@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_99_Other()
+function E:func_Universal_90_Other()
 	local OctoTable_Universal = {
 		-- E:func_EventName(181) (Noblegarden) (Сад чудес)
 		{
@@ -222,100 +222,100 @@ function E:func_Universal_99_Other()
 			},
 			forcedMaxQuest = 1,
 		},
+		-- {
+
+		-- 	textleft = "Profession Monthlies",
+		-- 	showTooltip = true,
+		-- 	name_save = "ProfessionMonthlies",
+		-- 	reset = "Month",
+		-- 	desc = "HolidaysDarkmoonFaire",
+		-- 	quests = {
+		-- 		{29506},
+		-- 		{29507},
+		-- 		{29508},
+		-- 		{29509},
+		-- 		{29510},
+		-- 		{29511},
+		-- 		{29513},
+		-- 		{29514},
+		-- 		{29515},
+		-- 		{29516},
+		-- 		{29517},
+		-- 		{29518},
+		-- 		{29519},
+		-- 		{29520},
+		-- 	},
+		-- 	-- forcedMaxQuest = 14,
+		-- },
+		-- {
+
+		-- 	textleft = "Monthly Quests",
+		-- 	showTooltip = true,
+		-- 	name_save = "MonthlyQuests",
+		-- 	reset = "Month",
+		-- 	desc = "HolidaysDarkmoonFaire",
+		-- 	quests = {
+		-- 		{33354},
+		-- 		{29443},
+		-- 	},
+		-- 	-- forcedMaxQuest = 2,
+		-- },
+		-- {
+
+		-- 	textleft = "Acount-wide Dailies",
+		-- 	showTooltip = true,
+		-- 	name_save = "AcountwideDailies",
+		-- 	reset = "Daily",
+		-- 	desc = "HolidaysDarkmoonFaire",
+		-- 	quests = {
+		-- 		{32175},
+		-- 		{36471},
+		-- 	},
+		-- 	-- forcedMaxQuest = 2,
+		-- },
+		-- {
+
+		-- 	textleft = "item turns ins",
+		-- 	showTooltip = true,
+		-- 	name_save = "itemturnsins",
+		-- 	reset = "Daily",
+		-- 	desc = "HolidaysDarkmoonFaire",
+		-- 	quests = {
+		-- 		{29458},
+		-- 		{29456},
+		-- 		{29457},
+		-- 		{29443},
+		-- 		{29444},
+		-- 		{29445},
+		-- 		{29446},
+		-- 		{29464},
+		-- 		{29451},
+		-- 	},
+		-- 	-- forcedMaxQuest = 9,
+		-- },
+		-- {
+
+		-- 	textleft = E:func_itemName(93724),
+		-- 	showTooltip = true,
+		-- 	name_save = "DarkmoonFaire",
+		-- 	reset = "Daily",
+		-- 	desc = "HolidaysDarkmoonFaire",
+		-- 	quests = {
+		-- 		{37911},
+		-- 		{29438},
+		-- 		{36481},
+		-- 		{29463},
+		-- 		{29436},
+		-- 		{29434},
+		-- 		{37910},
+		-- 		{29455},
+		-- 		{64783},
+		-- 	},
+		-- 	-- forcedMaxQuest = 9,
+		-- },
 		{
 
-			textleft = "Profession Monthlies",
-			showTooltip = true,
-			name_save = "ProfessionMonthlies",
-			reset = "Month",
-			desc = "HolidaysDarkmoonFaire",
-			quests = {
-				{29506},
-				{29507},
-				{29508},
-				{29509},
-				{29510},
-				{29511},
-				{29513},
-				{29514},
-				{29515},
-				{29516},
-				{29517},
-				{29518},
-				{29519},
-				{29520},
-			},
-			-- forcedMaxQuest = 14,
-		},
-		{
-
-			textleft = "Monthly Quests",
-			showTooltip = true,
-			name_save = "MonthlyQuests",
-			reset = "Month",
-			desc = "HolidaysDarkmoonFaire",
-			quests = {
-				{33354},
-				{29443},
-			},
-			-- forcedMaxQuest = 2,
-		},
-		{
-
-			textleft = "Acount-wide Dailies",
-			showTooltip = true,
-			name_save = "AcountwideDailies",
-			reset = "Daily",
-			desc = "HolidaysDarkmoonFaire",
-			quests = {
-				{32175},
-				{36471},
-			},
-			-- forcedMaxQuest = 2,
-		},
-		{
-
-			textleft = "item turns ins",
-			showTooltip = true,
-			name_save = "itemturnsins",
-			reset = "Daily",
-			desc = "HolidaysDarkmoonFaire",
-			quests = {
-				{29458},
-				{29456},
-				{29457},
-				{29443},
-				{29444},
-				{29445},
-				{29446},
-				{29464},
-				{29451},
-			},
-			-- forcedMaxQuest = 9,
-		},
-		{
-
-			textleft = E:func_GetItemNameByID(93724),
-			showTooltip = true,
-			name_save = "DarkmoonFaire",
-			reset = "Daily",
-			desc = "HolidaysDarkmoonFaire",
-			quests = {
-				{37911},
-				{29438},
-				{36481},
-				{29463},
-				{29436},
-				{29434},
-				{37910},
-				{29455},
-				{64783},
-			},
-			-- forcedMaxQuest = 9,
-		},
-		{
-
-			textleft = E:func_GetItemNameByID(92441),
+			textleft = E:func_itemName(92441),
 			showTooltip = true,
 			name_save = "GreenFire",
 			reset = "Once",

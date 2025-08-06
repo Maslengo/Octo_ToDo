@@ -3,35 +3,34 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
 function E:func_Universal_08_BattleforAzeroth()
 	local OctoTable_Universal = {
-
 		{
-
+			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
 			desc = "BattleforAzeroth",
 			quests = {
-				{52196},
-				{52169},
-				{52181},
-				{52166},
-				{52163},
-				{52157},
-				{52848},
-				{52847},
-				{54895},
-				{54896},
-				{58705},
-				{55466},
-				{56057},
-				{56056},
+				{52196}, -- Занесенные песком кости (Вол'дун)
+				{52169}, -- Матриарх (Дикие земли)
+				{52181}, -- Дым и тени (Назмир)
+				{52166}, -- Безликий глашатай (Долина Штормов)
+				{52163}, -- Крылатый тайфун (Тирагардское поморье)
+				{52157}, -- Леденящая встреча (Друствар)
+				{52848, faction = "Horde",}, -- "Львиный рык" (Нагорье Арати)
+				{52847, faction = "Alliance",}, -- "Гибельный вой" (Нагорье Арати)
+				{54896, faction = "Horde",}, -- Ивус Лесной Властелин (Темные берега)
+				{54895, faction = "Alliance",}, -- Ивус Трухлявый (Темные берега)
+				{58705}, -- Великая императрица Шек'зара (Вечноцветущий дол)
+				{55466}, -- Вук'лаз Землелом (Ульдум)
+				{56057, forcedText = {npcID = 152697},}, -- Страж душ (Назжатар)
+				{56056}, -- Глубинный ужас (Назжатар)
 			},
 			forcedMaxQuest = 4,
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID()),
+			textleft = E:func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436)),
 			name_save = "AzeriteForTheFaction",
 			reset = "Weekly",
 			desc = "BattleforAzeroth",
@@ -43,7 +42,6 @@ function E:func_Universal_08_BattleforAzeroth()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.Timers.BfA_Invasion(),
 			name_save = "InvasionQuests",
@@ -66,7 +64,6 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 			name_save = "AssaultTheBlackEmpire",
@@ -81,7 +78,6 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "miniVision",
 			name_save = "miniVision",
@@ -97,7 +93,6 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "Warfront: Stromgarde",
 			name_save = "WarfrontStromgarde",
@@ -107,10 +102,9 @@ function E:func_Universal_08_BattleforAzeroth()
 				{53416, faction = "Horde"},
 				{53414, faction = "Alliance"},
 			},
-			 -- forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "Warfront: Darkshore",
 			name_save = "WarfrontDarkshore",
@@ -120,10 +114,9 @@ function E:func_Universal_08_BattleforAzeroth()
 				{53955, faction = "Horde"},
 				{53992, faction = "Alliance"},
 			},
-			 -- forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "Warfront: Heroic",
 			name_save = "WarfrontHeroic",
@@ -138,7 +131,6 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			sorted = true,
 			showTooltip = true,
 			textleft = "DarkshoreRares",
@@ -149,94 +141,71 @@ function E:func_Universal_08_BattleforAzeroth()
 				-- Alash'anir
 				{54695, faction = "Alliance", forcedText = {npcID = 148787},},
 				{54696, faction = "Horde", forcedText = {npcID = 148787},},
-
 				-- Aman
 				{54405, faction = "Alliance",forcedText = {npcID = 147966},},
 				{54406, faction = "Horde", forcedText = {npcID = 147966},},
-
 				-- Amberclaw
 				{54285, faction = "Alliance",forcedText = {npcID = 147744},},
 				{54286, faction = "Horde", forcedText = {npcID = 147744},},
-
 				-- Athrikus Narassin
 				{54278, faction = "Alliance",forcedText = {npcID = 147708},},
 				{54279, faction = "Horde", forcedText = {npcID = 147708},},
-
 				-- Commander Ral'esh
 				{54426, faction = "Alliance",forcedText = {npcID = 148025},},
 				{54427, faction = "Horde", forcedText = {npcID = 148025},},
-
 				-- Conflagros
 				{54232, faction = "Alliance",forcedText = {npcID = 147260},},
 				{54233, faction = "Horde", forcedText = {npcID = 147260},},
-
 				-- Cyclarus
 				{54229, faction = "Alliance",forcedText = {npcID = 147241},},
 				{54230, faction = "Horde", forcedText = {npcID = 147241},},
-
 				-- Glimmerspine
 				{54884, faction = "Alliance", forcedText = {npcID = 149654},},
 				{54885, faction = "Horde", forcedText = {npcID = 149654},},
-
-
 				-- Granokk
 				{54234, faction = "Alliance",forcedText = {npcID = 147261},},
 				{54235, faction = "Horde", forcedText = {npcID = 147261},},
-
 				-- Gren Tornfur
 				{54428, faction = "Alliance",forcedText = {npcID = 148031},},
 				{54429, faction = "Horde", forcedText = {npcID = 148031},},
-
 				-- Hydrath
 				{54227, faction = "Alliance",forcedText = {npcID = 147240},},
 				{54228, faction = "Horde", forcedText = {npcID = 147240},},
-
 				-- Madfeather
 				{54887, faction = "Alliance",forcedText = {npcID = 149657},},
 				{54888, faction = "Horde", forcedText = {npcID = 149657},},
-
 				-- Mrggr'marr
 				{54408, faction = "Alliance",forcedText = {npcID = 147970},},
 				{54409, faction = "Horde", forcedText = {npcID = 147970},},
-
 				-- Scalefiend
 				{54893, faction = "Alliance",forcedText = {npcID = 149665},},
 				{54894, faction = "Horde", forcedText = {npcID = 149665},},
-
 				-- Shattershard
 				{54289, faction = "Alliance", forcedText = {npcID = 147751},},
 				{54290, faction = "Horde", forcedText = {npcID = 147751},},
-
 				-- Soggoth the Slitherer
 				{54320, faction = "Alliance",forcedText = {npcID = 147897},},
 				{54321, faction = "Horde", forcedText = {npcID = 147897},},
-
 				-- Stonebinder Ssra'vess
 				{54247, faction = "Alliance",forcedText = {npcID = 147332},},
 				{54248, faction = "Horde", forcedText = {npcID = 147332},},
-
 				-- Twilight Prophet Graemeа
 				{54397, faction = "Alliance",forcedText = {npcID = 147942},},
 				{54398, faction = "Horde", forcedText = {npcID = 147942},},
-
 				-- Athil Dewfire
-				{54431, faction = "Horde", forcedText = {npcID = 148037},},  -- УБИЛ ОРДОЙ 54892
+				{54431, faction = "Horde", forcedText = {npcID = 148037},}, -- УБИЛ ОРДОЙ 54892
 				-- Blackpaw
 				{54890, faction = "Horde", forcedText = {npcID = 149660},}, -- УБИЛ ОРДОЙ
 				-- Grimhorn
 				{54891, faction = "Horde", forcedText = {npcID = 149662},},
 				-- Onu
-				{54291, faction = "Horde", forcedText = {npcID = 147758},},  -- УБИЛ ОРДОЙ 54892
+				{54291, faction = "Horde", forcedText = {npcID = 147758},}, -- УБИЛ ОРДОЙ 54892
 				-- Sapper Odette
-				{54452, faction = "Horde", forcedText = {npcID = 148103},},  -- УБИЛ ОРДОЙ 54892
+				{54452, faction = "Horde", forcedText = {npcID = 148103},}, -- УБИЛ ОРДОЙ 54892
 				-- Shadowclaw
 				{54892, faction = "Horde", forcedText = {npcID = 149663},}, -- УБИЛ ОРДОЙ 54892
 				-- Thelar Moonstrike
 				{54252, faction = "Horde", forcedText = {npcID = 147435},},
-
-
-
-
 				-- Agathe Wyrmwood
 				{54883, faction = "Alliance", forcedText = {npcID = 149517},},
 				-- Burninator Mark V
@@ -248,14 +217,13 @@ function E:func_Universal_08_BattleforAzeroth()
 				-- Moxo the Beheader
 				{54277, faction = "Alliance", forcedText = {npcID = 147701},},
 				-- Orwell Stevenson
-				{54889, faction = "Alliance", forcedText = {npcID = 149659},},  -- 149664
+				{54889, faction = "Alliance", forcedText = {npcID = 149659},}, -- 149664
 				-- Zim'kaga
 				{54274, faction = "Alliance", forcedText = {npcID = 147664},},
 			},
 			-- forcedMaxQuest = 25,
 		},
 		{
-
 			sorted = true,
 			showTooltip = true,
 			textleft = "MechagonRares",
@@ -263,7 +231,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			reset = "Daily",
 			desc = "BattleforAzeroth",
 			quests = {
-				{55512, forcedText = {npcID = 151934},}, -- 154342  -- MOUNT
+				{55512, forcedText = {npcID = 151934},}, -- RARE ELITE       154342 -- MOUNT
 				{55539, forcedText = {npcID = 151308},},
 				{55857, forcedText = {npcID = 153200},},
 				{55537, forcedText = {npcID = 152001},},
@@ -283,8 +251,8 @@ function E:func_Universal_08_BattleforAzeroth()
 				{55207, forcedText = {npcID = 151124},},
 				{55386, forcedText = {npcID = 151672},},
 				{55859, forcedText = {npcID = 151627},},
-				{55853, forcedText = {npcID = 153206},},
-				{55515, forcedText = {npcID = 151296},}, -- +QUEST 55918
+				{55853, forcedText = {npcID = 153206},}, -- RARE
+				{55515, forcedText = {npcID = 151296},}, --                +QUEST 55918
 				{55856, forcedText = {npcID = 152764},},
 				{55405, forcedText = {npcID = 151702},},
 				{55368, forcedText = {npcID = 150575},},
@@ -303,11 +271,7 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 			-- forcedMaxQuest = 36+1,
 		},
-
-
-
 		{
-
 			showTooltip = true,
 			textleft = "MechagonTREASURE",
 			name_save = "MechagonTREASURE",
@@ -327,121 +291,115 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 			forcedMaxQuest = 10,
 		},
-		{
-
-			showTooltip = true,
-			textleft = "MechagonTREASURE_MISCELLANEOUS",
-			name_save = "MechagonTREASURE_MISCELLANEOUS",
-			reset = "Daily",
-			desc = "BattleforAzeroth",
-			quests = {
-				{55743},
-				{56117},
-				{57134},
-			},
-			forcedMaxQuest = 3,
-		},
-		{
-
-			showTooltip = true,
-			textleft = "MechagonLOCKED_CHESTS1",
-			name_save = "MechagonLOCKED_CHESTS1",
-			reset = "Daily",
-			desc = "BattleforAzeroth",
-			quests = {
-				{56907},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-
-			showTooltip = true,
-			textleft = "MechagonLOCKED_CHESTS2",
-			name_save = "MechagonLOCKED_CHESTS2",
-			reset = "Daily",
-			desc = "BattleforAzeroth",
-			quests = {
-				{57133},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			textleft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
-			name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
-			reset = "Once",
-			desc = "BattleforAzeroth",
-			 -- forcedMaxQuest = "all",
-			quests = {
-				{56031, faction = "Alliance"},
-				{56043, faction = "Alliance"},
-				{55095, faction = "Alliance"},
-				{54969, faction = "Alliance"},
-				{56640, faction = "Alliance"},
-				{56641, faction = "Alliance"},
-				{56642, faction = "Alliance"},
-				{56643, faction = "Alliance"},
-				{56644, faction = "Alliance"},
-				{55175, faction = "Alliance"},
-				{54972, faction = "Alliance"},
-
-				{56030, faction = "Horde"},
-				{56044, faction = "Horde"},
-				{55054, faction = "Horde"},
-				{54018, faction = "Horde"},
-				{54021, faction = "Horde"},
-				{54012, faction = "Horde"},
-				{55092, faction = "Horde"},
-				{56063, faction = "Horde"},
-				{54015, faction = "Horde"},
-				{56429, faction = "Horde"},
-				{55094, faction = "Horde"},
-				{55053, faction = "Horde"},
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			textleft = "UNLOCKING MECHAGON PART 2",
-			name_save = "UNLOCKING MECHAGON PART 2",
-			reset = "Once",
-			desc = "BattleforAzeroth",
-			 -- forcedMaxQuest = "all",
-			quests = {
-				{55851},
-				{55533},
-				{55374},
-				{55400},
-				{55407},
-				{55425},
-				{55497},
-				{55618},
-				{57010},
-				{56162, faction = "Alliance"},
-				{56350, faction = "Alliance"},
-				{55361, faction = "Alliance"},
-				{55363, faction = "Alliance"},
-				{56156, faction = "Alliance"},
-
-				{56161, faction = "Horde"},
-				{55481, faction = "Horde"},
-				{55384, faction = "Horde"},
-				{55385, faction = "Horde"},
-				{55500, faction = "Horde"},
-			},
-			 -- forcedMaxQuest = "all",
-		},
-
+		-- {
+		-- 	showTooltip = true,
+		-- 	textleft = "MechagonTREASURE_MISCELLANEOUS",
+		-- 	name_save = "MechagonTREASURE_MISCELLANEOUS",
+		-- 	reset = "Daily",
+		-- 	desc = "BattleforAzeroth",
+		-- 	quests = {
+		-- 		{55743},
+		-- 		{56117},
+		-- 		{57134},
+		-- 	},
+		-- 	forcedMaxQuest = 3,
+		-- },
+		-- {
+		-- 	showTooltip = true,
+		-- 	textleft = "MechagonLOCKED_CHESTS1",
+		-- 	name_save = "MechagonLOCKED_CHESTS1",
+		-- 	reset = "Daily",
+		-- 	desc = "BattleforAzeroth",
+		-- 	quests = {
+		-- 		{56907},
+		-- 	},
+		-- 	forcedMaxQuest = 1,
+		-- },
+		-- {
+		-- 	showTooltip = true,
+		-- 	textleft = "MechagonLOCKED_CHESTS2",
+		-- 	name_save = "MechagonLOCKED_CHESTS2",
+		-- 	reset = "Daily",
+		-- 	desc = "BattleforAzeroth",
+		-- 	quests = {
+		-- 		{57133},
+		-- 	},
+		-- 	forcedMaxQuest = 1,
+		-- },
+		-- {
+		--     sorted = false,
+		--     showTooltip = true,
+		--     textleft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
+		--     name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
+		--     reset = "Once",
+		--     desc = "BattleforAzeroth",
+		--      -- forcedMaxQuest = "all",
+		--     quests = {
+		--         {56031, faction = "Alliance"},
+		--         {56043, faction = "Alliance"},
+		--         {55095, faction = "Alliance"},
+		--         {54969, faction = "Alliance"},
+		--         {56640, faction = "Alliance"},
+		--         {56641, faction = "Alliance"},
+		--         {56642, faction = "Alliance"},
+		--         {56643, faction = "Alliance"},
+		--         {56644, faction = "Alliance"},
+		--         {55175, faction = "Alliance"},
+		--         {54972, faction = "Alliance"},
+		--         {56030, faction = "Horde"},
+		--         {56044, faction = "Horde"},
+		--         {55054, faction = "Horde"},
+		--         {54018, faction = "Horde"},
+		--         {54021, faction = "Horde"},
+		--         {54012, faction = "Horde"},
+		--         {55092, faction = "Horde"},
+		--         {56063, faction = "Horde"},
+		--         {54015, faction = "Horde"},
+		--         {56429, faction = "Horde"},
+		--         {55094, faction = "Horde"},
+		--         {55053, faction = "Horde"},
+		--     },
+		-- },
+		-- {
+		--     sorted = false,
+		--     showTooltip = true,
+		--     textleft = "UNLOCKING MECHAGON PART 2",
+		--     name_save = "UNLOCKING MECHAGON PART 2",
+		--     reset = "Once",
+		--     desc = "BattleforAzeroth",
+		--      -- forcedMaxQuest = "all",
+		--     quests = {
+		--         {55851},
+		--         {55533},
+		--         {55374},
+		--         {55400},
+		--         {55407},
+		--         {55425},
+		--         {55497},
+		--         {55618},
+		--         {57010},
+		--         {56162, faction = "Alliance"},
+		--         {56350, faction = "Alliance"},
+		--         {55361, faction = "Alliance"},
+		--         {55363, faction = "Alliance"},
+		--         {56156, faction = "Alliance"},
+		--         {56161, faction = "Horde"},
+		--         {55481, faction = "Horde"},
+		--         {55384, faction = "Horde"},
+		--         {55385, faction = "Horde"},
+		--         {55500, faction = "Horde"},
+		--     },
+		--      -- forcedMaxQuest = "all",
+		-- },
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = "THE MECHAGONIAN THREAT",
-			name_save = "THE MECHAGONIAN THREAT",
+			name_save = "TheMechagonianThreat",
 			reset = "Once",
 			desc = "BattleforAzeroth",
 			quests = {
-				 -- Только для Альянса
+				-- Только для Альянса
 				{54088, faction = "Alliance"},
 				{55040, faction = "Alliance"},
 				{54945, faction = "Alliance"},
@@ -450,7 +408,7 @@ function E:func_Universal_08_BattleforAzeroth()
 				{54947, faction = "Alliance"},
 				{54992, faction = "Alliance"},
 				{55645, faction = "Alliance"},
-				 -- Только для Орды
+				-- Только для Орды
 				{55646, faction = "Horde"},
 				{55647, faction = "Horde"},
 				{55648, faction = "Horde"},
@@ -461,7 +419,7 @@ function E:func_Universal_08_BattleforAzeroth()
 				{55651, faction = "Horde"},
 				{55652, faction = "Horde"},
 				{55685, faction = "Horde"},
-				 -- Общие квесты
+				-- Общие квесты
 				{55730},
 				{55731},
 				{55995},
@@ -471,170 +429,141 @@ function E:func_Universal_08_BattleforAzeroth()
 				-- {55609}, -- Операция мехагон
 			},
 		},
-
-
-
-
-
 		{
-
 			showTooltip = true,
 			textleft = "DAILY_VISITOR_QUESTS",
 			name_save = "DAILY_VISITOR_QUESTS",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
 			quests = {
-				{56493},
-				{56558, faction = "Alliance",},
-				{56552, faction = "Horde"},
-				{55688},
-				{55575},
-				{55672},
-				{56184},
-				{55905},
-				{56469},
+				{55463},
+				{55658},
+				{55688}, -- https://www.wowhead.com/ru/quest=55658/
+				{55718},
+				{55765},
+				{55885},
+				{56053},
+				{55813},
+				{56301},
 				{56142},
 				{55528},
-				{55463},
-				{55885},
-				{55813},
-				{55718},
-				{56355},
-				{56501},
 				{56365},
-				{55717},
-				{55765},
-				{56306},
-				{55658},
-				{56053},
-				{56405},
-				{55816},
-				{56049},
-				{54090},
-				{56410},
+				{56552, faction = "Horde",},
+				{56558, faction = "Alliance"},
 				{56572},
-				{56301},
-				{56471},
+				{56501},
+				{56493},
+				{55575},
+				{55672}, -- https://www.wowhead.com/ru/quest=55658/
+				{55717}, -- https://www.wowhead.com/ru/quest=55658/
+				{56049}, -- https://www.wowhead.com/ru/quest=55658/
+				{56469},
+				{55816},
+				{55905},
+				{56184},
+				{56306},
+				{54090},
+				{56355},
 				{56523},
+				{56410},
 				{56508},
+				{56471},
+				{56405},
 			},
-			 -- forcedMaxQuest = 32,
+			-- forcedMaxQuest = 32,
 		},
 		{
-
+			sorted = false,
+			showTooltip = true,
+			textleft = "MechagonDAILYWQ",
+			name_save = "MechagonDAILYWQ",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			quests = {
+				{56139}, -- WQ
+				{56141}, -- WQ
+				{55901}, -- WQ
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
 			showTooltip = true,
 			textleft = "MechagonDAILYQUESTS",
 			name_save = "MechagonDAILYQUESTS",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
 			quests = {
-				 -- 56326,
-				 -- 56334,
-				{56328},
-				 -- 54090,
-				 -- 55905,
-				 -- 55463,
-				 -- 56405,
-				{56139}, -- WQ
-				{56405},
-				{56410},
-				{56419},
-				{55816},
-				{55463},
-				{55658},
-				{55743},
-				{55765},
-				{55213},
-				{54090},
-				{56572},
-				{56523},
-				{55299},
-				{56746},
-				{55575},
-				{56532},
-				{56469},
-				{56306},
-				{56552},
-				{55378},
+				-- {56765, faction = "Horde",}, Ржавоболтский запрос: полосатый окунь
+				-- {56761, faction = "Alliance",},
+				-- {56362, faction = "Horde",}, Ржавоболтский запрос: морской лен
+				-- {55378},
+				-- {56747},
+				-- {56752},
+				-- {56361},
+				-- {56758},
+				-- {55074},
+				-- {55382},
+				-- {56749},
+				-- {55379},
+				-- {55381},
+				-- {55383},
+				-- {55380},
+				-- {56762},
+				-- {56759},
+				-- {56753},
+				-- {56750},
+				-- {56751},
+				-- {56363},
+				-- {56757},
+				-- {56364},
+				-- {56760},
+				-- {56754},
+				-- {56763},
+				-- {56755},
 				{56621},
-				{56365},
+				{56184}, -- DOUBLE
+				{56405}, -- DOUBLE
+				{55658}, -- DOUBLE
+				{54090}, -- DOUBLE
+				{56334},
 				{56326},
+				{55528}, -- DOUBLE
+				{56355}, -- DOUBLE
+				{56306}, -- DOUBLE
+				{56301}, -- DOUBLE
+
+
+
+
+
+				-- {56328}, ONCE
+				{56419},
+				-- {55743}, -- надо ли?
+				{55213},
+				{56746},
+				{56532},
 				{56557},
 				{57327},
 				{56083},
-				{55717},
-				{56501},
-				{56301},
-				{55672},
-				{56362},
-				{55718},
-				{56558},
-				{55305},
-				{56142},
-				{55310},
 				{55994},
 				{56559},
-				{56184},
-				{55307},
-				{56763},
-				{56761},
-				{56508},
-				{55311},
 				{55880},
 				{56573},
-				{55382},
 				{55849},
-				{55813},
-				{55688},
 				{56434},
-				{55528},
-				{56758},
-				{56471},
-				{56765},
 				{57326},
-				{56751},
-				{56762},
 				{56380},
-				{56363},
-				{55309},
 				{56327},
-				{56053},
-				{56760},
-				{56759},
 				{56373},
 				{55695},
-				{56749},
-				{56361},
-				{56757},
-				{55383},
-				{55905},
-				{56754},
-				{55380},
-				{56334},
-				{55308},
-				{56755},
 				{56082},
-				{55381},
-				{56493},
 				{54082},
-				{56752},
-				{55306},
-				{55379},
-				{56049},
-				{56753},
-				{55312},
-				{55885},
-				{56747},
-				{56355},
-				{56750},
-				{55313},
-				{56364},
 				{55742},
 			},
-			forcedMaxQuest = 7,
+			forcedMaxQuest = 11, -- ПОФИКСИТь
 		},
 		{
-
 			showTooltip = true,
 			textleft = "MechagonSecretFish",
 			name_save = "MechagonSecretFish",
@@ -654,6 +583,47 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 			forcedMaxQuest = 10,
 		},
+
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = "Making a Mount",
+			name_save = "MakingAMount",
+			reset = "Once",
+			desc = "BattleforAzeroth",
+			quests = {
+				{55608},
+				{54086},
+				{54929},
+				{55373},
+				{55697},
+				{54922},
+				{56168},
+				{54083},
+				{56175},
+				{55696},
+				{55753},
+				{55622},
+			},
+			-- forcedMaxQuest = 10,
+		},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 	return OctoTable_Universal
 end

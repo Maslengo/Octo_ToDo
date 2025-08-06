@@ -1,10 +1,6 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-local LibDataBroker = LibStub("LibDataBroker-1.1")
-local LibDBIcon = LibStub("LibDBIcon-1.0")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 -------------------------------------------------------------------------
 function E:CreateGeneralOptions()
 	local index = 0
@@ -39,76 +35,84 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Reload = {
-				type = "execute",
-				name = RELOADUI,
-				func = function()
-					return ReloadUI()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			Header3 = {
 				type = "header",
 				name = "Настройки фреймов аддона",
 				order = GetOrder(),
 			},
-			-------------------------------------------------
-			AddonHeight = {
+			Config_FontSize = {
 				type = "range",
-				name = L["AddonHeight"],
-				desc = "AddonHeight",
-				min = 10,
-				max = 30,
+				name = "Config_FontSize",
+				desc = "Config_FontSize",
+				min = 8,
+				max = 32,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.AddonHeight
+					return Octo_ToDo_DB_Vars.Config_FontSize
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.AddonHeight = value
+					Octo_ToDo_DB_Vars.Config_FontSize = value
+					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+				
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_MainFrameDefaultLines = {
-				type = "range",
-				name = L["Config_MainFrameDefaultLines"],
-				desc = "Config_MainFrameDefaultLines",
-				min = 10,
-				max = 50,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_MainFrameDefaultLines
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_MainFrameDefaultLines = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			FrameScale = {
-				type = "range",
-				name = "FrameScale",
+			["Config_FontFlags"] = {
+				type = "select",
+				name = "Config_FontFlags",
+				values = {},
 				desc = "",
-				min = 0.5,
-				max = 2.5,
-				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.FrameScale
+					return Octo_ToDo_DB_Vars.Config_FontFlags
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.FrameScale = value
+					Octo_ToDo_DB_Vars.Config_FontFlags = value
+					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+					
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+			-------------------------------------------------
+			Config_FontStyle = {
+				name = "Font",
+				type = "select",
+				dialogControl = "LSM30_Font",
+				values = LibSharedMedia:HashTable("font"),
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_FontStyle
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_FontStyle = value
+					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+					
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_Texture = {
+				name = "Texture",
+				type = "select",
+				dialogControl = "LSM30_Statusbar",
+				values = LibSharedMedia:HashTable("statusbar"),
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_Texture
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_Texture = value
+					
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			-------------------------------------------------
 			Config_AlphaOnDrag = {
 				type = "range",
-				name = "Config_AlphaOnDrag",
+				name = L["Alpha On Drag"],
 				desc = "",
 				min = 0.1,
 				max = 1,
@@ -123,23 +127,9 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_DontSavePosition = {
-				type = "toggle",
-				name = "Dont Save Position",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_DontSavePosition
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_DontSavePosition = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			Config_ClampedToScreen = {
 				type = "toggle",
-				name = "Clamped To Screen",
+				name = L["Clamped To Screen"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_ClampedToScreen
@@ -148,9 +138,6 @@ function E:CreateGeneralOptions()
 					Octo_ToDo_DB_Vars.Config_ClampedToScreen = value
 					if Octo_MainFrame_ToDo then
 						Octo_MainFrame_ToDo:SetClampedToScreen(value)
-					end
-					if Octo_Main_TestFrame then
-						Octo_Main_TestFrame:SetClampedToScreen(value)
 					end
 					if TestButton1 then
 						TestButton1:SetClampedToScreen(value)
@@ -198,7 +185,7 @@ function E:CreateGeneralOptions()
 			-------------------------------------------------
 			Config_LevelToShow = {
 				type = "range",
-				name = L["Player level"],
+				name = L["Min. Level"],
 				desc = "",
 				min = 1,
 				max = 80,
@@ -215,7 +202,7 @@ function E:CreateGeneralOptions()
 			-------------------------------------------------
 			Config_LevelToShowMAX = {
 				type = "range",
-				name = L["Player MAX level"],
+				name = L["Max. Level"],
 				desc = "",
 				min = 1,
 				max = 80*2,
@@ -227,30 +214,6 @@ function E:CreateGeneralOptions()
 					Octo_ToDo_DB_Vars.Config_LevelToShowMAX = value
 				end,
 				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			itemConfig_LevelToShow = {
-				type = "range",
-				name = L["Item level: "],
-				desc = "",
-				min = 0,
-				max = 560,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.itemConfig_LevelToShow
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.itemConfig_LevelToShow = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			-------------------------------------------------
-			MainHeader24 = {
-				type = "header",
-				name = OTHER,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -277,6 +240,20 @@ function E:CreateGeneralOptions()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			OnlyCurrentFaction = {
+				type = "toggle",
+				name = E.curFaction == "Horde" and E:func_texturefromIcon(E.Icon_Horde)..L["Only Horde"] or E:func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"],
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.OnlyCurrentFaction
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.OnlyCurrentFaction = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -344,8 +321,6 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-
-
 			TRADE_SKILLS = {
 				type = "toggle",
 				name = TRADE_SKILLS,
@@ -408,65 +383,6 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-
-			FontSize = {
-				type = "range",
-				name = "FontSize",
-				desc = "FontSize",
-				min = 8,
-				max = 32,
-				step = 1,
-				get = function()
-					return Octo_ToDo_DB_Vars.FontSize
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.FontSize = value
-					E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", value, Octo_ToDo_DB_Vars.FontFlags)
-					for i, frame in ipairs(E.OctoTable_Frames) do
-						if frame:IsShown() then
-							frame:Hide()
-							frame:Show()
-						end
-					end
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-
-
-
-
-			["FontFlags"] = {
-				type = "select",
-				name = "FontFlags",
-				values = {},
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.FontFlags
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.FontFlags = value
-					E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", Octo_ToDo_DB_Vars.FontSize, value)
-					for i, frame in ipairs(E.OctoTable_Frames) do
-						if frame:IsShown() then
-							frame:Hide()
-							frame:Show()
-						end
-					end
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-
-
-
-
-
-
-
-
-
-
 			-------------------------------------------------
 		},
 	}
@@ -474,23 +390,17 @@ function E:CreateGeneralOptions()
 	for index, name in ipairs(E.OctoTable_Prefixes) do
 		generalOptions.args.Config_prefix.values[index] = name
 	end
-
-
 	local tblFontFlags = {
-		"",				-- The base font
-		"MONOCHROME",	-- Font is rendered without antialiasing
-		"OUTLINE",		-- Font is displayed with a black outline
-		"THICKOUTLINE",	-- Font is displayed with a thick black outline
+		"", -- (пустая строка) стандартный шрифт с антиалиасингом.
+		"MONOCHROME", -- шрифт без сглаживания (пиксельный).
+		"OUTLINE", -- шрифт с тонкой черной обводкой.
+		"THICKOUTLINE", -- шрифт с толстой черной обводкой.
+		"MONOCHROME, OUTLINE", -- пиксельный шрифт с тонкой обводкой.
+		"MONOCHROME, THICKOUTLINE", -- пиксельный шрифт с толстой обводкой.
 	}
-
-
 	for index, name in ipairs(tblFontFlags) do
-		generalOptions.args.FontFlags.values[name] = name
+		generalOptions.args.Config_FontFlags.values[name] = name
 	end
-
-
-
-
 	-------------------------------------------------
 	return generalOptions
 end

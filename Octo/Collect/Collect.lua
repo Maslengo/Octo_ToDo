@@ -4,8 +4,8 @@ Octo_EventFrame_Collect:Hide()
 
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED",
 	"PLAYER_LOGIN",
+	"PLAYER_UPDATE_RESTING",
 	"TIME_PLAYED_MSG",
 	"PLAYER_LEAVING_WORLD",
 	"ACCOUNT_MONEY",
@@ -44,7 +44,6 @@ local MyEventsTable = {
 
 
 	"BARBER_SHOP_APPEARANCE_APPLIED",
-	"VARIABLES_LOADED",
 
 	"PLAYER_FLAGS_CHANGED",
 	"UPDATE_FACTION",
@@ -59,18 +58,6 @@ function E:func_Collect_All_Table()
 end
 ----------------------------------------------------------------
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable)
-function Octo_EventFrame_Collect:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
-		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	end
-end
-
-
-
-
 -- function Octo_EventFrame_Collect:UNIT_FACTION(...)
 -- 	if ... == "player" then
 -- 		E.Collect_All_PlayerInfo()
@@ -81,8 +68,6 @@ end
 function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	RequestTimePlayed()
 	RequestRaidInfo()
-	self:UnregisterEvent("PLAYER_LOGIN")
-	self.PLAYER_LOGIN = nil
 	E.Collect_All_MoneyOnLogin()
 	-- Персонаж и прогресс
 	E.Collect_All_PlayerInfo() -- общая информация о персонаже
@@ -440,53 +425,6 @@ end
 
 
 
-
-function Octo_EventFrame_Collect:VARIABLES_LOADED()
-	if E.DEBUG_TIMINGS_COLLECT then
-		wipe(Octo_Debug_DB.Functions)
-
-		local function TimeFunctionExecution(funcName, func)
-			Octo_Debug_DB.Functions[funcName] = {
-				count = 0,
-				minTime = math.huge,
-				maxTime = 0,
-				totalTime = 0,
-			}
-
-			return function(...)
-				local startTime = debugprofilestop()
-				local result = {func(...)}
-				local executionTime = (debugprofilestop() - startTime)
-
-				local stats = Octo_Debug_DB.Functions[funcName]
-				stats.count = stats.count + 1
-				stats.minTime = math.min(stats.minTime, executionTime)
-				stats.maxTime = math.max(stats.maxTime, executionTime)
-				stats.totalTime = stats.totalTime + executionTime
-				print (funcName, stats.count)
-
-				return unpack(result) -- table.unpack
-			end
-		end
-
-		-- for funcName, func in pairs(Octo_EventFrame_Collect) do
-		--     if type(func) == "function" and funcName ~= "OnEvent" and funcName ~= "OnUpdate" then
-		--         Octo_EventFrame_Collect[funcName] = TimeFunctionExecution(funcName, func)
-		--     end
-		-- end
-
-		for funcName, func in pairs(E) do
-			if type(func) == "function" and funcName ~= "OnEvent" and funcName ~= "OnUpdate" then
-				E[funcName] = TimeFunctionExecution(funcName, func)
-			end
-		end
-	end
-end
-
-
-
-
-
 function Octo_EventFrame_Collect:UPDATE_FACTION()
 	if InCombatLockdown() or self.UPDATE_FACTION_pause then return end
 	self.UPDATE_FACTION_pause = true
@@ -500,6 +438,12 @@ end
 
 
 function Octo_EventFrame_Collect:PLAYER_FLAGS_CHANGED()
+	if InCombatLockdown() then return end
+	E.Collect_All_PlayerInfo()
+end
+
+
+function Octo_EventFrame_Collect:PLAYER_UPDATE_RESTING()
 	if InCombatLockdown() then return end
 	E.Collect_All_PlayerInfo()
 end

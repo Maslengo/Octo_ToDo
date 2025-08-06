@@ -15,7 +15,7 @@ function E:func_Otrisovka_07_Legion()
 				textCENT = E:func_textCENT_Items(CharInfo, 124124)
 				myType = {"Item", 124124}
 				----------------------------------------------------------------
-				textLEFT = E:func_GetItemNameByID(124124)
+				textLEFT = E:func_itemName(124124)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType

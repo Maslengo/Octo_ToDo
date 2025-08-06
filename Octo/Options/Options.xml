@@ -1,15 +1,11 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
-..\FrameXML\UI.xsd">
-
+<Ui>
 	<Script file="Options\00_basicOptions.lua"/>
 	<Script file="Options\01_GeneralConfigPanel.lua"/>
 	<Script file="Options\02_Automatization.lua"/>
 	<Script file="Options\03_HideFrames.lua"/>
-	<Script file="Options\04_Other.lua"/>
+	<Script file="Options\04_myOther.lua"/>
 	<Script file="Options\05_Cvars.lua"/>
 
-	<Script file="Options\99_Debug.lua"/>
-
-	<Script file="Options\999_Functions_LibSFDropDown.lua"/>
-
+	<Script file="Options\90_Debug.lua"/>
+	<Script file="Options\91_Functions_LibSFDropDown.lua"/>
 </Ui>

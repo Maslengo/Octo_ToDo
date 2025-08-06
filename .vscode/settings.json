@@ -260,7 +260,11 @@
 		"SecondsFormatterMixin",
 		"SecondsFormatter",
 		"NEVER",
-		"BATTLE_PET_SOURCE_2"
+		"BATTLE_PET_SOURCE_2",
+		"SPELLS",
+		"UIParentLoadAddOn",
+		"EventTrace"
 	],
-	"Lua.type.weakUnionCheck": true
+	"Lua.type.weakUnionCheck": true,
+	"lua.targetVersion": "5.1"
 }

@@ -429,7 +429,6 @@ function E:Config_Hide_EventToastManagerFrame()
 end
 
 local MyEventsTable = {
-	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_ENABLED",
 	"PLAYER_REGEN_DISABLED",
@@ -439,14 +438,6 @@ local MyEventsTable = {
 }
 
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable)
-
-function Octo_EventFrame_HideFrames:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-	end
-end
-
 function Octo_EventFrame_HideFrames:START_HF_functions()
 	if Octo_ToDo_DB_Vars.Config_Hide_CheckListText then E:Config_Hide_CheckListText() end
 	-- if Octo_ToDo_DB_Vars.Config_Hide_SubscriptionInterstitialFrame then E:Config_Hide_SubscriptionInterstitialFrame() end

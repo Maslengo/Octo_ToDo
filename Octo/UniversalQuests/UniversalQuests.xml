@@ -14,6 +14,6 @@
 	<Script file="UniversalQuests\11_TheWarWithin.lua"/>
 	<Script file="UniversalQuests\12_Midnight.lua"/>
 	<Script file="UniversalQuests\13_TheLastTitan.lua"/>
-	<Script file="UniversalQuests\99_Other.lua"/>
+	<Script file="UniversalQuests\90_Other.lua"/>
 
 </Ui>

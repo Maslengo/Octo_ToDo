@@ -3,6 +3,7 @@ local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, stri
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 ----------------------------------------------------------------
 -- Кеширование глобальных функций и таблиц
 local sort = table.sort
@@ -199,6 +200,19 @@ function E:func_IsTLT() if E.interfaceVersion > 130000 and E.interfaceVersion < 
 function E:func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E:func_IsPTR() return GetCurrentRegion() >= 72 end
 ----------------------------------------------------------------
+function E:func_texturefromIcon(icon, iconWidth, iconHeight)
+	local iconWidth = iconWidth or 16
+	local iconHeight = iconHeight or 16
+	-- return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:4:60:4:60|t" -- DEFAULT OCTO
+	-- return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:0:64:0:64|t" -- NORMAL BLIZZARD
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t " -- TEST OCTO
+end
+----------------------------------------------------------------
+function E:func_texturefromIconEVENT(icon, iconSize)
+	iconSize = iconSize or 16
+	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
+end
+----------------------------------------------------------------
 function E:func_GetItemIconByID(itemID)
 	return GetItemIconByID(itemID)
 end
@@ -247,49 +261,39 @@ function E:func_GetSpellIcon(spellID)
 	return GetSpellTexture(spellID)
 end
 ----------------------------------------------------------------
-function E:func_GetSpellName(spellID)
-	table_insert(E.PromiseSpell, spellID)
-	local vivod = GetSpellName(spellID)
-	return vivod..(E.DebugIDs and E.Gray_Color.." id:"..spellID.."|r" or "")
-end
-----------------------------------------------------------------
 function E:func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
 	return info and info.iconFileID or E.Icon_Empty -- E.Icon_QuestionMark
 end
-
-
-
-
-local function func_GetItemNameByID_CACHE(id)
+----------------------------------------------------------------
+local function func_itemName_CACHE(id)
 	local itemCache = Octo_Cache_DB.AllItems[id] -- Кешируем обращение к таблице
 	if itemCache and itemCache[E.curLocaleLang] then
 		return itemCache[E.curLocaleLang] -- Возвращаем имя, если оно уже есть в кеше
 	end
-
 	local itemName = GetItemNameByID(id) -- Запрашиваем имя предмета, если его нет в кеше
 	if itemName and itemName ~= "" then
 		if not itemCache then -- Создаем запись в кеше, если её нет
 			itemCache = {}
 			Octo_Cache_DB.AllItems[id] = itemCache
 		end
+		print (E.Lime_Color .. ITEMS .. "|r", id, itemName)
 		itemCache[E.curLocaleLang] = itemName -- Сохраняем имя для текущей локали
 		return itemName -- Возвращаем имя сразу, без лишних проверок
 	end
-
 	return E.Red_Color .. UNKNOWN .. "|r" -- Если предмет не найден
 end
-
-function E:func_GetItemNameByID(id, newQuality)
+function E:func_itemName(id, newQuality)
 	if not id then return end -- Проверка на nil
-
-	-- Безопасное получение качества с защитой от nil
-	local quality = newQuality ~= nil and newQuality or select(3, E:func_GetItemInfo(id)) or 0
+	local quality = GetItemQualityByID(id) or 0
+	if newQuality then
+		quality = newQuality
+	end
+	-- local quality = newQuality ~= nil and newQuality or GetItemQualityByID(id) or 0
 	local colorHex = ITEM_QUALITY_COLORS[quality].hex -- Цвет качества
 	local icon = E:func_texturefromIcon(E:func_GetItemIconByID(id)) or "" -- Иконка (если есть)
-	local name = func_GetItemNameByID_CACHE(id) -- Получаем имя из кеша
+	local name = func_itemName_CACHE(id) -- Получаем имя из кеша
 	local debugInfo = E.DebugIDs and (E.Gray_Color .. " id:" .. id .. "|r") or "" -- Отладочная информация (если включена)
-
 	return icon .. colorHex .. name .. "|r" .. debugInfo -- Собираем итоговую строку
 end
 ----------------------------------------------------------------
@@ -298,38 +302,31 @@ local function func_currencyName_CACHE(id)
 	if currencyCache and currencyCache[E.curLocaleLang] then
 		return currencyCache[E.curLocaleLang]  -- Если имя уже есть в кеше, возвращаем его
 	end
-
 	local WarbandIcon = ""  -- Иконка для "валюта аккаунта" или "валюта варбанда"
 	if IsAccountTransferableCurrency(id) then
 		WarbandIcon = E.Icon_AccountTransferable
 	elseif IsAccountWideCurrency(id) then
 		WarbandIcon = E.Icon_AccountWide
 	end
-
 	local info = GetCurrencyInfo(id)  -- Получаем информацию о валюте
 	if not info then
 		return E.Red_Color .. UNKNOWN .. "|r"  -- Если валюта не найдена
 	end
-
 	-- Формируем строку с иконкой, цветом качества и названием
 	local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
 	-- local icon = E:func_texturefromIcon(E:func_GetCurrencyIcon(id)) or ""
 	-- local cachedValue = icon .. colorHex .. info.name .. "|r" .. WarbandIcon
 	local cachedValue = colorHex .. info.name .. "|r" .. WarbandIcon
-
 	-- Сохраняем в кеш
 	if not currencyCache then
 		currencyCache = {}
 		Octo_Cache_DB.AllCurrencies[id] = currencyCache
 	end
 	currencyCache[E.curLocaleLang] = cachedValue
-
 	-- Вывод в лог (если нужно)
 	print (E.Lime_Color .. CURRENCY .. "|r", id, info.name)
-
 	return cachedValue  -- Возвращаем готовую строку
 end
-
 function E:func_currencyName(id)
 	if not id then return end
 	local cachedName = (E:func_texturefromIcon(E:func_GetCurrencyIcon(id)) or "") ..func_currencyName_CACHE(id)
@@ -337,28 +334,44 @@ function E:func_currencyName(id)
 	return cachedName .. debugInfo
 end
 ----------------------------------------------------------------
+-- local PIZDATBL = {}
+-- ["line2"] = "??-й уровень (элита)",
+-- ["line3"] = "??-й уровень (элита)",
+
+-- ["line3"] = "??-й уровень (босс)",
+-- ["line2"] = "??-й уровень (босс)",
+-- BOSS босс
+-- ELITE - элита
 local function func_npcName_CACHE(id)
 	local npcCache = Octo_Cache_DB.AllNPCs[id]  -- Кешируем запись NPC
 	if npcCache and npcCache[E.curLocaleLang] then
 		return npcCache[E.curLocaleLang]  -- Возвращаем имя, если есть в кеше
 	end
-
 	-- Создаем/получаем tooltip один раз при первом вызове
 	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
 	local tooltip = E.ScanningTooltipFUNC
-
 	-- Настраиваем tooltip для сканирования
 	tooltip:Hide()
 	tooltip:SetOwner(UIParent, "ANCHOR_NONE")
 	tooltip:ClearLines()
 	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..id)
-
 	-- Получаем имя NPC из tooltip
 	local name
 	if tooltip:NumLines() > 0 then
-		name = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
+		for i = 1, tooltip:NumLines() do
+			-- PIZDATBL[id] = PIZDATBL[id] or {}
+			if i == 1 then
+				name = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
+			-- 	PIZDATBL[id][i] = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
+			-- elseif i == 2 then
+			-- 	PIZDATBL[id][i] = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft2"]:GetText()
+			-- elseif i == 3 then
+			-- 	PIZDATBL[id][i] = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft3"]:GetText()
+			-- elseif i == 4 then
+			-- 	PIZDATBL[id][i] = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft4"]:GetText()
+			end
+		end
 	end
-
 	-- Если имя получено - сохраняем в кеш
 	if name and name ~= "" then
 		if not npcCache then
@@ -369,10 +382,14 @@ local function func_npcName_CACHE(id)
 		print (E.Lime_Color.."NPC|r", id, name)
 		return name
 	end
-
 	return E.Red_Color..UNKNOWN.."|r"  -- Возвращаем "неизвестно", если NPC не найден
 end
 
+-- C_Timer.After(2, function()
+-- 	fpde(PIZDATBL)
+-- end)
+
+----------------------------------------------------------------
 function E:func_npcName(id)
 	if not id then return end
 	local cachedName = func_npcName_CACHE(id)
@@ -385,7 +402,6 @@ local function func_questName_CACHE(id)
 	if questCache and questCache[E.curLocaleLang] then
 		return questCache[E.curLocaleLang]  -- Возвращаем имя, если есть в кеше
 	end
-
 	local name = (GetTitleForQuestID or GetQuestInfo)(id)  -- Получаем название квеста
 	if name and name ~= "" then
 		if not questCache then
@@ -396,31 +412,14 @@ local function func_questName_CACHE(id)
 		print (E.Lime_Color..BATTLE_PET_SOURCE_2.."|r", id, name)
 		return name
 	end
-
 	return E.Red_Color..UNKNOWN.."|r"  -- Возвращаем "неизвестно", если квест не найден
 end
-
 function E:func_questName(id)
 	if not id then return end  -- Добавлена проверка на nil
 	local cachedName = func_questName_CACHE(id)
 	local debugInfo = E.DebugIDs and (E.Gray_Color.." id:"..id.."|r") or ""
 	return cachedName..debugInfo
 end
-----------------------------------------------------------------
--- function E:func_reputationName_SIMPLE(reputationID)
--- if not reputationID then return "|cffFF0000no reputationID|r" end
--- local repInfo = GetFactionDataByID(reputationID)
--- if repInfo then
--- return repInfo.name
--- else
--- local reputationInfo = GetFriendshipReputation(reputationID)
--- if reputationInfo.name then
--- return reputationInfo.name
--- else
--- return UNKNOWN
--- end
--- end
--- end
 ----------------------------------------------------------------
 local function func_reputationName_CACHE(id)
 	if Octo_Cache_DB.AllReputations[id] and Octo_Cache_DB.AllReputations[id][E.curLocaleLang] then
@@ -453,7 +452,6 @@ local function func_reputationName_CACHE(id)
 	end
 	return Octo_Cache_DB.AllReputations[id] and Octo_Cache_DB.AllReputations[id][E.curLocaleLang] or E.Purple_Color..UNKNOWN.."|r"
 end
-----------------------------------------------------------------
 function E:func_reputationName(id)
 	if not id then return end
 	local sideIcon = ""
@@ -472,12 +470,37 @@ function E:func_reputationName(id)
 	return sideIcon..func_reputationName_CACHE(id)..(E.DebugIDs and E.Gray_Color.." id:"..id.."|r" or "")
 end
 ----------------------------------------------------------------
+local function func_spellName_CACHE(id)
+	local spellCache = Octo_Cache_DB.AllSpells[id]  -- Кешируем запись spell
+	if spellCache and spellCache[E.curLocaleLang] then
+		return spellCache[E.curLocaleLang]  -- Возвращаем имя, если есть в кеше
+	end
+
+	local name = GetSpellName(id)
+
+	if name and name ~= "" then
+		if not spellCache then
+			spellCache = {}
+			Octo_Cache_DB.AllSpells[id] = spellCache
+		end
+		spellCache[E.curLocaleLang] = name
+		print (E.Lime_Color..SPELLS.."|r", id, name)
+		return name
+	end
+
+	return E.Red_Color..UNKNOWN.."|r"  -- Возвращаем "неизвестно", если заклинание не найдено
+end
+
+function E:func_spellName(id)
+	local cachedName = func_spellName_CACHE(id)
+	local debugInfo = E.DebugIDs and (E.Gray_Color.." id:"..id.."|r") or ""
+	return cachedName..debugInfo
+end
+----------------------------------------------------------------
 function E:func_IsAccountQuest(questID)
-	table_insert(E.PromiseQuest, questID)
 	return IsAccountQuest(questID)
 end
 function E:func_IsQuestFlaggedCompletedOnAccount(questID)
-	table_insert(E.PromiseQuest, questID)
 	return IsQuestFlaggedCompletedOnAccount(questID)
 end
 ----------------------------------------------------------------
@@ -744,19 +767,6 @@ function E:func_CompactNumberSimple(number)
 	end
 end
 ----------------------------------------------------------------
-function E:func_texturefromIcon(icon, iconWidth, iconHeight)
-	local iconWidth = iconWidth or 12
-	local iconHeight = iconHeight or 12
-	-- return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:4:60:4:60|t" -- DEFAULT OCTO
-	-- return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:0:64:0:64|t" -- NORMAL BLIZZARD
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t" -- TEST OCTO
-end
-----------------------------------------------------------------
-function E:func_texturefromIconEVENT(icon, iconSize)
-	iconSize = iconSize or 12
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t"
-end
-----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -780,7 +790,7 @@ function E:func_currencyquantity(currencyID)
 	return quantity
 end
 ----------------------------------------------------------------
-function E:func_SecondsToClock(time)
+function E:func_SecondsToClock(time, showSecond)
 	time = tonumber(time) or 0
 	if time <= 0 then
 		return "" -- "0"..(L["time_SECOND"])
@@ -817,6 +827,22 @@ function E:func_SecondsToClock(time)
 	return table_concat(parts)
 end
 ----------------------------------------------------------------
+-- do
+-- 	local day = DAY_ONELETTER_ABBR:gsub(" ", ""):gsub(".", "")
+-- 	local hour = HOUR_ONELETTER_ABBR:gsub(" ", ""):gsub(".", "")
+-- 	local minute = MINUTE_ONELETTER_ABBR:gsub(" ", ""):gsub(".", "")
+-- 	local dstr = ("%s %s"):format(day, hour)
+-- 	local hstr = ("%s %s"):format(hour, minute)
+-- 	function E:func_SecondsToClock(tstmp)
+-- 		local d,h,m = ChatFrame_TimeBreakDown(tstmp)
+-- 		if d > 0 then
+-- 			return "dstr:format(d, h)"
+-- 		else
+-- 			return "hstr:format(h, m)"
+-- 		end
+-- 	end
+-- end
+----------------------------------------------------------------
 function E:func_ChatFrame_TimeBreakDown(time)
 	local days = floor(time / (60 * 60 * 24))
 	local hours = floor((time - (days * (60 * 60 * 24))) / (60 * 60))
@@ -852,9 +878,8 @@ end
 ----------------------------------------------------------------
 function E:func_CheckCompletedByQuestID(questID)
 	local result
-
 	if IsFailed(questID) then
-		result = "|cffFF0000>"..FAILED.."<|r"
+		result = E.Red_Color..FAILED.."|r"
 	elseif IsQuestFlaggedCompleted(questID) then
 		result = E.DONE
 	elseif IsComplete(questID) then
@@ -885,7 +910,6 @@ function E:func_CheckCompletedByQuestID(questID)
 			result = table_concat(parts, " ")
 		end
 	end
-
 	return result
 end
 ----------------------------------------------------------------
@@ -1586,9 +1610,9 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 					E:FrameColor(self, id, curType)
 					E:func_OctoTooltip_OnEnter(frame)
 					if curType == "item" or curType == "toy" then
-						GameTooltip:AddDoubleLine(E:func_GetItemNameByID(id), E:func_SecondsToClock(E:func_GetItemCooldown(id)))
+						GameTooltip:AddDoubleLine(E:func_itemName(id), E:func_SecondsToClock(E:func_GetItemCooldown(id)))
 					else
-						GameTooltip:AddDoubleLine(E:func_GetSpellName(id), E:func_SecondsToClock(E:func_GetSpellCooldown(id)))
+						GameTooltip:AddDoubleLine(E:func_spellName(id), E:func_SecondsToClock(E:func_GetSpellCooldown(id)))
 						GameTooltip:AddDoubleLine(E:func_GetSpellSubtext(id))
 					end
 			end)
@@ -1911,7 +1935,6 @@ function E:func_lockAddonNEW(index, state)
 	E:func_rec_lock(index, enabled)
 end
 -- Сохранить текущий профиль
-
 local currentProfile = "default"
 function E:func_SaveProfile(profileName)
 	if not profileName or profileName == "" then
@@ -2229,6 +2252,7 @@ function E:func_ShowTooltip(...)
 end
 ----------------------------------------------------------------
 local function func_OnceDailyWeeklyMonth_Format(text)
+	if not text then return end
 	local vivod = ""
 	if text == "Once" then
 		vivod = E.Yellow_Color.."O|r"
@@ -2243,15 +2267,12 @@ local function func_OnceDailyWeeklyMonth_Format(text)
 end
 function E:func_GetAchievemenName(id)
 	return select(2, GetAchievementInfo(id))..(E.DebugIDs and E.Gray_Color.." ACHid:"..id.."|r" or "")
-
 end
 ----------------------------------------------------------------
 function E:func_Universal(tbl, DESCRIPT)
 	if not tbl or not DESCRIPT then return end
 	if not Octo_ToDo_DB_Vars.Quests and not Octo_ToDo_DB_Vars.Holidays then return end
-
 	local expID, expColor, expName, descSTR
-
 	-- Обработка DESCRIPT в зависимости от типа
 	if type(DESCRIPT) == "number" and Octo_ToDo_DB_Vars.Quests then
 		local expansionData = E.OctoTable_Expansions[DESCRIPT]
@@ -2269,7 +2290,6 @@ function E:func_Universal(tbl, DESCRIPT)
 	else
 		return -- Неподдерживаемый тип DESCRIPT или отключенные модули
 	end
-
 	-- Поиск соответствующих квестов
 	for _, data in ipairs(E.OctoTable_UniversalQuest) do
 		if data.quests and descSTR == data.desc then
@@ -2277,13 +2297,14 @@ function E:func_Universal(tbl, DESCRIPT)
 				local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
 				local questKey = data.desc.."_"..data.name_save.."_"..data.reset
 				local showTooltip = data.showTooltip or false
+				if not data.textleft then
+					fpde(data)
+				end
 				textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
-
 				-- Инициализация tooltipRIGHT даже если нет данных в UniversalQuest
 				if showTooltip then
 					local totalQuest = 0
 					local forcedMaxQuest = data.forcedMaxQuest
-
 					-- Подсчет релевантных квестов
 					for _, questData in ipairs(data.quests) do
 						local faction = questData.faction
@@ -2298,7 +2319,6 @@ function E:func_Universal(tbl, DESCRIPT)
 							end
 						end
 					end
-
 					forcedMaxQuest = totalQuest
 					if E.DebugInfo then
 						tooltipRIGHT[#tooltipRIGHT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
@@ -2307,7 +2327,6 @@ function E:func_Universal(tbl, DESCRIPT)
 						tooltipRIGHT[#tooltipRIGHT+1] = {textLEFT, TOTAL..": "..totalQuest}
 						tooltipRIGHT[#tooltipRIGHT+1] = {" "}
 					end
-
 					local questsToShow = {}
 					for _, questData in ipairs(data.quests) do
 						local faction = questData.faction
@@ -2315,7 +2334,6 @@ function E:func_Universal(tbl, DESCRIPT)
 							table.insert(questsToShow, questData)
 						end
 					end
-
 					if data.sorted ~= false then
 						table.sort(questsToShow, function(a, b)
 							local nameA = a.forcedText and a.forcedText.npcID and E:func_npcName(a.forcedText.npcID) or E:func_questName(a[1]) or a.forcedText.text or  ""
@@ -2323,38 +2341,32 @@ function E:func_Universal(tbl, DESCRIPT)
 							return nameA < nameB
 						end)
 					end
-
 					for _, questData in ipairs(questsToShow) do
 						local questID = questData[1]
 						local faction = questData.faction
 						local forcedText = questData.forcedText
-						local vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
+						local vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
 						local vivod_LEFT = ""
-
 						if forcedText then
 							vivod_LEFT = forcedText.npcID and E:func_npcName(forcedText.npcID) or
 										forcedText.text or
 										forcedText.achievementID and E:func_GetAchievemenName(forcedText.achievementID) or
-										forcedText.itemID and E:func_GetItemNameByID(forcedText.itemID) or ""
+										forcedText.itemID and E:func_itemName(forcedText.itemID) or ""
 						else
 							vivod_LEFT = E:func_questName(questID)
 						end
-
 						if faction == CharInfo.PlayerData.Faction then
 							vivod_LEFT = E:func_texturefromIcon(E:func_FactionIconID(faction))..vivod_LEFT
 						end
-
 						tooltipRIGHT[#tooltipRIGHT+1] = {vivod_LEFT, vivod_RIGHT}
 					end
 				end
-
 				-- Обработка данных, если они есть
-				if CharInfo.MASLENGO.UniversalQuest[questKey] then
+				if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] then
 					local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].textCENT
 					if LeftData then
 						local totalQuest = 0
 						local forcedMaxQuest = data.forcedMaxQuest
-
 						-- Подсчет релевантных квестов (дублируется для textCENT)
 						for _, questData in ipairs(data.quests) do
 							local faction = questData.faction
@@ -2369,9 +2381,7 @@ function E:func_Universal(tbl, DESCRIPT)
 								end
 							end
 						end
-
 						forcedMaxQuest = totalQuest
-
 						-- Формирование textCENT
 						if type(LeftData) == "number" and forcedMaxQuest then
 							textCENT = LeftData >= forcedMaxQuest and E.DONE or LeftData.."/"..forcedMaxQuest
@@ -2382,55 +2392,13 @@ function E:func_Universal(tbl, DESCRIPT)
 						end
 					end
 				end
-
 				colorLEFT = expColor
-
 				return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
 			end)
 		end
 	end
 end
 ----------------------------------------------------------------
-function E:func_Universal_Holiday(tbl, Holiday, color)
-	if not tbl then return end
-	for _, v in ipairs(E.OctoTable_UniversalQuest) do
-		if v.desc == Holiday then
-			table.insert(tbl, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
-					----------------------------------------------------------------
-					local LeftData = CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]
-					if LeftData then
-						local max = v.max or 999999
-						if type(LeftData) == "number" and max then
-							if LeftData < max then
-								textCENT = LeftData.."/"..max
-							elseif LeftData >= max then
-								textCENT = E.DONE
-							else
-								textCENT = E.DONE
-							end
-						elseif max ~= 1 then
-							textCENT = "0/"..max
-						elseif type(LeftData) == "string" then
-							textCENT = LeftData
-						end
-						if CharInfo.PlayerData.GUID == E.curGUID then
-							for index, questID in ipairs(v.questID) do
-								tooltipRIGHT[#tooltipRIGHT+1] = {index..". "..E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
-							end
-						end
-					end
-					----------------------------------------------------------------
-					textLEFT = tostringall(v.textleft).."|r" -- v.icon
-					colorLEFT = color
-					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-					----------------------------------------------------------------
-			end)
-		end
-	end
-end
 function E:func_FactionIconID(faction)
 	if faction == "Horde" then
 		return 2565244
@@ -2455,7 +2423,7 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 	if not Data then return end
 	-- Локальные ссылки на методы (через `:` для корректного self)
 	local func_textCENT_Items = function(...) return E:func_textCENT_Items(...) end
-	local func_GetItemNameByID = function(...) return E:func_GetItemNameByID(...) end
+	local func_itemName = function(...) return E:func_itemName(...) end
 	local func_GetItemIconByID = function(...) return E:func_GetItemIconByID(...) end
 	local func_textCENT_Currency = function(...) return E:func_textCENT_Currency(...) end
 	local func_currencyName = function(...) return E:func_currencyName(...) end
@@ -2466,7 +2434,7 @@ function E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka, expansionID)
 		local processor = itemProcessors[itemID]
 		if not processor then
 			processor = function(CharInfo)
-				return func_GetItemNameByID(itemID),
+				return func_itemName(itemID),
 				expansionData.color,
 				func_textCENT_Items(CharInfo, itemID),
 				{},
@@ -2677,7 +2645,7 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 			C_WowTokenPublic.UpdateMarketPrice()
 			if C_WowTokenPublic.GetCurrentMarketPrice() then
 				local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
-				tooltip[#tooltip+1] = {"", TOKEN_FILTER_LABEL..": "..E:func_MoneyString(C_WowTokenPublic.GetCurrentMarketPrice())}
+				tooltip[#tooltip+1] = {"", E:func_itemName(122284)..": "..E:func_MoneyString(C_WowTokenPublic.GetCurrentMarketPrice())}
 			end
 			if C_Bank.FetchDepositedMoney(Enum.BankType.Account) then
 				tooltip[#tooltip+1] = {"", ACCOUNT_BANK_PANEL_TITLE..": "..E:func_MoneyString(C_Bank.FetchDepositedMoney(Enum.BankType.Account))}
@@ -2685,11 +2653,12 @@ function E:func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 			tooltip[#tooltip+1] = {"", TOTAL..": "..E:func_MoneyString(total)}
 			-- tooltip[#tooltip+1] = {"", TOTAL..": "..C_CurrencyInfo.GetCoinTextureString(total)}
 		elseif myType == "Online" then
-			tooltip[#tooltip+1] = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+			-- tooltip[#tooltip+1] = {"", TIME_PLAYED_TOTAL:format(E:func_SecondsToClock(total))}
+			tooltip[#tooltip+1] = {"", E:func_SecondsToClock(total)}
 		elseif myType == "Currency" then
 			tooltip[#tooltip+1] = {"", TOTAL..": "..total}
 		elseif myType == "Item" then
-			tooltip[#tooltip+1] = {E:func_GetItemNameByID(ID), TOTAL..": "..total}
+			tooltip[#tooltip+1] = {E:func_itemName(ID), TOTAL..": "..total}
 		elseif myType == "Currency_Covenant_Anima" then
 			tooltip[#tooltip+1] = {E:func_texturefromIcon(E:func_GetCurrencyIcon(ID)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", total}
 		elseif myType == "Currency_Covenant_Renown" then
@@ -2830,7 +2799,7 @@ function E:func_tooltipRIGHT_ITEMS(CharInfo, TBL, needShowAllItems)
 	-- Правильно кэшируем методы через :
 	local GetItemQuality = function(id) return self:func_GetItemQuality(id) end
 	local GetItemIconByID = function(id) return self:func_GetItemIconByID(id) end
-	local GetItemNameByID = function(id) return self:func_GetItemNameByID(id) end
+	local GetItemNameByID = function(id) return self:func_itemName(id) end
 	local ItemPriceTSM = function(id, count) return self:func_ItemPriceTSM(id, count) end
 	local texturefromIcon = function(icon) return self:func_texturefromIcon(icon) end
 	-- Filter and prepare items for sorting
@@ -2881,7 +2850,21 @@ function E:func_InitFrame(frame)
 	end)
 end
 ---------------------------------------------------------------------
----------------------------------------------------------------------
----------------------------------------------------------------------
----------------------------------------------------------------------
+function E:func_joinableDung()
+	local joinable, timewalkDungeonName, vivod = false, "", ""
+	for expID, v in ipairs(E.OctoTable_Expansions) do
+		if v.timewalkDungeonID and IsLFGDungeonJoinable(v.timewalkDungeonID) then
+			joinable = true
+			vivod = E:func_texturefromIcon(v.icon, 16, 32)..v.color .. v.nameVeryShort .. "|r"
+			timewalkDungeonName = GetLFGDungeonInfo(v.timewalkDungeonID)
+		end
+	end
+	-- local pizda = A_RANDOM_DUNGEON
+	return joinable, vivod, timewalkDungeonName:match("%((.-)%)")
+	-- LFG_TYPE_RANDOM_TIMEWALKER_DUNGEON - Случайное (путеш. во врем.)
+	-- A_RANDOM_DUNGEON - Случайное подземелье
 
+end
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------

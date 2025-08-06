@@ -1,6 +1,4 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
-..\FrameXML\UI.xsd">
-
+<Ui>
 	<Script file="Collect\Collect_All_BfA_Azerite.lua"/>
 	<Script file="Collect\Collect_All_BfA_Cloaklvl.lua"/>
 	<Script file="Collect\Collect_All_Chromie.lua"/>
@@ -28,7 +26,5 @@
 	<Script file="Collect\Collect_All_WarMode.lua"/>
 	<Script file="Collect\Collect_CurrentKey_ITEM_CHANGED.lua"/>
 
-
 	<Script file="Collect\Collect.lua"/>
-
 </Ui>

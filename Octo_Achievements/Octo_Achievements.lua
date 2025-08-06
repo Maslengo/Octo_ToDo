@@ -10,10 +10,10 @@ E:func_InitFrame(Octo_MainFrame_Achievements)
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
 local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
-local Config_MainFrameDefaultLines = 30
+local LINES_MAX = E.LINES_MAX
 local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
-if Config_MainFrameDefaultLines > MainFrameTotalLines then
-	Config_MainFrameDefaultLines = MainFrameTotalLines
+if LINES_MAX > MainFrameTotalLines then
+	LINES_MAX = MainFrameTotalLines
 end
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
@@ -94,16 +94,16 @@ local func_OnAcquired do
 			frame.texture_2:SetTexture(E.TEXTURE_LEFT_PATH)
 			frame.texture_2:SetVertexColor(1, 1, 1, .1)
 			------------------------------------------------
-			frame.textLEFT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			frame.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+2, 0)
+			frame.textLEFT = frame:CreateFontString()
 			frame.textLEFT:SetFontObject(OctoFont11)
+			frame.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+2, 0)
 			frame.textLEFT:SetJustifyV("MIDDLE")
 			frame.textLEFT:SetJustifyH("LEFT")
 			frame.textLEFT:SetTextColor(1, 1, 1, 1)
 			------------------------------------------------
-			frame.textRIGHT = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			frame.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
+			frame.textRIGHT = frame:CreateFontString()
 			frame.textRIGHT:SetFontObject(OctoFont11)
+			frame.textRIGHT:SetPoint("RIGHT", frame, "RIGHT", -4, 0)
 			frame.textRIGHT:SetJustifyV("MIDDLE")
 			frame.textRIGHT:SetJustifyH("RIGHT")
 			frame.textRIGHT:SetTextColor(1, 1, 1, 1)
@@ -173,9 +173,14 @@ function Octo_EventFrame_Achievements:Octo_Frame_init(frame, node)
 end
 function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
 	Octo_MainFrame_Achievements:SetPoint("CENTER", 0, 0)
+	Octo_MainFrame_Achievements:SetScript("OnShow", function()
+		Octo_EventFrame_Achievements:CreateDataProvider()
+		RequestRaidInfo()
+	end)
+
 	-- Octo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
-	Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*Config_MainFrameDefaultLines)
-	Octo_MainFrame_Achievements:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*LINES_MAX)
+	Octo_MainFrame_Achievements:SetDontSavePosition(true)
 	Octo_MainFrame_Achievements:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_Achievements:SetFrameStrata("HIGH")
 	Octo_MainFrame_Achievements:SetBackdrop(E.menuBackdrop)
@@ -212,10 +217,10 @@ function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_Achievements.ScrollBox, Octo_MainFrame_Achievements.ScrollBar, Octo_MainFrame_Achievements.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_Achievements.ScrollBox, Octo_MainFrame_Achievements.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 end
-function Octo_EventFrame_Achievements:Update()
-	Octo_MainFrame_Achievements.view:SetDataProvider(Octo_EventFrame_Achievements.DataProvider, ScrollBoxConstants.RetainScrollPosition)
-end
-function E:func_Achievements_CreateDataProvider()
+-- function Octo_EventFrame_Achievements:Update()
+-- 	Octo_MainFrame_Achievements.view:SetDataProvider(Octo_EventFrame_Achievements.DataProvider, ScrollBoxConstants.RetainScrollPosition)
+-- end
+function Octo_EventFrame_Achievements:CreateDataProvider()
 	if Octo_MainFrame_Achievements then
 		Octo_EventFrame_Achievements.DataProvider = CreateTreeDataProvider()
 		local count = 0
@@ -245,48 +250,37 @@ function E:func_Achievements_CreateDataProvider()
 			end
 		end
 
-		if count > Config_MainFrameDefaultLines then
-			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*Config_MainFrameDefaultLines)
+		if count > LINES_MAX then
+			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*LINES_MAX)
 		elseif count == 0 then
 			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*1)
 		else
 			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*count)
 		end
-		Octo_EventFrame_Achievements:Update()
+		Octo_MainFrame_Achievements.view:SetDataProvider(Octo_EventFrame_Achievements.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	end
 end
 local MyEventsTable = {
-	"ADDON_LOADED",
-	"CONTENT_TRACKING_UPDATE",
+	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
+
+	"CONTENT_TRACKING_UPDATE",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable)
-function Octo_EventFrame_Achievements:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		self:Octo_Create_MainFrame_Achievements()
-		E:func_Achievements_CreateDataProvider()
-		E:func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.Lime_Color, function() E:func_Achievements_CreateDataProvider() end)
-		E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, function() Octo_EventFrame_Achievements:Update() end, "Octo_MainFrame_Achievements")
-		Octo_MainFrame_Achievements:SetScript("OnShow", function()
-				E:func_Achievements_CreateDataProvider()
-		end)
-	end
-end
-function Octo_EventFrame_Achievements:CONTENT_TRACKING_UPDATE(type, AchievementID, isTracked)
-	if type == 2 then -- Enum.ContentTrackingType
-		self:Update()
-	end
+
+function Octo_EventFrame_Achievements:PLAYER_LOGIN()
+	self:Octo_Create_MainFrame_Achievements()
+	E:func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.Lime_Color, function() Octo_EventFrame_Achievements:CreateDataProvider() end)
+	E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, nil, "Octo_MainFrame_Achievements")
 end
 function Octo_EventFrame_Achievements:PLAYER_REGEN_DISABLED()
-	if Octo_MainFrame_Achievements and Octo_MainFrame_Achievements:IsShown() then
-		Octo_MainFrame_Achievements:Hide()
+	Octo_MainFrame_Achievements:Hide()
+end
+
+
+function Octo_EventFrame_Achievements:CONTENT_TRACKING_UPDATE(type, AchievementID, isTracked)
+	if type == 2 then -- Enum.ContentTrackingType
+		-- self:Update()
 	end
 end
+

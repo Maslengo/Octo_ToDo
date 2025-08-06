@@ -72,9 +72,3 @@ function E.Collect_All_Reputations()
 		----------------------------------------------------------------
 	end
 end
-
-
-
-function E.Collect_All_Reputations_TARGET(reputationID)
-	print (reputationID, E:func_CheckReputation(reputationID))
-end

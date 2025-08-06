@@ -56,6 +56,7 @@ local ignoreICONS = {
 	[132060] = true, -- TRADER
 	[132058] = true, -- SKILL MASTER
 	[136458] = true, -- BIND NEW HOME
+	[132057] = true, -- FLY
 }
 ----------------------------------------------------------------
 local function HELP_TEXT(i, icon, name)
@@ -87,7 +88,7 @@ function Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
 
 		if option.gossipOptionID and not ignoreICONS[icon] and not gossipOptionIDsIGNORE[option.gossipOptionID] then
 			if string.find(option.name:gsub("|", ""), "FF0000") then
-				print ("break")
+				-- print ("break")
 				break
 			end
 

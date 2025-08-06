@@ -19,16 +19,21 @@ function E:func_Universal_06_WarlordsofDraenor()
 			forcedMaxQuest = 4,
 		},
 		{
-
+			sorted = false,
 			showTooltip = true,
 			textleft = GARRISON_LOCATION_TOOLTIP,
 			name_save = "GarrisonLevel",
 			reset = "Once",
 			desc = "WarlordsofDraenor",
 			quests = {
-				{34378},
-				{36567},
-				{36614},
+				{34378, faction = "Horde",},
+				{34586, faction = "Alliance",},
+
+				{36567, faction = "Horde",},
+				{36592, faction = "Alliance",},
+
+				{36614, faction = "Horde",},
+				{36615, faction = "Alliance",},
 			},
 			forcedMaxQuest = 3,
 		},

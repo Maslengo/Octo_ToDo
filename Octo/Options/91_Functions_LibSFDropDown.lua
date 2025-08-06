@@ -1,5 +1,4 @@
 local GlobalAddonName, E = ...
-local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
@@ -43,9 +42,9 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)
 
 	-- Текст меню
-	DropDown.text = DropDown:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	DropDown.text:SetAllPoints()
+	DropDown.text = DropDown:CreateFontString()
 	DropDown.text:SetFontObject(OctoFont11)
+	DropDown.text:SetAllPoints()
 	DropDown.text:SetJustifyV("MIDDLE")
 	DropDown.text:SetJustifyH("CENTER")
 	DropDown.text:SetTextColor(1, 1, 1, 1)
@@ -134,7 +133,7 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						tinsert(list, info)
 					end
 				else
-					local GUID, CharInfo = next(Octo_ToDo_DB_Levels)
+					local GUID, CharInfo = next, (Octo_ToDo_DB_Levels)
 					value = CharInfo.PlayerData.CurrentRegionName
 				end
 			end

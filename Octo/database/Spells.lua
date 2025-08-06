@@ -21,18 +21,18 @@ E.Octo_ProfessionsskillLine_Other = {
 }
 E.OctoTable_Portals = {
 	-- {
-	-- 	{id = 187898, curType = "item", level = 20,},
-	-- 	{id = 187869, curType = "item", level = 20,},
-	-- 	{id = 187875, curType = "item", level = 20,},
-	-- 	{id = 187895, curType = "item", level = 20,},
-	-- 	{id = 187897, curType = "item", level = 20,},
-	-- 	{id = 187896, curType = "item", level = 20,},
-	-- 	{id = 187899, curType = "item", level = 20,},
-	-- 	{id = 187900, curType = "item", level = 20,},
-	-- 	{id = 150743, curType = "item", level = 20, faction = "Alliance",},-- ALLY
-	-- 	{id = 150744, curType = "item", level = 20, faction = "Horde",},-- HORDE
-	-- 	{id = 150746, curType = "item", level = 20, faction = "Alliance",},-- ALLY
-	-- 	{id = 150745, curType = "item", level = 20, faction = "Horde",},-- HORDE
+	--     {id = 187898, curType = "item", level = 20,},
+	--     {id = 187869, curType = "item", level = 20,},
+	--     {id = 187875, curType = "item", level = 20,},
+	--     {id = 187895, curType = "item", level = 20,},
+	--     {id = 187897, curType = "item", level = 20,},
+	--     {id = 187896, curType = "item", level = 20,},
+	--     {id = 187899, curType = "item", level = 20,},
+	--     {id = 187900, curType = "item", level = 20,},
+	--     {id = 150743, curType = "item", level = 20, faction = "Alliance",},-- ALLY
+	--     {id = 150744, curType = "item", level = 20, faction = "Horde",},-- HORDE
+	--     {id = 150746, curType = "item", level = 20, faction = "Alliance",},-- ALLY
+	--     {id = 150745, curType = "item", level = 20, faction = "Horde",},-- HORDE
 	-- },
 	-- OTHER
 	{
@@ -71,85 +71,85 @@ E.OctoTable_Portals = {
 		{id = 198156, curType = "toy", profession = "Engineering",}, -- DF
 	},
 	--["Portals_Mage_Solo"] = {
-		{
-			{id = 3567, faction = "Horde", class = "MAGE",},
-			{id = 3563, faction = "Horde", class = "MAGE",},
-			{id = 3566, faction = "Horde", class = "MAGE",},
-			{id = 32272, faction = "Horde", class = "MAGE",},
-			{id = 49358, faction = "Horde", class = "MAGE",},
-			{id = 35715, faction = "Horde", class = "MAGE",},
-			{id = 53140, faction = "Horde", class = "MAGE",},
-			{id = 88344, faction = "Horde", class = "MAGE",},
-			{id = 120145, faction = "Horde", class = "MAGE",},
-			{id = 132627, faction = "Horde", class = "MAGE",},
-			{id = 176242, faction = "Horde", class = "MAGE",},
-			{id = 224869, faction = "Horde", class = "MAGE",},
-			{id = 281404, faction = "Horde", class = "MAGE",},
-			{id = 344587, faction = "Horde", class = "MAGE",},
-			{id = 395277, faction = "Horde", class = "MAGE",},
-			{id = 446540, faction = "Horde", class = "MAGE",},
-			{id = 193759, faction = "Horde", class = "MAGE",},
-			{id = 3561, faction = "Alliance", class = "MAGE",},
-			{id = 3562, faction = "Alliance", class = "MAGE",},
-			{id = 3565, faction = "Alliance", class = "MAGE",},
-			{id = 32271, faction = "Alliance", class = "MAGE",},
-			{id = 49359, faction = "Alliance", class = "MAGE",},
-			{id = 33690, faction = "Alliance", class = "MAGE",},
-			{id = 53140, faction = "Alliance", class = "MAGE",},
-			{id = 88342, faction = "Alliance", class = "MAGE",},
-			{id = 120145, faction = "Alliance", class = "MAGE",},
-			{id = 132621, faction = "Alliance", class = "MAGE",},
-			{id = 176248, faction = "Alliance", class = "MAGE",},
-			{id = 224869, faction = "Alliance", class = "MAGE",},
-			{id = 281403, faction = "Alliance", class = "MAGE",},
-			{id = 344587, faction = "Alliance", class = "MAGE",},
-			{id = 395277, faction = "Alliance", class = "MAGE",},
-			{id = 446540, faction = "Alliance", class = "MAGE",},
-			{id = 193759, faction = "Alliance", class = "MAGE",},
-		},
+	{
+		{id = 3567, faction = "Horde", class = "MAGE",},
+		{id = 3563, faction = "Horde", class = "MAGE",},
+		{id = 3566, faction = "Horde", class = "MAGE",},
+		{id = 32272, faction = "Horde", class = "MAGE",},
+		{id = 49358, faction = "Horde", class = "MAGE",},
+		{id = 35715, faction = "Horde", class = "MAGE",},
+		{id = 53140, faction = "Horde", class = "MAGE",},
+		{id = 88344, faction = "Horde", class = "MAGE",},
+		{id = 120145, faction = "Horde", class = "MAGE",},
+		{id = 132627, faction = "Horde", class = "MAGE",},
+		{id = 176242, faction = "Horde", class = "MAGE",},
+		{id = 224869, faction = "Horde", class = "MAGE",},
+		{id = 281404, faction = "Horde", class = "MAGE",},
+		{id = 344587, faction = "Horde", class = "MAGE",},
+		{id = 395277, faction = "Horde", class = "MAGE",},
+		{id = 446540, faction = "Horde", class = "MAGE",},
+		{id = 193759, faction = "Horde", class = "MAGE",},
+		{id = 3561, faction = "Alliance", class = "MAGE",},
+		{id = 3562, faction = "Alliance", class = "MAGE",},
+		{id = 3565, faction = "Alliance", class = "MAGE",},
+		{id = 32271, faction = "Alliance", class = "MAGE",},
+		{id = 49359, faction = "Alliance", class = "MAGE",},
+		{id = 33690, faction = "Alliance", class = "MAGE",},
+		{id = 53140, faction = "Alliance", class = "MAGE",},
+		{id = 88342, faction = "Alliance", class = "MAGE",},
+		{id = 120145, faction = "Alliance", class = "MAGE",},
+		{id = 132621, faction = "Alliance", class = "MAGE",},
+		{id = 176248, faction = "Alliance", class = "MAGE",},
+		{id = 224869, faction = "Alliance", class = "MAGE",},
+		{id = 281403, faction = "Alliance", class = "MAGE",},
+		{id = 344587, faction = "Alliance", class = "MAGE",},
+		{id = 395277, faction = "Alliance", class = "MAGE",},
+		{id = 446540, faction = "Alliance", class = "MAGE",},
+		{id = 193759, faction = "Alliance", class = "MAGE",},
+	},
 	--["Portals_Mage_Group"] = {
-		{
-			{id = 11417, faction = "Horde", class = "MAGE",},
-			{id = 11418, faction = "Horde", class = "MAGE",},
-			{id = 11420, faction = "Horde", class = "MAGE",},
-			{id = 32267, faction = "Horde", class = "MAGE",},
-			{id = 49361, faction = "Horde", class = "MAGE",},
-			{id = 35717, faction = "Horde", class = "MAGE",},
-			{id = 53142, faction = "Horde", class = "MAGE",},
-			{id = 88346, faction = "Horde", class = "MAGE",},
-			{id = 120146, faction = "Horde", class = "MAGE",},
-			{id = 132626, faction = "Horde", class = "MAGE",},
-			{id = 176244, faction = "Horde", class = "MAGE",},
-			{id = 224871, faction = "Horde", class = "MAGE",},
-			{id = 281402, faction = "Horde", class = "MAGE",},
-			{id = 344597, faction = "Horde", class = "MAGE",},
-			{id = 395289, faction = "Horde", class = "MAGE",},
-			{id = 446534, faction = "Horde", class = "MAGE",},
-			{id = 10059, faction = "Alliance", class = "MAGE",},
-			{id = 11416, faction = "Alliance", class = "MAGE",},
-			{id = 11419, faction = "Alliance", class = "MAGE",},
-			{id = 32266, faction = "Alliance", class = "MAGE",},
-			{id = 49360, faction = "Alliance", class = "MAGE",},
-			{id = 33691, faction = "Alliance", class = "MAGE",},
-			{id = 53142, faction = "Alliance", class = "MAGE",},
-			{id = 88345, faction = "Alliance", class = "MAGE",},
-			{id = 120146, faction = "Alliance", class = "MAGE",},
-			{id = 132620, faction = "Alliance", class = "MAGE",},
-			{id = 176246, faction = "Alliance", class = "MAGE",},
-			{id = 224871, faction = "Alliance", class = "MAGE",},
-			{id = 281400, faction = "Alliance", class = "MAGE",},
-			{id = 344597, faction = "Alliance", class = "MAGE",},
-			{id = 395289, faction = "Alliance", class = "MAGE",},
-			{id = 446534, faction = "Alliance", class = "MAGE",},
-		},
+	{
+		{id = 11417, faction = "Horde", class = "MAGE",},
+		{id = 11418, faction = "Horde", class = "MAGE",},
+		{id = 11420, faction = "Horde", class = "MAGE",},
+		{id = 32267, faction = "Horde", class = "MAGE",},
+		{id = 49361, faction = "Horde", class = "MAGE",},
+		{id = 35717, faction = "Horde", class = "MAGE",},
+		{id = 53142, faction = "Horde", class = "MAGE",},
+		{id = 88346, faction = "Horde", class = "MAGE",},
+		{id = 120146, faction = "Horde", class = "MAGE",},
+		{id = 132626, faction = "Horde", class = "MAGE",},
+		{id = 176244, faction = "Horde", class = "MAGE",},
+		{id = 224871, faction = "Horde", class = "MAGE",},
+		{id = 281402, faction = "Horde", class = "MAGE",},
+		{id = 344597, faction = "Horde", class = "MAGE",},
+		{id = 395289, faction = "Horde", class = "MAGE",},
+		{id = 446534, faction = "Horde", class = "MAGE",},
+		{id = 10059, faction = "Alliance", class = "MAGE",},
+		{id = 11416, faction = "Alliance", class = "MAGE",},
+		{id = 11419, faction = "Alliance", class = "MAGE",},
+		{id = 32266, faction = "Alliance", class = "MAGE",},
+		{id = 49360, faction = "Alliance", class = "MAGE",},
+		{id = 33691, faction = "Alliance", class = "MAGE",},
+		{id = 53142, faction = "Alliance", class = "MAGE",},
+		{id = 88345, faction = "Alliance", class = "MAGE",},
+		{id = 120146, faction = "Alliance", class = "MAGE",},
+		{id = 132620, faction = "Alliance", class = "MAGE",},
+		{id = 176246, faction = "Alliance", class = "MAGE",},
+		{id = 224871, faction = "Alliance", class = "MAGE",},
+		{id = 281400, faction = "Alliance", class = "MAGE",},
+		{id = 344597, faction = "Alliance", class = "MAGE",},
+		{id = 395289, faction = "Alliance", class = "MAGE",},
+		{id = 446534, faction = "Alliance", class = "MAGE",},
+	},
 	--["Cataclysm"] = {
-		{
+	{
 		445424, -- name = "GB", expansion = "cataclysm", mapID = {507}}, -- Grim Batol
 		424142, -- name = "TOTT", expansion = "cataclysm", mapID = {456}}, -- Throne of the Tides
 		410080, -- name = "VP", expansion = "cataclysm", mapID = {438}}, -- The Vortex Pinnacle
 	},
 	--["MistsofPandaria"] = {
-		{
+	{
 		131204, -- name = "TOJS", expansion = "mist of pandaria", mapID = {2}}, -- Temple of the Jade Serpent
 		131232,
 		131231,
@@ -160,7 +160,7 @@ E.OctoTable_Portals = {
 		131205,
 	},
 	--["WarlordsofDraenor"] = {
-		{
+	{
 		159897, -- name = "AUCH", expansion = "warlords of draenor", mapID = {164}}, -- Auchindoun
 		159895, -- name = "BSM", expansion = "warlords of draenor", mapID = {163}}, -- Bloodmaul Slag Mines
 		159900, -- name = "GD", expansion = "warlords of draenor", mapID = {166}}, -- Grimrail Depot
@@ -171,7 +171,7 @@ E.OctoTable_Portals = {
 		159902, -- name = "UBS", expansion = "warlords of draenor", mapID = {167}}, -- Upper Blackrock Spire
 	},
 	--["Legion"] = {
-		{
+	{
 		393766, -- name = "COS", expansion = "legion", mapID = {210}}, -- Court of Stars
 		424153, -- name = "BRH", expansion = "legion", mapID = {199}}, -- Black Rook Hold
 		424163, -- name = "DH", expansion = "legion", mapID = {198}}, -- Darkheart Thicket
@@ -180,7 +180,7 @@ E.OctoTable_Portals = {
 		373262, -- name = "KARA", expansion = "legion", mapID = {277, 234}}, -- Return to Karazhan
 	},
 	--["BattleforAzeroth"] = {
-		{
+	{
 		424187, -- name = "AD", expansion = "battle for azeroth", mapID = {244}}, -- Atal'Dazar
 		410071, -- name = "FH", expansion = "battle for azeroth", mapID = {245}}, -- Freehold
 		373274, -- name = "MECH", expansion = "battle for azeroth", mapID = {369, 370}}, -- Operation: Mechagon
@@ -192,7 +192,7 @@ E.OctoTable_Portals = {
 		{id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
 	},
 	--["Shadowlands"] = {
-		{
+	{
 		354468, -- name = "DOS", expansion = "shadowlands", mapID = {377}}, -- De Other Side
 		354465, -- name = "HOA", expansion = "shadowlands", mapID = {378}}, -- Halls of Atonement
 		354464, -- name = "MOTS", expansion = "shadowlands", mapID = {375}}, -- Mist of Tirna Scithe
@@ -208,7 +208,7 @@ E.OctoTable_Portals = {
 		373192, -- name = "SOFO", expansion = "shadowlands"}, --Sepulcher of the First Ones
 	},
 	--["Dragonflight"] = {
-		{
+	{
 		393273, -- name = "AA", expansion = "dragonflight", mapID = {402}}, -- Algeth'ar Academy
 		393267, -- name = "BH", expansion = "dragonflight", mapID = {405}}, -- Brakenhide Hollow
 		424197, -- name = "DOTI", expansion = "dragonflight", mapID = {463, 464}}, -- Dawn of the infinite
@@ -224,7 +224,7 @@ E.OctoTable_Portals = {
 		432254, -- name = "VOTI", expansion = "dragonflight"}, --Vault of the Incarnates
 	},
 	--["TheWarWithin"] = {
-		{
+	{
 		445417, -- name = "AK", expansion = "the war within", mapID = {503}}, -- Ara-Kara, City of Echoes
 		445440, -- name = "CM", expansion = "the war within", mapID = {506}}, -- Cinderbrew Meadery
 		445416, -- name = "COT", expansion = "the war within", mapID = {502}}, -- City of Threads
@@ -237,15 +237,15 @@ E.OctoTable_Portals = {
 	},
 	-- TWW S1
 	-- {
-	-- 	{id = 464256, faction = "Horde",},-- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Horde)
-	-- 	{id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
-	-- 	354464, -- Mists
-	-- 	354462, -- Necrotic Wake
-	-- 	445269, -- Stonevault
-	-- 	445416, -- City of Threads
-	-- 	445417, -- Ara Ara
-	-- 	445414, -- The Dawnbreaker
-	-- 	445424, -- Grim Batol
+	--     {id = 464256, faction = "Horde",},-- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Horde)
+	--     {id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
+	--     354464, -- Mists
+	--     354462, -- Necrotic Wake
+	--     445269, -- Stonevault
+	--     445416, -- City of Threads
+	--     445417, -- Ara Ara
+	--     445414, -- The Dawnbreaker
+	--     445424, -- Grim Batol
 	-- },
 	-- TWW S2
 	{

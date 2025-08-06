@@ -9,7 +9,7 @@ local INDENT_TEST = 4
 local INDENT_SCROLL = 20
 local TOOLTIP_LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local TOOLTIP_LINE_WIDTH = 256
-local LINES_MAX = 30
+local LINES_MAX = 20
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)
 if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
@@ -67,9 +67,9 @@ local func_OnAcquired do
 							end
 							f:RegisterForClicks("LeftButtonUp")
 							-- Текст в центре
-							f.text = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-							f.text:SetAllPoints()
+							f.text = f:CreateFontString()
 							f.text:SetFontObject(OctoFont11)
+							f.text:SetAllPoints()
 							f.text:SetWordWrap(false)
 							f.text:SetJustifyV("MIDDLE") -- TOP, MIDDLE, BOTTOM
 							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
@@ -310,13 +310,12 @@ function E:func_OctoTooltip_OnEnter(frame, point)
 	end
 end
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 }
 E:func_RegisterMyEventsToFrames(OctoTooltip_EventFrame, MyEventsTable)
-function OctoTooltip_EventFrame:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		self:Create_OctoTooltip()
-	end
+
+function OctoTooltip_EventFrame:VARIABLES_LOADED()
+	self:UnregisterEvent("VARIABLES_LOADED")
+	self.VARIABLES_LOADED = nil
+	self:Create_OctoTooltip()
 end

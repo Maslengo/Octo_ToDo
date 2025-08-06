@@ -20,7 +20,7 @@ function E:func_Otrisovka_90_Holidays()
 						textCENT = CharInfo.MASLENGO.ItemsInBag[44791]
 					end
 					----------------------------------------------------------------
-					textLEFT = E:func_GetItemNameByID(44791)
+					textLEFT = E:func_itemName(44791)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -34,7 +34,7 @@ function E:func_Otrisovka_90_Holidays()
 						textCENT = CharInfo.MASLENGO.ItemsInBag[45072]
 					end
 					----------------------------------------------------------------
-					textLEFT = E:func_GetItemNameByID(45072)
+					textLEFT = E:func_itemName(45072)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -46,31 +46,35 @@ function E:func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		-- 1583 EU classic
 		-- 1508 US classic
-		local TimewalkHolidayTBL = {1583, 1265, 1063, 652, 622, 1508, 1667} -- 1458 Бурные потоки
-		for _, HolidayID in ipairs(TimewalkHolidayTBL) do
-			if E.ActiveHoliday[HolidayID] then
-				E:func_Universal(OctoTable_Otrisovka, "HolidaysTimewalk", E.Event_Color)
-				table.insert(OctoTable_Otrisovka, function(CharInfo)
-						----------------------------------------------------------------
-						local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
-						----------------------------------------------------------------
-						textCENT = E:func_textCENT_Currency(CharInfo, 1166)
-						myType = {"Currency", 1166}
-						----------------------------------------------------------------
-						textLEFT = E:func_currencyName(1166)
-						colorLEFT = E.Event_Color
-						----------------------------------------------------------------
-						return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
-						----------------------------------------------------------------
-				end)
-			end
+		-- 1458 Бурные потоки
+		-- local TimewalkHolidayTBL = {1583, 1265, 1063, 652, 622, 1508, 1667}
+		-- for _, HolidayID in ipairs(TimewalkHolidayTBL) do
+		--     if E.ActiveHoliday[HolidayID] then
+		local joinable, timewalkDungeonName = E:func_joinableDung()
+		if joinable then
+			E:func_Universal(OctoTable_Otrisovka, "HolidaysTimewalk", E.Event_Color)
+			table.insert(OctoTable_Otrisovka, function(CharInfo)
+					----------------------------------------------------------------
+					local textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType = "", nil, "", {}, nil, {}
+					----------------------------------------------------------------
+					textCENT = E:func_textCENT_Currency(CharInfo, 1166)
+					myType = {"Currency", 1166}
+					----------------------------------------------------------------
+					textLEFT = timewalkDungeonName .. E:func_currencyName(1166)
+					colorLEFT = E.Event_Color
+					----------------------------------------------------------------
+					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
+					----------------------------------------------------------------
+			end)
 		end
+		--     end
+		-- end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		if E.ActiveHoliday[201] then
-			E:func_Universal(OctoTable_Otrisovka, "HolidaysChildrensWeek")
-		end
+		-- if E.ActiveHoliday[201] then
+		--     E:func_Universal(OctoTable_Otrisovka, "HolidaysChildrensWeek")
+		-- end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -85,7 +89,6 @@ function E:func_Otrisovka_90_Holidays()
 					end
 					----------------------------------------------------------------
 					textLEFT = E:func_texturefromIcon(E:func_GetItemIconByID(23247))..E:func_texturefromIcon(E.Icon_LFG) .. E:func_LFGdungName(286)
-
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -99,7 +102,7 @@ function E:func_Otrisovka_90_Holidays()
 						textCENT = CharInfo.MASLENGO.ItemsInBag[23247]
 					end
 					----------------------------------------------------------------
-					textLEFT = E:func_GetItemNameByID(23247)
+					textLEFT = E:func_itemName(23247)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType

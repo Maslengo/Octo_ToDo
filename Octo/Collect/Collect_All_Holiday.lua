@@ -11,15 +11,28 @@ local SetAbsMonth = C_Calendar.SetAbsMonth
 local GetNumDayEvents = C_Calendar.GetNumDayEvents
 local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
 
--- Функция для создания таблицы с датой
-local function createDateTable(timeData)
-	return {
-		year = timeData.year,
-		month = timeData.month,
-		day = timeData.monthDay,
-		hour = timeData.hour,
-		min = timeData.minute,
-	}
+-- -- Функция для создания таблицы с датой
+-- local function createDateTable(timeData)
+-- 	return {
+-- 		year = timeData.year,
+-- 		month = timeData.month,
+-- 		day = timeData.monthDay,
+-- 		hour = timeData.hour,
+-- 		min = timeData.minute,
+-- 	}
+-- end
+
+
+local getCalendarTime do
+	local t = {}
+	function getCalendarTime(eTime)
+		t.year = eTime.year
+		t.month = eTime.month
+		t.day = eTime.monthDay
+		t.hour = eTime.hour
+		t.min = eTime.minute
+		return time(t)
+	end
 end
 
 -- Функция для сохранения текущих настроек календаря
@@ -81,8 +94,16 @@ local function generateEventKey(eventID, startTime)
 		eventID,
 		startTime.monthDay,
 		startTime.month,
-	startTime.year)
+		startTime.year)
 end
+
+
+
+
+
+
+
+
 
 -- Основная функция сбора информации о праздниках
 function E.Collect_All_Holiday()
@@ -102,6 +123,7 @@ function E.Collect_All_Holiday()
 	local minute, hour = currentCalendarTime.minute, currentCalendarTime.hour
 	local monthDay, month = currentCalendarTime.monthDay, currentCalendarTime.month
 	local year = currentCalendarTime.year
+	local curTime = getCalendarTime(currentCalendarTime)
 
 	-- Получаем информацию о текущем месяце
 	local monthInfo = GetMonthInfo()
@@ -138,15 +160,27 @@ function E.Collect_All_Holiday()
 			if not holiday.title then
 				holiday.title = event.title
 				local startTime, endTime = event.startTime, event.endTime
-				local startDate = createDateTable(startTime)
-				local endDate = createDateTable(endTime)
-				local duration = time(endDate) - time(startDate)
+				-- local startDate = createDateTable(startTime)
+				-- local endDate = createDateTable(endTime)
+				local startDate = getCalendarTime(startTime)
+				local endDate = getCalendarTime(endTime)
+
+				local duration = endDate - startDate
+
+				-- local date = C_DateAndTime.GetCurrentCalendarTime()
+
+
+				-- print (C_DateAndTime.GetServerTimeLocal() == curTime)
+				-- print (E:func_SecondsToClock(C_DateAndTime.GetServerTimeLocal()-curTime), C_DateAndTime.GetServerTimeLocal(), curTime)
+
+				-- local curTime = C_DateAndTime.GetServerTimeLocal()
 
 				holiday.event_duration = E.func_FriendsFrame_GetLastOnline(duration, true)
 				holiday.startTime = E:func_fixdate(startTime.monthDay).."/"..E:func_fixdate(startTime.month)
 				holiday.endTime = E:func_fixdate(endTime.monthDay).."/"..E:func_fixdate(endTime.month)
-				holiday.ENDS = E:func_SecondsToClock(time(endDate) - GetServerTime(), true)
-				holiday.iconTexture = eInfo.texture or event.iconTexture or E.Icon_QuestionMark
+				-- holiday.ENDS = E:func_SecondsToClock(endDate - GetServerTime(), true)
+				holiday.ENDS = E:func_SecondsToClock(endDate - curTime)
+				holiday.iconTexture = eInfo.texture or event.iconTexture
 				holiday.priority = priority
 				holiday.eventID = event.eventID
 				priority = priority + 1

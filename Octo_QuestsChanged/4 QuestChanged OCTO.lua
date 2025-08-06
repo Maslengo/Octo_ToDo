@@ -10,10 +10,10 @@ E:func_InitFrame(Octo_MainFrame_QuestsChanged)
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
 local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
-local Config_MainFrameDefaultLines = 30
+local LINES_MAX = E.LINES_MAX
 local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
-if Config_MainFrameDefaultLines > MainFrameTotalLines then
-	Config_MainFrameDefaultLines = MainFrameTotalLines
+if LINES_MAX > MainFrameTotalLines then
+	LINES_MAX = MainFrameTotalLines
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
@@ -89,9 +89,9 @@ local func_OnAcquired do
 			first:SetSize(first_width, first_height)
 			first:SetPoint("TOPLEFT", icon_1, "TOPRIGHT")
 			first:SetPropagateMouseClicks(true)
-			first.text = first:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			first.text:SetAllPoints()
+			first.text = first:CreateFontString()
 			first.text:SetFontObject(OctoFont11)
+			first.text:SetAllPoints()
 			first.text:SetJustifyV(JustifyV)
 			first.text:SetJustifyH(JustifyH)
 			first.text:SetTextColor(1, 1, 1, 1)
@@ -105,9 +105,9 @@ local func_OnAcquired do
 			second:SetSize(second_width, second_height)
 			second:SetPoint("TOPLEFT", first, "TOPRIGHT")
 			second:SetPropagateMouseClicks(true)
-			second.text = second:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			second.text:SetAllPoints()
+			second.text = second:CreateFontString()
 			second.text:SetFontObject(OctoFont11)
+			second.text:SetAllPoints()
 			second.text:SetJustifyV(JustifyV)
 			second.text:SetJustifyH("RIGHT")
 			second.text:SetTextColor(1, 1, 1, 1)
@@ -129,9 +129,9 @@ local func_OnAcquired do
 			third:SetSize(third_width, third_height)
 			third:SetPoint("TOPLEFT", icon_2, "TOPRIGHT")
 			third:SetPropagateMouseClicks(true)
-			third.text = third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			third.text:SetAllPoints()
+			third.text = third:CreateFontString()
 			third.text:SetFontObject(OctoFont11)
+			third.text:SetAllPoints()
 			third.text:SetJustifyV(JustifyV)
 			third.text:SetJustifyH(JustifyH)
 			third.text:SetTextColor(1, 1, 1, 1)
@@ -144,9 +144,9 @@ local func_OnAcquired do
 			fourth:SetSize(fourth_width, fourth_height)
 			fourth:SetPoint("TOPLEFT", third, "TOPRIGHT")
 			fourth:SetPropagateMouseClicks(true)
-			fourth.text = fourth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			fourth.text:SetAllPoints()
+			fourth.text = fourth:CreateFontString()
 			fourth.text:SetFontObject(OctoFont11)
+			fourth.text:SetAllPoints()
 			fourth.text:SetJustifyV(JustifyV)
 			fourth.text:SetJustifyH("RIGHT")
 			fourth.text:SetTextColor(1, 1, 1, 1)
@@ -159,9 +159,9 @@ local func_OnAcquired do
 			fifth:SetSize(fifth_width, fifth_height)
 			fifth:SetPoint("TOPLEFT", fourth, "TOPRIGHT")
 			fifth:SetPropagateMouseClicks(true)
-			fifth.text = fifth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			fifth.text:SetAllPoints()
+			fifth.text = fifth:CreateFontString()
 			fifth.text:SetFontObject(OctoFont11)
+			fifth.text:SetAllPoints()
 			fifth.text:SetJustifyV(JustifyV)
 			fifth.text:SetJustifyH(JustifyH)
 			fifth.text:SetTextColor(1, 1, 1, 1)
@@ -174,9 +174,9 @@ local func_OnAcquired do
 			sixth:SetSize(sixth_width, sixth_height)
 			sixth:SetPoint("TOPLEFT", fifth, "TOPRIGHT")
 			sixth:SetPropagateMouseClicks(true)
-			sixth.text = sixth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			sixth.text:SetAllPoints()
+			sixth.text = sixth:CreateFontString()
 			sixth.text:SetFontObject(OctoFont11)
+			sixth.text:SetAllPoints()
 			sixth.text:SetJustifyV(JustifyV)
 			sixth.text:SetJustifyH("CENTER")
 			sixth.text:SetTextColor(1, 1, 1, 1)
@@ -189,9 +189,9 @@ local func_OnAcquired do
 			seventh:SetSize(seventh_width, seventh_height)
 			seventh:SetPoint("TOPLEFT", sixth, "TOPRIGHT")
 			seventh:SetPropagateMouseClicks(true)
-			seventh.text = seventh:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			seventh.text:SetAllPoints()
+			seventh.text = seventh:CreateFontString()
 			seventh.text:SetFontObject(OctoFont11)
+			seventh.text:SetAllPoints()
 			seventh.text:SetJustifyV(JustifyV)
 			seventh.text:SetJustifyH("CENTER")
 			seventh.text:SetTextColor(1, 1, 1, 1)
@@ -204,9 +204,9 @@ local func_OnAcquired do
 			-- eighth:SetSize(eighth_width, eighth_height)
 			-- eighth:SetPoint("TOPLEFT", seventh, "TOPRIGHT")
 			-- eighth:SetPropagateMouseClicks(true)
-			-- eighth.text = eighth:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			-- eighth.text:SetAllPoints()
+			-- eighth.text = eighth:CreateFontString()
 			-- eighth.text:SetFontObject(OctoFont11)
+			-- eighth.text:SetAllPoints()
 			-- eighth.text:SetJustifyV(JustifyV)
 			-- eighth.text:SetJustifyH(JustifyH)
 			-- eighth.text:SetTextColor(1, 1, 1, 1)
@@ -303,9 +303,8 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 end
 function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetPoint("CENTER", 0, 0)
-	-- Octo_MainFrame_QuestsChanged:SetSize(LINE_WIDTH_RIGHT*7, LINE_HEIGHT*Config_MainFrameDefaultLines)
-	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*Config_MainFrameDefaultLines)
-	Octo_MainFrame_QuestsChanged:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*LINES_MAX)
+	Octo_MainFrame_QuestsChanged:SetDontSavePosition(true)
 	Octo_MainFrame_QuestsChanged:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_QuestsChanged:SetFrameStrata("HIGH")
 	Octo_MainFrame_QuestsChanged:SetBackdrop(E.menuBackdrop)
@@ -409,8 +408,8 @@ function E:QuestsChanged_CreateMyDataProvider()
 	-- SetDataProvider триггерит создания фреймов
 	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 
-	if count > Config_MainFrameDefaultLines then
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*Config_MainFrameDefaultLines)
+	if count > LINES_MAX then
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*LINES_MAX)
 	elseif count == 0 then
 		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*1)
 	else
@@ -422,25 +421,17 @@ end
 -- ДОЛЖНА ВЫЗЫВАТЬСЯ 1 РАЗ
 -- ЧЕТ ТУТ
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_LOGIN",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
-function Octo_EventFrame_QuestsChanged:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		self:Octo_Create_MainFrame_QuestsChanged()
-		E:QuestsChanged_CreateMyDataProvider()
-		----------------------------------------------------------------
-		E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
-		----------------------------------------------------------------
-	end
+function Octo_EventFrame_QuestsChanged:VARIABLES_LOADED()
+	self:Octo_Create_MainFrame_QuestsChanged()
+	E:QuestsChanged_CreateMyDataProvider()
+	----------------------------------------------------------------
+	E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_QuestsChanged:PLAYER_REGEN_DISABLED()

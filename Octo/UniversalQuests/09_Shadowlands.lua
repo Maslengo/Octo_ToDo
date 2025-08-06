@@ -528,7 +528,7 @@ function E:func_Universal_09_Shadowlands()
 	-- {
 
 	-- showTooltip = true,
-	-- textleft = E:func_GetItemNameByID(187216),
+	-- textleft = E:func_itemName(187216),
 	-- 	name_save = "KorthiaSoultwiningCrescent",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",

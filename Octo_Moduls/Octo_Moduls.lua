@@ -11,18 +11,12 @@ function Octo_EventFrame_Moduls:OnLoad()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Moduls, MyEventsTable)
-function Octo_EventFrame_Moduls:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
+function Octo_EventFrame_Moduls:VARIABLES_LOADED()
+	E:func_CreateMinimapButton(GlobalAddonName, "Moduls", Octo_Moduls_DB, Octo_MainFrame_Moduls, nil, "Octo_MainFrame_Moduls")
 
-
-		E:func_CreateMinimapButton(GlobalAddonName, "Moduls", Octo_Moduls_DB, Octo_MainFrame_Moduls, nil, "Octo_MainFrame_Moduls")
-
-		self:OnLoad()
-		E:func_LoadCVars()
-	end
+	self:OnLoad()
+	E:func_LoadCVars()
 end

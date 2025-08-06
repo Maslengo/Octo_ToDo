@@ -73,6 +73,7 @@ local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local UseContainerItem = C_Container.UseContainerItem
 local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
+local GetContainerItemID = C_Container.GetContainerItemID
 
 local func_GetItemCount = function(...) return E:func_GetItemCount(...) end
 
@@ -126,10 +127,10 @@ local function CreateSellButton(Parentframe, texture, text, quality)
 
 	-- Текст кнопки (если указан)
 	if text then
-		button.text = button:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+		button.text = button:CreateFontString()
+		button.text:SetFontObject(OctoFont11)
 		button.text:SetPoint("LEFT", button, "RIGHT")
 		button.text:SetWidth(255)
-		button.text:SetFontObject(OctoFont11)
 		button.text:SetWordWrap(false)
 		button.text:SetJustifyV(JustifyV)
 		button.text:SetJustifyH(JustifyH)
@@ -322,7 +323,7 @@ local function UpdateTooltip(button)
 							count = itemCount,
 							quality = quality,
 							sellPrice = sellPrice,
-							itemName = E:func_GetItemNameByID(itemID, quality),
+							itemName = E:func_itemName(itemID, quality),
 							itemType = itemEquipLoc
 						}
 					end
@@ -401,11 +402,13 @@ function Octo_EventFrame_SellFrame:func_SellItemsByQuality()
 			insets = { left = 11, right = 12, top = 12, bottom = 11 }
 		})
 
-		self.progressFrame.text = self.progressFrame:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		self.progressFrame.text = self.progressFrame:CreateFontString()
+		self.progressFrame.text:SetFontObject(OctoFont11)
 		self.progressFrame.text:SetPoint("TOP", 0, -15)
 		self.progressFrame.text:SetText("Продажа предметов...")
 
-		self.progressFrame.progressText = self.progressFrame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+		self.progressFrame.progressText = self.progressFrame:CreateFontString()
+		self.progressFrame.progressText:SetFontObject(OctoFont11)
 		self.progressFrame.progressText:SetPoint("CENTER", 0, 0)
 
 		self.progressFrame.cancelButton = CreateFrame("Button", nil, self.progressFrame, "UIPanelButtonTemplate")
@@ -510,7 +513,7 @@ end
 -- Обработчики событий
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 	"MERCHANT_UPDATE",
 	"TOOLTIP_DATA_UPDATE",
 	"MERCHANT_CLOSED",
@@ -519,15 +522,11 @@ local MyEventsTable = {
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_SellFrame, MyEventsTable)
 
 --- Обрабатывает событие загрузки аддона
-function Octo_EventFrame_SellFrame:ADDON_LOADED(addonName)
-	if addonName ~= GlobalAddonName then return end
-	self:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
+function Octo_EventFrame_SellFrame:VARIABLES_LOADED()
+	self:UnregisterEvent("VARIABLES_LOADED")
+	self.VARIABLES_LOADED = nil
 	self:func_CreateTradeButtons()
 	CreateBankButtons()
-	-- C_Timer.After(1, function()
-	-- 	fpde(Octo_EventFrame_SellFrame)
-	-- end)
 end
 
 --- Обрабатывает событие обновления торговца

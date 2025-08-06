@@ -14,7 +14,7 @@ tinsert(E.Modules, function()
 		local PosFrame = CreateFrame("Frame", "PosFrame", WorldMapFrame, "BackdropTemplate")
 		PosFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 		PosFrame:SetSize(280, 32)
-		PosFrame:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+		PosFrame:SetDontSavePosition(true)
 		PosFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 		PosFrame:SetFrameStrata("HIGH")
 		PosFrame:EnableMouse(true)
@@ -39,13 +39,13 @@ tinsert(E.Modules, function()
 
 		-- Create text elements
 		local function CreateTextElement(offset, r, g, b)
-			local text = PosFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			local text = PosFrame:CreateFontString()
+			text:SetFontObject(OctoFont11)
 			offset = offset or 0
 			r = r or 1
 			g = g or 1
 			b = b or 1
 			text:SetPoint("CENTER", 0, offset)
-			text:SetFontObject(OctoFont11)
 			text:SetJustifyV("MIDDLE")
 			text:SetJustifyH("CENTER")
 			text:SetTextColor(r, g, b, 1)

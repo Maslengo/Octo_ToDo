@@ -78,7 +78,7 @@ function E:func_Tooltip_Chars(CharInfo)
 	-- Special item info
 	if CharInfo.MASLENGO.ItemsInBag[122284] then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_GetItemNameByID(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
+		tooltip_Chars[#tooltip_Chars+1] = {E:func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 	end
 	-- Debug information
 	if E.DebugInfo then

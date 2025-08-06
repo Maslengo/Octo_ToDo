@@ -61,3 +61,14 @@ E.OctoTable_QuestID = {
 
 	37485, --- 1000 RESOURS
 }
+
+local function func_TableConcat(table1, table2)
+	local len = #table1
+	for i = 1, #table2 do
+		len = len + 1
+		table1[len] = table2[i]
+	end
+	return table1
+end
+
+func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)

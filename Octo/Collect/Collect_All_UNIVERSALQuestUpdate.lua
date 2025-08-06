@@ -1,6 +1,13 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function func_ConcatAtStart_UniversalQuest()
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local GlobalAddonName, E = ...
+local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+----------------------------------------------------------------
+function E:func_Universal_91_Concat()
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_01_WorldofWarcraft())
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_02_TheBurningCrusade())
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_03_WrathoftheLichKing())
@@ -14,19 +21,15 @@ local function func_ConcatAtStart_UniversalQuest()
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_11_TheWarWithin())
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_12_Midnight())
 	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_13_TheLastTitan())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_99_Other())
+	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_90_Other())
 end
 
 
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-
 function E:func_Collect_All_UNIVERSALQuestUpdate()
-	if not E.func_ConcatAtStart_UniversalQuest then
-		E.func_ConcatAtStart_UniversalQuest = true
-		func_ConcatAtStart_UniversalQuest()
+	if not E.func_ConcatAtStart_UniversalQuestQWE then
+		print ("func_ConcatAtStart_UniversalQuestQWE")
+		E.func_ConcatAtStart_UniversalQuestQWE = true
+		E:func_Universal_91_Concat()
 	end
 
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
@@ -49,22 +52,24 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 
 		-- Обработка квестов
 		for _, questData in ipairs(data.quests) do
-			local questID = questData[1]
-			local faction = questData.faction
+			if type(questData[1]) == "number" then
+				local questID = questData[1]
+				local faction = questData.faction
 
-			if not faction or faction == E.curFaction then
-				local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
-				local status = E:func_CheckCompletedByQuestID(questID)
+				if not faction or faction == E.curFaction then
+					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+					local status = E:func_CheckCompletedByQuestID(questID)
 
-				questDataTable[questID] = status
+					questDataTable[questID] = status
 
-				if isCompleted then
-					count = count + 1
-				end
+					if isCompleted then
+						count = count + 1
+					end
 
-				if (forcedMaxQuest == 1 or #data.quests) and E:func_IsOnQuest(questID) then
-					questDataTable.textCENT = status
-					hasSingleQuestOutput = true
+					if (forcedMaxQuest == 1 or #data.quests == 1) and E:func_IsOnQuest(questID) then
+						questDataTable.textCENT = status
+						hasSingleQuestOutput = true
+					end
 				end
 			end
 		end

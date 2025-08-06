@@ -195,7 +195,8 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	frame.resize:SetPushedTexture("Interface\\ChatFrame\\UI-ChatIM-SizeGrabber-Down")
 	frame.resize:RegisterForDrag("LeftButton")
 	-- LINE
-	frame.lineText = frame:CreateFontString(nil, "ARTWORK", "GameFontHighlight")
+	frame.lineText = frame:CreateFontString()
+	frame.lineText:SetFontObject(OctoFont11)
 	frame.lineText:SetPoint("BOTTOMLEFT", 20, 20)
 	frame.lineText:SetText(L["Line"])
 	-- HZ
@@ -431,10 +432,10 @@ function Octo_EventFrame_Debug:func_itemslist(msg)
 	:Then(function()
 			sort(list1, E.func_Reverse_order)
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E:func_GetItemNameByID(id1).."\n"
+				str = str..id1..", -- "..E:func_itemName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E:func_GetItemNameByID(id2).."\n"
+				str = str..id2..", -- "..E:func_itemName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
@@ -620,10 +621,10 @@ function Octo_EventFrame_Debug:func_spellslist(msg)
 	end
 	sort(list, E.func_Reverse_order)
 	for _, spellID in next, (list) do
-		if E:func_GetSpellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
-			str4 = str4..spellID..", --" ..E:func_GetSpellNameFull(spellID).."\n"
+		if E:func_spellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
+			str4 = str4..spellID..", --" ..E:func_spellNameFull(spellID).."\n"
 		else
-			str5 = str5..spellID..", --" ..E:func_GetSpellNameFull(spellID).."\n"
+			str5 = str5..spellID..", --" ..E:func_spellNameFull(spellID).."\n"
 		end
 	end
 	vivod = str4..str5
@@ -685,17 +686,13 @@ for name, data in pairs(slashCommands) do
 end
 -- Регистрация событий
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
--- Обработчик события ADDON_LOADED
-function Octo_EventFrame_Debug:ADDON_LOADED(addonName)
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		E:func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
-	end
+-- Обработчик события VARIABLES_LOADED
+function Octo_EventFrame_Debug:VARIABLES_LOADED()
+	E:func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
 end
 function Octo_EventFrame_Debug:PLAYER_LOGIN()
 	E:func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)

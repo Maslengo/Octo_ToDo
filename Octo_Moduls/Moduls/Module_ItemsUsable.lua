@@ -34,9 +34,9 @@ function Octo_EventFrame_ItemsUsable:CreateCommonButtonSettings(button, pointY, 
 	button:SetBackdrop(E.menuBackdrop)
 	button:SetBackdropBorderColor(unpack(borderColor))
 	-- Текст рядом с кнопкой
-	button.text = button:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	button.text = button:CreateFontString()
+	button.text:SetFontObject(OctoFont11)
 	button.text:SetPoint("LEFT", button, "RIGHT")
-	button.text:SetFontObject(OctoFont22)
 	button.text:SetText(E:func_GetAddOnMetadata(GlobalAddonName, "Version"))
 	-- Иконка предмета на кнопке
 	button.icon = button:CreateTexture(nil, "BACKGROUND")
@@ -116,12 +116,12 @@ function Octo_EventFrame_ItemsUsable:UpdateItemsUsableFrame()
 						end
 						-- Устанавливаем текст с количеством и названием предмета
 						Clickable_ItemsUsable.itemID = itemID
-						Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E:func_GetItemNameByID(itemID))
+						Clickable_ItemsUsable.text:SetText(" "..GetItemCount(itemID, true, true, true).." "..E:func_itemName(itemID))
 						return-- Нашли предмет - выходим
 					-- else
 					-- 	-- Если предмет нельзя использовать, добавляем его в список на удаление
 					-- 	if not E.OctoTable_itemID_ItemsDelete[itemID] then
-					-- 		DEFAULT_CHAT_FRAME:AddMessage(E:func_GetItemNameByID(itemID), E:func_Gradient("mark to DELETE"))
+					-- 		DEFAULT_CHAT_FRAME:AddMessage(E:func_itemName(itemID), E:func_Gradient("mark to DELETE"))
 					-- 		E.OctoTable_itemID_ItemsDelete[itemID] = true
 					-- 	end
 					end
@@ -157,7 +157,7 @@ function Octo_EventFrame_ItemsUsable:UpdateItemsDeleteFrame()
 				Clickable_ItemsDelete.icon:SetTexture(itemTexture or 413587)
 				Clickable_ItemsDelete.itemID = itemID
 				-- Красный текст для предметов на удаление
-				Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, false, false, false).." "..E.Red_Color..E:func_GetItemNameByID(itemID).."|r")
+				Clickable_ItemsDelete.text:SetText(" "..GetItemCount(itemID, false, false, false).." "..E.Red_Color..E:func_itemName(itemID).."|r")
 				return-- Нашли предмет - выходим
 			end
 		end
@@ -165,7 +165,7 @@ function Octo_EventFrame_ItemsUsable:UpdateItemsDeleteFrame()
 end
 -- Таблица событий, на которые реагирует аддон
 local MyEventsTable = {
-	"ADDON_LOADED",-- При загрузке аддона
+	"VARIABLES_LOADED",
 	"BAG_UPDATE_DELAYED",-- При изменении содержимого сумок
 	"PLAYER_REGEN_DISABLED", -- При входе в бой
 	"PLAYER_REGEN_ENABLED",-- При выходе из боя
@@ -173,11 +173,7 @@ local MyEventsTable = {
 -- Регистрируем события
 	E:func_RegisterMyEventsToFrames(Octo_EventFrame_ItemsUsable, MyEventsTable)
 -- Обработчик события загрузки аддона
-function Octo_EventFrame_ItemsUsable:ADDON_LOADED(addonName)
-	if addonName ~= GlobalAddonName then return end
-	-- Отписываемся от события после загрузки
-	self:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
+function Octo_EventFrame_ItemsUsable:VARIABLES_LOADED()
 	-- Настраиваем кнопку для использования предметов
 	self:CreateCommonButtonSettings(Clickable_ItemsUsable, 0, {1, 1, 1, 1})
 	Clickable_ItemsUsable:SetAttribute("type", "macro")

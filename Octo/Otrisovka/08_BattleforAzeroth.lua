@@ -18,7 +18,7 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 					end
 					myType = {"Item", 158075}
 					----------------------------------------------------------------
-					textLEFT = E:func_GetItemNameByID(158075)
+					textLEFT = E:func_itemName(158075)
 					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType
@@ -37,7 +37,7 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 					end
 					myType = {"Item", 169223}
 					----------------------------------------------------------------
-					textLEFT = E:func_GetItemNameByID(169223)
+					textLEFT = E:func_itemName(169223)
 					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipRIGHT, colorCENT, myType

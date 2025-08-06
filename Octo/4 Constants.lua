@@ -1,9 +1,5 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
-
-E.PromiseItem = {}
-E.PromiseSpell = {}
-E.PromiseQuest = {}
 E.ActiveHoliday = {}
 E.Holiday = {}
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
@@ -77,7 +73,7 @@ E.menuBackdrop = {
 }
 
 -------------------------------------------------------------------------
-E.GLOBAL_FONT_SIZE = 12
+E.LINES_MAX = 30
 
 E.ddMenuButtonHeight = 16
 E.GLOBAL_LINE_HEIGHT = 20
@@ -85,15 +81,20 @@ E.GLOBAL_LINE_WIDTH_LEFT = 200
 E.GLOBAL_LINE_WIDTH_RIGHT = 90
 
 E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
+E.GLOBAL_FONT_SIZE = 11
 -- E.Octo_font = "Friz Quadrata TT"
 -- E.Octo_font = "Fonts\\FRIZQT___CYR.TTF"
 E.OctoFont11 = CreateFont("OctoFont11")
-E.OctoFont11:CopyFontObject(GameTooltipTextSmall)-- local font = GameFontHighlightSmallLeft
-local fontFile, height, flags = E.OctoFont11:GetFont()
-E.OctoFont11:SetFont(E.Octo_font, E.GLOBAL_FONT_SIZE, flags)
+E.OctoFont11:CopyFontObject(GameTooltipText)-- local font =
+-- local fontFile, height, flags = E.OctoFont11:GetFont()
+-- E.OctoFont11:SetFont(E.Octo_font, E.GLOBAL_FONT_SIZE, "OUTLINE")
 
+
+-- GameFontHighlightSmallLeft
 -- GameFontNormalSmall
 -- GameTooltipText
+
+
 
 -- /dump GameFontNormalSmall:GetFonts()
 -- /dump GetFontInfo(GameFontNormalSmall)

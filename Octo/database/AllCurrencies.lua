@@ -18,12 +18,8 @@ E.OctoTables_DataOtrisovka = {
 		["Items"] = {
 		},
 		["Currencies"] = {
-			3139,
-			3090,
 		},
 	},
-
-
 	-- "The Burning Crusade",
 	{
 		["Items"] = {
@@ -38,8 +34,6 @@ E.OctoTables_DataOtrisovka = {
 		["Currencies"] = {
 		},
 	},
-
-
 	-- "Wrath of the Lich King",
 	{
 		["Items"] = {
@@ -49,8 +43,6 @@ E.OctoTables_DataOtrisovka = {
 			241, -- Champion's Seal
 		},
 	},
-
-
 	-- "Cataclysm",
 	{
 		["Items"] = {
@@ -63,36 +55,28 @@ E.OctoTables_DataOtrisovka = {
 			416, -- Mark of the World Tree
 		},
 	},
-
-
 	-- "Mists of Pandaria",
 	{
 		["Items"] = {
 		},
 		["Currencies"] = {
-
 			402, -- Ironpaw Token
 			738, -- Lesser Charm of Good Fortune
 			752, -- Mogu Rune of Fate
 			776, -- Warforged Seal
-
 			777,
 			789,
 			697, -- (697 MONETKA)
 		},
 	},
-
-
 	-- "Warlords of Draenor",
 	{
 		["Items"] = {
 		},
 		["Currencies"] = {
-			1101, 823, 1129, 994,-- (1129, 994 MONETKA) (824 GARRISON_RESOURCE_ID)
+			1101, 823, 1129, 994, -- (1129, 994 MONETKA) (824 GARRISON_RESOURCE_ID)
 		},
 	},
-
-
 	-- "Legion",
 	{
 		["Items"] = {
@@ -101,10 +85,8 @@ E.OctoTables_DataOtrisovka = {
 			1508, 1342, 1220, 1226, 1533, 1155, 1149, 1416, 1273, -- (1273 MONETKA)
 		},
 	},
-
-
 	-- "Battle for Azeroth",
-	-- {1803, 1755, 1719, 1721, 1718, 1580, 1560, 1717, 1716, 1710,}, -- ДОБАВИТЬ ИТЕМ 173363 к 1719 (1580 MONETKA)
+	-- {1803, 1755, 1719, 1721, 1718, 1580, 1560, 1717, 1716, 1710, }, -- ДОБАВИТЬ ИТЕМ 173363 к 1719 (1580 MONETKA)
 	{
 		["Items"] = {
 		},
@@ -112,10 +94,8 @@ E.OctoTables_DataOtrisovka = {
 			1560, 1721, 1803, 1755, 1719, 1710, 1716, 1717, 1718, 1580,
 		},
 	},
-
-
 	-- "Shadowlands",
-	-- {2009, 1979, 1977, 1931, 1816, 1904, 1906, 1828, 1767, 1820, 1889, 1885, 1810,},
+	-- {2009, 1979, 1977, 1931, 1816, 1904, 1906, 1828, 1767, 1820, 1889, 1885, 1810, },
 	{
 		["Items"] = {
 		},
@@ -123,32 +103,26 @@ E.OctoTables_DataOtrisovka = {
 			2009, 1906, 1828, 1979, 1931,
 		},
 	},
-
-
 	-- "Dragonflight",
 	{
 		["Items"] = {
-			209856,207002,210254,213089,211516,211515,
+			209856, 207002, 210254, 213089, 211516, 211515,
 		},
 		["Currencies"] = {
 			2122, 2118, 2003, 1191, 1602, 2245, 2594, -- (УСТАРЕЛО АСПЕКТЫ 2812, 2809, 2807, 2806)
 		},
 	},
-
-
 	-- "The War Within",
 	{
 		["Items"] = {
 		},
 		["Currencies"] = {
-			3056, 2815,
-			--season 3
-			3356,3290,3288,3286,3284,3141,3028,3008,2803,
-			-- 3149, 3226, 3218, 3090, 3028, 2803, 3116, 2815, 3056, 3110, 3109, 3108, 3107, 3008,
+			-- 3056, 2815,
+			-- season 3
+			3356, 3290, 3288, 3286, 3284, 3141, 3028, 3008, 2803,
+			-- 3149, 3226, 3218, 3090, 3028, 2803, 3116, 2815, 3056, 3008, 3110, 3109, 3108, 3107,
 		},
 	},
-
-
 	-- "Midnight",
 	{
 		["Items"] = {
@@ -156,8 +130,6 @@ E.OctoTables_DataOtrisovka = {
 		["Currencies"] = {
 		},
 	},
-
-
 	-- "The Last Titan",
 	{
 		["Items"] = {
@@ -166,7 +138,6 @@ E.OctoTables_DataOtrisovka = {
 		},
 	},
 }
-
 E.OctoTable_Currencies = {
 	81, -- Epicurean Award
 	515, -- Darkmoon Prize Ticket
@@ -298,9 +269,23 @@ E.OctoTable_Currencies = {
 	3216, -- Bounty's Remnants
 	3309, -- Осколок камня Преисподней
 	2815,
-	3149,
 	3055,
 	3223,
 	3093,
 	2839,
+	3139,
+
+
+
+
+	3149, -- Displaced Corrupted Mementos
+	3303, -- Untethered Coin
+	3356, -- Untainted Mana-Crystals
+	3269, -- Ethereal Voidsplinter
+	3284, -- Weathered Ethereal Crest
+	3286, -- Carved Ethereal Crest
+	3288, -- Runed Ethereal Crest
+	3290, -- Gilded Ethereal Crest
+	3141, -- Starlight Spark Dust
+
 }

@@ -2,6 +2,10 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Min. Level"] = true
+	L["Max. Level"] = true
+	L["Clamped To Screen"] = true
+	L["Alpha On Drag"] = true
 	L["Wrath of the Jailer"] = true
 	L["Tormentors of Torghast"] = true
 
@@ -88,8 +92,6 @@ if L then
 	L["PvP"] = true
 	L["Abandon"] = true
 	-- Addon settings
-	L["AddonHeight"] = true
-	L["Config_MainFrameDefaultLines"] = true
 	L["fullName"] = true
 	L["showIcons"] = true
 	L["showIconsQuestionMark"] = true
@@ -237,8 +239,6 @@ if L then
 	-- Filters
 	L["Only Current Server"] = true
 	L["Only Current Region"] = true
-	L["Player level"] = true
-	L["Player MAX level"] = true
 	L["Only Current Realm"] = true
 	L["Daily quests"] = true
 	L["Anima Vessel"] = true
@@ -258,6 +258,10 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Min. Level"] = "Мин. уровень"
+	L["Max. Level"] = "Макс. уровень"
+	L["Clamped To Screen"] = "Закреплён на экране"
+	L["Alpha On Drag"] = "Альфа при перетаскивании"
 	L["Wrath of the Jailer"] = "Гнев Тюремщика"
 	L["Tormentors of Torghast"] = "Истязатели из Торгаста"
 
@@ -346,8 +350,6 @@ if L then
 	L["PvP"] = "PvP"
 	L["Abandon"] = "Отменено: "
 	-- Addon settings
-	L["AddonHeight"] = "Высота строк"
-	L["Config_MainFrameDefaultLines"] = "Количество строк"
 	L["fullName"] = "Полное название"
 	L["showIcons"] = "Показывать иконку"
 	L["showIconsQuestionMark"] = "Показывать иконку со знаком вопроса"
@@ -495,8 +497,6 @@ if L then
 	-- Filters
 	L["Only Current Server"] = "Только текущий сервер"
 	L["Only Current Region"] = "Только текущий регион"
-	L["Player level"] = "Мин. уровень"
-	L["Player MAX level"] = "Макс. уровень"
 	L["Only Current Realm"] = "Только текущий сервер"
 	L["Daily quests"] = "Ежедневные задания"
 	L["Anima Vessel"] = "Сосуд с анимой"

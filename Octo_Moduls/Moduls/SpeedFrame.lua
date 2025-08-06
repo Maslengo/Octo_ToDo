@@ -9,7 +9,7 @@ function Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
 	local vars = Octo_ToDo_DB_Vars.SpeedFrame
 	Octo_MainFrame_SpeedFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 	Octo_MainFrame_SpeedFrame:SetSize(80, 32)
-	Octo_MainFrame_SpeedFrame:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
+	Octo_MainFrame_SpeedFrame:SetDontSavePosition(true)
 	Octo_MainFrame_SpeedFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_SpeedFrame:SetFrameStrata("HIGH")
 	Octo_MainFrame_SpeedFrame:EnableMouse(true)
@@ -29,15 +29,15 @@ function Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
 			vars.yOfs = E:func_CompactNumberSimple(yOfs)
 			LibCustomGlow.ButtonGlow_Stop(Octo_MainFrame_SpeedFrame)
 	end)
-	local text_glide = Octo_MainFrame_SpeedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	text_glide:SetPoint("CENTER", 0, 7)
+	local text_glide = Octo_MainFrame_SpeedFrame:CreateFontString()
 	text_glide:SetFontObject(OctoFont11)
+	text_glide:SetPoint("CENTER", 0, 7)
 	text_glide:SetJustifyV("MIDDLE")
 	text_glide:SetJustifyH("CENTER")
 	text_glide:SetTextColor(0, 0.65, 1, 1)
-	local text_movespeed = Octo_MainFrame_SpeedFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	text_movespeed:SetPoint("CENTER", 0, -7)
+	local text_movespeed = Octo_MainFrame_SpeedFrame:CreateFontString()
 	text_movespeed:SetFontObject(OctoFont11)
+	text_movespeed:SetPoint("CENTER", 0, -7)
 	text_movespeed:SetJustifyV("MIDDLE")
 	text_movespeed:SetJustifyH("CENTER")
 	text_movespeed:SetTextColor(0.31, 1, 0.47, 1)
@@ -61,13 +61,10 @@ end
 -- Обработчики событий
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_SpeedFrame, MyEventsTable)
 --- Обрабатывает событие загрузки аддона
-function Octo_EventFrame_SpeedFrame:ADDON_LOADED(addonName)
-	if addonName ~= GlobalAddonName then return end
-	self:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
+function Octo_EventFrame_SpeedFrame:VARIABLES_LOADED()
 	Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
 end

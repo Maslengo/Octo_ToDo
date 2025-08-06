@@ -4,9 +4,6 @@ E.MainAddonName = GlobalAddonName
 -- local E = {}
 OctoEngine = E -- в других аддонах
 -- ns.E = E
-
-E.DEBUG_TIMINGS_COLLECT = false
-E.DEBUG_TIMINGS_TESTFRAME1 = false
 E.OctoTable_Frames = {}
 E.OctoTable_UniversalQuest = {}
 E.Modules = {}

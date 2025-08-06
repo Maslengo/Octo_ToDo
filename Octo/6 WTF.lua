@@ -12,13 +12,19 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронн�
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
+	-- local tblCurrencies = {}
+	local tblQuests = {}
+	local tblItems = {}
+	-- local tblSpells = {}
+
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
 		for _, currencyID in ipairs(v.Currencies) do
 			local currency =  E:func_currencyName(currencyID) -- "AllCurrencies"
 		end
 		for _, itemID in ipairs(v.Items) do
 			if type(itemID) == "number" then
-				local item = E:func_GetItemNameByID(itemID) -- "AllItems"
+				tblItems[itemID] = true
+				-- local item = E:func_itemName(itemID) -- "AllItems"
 			end
 		end
 	end
@@ -35,17 +41,17 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 	E.Collect_All_Reputations()
 	----------------------------------------------------------------
 	for _, questID in ipairs(E.OctoTable_QuestID) do
-		local quest = E:func_questName(questID) -- "AllQuests"
+		tblQuests[questID] = true
 	end
 	for _, questID in ipairs(E.OctoTable_QuestID_Paragon) do
-		local quest = E:func_questName(questID) -- "AllQuests"
+		tblQuests[questID] = true
 	end
 	for _, data in ipairs(E.OctoTable_UniversalQuest) do
 		if not data.quests then
 			break -- Пропускаем записи без квестов
 		end
 		for _, questData in ipairs(data.quests) do
-			local quest = E:func_questName(questData[1]) -- "AllQuests"
+			tblQuests[questData[1]] = true
 			if questData.forcedText and questData.forcedText.npcID then
 				local npc = E:func_npcName(questData.forcedText.npcID) -- "AllNPCs"
 			end
@@ -54,9 +60,32 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 	for i = 1, C_QuestLog.GetNumQuestLogEntries() do
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
-			local quest = E:func_questName(info.questID) -- "AllQuests"
+			tblQuests[info.questID] = true
 		end
 	end
+
+	local promise = LibThingsLoad:QuestsByKey(tblQuests)
+	promise:AddItemsByKey(tblItems)
+	-- promise:Then(function()
+	-- 	print ("THEN")
+	-- end)
+
+	promise:ThenForAllWithCached(function(promise, id, type)
+			if type == "quest" then
+				local quest = E:func_questName(id) -- "AllQuests"
+			elseif type == "item" then
+				local item = E:func_itemName(id)
+				local qw = C_Item.GetItemQualityByID(id)
+			end
+			-- if Octo_MainFrame_ToDo:IsShown() then
+			-- 	E:func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
+			-- end
+	end)
+	-- promise:FailWithChecked(function(promise, id, type)
+	-- 	if type == "quest" then
+	-- 		print (id)
+	-- 	end
+	-- end)
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -93,7 +122,6 @@ function Octo_EventFrame_WTF:DatabaseTransfer()
 				if CharInfo.MASLENGO.CurrencyID_Total then
 					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID_Total) do
 						if type(value) == "number" then
-							print(CurrencyID, value)
 							CharInfo.MASLENGO.Currency[CurrencyID] =
 							CharInfo.MASLENGO.Currency[CurrencyID] or {}
 							CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity = value
@@ -182,8 +210,8 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 		if CharInfo.PlayerData then
 			-- Проверяем совпадение имени и сервера
 			if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
-			   CharInfo.PlayerData.Name == currentName and
-			   CharInfo.PlayerData.curServer == currentRealm then
+			CharInfo.PlayerData.Name == currentName and
+			CharInfo.PlayerData.curServer == currentRealm then
 
 				-- Если это НЕ текущий игрок - отмечаем найденный дубликат
 				if GUID ~= currentGUID then
@@ -199,8 +227,8 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 		for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 			if CharInfo.PlayerData then
 				if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
-					CharInfo.PlayerData.Name == currentName and
-					CharInfo.PlayerData.curServer == currentRealm then
+				CharInfo.PlayerData.Name == currentName and
+				CharInfo.PlayerData.curServer == currentRealm then
 
 					if GUID ~= currentGUID then
 						print(L["Removing duplicate: "], CharInfo.PlayerData.Name.."-"..CharInfo.PlayerData.curServer, "GUID:", GUID)
@@ -397,7 +425,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки функций аддона
 	local featureDefaults = {
-		AddonHeight = 20, -- Высота аддона
 		Config_AlphaOnDrag = 0.8, -- Альфа при перетаскивании
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
 		Config_Auto_ChatClearing = false, -- Автоочистка чата
@@ -410,8 +437,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Config_Auto_Screenshot = true, -- Автоскриншоты
 		Config_Auto_SellGrey = true, -- Автопродажа серых предметов
 		Config_Auto_TurnQuests = true, -- Автосдача квестов
-		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
-		Config_DontSavePosition = true, -- Не сохранять позицию
+		Config_ClampedToScreen = true, -- Не привязывать к границам экрана
 		Config_Hide_ActionStatusText = true, -- Скрыть текст статуса действий
 		Config_Hide_BossBanner = true, -- Скрыть баннер босса
 		Config_Hide_Bug = true, -- Скрыть баг-репортер
@@ -442,15 +468,19 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Config_Hide_ZoneTextString = true, -- Скрыть строку зоны
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
 		Config_LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
-		Config_MainFrameDefaultLines = 30, -- Количество строк по умолчанию
 		Config_prefix = 1, -- Префикс
 		Currencies = true, -- Квесты
 		Currency = true, -- Валюта
 		CVar = true, -- CVar настройки
 		Dungeons = true, -- Подземелья
-		FontFlags = "OUTLINE",
-		FontSize = 11,
-		FrameScale = 1, -- Масштаб фрейма
+		Config_FontFlags = "OUTLINE",
+		Config_FontSize = 11,
+		Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r",
+		Config_Texture = "Blizzard Raid Bar",
+
+
+
+
 		Gold = true, -- Золото
 		Holidays = true, -- Праздники
 		ItemLevel = true, -- Уровень предметов
@@ -521,37 +551,18 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	Octo_Cache_DB = E:func_InitTable(Octo_Cache_DB)
 	E:func_InitField(Octo_Cache_DB, "lastBuildNumber", 1)
 	E:func_InitField(Octo_Cache_DB, "lastFaction", UNKNOWN)
+	E:func_InitField(Octo_Cache_DB, "lastLocaleLang", UNKNOWN)
 	-- Инициализация подтаблиц
-	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
-	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
-	E:func_InitSubTable(Octo_Cache_DB, "AllQuests")
 	E:func_InitSubTable(Octo_Cache_DB, "AllItems")
+	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E:func_InitSubTable(Octo_Cache_DB, "AllNPCs")
+	E:func_InitSubTable(Octo_Cache_DB, "AllQuests")
+	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
+	E:func_InitSubTable(Octo_Cache_DB, "AllSpells")
 
 	E:func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 
-	-- Обновляем кэш валют и репутаций
-	if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction then
-		-- self:func_CurrencyCaching()
-		-- self:func_ReputationsCaching()
-		C_Timer.After(1, function()
-			self:func_CreateDataCacheAtStart()
-		end)
-		C_Timer.After(2, function()
-			self:func_CreateDataCacheAtStart()
-		end)
-		C_Timer.After(3, function()
-			self:func_CreateDataCacheAtStart()
-		end)
-		C_Timer.After(4, function()
-			self:func_CreateDataCacheAtStart()
-		end)
-		C_Timer.After(5, function()
-			self:func_CreateDataCacheAtStart()
-		end)
-		Octo_Cache_DB.lastBuildNumber = E.buildNumber
-		Octo_Cache_DB.lastFaction = E.curFaction
-	end
+
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -696,8 +707,6 @@ function Octo_EventFrame_WTF:Daily_Reset()
 					CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
 					CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
 				end
-				-- Очищаем отладочные данные профессий
-				Octo_ToDo_DB_Other.professions.DEBUG = nil
 			end
 		end
 	end
@@ -766,6 +775,7 @@ end
 local MyEventsTable = {
 	"ADDON_LOADED", -- Событие загрузки аддона
 	"VARIABLES_LOADED", -- Событие загрузки переменных
+	"PLAYER_LOGIN",
 }
 ----------------------------------------------------------------
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
@@ -776,35 +786,64 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 	if addonName == GlobalAddonName then
 		self:UnregisterEvent("ADDON_LOADED")
 		self.ADDON_LOADED = nil
-		-- Чистка персонажей при старте
-		self:CleaningIdenticalCharacters()
-		-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
-		-- Инициализация всех компонентов
-		self:Octo_Cache_DB() -- Кэш данных
-		self:DatabaseTransfer() -- Перенос данных
-		self:Octo_ToDo_DB_Levels() -- Данные персонажей
-		self:Octo_ToDo_DB_Vars() -- Настройки
-		self:Octo_ToDo_DB_Other() -- Другие данные
-		self:Octo_Minecraft_DB() -- Minecraft стиль
-		self:Octo_Achievements_DB() -- Достижения
-		self:Octo_AddonsTable_DB() -- Таблица аддонов
-		self:Octo_AddonsManager_DB() -- Менеджер аддонов
-		self:Octo_Debug_DB() -- Отладка
-		self:Octo_LoadAddons_DB()
-		self:Octo_Moduls_DB()
-		self:Octo_QuestsChanged_DB() -- Изменения квестов
-		-- Очистка и сброс данных
-		self:Daily_Reset()
-		self:Weekly_Reset()
-		self:Month_Reset()
-		-- Применяем старые изменения
-		E:setOldChanges()
+		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
+		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	end
 end
 
+
 function Octo_EventFrame_WTF:VARIABLES_LOADED()
-	E.OctoFont11:SetFont("Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF", Octo_ToDo_DB_Vars.FontSize, Octo_ToDo_DB_Vars.FontFlags)
-	E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.AddonHeight
+	-- Чистка персонажей при старте
+	self:CleaningIdenticalCharacters()
+	-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
+	-- Инициализация всех компонентов
+	self:Octo_Cache_DB() -- Кэш данных
+	self:DatabaseTransfer() -- Перенос данных
+	self:Octo_ToDo_DB_Levels() -- Данные персонажей
+	self:Octo_ToDo_DB_Vars() -- Настройки
+	self:Octo_ToDo_DB_Other() -- Другие данные
+	self:Octo_Minecraft_DB() -- Minecraft стиль
+	self:Octo_Achievements_DB() -- Достижения
+	self:Octo_AddonsTable_DB() -- Таблица аддонов
+	self:Octo_AddonsManager_DB() -- Менеджер аддонов
+	self:Octo_Debug_DB() -- Отладка
+	self:Octo_LoadAddons_DB()
+	self:Octo_Moduls_DB()
+	self:Octo_QuestsChanged_DB() -- Изменения квестов
+	-- Применяем старые изменения
+	E:setOldChanges()
+
+	if not E.func_ConcatAtStart_UniversalQuestQWE then
+		E.func_ConcatAtStart_UniversalQuestQWE = true
+		E:func_Universal_91_Concat()
+	end
+
+	-- Очистка и сброс данных
+	self:Daily_Reset()
+	self:Weekly_Reset()
+	self:Month_Reset()
+
+	-- local fontFile, height, flags = E.OctoFont11:GetFont() -- "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
+	-- if Octo_ToDo_DB_Vars.Config_FontStyle and Octo_ToDo_DB_Vars.Config_FontStyle ~= "" then
+	-- fontFile = Octo_ToDo_DB_Vars.Config_FontStyle
+	-- end
+	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+	-- E.OctoFont11:SetFont(Octo_ToDo_DB_Vars.Config_FontStyle, Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+	-- E.OctoFont11:SetFont(fontFile, Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+
+	-- E.LINES_MAX =  Octo_ToDo_DB_Vars.Config_MainFrameDefaultLines
+	-- E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.AddonHeight
 	-- E.GLOBAL_LINE_WIDTH_LEFT = Octo_ToDo_DB_Vars.AddonLeftFrameWeight
 	-- E.GLOBAL_LINE_WIDTH_RIGHT = Octo_ToDo_DB_Vars.AddonCentralFrameWeight
+end
+
+
+function Octo_EventFrame_WTF:PLAYER_LOGIN()
+	-- Обновляем кэш
+	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
+		self:func_CreateDataCacheAtStart()
+		Octo_Cache_DB.lastBuildNumber = E.buildNumber
+		Octo_Cache_DB.lastFaction = E.curFaction
+		Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
+	-- end
 end

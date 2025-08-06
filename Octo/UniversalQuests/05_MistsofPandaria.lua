@@ -1,5 +1,4 @@
-local GlobalAddonName,
-E = ...
+local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 function E:func_Universal_05_MistsofPandaria()
@@ -21,10 +20,6 @@ function E:func_Universal_05_MistsofPandaria()
 
 				{32098, forcedText = {npcID = 62346},}, -- "Salyis's Warband"
 				{32099, forcedText = {npcID = 60491},}, -- "Sha of Anger"
-
-
-
-
 			},
 			-- forcedMaxQuest = 6,
 		},

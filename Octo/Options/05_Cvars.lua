@@ -37,10 +37,8 @@ function E:Cvars()
 					end
 				end,
 				set = function(_, value)
-					-- This is a dirty hack for SetSortBagsRightToLeft not instantly updating the bags
-					-- Force a refresh of the UI after a set amount of time to make the checkbox reflect the new value
-					C_Timer.After(1, function()
-						AceConfigRegistry:NotifyChange(E:func_AddonTitle(GlobalAddonName))
+					C_Timer.After(0.5, function()
+						AceConfigRegistry:NotifyChange("Cvars")
 					end)
 
 					if C_Container and C_Container.SetSortBagsRightToLeft then
@@ -49,9 +47,6 @@ function E:Cvars()
 						SetSortBagsRightToLeft(value)
 					end
 				end,
-				-- hidden = function()
-				-- 	return self.IsClassicEra() or self.IsClassic()
-				-- end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
 			},

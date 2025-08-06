@@ -30,7 +30,7 @@ local utilityFrames = {
 	@param func_onClick - Function to call on click
 	@return The created button
 ]]
-local function CreateUtilButton(name, frame, xOffset, texture, func_onEnter, func_onClick)
+local function CreateUtilButton(name, frame, texture, func_onEnter, func_onClick)
 	-- Reuse existing button if available
 	local button = utilityFrames.buttons[name]
 
@@ -90,7 +90,7 @@ local function AttachUtilityFrames(targetFrame)
 			if i == 1 then
 				button:SetPoint("BOTTOMRIGHT", targetFrame, "TOPRIGHT", 0, 0)
 			else
-				button:SetPoint("RIGHT", prevButton, "LEFT", 0, 0)
+				button:SetPoint("RIGHT", prevButton, "LEFT", -2, 0)
 			end
 
 			prevButton = button
@@ -102,7 +102,7 @@ local function AttachUtilityFrames(targetFrame)
 	if utilityFrames.framerate then
 		utilityFrames.framerate:SetParent(targetFrame)
 		utilityFrames.framerate:ClearAllPoints()
-		utilityFrames.framerate:SetPoint("RIGHT", prevButton, "LEFT", 0, 0)
+		utilityFrames.framerate:SetPoint("RIGHT", prevButton, "LEFT", -4, 0)
 		utilityFrames.framerate:Show()
 	end
 end
@@ -115,7 +115,6 @@ function Octo_Event_UtilityFrames:Octo_CloseButton(frame)
 	local button = CreateUtilButton(
 		"CloseButton",
 		frame,
-		0,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga",
 		function() return {{E.classColorHexCurrent..CLOSE.."|r"}} end,
 		nil
@@ -156,7 +155,6 @@ function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 	CreateUtilButton(
 		"OptionsButton",
 		frame,
-		-WIDTH,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..addonIconTexture,
 		func_onEnter,
 		func_onClick
@@ -233,7 +231,6 @@ function Octo_Event_UtilityFrames:Octo_AbandonButton(frame)
 	CreateUtilButton(
 		"AbandonButton",
 		frame,
-		-WIDTH*2,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow72.tga",
 		func_onEnter,
 		func_onClick
@@ -270,8 +267,8 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame)
 			local timeText = v.startTime.." - "..v.endTime
 
 			if v.Active then
-				titleText = titleText..E.Green_Color..v.title.."|r"..E.White_Color.." ("..v.ENDS..")|r"
-				timeText = E.Green_Color..timeText.."|r"
+				titleText = titleText..E.White_Color..v.title.."|r"..E.Green_Color.." ("..v.ENDS..")|r"
+				timeText = E.White_Color..timeText.."|r"
 			else
 				titleText = titleText..E.Gray_Color..v.title.."|r"
 				timeText = E.Gray_Color..timeText.."|r"
@@ -299,7 +296,6 @@ function Octo_Event_UtilityFrames:Octo_EventsButton(frame)
 	CreateUtilButton(
 		"EventsButton",
 		frame,
-		-WIDTH*3,
 		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow6.tga",
 		func_onEnter,
 		func_onClick
@@ -314,13 +310,13 @@ function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame)
 	if not utilityFrames.framerate then
 		local Octo_FramerateFrame = CreateFrame("Frame", nil, UIParent)
 		Octo_FramerateFrame:Hide()
-		Octo_FramerateFrame:SetSize(WIDTH*2, HEIGHT)
+		Octo_FramerateFrame:SetSize(WIDTH*4, HEIGHT)
 		Octo_FramerateFrame:SetFrameStrata("HIGH")
 
-		local text_fps = Octo_FramerateFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-		text_fps:SetAllPoints()
-		text_fps:SetFontObject(OctoFont11)
-		text_fps:SetJustifyH("CENTER")
+		Octo_FramerateFrame.text = Octo_FramerateFrame:CreateFontString()
+		Octo_FramerateFrame.text:SetFontObject(OctoFont11)
+		Octo_FramerateFrame.text:SetAllPoints()
+		Octo_FramerateFrame.text:SetJustifyH("RIGHT")
 
 		Octo_FramerateFrame.ticker = nil
 		Octo_FramerateFrame.isTickerActive = false
@@ -329,14 +325,14 @@ function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame)
 			local FPS = math.floor(GetFramerate() * 10) / 10
 
 			if FPS >= 144 then
-				text_fps:SetTextColor(0, 1, 1, 1)
+				Octo_FramerateFrame.text:SetTextColor(0, 1, 1, 1)
 			elseif FPS >= 60 then
-				text_fps:SetTextColor(0.31, 1, 0.47, 1)
+				Octo_FramerateFrame.text:SetTextColor(0.31, 1, 0.47, 1)
 			else
-				text_fps:SetTextColor(1, 0, 0, 1)
+				Octo_FramerateFrame.text:SetTextColor(1, 0, 0, 1)
 			end
 
-			text_fps:SetText(FPS)
+			Octo_FramerateFrame.text:SetText(FPS)
 		end
 
 		local function StartTicker()
@@ -391,20 +387,12 @@ end
 
 -- Event registration
 local MyEventsTable = {
-	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 }
 
 E:func_RegisterMyEventsToFrames(Octo_Event_UtilityFrames, MyEventsTable)
 
---[[
-	Handles ADDON_LOADED event
-	@param addonName - Name of the loaded addon
-]]
-function Octo_Event_UtilityFrames:ADDON_LOADED(addonName)
-	if addonName ~= GlobalAddonName then return end
-
-	self:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
+function Octo_Event_UtilityFrames:VARIABLES_LOADED()
 
 	C_Timer.After(0, function()
 		for i, frame in ipairs(E.OctoTable_Frames) do
