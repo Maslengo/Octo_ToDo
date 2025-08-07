@@ -34,16 +34,6 @@ local math_min = math.min
 local math_max = math.max
 
 
-
-
-
-
-
-
-
-
-
-
 -- Функция инициализации элементов левой колонки
 local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	if not new then return end
@@ -81,7 +71,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frame.textLEFT:SetTextColor(textR, textG, textB, textA)
 
 	-- Текстура для фона левой колонки
-	frame.textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
+	frame.textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
 	frame.textureLEFT:Hide()
 	frame.textureLEFT:SetAllPoints()
 	frame.textureLEFT:SetTexture(E.TEXTURE_LEFT_PATH)
@@ -259,7 +249,7 @@ end
 function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 	-- Настройка позиции и обработчика показа фрейма
 	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.MonitorWidth*.05)
-	Octo_MainFrame_ToDo:SetPoint("CENTER") -- ПОФИКСИТЬ
+	Octo_MainFrame_ToDo:SetPoint("CENTER")
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
 		Octo_EventFrame_ToDo:CreateDataProvider()
 		RequestRaidInfo()
@@ -410,7 +400,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 
 	HeaderFrameLEFT.text = HeaderFrameLEFT:CreateFontString()
 	HeaderFrameLEFT.text:SetFontObject(OctoFont11)
-	HeaderFrameLEFT.text:SetPoint("LEFT")
+	HeaderFrameLEFT.text:SetPoint("LEFT", INDENT_TEST, 0)
 	HeaderFrameLEFT.text:SetWordWrap(false)
 	HeaderFrameLEFT.text:SetJustifyV("MIDDLE")
 	HeaderFrameLEFT.text:SetJustifyH("LEFT")
@@ -419,7 +409,7 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
 		-- HeaderFrameLEFT.text:SetText(E:func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset()).."|r")
-		HeaderFrameLEFT.text:SetText("  Weekly Reset: "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset(), true).."|r  ")
+		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset(), true).."|r  ")
 	end)
 
 	-- Функция сброса пула фреймов
@@ -629,115 +619,114 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
 
 	-- Обновление интерфейса, если фрейм существует
-	if Octo_MainFrame_ToDo then
-		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.childCENT then return end
+	Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 
-		-- Расчет общей ширины правой части
-		local totalRightWidth = 0
-		local maxRIGHT = MIN_LINE_WIDTH_LEFT
-		if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
-			maxRIGHT = MAX_FRAME_WIDTH - COLUMN_SIZES_LEFT[1]+INDENT_TEST
+	-- Расчет общей ширины правой части
+	local totalRightWidth = 0
+	local maxRIGHT = MIN_LINE_WIDTH_LEFT
+	if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
+		maxRIGHT = MAX_FRAME_WIDTH - COLUMN_SIZES_LEFT[1]+INDENT_TEST
+	end
+
+	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
+		if (totalRightWidth + COLUMN_SIZES_RIGHT[i]) <= maxRIGHT then
+			totalRightWidth = totalRightWidth + COLUMN_SIZES_RIGHT[i]
+		else
+			break
+		end
+	end
+
+	local totalRightWidth_childCENT = 0
+	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
+		totalRightWidth_childCENT = totalRightWidth_childCENT + COLUMN_SIZES_RIGHT[i]
+	end
+
+	-- Расчет количества строк
+	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / LINE_HEIGHT)
+	LINES_MAX = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+
+	-- Установка размеров фрейма
+	local width = MIN_LINE_WIDTH_LEFT
+	if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
+		width = (COLUMN_SIZES_LEFT[1]+INDENT_TEST or MIN_LINE_WIDTH_LEFT) + totalRightWidth
+	end
+	local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
+
+	Octo_MainFrame_ToDo:SetSize(width, height)
+
+
+	-- print (E.Blue_Color.."left|r", COLUMN_SIZES_LEFT[1]+INDENT_TEST)
+	-- print (E.Red_Color.."rightChild|r", totalRightWidth_childCENT)
+	-- print (E.Gray_Color.."rightChild|r", totalRightWidth)
+	-- print (E.Purple_Color.."MainFrame|r", width)
+
+
+	Octo_MainFrame_ToDo.childCENT:SetSize(totalRightWidth_childCENT, height)
+
+	-- Освобождение всех фреймов из пула
+	Octo_MainFrame_ToDo.pool:ReleaseAll()
+
+	-- Создание заголовков для колонок персонажей
+	local accumulatedWidth = 0
+	for count, CharInfo in ipairs(tbl) do
+		local HeaderFrameRIGHT = Octo_MainFrame_ToDo.pool:Acquire()
+		local columnWidth = COLUMN_SIZES_RIGHT[count] or MIN_LINE_WIDTH_CENT
+
+		-- Установка позиции и размера заголовка
+		HeaderFrameRIGHT:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", accumulatedWidth, -HEADER_HEIGHT)
+		HeaderFrameRIGHT:SetSize(columnWidth, HEADER_HEIGHT)
+		accumulatedWidth = accumulatedWidth + columnWidth
+
+		-- Настройка текста заголовка
+		HeaderFrameRIGHT.text:SetAllPoints()
+		HeaderFrameRIGHT.text:SetFontObject(OctoFont11)
+		HeaderFrameRIGHT.text:SetWordWrap(true)
+		HeaderFrameRIGHT.text:SetJustifyV("MIDDLE")
+		HeaderFrameRIGHT.text:SetJustifyH("CENTER")
+		HeaderFrameRIGHT.text:SetMaxLines(3)
+		HeaderFrameRIGHT.text:SetText(E:func_textCENT_Chars(CharInfo))
+
+		-- Настройка взаимодействия
+		HeaderFrameRIGHT:SetPropagateMouseClicks(true)
+		HeaderFrameRIGHT:SetPropagateMouseMotion(true)
+		HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1)
+
+
+
+		-- Устанавливаем цвет фона в зависимости от фракции
+		if CharInfo.PlayerData.Faction == "Horde" then
+			charR, charG, charB = E:func_hex2rgbNUMBER(E.Horde_Color)
+		elseif CharInfo.PlayerData.Faction == "Alliance" then
+			charR, charG, charB = E:func_hex2rgbNUMBER(E.Alliance_Color)
+		elseif CharInfo.PlayerData.Faction == "Neutral" then
+			charR, charG, charB = E:func_hex2rgbNUMBER(E.Neutral_Color)
 		end
 
-		for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
-			if (totalRightWidth + COLUMN_SIZES_RIGHT[i]) <= maxRIGHT then
-				totalRightWidth = totalRightWidth + COLUMN_SIZES_RIGHT[i]
-			else
-				break
-			end
-		end
 
-		local totalRightWidth_childCENT = 0
-		for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
-			totalRightWidth_childCENT = totalRightWidth_childCENT + COLUMN_SIZES_RIGHT[i]
-		end
+		-- -- Установка цвета фона в зависимости от фракции
+		-- local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
+		HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
 
-		-- Расчет количества строк
-		local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / LINE_HEIGHT)
-		LINES_MAX = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+		-- Обработчик наведения для отображения тултипа
+		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
+			HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
+			E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
+		end)
 
-		-- Установка размеров фрейма
-		local width = MIN_LINE_WIDTH_LEFT
-		if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
-			width = (COLUMN_SIZES_LEFT[1]+INDENT_TEST or MIN_LINE_WIDTH_LEFT) + totalRightWidth
-		end
-		local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
+		HeaderFrameRIGHT:Show()
+	end
 
-		Octo_MainFrame_ToDo:SetSize(width, height)
-
-
-		-- print (E.Blue_Color.."left|r", COLUMN_SIZES_LEFT[1]+INDENT_TEST)
-		-- print (E.Red_Color.."rightChild|r", totalRightWidth_childCENT)
-		-- print (E.Gray_Color.."rightChild|r", totalRightWidth)
-		-- print (E.Purple_Color.."MainFrame|r", width)
-
-
-		Octo_MainFrame_ToDo.childCENT:SetSize(totalRightWidth_childCENT, height) -- ПОФИКСИТЬ? - INDENT_TEST
-
-		-- Освобождение всех фреймов из пула
-		Octo_MainFrame_ToDo.pool:ReleaseAll()
-
-		-- Создание заголовков для колонок персонажей
+	-- Обновление позиций подфреймов в центральной колонке
+	for _, frame in ipairs(Octo_MainFrame_ToDo.viewCENT:GetFrames()) do
 		local accumulatedWidth = 0
-		for count, CharInfo in ipairs(tbl) do
-			local HeaderFrameRIGHT = Octo_MainFrame_ToDo.pool:Acquire()
-			local columnWidth = COLUMN_SIZES_RIGHT[count] or MIN_LINE_WIDTH_CENT
-
-			-- Установка позиции и размера заголовка
-			HeaderFrameRIGHT:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", accumulatedWidth, -HEADER_HEIGHT)
-			HeaderFrameRIGHT:SetSize(columnWidth, HEADER_HEIGHT)
-			accumulatedWidth = accumulatedWidth + columnWidth
-
-			-- Настройка текста заголовка
-			HeaderFrameRIGHT.text:SetAllPoints()
-			HeaderFrameRIGHT.text:SetFontObject(OctoFont11)
-			HeaderFrameRIGHT.text:SetWordWrap(true)
-			HeaderFrameRIGHT.text:SetJustifyV("MIDDLE")
-			HeaderFrameRIGHT.text:SetJustifyH("CENTER")
-			HeaderFrameRIGHT.text:SetMaxLines(3)
-			HeaderFrameRIGHT.text:SetText(E:func_textCENT_Chars(CharInfo))
-
-			-- Настройка взаимодействия
-			HeaderFrameRIGHT:SetPropagateMouseClicks(true)
-			HeaderFrameRIGHT:SetPropagateMouseMotion(true)
-			HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1)
-
-
-
-			-- Устанавливаем цвет фона в зависимости от фракции
-			if CharInfo.PlayerData.Faction == "Horde" then
-				charR, charG, charB = E:func_hex2rgbNUMBER(E.Horde_Color)
-			elseif CharInfo.PlayerData.Faction == "Alliance" then
-				charR, charG, charB = E:func_hex2rgbNUMBER(E.Alliance_Color)
-			elseif CharInfo.PlayerData.Faction == "Neutral" then
-				charR, charG, charB = E:func_hex2rgbNUMBER(E.Neutral_Color)
-			end
-
-
-			-- -- Установка цвета фона в зависимости от фракции
-			-- local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
-			HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
-
-			-- Обработчик наведения для отображения тултипа
-			HeaderFrameRIGHT:SetScript("OnEnter", function(self)
-				HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
-				E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
-			end)
-
-			HeaderFrameRIGHT:Show()
-		end
-
-		-- Обновление позиций подфреймов в центральной колонке
-		for _, frame in ipairs(Octo_MainFrame_ToDo.viewCENT:GetFrames()) do
-			local accumulatedWidth = 0
-			for i = 1, #COLUMN_SIZES_RIGHT do
-				if frame.second[i] then
-					frame.second[i]:ClearAllPoints()
-					frame.second[i]:SetPoint("LEFT", frame, "LEFT", accumulatedWidth, 0)
-					frame.second[i]:SetWidth(COLUMN_SIZES_RIGHT[i])
-					accumulatedWidth = accumulatedWidth + COLUMN_SIZES_RIGHT[i]
-				end
+		for i = 1, #COLUMN_SIZES_RIGHT do
+			if frame.second[i] then
+				frame.second[i]:ClearAllPoints()
+				frame.second[i]:SetPoint("LEFT", frame, "LEFT", accumulatedWidth, 0)
+				frame.second[i]:SetWidth(COLUMN_SIZES_RIGHT[i])
+				accumulatedWidth = accumulatedWidth + COLUMN_SIZES_RIGHT[i]
 			end
 		end
 	end
@@ -751,17 +740,23 @@ local function Toggle_Octo_MainFrame_ToDo(frame)
 end
 
 -- Открытие главного фрейма по /octo
-function Octo_EventFrame_ToDo:main_frame_toggle()
+function E:main_frame_toggle()
 	if Octo_MainFrame_ToDo then
 		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
 	end
 end
 
 local MyEventsTable = {
+	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable)
+function Octo_EventFrame_ToDo:VARIABLES_LOADED()
+	--Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
+	-- local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
+	-- local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
+end
 function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 	Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 	E:InitOptions()
@@ -770,48 +765,4 @@ function Octo_EventFrame_ToDo:PLAYER_LOGIN()
 end
 function Octo_EventFrame_ToDo:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_ToDo:Hide()
-end
-----------------------------------------------------------------
--- Slash-команды
-----------------------------------------------------------------
-local slashCommands = {
-	OCTO = {
-		commands = {"/octo"},
-		handler = function(msg)
-			if not InCombatLockdown() then
-				Octo_EventFrame_ToDo:main_frame_toggle() -- Переключаем фрейм
-			end
-		end
-	},
-	RELOAD = {
-		commands = {"/rl"},
-		handler = function()
-			ReloadUI()
-		end
-	},
-	FRAMESTK = {
-		commands = {"/fs"},
-		handler = function(msg)
-			if not E:func_IsAddOnLoaded("Blizzard_DebugTools") then
-				E:func_LoadAddOnFORCED("Blizzard_DebugTools")
-			end
-			FrameStackTooltip_Toggle(msg == "true", true, true)
-		end
-	},
-	EVENTTREEASCE = {
-		commands = {"/et"},
-		handler = function(msg)
-			UIParentLoadAddOn("Blizzard_EventTrace");
-			if not EventTrace:ProcessChatCommand(msg) then
-				EventTrace:SetShown(not EventTrace:IsShown());
-			end
-		end
-	},
-}
--- Регистрируем все slash-команды
-for name, data in pairs(slashCommands) do
-	SlashCmdList[name] = data.handler
-	for i, cmd in ipairs(data.commands) do
-		_G["SLASH_"..name..i] = cmd
-	end
 end

@@ -1,16 +1,10 @@
 local GlobalAddonName, E = ...
 
-
-
-
-
-
-
 function E.Collect_All_ItemsInBag()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 
-	if not collectPlayerData or InCombatLockdown() then return end
+	if not collectPlayerData then return end
 
 	local usedSlots, totalSlots, Possible_Anima, Possible_CatalogedResearch = 0, 0, 0, 0
 	local keystoneFound = false

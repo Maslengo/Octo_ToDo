@@ -1,9 +1,9 @@
 local GlobalAddonName, E = ...
 
 function E.Collect_All_Garrison()
-	local list = {}
+
 	local collectGARRISON = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GARRISON
-	if not collectGARRISON or InCombatLockdown() then return end
+	if not collectGARRISON then return end
 
 	collectGARRISON.cacheSize = C_QuestLog.IsQuestFlaggedCompleted(37485) and 1000 or 500
 

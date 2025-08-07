@@ -425,6 +425,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	end
 	-- Настройки функций аддона
 	local featureDefaults = {
+		Config_ADDON_HEIGHT = 20,
 		Config_AlphaOnDrag = 0.8, -- Альфа при перетаскивании
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
 		Config_Auto_ChatClearing = false, -- Автоочистка чата

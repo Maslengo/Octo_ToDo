@@ -2,6 +2,9 @@ local GlobalAddonName, E = ...
 
 
 function E.Collect_All_Professions()
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collectMASLENGO then return end
+
 	local archaeology = {
 		--ID,Name_lang,ResearchFieldID,CurrencyID,TextureFileID,BigTextureFileID,ItemID
 		1, -- Дворфы,1,384,461831,461832,52843
@@ -56,9 +59,7 @@ function E.Collect_All_Professions()
 		-- 981,-- "Кулинария для новичков", -- WTF?
 		-- 982,-- "Кулинария для подмастерьев", -- WTF?
 	}
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectENABLEmoreprof = false
-	if collectMASLENGO and not InCombatLockdown() then
 		-- collectMASLENGO.professions = collectMASLENGO.professions or {}
 		collectMASLENGO.professions = {}
 		for i, id in next, ({GetProfessions()}) do
@@ -148,7 +149,6 @@ function E.Collect_All_Professions()
 			----------------------------------------------------------------
 			----------------------------------------------------------------
 		end
-	end
 	-- for _, branchID in ipairs(ArchaeologyTBL) do
 	-- local raceName, raceTextureID, raceItemID, numFragmentsCollected, numFragmentsRequired, maxFragments = GetArchaeologyRaceInfoByID(branchID)
 	-- end

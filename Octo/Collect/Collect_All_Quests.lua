@@ -4,10 +4,7 @@ function E.Collect_All_Quests()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 
-	-- Early return if conditions aren't met
-	if not collectPlayerData or InCombatLockdown() then
-		return
-	end
+	if not collectPlayerData or not collectMASLENGO then return end
 
 	-- Clear tables
 	wipe(collectMASLENGO.ListOfQuests)

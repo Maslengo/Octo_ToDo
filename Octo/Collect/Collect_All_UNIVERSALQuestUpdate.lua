@@ -1,10 +1,4 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 function E:func_Universal_91_Concat()
@@ -26,14 +20,15 @@ end
 
 
 function E:func_Collect_All_UNIVERSALQuestUpdate()
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collectMASLENGO then return end
+
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
 		print ("func_ConcatAtStart_UniversalQuestQWE")
 		E.func_ConcatAtStart_UniversalQuestQWE = true
 		E:func_Universal_91_Concat()
 	end
 
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectMASLENGO or InCombatLockdown() then return end
 
 	-- Создаем таблицу только если есть данные для сохранения
 	local hasDataToSave = false

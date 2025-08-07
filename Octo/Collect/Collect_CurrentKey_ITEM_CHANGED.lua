@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 
 function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collectPlayerData then return end
 	----------------------------------------------------------------
 	local dungeonSTR = select(18, strsplit(":", arg2))
 	local lvl = select(20, strsplit(":", arg2))

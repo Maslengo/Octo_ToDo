@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 
--- Локализация часто используемых функций и переменных
 local time = time
 local GetServerTime = GetServerTime
 local GetCVarBool, SetCVar = GetCVarBool, SetCVar
@@ -10,18 +9,6 @@ local GetMonthInfo = C_Calendar.GetMonthInfo
 local SetAbsMonth = C_Calendar.SetAbsMonth
 local GetNumDayEvents = C_Calendar.GetNumDayEvents
 local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
-
--- -- Функция для создания таблицы с датой
--- local function createDateTable(timeData)
--- 	return {
--- 		year = timeData.year,
--- 		month = timeData.month,
--- 		day = timeData.monthDay,
--- 		hour = timeData.hour,
--- 		min = timeData.minute,
--- 	}
--- end
-
 
 local getCalendarTime do
 	local t = {}
@@ -96,14 +83,6 @@ local function generateEventKey(eventID, startTime)
 		startTime.month,
 		startTime.year)
 end
-
-
-
-
-
-
-
-
 
 -- Основная функция сбора информации о праздниках
 function E.Collect_All_Holiday()

@@ -56,14 +56,9 @@ function E:func_Collect_All_Table()
 	E.Collect_All_PlayerDurability()
 	E.Collect_All_Holiday()
 end
-----------------------------------------------------------------
 E:func_RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable)
--- function Octo_EventFrame_Collect:UNIT_FACTION(...)
--- 	if ... == "player" then
--- 		E.Collect_All_PlayerInfo()
--- 		print ("UNIT_FACTION", ...)
--- 	end
--- end
+
+----------------------------------------------------------------
 
 function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	RequestTimePlayed()

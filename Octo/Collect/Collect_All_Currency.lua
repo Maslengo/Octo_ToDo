@@ -1,9 +1,9 @@
 local GlobalAddonName, E = ...
 
 function E.Collect_All_Currency()
-	local list = {}
+
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectMASLENGO or InCombatLockdown() then return end
+	if not collectMASLENGO then return end
 	if not Octo_Cache_DB and not Octo_Cache_DB.AllCurrencies then return end
 		----------------------------------------------------------------
 		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()

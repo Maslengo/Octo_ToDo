@@ -3,11 +3,8 @@ local GlobalAddonName, E = ...
 
 function E.Collect_All_BfA_Cloaklvl()
 
-	-- Проверяем, есть ли данные игрока и не в бою ли мы
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not (collectPlayerData and not InCombatLockdown()) then
-		return  -- Если условий нет, выходим
-	end
+	if not collectPlayerData then return end
 
 	-- Проверяем, есть ли плащ (ID 169223) в инвентаре
 	local hasItem = E:func_GetItemCount(169223, false, false, false, false)

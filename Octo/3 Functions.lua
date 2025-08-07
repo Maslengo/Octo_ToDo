@@ -277,7 +277,7 @@ local function func_itemName_CACHE(id)
 			itemCache = {}
 			Octo_Cache_DB.AllItems[id] = itemCache
 		end
-		print (E.Lime_Color .. ITEMS .. "|r", id, itemName)
+		-- print (E.Lime_Color .. ITEMS .. "|r", id, itemName)
 		itemCache[E.curLocaleLang] = itemName -- Сохраняем имя для текущей локали
 		return itemName -- Возвращаем имя сразу, без лишних проверок
 	end
@@ -324,7 +324,7 @@ local function func_currencyName_CACHE(id)
 	end
 	currencyCache[E.curLocaleLang] = cachedValue
 	-- Вывод в лог (если нужно)
-	print (E.Lime_Color .. CURRENCY .. "|r", id, info.name)
+	-- print (E.Lime_Color .. CURRENCY .. "|r", id, info.name)
 	return cachedValue  -- Возвращаем готовую строку
 end
 function E:func_currencyName(id)
@@ -379,7 +379,7 @@ local function func_npcName_CACHE(id)
 			Octo_Cache_DB.AllNPCs[id] = npcCache
 		end
 		npcCache[E.curLocaleLang] = name
-		print (E.Lime_Color.."NPC|r", id, name)
+		-- print (E.Lime_Color.."NPC|r", id, name)
 		return name
 	end
 	return E.Red_Color..UNKNOWN.."|r"  -- Возвращаем "неизвестно", если NPC не найден
@@ -409,7 +409,7 @@ local function func_questName_CACHE(id)
 			Octo_Cache_DB.AllQuests[id] = questCache
 		end
 		questCache[E.curLocaleLang] = name
-		print (E.Lime_Color..BATTLE_PET_SOURCE_2.."|r", id, name)
+		-- print (E.Lime_Color..BATTLE_PET_SOURCE_2.."|r", id, name)
 		return name
 	end
 	return E.Red_Color..UNKNOWN.."|r"  -- Возвращаем "неизвестно", если квест не найден
@@ -446,7 +446,7 @@ local function func_reputationName_CACHE(id)
 		if isAccountWide == true then
 			vivod = E.Icon_AccountWide..vivod
 		end
-		print (E.Lime_Color..REPUTATION.."|r", id, name)
+		-- print (E.Lime_Color..REPUTATION.."|r", id, name)
 		Octo_Cache_DB.AllReputations[id] = Octo_Cache_DB.AllReputations[id] or {}
 		Octo_Cache_DB.AllReputations[id][E.curLocaleLang] = vivod
 	end
@@ -484,7 +484,7 @@ local function func_spellName_CACHE(id)
 			Octo_Cache_DB.AllSpells[id] = spellCache
 		end
 		spellCache[E.curLocaleLang] = name
-		print (E.Lime_Color..SPELLS.."|r", id, name)
+		-- print (E.Lime_Color..SPELLS.."|r", id, name)
 		return name
 	end
 
@@ -2111,107 +2111,125 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E:func_NumPlayers()
-	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
-	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
-	local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
-	local sorted = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData then
-			if E.curGUID == GUID then
-				sorted[#sorted+1] = CharInfo
-			end
-			local isShownPLAYER = CharInfo.PlayerData.isShownPLAYER --or false
-			local UnitLevel = CharInfo.PlayerData.UnitLevel --or 0
-			local CurrentRegionName = CharInfo.PlayerData.CurrentRegionName
-			local curServer = CharInfo.PlayerData.curServer
-			local Faction = CharInfo.PlayerData.Faction --or "Horde"
-			if isShownPLAYER and UnitLevel and CurrentRegionName and curServer and Faction and E.curGUID ~= GUID then
-				if not OnlyCurrentFaction or (OnlyCurrentFaction and Faction == E.curFaction) then
-					if ShowOnlyCurrentRegion then
-						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and CurrentRegionName == E.CurrentRegionName
-						and UnitLevel >= Config_LevelToShow
-						and UnitLevel <= Config_LevelToShowMAX then
-							sorted[#sorted+1] = CharInfo
-						end
-					else
-						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and UnitLevel >= Config_LevelToShow
-						and UnitLevel <= Config_LevelToShowMAX then
-							sorted[#sorted+1] = CharInfo
-						end
-					end
-				end
-			end
-		end
-	end
-	return #sorted or 1
+    local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+    local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+    local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
+    local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
+    local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
+
+    local count = 0  -- Используем простой счетчик вместо таблицы
+    local curGUID = E.curGUID
+    local curFaction = E.curFaction
+    local curServer = E.curServer
+    local CurrentRegionName = E.CurrentRegionName
+
+    -- Предварительно вычисляем условия для оптимизации
+    local checkCurrentServer = ShowOnlyCurrentServer and curServer
+    local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
+
+    for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+        if CharInfo.PlayerData then
+            local PlayerData = CharInfo.PlayerData
+
+            -- Текущий игрок всегда учитывается
+            if GUID == curGUID then
+                count = count + 1
+            else
+                -- Проверяем основные условия
+                if PlayerData.isShownPLAYER and
+                   PlayerData.UnitLevel and
+                   PlayerData.CurrentRegionName and
+                   PlayerData.curServer and
+                   PlayerData.Faction then
+
+                    local unitLevel = PlayerData.UnitLevel
+                    local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
+                    local meetsFaction = not OnlyCurrentFaction or PlayerData.Faction == curFaction
+                    local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
+                    local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
+
+                    if meetsLevel and meetsFaction and meetsServer and meetsRegion then
+                        count = count + 1
+                    end
+                end
+            end
+        end
+    end
+
+    -- Возвращаем минимум 1, если count == 0, но текущий игрок должен быть всегда
+    return count > 0 and count or 1
 end
+
 function E:func_sorted()
-	local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
-	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
-	local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
-	local sorted = {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData then
-			if E.curGUID == GUID then
-				sorted[#sorted+1] = CharInfo
-			end
-			local isShownPLAYER = CharInfo.PlayerData.isShownPLAYER --or false
-			local UnitLevel = CharInfo.PlayerData.UnitLevel --or 0
-			local CurrentRegionName = CharInfo.PlayerData.CurrentRegionName
-			local curServer = CharInfo.PlayerData.curServer
-			local Faction = CharInfo.PlayerData.Faction --or "Horde"
-			if isShownPLAYER and UnitLevel and CurrentRegionName and curServer and Faction and E.curGUID ~= GUID then
-				if not OnlyCurrentFaction or (OnlyCurrentFaction and Faction == E.curFaction) then
-					if ShowOnlyCurrentRegion then
-						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and CurrentRegionName == E.CurrentRegionName
-						and UnitLevel >= Config_LevelToShow
-						and UnitLevel <= Config_LevelToShowMAX
-						then
-							sorted[#sorted+1] = CharInfo
-						end
-					else
-						if (ShowOnlyCurrentServer and curServer == E.curServer or not ShowOnlyCurrentServer)
-						and UnitLevel >= Config_LevelToShow
-						and UnitLevel <= Config_LevelToShowMAX
-						then
-							sorted[#sorted+1] = CharInfo
-						end
-					end
-				end
-			end
-		end
-		table.sort(sorted, function(a, b)
-				if not a or not b then return false end
-				local a_UnitLevel = a.PlayerData.UnitLevel or 0
-				local b_UnitLevel = b.PlayerData.UnitLevel or 0
-				local a_avgItemLevelEquipped = a.PlayerData.avgItemLevelEquipped or 0
-				local b_avgItemLevelEquipped = b.PlayerData.avgItemLevelEquipped or 0
-				local a_Name = a.PlayerData.Name or "noname"
-				local b_Name = b.PlayerData.Name or "noname"
-				-- Сначала сортируем по серверу (в алфавитном порядке)
-				-- if a.PlayerData.curServer ~= b.PlayerData.curServer then
-				-- return a.PlayerData.curServer < b.PlayerData.curServer
-				-- end
-				-- Затем по уровню (по убыванию)
-				if a_UnitLevel ~= b_UnitLevel then
-					return a_UnitLevel > b_UnitLevel
-				end
-				-- Затем по уровню предметов (по убыванию) -- avgItemLevelEquippedEquipped
-				if a_avgItemLevelEquipped ~= b_avgItemLevelEquipped then
-					return a_avgItemLevelEquipped > b_avgItemLevelEquipped
-				end
-				-- В конце по имени (по возрастанию)
-				return a_Name < b_Name
-		end)
-	end
-	return sorted
+    local ShowOnlyCurrentServer = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+    local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+    local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
+    local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
+    local OnlyCurrentFaction = Octo_ToDo_DB_Vars.OnlyCurrentFaction
+
+    local sorted = {}
+    local curGUID = E.curGUID
+    local curFaction = E.curFaction
+    local curServer = E.curServer
+    local CurrentRegionName = E.CurrentRegionName
+
+    -- Кэшируем часто используемые значения
+    local checkCurrentServer = ShowOnlyCurrentServer and curServer
+    local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
+
+    for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+        if not CharInfo.PlayerData then
+            -- Пропускаем если нет PlayerData
+        else
+            local PlayerData = CharInfo.PlayerData
+
+            -- Быстро добавляем текущего игрока
+            if GUID == curGUID then
+                sorted[#sorted + 1] = CharInfo
+            else
+                -- Проверяем основные условия одним if
+                if PlayerData.isShownPLAYER and
+                   PlayerData.UnitLevel and
+                   PlayerData.CurrentRegionName and
+                   PlayerData.curServer and
+                   PlayerData.Faction then
+
+                    local unitLevel = PlayerData.UnitLevel
+                    local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
+                    local meetsFaction = not OnlyCurrentFaction or PlayerData.Faction == curFaction
+                    local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
+                    local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
+
+                    if meetsLevel and meetsFaction and meetsServer and meetsRegion then
+                        sorted[#sorted + 1] = CharInfo
+                    end
+                end
+            end
+        end
+    end
+
+    -- Оптимизированная сортировка
+    table.sort(sorted, function(a, b)
+        local aData, bData = a.PlayerData, b.PlayerData
+        local aLevel = aData.UnitLevel or 0
+        local bLevel = bData.UnitLevel or 0
+
+        if aLevel ~= bLevel then
+            return aLevel > bLevel
+        end
+
+        local aItemLevel = aData.avgItemLevelEquipped or 0
+        local bItemLevel = bData.avgItemLevelEquipped or 0
+        if aItemLevel ~= bItemLevel then
+            return aItemLevel > bItemLevel
+        end
+
+        local aName = aData.Name or "noname"
+        local bName = bData.Name or "noname"
+        return aName < bName
+    end)
+
+    return sorted
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

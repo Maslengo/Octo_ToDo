@@ -368,14 +368,14 @@ function E:func_Otrisovka_91_Other()
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.Money then
-					textCENT = E:func_CompactNumberFormat(CharInfo.PlayerData.Money/10000)
+					textCENT = E:func_MoneyString(CharInfo.PlayerData.Money)
 					if CharInfo.PlayerData.MoneyOnLogin then
 						if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
 							textCENT = textCENT..E.Red_Color.."-|r"
-							tooltipCENT[#tooltipCENT+1] = {"lost: ", E.Red_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+							tooltipCENT[#tooltipCENT+1] = {"lost: ", E.Red_Color..E:func_MoneyString((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)).."|r "..E:func_texturefromIcon(E.Icon_Money)}
 						elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
 							textCENT = textCENT..E.Green_Color.."+|r"
-							tooltipCENT[#tooltipCENT+1] = {"received: ", E.Green_Color..E:func_CompactNumberFormat((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)/10000).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+							tooltipCENT[#tooltipCENT+1] = {"received: ", E.Green_Color..E:func_MoneyString((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)).."|r "..E:func_texturefromIcon(E.Icon_Money)}
 						end
 					end
 				end
@@ -409,9 +409,9 @@ function E:func_Otrisovka_91_Other()
 						end
 						textCENT = color..E.func_FriendsFrame_GetLastOnline(CharInfo.PlayerData.time).."|r"
 						tooltipCENT[#tooltipCENT+1] = {color..E:func_FriendsFrame_GetLastOnlineText(CharInfo.PlayerData.time, CharInfo.PlayerData.classColorHex).."|r", ""}
-						tooltipCENT[#tooltipCENT+1] = {" ", ""}
-						tooltipCENT[#tooltipCENT+1] = {" ", color..CharInfo.PlayerData.loginDay.."|r"}
-						tooltipCENT[#tooltipCENT+1] = {" ", color..CharInfo.PlayerData.loginHour.."|r"}
+						tooltipCENT[#tooltipCENT+1] = {"", ""}
+						tooltipCENT[#tooltipCENT+1] = {color..CharInfo.PlayerData.loginDay.."|r", ""}
+						tooltipCENT[#tooltipCENT+1] = {color..CharInfo.PlayerData.loginHour.."|r", ""}
 					end
 				end
 				textLEFT = L["Was online"]

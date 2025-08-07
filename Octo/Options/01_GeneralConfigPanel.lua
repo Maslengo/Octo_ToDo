@@ -109,6 +109,24 @@ function E:CreateGeneralOptions()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			Config_ADDON_HEIGHT = {
+				type = "range",
+				name = "Высота одной строки",
+				desc = "",
+				min = 15,
+				max = 30,
+				step = 1,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT = value
+					print (value)
+					E.GLOBAL_LINE_HEIGHT = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			Config_AlphaOnDrag = {
 				type = "range",

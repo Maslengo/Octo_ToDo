@@ -64,19 +64,30 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
 			textleft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 			name_save = "AssaultTheBlackEmpire",
 			reset = "Weekly",
 			desc = "BattleforAzeroth",
 			quests = {
-				{56064},
-				{57728},
-				{55350},
-				{57157},
+				{57157}, -- _Uldum
+				{56308}, -- _Uldum
+				{55350}, -- _Uldum
+
+				{56064}, -- Vale of Eternal Blossoms
+				{57728}, -- Vale of Eternal Blossoms
+				{57008}, -- Vale of Eternal Blossoms
 			},
 			forcedMaxQuest = 2,
 		},
+
+
+
+
+
+
+
 		{
 			showTooltip = true,
 			textleft = "miniVision",
@@ -93,47 +104,31 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
+			-- sorted = true,
 			showTooltip = true,
-			textleft = "Warfront: Stromgarde",
-			name_save = "WarfrontStromgarde",
+			textleft = "Warfront",
+			name_save = "Warfront",
 			reset = "Weekly",
 			desc = "BattleforAzeroth",
 			quests = {
 				{53416, faction = "Horde"},
 				{53414, faction = "Alliance"},
-			},
-			-- forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			textleft = "Warfront: Darkshore",
-			name_save = "WarfrontDarkshore",
-			reset = "Weekly",
-			desc = "BattleforAzeroth",
-			quests = {
+
 				{53955, faction = "Horde"},
 				{53992, faction = "Alliance"},
-			},
-			-- forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			textleft = "Warfront: Heroic",
-			name_save = "WarfrontHeroic",
-			reset = "Weekly",
-			desc = "BattleforAzeroth",
-			quests = {
+
 				{56137, faction = "Horde"},
 				{57959, faction = "Horde"},
 				{56136, faction = "Alliance"},
 				{57960, faction = "Alliance"},
+
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			sorted = true,
 			showTooltip = true,
-			textleft = "DarkshoreRares",
+			textleft = "Darkshore: Rares",
 			name_save = "DarkshoreRares",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
@@ -223,10 +218,126 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 			-- forcedMaxQuest = 25,
 		},
+
+
+
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = "Mechagon: "..E:func_questName(54088),
+			name_save = "TheMechagonianThreat",
+			reset = "Once",
+			desc = "BattleforAzeroth",
+			quests = {
+				-- Только для Альянса
+				{54088, faction = "Alliance"},
+				{55040, faction = "Alliance"},
+				{54945, faction = "Alliance"},
+				{54087, faction = "Alliance"},
+				{54946, faction = "Alliance"},
+				{54947, faction = "Alliance"},
+				{54992, faction = "Alliance"},
+				{55645, faction = "Alliance"},
+				-- Только для Орды
+				{55646, faction = "Horde"},
+				{55647, faction = "Horde"},
+				{55648, faction = "Horde"},
+				{55630, faction = "Horde"},
+				{55632, faction = "Horde"},
+				{55649, faction = "Horde"},
+				{55650, faction = "Horde"},
+				{55651, faction = "Horde"},
+				{55652, faction = "Horde"},
+				{55685, faction = "Horde"},
+				-- Общие квесты
+				{55730},
+				{55731},
+				{55995},
+				{55734},
+				{55096},
+				{55736},
+				-- {55609}, -- Операция мехагон
+			},
+		},
+
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = "Mechagon: Dailies",
+			name_save = "MechagonDAILYQUESTS",
+			reset = "Daily",
+			desc = "BattleforAzeroth",
+			quests = {
+				-- {56765, faction = "Horde",}, Ржавоболтский запрос: полосатый окунь
+				-- {56761, faction = "Alliance",},
+				-- {56362, faction = "Horde",}, Ржавоболтский запрос: морской лен
+				-- {55378},
+				-- {56747},
+				-- {56752},
+				-- {56361},
+				-- {56758},
+				-- {55074},
+				-- {55382},
+				-- {56749},
+				-- {55379},
+				-- {55381},
+				-- {55383},
+				-- {55380},
+				-- {56762},
+				-- {56759},
+				-- {56753},
+				-- {56750},
+				-- {56751},
+				-- {56363},
+				-- {56757},
+				-- {56364},
+				-- {56760},
+				-- {56754},
+				-- {56763},
+				-- {56755},
+				{56621},
+				{56184}, -- DOUBLE
+				{56405}, -- DOUBLE
+				{55658}, -- DOUBLE
+				{54090}, -- DOUBLE
+				{56334},
+				{56326},
+				{55528}, -- DOUBLE
+				{56355}, -- DOUBLE
+				{56306}, -- DOUBLE
+				{56301}, -- DOUBLE
+				-- {56328}, ONCE
+				{56419},
+				-- {55743}, -- надо ли?
+				{55213},
+				{56746},
+				{56532},
+				{56557},
+				{57327},
+				{56083},
+				{55994},
+				{56559},
+				{55880},
+				{56573},
+				{55849},
+				{56434},
+				{57326},
+				{56380},
+				{56327},
+				{56373},
+				{55695},
+				{56082},
+				{54082},
+				{55742},
+			},
+			forcedMaxQuest = 11, -- ПОФИКСИТь
+		},
 		{
 			sorted = true,
 			showTooltip = true,
-			textleft = "MechagonRares",
+			textleft = "Mechagon: Rares",
 			name_save = "MechagonRares",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
@@ -273,7 +384,7 @@ function E:func_Universal_08_BattleforAzeroth()
 		},
 		{
 			showTooltip = true,
-			textleft = "MechagonTREASURE",
+			textleft = "Mechagon: Treasures",
 			name_save = "MechagonTREASURE",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
@@ -392,46 +503,8 @@ function E:func_Universal_08_BattleforAzeroth()
 		--      -- forcedMaxQuest = "all",
 		-- },
 		{
-			sorted = false,
 			showTooltip = true,
-			textleft = "THE MECHAGONIAN THREAT",
-			name_save = "TheMechagonianThreat",
-			reset = "Once",
-			desc = "BattleforAzeroth",
-			quests = {
-				-- Только для Альянса
-				{54088, faction = "Alliance"},
-				{55040, faction = "Alliance"},
-				{54945, faction = "Alliance"},
-				{54087, faction = "Alliance"},
-				{54946, faction = "Alliance"},
-				{54947, faction = "Alliance"},
-				{54992, faction = "Alliance"},
-				{55645, faction = "Alliance"},
-				-- Только для Орды
-				{55646, faction = "Horde"},
-				{55647, faction = "Horde"},
-				{55648, faction = "Horde"},
-				{55630, faction = "Horde"},
-				{55632, faction = "Horde"},
-				{55649, faction = "Horde"},
-				{55650, faction = "Horde"},
-				{55651, faction = "Horde"},
-				{55652, faction = "Horde"},
-				{55685, faction = "Horde"},
-				-- Общие квесты
-				{55730},
-				{55731},
-				{55995},
-				{55734},
-				{55096},
-				{55736},
-				-- {55609}, -- Операция мехагон
-			},
-		},
-		{
-			showTooltip = true,
-			textleft = "DAILY_VISITOR_QUESTS",
+			textleft = "Mechagon: Dailies Visitor Quests",
 			name_save = "DAILY_VISITOR_QUESTS",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
@@ -475,7 +548,7 @@ function E:func_Universal_08_BattleforAzeroth()
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = "MechagonDAILYWQ",
+			textleft = "Mechagon: Daily WQ",
 			name_save = "MechagonDAILYWQ",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
@@ -487,85 +560,8 @@ function E:func_Universal_08_BattleforAzeroth()
 			forcedMaxQuest = 1,
 		},
 		{
-			sorted = false,
 			showTooltip = true,
-			textleft = "MechagonDAILYQUESTS",
-			name_save = "MechagonDAILYQUESTS",
-			reset = "Daily",
-			desc = "BattleforAzeroth",
-			quests = {
-				-- {56765, faction = "Horde",}, Ржавоболтский запрос: полосатый окунь
-				-- {56761, faction = "Alliance",},
-				-- {56362, faction = "Horde",}, Ржавоболтский запрос: морской лен
-				-- {55378},
-				-- {56747},
-				-- {56752},
-				-- {56361},
-				-- {56758},
-				-- {55074},
-				-- {55382},
-				-- {56749},
-				-- {55379},
-				-- {55381},
-				-- {55383},
-				-- {55380},
-				-- {56762},
-				-- {56759},
-				-- {56753},
-				-- {56750},
-				-- {56751},
-				-- {56363},
-				-- {56757},
-				-- {56364},
-				-- {56760},
-				-- {56754},
-				-- {56763},
-				-- {56755},
-				{56621},
-				{56184}, -- DOUBLE
-				{56405}, -- DOUBLE
-				{55658}, -- DOUBLE
-				{54090}, -- DOUBLE
-				{56334},
-				{56326},
-				{55528}, -- DOUBLE
-				{56355}, -- DOUBLE
-				{56306}, -- DOUBLE
-				{56301}, -- DOUBLE
-
-
-
-
-
-				-- {56328}, ONCE
-				{56419},
-				-- {55743}, -- надо ли?
-				{55213},
-				{56746},
-				{56532},
-				{56557},
-				{57327},
-				{56083},
-				{55994},
-				{56559},
-				{55880},
-				{56573},
-				{55849},
-				{56434},
-				{57326},
-				{56380},
-				{56327},
-				{56373},
-				{55695},
-				{56082},
-				{54082},
-				{55742},
-			},
-			forcedMaxQuest = 11, -- ПОФИКСИТь
-		},
-		{
-			showTooltip = true,
-			textleft = "MechagonSecretFish",
+			textleft = "Mechagon: Secret Fish",
 			name_save = "MechagonSecretFish",
 			reset = "Daily",
 			desc = "BattleforAzeroth",
@@ -583,14 +579,11 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 			forcedMaxQuest = 10,
 		},
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = "Making a Mount",
-			name_save = "MakingAMount",
+			textleft = "Mechagon: Making a Mount",
+			name_save = "MechagonMakingAMount",
 			reset = "Once",
 			desc = "BattleforAzeroth",
 			quests = {
@@ -609,21 +602,6 @@ function E:func_Universal_08_BattleforAzeroth()
 			},
 			-- forcedMaxQuest = 10,
 		},
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 	return OctoTable_Universal
 end
