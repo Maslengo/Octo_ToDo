@@ -1,8 +1,10 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
+local Octo_EventFrame_UtilityFrames = CreateFrame("FRAME")
+Octo_EventFrame_UtilityFrames:Hide()
+----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-local Octo_Event_UtilityFrames = CreateFrame("FRAME")
-Octo_Event_UtilityFrames:Hide()
-
+----------------------------------------------------------------
 -- Constants
 local HEIGHT = 20
 local WIDTH = 20
@@ -111,7 +113,7 @@ end
 	Creates the close button
 	@param frame - Parent frame
 ]]
-function Octo_Event_UtilityFrames:Octo_CloseButton(frame)
+function Octo_EventFrame_UtilityFrames:Octo_CloseButton(frame)
 	local button = CreateUtilButton(
 		"CloseButton",
 		frame,
@@ -134,7 +136,7 @@ end
 	@param frame - Parent frame
 	@param addonIconTexture - Texture path for the button icon
 ]]
-function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
+function Octo_EventFrame_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 	local function func_onEnter()
 		return {{E.classColorHexCurrent..OPTIONS.."|r"}}
 	end
@@ -148,7 +150,7 @@ function Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
 		if SettingsPanel:IsVisible() then
 			HideUIPanel(SettingsPanel)
 		else
-			Settings.OpenToCategory(E:func_AddonTitle(E.MainAddonName), true)
+			Settings.OpenToCategory(E:func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
 		end
 	end
 
@@ -165,7 +167,7 @@ end
 	Creates the abandon quest button
 	@param frame - Parent frame
 ]]
-function Octo_Event_UtilityFrames:Octo_AbandonButton(frame)
+function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 	local function func_onEnter()
 		local tooltip = {}
 		local numQuests = E:func_CurrentNumQuests()
@@ -241,7 +243,7 @@ end
 	Creates the events button
 	@param frame - Parent frame
 ]]
-function Octo_Event_UtilityFrames:Octo_EventsButton(frame)
+function Octo_EventFrame_UtilityFrames:Octo_EventsButton(frame)
 	local function func_onEnter()
 		wipe(E.Holiday)
 		E.Collect_All_Holiday()
@@ -306,7 +308,7 @@ end
 	Creates the framerate display frame
 	@param frame - Parent frame
 ]]
-function Octo_Event_UtilityFrames:Octo_FramerateFrame(frame)
+function Octo_EventFrame_UtilityFrames:Octo_FramerateFrame(frame)
 	if not utilityFrames.framerate then
 		local Octo_FramerateFrame = CreateFrame("Frame", nil, UIParent)
 		Octo_FramerateFrame:Hide()
@@ -368,11 +370,11 @@ end
 ]]
 function E:func_CreateUtilsButton(frame, addonIconTexture)
 	if not utilityFrames.initialized then
-		Octo_Event_UtilityFrames:Octo_CloseButton(frame)
-		Octo_Event_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
-		Octo_Event_UtilityFrames:Octo_AbandonButton(frame)
-		Octo_Event_UtilityFrames:Octo_EventsButton(frame)
-		Octo_Event_UtilityFrames:Octo_FramerateFrame(frame)
+		Octo_EventFrame_UtilityFrames:Octo_CloseButton(frame)
+		Octo_EventFrame_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
+		Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
+		Octo_EventFrame_UtilityFrames:Octo_EventsButton(frame)
+		Octo_EventFrame_UtilityFrames:Octo_FramerateFrame(frame)
 		utilityFrames.initialized = true
 	end
 
@@ -390,9 +392,9 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
 
-E:func_RegisterMyEventsToFrames(Octo_Event_UtilityFrames, MyEventsTable)
+E:func_RegisterMyEventsToFrames(Octo_EventFrame_UtilityFrames, MyEventsTable)
 
-function Octo_Event_UtilityFrames:VARIABLES_LOADED()
+function Octo_EventFrame_UtilityFrames:VARIABLES_LOADED()
 
 	C_Timer.After(0, function()
 		for i, frame in ipairs(E.OctoTable_Frames) do

@@ -49,6 +49,26 @@ local MyEventsTable = {
 	"UPDATE_FACTION",
 	-- "UNIT_FACTION",
 
+	-- "GARRISON_LANDINGPAGE_SHIPMENTS",
+	-- "GARRISON_TALENT_UPDATE",
+	-- "GARRISON_TALENT_COMPLETE",
+	-- "GARRISON_MISSION_LIST_UPDATE",
+	-- "GET_ITEM_INFO_RECEIVED",
+	-- "GARRISON_SHIPMENT_RECEIVED",
+
+
+
+	"GARRISON_UPDATE",
+	"GARRISON_BUILDING_UPDATE",
+	"GARRISON_BUILDING_PLACED",
+	"GARRISON_BUILDING_REMOVED",
+	"GARRISON_BUILDING_LIST_UPDATE",
+	"GARRISON_BUILDING_ACTIVATED",
+	"GARRISON_UPGRADEABLE_RESULT",
+	"GARRISON_BUILDING_ERROR",
+
+
+
 }
 function E:func_Collect_All_Table()
 	E.Collect_All_PlayerLevel()
@@ -73,6 +93,7 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	E.Collect_All_Reputations() -- репутации
 	E.Collect_All_Quests() -- квесты
 	E.Collect_All_Garrison()
+	E.Collect_All_GarrisonBuilds()
 	E:func_Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
 	-- Предметы и валюта
 	E.Collect_All_ItemsInBag() -- предметы в сумках
@@ -195,6 +216,7 @@ function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
 	C_Timer.After(1, function()
 			E.Collect_All_Currency()
 			E.Collect_All_Covenant()
+			E.Collect_All_GarrisonBuilds()
 			E:func_Update("CURRENCY_DISPLAY_UPDATE")
 			self.CURRENCY_DISPLAY_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
 	end)
@@ -442,3 +464,148 @@ function Octo_EventFrame_Collect:PLAYER_UPDATE_RESTING()
 	if InCombatLockdown() then return end
 	E.Collect_All_PlayerInfo()
 end
+
+
+
+
+
+
+
+-- function Octo_EventFrame_Collect:GARRISON_LANDINGPAGE_SHIPMENTS()
+
+-- 	if InCombatLockdown() then return end
+-- 	E.Collect_All_GarrisonBuilds()
+-- end
+-- function Octo_EventFrame_Collect:GARRISON_TALENT_UPDATE()
+
+-- 	if InCombatLockdown() then return end
+-- 	E.Collect_All_GarrisonBuilds()
+-- end
+-- function Octo_EventFrame_Collect:GARRISON_TALENT_COMPLETE()
+
+-- 	if InCombatLockdown() then return end
+-- 	E.Collect_All_GarrisonBuilds()
+-- end
+-- function Octo_EventFrame_Collect:GARRISON_MISSION_LIST_UPDATE()
+
+-- 	if InCombatLockdown() then return end
+-- 	E.Collect_All_GarrisonBuilds()
+-- end
+-- function Octo_EventFrame_Collect:GET_ITEM_INFO_RECEIVED()
+
+-- 	if InCombatLockdown() then return end
+-- 	E.Collect_All_GarrisonBuilds()
+-- end
+-- function Octo_EventFrame_Collect:GARRISON_SHIPMENT_RECEIVED()
+
+-- 	if InCombatLockdown() then return end
+-- 	E.Collect_All_GarrisonBuilds()
+-- end
+
+
+
+
+function Octo_EventFrame_Collect:GARRISON_UPDATE()
+
+	if InCombatLockdown() or self.GARRISON_UPDATE then return end
+	self.GARRISON_UPDATE = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_UPDATE")
+		self.GARRISON_UPDATE = nil
+	end)
+
+end
+-- function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
+
+-- 	if InCombatLockdown() or self.CURRENCY_DISPLAY_UPDATE then return end
+-- 	self.CURRENCY_DISPLAY_UPDATE = true
+-- 	C_Timer.After(1, function()
+-- 		E.Collect_All_GarrisonBuilds()
+-- 		E:func_Update("CURRENCY_DISPLAY_UPDATE")
+-- 		self.CURRENCY_DISPLAY_UPDATE = nil
+-- 	end)
+
+-- end
+function Octo_EventFrame_Collect:GARRISON_BUILDING_UPDATE()
+
+	if InCombatLockdown() or self.GARRISON_BUILDING_UPDATE then return end
+	self.GARRISON_BUILDING_UPDATE = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_BUILDING_UPDATE")
+		self.GARRISON_BUILDING_UPDATE = nil
+	end)
+
+end
+function Octo_EventFrame_Collect:GARRISON_BUILDING_PLACED()
+
+	if InCombatLockdown() or self.GARRISON_BUILDING_PLACED then return end
+	self.GARRISON_BUILDING_PLACED = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_BUILDING_PLACED")
+		self.GARRISON_BUILDING_PLACED = nil
+	end)
+
+end
+function Octo_EventFrame_Collect:GARRISON_BUILDING_REMOVED()
+
+	if InCombatLockdown() or self.GARRISON_BUILDING_REMOVED then return end
+	self.GARRISON_BUILDING_REMOVED = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_BUILDING_REMOVED")
+		self.GARRISON_BUILDING_REMOVED = nil
+	end)
+
+end
+function Octo_EventFrame_Collect:GARRISON_BUILDING_LIST_UPDATE()
+
+	if InCombatLockdown() or self.GARRISON_BUILDING_LIST_UPDATE then return end
+	self.GARRISON_BUILDING_LIST_UPDATE = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_BUILDING_LIST_UPDATE")
+		self.GARRISON_BUILDING_LIST_UPDATE = nil
+	end)
+
+end
+function Octo_EventFrame_Collect:GARRISON_BUILDING_ACTIVATED()
+
+	if InCombatLockdown() or self.GARRISON_BUILDING_ACTIVATED then return end
+	self.GARRISON_BUILDING_ACTIVATED = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_BUILDING_ACTIVATED")
+		self.GARRISON_BUILDING_ACTIVATED = nil
+	end)
+
+end
+function Octo_EventFrame_Collect:GARRISON_UPGRADEABLE_RESULT()
+
+	if InCombatLockdown() or self.GARRISON_UPGRADEABLE_RESULT then return end
+	self.GARRISON_UPGRADEABLE_RESULT = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_UPGRADEABLE_RESULT")
+		self.GARRISON_UPGRADEABLE_RESULT = nil
+	end)
+
+end
+function Octo_EventFrame_Collect:GARRISON_BUILDING_ERROR()
+
+	if InCombatLockdown() or self.GARRISON_BUILDING_ERROR then return end
+	self.GARRISON_BUILDING_ERROR = true
+	C_Timer.After(1, function()
+		E.Collect_All_GarrisonBuilds()
+		E:func_Update("GARRISON_BUILDING_ERROR")
+		self.GARRISON_BUILDING_ERROR = nil
+	end)
+
+end
+
+
+
+
+

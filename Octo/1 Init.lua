@@ -8,11 +8,10 @@ E.OctoTable_Frames = {}
 E.OctoTable_UniversalQuest = {}
 E.Modules = {}
 
-
-
-
-
-
+E.ActiveHoliday = {}
+E.Holiday = {}
+E.strategies = {}
+E.altStrategies = {}
 
 
 

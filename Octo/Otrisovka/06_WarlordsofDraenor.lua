@@ -10,31 +10,65 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
-
+		-- 2    Type_6_0_Garrison    Warlords of Draenor
+		-- 3    Type_7_0_Garrison    Legion
+		-- 9    Type_8_0_Garrison    Battle for Azeroth
+		-- 111    Type_9_0_Garrison    Shadowlands
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+				----------------------------------------------------------------
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+				textLEFT = E:func_texturefromIcon(E:func_GetItemIconByID(110560))..GARRISON_LOCATION_TOOLTIP
+				if CharInfo.MASLENGO.HasGarrison[2] then
+					local count = 0
+					for garrisonType, id in next, (Enum.GarrisonType) do
+						if id == 2 then -- Warlords of Draenor
+							if CharInfo.MASLENGO.garrisonType[id] then
+								local data = CharInfo.MASLENGO.garrisonType[id]
+								for i, v in ipairs(data) do
+									local id = v.buildingID
+									count = count + 1
+									-- local _, name, textureKit, icon, rank, isBuilding, timeStart, buildTime, canActivate, canUpgrade, isPrebuilt = C_Garrison.GetOwnedBuildingInfoAbbrev(v.plotID)
+									-- local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = C_Garrison.GetBuildingInfo(v.buildingID)
+									tooltipCENT[#tooltipCENT+1] = {
+										E:func_texturefromIcon(E:func_buildIcon(id))..E:func_buildName(id),
+										v.level
+									}
+								end
+							end
+						end
+					end
+					if count ~= 0 then
+						textCENT = count
+					end
+				else
+					textCENT = E.NONE
+				end
+				----------------------------------------------------------------
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+				----------------------------------------------------------------
+		end)
 		-- table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
-		-- 		----------------------------------------------------------------
-		-- 		local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
-		-- 		----------------------------------------------------------------
-		-- 		if CharInfo.MASLENGO.OctoTable_QuestID[38242] then
-		-- 			textCENT = CharInfo.MASLENGO.OctoTable_QuestID[38242] and E.DONE
-		-- 		end
-		-- 		if CharInfo.MASLENGO.ItemsInBag[122457] then
-		-- 			textCENT = textCENT.."+"..CharInfo.MASLENGO.ItemsInBag[122457]..E:func_GetItemIconByID(122457)
-		-- 		end
-		-- 		myType = {"Item", 122457}
-		-- 		----------------------------------------------------------------
-		-- 		textLEFT = E:func_questName(38242).." (ап пета)"
-		-- 		colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-		-- 		----------------------------------------------------------------
-		-- 		return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
-		-- 		----------------------------------------------------------------
+		--         ----------------------------------------------------------------
+		--         local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+		--         ----------------------------------------------------------------
+		--         if CharInfo.MASLENGO.OctoTable_QuestID[38242] then
+		--             textCENT = CharInfo.MASLENGO.OctoTable_QuestID[38242] and E.DONE
+		--         end
+		--         if CharInfo.MASLENGO.ItemsInBag[122457] then
+		--             textCENT = textCENT.."+"..CharInfo.MASLENGO.ItemsInBag[122457]..E:func_GetItemIconByID(122457)
+		--         end
+		--         myType = {"Item", 122457}
+		--         ----------------------------------------------------------------
+		--         textLEFT = E:func_questName(38242).." (ап пета)"
+		--         colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+		--         ----------------------------------------------------------------
+		--         return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+		--         ----------------------------------------------------------------
 		-- end)
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
-
-
 				local GARRISON_RESOURCE_ID = 824
 				local RESOURCE_GENERATION_INTERVAL = 600  -- 10 minutes in seconds
 				local RESOURCES_PER_INTERVAL = 1
@@ -83,7 +117,6 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
 				----------------------------------------------------------------
 		end)
-
 		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end

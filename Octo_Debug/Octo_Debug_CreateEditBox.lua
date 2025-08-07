@@ -295,8 +295,10 @@ end
 ------------------------------------------------------------
 -- Создаем фрейм для редактирования текста
 local editFrame = CreateMyAddonEditFrameTemplate("editFrame", UIParent)
+-- E:func_InitFrame(editFrame)
 editFrame:ClearAllPoints()
 editFrame:SetPoint("CENTER")
+
 local editBox = editFrame.editFrame
 ------------------------------------------------------------
 ------------------------------------------------------------

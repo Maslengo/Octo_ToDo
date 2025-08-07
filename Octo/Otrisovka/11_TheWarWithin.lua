@@ -23,7 +23,7 @@ function E:func_Otrisovka_11_TheWarWithin()
 						-- CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
 						if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
 							if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
-								tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING.."|r"}
+								tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING}
 							elseif CharInfo.MASLENGO.GreatVault[i].progress then
 								tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
 							end
@@ -49,15 +49,15 @@ function E:func_Otrisovka_11_TheWarWithin()
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.CurrentKeyName then
-					tooltipCENT[#tooltipCENT+1] = {E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName.."|r", ""}
+					tooltipCENT[#tooltipCENT+1] = {CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName, ""}
 				end
 				if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
 					tooltipCENT[#tooltipCENT+1] = {" ", " "}
-					tooltipCENT[#tooltipCENT+1] = {"Weekly Best:", E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_weeklyBest.."|r"}
-					tooltipCENT[#tooltipCENT+1] = {"RIO Score:", E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.RIO_Score.."|r"}
+					tooltipCENT[#tooltipCENT+1] = {"Weekly Best:", CharInfo.PlayerData.RIO_weeklyBest}
+					tooltipCENT[#tooltipCENT+1] = {"RIO Score:", CharInfo.PlayerData.RIO_Score}
 				end
 				if CharInfo.PlayerData.CurrentKey then
-					textCENT = E:func_RIOColor(CharInfo.PlayerData.RIO_Score)..CharInfo.PlayerData.CurrentKey.."|r"
+					textCENT = CharInfo.PlayerData.CurrentKey
 				end
 				----------------------------------------------------------------
 				textLEFT = E.WOW_Epic_Color..L["Mythic Keystone"].."|r"

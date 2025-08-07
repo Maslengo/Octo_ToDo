@@ -1,9 +1,8 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 local Octo_EventFrame_WTF = CreateFrame("FRAME")
 Octo_EventFrame_WTF:Hide()
-
 ----------------------------------------------------------------
-
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo") -- Локализация
 local LibDataBroker = LibStub("LibDataBroker-1.1") -- Для брокера данных
 local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
@@ -298,7 +297,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		CurrentRegion = E:func_GetCurrentRegion(),
 		CurrentRegionName = E:func_GetCurrentRegionName(),
 		curServer = E.curServer, -- Текущий сервер
-		curServerShort = E:func_CurServerShort(E.curServer), -- Короткое имя сервера
+		curServerShort = E.curServerShort, -- Короткое имя сервера
 		currentTier = E.currentTier, -- Текущий игровой тир
 		Faction = "Horde", -- Фракция
 		GUID = "curGUID", -- Идентификатор персонажа
@@ -321,6 +320,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			[3] = {},
 			[4] = {},
 		},
+		garrisonType = {},
+		HasGarrison = {},
 		GARRISON = {},
 		GreatVault = {}, -- Данные Великого Хранилища
 		ItemsInBag = {}, -- Предметы в сумках
@@ -339,6 +340,11 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		SavedWorldBoss = {}, -- Сохраненные мировые боссы
 		UniversalQuest = {}, -- Универсальные квесты
 	}
+
+
+
+
+
 	-- Стандартные значения для данных игрока
 	local GARRISON_default = {
 		cacheSize = 0,
@@ -347,6 +353,9 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	}
 	-- Стандартные значения для GARRISON таблицы
 	local GARRISON_DEFAULTS = {
+		buids = {
+
+		},
 		summary = {
 			inProgress = {},
 		},
@@ -377,6 +386,15 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
+
+
+		for garrisonType, id in next, (Enum.GarrisonType) do
+			MASLENGO.garrisonType[id] = MASLENGO.garrisonType[id] or {}
+			-- MASLENGO.HasGarrison[id] = MASLENGO.HasGarrison[id] or false
+			E:func_InitField(MASLENGO, "HasGarrison", false)
+		end
+
+
 		-- Заполняем стандартные значения
 		for k, v in next, (GARRISON_default) do
 			E:func_InitField(MASLENGO.GARRISON, k, v)
@@ -390,6 +408,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				MASLENGO.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
+
 		-- Инициализируем данные репутации
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do

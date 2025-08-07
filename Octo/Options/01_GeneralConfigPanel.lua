@@ -11,7 +11,7 @@ function E:CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
-		name = E:func_AddonTitle(GlobalAddonName).." "..E.Gray_Color..E:func_AddonVersion(GlobalAddonName) .. "|r",
+		name = E:func_texturefromIcon(E:func_GetAddOnMetadata(E.MainAddonName, "IconTexture"))..E:func_GetAddOnMetadata(E.MainAddonName, "Title").." "..E.Gray_Color..E:func_GetAddOnMetadata(GlobalAddonName, "Version") .. "|r",
 		args = {
 			-------------------------------------------------
 			Header1 = {

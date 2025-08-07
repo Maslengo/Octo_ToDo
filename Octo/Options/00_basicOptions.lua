@@ -12,11 +12,11 @@ function E:InitOptions()
 
 	AceConfigRegistry:RegisterOptionsTable("Debug", E:Debug())
 	----------------------------------------------------------------
-	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E:func_AddonTitle(GlobalAddonName))
-	AceConfigDialog:AddToBlizOptions("Automatization", "Automatization", E:func_AddonTitle(GlobalAddonName))
-	AceConfigDialog:AddToBlizOptions("HideFrames", "HideFrames", E:func_AddonTitle(GlobalAddonName))
-	AceConfigDialog:AddToBlizOptions("Cvars", "Cvars", E:func_AddonTitle(GlobalAddonName))
+	local categoryFrame, mainCategoryID = AceConfigDialog:AddToBlizOptions("CreateGeneralOptions", E:func_GetAddOnMetadata(E.MainAddonName, "Title"))
+	AceConfigDialog:AddToBlizOptions("Automatization", "Automatization", E:func_GetAddOnMetadata(E.MainAddonName, "Title"))
+	AceConfigDialog:AddToBlizOptions("HideFrames", "HideFrames", E:func_GetAddOnMetadata(E.MainAddonName, "Title"))
+	AceConfigDialog:AddToBlizOptions("Cvars", "Cvars", E:func_GetAddOnMetadata(E.MainAddonName, "Title"))
 
-	AceConfigDialog:AddToBlizOptions("Debug", "Debug", E:func_AddonTitle(GlobalAddonName))
+	AceConfigDialog:AddToBlizOptions("Debug", "Debug", E:func_GetAddOnMetadata(E.MainAddonName, "Title"))
 	----------------------------------------------------------------
 end

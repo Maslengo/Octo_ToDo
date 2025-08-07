@@ -8,8 +8,7 @@ function E:func_textCENT_Chars(CharInfo)
 	if CharInfo.PlayerData.UnitLevel and CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerData.PlayerCanEarnExperience then
 		levelPart = " "..E.Yellow_Color..CharInfo.PlayerData.UnitLevel.."|r"
 	end
-	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and
-	E:func_CurServerShort(E.curServer) ~= CharInfo.PlayerData.curServer then
+	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and E.curServerShort ~= CharInfo.PlayerData.curServer then
 		serverPart = E.Skyblue_Color..CharInfo.PlayerData.curServer.."|r"
 	end
 	return namePart..levelPart.."|n"..serverPart

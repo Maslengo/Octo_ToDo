@@ -4,7 +4,7 @@ function E.Collect_All_PlayerInfo()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 
-	local curServerShort = E:func_CurServerShort(E.curServer)
+	local curServerShort = E.curServerShort
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 	local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")

@@ -31,23 +31,20 @@ tinsert(E.Modules, function()
 	end
 
 	-- Создаем и настраиваем фрейм
-	local eventFrame = CreateFrame("Frame", E:func_GenerateUniqueID())
-
+	local eventFrame_Screenshot = CreateFrame("Frame")
+	eventFrame_Screenshot:Hide()
 	-- Регистрируем события
-	eventFrame:RegisterEvent("PLAYER_LEVEL_UP")
-	eventFrame:RegisterEvent("ACHIEVEMENT_EARNED")
-	eventFrame:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
-	eventFrame:RegisterEvent("NEW_MOUNT_ADDED")
-	eventFrame:RegisterEvent("NEW_PET_ADDED")
-	eventFrame:RegisterEvent("NEW_TOY_ADDED")
-	eventFrame:RegisterEvent("TRADE_ACCEPT_UPDATE")
-
-	if E:func_IsRetail() then
-		eventFrame:RegisterEvent("CHALLENGE_MODE_COMPLETED")
-	end
+	eventFrame_Screenshot:RegisterEvent("PLAYER_LEVEL_UP")
+	eventFrame_Screenshot:RegisterEvent("ACHIEVEMENT_EARNED")
+	eventFrame_Screenshot:RegisterEvent("SHOW_LOOT_TOAST_LEGENDARY_LOOTED")
+	eventFrame_Screenshot:RegisterEvent("NEW_MOUNT_ADDED")
+	eventFrame_Screenshot:RegisterEvent("NEW_PET_ADDED")
+	eventFrame_Screenshot:RegisterEvent("NEW_TOY_ADDED")
+	eventFrame_Screenshot:RegisterEvent("TRADE_ACCEPT_UPDATE")
+	eventFrame_Screenshot:RegisterEvent("CHALLENGE_MODE_COMPLETED")
 
 	-- Устанавливаем обработчик событий
-	eventFrame:SetScript("OnEvent", function(self, event, ...)
+	eventFrame_Screenshot:SetScript("OnEvent", function(self, event, ...)
 		if EVENT_MESSAGES[event] then
 			-- DEFAULT_CHAT_FRAME:AddMessage(event)
 			TakeScreenshotWithMessage(event)

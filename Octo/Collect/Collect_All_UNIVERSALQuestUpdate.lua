@@ -42,6 +42,7 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 		local questKey = data.desc.."_"..data.name_save.."_"..data.reset
 		local questDataTable = {}
 		local count = 0
+		local totalQUEST = 0
 		local forcedMaxQuest = data.forcedMaxQuest
 		local hasSingleQuestOutput = false
 
@@ -54,14 +55,16 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 				if not faction or faction == E.curFaction then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 					local status = E:func_CheckCompletedByQuestID(questID)
-
+					totalQUEST = totalQUEST + 1
 					questDataTable[questID] = status
 
 					if isCompleted then
 						count = count + 1
 					end
-
-					if (forcedMaxQuest == 1 or #data.quests == 1) and E:func_IsOnQuest(questID) then
+					-- if questID == 53435 then
+					-- 	print (53435, totalQUEST, forcedMaxQuest, #data.quests, E:func_IsOnQuest(questID))
+					-- end
+					if (totalQUEST == 1 or forcedMaxQuest == 1 or #data.quests == 1) and E:func_IsOnQuest(questID) then
 						questDataTable.textCENT = status
 						hasSingleQuestOutput = true
 					end
