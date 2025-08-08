@@ -1727,9 +1727,6 @@ function E:debugInfo(id)
 	return result
 end
 
-
-
-
 function E:func_buildIcon(id)
 	local icon = select(4, GetBuildingInfo(id))
 	return icon
@@ -1745,15 +1742,14 @@ function E:func_buildLevel(id)
 	local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
 
 	-- if not canUpgrade then
-	if isMaxLevel then
+	-- if isMaxLevel then
+	if rank == 3 then
 		return E.Green_Color..rank.."|r"
 	else
 		return E.Red_Color..rank.."|r"
 	end
 
 end
-
-
 
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
 E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"

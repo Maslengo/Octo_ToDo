@@ -47,7 +47,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frame:SetHitRectInsets(1, 1, 1, 1)
 
 	-- Создание полноразмерного фрейма для подсветки
-	local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_ToDo)
+	local frameFULL = CreateFrame("BUTTON", nil, owner)
 	frameFULL:SetPropagateMouseClicks(true)
 	frameFULL:SetPropagateMouseMotion(true)
 	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
@@ -221,9 +221,8 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			end
 
 			secondFrame.textCENT:SetText(textCENT)
-
 			-- Подсветка колонки текущего персонажа если больше 1 персонажа
-			if frameData.totalPers > 1 and i == frameData.currentCharacterIndex then
+			if frameData.totalColumns > 1 and i == frameData.currentCharacterIndex then
 				secondFrame.curCharTextureBG:Show()
 			else
 				secondFrame.curCharTextureBG:Hide()
@@ -563,7 +562,6 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	end
 
 	local totalColumns = #tbl
-	local totalPers = totalColumns
 
 	-- Обработка данных для каждой строки
 	for _, func in ipairs(E:func_Concat_Otrisovka()) do
@@ -576,7 +574,6 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 			tooltipCENT = {},
 			colorCENT = {},
 			myType = {},
-			totalPers = totalPers,
 		}
 
 		-- Заполнение данных для каждого персонажа
@@ -598,6 +595,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 
 		-- Установка дополнительных параметров
 		zxc.currentCharacterIndex = currentCharacterIndex
+
 		zxc.totalColumns = totalColumns
 
 		-- Вставка данных в провайдер
