@@ -413,7 +413,6 @@ function E:func_GetHexColorFromQuality(quality)
 	end
 	return E.White_Color
 end
-
 function E:func_GetItemQualityColor(quality)
 	local r, g, b = GetItemQualityColor(quality)
 	return r, g, b
@@ -1952,16 +1951,13 @@ E.OctoTable_Covenant = {
 		b = 0.49,
 	},
 }
-
 E.OctoTable_followerTypeIDs = {
-	{name = "DRAENOR", id = Enum.GarrisonFollowerType.FollowerType_6_0_GarrisonFollower,}, -- 1 DRAENOR
-	{name = "DRAENOR_BOAT", id = Enum.GarrisonFollowerType.FollowerType_6_0_Boat,}, -- 2 DRAENOR SHIPS
-	{name = "LEGION", id = Enum.GarrisonFollowerType.FollowerType_7_0_GarrisonFollower,}, -- 4 LEGION
-	{name = "BATTLEFORAZEROTH", id = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower,}, -- 22 бфа что ли?
-	{name = "SHADOWNLANDS", id = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower,}, -- 123 SHADOWNLANDS (для каждого ковенанта)
+	{name = "DRAENOR", max = 52, id = Enum.GarrisonFollowerType.FollowerType_6_0_GarrisonFollower,}, -- 1 DRAENOR
+	{name = "DRAENOR_BOAT", max = 10, id = Enum.GarrisonFollowerType.FollowerType_6_0_Boat,}, -- 2 DRAENOR SHIPS
+	{name = "LEGION", max = 999, id = Enum.GarrisonFollowerType.FollowerType_7_0_GarrisonFollower,}, -- 4 LEGION
+	{name = "BATTLEFORAZEROTH", max = 999, id = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower,}, -- 22 бфа что ли?
+	{name = "SHADOWNLANDS", max = 999, id = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower,}, -- 123 SHADOWNLANDS (для каждого ковенанта)
 }
-
-
 E.listMaxSize = 30
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.."DebugInfo|r: "
 E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
@@ -2179,10 +2175,7 @@ function E:func_KeyTooltip(GUID, tooltipKey)
 		-- end
 		----------------------------------------------------------------
 	elseif tooltipKey:find("_COMPANIONS") then
-
 		tooltipCENT = E:func_CompanionsTOOLTIP(CharInfo, tooltipKey)
-
-
 		----------------------------------------------------------------
 	elseif tooltipKey:find("ItemsInBag") then
 		local number = tonumber(string.match(tooltipKey, "%d+"))
@@ -2275,95 +2268,88 @@ function E:func_KeyTooltip(GUID, tooltipKey)
 	----------------------------------------------------------------
 	return tooltipCENT
 end
-
-
-
 function E:func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 	local tooltipCENT = {}
 	local followerType = tooltipKey:gsub("_COMPANIONS", "")
-
 	-- Находим нужный тип фолловеров
 	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
 		if followerData.name == followerType then
-
-
-			if followerData.name == "SHADOWNLANDS" then
-				local covenandID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-				tooltipCENT[#tooltipCENT+1] = {
-					E:func_texturefromIcon(E.OctoTable_Covenant[covenandID].icon).." "..E.OctoTable_Covenant[covenandID].color..E.OctoTable_Covenant[covenandID].name.."|r"..": "..CharInfo.MASLENGO.CovenantAndAnima[covenandID][1],
-					"",
-					E:func_currencyName(1813)..": "..CharInfo.MASLENGO.CovenantAndAnima[covenandID][2]
-				}
-
-			end
 			-- Собираем всех собранных фолловеров
-			local collectedFollowers = {}
-			for _, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[followerType]) do
-				if v.isCollected then
-					table_insert(collectedFollowers, v)
-				end
-			end
-
-			-- Сортируем по качеству (quality) и имени (name)
-			table_sort(collectedFollowers, function(a, b)
-				if a.quality ~= b.quality then
-					return a.quality > b.quality  -- Сначала более высокое качество
-				elseif a.name ~= b.name then
-					return a.name < b.name        -- При одинаковом качестве - по алфавиту
-				else
-					return a.garrFollowerID < b.garrFollowerID
-				end
-			end)
-
-			-- Формируем tooltip данные
-			for _, v in ipairs(collectedFollowers) do
-				local portraitIconID = v.portraitIconID and E:func_texturefromIcon(v.portraitIconID) or ""
-				local classAtlas = v.classAtlas and CreateAtlasMarkup(v.classAtlas, 16, 16) or ""
-
-				local status = ""
-				if v.status then
-					if v.status == GARRISON_FOLLOWER_INACTIVE then
-						status = E.Red_Color..v.status.."|r" or v.status
-					elseif followerData.name == "SHADOWNLANDS" and v.status == GARRISON_FOLLOWER_ON_MISSION then
-						status = E.Skyblue_Color..COVENANT_MISSIONS_HEAL_ERROR_ON_ADVENTURE.."|r"
-					else
-						status = E.Skyblue_Color..v.status.."|r"
+			if CharInfo.MASLENGO.GarrisonFollowers and CharInfo.MASLENGO.GarrisonFollowers[followerType] then
+				local collectedFollowers = {}
+				local countCurrent = 0
+				for _, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[followerType]) do
+					if v.isCollected then
+						countCurrent = countCurrent + 1
+						table_insert(collectedFollowers, v)
 					end
 				end
-
-				local level = ""
-				if v.level then
-					level = v.isMaxLevel
+				-- Сортируем по качеству (quality) и имени (name)
+				table_sort(collectedFollowers, function(a, b)
+						local A_isCollected = a.isCollected and "true" or "false"
+						local B_isCollected = b.isCollected and "true" or "false"
+						if A_isCollected ~= B_isCollected then
+							return A_isCollected > B_isCollected
+						elseif a.quality ~= b.quality then
+							return a.quality > b.quality  -- Сначала более высокое качество
+						elseif a.name ~= b.name then
+							return a.name < b.name        -- При одинаковом качестве - по алфавиту
+							-- else
+							--     return a.garrFollowerID < b.garrFollowerID
+						end
+				end)
+				if followerData.name == "SHADOWNLANDS" and countCurrent ~= 0 and CharInfo.MASLENGO.CovenantAndAnima and CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+					local covenandID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+					tooltipCENT[#tooltipCENT+1] = {
+						E:func_texturefromIcon(E.OctoTable_Covenant[covenandID].icon).." "..E.OctoTable_Covenant[covenandID].color..E.OctoTable_Covenant[covenandID].name.."|r"..": "..CharInfo.MASLENGO.CovenantAndAnima[covenandID][1],
+						"",
+						E:func_currencyName(1813)..": "..(CharInfo.MASLENGO.CovenantAndAnima[covenandID][2] or 0)
+					}
+				end
+				-- Формируем tooltip данные
+				for _, v in ipairs(collectedFollowers) do
+					local portraitIconID = v.portraitIconID and E:func_texturefromIcon(v.portraitIconID) or ""
+					local classAtlas = v.classAtlas and CreateAtlasMarkup(v.classAtlas, 16, 16) or ""
+					local status = ""
+					if v.status then
+						if v.status == GARRISON_FOLLOWER_INACTIVE then
+							status = E.Red_Color..v.status.."|r" or v.status
+						elseif followerData.name == "SHADOWNLANDS" and v.status == GARRISON_FOLLOWER_ON_MISSION then
+							status = E.Skyblue_Color..COVENANT_MISSIONS_HEAL_ERROR_ON_ADVENTURE.."|r"
+						else
+							status = E.Skyblue_Color..v.status.."|r"
+						end
+					end
+					local level = ""
+					if v.level then
+						level = v.isMaxLevel
 						and " "..E.Green_Color..v.level.."|r"
 						or " "..E.Red_Color..v.level.."|r"
-
-					if not v.isMaxLevel and v.xp and v.levelXP then
-						level = level.." ("..v.xp.."/ "..v.levelXP..")"
+						if not v.isMaxLevel and v.xp and v.levelXP then
+							level = level.." ("..v.xp.."/ "..v.levelXP..")"
+						end
 					end
+					local durability = ""
+					if v.durability and v.maxDurability then
+						durability = v.durability.."/"..v.maxDurability
+					end
+					local color = E.Gray_Color
+					if v.isCollected then
+						color = E:func_GetHexColorFromQuality(v.quality)
+					end
+					local leftText = portraitIconID.." "..color..v.name.."|r"..level
+					local centText = durability
+					local rightText = status
+					table_insert(tooltipCENT, {
+							leftText,
+							centText,
+							rightText
+					})
 				end
-
-				local durability = ""
-				if v.durability and v.maxDurability then
-					durability = v.durability.."/"..v.maxDurability
-				end
-
-				local leftText = portraitIconID.." "..E:func_GetHexColorFromQuality(v.quality)..v.name.."|r"..level
-				local centText = durability
-				local rightText = status
-
-
-
-				table_insert(tooltipCENT, {
-					leftText,
-					centText,
-					rightText
-				})
 			end
-
 			break  -- Выходим из цикла после нахождения нужного типа
 		end
 	end
-
 	return tooltipCENT
 end
 ----------------------------------------------------------------
@@ -2458,7 +2444,7 @@ function E:func_Tooltip_Chars(CharInfo)
 		tooltip_Chars[#tooltip_Chars+1] = {"Chromie_canEnter", CharInfo.PlayerData.Chromie_canEnter and E.TRUE}
 		tooltip_Chars[#tooltip_Chars+1] = {"Chromie_UnitChromieTimeID", CharInfo.PlayerData.Chromie_UnitChromieTimeID}
 		-- if CharInfo.PlayerData.Chromie_name then
-			tooltip_Chars[#tooltip_Chars+1] = {"Chromie_name", CharInfo.PlayerData.Chromie_name}
+		tooltip_Chars[#tooltip_Chars+1] = {"Chromie_name", CharInfo.PlayerData.Chromie_name}
 		-- end
 		-- BattleTag info
 		tooltip_Chars[#tooltip_Chars+1] = {"BattleTag", E.Blue_Color..CharInfo.PlayerData.BattleTag.."|r"}

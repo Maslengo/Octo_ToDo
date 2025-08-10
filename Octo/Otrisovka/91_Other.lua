@@ -9,19 +9,23 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				local QWEname = followerData.name
+				local followerMAX = followerData.max
 				textLEFT = COMPANIONS.." ("..QWEname..")"
 				if CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
 					tooltipKey = QWEname.."_COMPANIONS"
-					local count = 0
+					local countCurrent = 0
+					local countTotal = 0
+
 					for i, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[QWEname]) do
 						if v.isCollected then
-							count = count + 1
+							countCurrent = countCurrent + 1
 						end
+						countTotal = countTotal + 1
 					end
 
 					-- if #CharInfo.MASLENGO.GarrisonFollowers[QWEname] ~= 0 then
-					if count ~= 0 then
-						textCENT = count
+					if countCurrent ~= 0 then
+						textCENT = countCurrent .."/".. countTotal -- followerMAX
 					end
 				end
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
