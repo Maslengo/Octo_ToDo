@@ -92,12 +92,14 @@ function Octo_EventFrame_OctoTooltip:Octo_Frame_init(frame, node)
 	-- Получаем данные из узла и кэшируем часто используемые переменные
 	local frameData = node:GetData()
 	local lineFrames = frame.lineFrames  -- Кэшируем для быстрого доступа
-	local numData = #frameData           -- Количество элементов в данных
+	-- local numData = #frameData           -- Количество элементов в данных
+	local numData = Octo_EventFrame_OctoTooltip.columns or 1           -- Количество элементов в данных
+	-- print (Octo_EventFrame_OctoTooltip.columns, totalColumns, numData)
 	local numLines = #lineFrames         -- Количество доступных lineFrames
 	local columnSizes = Octo_EventFrame_OctoTooltip.COLUMN_SIZES  -- Размеры колонок (если есть)
 	-- Обрабатываем данные и обновляем соответствующие lineFrames
 	for i = 1, numData do
-		local currentText = frameData[i]
+		local currentText = frameData[i] or ""
 		if currentText then
 			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
 		end
@@ -230,6 +232,7 @@ local function calculateColumnWidths(node)
 	return columnWidths
 end
 function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
+	-- fpde(tbl)
 	local lines = 0
 	local columns = 0
 	local DataProvider = CreateTreeDataProvider()
@@ -247,26 +250,50 @@ function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
 		lines = lines + 1
 		-- DataProvider:Remove(tempHeaderNode) -- Удаляем, чтобы не мешал
 	end
+	local newColumnsNumber = 0
 
-
-	for _, v in ipairs(tbl) do
+	for stroka, v in ipairs(tbl) do
 		lines = lines + 1
 		local zxc = {}
-		for i, value in ipairs(v) do
-			if value ~= nil then
-				table.insert(zxc, value)
+		for indexColumn = 1, #v do
+			newColumnsNumber = math.max(newColumnsNumber, #v)
+			local value = v[indexColumn]
+			if value == nil then
+				value = E.NIL
+			elseif value == true then
+				value = E.TRUE
+			elseif value == false then
+				value = E.FALSE
+			end
+			if E.DebugInfo then
+				if type(value) ~= "table" then
+					value = tostring(value)
+					if value == "" then value = " " end
+					if value == " " then value = E.Yellow_Color.."SPACE|R" end
+					table.insert(zxc, value)
+				end
+			else
+				if type(value) ~= "table" then
+					value = tostring(value)
+					if value == "" then value = " " end
+					table.insert(zxc, value)
+				end
 			end
 		end
-		if #zxc > 0 then
+		if newColumnsNumber > 0 then
+		-- if #zxc > 0 then
 			local node = DataProvider:Insert(zxc)
-			columns = #zxc
+			-- columns = #zxc
+			columns = newColumnsNumber
 			for j, w in ipairs(calculateColumnWidths(node)) do
 				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
 			end
 		end
 	end
+	-- print ("newColumnsNumber:", newColumnsNumber, "columns:", columns)
 
 	Octo_EventFrame_OctoTooltip.COLUMN_SIZES = COLUMN_SIZES
+	Octo_EventFrame_OctoTooltip.columns = columns
 	local total_width = INDENT_TEST*2 -- ОТСТУП
 	for i = 1, columns do
 		total_width = total_width + Octo_EventFrame_OctoTooltip.COLUMN_SIZES[i]

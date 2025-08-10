@@ -321,6 +321,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			[4] = {},
 		},
 		garrisonType = {},
+		GarrisonFollowers = {},
 		HasGarrison = {},
 		GARRISON = {},
 		GreatVault = {}, -- Данные Великого Хранилища
@@ -394,6 +395,11 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 			E:func_InitField(MASLENGO, "HasGarrison", false)
 		end
 
+
+		for i, v in ipairs(E.OctoTable_followerTypeIDs) do
+			local name = v.name
+			MASLENGO.GarrisonFollowers[name] = MASLENGO.GarrisonFollowers[name] or {}
+		end
 
 		-- Заполняем стандартные значения
 		for k, v in next, (GARRISON_default) do
@@ -717,7 +723,7 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				-- Сбрасываем ежедневные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Daily" then
-						local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
@@ -762,7 +768,7 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				-- Сбрасываем еженедельные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Weekly" then
-						local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
@@ -783,7 +789,7 @@ function Octo_EventFrame_WTF:Month_Reset()
 				-- Сбрасываем ежемесячные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Month" then
-						local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
@@ -865,5 +871,18 @@ function Octo_EventFrame_WTF:PLAYER_LOGIN()
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
 		Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
+
+
+
+
+
+		Octo_ToDo_DB_Vars.DebugButton = E.DebugButton -- Отладка кнопок
+		Octo_ToDo_DB_Vars.DebugEvent = E.DebugEvent -- Отладка событий
+		Octo_ToDo_DB_Vars.DebugFunction = E.DebugFunction -- Отладка функций
+		Octo_ToDo_DB_Vars.DebugIDs = E.DebugIDs  -- Отладка ID
+		Octo_ToDo_DB_Vars.DebugInfo = E.DebugInfo -- Отладка информации
+
+
+
 	-- end
 end

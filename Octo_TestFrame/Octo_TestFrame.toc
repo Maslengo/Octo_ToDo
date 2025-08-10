@@ -7,6 +7,4 @@
 
 ## SavedVariables: Octo_TestFrame_DB_Vars
 
-Otrisovka.lua
 Octo_TestFrame.lua
-QWE.lua

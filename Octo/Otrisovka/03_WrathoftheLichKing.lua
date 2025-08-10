@@ -3,9 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 3
 function E:func_Otrisovka_03_WrathoftheLichKing()
-	local OctoTable_Otrisovka_textLEFT = {}
 	local OctoTable_Otrisovka_textCENT = {}
-	local OctoTable_Otrisovka_tooltipCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------

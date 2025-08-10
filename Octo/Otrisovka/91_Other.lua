@@ -1,193 +1,35 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_textCENT_Chars(CharInfo)
-	local namePart = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"
-	local levelPart = ""
-	local serverPart = ""
-	if CharInfo.PlayerData.UnitLevel and CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerData.PlayerCanEarnExperience then
-		levelPart = " "..E.Yellow_Color..CharInfo.PlayerData.UnitLevel.."|r"
-	end
-	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and E.curServerShort ~= CharInfo.PlayerData.curServer then
-		serverPart = E.Skyblue_Color..CharInfo.PlayerData.curServer.."|r"
-	end
-	return namePart..levelPart.."|n"..serverPart
-end
-----------------------------------------------------------------
-local function AddDoubleLine(left, right, tooltip)
-	tooltip[#tooltip+1] = {left, right or ""}
-end
-----------------------------------------------------------------
-function E:func_Tooltip_Chars(CharInfo)
-	local tooltip_Chars = {}
-	-- Basic character information
-	if CharInfo.PlayerData.classColorHex then
-		-- Name and guild info
-		if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer then
-			tooltip_Chars.Header = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")"}
-			-- tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r ("..CharInfo.PlayerData.curServer..")"}
-		end
-		if CharInfo.PlayerData.guildRankName and CharInfo.PlayerData.guildRankIndex then
-			tooltip_Chars[#tooltip_Chars+1] = {"<"..E.Green_Color..CharInfo.PlayerData.guildName.."|r"..">".." ["..E.Green_Color..CharInfo.PlayerData.guildRankName.."|r".."]"}
-		end
-		-- War mode status
-		if CharInfo.PlayerData.WarMode then
-			tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.WarMode and E.Green_Color..ERR_PVP_WARMODE_TOGGLE_ON.."|r" or ""}
-		end
-		-- Level and race info
-		if CharInfo.PlayerData.RaceLocal then
-			if CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerData.UnitXPPercent then
-				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.RaceLocal.." "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.UnitLevel.."-го|r уровня "..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.UnitXPPercent.."%|r", ""}
-			else
-				tooltip_Chars[#tooltip_Chars+1] = {CharInfo.PlayerData.RaceLocal, ""}
-			end
-		end
-		-- Spec and class info
-		if CharInfo.PlayerData.specName and CharInfo.PlayerData.specIcon then
-			tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(CharInfo.PlayerData.specIcon)..CharInfo.PlayerData.specName.." "..CharInfo.PlayerData.className, ""}
-		end
-	end
-	-- Chromie time info
-	if CharInfo.PlayerData.Chromie_name and CharInfo.PlayerData.Chromie_name ~= "" then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {L["Chromie"]..": "..E.Green_Color..CharInfo.PlayerData.Chromie_name.."|r", ""}
-	end
-	-- Location info
-	if CharInfo.PlayerData.BindLocation then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(134414)..string.format(BIND_ZONE_DISPLAY, CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.BindLocation.."|r"), ""}
-	end
-	if CharInfo.PlayerData.curLocation then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.curLocation.."|r", ""}
-	end
-	-- Inventory info
-	if CharInfo.PlayerData.usedSlots and CharInfo.PlayerData.totalSlots then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(133634)..L["Bags"]..": "..CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.usedSlots.."/"..CharInfo.PlayerData.totalSlots).."|r", ""}
-	end
-	-- Quests info
-	if CharInfo.PlayerData.numQuests and CharInfo.PlayerData.maxNumQuestsCanAccept then
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_texturefromIcon(236664)..QUESTS_LABEL..": "..CharInfo.PlayerData.classColorHex..(CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept).."|r", ""}
-	end
-	-- Play time info
-	if CharInfo.PlayerData.realTotalTime then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {string.format(TIME_PLAYED_TOTAL, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.realTotalTime)).."|r", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {string.format(TIME_PLAYED_LEVEL, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.realLevelTime)).."|r", ""}
-	end
-	-- Special item info
-	if CharInfo.MASLENGO.ItemsInBag[122284] then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {E:func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
-	end
-	-- Debug information
-	if E.DebugInfo then
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		tooltip_Chars[#tooltip_Chars+1] = {E.DEVTEXT, ""}
-		if CharInfo.PlayerData.tmstp_Daily then
-			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Daily: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Daily-GetServerTime()).."|r", ""}
-		end
-		if CharInfo.PlayerData.tmstp_Weekly then
-			tooltip_Chars[#tooltip_Chars+1] = {"tmstp_Weekly: "..CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(CharInfo.PlayerData.tmstp_Weekly-GetServerTime()).."|r", ""}
-		end
-		-- Character identification
-		tooltip_Chars[#tooltip_Chars+1] = {E.Purple_Color.."GUID".."|r", E.Purple_Color..CharInfo.PlayerData.GUID.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"hasMail", CharInfo.PlayerData.hasMail and E:func_texturefromIcon(E.Icon_MailBox)..CharInfo.PlayerData.classColorHex.."true|r" or E.NIL}
-		-- Chromie time debug info
-		tooltip_Chars[#tooltip_Chars+1] = {"Chromie_canEnter", CharInfo.PlayerData.Chromie_canEnter and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"Chromie_UnitChromieTimeID", CharInfo.PlayerData.Chromie_UnitChromieTimeID or E.NIL.."|r"}
-		if CharInfo.PlayerData.Chromie_name then
-			tooltip_Chars[#tooltip_Chars+1] = {"Chromie_name", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Chromie_name.."|r"}
-		end
-		-- BattleTag info
-		tooltip_Chars[#tooltip_Chars+1] = {"BattleTag", E.Blue_Color..CharInfo.PlayerData.BattleTag.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"BattleTagLocal", E.Blue_Color..CharInfo.PlayerData.BattleTagLocal.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		-- Account restrictions
-		tooltip_Chars[#tooltip_Chars+1] = {"GameLimitedMode_IsActive", CharInfo.PlayerData.GameLimitedMode_IsActive and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"levelCapped20", CharInfo.PlayerData.levelCapped20 and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"PlayerCanEarnExperience", CharInfo.PlayerData.PlayerCanEarnExperience and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		-- Build info
-		tooltip_Chars[#tooltip_Chars+1] = {"buildVersion", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.buildVersion.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"buildNumber", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.buildNumber.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"buildDate", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.buildDate.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"interfaceVersion", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.interfaceVersion.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		-- Version info
-		tooltip_Chars[#tooltip_Chars+1] = {"currentTier", CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.currentTier.."|r"}
-		tooltip_Chars[#tooltip_Chars+1] = {"IsPublicBuild", CharInfo.PlayerData.IsPublicBuild and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		-- Account limits
-		tooltip_Chars[#tooltip_Chars+1] = {"max LVL", CharInfo.PlayerData.GetRestrictedAccountData_rLevel and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"max Money", CharInfo.PlayerData.GetRestrictedAccountData_rMoney and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		-- Account security
-		tooltip_Chars[#tooltip_Chars+1] = {"Authenticator", CharInfo.PlayerData.IsAccountSecured and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"УЗ имеет ограничения пробной УЗ", CharInfo.PlayerData.IsRestrictedAccount and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"Использует ли игрок пробную УЗ", CharInfo.PlayerData.IsTrialAccount and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {"Нет игрового времени", CharInfo.PlayerData.IsVeteranTrialAccount and E.TRUE or E.NIL}
-		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
-		-- Durability
-		tooltip_Chars[#tooltip_Chars+1] = {"PlayerDurability", CharInfo.PlayerData.PlayerDurability and E.TRUE or E.NIL}
-		-- DBVersion
-		tooltip_Chars[#tooltip_Chars+1] = {"DBVersion", CharInfo.PlayerData.DBVersion}
-		tooltip_Chars[#tooltip_Chars+1] = {"CurrentRegion", CharInfo.PlayerData.CurrentRegion}
-		tooltip_Chars[#tooltip_Chars+1] = {"CurrentRegionName", CharInfo.PlayerData.CurrentRegionName}
-	end
-	return tooltip_Chars
-end
-----------------------------------------------------------------
 function E:func_Otrisovka_91_Other()
-	local OctoTable_Otrisovka_textLEFT = {}
 	local OctoTable_Otrisovka_textCENT = {}
-	local OctoTable_Otrisovka_tooltipCENT = {}
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if E.DebugInfo then
+
+	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
-				----------------------------------------------------------------
-				for _, v in next, (E.OctoTable_UniversalQuest) do
-					if CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset] == E.DONE then
-						tooltipCENT[#tooltipCENT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
+				local QWEname = followerData.name
+				textLEFT = COMPANIONS.." ("..QWEname..")"
+				if CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
+					tooltipKey = QWEname.."_COMPANIONS"
+					local count = 0
+					for i, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[QWEname]) do
+						if v.isCollected then
+							count = count + 1
+						end
+					end
+
+					-- if #CharInfo.MASLENGO.GarrisonFollowers[QWEname] ~= 0 then
+					if count ~= 0 then
+						textCENT = count
 					end
 				end
-				if #tooltipCENT ~= 0 then
-					textCENT = E.Green_Color.."Выполненные|r"
-				end
-				----------------------------------------------------------------
-				textLEFT = E.DEVTEXT..E.Blue_Color.."ALL|r"
-				----------------------------------------------------------------
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
-		local list = {}
-		for _, v in next, (E.OctoTable_UniversalQuest) do
-			table.insert(list, v.desc)
-		end
-		E:func_TableRemoveDuplicates(list)
-		table.sort(list)
-		for i, value in ipairs(list) do
-			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
-					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
-					----------------------------------------------------------------
-					for _, v in next, (E.OctoTable_UniversalQuest) do
-						if v.desc == value then
-							tooltipCENT[#tooltipCENT+1] = {tostringall(v.desc.."_"..v.name_save.."_"..v.reset), CharInfo.MASLENGO.UniversalQuest[v.desc.."_"..v.name_save.."_"..v.reset]}
-							textCENT = value
-						end
-					end
-					----------------------------------------------------------------
-					textLEFT = E.DEVTEXT..i
-					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
-					----------------------------------------------------------------
-			end)
-		end
 	end
+
+
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -262,9 +104,16 @@ function E:func_Otrisovka_91_Other()
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				----------------------------------------------------------------
 				tooltipKey = "Other_Items"
-				-- if #tooltipCENT ~= 0 then
+				local count = 0
+				for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
+					if CharInfo.MASLENGO.ItemsInBag[itemID] then
+						count = count + 1
+						break
+					end
+				end
+				if count ~= 0 then
 					textCENT = E.Gray_Color..ITEMS.."|r"
-				-- end
+				end
 				----------------------------------------------------------------
 				textLEFT = ITEMS
 				----------------------------------------------------------------

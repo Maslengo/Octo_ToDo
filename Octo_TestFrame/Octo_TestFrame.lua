@@ -19,7 +19,7 @@ local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
 local MIN_LINE_WIDTH_LEFT = 200            		-- Минимальная ширина левой колонки
 local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная ширина центральной колонки
 local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.MonitorWidth*.6  		-- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_WIDTH = E.MonitorWidth*.8  		-- Максимальная ширина фрейма (80% экрана)
 local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
 Octo_EventFrame.COLUMNS_MAX = 113     		-- Максимальное количество колонок
 

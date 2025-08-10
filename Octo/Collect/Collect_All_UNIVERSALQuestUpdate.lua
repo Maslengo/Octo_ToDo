@@ -38,7 +38,7 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 			break -- Пропускаем записи без квестов
 		end
 
-		local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
+		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 		local questDataTable = {}
 		local count = 0
 		local totalQUEST = 0

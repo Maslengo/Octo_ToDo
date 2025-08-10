@@ -3,9 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 11
 function E:func_Otrisovka_11_TheWarWithin()
-	local OctoTable_Otrisovka_textLEFT = {}
 	local OctoTable_Otrisovka_textCENT = {}
-	local OctoTable_Otrisovka_tooltipCENT = {}
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)

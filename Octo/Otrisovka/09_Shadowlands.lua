@@ -3,9 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 9
 function E:func_Otrisovka_09_Shadowlands()
-	local OctoTable_Otrisovka_textLEFT = {}
 	local OctoTable_Otrisovka_textCENT = {}
-	local OctoTable_Otrisovka_tooltipCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------

@@ -319,9 +319,10 @@ function E:Debug()
 				name = "DebugInfo",
 				desc = "",
 				get = function()
-					return E.DebugInfo
+					return Octo_ToDo_DB_Vars.DebugInfo
 				end,
 				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugInfo = value
 					E.DebugInfo = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -348,9 +349,10 @@ function E:Debug()
 				name = "DebugFunction",
 				desc = "",
 				get = function()
-					return E.DebugFunction
+					return Octo_ToDo_DB_Vars.DebugFunction
 				end,
 				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugFunction = value
 					E.DebugFunction = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -362,9 +364,10 @@ function E:Debug()
 				name = "DebugButton",
 				desc = "",
 				get = function()
-					return E.DebugButton
+					return Octo_ToDo_DB_Vars.DebugButton
 				end,
 				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugButton = value
 					E.DebugButton = value
 				end,
 				width = E.FULL_WIDTH/2,

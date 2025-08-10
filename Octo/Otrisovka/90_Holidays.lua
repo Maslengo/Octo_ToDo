@@ -2,9 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 function E:func_Otrisovka_90_Holidays()
-	local OctoTable_Otrisovka_textLEFT = {}
 	local OctoTable_Otrisovka_textCENT = {}
-	local OctoTable_Otrisovka_tooltipCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
