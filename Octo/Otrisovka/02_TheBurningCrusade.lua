@@ -2,14 +2,14 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 2
-function E:func_Otrisovka_02_TheBurningCrusade()
+function E.func_Otrisovka_02_TheBurningCrusade()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

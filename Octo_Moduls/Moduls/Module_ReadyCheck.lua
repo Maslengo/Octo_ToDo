@@ -18,7 +18,7 @@ local MyEventsTable = {
 }
 
 -- Регистрация событий
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_READY_CHECK, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_READY_CHECK, MyEventsTable)
 -- Обработчик проверки готовности
 function Octo_EventFrame_READY_CHECK:READY_CHECK()
 	if InCombatLockdown() then return end

@@ -7,7 +7,7 @@ local slashCommands = {
 		commands = {"/octo"},
 		handler = function(msg)
 			if not InCombatLockdown() then
-				E:main_frame_toggle() -- Переключаем фрейм
+				E.func_main_frame_toggle() -- Переключаем фрейм
 			end
 		end
 	},
@@ -20,8 +20,8 @@ local slashCommands = {
 	FRAMESTK = {
 		commands = {"/fs"},
 		handler = function(msg)
-			if not E:func_IsAddOnLoaded("Blizzard_DebugTools") then
-				E:func_LoadAddOnFORCED("Blizzard_DebugTools")
+			if not E.func_IsAddOnLoaded("Blizzard_DebugTools") then
+				E.func_LoadAddOnFORCED("Blizzard_DebugTools")
 			end
 			FrameStackTooltip_Toggle(msg == "true", true, true)
 		end

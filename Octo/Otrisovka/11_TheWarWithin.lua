@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 11
-function E:func_Otrisovka_11_TheWarWithin()
+function E.func_Otrisovka_11_TheWarWithin()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
@@ -49,10 +49,10 @@ function E:func_Otrisovka_11_TheWarWithin()
 						----------------------------------------------------------------
 						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 						----------------------------------------------------------------
-						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
+						textCENT = E.func_textCENT_Currency(CharInfo, CurrencyID)
 						myType = {"Currency", CurrencyID}
 						----------------------------------------------------------------
-						textLEFT = E:func_currencyName(CurrencyID)
+						textLEFT = E.func_currencyName(CurrencyID)
 						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 						----------------------------------------------------------------
 						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
@@ -61,8 +61,8 @@ function E:func_Otrisovka_11_TheWarWithin()
 			end
 		end
 		----------------------------------------------------------------
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

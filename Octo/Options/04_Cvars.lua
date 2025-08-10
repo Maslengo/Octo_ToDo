@@ -3,7 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E:Cvars()
+function E.func_Cvars()
 	local index = 0
 	local function GetOrder()
 		index = index + 1

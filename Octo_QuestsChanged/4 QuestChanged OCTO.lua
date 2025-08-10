@@ -5,7 +5,7 @@ local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
 Octo_EventFrame_QuestsChanged:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
 Octo_MainFrame_QuestsChanged:Hide()
-E:func_InitFrame(Octo_MainFrame_QuestsChanged)
+E.func_InitFrame(Octo_MainFrame_QuestsChanged)
 ----------------------------------------------------------------
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
@@ -235,7 +235,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
-	local playerName = (frameData.classColorHex or E.Red_Color)..(frameData.playerName or UNKNOWN).."|r-"..E:func_CurServerShort(frameData.curServer)
+	local playerName = (frameData.classColorHex or E.Red_Color)..(frameData.playerName or UNKNOWN).."|r-"..E.func_CurServerShort(frameData.curServer)
 
 
 
@@ -246,12 +246,12 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 
 
 	if frameData.type == "QC_Quests" then
-		if E:func_IsAccountQuest(frameData.id) or E:func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
+		if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
 			frame.icon_2:SetAtlas("warbands-icon")
 		else
 			frame.icon_2:SetTexture(E.Icon_Empty)
 		end
-		frame.third.text:SetText(E:func_questName(frameData.id))
+		frame.third.text:SetText(E.func_questName(frameData.id))
 	elseif frameData.type == "QC_Vignettes" then
 		if frameData.atlas then
 			frame.icon_2:SetAtlas(frameData.atlas)
@@ -281,13 +281,13 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	if frameData.curLocation and frameData.curLocation ~= "" then
 		frame.fifth.text:SetText(frameData.curLocation)
 	elseif frameData.mapID then
-		frame.fifth.text:SetText(E:func_GetMapName(frameData.mapID))
+		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
 	else
 		frame.fifth.text:SetText("qwe")
 	end
 	----------------------------------------------------------------
-	-- frame.sixth.text:SetText(E.Green_Color..E:func_GetCoordFormated(frameData.x, frameData.y).."|r")
-	frame.sixth.text:SetText(E:func_GetCoordFormated(frameData.x, frameData.y))
+	-- frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
+	frame.sixth.text:SetText(E.func_GetCoordFormated(frameData.x, frameData.y))
 
 
 	if self.minTime then
@@ -297,7 +297,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 		local red = min(255, (1 - done / total) * 510)
 		local green = min(255, (done / total) * 510)
 		local hexcolor = string.format("|cff%2x%2x00", red, green)
-		frame.seventh.text:SetText(hexcolor..E:func_SecondsToClock(time()-frameData.time).."|r")
+		frame.seventh.text:SetText(hexcolor..E.func_SecondsToClock(time()-frameData.time).."|r")
 	end
 	-- frame.eighth.text:SetText(8)
 end
@@ -342,7 +342,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_QuestsChanged.ScrollBox, Octo_MainFrame_QuestsChanged.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	----------------------------------------------------------------
 end
-function E:QuestsChanged_CreateMyDataProvider()
+function Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider()
 	local count = 0
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider_QuestsChanged = DataProvider
@@ -425,12 +425,12 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_LOGIN",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
 function Octo_EventFrame_QuestsChanged:VARIABLES_LOADED()
 	self:Octo_Create_MainFrame_QuestsChanged()
-	E:QuestsChanged_CreateMyDataProvider()
+	self:func_QuestsChanged_CreateMyDataProvider()
 	----------------------------------------------------------------
-	E:func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() E:QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
+	E.func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -443,5 +443,5 @@ function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
 	-- Cleanup event
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-	E:func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() E:QuestsChanged_CreateMyDataProvider() end)
+	E.func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider() end)
 end

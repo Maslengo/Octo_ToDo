@@ -12,7 +12,7 @@ local MyEventsTable = {
 	"CINEMATIC_START",
 	"PLAY_MOVIE",
 }
-E:func_RegisterMyEventsToFrames(Octo_Event_Config_Auto_CinematicCanceler, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_Event_Config_Auto_CinematicCanceler, MyEventsTable)
 function Octo_Event_Config_Auto_CinematicCanceler:CINEMATIC_START()
 	if Octo_ToDo_DB_Vars.Config_Auto_CinematicCanceler then
 		CinematicFrame_CancelCinematic()
@@ -33,7 +33,7 @@ tinsert(E.Modules, function()
 			if dialog.Hide then dialog:Hide() end
 			confirmButton:Click()
 			if message then
-				DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(message))
+				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message))
 			end
 		end
 		local function OnKeyUp(self, key)

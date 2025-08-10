@@ -5,7 +5,7 @@ local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E:Debug()
+function E.func_Debug()
 	local index = 0
 	local function GetOrder()
 		index = index + 1
@@ -74,41 +74,13 @@ function E:Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			CurrencyID = {
+			CovenantAndAnima = {
 				type = "execute",
-				name = "CurrencyID",
-				desc = "CharInfo.MASLENGO.CurrencyID = {}",
+				name = "CovenantAndAnima",
+				desc = "CharInfo.MASLENGO.CovenantAndAnima = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			CurrencyID_Total = {
-				type = "execute",
-				name = "CurrencyID_Total",
-				desc = "CharInfo.MASLENGO.CurrencyID_Total = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID_Total= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			CurrencyID_totalEarned = {
-				type = "execute",
-				name = "CurrencyID_totalEarned",
-				desc = "CharInfo.MASLENGO.CurrencyID_totalEarned = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.CurrencyID_totalEarned= {}
+						CharInfo.MASLENGO.CovenantAndAnima= {}
 					end
 					return
 				end,
@@ -118,7 +90,7 @@ function E:Debug()
 			-------------------------------------------------
 			Currency = {
 				type = "execute",
-				name = E.Purple_Color.."Currency|r",
+				name = "Currency",
 				desc = "CharInfo.MASLENGO.Currency = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -130,13 +102,97 @@ function E:Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			OctoTable_QuestID = {
+			garrisonType = {
 				type = "execute",
-				name = "OctoTable_QuestID",
-				desc = "CharInfo.MASLENGO.OctoTable_QuestID = {}",
+				name = "garrisonType",
+				desc = "CharInfo.MASLENGO.garrisonType = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.OctoTable_QuestID= {}
+						CharInfo.MASLENGO.garrisonType= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			GARRISON = {
+				type = "execute",
+				name = "GARRISON",
+				desc = "CharInfo.MASLENGO.GARRISON = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.GARRISON= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			GarrisonFollowers = {
+				type = "execute",
+				name = "GarrisonFollowers",
+				desc = "CharInfo.MASLENGO.GarrisonFollowers = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.GarrisonFollowers= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			GarrisonFollowersCount = {
+				type = "execute",
+				name = "GarrisonFollowersCount",
+				desc = "CharInfo.MASLENGO.GarrisonFollowersCount = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.GarrisonFollowersCount= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			GreatVault = {
+				type = "execute",
+				name = "GreatVault",
+				desc = "CharInfo.MASLENGO.GreatVault = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.GreatVault= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			HasGarrison = {
+				type = "execute",
+				name = "HasGarrison",
+				desc = "CharInfo.MASLENGO.HasGarrison = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.HasGarrison= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			ItemsALL = {
+				type = "execute",
+				name = "ItemsALL",
+				desc = "CharInfo.MASLENGO.ItemsALL = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.ItemsALL= {}
 					end
 					return
 				end,
@@ -151,6 +207,62 @@ function E:Debug()
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.ItemsInBag= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			journalInstance = {
+				type = "execute",
+				name = "journalInstance",
+				desc = "CharInfo.MASLENGO.journalInstance = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.journalInstance= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			LFGInstance = {
+				type = "execute",
+				name = "LFGInstance",
+				desc = "CharInfo.MASLENGO.LFGInstance = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.LFGInstance= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			ListOfQuests = {
+				type = "execute",
+				name = "ListOfQuests",
+				desc = "CharInfo.MASLENGO.ListOfQuests = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.ListOfQuests= {}
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			OctoTable_QuestID = {
+				type = "execute",
+				name = "OctoTable_QuestID",
+				desc = "CharInfo.MASLENGO.OctoTable_QuestID = {}",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.OctoTable_QuestID= {}
 					end
 					return
 				end,
@@ -178,7 +290,7 @@ function E:Debug()
 				desc = "CharInfo.MASLENGO.Reputation = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.Reputation = {}
+						CharInfo.MASLENGO.Reputation= {}
 					end
 					return
 				end,
@@ -186,13 +298,13 @@ function E:Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Quests = {
+			SavedWorldBoss = {
 				type = "execute",
-				name = "Quests",
-				desc = "CharInfo.MASLENGO.Quests = {}",
+				name = "SavedWorldBoss",
+				desc = "CharInfo.MASLENGO.SavedWorldBoss = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.Quests= {}
+						CharInfo.MASLENGO.SavedWorldBoss= {}
 					end
 					return
 				end,
@@ -213,6 +325,7 @@ function E:Debug()
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
+
 
 			-------------------------------------------------
 			GARRISON = {
@@ -392,28 +505,30 @@ function E:Debug()
 	-------------------------------------------------
 	-------------------------------------------------
 	local function add_args_recursive(tbl, parent_path, current_depth, max_depth)
-		if max_depth and current_depth > max_depth then return end
-		local key, value = next(tbl)
-		while key do
-			if type(value) == "table" and type(key) ~= "table" then
-				local order = GetOrder()
-				local str_key = tostring(key)
-				local path = parent_path.."."..str_key
-				Debug.args[str_key..order] = {
-					type = "execute",
-					name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r"  -- Красный для последнего уровня
-					or "|cffFFF371"..str_key.."|r",  -- Жёлтый для остальных
-					desc = path.." = {}",
-					order = order,
-					width = E.FULL_WIDTH/4,
-					func = function()
-						tbl[key] = nil
-					end,
-				}
-				add_args_recursive(value, path, current_depth + 1, max_depth)
-			end
-			key, value = next(tbl, key)
-		end
+	    if max_depth and current_depth > max_depth then return end
+	    local key, value = next(tbl)
+	    while key do
+	        if type(value) == "table" and type(key) ~= "table" then
+	            local order = GetOrder()
+	            local str_key = tostring(key)
+	            local path = parent_path.."."..str_key
+	            Debug.args[str_key..order] = {
+	                type = "execute",
+	                name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r"  -- Красный для последнего уровня
+	                or "|cffFFF371"..str_key.."|r",  -- Жёлтый для остальных
+	                desc = path.." = {}",
+	                order = order,
+	                width = E.FULL_WIDTH/4,
+	                func = (function(k)  -- Создаем новое замыкание для сохранения значения key
+	                    return function()
+	                        tbl[k] = nil
+	                    end
+	                end)(key),  -- Передаем текущее значение key в замыкание
+	            }
+	            add_args_recursive(value, path, current_depth + 1, max_depth)
+	        end
+	        key, value = next(tbl, key)
+	    end
 	end
 	local function add_args(tbl, name, max_depth)
 		local header_order = GetOrder()

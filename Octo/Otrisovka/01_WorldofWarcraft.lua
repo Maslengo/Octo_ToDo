@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 1
-function E:func_Otrisovka_01_WorldofWarcraft()
+function E.func_Otrisovka_01_WorldofWarcraft()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -11,8 +11,8 @@ function E:func_Otrisovka_01_WorldofWarcraft()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

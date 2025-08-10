@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 8
-function E:func_Otrisovka_08_BattleforAzeroth()
+function E.func_Otrisovka_08_BattleforAzeroth()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -18,7 +18,7 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 					end
 					myType = {"Item", 158075}
 					----------------------------------------------------------------
-					textLEFT = E:func_itemName(158075)
+					textLEFT = E.func_itemName(158075)
 					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
@@ -37,7 +37,7 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 					end
 					myType = {"Item", 169223}
 					----------------------------------------------------------------
-					textLEFT = E:func_itemName(169223)
+					textLEFT = E.func_itemName(169223)
 					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
@@ -57,8 +57,8 @@ function E:func_Otrisovka_08_BattleforAzeroth()
 					----------------------------------------------------------------
 			end)
 		end
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

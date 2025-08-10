@@ -35,7 +35,7 @@ function Octo_EventFrame_Vignettes:OnVignetteEvent()
 				playerName = E.curCharName,
 				curServer = GetRealmName(),
 				classColorHex = E.classColorHexCurrent,
-				curLocation = E:func_GetCurrentLocation(),
+				curLocation = E.func_GetCurrentLocation(),
 				specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
 				guid = vignetteInfo.vignetteGUID,
 				name = vignetteInfo.name,
@@ -43,7 +43,7 @@ function Octo_EventFrame_Vignettes:OnVignetteEvent()
 			}
 			table.insert(ordered, vignetteInfo.vignetteGUID)
 			table.insert(Octo_QuestsChanged_DB.QC_Vignettes, log[vignetteInfo.vignetteGUID])
-			E:TriggerEvent(E.Event.OnVignetteAdded, log[vignetteInfo.vignetteGUID], vignetteInfo.vignetteGUID)
+			E:func_TriggerEvent(E.Event.OnVignetteAdded, log[vignetteInfo.vignetteGUID], vignetteInfo.vignetteGUID)
 		end
 	end
 end
@@ -55,7 +55,7 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA",
 	"ZONE_CHANGED_INDOORS",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_Vignettes, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_Vignettes, MyEventsTable)
 
 -- function Octo_EventFrame_Vignettes:PLAYER_ENTERING_WORLD()
 	C_Timer.After(2, function()
@@ -77,7 +77,7 @@ Octo_EventFrame_Vignettes.ZONE_CHANGED_NEW_AREA = Octo_EventFrame_Vignettes.OnVi
 -- function Octo_EventFrame_Vignettes:ZONE_CHANGED_NEW_AREA()
 -- 	self:OnVignetteEvent()
 -- end
-function E:RemoveVignette(QC_Vignettes)
+function E.func_RemoveVignette(QC_Vignettes)
 	if not (QC_Vignettes and QC_Vignettes.guid) then return end
 	log[QC_Vignettes.guid] = nil
 	table.remove(ordered, tIndexOf(ordered, QC_Vignettes.guid))

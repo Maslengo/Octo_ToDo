@@ -44,8 +44,8 @@ local zxc = {
 
 
 E.tbl_Otrisovka = {}
-E.tbl_Otrisovka.textLEFT = E:func_itemName(44791)
-E.tbl_Otrisovka.textCENT = (function(itemID) return E:func_itemName(itemID) end)
+E.tbl_Otrisovka.textLEFT = E.func_itemName(44791)
+E.tbl_Otrisovka.textCENT = (function(itemID) return E.func_itemName(itemID) end)
 E.tbl_Otrisovka.tooltipCENT = "tooltipCENT"
 
 

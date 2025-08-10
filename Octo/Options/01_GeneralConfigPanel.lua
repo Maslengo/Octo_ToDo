@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 -------------------------------------------------------------------------
-function E:CreateGeneralOptions()
+function E.func_CreateGeneralOptions()
 	local index = 0
 	local function GetOrder()
 		index = index + 1
@@ -11,7 +11,7 @@ function E:CreateGeneralOptions()
 	local generalOptions = {
 		type = "group",
 		childGroups = "tree",
-		name = E:func_texturefromIcon(E:func_GetAddOnMetadata(E.MainAddonName, "IconTexture"))..E:func_GetAddOnMetadata(E.MainAddonName, "Title").." "..E.Gray_Color..E:func_GetAddOnMetadata(GlobalAddonName, "Version") .. "|r",
+		name = E.func_texturefromIcon(E.func_GetAddOnMetadata(E.MainAddonName, "IconTexture"))..E.func_GetAddOnMetadata(E.MainAddonName, "Title").." "..E.Gray_Color..E.func_GetAddOnMetadata(GlobalAddonName, "Version") .. "|r",
 		args = {
 			-------------------------------------------------
 			Header1 = {
@@ -264,7 +264,7 @@ function E:CreateGeneralOptions()
 			-------------------------------------------------
 			OnlyCurrentFaction = {
 				type = "toggle",
-				name = E.curFaction == "Horde" and E:func_texturefromIcon(E.Icon_Horde)..L["Only Horde"] or E:func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"],
+				name = E.curFaction == "Horde" and E.func_texturefromIcon(E.Icon_Horde)..L["Only Horde"] or E.func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.OnlyCurrentFaction

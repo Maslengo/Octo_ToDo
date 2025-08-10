@@ -1,31 +1,31 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_91_Concat()
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_01_WorldofWarcraft())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_02_TheBurningCrusade())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_03_WrathoftheLichKing())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_04_Cataclysm())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_05_MistsofPandaria())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_06_WarlordsofDraenor())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_07_Legion())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_08_BattleforAzeroth())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_09_Shadowlands())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_10_Dragonflight())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_11_TheWarWithin())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_12_Midnight())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_13_TheLastTitan())
-	E:func_TableConcat(E.OctoTable_UniversalQuest, E:func_Universal_90_Other())
+function E.func_Universal_91_Concat()
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_01_WorldofWarcraft())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_02_TheBurningCrusade())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_03_WrathoftheLichKing())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_04_Cataclysm())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_05_MistsofPandaria())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_06_WarlordsofDraenor())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_07_Legion())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_08_BattleforAzeroth())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_09_Shadowlands())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_10_Dragonflight())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_11_TheWarWithin())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_12_Midnight())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_13_TheLastTitan())
+	E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_90_Other())
 end
 
 
-function E:func_Collect_All_UNIVERSALQuestUpdate()
+function E.func_Collect_All_UNIVERSALQuestUpdate()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
 		E.func_ConcatAtStart_UniversalQuestQWE = true
-		E:func_Universal_91_Concat()
+		E.func_Universal_91_Concat()
 	end
 
 
@@ -53,14 +53,14 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 
 				if not faction or faction == E.curFaction then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
-					local status = E:func_CheckCompletedByQuestID(questID)
+					local status = E.func_CheckCompletedByQuestID(questID)
 					totalQUEST = totalQUEST + 1
 					questDataTable[questID] = status
 
 					if isCompleted then
 						count = count + 1
 					end
-					if (totalQUEST == 1 or forcedMaxQuest == 1 or #data.quests == 1) and E:func_IsOnQuest(questID) then
+					if (totalQUEST == 1 or forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
 						questDataTable.textCENT = status
 						hasSingleQuestOutput = true
 					end

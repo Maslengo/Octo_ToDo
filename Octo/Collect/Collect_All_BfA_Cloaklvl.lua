@@ -7,7 +7,7 @@ function E.Collect_All_BfA_Cloaklvl()
 	if not collectPlayerData then return end
 
 	-- Проверяем, есть ли плащ (ID 169223) в инвентаре
-	local hasItem = E:func_GetItemCount(169223, false, false, false, false)
+	local hasItem = E.func_GetItemCount(169223, false, false, false, false)
 	if hasItem == 0 then
 		collectPlayerData.cloak_lvl = nil  -- Если плаща нет, очищаем данные
 		return
@@ -16,7 +16,7 @@ function E.Collect_All_BfA_Cloaklvl()
 	-- Сначала проверяем надетый плащ (слот 15 — спина)
 	local itemLink = GetInventoryItemLink("player", 15)
 	if itemLink and itemLink:find("item:169223:") then
-		local itemLevel = select(4, E:func_GetItemInfo(itemLink))
+		local itemLevel = select(4, E.func_GetItemInfo(itemLink))
 		if itemLevel then
 			-- Рассчитываем уровень плаща (от 1 до 15)
 			collectPlayerData.cloak_lvl = math.min(15, math.max((itemLevel - 125) / 2 + 1, 1))
@@ -30,7 +30,7 @@ function E.Collect_All_BfA_Cloaklvl()
 		for slot = 1, numSlots do
 			local containerInfo = C_Container.GetContainerItemInfo(bag, slot)
 			if containerInfo and containerInfo.itemID == 169223 then
-				local itemLevel = select(4, E:func_GetItemInfo(containerInfo.hyperlink))
+				local itemLevel = select(4, E.func_GetItemInfo(containerInfo.hyperlink))
 				if itemLevel then
 					collectPlayerData.cloak_lvl = math.min(15, math.max((itemLevel - 125) / 2 + 1, 1))
 					return  -- Нашли плащ в сумке — выходим

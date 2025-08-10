@@ -69,7 +69,7 @@ local MyEventsTable = {
 	"GOSSIP_SHOW",
 	"QUEST_PROGRESS",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, MyEventsTable)
 function Octo_EventFrame_AutoTurnIn:QUEST_DETAIL()
 	if not IsShiftKeyDown() then
 		if QuestIsFromAreaTrigger() then

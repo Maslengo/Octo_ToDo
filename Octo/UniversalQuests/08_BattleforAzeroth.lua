@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
-function E:func_Universal_08_BattleforAzeroth()
+function E.func_Universal_08_BattleforAzeroth()
 	local OctoTable_Universal = {
 		{
 			sorted = false,
@@ -30,7 +30,7 @@ function E:func_Universal_08_BattleforAzeroth()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436)),
+			textleft = E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436)),
 			name_save = "AzeriteForTheFaction",
 			reset = "Weekly",
 			desc = "BattleforAzeroth",
@@ -226,7 +226,7 @@ function E:func_Universal_08_BattleforAzeroth()
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = "Mechagon: "..E:func_questName(54088),
+			textleft = "Mechagon: "..E.func_questName(54088),
 			name_save = "TheMechagonianThreat",
 			reset = "Once",
 			desc = "BattleforAzeroth",

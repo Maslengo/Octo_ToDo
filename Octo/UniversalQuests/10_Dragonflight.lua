@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_10_Dragonflight()
+function E.func_Universal_10_Dragonflight()
 	local OctoTable_Universal = {
 		{
 			showTooltip = true,
@@ -21,7 +21,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(47148),
+			textleft = E.func_questName(47148),
 			name_save = "SomethingDifferent",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -95,7 +95,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(75665),
+			textleft = E.func_questName(75665),
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -234,7 +234,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(66133),
+			textleft = E.func_questName(66133),
 			name_save = "KeysofLoyalty",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -256,7 +256,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E.Timers.DF_ResearchersUnderFire()..E:func_questName(74906),
+			textleft = E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906),
 			name_save = "ResearchersUnderFire",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -293,7 +293,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(70750),
+			textleft = E.func_questName(70750),
 			name_save = "AidingtheAccord",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -330,7 +330,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		-- {
 		-- showTooltip = true,
-		-- textleft = E:func_spellName(393294),
+		-- textleft = E.func_spellName(393294),
 		--     name_save = "CatchingUp",
 		--     reset = "Once",
 		--     desc = "Dragonflight",
@@ -346,7 +346,7 @@ function E:func_Universal_10_Dragonflight()
 		-- },
 		-- {
 		-- showTooltip = true,
-		-- textleft = E:func_questName(75694),
+		-- textleft = E.func_questName(75694),
 		--     name_save = "AberrustheShadowedCrucibleSarkareth",
 		--     reset = "Once",
 		--     desc = "Dragonflight",
@@ -357,7 +357,7 @@ function E:func_Universal_10_Dragonflight()
 		-- },
 		-- {
 		-- showTooltip = true,
-		-- textleft = E:func_questName(66847),
+		-- textleft = E.func_questName(66847),
 		--     name_save = "VaultoftheIncarnatesFuryoftheStormEater",
 		--     reset = "Once",
 		--     desc = "Dragonflight",
@@ -379,7 +379,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E.Timers.DF_Dreamsurges()..E:func_questName(77414),
+			textleft = E.Timers.DF_Dreamsurges()..E.func_questName(77414),
 			name_save = "DreamsurgeInvestigation",
 			reset = "Once",
 			desc = "Dragonflight",
@@ -390,7 +390,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(77251),
+			textleft = E.func_questName(77251),
 			name_save = "ShapingtheDreamsurge",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -401,7 +401,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(77236),
+			textleft = E.func_questName(77236),
 			name_save = "WhenTimeNeedsMending",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -439,7 +439,7 @@ function E:func_Universal_10_Dragonflight()
 		----------------------------------------------------------------
 		{
 			showTooltip = true,
-			textleft = E:func_questName(78444),
+			textleft = E.func_questName(78444),
 			name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -450,7 +450,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(78821),
+			textleft = E.func_questName(78821),
 			name_save = "EmeraldDream_BloomingDreamseeds",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -461,7 +461,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E.Timers.DF_Flower()..E:func_questName(78319),
+			textleft = E.Timers.DF_Flower()..E.func_questName(78319),
 			name_save = "EmeraldDream_TheSuperbloom",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -538,7 +538,7 @@ function E:func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = E:func_questName(78381),
+			textleft = E.func_questName(78381),
 			name_save = "EmeraldDream_DreamsUnified",
 			reset = "Once",
 			desc = "Dragonflight",

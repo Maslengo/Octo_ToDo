@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
-function E:HideFrames()
+function E.func_HideFrames()
 	local index = 0
 	local function GetOrder()
 		index = index + 1
@@ -29,7 +29,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_CheckListText = value
-					E:Config_Hide_CheckListText()
+					E.func_Config_Hide_CheckListText()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -45,7 +45,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_SubscriptionInterstitialFrame = value
-					E:Config_Hide_SubscriptionInterstitialFrame()
+					E.func_Config_Hide_SubscriptionInterstitialFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -60,7 +60,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_ActionStatusText = value
-					E:Config_Hide_ActionStatusText()
+					E.func_Config_Hide_ActionStatusText()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -75,7 +75,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_SecondaryStatusTrackingBarContainer = value
-					E:Config_Hide_SecondaryStatusTrackingBarContainer()
+					E.func_Config_Hide_SecondaryStatusTrackingBarContainer()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -90,7 +90,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_MainStatusTrackingBarContainer = value
-					E:Config_Hide_MainStatusTrackingBarContainer()
+					E.func_Config_Hide_MainStatusTrackingBarContainer()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -105,7 +105,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_WeeklyRewardExpirationWarningDialog = value
-					E:Config_Hide_WeeklyRewardExpirationWarningDialog()
+					E.func_Config_Hide_WeeklyRewardExpirationWarningDialog()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -120,7 +120,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_MajorFactionsRenownToast = value
-					E:Config_Hide_MajorFactionsRenownToast()
+					E.func_Config_Hide_MajorFactionsRenownToast()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -135,7 +135,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_UIWidgetTopCenterContainerFrame = value
-					E:Config_Hide_UIWidgetTopCenterContainerFrame()
+					E.func_Config_Hide_UIWidgetTopCenterContainerFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -150,7 +150,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_BossBanner = value
-					E:Config_Hide_BossBanner()
+					E.func_Config_Hide_BossBanner()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -165,7 +165,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_RaidWarningFrame = value
-					E:Config_Hide_RaidWarningFrame()
+					E.func_Config_Hide_RaidWarningFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -180,7 +180,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_RaidBossEmoteFrame = value
-					E:Config_Hide_RaidBossEmoteFrame()
+					E.func_Config_Hide_RaidBossEmoteFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -195,7 +195,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_PrivateRaidBossEmoteFrameAnchor = value
-					E:Config_Hide_PrivateRaidBossEmoteFrameAnchor()
+					E.func_Config_Hide_PrivateRaidBossEmoteFrameAnchor()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -210,7 +210,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_SplashFrame = value
-					E:Config_Hide_SplashFrame()
+					E.func_Config_Hide_SplashFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -225,7 +225,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_PTRReporter = value
-					E:Config_Hide_PTRReporter()
+					E.func_Config_Hide_PTRReporter()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -240,7 +240,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_PTRIssueReporter = value
-					E:Config_Hide_PTRIssueReporter()
+					E.func_Config_Hide_PTRIssueReporter()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -255,7 +255,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_PTRIssueReporterAlertFrame = value
-					E:Config_Hide_PTRIssueReporterAlertFrame()
+					E.func_Config_Hide_PTRIssueReporterAlertFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -270,7 +270,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_Bug = value
-					E:Config_Hide_Bug()
+					E.func_Config_Hide_Bug()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -285,7 +285,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_CovenantRenownToast = value
-					E:Config_Hide_CovenantRenownToast()
+					E.func_Config_Hide_CovenantRenownToast()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -300,7 +300,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_CovenantChoiceToast = value
-					E:Config_Hide_CovenantChoiceToast()
+					E.func_Config_Hide_CovenantChoiceToast()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -315,7 +315,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_ZoneTextFrame = value
-					E:Config_Hide_ZoneTextFrame()
+					E.func_Config_Hide_ZoneTextFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -330,7 +330,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_SubZoneTextFrame = value
-					E:Config_Hide_SubZoneTextFrame()
+					E.func_Config_Hide_SubZoneTextFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -345,7 +345,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_PVPArenaTextString = value
-					E:Config_Hide_PVPArenaTextString()
+					E.func_Config_Hide_PVPArenaTextString()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -360,7 +360,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_ZoneTextString = value
-					E:Config_Hide_ZoneTextString()
+					E.func_Config_Hide_ZoneTextString()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -375,7 +375,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_SubZoneTextString = value
-					E:Config_Hide_SubZoneTextString()
+					E.func_Config_Hide_SubZoneTextString()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -390,7 +390,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_OrderHallCommandBar = value
-					E:Config_Hide_OrderHallCommandBar()
+					E.func_Config_Hide_OrderHallCommandBar()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -405,7 +405,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_ErrorMessages = value
-					E:Config_Hide_ErrorMessages()
+					E.func_Config_Hide_ErrorMessages()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -420,7 +420,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_TalkingHeadFrame = value
-					E:Config_Hide_TalkingHeadFrame()
+					E.func_Config_Hide_TalkingHeadFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -435,7 +435,7 @@ function E:HideFrames()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_Hide_EventToastManagerFrame = value
-					E:Config_Hide_EventToastManagerFrame()
+					E.func_Config_Hide_EventToastManagerFrame()
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),

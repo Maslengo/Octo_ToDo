@@ -25,7 +25,7 @@ function E.Collect_All_Quests()
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
 			numQuests = numQuests + 1
-			collectMASLENGO.ListOfQuests[info.questID] = E:func_CheckCompletedByQuestID(info.questID)
+			collectMASLENGO.ListOfQuests[info.questID] = E.func_CheckCompletedByQuestID(info.questID)
 		end
 	end
 

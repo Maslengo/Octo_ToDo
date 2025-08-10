@@ -5,7 +5,7 @@ Octo_EventFrame:Hide()
 -- Создание главного фрейма для тестового интерфейса
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
-E:func_InitFrame(Octo_MainFrame_ToDo)
+E.func_InitFrame(Octo_MainFrame_ToDo)
 
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
@@ -158,7 +158,7 @@ function Octo_EventFrame:Octo_Frame_initLEFT(frame, node)
 	frame.textLEFT:SetText(frameData.textLEFT)
 
 	if frameData.colorLEFT then
-		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
+		local r, g, b = E.func_hex2rgbNUMBER(frameData.colorLEFT)
 		frame.textureLEFT:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
 		frame.textureLEFT:Show()
 	else
@@ -175,11 +175,11 @@ function Octo_EventFrame:Octo_Frame_initLEFT(frame, node)
 		if type(ID) == "table" then
 			-- Обработка нескольких ID
 			for _, tblID in ipairs(ID) do
-				E:func_TableConcat(tooltipOCTO, E:func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
+				E.func_TableConcat(tooltipOCTO, E.func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
 			end
 		else
 			-- Обработка одиночного ID
-			tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+			tooltipOCTO = E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
 		end
 
 		frame.tooltip = tooltipOCTO
@@ -214,7 +214,7 @@ function Octo_EventFrame:Octo_Frame_initCENT(frame, node)
 
 			-- Установка цвета фона, если он задан
 			if frameData.colorCENT and frameData.colorCENT[i] then
-				local r1, g1, b1 = E:func_hex2rgbNUMBER(frameData.colorCENT[i])
+				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.colorCENT[i])
 				secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
 				secondFrame.ReputTextureAndBG:Show()
 				secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
@@ -259,7 +259,7 @@ function Octo_EventFrame:Octo_Create_MainFrame()
 	end)
 
 	-- Расчет размеров фрейма на основе количества игроков
-	local NumPlayers = math_min(E:func_NumPlayers(), Octo_EventFrame.COLUMNS_MAX)
+	local NumPlayers = math_min(E.func_NumPlayers(), Octo_EventFrame.COLUMNS_MAX)
 	Octo_MainFrame_ToDo:SetSize(MIN_LINE_WIDTH_LEFT + MIN_LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
 
 	-- Настройки фрейма
@@ -411,8 +411,8 @@ function Octo_EventFrame:Octo_Create_MainFrame()
 
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
-		-- HeaderFrameLEFT.text:SetText(E:func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset()).."|r")
-		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E:func_SecondsToClock(E:func_GetWeeklyReset(), true).."|r  ")
+		-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
+		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r  ")
 	end)
 
 	-- Функция сброса пула фреймов
@@ -520,25 +520,25 @@ end
 ----------------------------------------------------------------
 -- Функция для объединения таблиц отрисовки
 ----------------------------------------------------------------
-function E:func_Concat_Otrisovka()
+function E.func_Concat_Otrisovka()
 	local tbl = {}
 	-- Объединяем таблицы для каждого дополнения в обратном порядке (от нового к старому)
-	E:func_TableConcat(tbl, E:func_Otrisovka_13_TheLastTitan())
-	E:func_TableConcat(tbl, E:func_Otrisovka_12_Midnight())
-	E:func_TableConcat(tbl, E:func_Otrisovka_11_TheWarWithin())
-	E:func_TableConcat(tbl, E:func_Otrisovka_10_Dragonflight())
-	E:func_TableConcat(tbl, E:func_Otrisovka_09_Shadowlands())
-	E:func_TableConcat(tbl, E:func_Otrisovka_08_BattleforAzeroth())
-	E:func_TableConcat(tbl, E:func_Otrisovka_07_Legion())
-	E:func_TableConcat(tbl, E:func_Otrisovka_06_WarlordsofDraenor())
-	E:func_TableConcat(tbl, E:func_Otrisovka_05_MistsofPandaria())
-	E:func_TableConcat(tbl, E:func_Otrisovka_04_Cataclysm())
-	E:func_TableConcat(tbl, E:func_Otrisovka_03_WrathoftheLichKing())
-	E:func_TableConcat(tbl, E:func_Otrisovka_02_TheBurningCrusade())
-	E:func_TableConcat(tbl, E:func_Otrisovka_01_WorldofWarcraft())
+	E.func_TableConcat(tbl, E.func_Otrisovka_13_TheLastTitan())
+	E.func_TableConcat(tbl, E.func_Otrisovka_12_Midnight())
+	E.func_TableConcat(tbl, E.func_Otrisovka_11_TheWarWithin())
+	E.func_TableConcat(tbl, E.func_Otrisovka_10_Dragonflight())
+	E.func_TableConcat(tbl, E.func_Otrisovka_09_Shadowlands())
+	E.func_TableConcat(tbl, E.func_Otrisovka_08_BattleforAzeroth())
+	E.func_TableConcat(tbl, E.func_Otrisovka_07_Legion())
+	E.func_TableConcat(tbl, E.func_Otrisovka_06_WarlordsofDraenor())
+	E.func_TableConcat(tbl, E.func_Otrisovka_05_MistsofPandaria())
+	E.func_TableConcat(tbl, E.func_Otrisovka_04_Cataclysm())
+	E.func_TableConcat(tbl, E.func_Otrisovka_03_WrathoftheLichKing())
+	E.func_TableConcat(tbl, E.func_Otrisovka_02_TheBurningCrusade())
+	E.func_TableConcat(tbl, E.func_Otrisovka_01_WorldofWarcraft())
 	-- Добавляем праздники и другие данные
-	E:func_TableConcat(tbl, E:func_Otrisovka_90_Holidays())
-	E:func_TableConcat(tbl, E:func_Otrisovka_91_Other())
+	E.func_TableConcat(tbl, E.func_Otrisovka_90_Holidays())
+	E.func_TableConcat(tbl, E.func_Otrisovka_91_Other())
 	return tbl
 end
 
@@ -554,7 +554,7 @@ function Octo_EventFrame:CreateDataProvider()
 	local COLUMN_SIZES_RIGHT = {}
 
 	-- Получение отсортированных данных персонажей
-	local tbl = E:func_sorted()
+	local tbl = E.func_sorted()
 	local currentCharacterIndex
 
 	-- Поиск индекса текущего персонажа
@@ -568,7 +568,7 @@ function Octo_EventFrame:CreateDataProvider()
 	local totalColumns = #tbl
 
 	-- Обработка данных для каждой строки
-	for _, func in ipairs(E:func_Concat_Otrisovka()) do
+	for _, func in ipairs(E.func_Concat_Otrisovka()) do
 		totalLines = totalLines + 1
 
 		local zxc = {
@@ -691,7 +691,7 @@ function Octo_EventFrame:CreateDataProvider()
 		HeaderFrameRIGHT.text:SetJustifyV("MIDDLE")
 		HeaderFrameRIGHT.text:SetJustifyH("CENTER")
 		HeaderFrameRIGHT.text:SetMaxLines(3)
-		HeaderFrameRIGHT.text:SetText(E:func_textCENT_Chars(CharInfo))
+		HeaderFrameRIGHT.text:SetText(E.func_textCENT_Chars(CharInfo))
 
 		-- Настройка взаимодействия
 		HeaderFrameRIGHT:SetPropagateMouseClicks(true)
@@ -702,21 +702,21 @@ function Octo_EventFrame:CreateDataProvider()
 
 		-- Устанавливаем цвет фона в зависимости от фракции
 		if CharInfo.PlayerData.Faction == "Horde" then
-			charR, charG, charB = E:func_hex2rgbNUMBER(E.Horde_Color)
+			charR, charG, charB = E.func_hex2rgbNUMBER(E.Horde_Color)
 		elseif CharInfo.PlayerData.Faction == "Alliance" then
-			charR, charG, charB = E:func_hex2rgbNUMBER(E.Alliance_Color)
+			charR, charG, charB = E.func_hex2rgbNUMBER(E.Alliance_Color)
 		elseif CharInfo.PlayerData.Faction == "Neutral" then
-			charR, charG, charB = E:func_hex2rgbNUMBER(E.Neutral_Color)
+			charR, charG, charB = E.func_hex2rgbNUMBER(E.Neutral_Color)
 		end
 
 
 		-- -- Установка цвета фона в зависимости от фракции
-		-- local charR, charG, charB = E:func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
+		-- local charR, charG, charB = E.func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
 		HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
 
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
-			HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
+			HeaderFrameRIGHT.tooltip = E.func_Tooltip_Chars(CharInfo)
 			E.func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 
@@ -745,7 +745,7 @@ local function Toggle_Octo_MainFrame_ToDo(frame)
 end
 
 -- Открытие главного фрейма по /octo
-function E:main_frame_toggle()
+function E.func_main_frame_toggle()
 	if Octo_MainFrame_ToDo then
 		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
 	end
@@ -755,12 +755,12 @@ local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
 function Octo_EventFrame:PLAYER_LOGIN()
 	Octo_EventFrame:Octo_Create_MainFrame()
-	E:InitOptions()
-	E:func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() Octo_EventFrame:CreateDataProvider() end)
-	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
+	E.func_InitOptions()
+	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() Octo_EventFrame:CreateDataProvider() end)
+	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 end
 function Octo_EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_ToDo:Hide()

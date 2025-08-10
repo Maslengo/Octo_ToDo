@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_09_Shadowlands()
+function E.func_Universal_09_Shadowlands()
 	local OctoTable_Universal = {
 
 	{
@@ -85,7 +85,7 @@ function E:func_Universal_09_Shadowlands()
 	{
 
 		showTooltip = true,
-		textleft = "Korthia: Weekly", --E:func_questName(63949),
+		textleft = "Korthia: Weekly", --E.func_questName(63949),
 		name_save = "kortiaweekly",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -98,37 +98,50 @@ function E:func_Universal_09_Shadowlands()
 	{
 
 		showTooltip = true,
-		textleft = "1000 anima", -- E:func_questName(61981),
+		textleft = "1000 anima", -- E.func_questName(61981),
 		name_save = "anima1k",
 		reset = "Weekly",
 		desc = "Shadowlands",
 		quests = {
-			{61981},
-			{61982},
-			{61983},
-			{61984},
+			{61982}, -- ker
+			{61983}, -- necr
+			{61984}, -- fae
+			{61981}, -- vent
 		},
 		forcedMaxQuest = 1,
 	},
+
+
 	{
 
 		showTooltip = true,
-		textleft = "Maw: World Boss",
-		name_save = "mawworldboss",
+		textleft = "Troubles at Home", -- E.func_questName(61981),
+		name_save = "Troubles at Home",
 		reset = "Weekly",
 		desc = "Shadowlands",
 		quests = {
-			{64531},
+			{60425}, -- ker
+			{60429}, -- necr
+			{60419}, -- fae
+			{60432}, -- vent
 		},
 		forcedMaxQuest = 1,
 	},
-
-
-
+	-- {
+	-- 	showTooltip = true,
+	-- 	textleft = "Maw: World Boss",
+	-- 	name_save = "mawworldboss",
+	-- 	reset = "Weekly",
+	-- 	desc = "Shadowlands",
+	-- 	quests = {
+	-- 		{64531},
+	-- 	},
+	-- 	forcedMaxQuest = 1,
+	-- },
 	{
 
 		showTooltip = true,
-		textleft = "Korthia: Lost Research", -- E:func_questName(65266),
+		textleft = "Korthia: Lost Research", -- E.func_questName(65266),
 		name_save = "korthialostresearch",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -147,10 +160,10 @@ function E:func_Universal_09_Shadowlands()
 		reset = "Weekly",
 		desc = "Shadowlands",
 		quests = {
-			{64551},
-			{64549},
-			{64552},
-			{64553},
+			{64552}, -- ker
+			{64551}, -- necr
+			{64549}, -- fae
+			{64553}, -- vent
 		},
 		forcedMaxQuest = 4,
 	},
@@ -173,7 +186,7 @@ function E:func_Universal_09_Shadowlands()
 	{
 
 		showTooltip = true,
-		textleft = "Zerith Mortis: Weekly", -- E:func_questName(66042),
+		textleft = "Zerith Mortis: Weekly", -- E.func_questName(66042),
 		name_save = "patternswithinpatterns",
 		reset = "Weekly",
 		desc = "Shadowlands",
@@ -211,7 +224,7 @@ function E:func_Universal_09_Shadowlands()
 	-- {
 
 -- 	showTooltip = true,
-	-- textleft = E:func_questName(62858),
+	-- textleft = E.func_questName(62858),
 	-- 	name_save = "ReturnLostSouls",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
@@ -261,7 +274,7 @@ function E:func_Universal_09_Shadowlands()
 	-- {
 
 	-- showTooltip = true,
-	-- textleft = E:func_currencyName(1880),
+	-- textleft = E.func_currencyName(1880),
 	-- 	name_save = "MawQuest",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",
@@ -298,7 +311,7 @@ function E:func_Universal_09_Shadowlands()
 	-- {
 
 	-- showTooltip = true,
-	-- textleft = E:func_questName(64522),
+	-- textleft = E.func_questName(64522),
 	-- 	name_save = "KorthiaStolenKorthianSupplies",
 	-- 	reset = "Weekly",
 	-- 	desc = "Shadowlands",
@@ -528,7 +541,7 @@ function E:func_Universal_09_Shadowlands()
 	-- {
 
 	-- showTooltip = true,
-	-- textleft = E:func_itemName(187216),
+	-- textleft = E.func_itemName(187216),
 	-- 	name_save = "KorthiaSoultwiningCrescent",
 	-- 	reset = "Daily",
 	-- 	desc = "Shadowlands",

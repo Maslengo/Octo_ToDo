@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 6
-function E:func_Otrisovka_06_WarlordsofDraenor()
+function E.func_Otrisovka_06_WarlordsofDraenor()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -16,7 +16,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				tooltipKey = "WoD_Garrison"
-				textLEFT = E:func_texturefromIcon(E:func_GetItemIconByID(110560))..GARRISON_LOCATION_TOOLTIP
+				textLEFT = E.func_texturefromIcon(E.func_GetItemIconByID(110560))..GARRISON_LOCATION_TOOLTIP
 				if CharInfo.MASLENGO.HasGarrison[2] then
 					local count = 0
 					for garrisonType, id in next, (Enum.GarrisonType) do
@@ -51,7 +51,7 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				local RESOURCE_GENERATION_INTERVAL = 600  -- 10 minutes in seconds
 				local RESOURCES_PER_INTERVAL = 1
 				local MAX_CACHE_SIZE = 500
-				textCENT = E:func_textCENT_Currency(CharInfo, 824)
+				textCENT = E.func_textCENT_Currency(CharInfo, 824)
 				myType = {"Currency", 824}
 				if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
 					local color = E.Gray_Color
@@ -70,14 +70,14 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 					end
 				end
 				----------------------------------------------------------------
-				textLEFT = E:func_currencyName(824)
+				textLEFT = E.func_currencyName(824)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

@@ -7,13 +7,13 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local function RegisterMyTables(myType, value, number, index, path)
 	local leftText = E.Addon_Right_Color..tostring(number).."|r"
 	if myType == "sound" then
-		LibSharedMedia:Register(myType, leftText.." "..E:func_Gradient(value), path..value..[[.ogg]])
+		LibSharedMedia:Register(myType, leftText.." "..E.func_Gradient(value), path..value..[[.ogg]])
 	elseif myType == "font" then
-		LibSharedMedia:Register(myType, E:func_Gradient(value), path..value..[[.TTF]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
+		LibSharedMedia:Register(myType, E.func_Gradient(value), path..value..[[.TTF]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
 	elseif myType == "border" then
-		LibSharedMedia:Register(myType, E:func_Gradient(value), path..value..[[.tga]])
+		LibSharedMedia:Register(myType, E.func_Gradient(value), path..value..[[.tga]])
 	elseif myType == "statusbar" then
-		LibSharedMedia:Register(myType, E:func_Gradient(myType.." "..value), path..value..[[.tga]])
+		LibSharedMedia:Register(myType, E.func_Gradient(myType.." "..value), path..value..[[.tga]])
 	end
 end
 ----------------------------------------------------------------

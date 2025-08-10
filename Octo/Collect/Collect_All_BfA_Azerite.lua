@@ -15,6 +15,6 @@ function E.Collect_All_BfA_Azerite()
 	collectPlayerData.azeriteLVL = currentLevel
 	collectPlayerData.azeriteEXP = ("%d%%, -%s"):format(
 		floor(xp / totalLevelXP * 100),
-		E:func_CompactNumberFormat(totalLevelXP - xp)
+		E.func_CompactNumberFormat(totalLevelXP - xp)
 	)
 end

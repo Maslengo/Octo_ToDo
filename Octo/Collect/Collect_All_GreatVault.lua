@@ -64,7 +64,7 @@ function E.Collect_All_GreatVault()
 					vaultEntry.progress = (activityInfo.progress and activityInfo.progress ~= 0) and activityInfo.progress or nil
 					vaultEntry.threshold = activityInfo.threshold or nil
 
-					local hyperlink_STRING = E:func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+					local hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 					if hyperlink_STRING then
 						vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
 						if vivod and vivod ~= "" then

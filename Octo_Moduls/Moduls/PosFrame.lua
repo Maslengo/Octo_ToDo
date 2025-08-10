@@ -32,8 +32,8 @@ tinsert(E.Modules, function()
 				local point, _, relativePoint, xOfs, yOfs = PosFrame:GetPoint()
 				vars.point = point
 				vars.relativePoint = relativePoint
-				vars.xOfs = E:func_CompactNumberSimple(xOfs)
-				vars.yOfs = E:func_CompactNumberSimple(yOfs)
+				vars.xOfs = E.func_CompactNumberSimple(xOfs)
+				vars.yOfs = E.func_CompactNumberSimple(yOfs)
 				LibCustomGlow.ButtonGlow_Stop(PosFrame)
 		end)
 
@@ -84,7 +84,7 @@ tinsert(E.Modules, function()
 
 					-- Update cursor text
 					if cursorX and cursorY then
-						cursorText:SetText(E:func_GetCoordFormated(cursorX, cursorY))
+						cursorText:SetText(E.func_GetCoordFormated(cursorX, cursorY))
 						playerText:SetPoint("CENTER", 0, -7)
 					else
 						if MapId then
@@ -94,7 +94,7 @@ tinsert(E.Modules, function()
 						playerText:SetPoint("CENTER", 0, 0)
 					end
 					-- Update player position text
-					playerText:SetText(E:func_GetCoordFormated(posX, posY))
+					playerText:SetText(E.func_GetCoordFormated(posX, posY))
 				end
 		end)
 end)

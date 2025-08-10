@@ -58,7 +58,7 @@ function E.Collect_All_JournalInstance()
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].defeatedBosses = defeatedBosses
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].extendDisabled = extendDisabled
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].DiffAbbr = DiffAbbr
-				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E:func_SecondsToClock(instanceReset-ServerTime)
+				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].Time = E.func_SecondsToClock(instanceReset-ServerTime)
 			end
 		end
 	end

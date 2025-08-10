@@ -147,10 +147,10 @@ function E.Collect_All_Holiday()
 				local duration = endDate - startDate
 
 				holiday.event_duration = E.func_FriendsFrame_GetLastOnline(duration, true)
-				holiday.startTime = E:func_fixdate(startTime.monthDay).."/"..E:func_fixdate(startTime.month)
-				holiday.endTime = E:func_fixdate(endTime.monthDay).."/"..E:func_fixdate(endTime.month)
-				-- holiday.ENDS = E:func_SecondsToClock(endDate - GetServerTime(), true)
-				holiday.ENDS = E:func_SecondsToClock(endDate - curTime)
+				holiday.startTime = E.func_fixdate(startTime.monthDay).."/"..E.func_fixdate(startTime.month)
+				holiday.endTime = E.func_fixdate(endTime.monthDay).."/"..E.func_fixdate(endTime.month)
+				-- holiday.ENDS = E.func_SecondsToClock(endDate - GetServerTime(), true)
+				holiday.ENDS = E.func_SecondsToClock(endDate - curTime)
 				holiday.iconTexture = eInfo.texture or event.iconTexture
 				holiday.priority = priority
 				holiday.eventID = event.eventID

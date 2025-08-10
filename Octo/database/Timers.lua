@@ -7,10 +7,10 @@ local mod = math.fmod -- (тоже самое что и %)
 -- Helper function to create consistent timers
 local function CreateTimer(baseTime, interval, duration, colorBefore, colorDuring, label)
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - baseTime, interval)
-	local timerText = colorBefore..E:func_SecondsToClock(nextEventIn).."|r "
+	local timerText = colorBefore..E.func_SecondsToClock(nextEventIn).."|r "
 	if nextEventIn > (interval - duration) then
 		nextEventIn = nextEventIn - (interval - duration)
-		timerText = colorDuring..E:func_SecondsToClock(nextEventIn).."|r "
+		timerText = colorDuring..E.func_SecondsToClock(nextEventIn).."|r "
 	end
 	return timerText..(label or "")
 end
@@ -129,8 +129,8 @@ function E.Timers.Treasure_GoblinOLD()
 	local cycle_position = math.floor(elapsed / interval)
 	local current_index = cycle_position % #spawns + 1
 	local next_index = current_index % #spawns + 1
-	local current_location = E:func_GetMapName(spawns[current_index].mapId)
-	local next_location = E:func_GetMapName(spawns[next_index].mapId)
+	local current_location = E.func_GetMapName(spawns[current_index].mapId)
+	local next_location = E.func_GetMapName(spawns[next_index].mapId)
 	-- Форматированный вывод
 	local vivod = current_location .. E.Gray_Color .. " -> " .. next_location .. "|r"
 	return CreateTimer(offset, interval, delay, E.Red_Color, E.Green_Color) .. vivod

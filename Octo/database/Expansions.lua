@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 E.OctoTable_Expansions = {
 	{
-		color = E.WorldofWarcraft_Color, --E:func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b)
+		color = E.WorldofWarcraft_Color, --E.func_rgb2hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b)
 		name = "World of Warcraft",
 		nameBlizzard = EXPANSION_NAME0, -- UNUSED
 		nameVeryShort = "WoW",
@@ -11,7 +11,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 2634,
 	},
 	{
-		color = E.TheBurningCrusade_Color, --E:func_rgb2hex(EXPANSION_COLOR_2.r, EXPANSION_COLOR_2.g, EXPANSION_COLOR_2.b)
+		color = E.TheBurningCrusade_Color, --E.func_rgb2hex(EXPANSION_COLOR_2.r, EXPANSION_COLOR_2.g, EXPANSION_COLOR_2.b)
 		name = "The Burning Crusade",
 		nameBlizzard = EXPANSION_NAME1, -- UNUSED
 		nameVeryShort = "TBC",
@@ -21,7 +21,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 744,
 	},
 	{
-		color = E.WrathoftheLichKing_Color, --E:func_rgb2hex(EXPANSION_COLOR_3.r, EXPANSION_COLOR_3.g, EXPANSION_COLOR_3.b)
+		color = E.WrathoftheLichKing_Color, --E.func_rgb2hex(EXPANSION_COLOR_3.r, EXPANSION_COLOR_3.g, EXPANSION_COLOR_3.b)
 		name = "Wrath of the Lich King",
 		nameBlizzard = EXPANSION_NAME2, -- UNUSED
 		nameVeryShort = "WotLK",
@@ -31,7 +31,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 995,
 	},
 	{
-		color = E.Cataclysm_Color, --E:func_rgb2hex(EXPANSION_COLOR_4.r, EXPANSION_COLOR_4.g, EXPANSION_COLOR_4.b)
+		color = E.Cataclysm_Color, --E.func_rgb2hex(EXPANSION_COLOR_4.r, EXPANSION_COLOR_4.g, EXPANSION_COLOR_4.b)
 		name = "Cataclysm",
 		nameBlizzard = EXPANSION_NAME3, -- UNUSED
 		nameVeryShort = "Cata",
@@ -41,7 +41,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 1146,
 	},
 	{
-		color = E.MistsofPandaria_Color, --E:func_rgb2hex(EXPANSION_COLOR_5.r, EXPANSION_COLOR_5.g, EXPANSION_COLOR_5.b)
+		color = E.MistsofPandaria_Color, --E.func_rgb2hex(EXPANSION_COLOR_5.r, EXPANSION_COLOR_5.g, EXPANSION_COLOR_5.b)
 		name = "Mists of Pandaria",
 		nameBlizzard = EXPANSION_NAME4, -- UNUSED
 		nameVeryShort = "MoP",
@@ -51,7 +51,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 1453,
 	},
 	{
-		color = E.WarlordsofDraenor_Color, --E:func_rgb2hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b)
+		color = E.WarlordsofDraenor_Color, --E.func_rgb2hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b)
 		name = "Warlords of Draenor",
 		nameBlizzard = EXPANSION_NAME5, -- UNUSED
 		nameVeryShort = "WoD",
@@ -61,7 +61,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 1971,
 	},
 	{
-		color =  E.Legion_Color, --E:func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b)
+		color =  E.Legion_Color, --E.func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b)
 		name = "Legion",
 		nameBlizzard = EXPANSION_NAME6, -- UNUSED
 		nameVeryShort = "Legion",
@@ -71,7 +71,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 2274,
 	},
 	{
-		color = E.BattleforAzeroth_Color, --E:func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b)
+		color = E.BattleforAzeroth_Color, --E.func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b)
 		name = "Battle for Azeroth",
 		nameBlizzard = EXPANSION_NAME7, -- UNUSED
 		nameVeryShort = "BfA",
@@ -81,7 +81,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 2874,
 	},
 	{
-		color = E.Shadowlands_Color, --E:func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b)
+		color = E.Shadowlands_Color, --E.func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b)
 		name = "Shadowlands",
 		nameBlizzard = EXPANSION_NAME8, -- UNUSED
 		nameVeryShort = "SL",
@@ -91,7 +91,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	},
 	{
-		color = E.Dragonflight_Color, --E:func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b)
+		color = E.Dragonflight_Color, --E.func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b)
 		name = "Dragonflight",
 		nameBlizzard = EXPANSION_NAME9, -- UNUSED
 		nameVeryShort = "DF",
@@ -101,7 +101,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	},
 	{
-		color = E.TheWarWithin_Color, --E:func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b)
+		color = E.TheWarWithin_Color, --E.func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b)
 		name = "The War Within",
 		nameBlizzard = EXPANSION_NAME10, -- UNUSED
 		nameVeryShort = "TWW",
@@ -111,7 +111,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	},
 	-- {
-	-- color = E.Midnight_Color, --E:func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
+	-- color = E.Midnight_Color, --E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
 	-- name = "Midnight",
 	-- nameBlizzard = EXPANSION_NAME11, -- UNUSED
 	-- nameVeryShort = "MN",
@@ -120,7 +120,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	-- },
 	-- {
-	-- color = E.TheLastTitan_Color, --E:func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
+	-- color = E.TheLastTitan_Color, --E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
 	-- name = "The Last Titan",
 	-- nameBlizzard = EXPANSION_NAME12, -- UNUSED
 	-- nameVeryShort = "TLT",

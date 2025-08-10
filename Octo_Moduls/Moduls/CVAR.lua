@@ -4,7 +4,7 @@ E = _G.OctoEngine
 
 
 
-function E:func_LoadCVars()
+function E.func_LoadCVars()
 	-- Grouped CVars by functionality
 	local cvars = {
 		-- Performance and UI

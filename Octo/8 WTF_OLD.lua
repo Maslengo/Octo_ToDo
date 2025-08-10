@@ -34,7 +34,7 @@ end
 
 
 
-function E:setOldChanges()
+function E.func_setOldChanges()
 	if not Octo_ToDo_DB_Vars.DBVersion then
 		Octo_ToDo_DB_Vars.DBVersion = 1
 	end

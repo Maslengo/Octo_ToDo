@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_07_Legion()
+function E.func_Universal_07_Legion()
 	local OctoTable_Universal = {
 
 
@@ -37,7 +37,7 @@ function E:func_Universal_07_Legion()
 
 
 		showTooltip = true,
-		textleft = E:func_questName(43533),
+		textleft = E.func_questName(43533),
 		name_save = "BalanceofPower",
 		reset = "Once",
 		desc = "Legion",

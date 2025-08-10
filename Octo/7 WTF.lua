@@ -14,27 +14,28 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 	-- local tblCurrencies = {}
 	local tblQuests = {}
 	local tblItems = {}
+	local tblFollowers = {}
 	-- local tblSpells = {}
 
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
 		for _, currencyID in ipairs(v.Currencies) do
-			local currency =  E:func_currencyName(currencyID) -- "AllCurrencies"
+			local currency =  E.func_currencyName(currencyID) -- "AllCurrencies"
 		end
 		for _, itemID in ipairs(v.Items) do
 			if type(itemID) == "number" then
 				tblItems[itemID] = true
-				-- local item = E:func_itemName(itemID) -- "AllItems"
+				-- local item = E.func_itemName(itemID) -- "AllItems"
 			end
 		end
 	end
 	----------------------------------------------------------------
 	for _, currencyID in ipairs(E.OctoTable_Currencies) do
-		local currency = E:func_currencyName(currencyID) -- "AllCurrencies"
+		local currency = E.func_currencyName(currencyID) -- "AllCurrencies"
 	end
 	----------------------------------------------------------------
 	for _, expansionID in ipairs(E.OctoTable_Reputations) do
 		for k, v in next, (expansionID) do
-			local reputation = E:func_reputationName(v.id) -- "AllReputations"
+			local reputation = E.func_reputationName(v.id) -- "AllReputations"
 		end
 	end
 	E.Collect_All_Reputations()
@@ -52,7 +53,7 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 		for _, questData in ipairs(data.quests) do
 			tblQuests[questData[1]] = true
 			if questData.forcedText and questData.forcedText.npcID then
-				local npc = E:func_npcName(questData.forcedText.npcID) -- "AllNPCs"
+				local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
 			end
 		end
 	end
@@ -62,6 +63,56 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 			tblQuests[info.questID] = true
 		end
 	end
+		-- local startTime = debugprofilestop()
+
+		-- local totalQuests = 0
+		-- local totalFollowers = 0
+
+		for _, CharInfo in next, Octo_ToDo_DB_Levels do
+			local MASLENGO = CharInfo.MASLENGO
+			if MASLENGO then
+				-- Квесты
+				local questList = MASLENGO.ListOfQuests
+				if questList then
+					for questID in next, questList do
+						tblQuests[questID] = true
+						-- totalQuests = totalQuests + 1
+					end
+				end
+
+				-- Последователи
+				local garrisonFollowers = MASLENGO.GarrisonFollowers
+				if garrisonFollowers then
+					for _, followerType in ipairs(E.OctoTable_followerTypeIDs) do
+						local followers = garrisonFollowers[followerType.name]
+						if followers then
+							for _, followerID in ipairs(followers) do
+								local name = E.func_getFollowerName(followerID)
+								-- totalFollowers = totalFollowers + 1
+								-- можно логировать name, если нужно
+								-- print("Follower:", name)
+							end
+						end
+					end
+				end
+
+				local ItemsInBag = MASLENGO.ItemsInBag
+				if ItemsInBag then
+					for itemID, itemCount in next, (MASLENGO.ItemsInBag) do
+						tblItems[itemID] = true
+					end
+				end
+			end
+		end
+
+		-- local endTime = debugprofilestop()
+		-- local elapsedMs = endTime - startTime
+		-- local elapsedSec = elapsedMs / 1000
+
+		-- print(string.format("Время выполнения: %.2f мс (%.3f сек)", elapsedMs, elapsedSec))
+		-- print("Обработано квестов:", totalQuests)
+		-- print("Обработано последователей:", totalFollowers)
+
 
 	local promise = LibThingsLoad:QuestsByKey(tblQuests)
 	promise:AddItemsByKey(tblItems)
@@ -71,13 +122,13 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 
 	promise:ThenForAllWithCached(function(promise, id, type)
 			if type == "quest" then
-				local quest = E:func_questName(id) -- "AllQuests"
+				local quest = E.func_questName(id) -- "AllQuests"
 			elseif type == "item" then
-				local item = E:func_itemName(id)
+				local item = E.func_itemName(id)
 				local qw = C_Item.GetItemQualityByID(id)
 			end
 			-- if Octo_MainFrame_ToDo:IsShown() then
-			-- 	E:func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
+			-- 	E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
 			-- end
 	end)
 	-- promise:FailWithChecked(function(promise, id, type)
@@ -276,8 +327,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	-- Получаем GUID текущего игрока
 	local curGUID = UnitGUID("player")
 	-- Инициализируем основную таблицу данных
-	Octo_ToDo_DB_Levels = E:func_InitTable(Octo_ToDo_DB_Levels)
-	Octo_ToDo_DB_Levels[curGUID] = E:func_InitTable(Octo_ToDo_DB_Levels[curGUID])
+	Octo_ToDo_DB_Levels = E.func_InitTable(Octo_ToDo_DB_Levels)
+	Octo_ToDo_DB_Levels[curGUID] = E.func_InitTable(Octo_ToDo_DB_Levels[curGUID])
 	-- Получаем текущее серверное время и дату
 	local ServerTime = GetServerTime()
 	local currentDate = date("%d.%m.%Y")
@@ -294,8 +345,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		classColorHex = E.classColorHexCurrent, -- Цвет класса в HEX
 		className = E.className, -- Имя класса
 		classFilename = E.classFilename, -- Техническое имя класса
-		CurrentRegion = E:func_GetCurrentRegion(),
-		CurrentRegionName = E:func_GetCurrentRegionName(),
+		CurrentRegion = E.func_GetCurrentRegion(),
+		CurrentRegionName = E.func_GetCurrentRegionName(),
 		curServer = E.curServer, -- Текущий сервер
 		curServerShort = E.curServerShort, -- Короткое имя сервера
 		currentTier = E.currentTier, -- Текущий игровой тир
@@ -313,18 +364,25 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	}
 	-- Стандартные значения для MASLENGO таблицы
 	local MASLENGO_DEFAULTS = {
-		Currency = {}, -- Данные валют
 		CovenantAndAnima = { -- Ковенанты и анима
 			[1] = {},
 			[2] = {},
 			[3] = {},
 			[4] = {},
 		},
+		Currency = {}, -- Данные валют
 		garrisonType = {},
-		GarrisonFollowers = {},
-		HasGarrison = {},
 		GARRISON = {},
+		GarrisonFollowers = {},
+		GarrisonFollowersCount = {},
 		GreatVault = {}, -- Данные Великого Хранилища
+		HasGarrison = {},
+		ItemsALL = {
+			Bags = {},
+			Bank = {},
+			Void = {},
+			-- БАНК ОТРЯДА НА ВЕСЬ АКК
+		},
 		ItemsInBag = {}, -- Предметы в сумках
 		journalInstance = {}, -- Инстансы из журнала
 		LFGInstance = {}, -- Данные LFG
@@ -370,16 +428,16 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	-- Обрабатываем всех персонажей в базе
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Инициализируем подтаблицы
-		E:func_InitSubTable(CharInfo, "MASLENGO")
+		E.func_InitSubTable(CharInfo, "MASLENGO")
 		local MASLENGO = CharInfo.MASLENGO
-		E:func_InitSubTable(CharInfo, "PlayerData")
+		E.func_InitSubTable(CharInfo, "PlayerData")
 		local PlayerData = CharInfo.PlayerData
 
 
 
 		-- Заполняем стандартные значения
 		for k, v in next, (defaults) do
-			E:func_InitField(PlayerData, k, v)
+			E.func_InitField(PlayerData, k, v)
 		end
 		-- Заполняем MASLENGO значениями по умолчанию
 		for k, v in next, (MASLENGO_DEFAULTS) do
@@ -392,18 +450,18 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		for garrisonType, id in next, (Enum.GarrisonType) do
 			MASLENGO.garrisonType[id] = MASLENGO.garrisonType[id] or {}
 			-- MASLENGO.HasGarrison[id] = MASLENGO.HasGarrison[id] or false
-			E:func_InitField(MASLENGO, "HasGarrison", false)
+			E.func_InitField(MASLENGO, "HasGarrison", false)
 		end
 
 
-		for i, v in ipairs(E.OctoTable_followerTypeIDs) do
-			local name = v.name
-			MASLENGO.GarrisonFollowers[name] = MASLENGO.GarrisonFollowers[name] or {}
+		for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
+			MASLENGO.GarrisonFollowers[followerData.name] = MASLENGO.GarrisonFollowers[followerData.name] or {}
+			MASLENGO.GarrisonFollowersCount[followerData.name] = MASLENGO.GarrisonFollowersCount[followerData.name] or {}
 		end
 
 		-- Заполняем стандартные значения
 		for k, v in next, (GARRISON_default) do
-			E:func_InitField(MASLENGO.GARRISON, k, v)
+			E.func_InitField(MASLENGO.GARRISON, k, v)
 		end
 		-- Устанавливаем временные метки
 		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
@@ -423,15 +481,15 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		end
 		-- Инициализируем данные LFG инстансов
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
-			MASLENGO.LFGInstance[dungeonID] = E:func_InitTable(MASLENGO.LFGInstance[dungeonID])
-			E:func_InitField(MASLENGO.LFGInstance[dungeonID], "D_name", name)
+			MASLENGO.LFGInstance[dungeonID] = E.func_InitTable(MASLENGO.LFGInstance[dungeonID])
+			E.func_InitField(MASLENGO.LFGInstance[dungeonID], "D_name", name)
 			MASLENGO.LFGInstance[dungeonID].donetoday = MASLENGO.LFGInstance[dungeonID].donetoday or nil
 		end
 	end
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
-	Octo_ToDo_DB_Vars = E:func_InitTable(Octo_ToDo_DB_Vars)
+	Octo_ToDo_DB_Vars = E.func_InitTable(Octo_ToDo_DB_Vars)
 	-- Настройки отладки
 	local debugDefaults = {
 		addonFontSize = 11,
@@ -445,7 +503,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		editorTheme = "Twilight",
 	}
 	for k, v in next, (debugDefaults) do
-		E:func_InitField(Octo_ToDo_DB_Vars, k, v)
+		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
 		E[k] = Octo_ToDo_DB_Vars[k] -- Копируем в глобальную таблицу
 	end
 	-- Настройки функций аддона
@@ -533,13 +591,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	}
 	-- Устанавливаем значения по умолчанию
 	for k, v in next, (featureDefaults) do
-		E:func_InitField(Octo_ToDo_DB_Vars, k, v)
+		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
 	end
 	-- Инициализируем таблицы настроек
-	E:func_InitField(Octo_ToDo_DB_Vars, "AchievementToShow", {[92] = true})
-	E:func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
+	E.func_InitField(Octo_ToDo_DB_Vars, "AchievementToShow", {[92] = true})
+	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
 	-- Настройки фрейма скорости
-	E:func_InitSubTable(Octo_ToDo_DB_Vars, "SpeedFrame")
+	E.func_InitSubTable(Octo_ToDo_DB_Vars, "SpeedFrame")
 	local speedFrameDefaults = {
 		Shown = true, -- Показывать фрейм
 		point = "BOTTOM", -- Точка привязки
@@ -548,10 +606,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		yOfs = 67 -- Смещение по Y
 	}
 	for k, v in next, (speedFrameDefaults) do
-		E:func_InitField(Octo_ToDo_DB_Vars.SpeedFrame, k, v)
+		E.func_InitField(Octo_ToDo_DB_Vars.SpeedFrame, k, v)
 	end
 	-- Настройки позиционного фрейма
-	E:func_InitSubTable(Octo_ToDo_DB_Vars, "PosFrame")
+	E.func_InitSubTable(Octo_ToDo_DB_Vars, "PosFrame")
 	local posFrameDefaults = {
 		Shown = true, -- Показывать фрейм
 		point = "BOTTOM", -- Точка привязки
@@ -560,33 +618,34 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		yOfs = 67, -- Смещение по Y
 	}
 	for k, v in next, (posFrameDefaults) do
-		E:func_InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
+		E.func_InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
 	end
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
-	Octo_ToDo_DB_Other = E:func_InitTable(Octo_ToDo_DB_Other)
+	Octo_ToDo_DB_Other = E.func_InitTable(Octo_ToDo_DB_Other)
 	-- Инициализация таблицы денег аккаунта
-	E:func_InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
-	E:func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.CurrentRegionName, 0)
+	E.func_InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
+	E.func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.CurrentRegionName, 0)
 	-- Инициализация таблиц настроек
-	-- E:func_InitSubTable(Octo_ToDo_DB_Other, "CVar")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Other, "CVar")
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Cache_DB()
-	Octo_Cache_DB = E:func_InitTable(Octo_Cache_DB)
-	E:func_InitField(Octo_Cache_DB, "lastBuildNumber", 1)
-	E:func_InitField(Octo_Cache_DB, "lastFaction", UNKNOWN)
-	E:func_InitField(Octo_Cache_DB, "lastLocaleLang", UNKNOWN)
+	Octo_Cache_DB = E.func_InitTable(Octo_Cache_DB)
+	E.func_InitField(Octo_Cache_DB, "lastBuildNumber", 1)
+	E.func_InitField(Octo_Cache_DB, "lastFaction", UNKNOWN)
+	E.func_InitField(Octo_Cache_DB, "lastLocaleLang", UNKNOWN)
 	-- Инициализация подтаблиц
-	E:func_InitSubTable(Octo_Cache_DB, "AllItems")
-	E:func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
-	E:func_InitSubTable(Octo_Cache_DB, "AllNPCs")
-	E:func_InitSubTable(Octo_Cache_DB, "AllQuests")
-	E:func_InitSubTable(Octo_Cache_DB, "AllReputations")
-	E:func_InitSubTable(Octo_Cache_DB, "AllSpells")
+	E.func_InitSubTable(Octo_Cache_DB, "AllItems")
+	E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
+	E.func_InitSubTable(Octo_Cache_DB, "AllNPCs")
+	E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
+	E.func_InitSubTable(Octo_Cache_DB, "AllReputations")
+	E.func_InitSubTable(Octo_Cache_DB, "AllSpells")
+	E.func_InitSubTable(Octo_Cache_DB, "AllFollowers")
 
-	E:func_InitSubTable(Octo_Cache_DB, "watchedMovies")
+	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 
 
 end
@@ -594,24 +653,24 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Achievements_DB()
-	Octo_Achievements_DB = E:func_InitTable(Octo_Achievements_DB)
+	Octo_Achievements_DB = E.func_InitTable(Octo_Achievements_DB)
 	-- Настройки отображения достижений
-	E:func_InitField(Octo_Achievements_DB, "Config_AchievementShowCompleted", true)
-	E:func_InitField(Octo_Achievements_DB, "AchievementToShow", {[92] = true})
+	E.func_InitField(Octo_Achievements_DB, "Config_AchievementShowCompleted", true)
+	E.func_InitField(Octo_Achievements_DB, "AchievementToShow", {[92] = true})
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
-	Octo_AddonsManager_DB = E:func_InitTable(Octo_AddonsManager_DB)
+	Octo_AddonsManager_DB = E.func_InitTable(Octo_AddonsManager_DB)
 	-- Инициализация подтаблиц
-	E:func_InitSubTable(Octo_AddonsManager_DB, "collapsedAddons")
-	E:func_InitSubTable(Octo_AddonsManager_DB, "profiles")
-	E:func_InitSubTable(Octo_AddonsManager_DB.profiles, "forceload")
+	E.func_InitSubTable(Octo_AddonsManager_DB, "collapsedAddons")
+	E.func_InitSubTable(Octo_AddonsManager_DB, "profiles")
+	E.func_InitSubTable(Octo_AddonsManager_DB.profiles, "forceload")
 	-- Настройка принудительной загрузки текущего аддона
-	E:func_InitField(Octo_AddonsManager_DB.profiles.forceload, GlobalAddonName, true)
+	E.func_InitField(Octo_AddonsManager_DB.profiles.forceload, GlobalAddonName, true)
 	-- Настройки конфигурации
-	E:func_InitSubTable(Octo_AddonsManager_DB, "config")
+	E.func_InitSubTable(Octo_AddonsManager_DB, "config")
 	local configDefaults = {
 		addonListStyle = "tree", -- Стиль списка как дерево
 		autofocusSearch = nil, -- Автофокус в поиске
@@ -638,24 +697,24 @@ function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
 	}
 	-- Устанавливаем значения по умолчанию
 	for k, v in next, (configDefaults) do
-		E:func_InitField(Octo_AddonsManager_DB.config, k, v)
+		E.func_InitField(Octo_AddonsManager_DB.config, k, v)
 	end
 	-- Дополнительные настройки
-	E:func_InitField(Octo_AddonsManager_DB, "isCategoryFrameVisible", true)
-	E:func_InitSubTable(Octo_AddonsManager_DB, "lock")
-	E:func_InitSubTable(Octo_AddonsManager_DB.lock, "addons")
-	E:func_InitField(Octo_AddonsManager_DB.lock.addons, E.MainAddonName, true)
+	E.func_InitField(Octo_AddonsManager_DB, "isCategoryFrameVisible", true)
+	E.func_InitSubTable(Octo_AddonsManager_DB, "lock")
+	E.func_InitSubTable(Octo_AddonsManager_DB.lock, "addons")
+	E.func_InitField(Octo_AddonsManager_DB.lock.addons, E.MainAddonName, true)
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_AddonsTable_DB()
-	Octo_AddonsTable_DB = E:func_InitTable(Octo_AddonsTable_DB)
+	Octo_AddonsTable_DB = E.func_InitTable(Octo_AddonsTable_DB)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Debug_DB()
-	Octo_Debug_DB = E:func_InitTable(Octo_Debug_DB)
-	E:func_InitSubTable(Octo_Debug_DB, "Functions")
+	Octo_Debug_DB = E.func_InitTable(Octo_Debug_DB)
+	E.func_InitSubTable(Octo_Debug_DB, "Functions")
 
 	if not Octo_Debug_DB then return end
 	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
@@ -671,46 +730,46 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_LoadAddons_DB()
-	Octo_LoadAddons_DB = E:func_InitTable(Octo_LoadAddons_DB)
+	Octo_LoadAddons_DB = E.func_InitTable(Octo_LoadAddons_DB)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Minecraft_DB()
-	Octo_Minecraft_DB = E:func_InitTable(Octo_Minecraft_DB)
+	Octo_Minecraft_DB = E.func_InitTable(Octo_Minecraft_DB)
 	-- Настройки цвета переднего плана
-	E:func_InitSubTable(Octo_Minecraft_DB, "ColorFG")
-	E:func_InitField(Octo_Minecraft_DB.ColorFG, "r", 1) -- Красный
-	E:func_InitField(Octo_Minecraft_DB.ColorFG, "g", 1) -- Зеленый
-	E:func_InitField(Octo_Minecraft_DB.ColorFG, "b", 1) -- Синий
-	E:func_InitField(Octo_Minecraft_DB.ColorFG, "a", 1) -- Альфа
+	E.func_InitSubTable(Octo_Minecraft_DB, "ColorFG")
+	E.func_InitField(Octo_Minecraft_DB.ColorFG, "r", 1) -- Красный
+	E.func_InitField(Octo_Minecraft_DB.ColorFG, "g", 1) -- Зеленый
+	E.func_InitField(Octo_Minecraft_DB.ColorFG, "b", 1) -- Синий
+	E.func_InitField(Octo_Minecraft_DB.ColorFG, "a", 1) -- Альфа
 	-- Настройки цвета фона
-	E:func_InitSubTable(Octo_Minecraft_DB, "ColorBG")
-	E:func_InitField(Octo_Minecraft_DB.ColorBG, "r", 1) -- Красный
-	E:func_InitField(Octo_Minecraft_DB.ColorBG, "g", 1) -- Зеленый
-	E:func_InitField(Octo_Minecraft_DB.ColorBG, "b", 1) -- Синий
-	E:func_InitField(Octo_Minecraft_DB.ColorBG, "a", 1) -- Альфа
+	E.func_InitSubTable(Octo_Minecraft_DB, "ColorBG")
+	E.func_InitField(Octo_Minecraft_DB.ColorBG, "r", 1) -- Красный
+	E.func_InitField(Octo_Minecraft_DB.ColorBG, "g", 1) -- Зеленый
+	E.func_InitField(Octo_Minecraft_DB.ColorBG, "b", 1) -- Синий
+	E.func_InitField(Octo_Minecraft_DB.ColorBG, "a", 1) -- Альфа
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_Moduls_DB()
-	Octo_Moduls_DB = E:func_InitTable(Octo_Moduls_DB)
+	Octo_Moduls_DB = E.func_InitTable(Octo_Moduls_DB)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Octo_QuestsChanged_DB()
-	Octo_QuestsChanged_DB = E:func_InitTable(Octo_QuestsChanged_DB)
+	Octo_QuestsChanged_DB = E.func_InitTable(Octo_QuestsChanged_DB)
 	-- Инициализация подтаблиц
-	E:func_InitSubTable(Octo_QuestsChanged_DB, "QC_Quests")
-	E:func_InitSubTable(Octo_QuestsChanged_DB, "QC_Vignettes")
+	E.func_InitSubTable(Octo_QuestsChanged_DB, "QC_Quests")
+	E.func_InitSubTable(Octo_QuestsChanged_DB, "QC_Vignettes")
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Daily_Reset()
-	if E:func_IsRetail() then
+	if E.func_IsRetail() then
 		local ServerTime = GetServerTime()
 		local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
 		-- Обрабатываем всех персонажей
@@ -739,7 +798,7 @@ function Octo_EventFrame_WTF:Daily_Reset()
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Weekly_Reset()
-	if E:func_IsRetail() then
+	if E.func_IsRetail() then
 		local ServerTime = GetServerTime()
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			-- Проверяем нужно ли выполнить сброс
@@ -778,8 +837,8 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:Month_Reset()
-	if E:func_IsRetail() then
-		local tmstp_Month = E:func_tmstpDayReset(365/12)
+	if E.func_IsRetail() then
+		local tmstp_Month = E.func_tmstpDayReset(365/12)
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			-- Проверяем нужно ли выполнить сброс
 			if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
@@ -804,7 +863,7 @@ local MyEventsTable = {
 	"PLAYER_LOGIN",
 }
 ----------------------------------------------------------------
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
 ------------------------------------------------------------
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
@@ -837,11 +896,11 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 	self:Octo_Moduls_DB()
 	self:Octo_QuestsChanged_DB() -- Изменения квестов
 	-- Применяем старые изменения
-	E:setOldChanges()
+	E.func_setOldChanges()
 
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
 		E.func_ConcatAtStart_UniversalQuestQWE = true
-		E:func_Universal_91_Concat()
+		E.func_Universal_91_Concat()
 	end
 
 	-- Очистка и сброс данных

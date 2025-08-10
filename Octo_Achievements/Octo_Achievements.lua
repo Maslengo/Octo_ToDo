@@ -5,7 +5,7 @@ local Octo_EventFrame_Achievements = CreateFrame("FRAME")
 Octo_EventFrame_Achievements:Hide()
 local Octo_MainFrame_Achievements = CreateFrame("BUTTON", "Octo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 Octo_MainFrame_Achievements:Hide()
-E:func_InitFrame(Octo_MainFrame_Achievements)
+E.func_InitFrame(Octo_MainFrame_Achievements)
 ----------------------------------------------------------------
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
@@ -33,9 +33,9 @@ local StartTracking = C_ContentTracking.StartTracking
 local StopTracking = C_ContentTracking.StopTracking
 ----------------------------------------------------------------
 local function ToggleAchievement(AchievementID)
-	if E:func_achievementComplete(AchievementID) and IsTracking(2, AchievementID) then
+	if E.func_achievementComplete(AchievementID) and IsTracking(2, AchievementID) then
 		return StopTracking(2, AchievementID, 2)
-	elseif E:func_achievementComplete(AchievementID) then
+	elseif E.func_achievementComplete(AchievementID) then
 		return
 	elseif IsTracking(2, AchievementID) then
 		return StopTracking(2, AchievementID, 2)
@@ -120,7 +120,7 @@ local function CreateAchievementTooltip(achievementID)
 	local _, name, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
 	local color = completed and E.Green_Color or E.Red_Color
 	-- Build header line
-	local textLEFT = E:func_texturefromIcon(icon)..name
+	local textLEFT = E.func_texturefromIcon(icon)..name
 	if E.DebugIDs then
 		textLEFT = textLEFT..E.Gray_Color.." id:"..achievementID.."|r"
 	end
@@ -165,10 +165,10 @@ function Octo_EventFrame_Achievements:Octo_Frame_init(frame, node)
 	frame.tooltip = CreateAchievementTooltip(data.AchievementID)
 	if IsTracking(2, data.AchievementID) then
 		frame.texture_2:Show()
-		-- E:func_SetBackdrop(frame, E.classColorHexCurrent, .3, 0)
+		-- E.func_SetBackdrop(frame, E.classColorHexCurrent, .3, 0)
 	else
 		frame.texture_2:Hide()
-		-- E:func_SetBackdrop(frame, nil, 0, 0)
+		-- E.func_SetBackdrop(frame, nil, 0, 0)
 	end
 end
 function Octo_EventFrame_Achievements:Octo_Create_MainFrame_Achievements()
@@ -240,7 +240,7 @@ function Octo_EventFrame_Achievements:CreateDataProvider()
 							count = count + 1
 							Octo_EventFrame_Achievements.DataProvider:Insert({
 									textLEFT = textLEFT,
-									textRIGHT = E:func_achievementvivod(AchievementID),
+									textRIGHT = E.func_achievementvivod(AchievementID),
 									AchievementID = AchievementID,
 									icon = icon,
 							})
@@ -266,12 +266,12 @@ local MyEventsTable = {
 
 	"CONTENT_TRACKING_UPDATE",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_Achievements, MyEventsTable)
 
 function Octo_EventFrame_Achievements:PLAYER_LOGIN()
 	self:Octo_Create_MainFrame_Achievements()
-	E:func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.Lime_Color, function() Octo_EventFrame_Achievements:CreateDataProvider() end)
-	E:func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, nil, "Octo_MainFrame_Achievements")
+	E.func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.Lime_Color, function() Octo_EventFrame_Achievements:CreateDataProvider() end)
+	E.func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, nil, "Octo_MainFrame_Achievements")
 end
 function Octo_EventFrame_Achievements:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_Achievements:Hide()

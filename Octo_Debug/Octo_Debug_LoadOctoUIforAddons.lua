@@ -54,7 +54,7 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
 function Octo_EventFrame_Debug:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")
 	self.VARIABLES_LOADED = nil

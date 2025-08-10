@@ -4,13 +4,14 @@ function E.Collect_All_ItemsInBag()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 
-	if not collectPlayerData then return end
+	if not collectPlayerData or not collectMASLENGO then return end
+	collectMASLENGO.ItemsALL.Bags = collectMASLENGO.ItemsALL.Bags or {}
 
 	local usedSlots, totalSlots, Possible_Anima, Possible_CatalogedResearch = 0, 0, 0, 0
 	local keystoneFound = false
 	local hasKeystone = false
 	for _, itemID in ipairs(E.KeyStoneTBL) do
-		if E:func_GetItemCount(itemID, false, false, false, false) ~= 0 then
+		if E.func_GetItemCount(itemID, false, false, false, false) ~= 0 then
 			hasKeystone = true
 			break
 		end
@@ -48,6 +49,10 @@ function E.Collect_All_ItemsInBag()
 					local quality = containerInfo.quality
 					local hyperlink = containerInfo.hyperlink
 					-- Обработка ключей подземелий
+					local name = E.func_itemName(itemID)
+					collectMASLENGO.ItemsALL.Bags[itemID] = E.func_GetItemCount(itemID, true, true, true, false)
+
+
 					if hasKeystone and not keystoneFound and hyperlink then
 						if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
 							local _, _, _, dungeonSTR, lvl = strsplit(":", hyperlink)
@@ -63,11 +68,11 @@ function E.Collect_All_ItemsInBag()
 
 					-- Обработка исследовательских материалов (используем таблицу поиска)
 					if itemID and researchItemsLookup[itemID] then
-						Possible_CatalogedResearch = Possible_CatalogedResearch + (researchItemsLookup[itemID] * E:func_GetItemCount(itemID))
+						Possible_CatalogedResearch = Possible_CatalogedResearch + (researchItemsLookup[itemID] * E.func_GetItemCount(itemID))
 					end
 
 					-- Обработка анимы
-					if stackCount and itemID and E:func_IsAnimaItemByID(itemID) then
+					if stackCount and itemID and E.func_IsAnimaItemByID(itemID) then
 						if itemID == 183727 then
 							Possible_Anima = Possible_Anima + (3 * stackCount)
 						elseif quality == 2 then
@@ -92,7 +97,7 @@ function E.Collect_All_ItemsInBag()
 
 	-- Обновление данных о предметах в сумке
 	for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
-		local count = E:func_GetItemCount(itemID, true, true, true, false)
+		local count = E.func_GetItemCount(itemID, true, true, true, false)
 		if count ~= 0 then
 			collectMASLENGO.ItemsInBag[itemID] = count
 		end

@@ -9,7 +9,7 @@ local INDENT_TEST = 4
 local INDENT_SCROLL = 20
 local TOOLTIP_LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local TOOLTIP_LINE_WIDTH = 256
-local LINES_MAX = 20
+local LINES_MAX = 24
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)
 if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
@@ -338,7 +338,7 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_OctoTooltip, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_OctoTooltip, MyEventsTable)
 
 function Octo_EventFrame_OctoTooltip:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")

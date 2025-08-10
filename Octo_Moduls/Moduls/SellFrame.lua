@@ -75,7 +75,7 @@ local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
 local GetContainerItemID = C_Container.GetContainerItemID
 
-local func_GetItemCount = function(...) return E:func_GetItemCount(...) end
+local func_GetItemCount = function(...) return E.func_GetItemCount(...) end
 
 -- Игнорируемые предметы (не для продажи)
 local ignorelist = {}
@@ -323,7 +323,7 @@ local function UpdateTooltip(button)
 							count = itemCount,
 							quality = quality,
 							sellPrice = sellPrice,
-							itemName = E:func_itemName(itemID, quality),
+							itemName = E.func_itemName(itemID, quality),
 							itemType = itemEquipLoc
 						}
 					end
@@ -349,10 +349,10 @@ local function UpdateTooltip(button)
 
 	-- Формирование данных для тултипа
 	local SellOther_tooltip = {}
-	SellOther_tooltip[#SellOther_tooltip+1] = {" ", TOTAL..": "..E:func_MoneyString(totalMoney)}
+	SellOther_tooltip[#SellOther_tooltip+1] = {" ", TOTAL..": "..E.func_MoneyString(totalMoney)}
 
 	for _, item in ipairs(sorted_itemList) do
-		local displayText = E:func_MoneyString(item.totalPrice)
+		local displayText = E.func_MoneyString(item.totalPrice)
 		if item.count > 1 then
 			displayText = E.Blue_Color.."x"..item.count.."|r "..displayText
 		end
@@ -375,7 +375,7 @@ end
 ----------------------------------------------------------------
 
 --- Продает предметы по качеству
-function Octo_EventFrame_SellFrame:func_SellItemsByQuality()
+function Octo_EventFrame_SellFrame.SellItemsByQuality()
 	-- Защита от повторного клика
 	if self.sellLock then return end
 	self.sellLock = true
@@ -455,7 +455,7 @@ end
 ----------------------------------------------------------------
 
 --- Создает кнопки для продажи предметов
-function Octo_EventFrame_SellFrame:func_CreateTradeButtons()
+function Octo_EventFrame_SellFrame.CreateTradeButtons()
 	-- Создаем кнопки для разных качеств предметов
 	for _, i in ipairs({3, 4}) do -- 0 COMMON, 3 RARE, 4 EPIC
 		local text = "OctoFrame_SellOtherBlue"
@@ -494,7 +494,7 @@ function Octo_EventFrame_SellFrame:func_CreateTradeButtons()
 		end)
 
 		OctoFrame_SellOtherBlue:SetScript("OnClick", function()
-				self:func_SellItemsByQuality()
+				self:SellItemsByQuality()
 		end)
 
 		OctoFrame_SellOtherBlue:SetScript("OnEnter", function()
@@ -519,13 +519,13 @@ local MyEventsTable = {
 	"MERCHANT_CLOSED",
 }
 
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_SellFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_SellFrame, MyEventsTable)
 
 --- Обрабатывает событие загрузки аддона
 function Octo_EventFrame_SellFrame:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")
 	self.VARIABLES_LOADED = nil
-	self:func_CreateTradeButtons()
+	self:CreateTradeButtons()
 	CreateBankButtons()
 end
 

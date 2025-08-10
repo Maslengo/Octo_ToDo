@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_11_TheWarWithin()
+function E.func_Universal_11_TheWarWithin()
 	local OctoTable_Universal = {
 		{
 
@@ -22,7 +22,7 @@ function E:func_Universal_11_TheWarWithin()
 		{
 
 			showTooltip = true,
-			textleft = E:func_questName(84370),
+			textleft = E.func_questName(84370),
 			name_save = "TheKeytoSuccess",
 			reset = "Weekly",
 			desc = "TheWarWithin",
@@ -34,7 +34,7 @@ function E:func_Universal_11_TheWarWithin()
 		{
 
 			showTooltip = true,
-			textleft = E:func_questName(82449),
+			textleft = E.func_questName(82449),
 			name_save = "TheCalloftheWorldsoul",
 			reset = "Weekly",
 			desc = "TheWarWithin",
@@ -190,7 +190,7 @@ function E:func_Universal_11_TheWarWithin()
 		{
 
 			showTooltip = true,
-			textleft = E.Timers.TWW_BeledarCycle()..E:func_questName(83240),
+			textleft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
 			name_save = "TheTheaterTroupe",
 			reset = "Weekly",
 			desc = "TheWarWithin",
@@ -202,7 +202,7 @@ function E:func_Universal_11_TheWarWithin()
 		{
 
 			showTooltip = true,
-			textleft = E:func_questName(76586),
+			textleft = E.func_questName(76586),
 			name_save = "SpreadingtheLight",
 			reset = "Weekly",
 			desc = "TheWarWithin",
@@ -214,7 +214,7 @@ function E:func_Universal_11_TheWarWithin()
 		{
 
 			showTooltip = true,
-			textleft = E:func_questName(83333),
+			textleft = E.func_questName(83333),
 			name_save = "GearingUpforTrouble",
 			reset = "Weekly",
 			desc = "TheWarWithin",
@@ -245,7 +245,7 @@ function E:func_Universal_11_TheWarWithin()
 		{
 
 			showTooltip = true,
-			textleft = E:func_questName(82946),
+			textleft = E.func_questName(82946),
 			name_save = "RollinDownintheDeeps",
 			reset = "Weekly",
 			desc = "TheWarWithin",

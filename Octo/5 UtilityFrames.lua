@@ -150,7 +150,7 @@ function Octo_EventFrame_UtilityFrames:Octo_OptionsButton(frame, addonIconTextur
 		if SettingsPanel:IsVisible() then
 			HideUIPanel(SettingsPanel)
 		else
-			Settings.OpenToCategory(E:func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+			Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
 		end
 	end
 
@@ -170,7 +170,7 @@ end
 function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 	local function func_onEnter()
 		local tooltip = {}
-		local numQuests = E:func_CurrentNumQuests()
+		local numQuests = E.func_CurrentNumQuests()
 
 		if numQuests > 0 then
 			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..numQuests..")"}
@@ -187,7 +187,7 @@ function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 			table.sort(list, E.func_Reverse_order)
 
 			for _, questID in ipairs(list) do
-				tooltip[#tooltip+1] = {E:func_questName(questID), E:func_CheckCompletedByQuestID(questID)}
+				tooltip[#tooltip+1] = {E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
 			end
 		else
 			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["No quests"].."|r"}
@@ -197,13 +197,13 @@ function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 	end
 
 	local function f_AbandonQuests()
-		local numQuests = E:func_CurrentNumQuests()
+		local numQuests = E.func_CurrentNumQuests()
 
 		for i = 1, GetNumQuestLogEntries() do
 			if numQuests ~= 0 then
 				local info = GetInfo(i)
 				if info and not info.isHeader and not info.isHidden then
-					DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(L["Abandon: "])..E:func_questName(info.questID))
+					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
 					SetSelectedQuest(info.questID)
 					SetAbandonQuest()
 					AbandonQuest()
@@ -211,7 +211,7 @@ function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 			end
 		end
 
-		DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
 	end
 
 	-- Create confirmation dialog
@@ -225,7 +225,7 @@ function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 	}
 
 	local function func_onClick()
-		if E:func_CurrentNumQuests() > 0 then
+		if E.func_CurrentNumQuests() > 0 then
 			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
 		end
 	end
@@ -265,7 +265,7 @@ function Octo_EventFrame_UtilityFrames:Octo_EventsButton(frame)
 
 		for _, eventKey in ipairs(sorted) do
 			local v = E.Holiday[eventKey]
-			local titleText = E:func_texturefromIconEVENT(v.iconTexture)
+			local titleText = E.func_texturefromIconEVENT(v.iconTexture)
 			local timeText = v.startTime.." - "..v.endTime
 
 			if v.Active then
@@ -368,7 +368,7 @@ end
 	@param frame - Target frame to attach buttons to
 	@param addonIconTexture - Texture path for options button
 ]]
-function E:func_CreateUtilsButton(frame, addonIconTexture)
+function E.func_CreateUtilsButton(frame, addonIconTexture)
 	if not utilityFrames.initialized then
 		Octo_EventFrame_UtilityFrames:Octo_CloseButton(frame)
 		Octo_EventFrame_UtilityFrames:Octo_OptionsButton(frame, addonIconTexture)
@@ -392,13 +392,13 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
 
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_UtilityFrames, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_UtilityFrames, MyEventsTable)
 
 function Octo_EventFrame_UtilityFrames:VARIABLES_LOADED()
 
 	C_Timer.After(0, function()
 		for i, frame in ipairs(E.OctoTable_Frames) do
-			E:func_CreateUtilsButton(frame, "ToDo")
+			E.func_CreateUtilsButton(frame, "ToDo")
 		end
 	end)
 end

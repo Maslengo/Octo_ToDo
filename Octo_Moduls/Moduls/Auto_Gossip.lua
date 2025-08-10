@@ -62,7 +62,7 @@ local ignoreICONS = {
 }
 ----------------------------------------------------------------
 local function HELP_TEXT(i, icon, name)
-	return E:func_Gradient(GlobalAddonName)..E.Green_Color.." ("..i..")|r "..E:func_texturefromIcon(icon)..name
+	return E.func_Gradient(GlobalAddonName)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
 end
 ----------------------------------------------------------------
 function Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
@@ -81,7 +81,7 @@ function Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
 		local name = option.name
 		local icon = option.icon
 		local flags = option.flags
-		-- print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E:func_texturefromIcon(icon),name)
+		-- print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon),name)
 
 
 
@@ -125,7 +125,7 @@ end
 local MyEventsTable = {
 	"GOSSIP_SHOW",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_Config_Auto_Gossip, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_Config_Auto_Gossip, MyEventsTable)
 function Octo_EventFrame_Config_Auto_Gossip:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
 	if not Octo_ToDo_DB_Vars.Config_Auto_Gossip then return end

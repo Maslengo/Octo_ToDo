@@ -25,8 +25,8 @@ function E.Collect_All_PlayerInfo()
 	collectPlayerData.RaceEnglish = RaceEnglish
 	collectPlayerData.raceID = raceID
 	collectPlayerData.classColorHex = E.classColorHexCurrent
-	collectPlayerData.CurrentRegion = E:func_GetCurrentRegion()
-	collectPlayerData.CurrentRegionName = E:func_GetCurrentRegionName()
+	collectPlayerData.CurrentRegion = E.func_GetCurrentRegion()
+	collectPlayerData.CurrentRegionName = E.func_GetCurrentRegionName()
 	collectPlayerData.guildName = guildName
 	collectPlayerData.guildRankName = guildRankName
 	if guildRankIndex and guildRankIndex ~= 0 then

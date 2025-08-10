@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Otrisovka_91_Other()
+function E.func_Otrisovka_91_Other()
 	local OctoTable_Otrisovka_textCENT = {}
 
 	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
@@ -9,23 +9,32 @@ function E:func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				local QWEname = followerData.name
-				local followerMAX = followerData.max
-				textLEFT = COMPANIONS.." ("..QWEname..")"
-				if CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
-					tooltipKey = QWEname.."_COMPANIONS"
-					local countCurrent = 0
-					local countTotal = 0
+				tooltipKey = QWEname.."_COMPANIONS"
 
-					for i, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[QWEname]) do
-						if v.isCollected then
-							countCurrent = countCurrent + 1
-						end
-						countTotal = countTotal + 1
+
+				textLEFT = COMPANIONS.." ("..QWEname..")"
+
+				local countColor = HIGHLIGHT_FONT_COLOR_CODE
+
+
+
+				if CharInfo.MASLENGO.GarrisonFollowersCount[QWEname] and CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].maxFollowers and CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].numActiveFollowers then
+					local numActiveFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].numActiveFollowers or 0 -- C_Garrison.GetNumActiveFollowers(followerData.id) or 0
+					local maxFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].maxFollowers or 0 -- C_Garrison.GetFollowerSoftCap(followerData.id)
+
+
+					if ( numActiveFollowers > maxFollowers ) then
+						countColor = E.Red_Color
+					elseif numActiveFollowers == maxFollowers then
+						countColor = E.Green_Color
 					end
 
-					-- if #CharInfo.MASLENGO.GarrisonFollowers[QWEname] ~= 0 then
-					if countCurrent ~= 0 then
-						textCENT = countCurrent .."/".. countTotal -- followerMAX
+
+
+
+					-- if CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
+					if numActiveFollowers ~= 0 then
+						textCENT = countColor..numActiveFollowers.."/"..maxFollowers..FONT_COLOR_CODE_CLOSE
 					end
 				end
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
@@ -138,7 +147,7 @@ function E:func_Otrisovka_91_Other()
 				for i = 1, 5 do
 					if charProf[i] and charProf[i].skillLine then
 						if i == 1 or i == 2 then
-							textCENT = textCENT..E:func_ProfessionIcon(charProf[i].skillLine).." "
+							textCENT = textCENT..E.func_ProfessionIcon(charProf[i].skillLine).." "
 						end
 					end
 				end
@@ -199,7 +208,7 @@ function E:func_Otrisovka_91_Other()
 				tooltipKey = "Other_Money"
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.Money then
-					textCENT = E:func_MoneyString(CharInfo.PlayerData.Money)
+					textCENT = E.func_MoneyString(CharInfo.PlayerData.Money)
 					if CharInfo.PlayerData.MoneyOnLogin then
 						if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
 							textCENT = textCENT..E.Red_Color.."-|r"

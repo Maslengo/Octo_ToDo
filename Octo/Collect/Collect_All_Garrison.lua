@@ -35,7 +35,7 @@ function E.Collect_All_GarrisonBuilds()
 			collect.garrisonType[id][i].plotID = data.plotID
 			collect.garrisonType[id][i].textureKit = data.textureKit
 			collect.garrisonType[id][i].uiTab = data.uiTab
-			collect.garrisonType[id][i].rank = E:func_buildRank(data.buildingID)
+			collect.garrisonType[id][i].rank = E.func_buildRank(data.buildingID)
 		end
 	end
 end
@@ -55,11 +55,19 @@ function E.Collect_All_GarrisonFollowers(eventName)
 			if not collect or InCombatLockdown() then return end
 
 			wipe(collect.GarrisonFollowers)
-			for i, v in ipairs(E.OctoTable_followerTypeIDs) do
-				local name = v.name
-				collect.GarrisonFollowers[name] = collect.GarrisonFollowers[name] or {}
-				collect.GarrisonFollowers[name] = C_Garrison.GetFollowers(v.id)
+			for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
+				collect.GarrisonFollowers[followerData.name] = collect.GarrisonFollowers[followerData.name] or {}
+				collect.GarrisonFollowers[followerData.name] = C_Garrison.GetFollowers(followerData.id)
+
+				collect.GarrisonFollowersCount[followerData.name].maxFollowers = C_Garrison.GetFollowerSoftCap(followerData.id)
+				collect.GarrisonFollowersCount[followerData.name].numActiveFollowers = C_Garrison.GetNumActiveFollowers(followerData.id) or 0
 			end
+
+
+
+
+
+
 			E.Collect_All_GarrisonFollowers_pause = nil
 	end)
 end

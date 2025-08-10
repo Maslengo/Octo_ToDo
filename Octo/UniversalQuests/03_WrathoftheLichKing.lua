@@ -1,11 +1,11 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_03_WrathoftheLichKing()
+function E.func_Universal_03_WrathoftheLichKing()
 	local OctoTable_Universal = {
 		{
 			showTooltip = true,
-			textleft = E:func_questName(24748),
+			textleft = E.func_questName(24748),
 			name_save = "Shadowmourne",
 			reset = "Once",
 			desc = "WrathoftheLichKing",

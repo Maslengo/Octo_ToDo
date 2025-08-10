@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local OCTOexpansionID = 9
-function E:func_Otrisovka_09_Shadowlands()
+function E.func_Otrisovka_09_Shadowlands()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -23,7 +23,7 @@ function E:func_Otrisovka_09_Shadowlands()
 							-- iconLEFT = E.OctoTable_Covenant[iANIMA].icon
 							myType = {"Currency_Covenant_Renown", 1813, iANIMA, kCovenant}
 						elseif kCovenant == 2 then
-							-- iconLEFT = E:func_GetCurrencyIcon(1813)
+							-- iconLEFT = E.func_GetCurrencyIcon(1813)
 							myType = {"Currency_Covenant_Anima", 1813, iANIMA, kCovenant}
 							if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 								if CharInfo.PlayerData.Possible_Anima then
@@ -47,8 +47,8 @@ function E:func_Otrisovka_09_Shadowlands()
 				end)
 			end
 		end
-		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E:func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

@@ -20,7 +20,7 @@ end)
 ----------------------------------------------------------------
 -- Общие функции
 ----------------------------------------------------------------
--- function E:reloadMenu(DropDown, level, value)
+-- function E.func_reloadMenu(DropDown, level, value)
 --     DropDown:ddCloseMenus(level)
 --     local menu = LibSFDropDown:GetMenu(level)
 --     DropDown:ddToggle(level, value, menu.anchorFrame)
@@ -34,7 +34,7 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 
 	DropDown:SetSize(LINE_WIDTH_LEFT, LINE_HEIGHT)
-	E:func_SetBackdrop(DropDown)
+	E.func_SetBackdrop(DropDown)
 
 	-- Стрелка раскрытия меню
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
@@ -71,7 +71,7 @@ end
 ----------------------------------------------------------------
 -- Меню ToDo
 ----------------------------------------------------------------
-function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
+function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
 
 	-- Функции для обработки выбора в меню
@@ -288,9 +288,9 @@ function E:func_Create_DDframe_ToDo(frame, hex, providerfunc)
 
 					-- Только текущая фракция
 					if E.curFaction == "Horde" then
-						info.text = E:func_texturefromIcon(E.Icon_Horde)..L["Only Horde"]
+						info.text = E.func_texturefromIcon(E.Icon_Horde)..L["Only Horde"]
 					else
-						info.text = E:func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"]
+						info.text = E.func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"]
 					end
 					info.checked = Octo_ToDo_DB_Vars.OnlyCurrentFaction
 					info.func = function(_, _, _, checked)
@@ -426,7 +426,7 @@ end
 ----------------------------------------------------------------
 -- Меню Achievements
 ----------------------------------------------------------------
-function E:func_Create_DDframe_Achievements(frame, hex, providerfunc)
+function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
 
 	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
@@ -444,7 +444,7 @@ function E:func_Create_DDframe_Achievements(frame, hex, providerfunc)
 			local categoryID = categories[i]
 			local _, parentCategoryID = GetCategoryInfo(categoryID)
 			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.AchievementToShow[categoryID] == true then
-				return E:func_Gradient(arg1.name)..arg1.vivod
+				return E.func_Gradient(arg1.name)..arg1.vivod
 			end
 		end
 		return arg1.name..arg1.vivod
@@ -520,7 +520,7 @@ end
 ----------------------------------------------------------------
 -- Меню QuestsChanged
 ----------------------------------------------------------------
-function E:func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
+function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
 
 	DropDown:ddSetInitFunc(function(self, level, value)
@@ -576,7 +576,7 @@ end
 ----------------------------------------------------------------
 -- Меню editFrame
 ----------------------------------------------------------------
-function E:func_Create_DDframe_editFrame(frame, hex, providerfunc)
+function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
 	local editBox = frame.editFrame:GetEditBox()
 
@@ -587,7 +587,7 @@ function E:func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	local function makeThemeHandler(themeName)
 		return function(btn)
 			Octo_ToDo_DB_Vars.editorTheme = themeName
-			LibIndentation.enable(editBox, E:func_createColorScheme(themeName or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces)
+			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(1)
@@ -597,7 +597,7 @@ function E:func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	local function makeTabSizeHandler(tabSize)
 		return function(btn)
 			Octo_ToDo_DB_Vars.editorTabSpaces = tabSize
-			LibIndentation.enable(editBox, E:func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), tabSize)
+			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), tabSize)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(2)

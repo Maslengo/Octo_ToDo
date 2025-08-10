@@ -61,7 +61,7 @@ E.editorThemes = {
 		["String"] = "|cff829D61", -- строки (зелёный)
 	},
 }
-function E:func_createColorScheme(themeName)
+function E.func_createColorScheme(themeName)
 	local theme = E.editorThemes[themeName] or E.editorThemes["Twilight"]
 	return {
 		-- Основные токены
@@ -156,7 +156,7 @@ local classR, classG, classB = GetClassColor(E.classFilename)
 local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Создаем основной фрейм
 	local frame = CreateFrame("BUTTON", frameName, parent, "DialogBoxFrame")
-	-- E:func_InitFrame(frame)
+	-- E.func_InitFrame(frame)
 	-- local width = E.MonitorWidth/3
 	-- local height = E.MonitorHeight/1.5
 	local width = E.MonitorWidth/2
@@ -295,7 +295,7 @@ end
 ------------------------------------------------------------
 -- Создаем фрейм для редактирования текста
 local editFrame = CreateMyAddonEditFrameTemplate("editFrame", UIParent)
--- E:func_InitFrame(editFrame)
+-- E.func_InitFrame(editFrame)
 editFrame:ClearAllPoints()
 editFrame:SetPoint("CENTER")
 
@@ -330,7 +330,7 @@ local function dumpEdit(indent, msg, tables)
 		end
 	end
 	if indent == 0 then
-		LibIndentation.enable(editBox:GetEditBox(), E:func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces) -- 4 - ширина табуляции в пробелах
+		LibIndentation.enable(editBox:GetEditBox(), E.func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces) -- 4 - ширина табуляции в пробелах
 		editBox:SetText(str)
 		LibIndentation.indentEditbox(editBox:GetEditBox())
 		editFrame:Show()
@@ -341,7 +341,7 @@ end
 -- Обработчик сообщений для вывода в чат
 local LOCAL_FPrintHandler = function(...)
 	local function sendMessage(frame, indent, msg, allChildren)
-		local indentStr = E:func_Gradient(GlobalAddonName..": ")
+		local indentStr = E.func_Gradient(GlobalAddonName..": ")
 		for i = 1, indent do
 			indentStr = indentStr.." "
 		end
@@ -360,7 +360,7 @@ local LOCAL_FPrintHandler = function(...)
 			end
 		end
 	end
-	local message = strjoin(" ", E:func_Gradient(GlobalAddonName..": "), tostringall(...))
+	local message = strjoin(" ", E.func_Gradient(GlobalAddonName..": "), tostringall(...))
 	local mFrame = DEFAULT_CHAT_FRAME
 	local i = 1
 	repeat
@@ -434,10 +434,10 @@ function Octo_EventFrame_Debug:func_itemslist(msg)
 	:Then(function()
 			sort(list1, E.func_Reverse_order)
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E:func_itemName(id1).."\n"
+				str = str..id1..", -- "..E.func_itemName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E:func_itemName(id2).."\n"
+				str = str..id2..", -- "..E.func_itemName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
@@ -478,7 +478,7 @@ function Octo_EventFrame_Debug:func_itemslistSort24(msg)
 	----------------------------------------------------------------
 	-------------------------- СРЕДНЕЕ 80ms ------------------------
 	----------------------------------------------------------------
-	-- E:func_TableRemoveDuplicates(GLOBAL_TABLE_ITEMS)
+	-- E.func_TableRemoveDuplicates(GLOBAL_TABLE_ITEMS)
 	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_Reverse_order)
 
 	-- local vivod, count = "", 0
@@ -500,7 +500,7 @@ function Octo_EventFrame_Debug:func_itemslistSort24(msg)
 		tbl = GLOBAL_TABLE_ITEMS
 	end
 	print (tbl)
-	E:func_TableRemoveDuplicates(tbl)
+	E.func_TableRemoveDuplicates(tbl)
 	table.sort(tbl, E.func_Reverse_order)
 
 	local chunks = {}
@@ -562,10 +562,10 @@ function Octo_EventFrame_Debug:func_questslist(msg)
 	sort(list2, E.func_Reverse_order)
 	promise2:Then(function()
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E:func_questName(id1).."\n"
+				str = str..id1..", -- "..E.func_questName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E:func_questName(id2).."\n"
+				str = str..id2..", -- "..E.func_questName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
@@ -581,10 +581,10 @@ function Octo_EventFrame_Debug:func_currencieslist(msg)
 	end
 	sort(list, E.func_Reverse_order)
 	for _, CurrencyID in ipairs(list) do
-		if E:func_currencyName(CurrencyID) ~= (CurrencyID.. " (UNKNOWN)") then
-			str1 = str1..CurrencyID..", --" ..E:func_currencyName(CurrencyID).."|n"
+		if E.func_currencyName(CurrencyID) ~= (CurrencyID.. " (UNKNOWN)") then
+			str1 = str1..CurrencyID..", --" ..E.func_currencyName(CurrencyID).."|n"
 		else
-			str2 = str2..CurrencyID..", --" ..E:func_currencyName(CurrencyID).."|n"
+			str2 = str2..CurrencyID..", --" ..E.func_currencyName(CurrencyID).."|n"
 		end
 	end
 	vivod = str1..str2
@@ -601,10 +601,10 @@ function Octo_EventFrame_Debug:func_reputationslist(msg)
 	end
 	sort(list, E.func_Reverse_order)
 	for _, reputationID in next, (list) do
-		if E:func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
-			str4 = str4..reputationID..", --" ..E:func_reputationName(reputationID).."|n"
+		if E.func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
+			str4 = str4..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
 		else
-			str5 = str5..reputationID..", --" ..E:func_reputationName(reputationID).."|n"
+			str5 = str5..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
 		end
 	end
 	vivod = str4..str5
@@ -623,10 +623,10 @@ function Octo_EventFrame_Debug:func_spellslist(msg)
 	end
 	sort(list, E.func_Reverse_order)
 	for _, spellID in next, (list) do
-		if E:func_spellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
-			str4 = str4..spellID..", --" ..E:func_spellNameFull(spellID).."\n"
+		if E.func_spellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
+			str4 = str4..spellID..", --" ..E.func_spellNameFull(spellID).."\n"
 		else
-			str5 = str5..spellID..", --" ..E:func_spellNameFull(spellID).."\n"
+			str5 = str5..spellID..", --" ..E.func_spellNameFull(spellID).."\n"
 		end
 	end
 	vivod = str4..str5
@@ -691,11 +691,11 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
 -- Обработчик события VARIABLES_LOADED
 function Octo_EventFrame_Debug:VARIABLES_LOADED()
-	E:func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
+	E.func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
 end
 function Octo_EventFrame_Debug:PLAYER_LOGIN()
-	E:func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)
+	E.func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)
 end

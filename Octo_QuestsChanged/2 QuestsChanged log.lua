@@ -3,7 +3,7 @@ E = _G.OctoEngine
 
 local floor = math.floor
 local QC_Quests, copybox
-function E:BuildLog()
+function E.func_BuildLog()
 	if _G.TabSystemOwnerMixin then
 		QC_Quests = CreateFrame("Frame", "QuestsChangedFrame", UIParent, "UIPanelDialogTemplate, TabSystemOwnerTemplate")
 	else
@@ -60,7 +60,7 @@ function E:BuildLog()
 		end)
 	end
 end
-function E:BuildLogPanel(initializer, dataProvider)
+function E.func_BuildLogPanel(initializer, dataProvider)
 	local Container = CreateFrame("Frame", nil, QC_Quests)
 	Container:SetPoint("TOPLEFT", 12, -32)
 	Container:SetPoint("BOTTOMRIGHT", -3, 4)
@@ -85,17 +85,17 @@ function E:BuildLogPanel(initializer, dataProvider)
 	-- end)
 	return Container
 end
-function E:BuildQuestLog()
+function E.func_BuildQuestLog()
 	local function Line_OnEnter(self)
 		local quest = self.data
 	end
 	local function Line_OnClick(self, button, down)
 		local quest = self.data
 		if button == "RightButton" then
-			E:RemoveQuest(quest)
+			E.func_RemoveQuest(quest)
 		elseif IsShiftKeyDown() then
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d},"):format(
-					E:func_GetCoord(quest.x, quest.y),
+					E.func_GetCoord(quest.x, quest.y),
 					quest.id or "nil"
 			))
 		else
@@ -166,7 +166,7 @@ function E:BuildQuestLog()
 			mapID, level = self.func_GetMapNameFromID(quest.mapID)
 		end
 		line.Title:SetFormattedText("%d: %s %s",
-			quest.id, E:func_questName(quest.id),
+			quest.id, E.func_questName(quest.id),
 			C_QuestLog.IsQuestFlaggedCompletedOnAccount and C_QuestLog.IsQuestFlaggedCompletedOnAccount(quest.id) and E.Icon_AccountWide or ""
 		)
 		line.Location:SetFormattedText("%s (%s)", quest.mapID, mapID .. (level and (' / ' .. level) or ''))
@@ -189,19 +189,19 @@ function E:BuildQuestLog()
 	self:RegisterCallback(self.Event.OnAllQuestsRemoved, function()
 			dataProvider:Flush()
 	end)
-	return E:BuildLogPanel(initializer, dataProvider)
+	return E.func_BuildLogPanel(initializer, dataProvider)
 end
-function E:BuildVignetteLog()
+function E.func_BuildVignetteLog()
 	local function Line_OnEnter(self)
 		local vignette = self.data
 	end
 	local function Line_OnClick(self, button, down)
 		local vignette = self.data
 		if button == "RightButton" then
-			E:RemoveVignette(vignette)
+			E.func_RemoveVignette(vignette)
 		elseif IsShiftKeyDown() then
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {vignette=%d, label=\"%s\"},"):format(
-					E:func_GetCoord(vignette.x, vignette.y),
+					E.func_GetCoord(vignette.x, vignette.y),
 					vignette.id or "nil",
 					vignette.name or UNKNOWN
 			))
@@ -277,12 +277,12 @@ function E:BuildVignetteLog()
 	self:RegisterCallback(self.Event.OnAllVignettesRemoved, function()
 			dataProvider:Flush()
 	end)
-	return E:BuildLogPanel(initializer, dataProvider)
+	return E.func_BuildLogPanel(initializer, dataProvider)
 end
-function E:LogShown()
+function E.func_LogShown()
 	return QC_Quests and QC_Quests:IsShown()
 end
-function E:ToggleLog()
+function E.func_ToggleLog()
 	if not QC_Quests then self:BuildLog() end
 	if QC_Quests:IsShown() then
 		QC_Quests:Hide()

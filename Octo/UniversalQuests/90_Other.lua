@@ -1,12 +1,12 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-function E:func_Universal_90_Other()
+function E.func_Universal_90_Other()
 	local OctoTable_Universal = {
-		-- E:func_EventName(181) (Noblegarden) (Сад чудес)
+		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
 		{
 
-			textleft = E:func_questName(13503),
+			textleft = E.func_questName(13503),
 			showTooltip = true,
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			reset = "Month",
@@ -18,7 +18,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(79575),
+			textleft = E.func_questName(79575),
 			showTooltip = true,
 			name_save = "WhattheDuck",
 			reset = "Month",
@@ -30,7 +30,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(13479),
+			textleft = E.func_questName(13479),
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
 			reset = "Daily",
@@ -42,7 +42,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(79576),
+			textleft = E.func_questName(79576),
 			showTooltip = true,
 			name_save = "AFowlConcoction",
 			reset = "Month",
@@ -54,7 +54,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(79577),
+			textleft = E.func_questName(79577),
 			showTooltip = true,
 			name_save = "DuckTales",
 			reset = "Month",
@@ -66,7 +66,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(79578),
+			textleft = E.func_questName(79578),
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
 			reset = "Month",
@@ -79,7 +79,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(79558),
+			textleft = E.func_questName(79558),
 			showTooltip = true,
 			name_save = "FeatheredFiend",
 			reset = "Daily",
@@ -91,7 +91,7 @@ function E:func_Universal_90_Other()
 		},
 		{
 
-			textleft = E:func_questName(79135),
+			textleft = E.func_questName(79135),
 			showTooltip = true,
 			name_save = "QuackingDown",
 			reset = "Daily",
@@ -103,7 +103,7 @@ function E:func_Universal_90_Other()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		-- E:func_EventName(201) (ChildrensWeek) (Детская неделя)
+		-- E.func_EventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
 		{
 
@@ -295,7 +295,7 @@ function E:func_Universal_90_Other()
 		-- },
 		-- {
 
-		-- 	textleft = E:func_itemName(93724),
+		-- 	textleft = E.func_itemName(93724),
 		-- 	showTooltip = true,
 		-- 	name_save = "DarkmoonFaire",
 		-- 	reset = "Daily",
@@ -315,7 +315,7 @@ function E:func_Universal_90_Other()
 		-- },
 		{
 
-			textleft = E:func_itemName(92441),
+			textleft = E.func_itemName(92441),
 			showTooltip = true,
 			name_save = "GreenFire",
 			reset = "Once",
