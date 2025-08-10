@@ -58,7 +58,7 @@ local func_OnAcquired do
 	end
 	------------------------------------------------
 	local function func_OnEnter(frame)
-		E:func_OctoTooltip_OnEnter(frame, false, false)
+		E.func_OctoTooltip_OnEnter(frame, false, false)
 	end
 	------------------------------------------------
 	function func_OnAcquired(owner, frame, data, new)

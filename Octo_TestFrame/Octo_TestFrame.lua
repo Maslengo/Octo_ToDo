@@ -1,14 +1,16 @@
-local GlobalAddonName, E = ...
-local Octo_EventFrame_ToDo = CreateFrame("FRAME")
-Octo_EventFrame_ToDo:Hide()
+local GlobalAddonName, ns = ...
+E = _G.OctoEngine
+
+local Octo_EventFrame = CreateFrame("FRAME")
+Octo_EventFrame:Hide()
 
 -- Создание главного фрейма для тестового интерфейса
-local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
-Octo_MainFrame_ToDo:Hide()
-E:func_InitFrame(Octo_MainFrame_ToDo)
+local Octo_MainFrame_TestFrame = CreateFrame("BUTTON", "Octo_MainFrame_TestFrame", UIParent, "BackdropTemplate")
+Octo_MainFrame_TestFrame:Hide()
+E:func_InitFrame(Octo_MainFrame_TestFrame)
 
 -- Создание фрейма для заголовка левой колонки
-local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
+local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_TestFrame)
 
 -- Константы для настройки интерфейса
 local INDENT_TEST = 4                      		-- Отступ для текста
@@ -19,7 +21,7 @@ local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная шири�
 local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
 local MAX_FRAME_WIDTH = E.MonitorWidth*.6  		-- Максимальная ширина фрейма (80% экрана)
 local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
-Octo_EventFrame_ToDo.COLUMNS_MAX = 113     		-- Максимальное количество колонок
+Octo_EventFrame.COLUMNS_MAX = 113     		-- Максимальное количество колонок
 
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
@@ -34,62 +36,91 @@ local math_min = math.min
 local math_max = math.max
 
 
--- Функция инициализации элементов левой колонки
-local func_OnAcquiredLEFT = function(owner, frame, data, new)
-	if not new then return end
 
-	local JustifyV = "MIDDLE"  -- Вертикальное выравнивание
-	local JustifyH = "LEFT"     -- Горизонтальное выравнивание
 
-	-- Настройки фрейма
-	frame:SetPropagateMouseClicks(true)
-	frame:SetPropagateMouseMotion(true)
-	frame:SetHitRectInsets(1, 1, 1, 1)
+local func_OnAcquiredLEFT do
+	local function func_OnEnter(frame)
+		local frameData = frame:GetData()
+		-- Получение данных для тултипа
+		local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
+		local tooltipOCTO = {}
 
-	-- Создание полноразмерного фрейма для подсветки
-	local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_ToDo)
-	frameFULL:SetPropagateMouseClicks(true)
-	frameFULL:SetPropagateMouseMotion(true)
-	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
-	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-	frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
-	frameFULL:SetPoint("LEFT", frame)
-	frameFULL:SetPoint("TOP", frame)
-	frameFULL:SetPoint("BOTTOM", frame)
-	frameFULL:SetPoint("RIGHT")
-	frame.frameFULL = frameFULL
+		if type(ID) == "table" then
+			-- Обработка нескольких ID
+			for _, tblID in ipairs(ID) do
+				E:func_TableConcat(tooltipOCTO, E:func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
+			end
+		else
+			-- Обработка одиночного ID
+			tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+		end
 
-	-- Текстовое поле для левой колонки
-	frame.textLEFT = frame:CreateFontString()
-	frame.textLEFT:SetFontObject(OctoFont11)
-	frame.textLEFT:SetPoint("LEFT", INDENT_TEST+0, 0)
-	frame.textLEFT:SetWidth(INDENT_TEST+MIN_LINE_WIDTH_LEFT)
-	frame.textLEFT:SetWordWrap(false)
-	frame.textLEFT:SetJustifyV(JustifyV)
-	frame.textLEFT:SetJustifyH(JustifyH)
-	frame.textLEFT:SetTextColor(textR, textG, textB, textA)
+		frame.tooltip = tooltipOCTO
+		E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
+	end
 
-	-- Текстура для фона левой колонки
-	frame.textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
-	frame.textureLEFT:Hide()
-	frame.textureLEFT:SetAllPoints()
-	frame.textureLEFT:SetTexture(E.TEXTURE_LEFT_PATH)
+	-- Функция инициализации элементов левой колонки
+	function func_OnAcquiredLEFT(owner, frame, node, new)
+		if not new then return end
+		local frameData = node:GetData()
 
-	-- Обработчики событий показа/скрытия фрейма
-	frame:SetScript("OnHide", function()
-		frame.frameFULL:Hide()
-	end)
+		local JustifyV = "MIDDLE"  -- Вертикальное выравнивание
+		local JustifyH = "LEFT"     -- Горизонтальное выравнивание
 
-	frame:SetScript("OnShow", function()
-		frame.frameFULL:Show()
-	end)
+		-- Настройки фрейма
+		frame:SetPropagateMouseClicks(true)
+		frame:SetPropagateMouseMotion(true)
+		frame:SetHitRectInsets(1, 1, 1, 1)
+
+		-- Создание полноразмерного фрейма для подсветки
+		local frameFULL = CreateFrame("BUTTON", nil, owner)
+		frameFULL:SetPropagateMouseClicks(true)
+		frameFULL:SetPropagateMouseMotion(true)
+		frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+		frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
+		frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+		frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
+		frameFULL:SetPoint("LEFT", frame)
+		frameFULL:SetPoint("TOP", frame)
+		frameFULL:SetPoint("BOTTOM", frame)
+		frameFULL:SetPoint("RIGHT")
+		frame.frameFULL = frameFULL
+
+		-- Текстовое поле для левой колонки
+		frame.textLEFT = frame:CreateFontString()
+		frame.textLEFT:SetFontObject(OctoFont11)
+		frame.textLEFT:SetPoint("LEFT", INDENT_TEST+0, 0)
+		frame.textLEFT:SetWidth(INDENT_TEST+MIN_LINE_WIDTH_LEFT)
+		frame.textLEFT:SetWordWrap(false)
+		frame.textLEFT:SetJustifyV(JustifyV)
+		frame.textLEFT:SetJustifyH(JustifyH)
+		frame.textLEFT:SetTextColor(textR, textG, textB, textA)
+
+		-- Текстура для фона левой колонки
+		frame.textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
+		frame.textureLEFT:Hide()
+		frame.textureLEFT:SetAllPoints()
+		frame.textureLEFT:SetTexture(E.TEXTURE_LEFT_PATH)
+
+		-- Обработчики событий показа/скрытия фрейма
+		frame:SetScript("OnHide", function()
+			frame.frameFULL:Hide()
+		end)
+
+		frame:SetScript("OnShow", function()
+			frame.frameFULL:Show()
+		end)
+
+		-- Обработчик наведения курсора для отображения тултипа
+		frame:SetScript("OnEnter", func_OnEnter)
+	end
 end
 
 -- Функция инициализации элементов центральной колонки
 local func_OnAcquiredCENT do
-	function func_OnAcquiredCENT(owner, frame, data, new)
+	function func_OnAcquiredCENT(owner, frame, node, new)
 		if not new then return end
+		local frameData = node:GetData()
 
 		frame:SetPropagateMouseClicks(true)
 
@@ -98,7 +129,7 @@ local func_OnAcquiredCENT do
 			__index = function(self, key)
 				if key then
 					-- Создание нового подфрейма для колонки
-					local f = CreateFrame("BUTTON", "frame.second"..key, frame)
+					local f = CreateFrame("BUTTON", nil, frame)
 					f:SetPropagateMouseClicks(true)
 					f:SetPropagateMouseMotion(true)
 					f:SetHeight(LINE_HEIGHT)
@@ -127,8 +158,7 @@ local func_OnAcquiredCENT do
 					f.textCENT:SetJustifyH("CENTER")
 					f.textCENT:SetTextColor(textR, textG, textB, textA)
 
-					-- Обработчик наведения курсора
-					f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
+					-- f:SetScript("OnEnter", E.func_OctoTooltip_OnEnter)
 
 					-- Обработчики скрытия
 					f:SetScript("OnHide", f.Hide)
@@ -143,13 +173,13 @@ local func_OnAcquiredCENT do
 end
 
 -- Функция инициализации данных для левой колонки
-function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
+function Octo_EventFrame:Octo_Frame_initLEFT(frame, node)
 	local frameData = node:GetData()
 
 	-- Обновление размеров колонки, если они были изменены
-	if Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT and Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT[1] then
-		local newLeftWidth = Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT[1]
-		Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(newLeftWidth+INDENT_TEST)
+	if Octo_EventFrame.COLUMN_SIZES_LEFT and Octo_EventFrame.COLUMN_SIZES_LEFT[1] then
+		local newLeftWidth = Octo_EventFrame.COLUMN_SIZES_LEFT[1]
+		Octo_MainFrame_TestFrame.ScrollBoxLEFT:SetWidth(newLeftWidth+INDENT_TEST)
 		frame.textLEFT:SetWidth(newLeftWidth)
 		HeaderFrameLEFT:SetWidth(newLeftWidth)
 	end
@@ -164,35 +194,13 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 	else
 		frame.textureLEFT:Hide()
 	end
-
-	-- Получение данных для тултипа
-	local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
-
-	-- Обработчик наведения курсора для отображения тултипа
-	frame:SetScript("OnEnter", function()
-		local tooltipOCTO = {}
-
-		if type(ID) == "table" then
-			-- Обработка нескольких ID
-			for _, tblID in ipairs(ID) do
-				E:func_TableConcat(tooltipOCTO, E:func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
-			end
-		else
-			-- Обработка одиночного ID
-			tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
-		end
-
-		frame.tooltip = tooltipOCTO
-		E:func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
-	end)
 end
 
 -- Функция инициализации данных для центральной колонки
-function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
+function Octo_EventFrame:Octo_Frame_initCENT(frame, node)
 	local frameData = node:GetData()
 	local accumulatedWidth = 0
-	local columnSizesRight = Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT or {}
-
+	local columnSizesRight = Octo_EventFrame.COLUMN_SIZES_RIGHT or {}
 	-- Инициализация всех колонок для текущей строки
 	for i = 1, (frameData.totalColumns or 0) do
 		local secondFrame = frame.second[i]
@@ -221,9 +229,8 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			end
 
 			secondFrame.textCENT:SetText(textCENT)
-
 			-- Подсветка колонки текущего персонажа если больше 1 персонажа
-			if frameData.totalPers > 1 and i == frameData.currentCharacterIndex then
+			if frameData.totalColumns > 1 and i == frameData.currentCharacterIndex then
 				secondFrame.curCharTextureBG:Show()
 			else
 				secondFrame.curCharTextureBG:Hide()
@@ -233,40 +240,52 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 			secondFrame.ReputTextureAndBG:SetVertexColor(0, 0, 0, 0)
 			secondFrame.curCharTextureBG:Hide()
 		end
-
 		-- Установка тултипа для колонки, если он есть
-		if frameData.tooltipCENT and frameData.tooltipCENT[i] then
-			secondFrame.tooltip = frameData.tooltipCENT[i]
-		else
-			secondFrame.tooltip = nil
-		end
+		-- if frameData.tooltipCENT and frameData.tooltipCENT[i] then
+		-- 	secondFrame.tooltip = frameData.tooltipCENT[i]
+		-- else
+		-- 	secondFrame.tooltip = nil
+		-- end
+		secondFrame:SetScript("OnEnter", function()
+			if frameData.tooltipKey and frameData.GUID[i] then
+				secondFrame.tooltip = E:func_KeyTooltip(frameData.GUID[i], frameData.tooltipKey)
+			else
+				secondFrame.tooltip = nil
+			end
+			E.func_OctoTooltip_OnEnter(secondFrame)
+		end)
+
+
 
 		secondFrame:Show()
+	end
+	for i = frameData.totalColumns+1, #frame.second do
+		frame.second[i]:Hide()
 	end
 end
 
 -- Функция создания главного тестового фрейма
-function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
+function Octo_EventFrame:Octo_Create_MainFrame()
 	-- Настройка позиции и обработчика показа фрейма
-	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.MonitorWidth*.05)
-	Octo_MainFrame_ToDo:SetPoint("CENTER")
-	Octo_MainFrame_ToDo:SetScript("OnShow", function()
-		Octo_EventFrame_ToDo:CreateDataProvider()
+	-- Octo_MainFrame_TestFrame:SetPoint("TOP", 0, -E.MonitorWidth*.05)
+	Octo_MainFrame_TestFrame:SetPoint("CENTER")
+	Octo_MainFrame_TestFrame:SetScript("OnShow", function()
+		Octo_EventFrame:CreateDataProvider()
 		RequestRaidInfo()
 	end)
 
 	-- Расчет размеров фрейма на основе количества игроков
-	local NumPlayers = math_min(E:func_NumPlayers(), Octo_EventFrame_ToDo.COLUMNS_MAX)
-	Octo_MainFrame_ToDo:SetSize(MIN_LINE_WIDTH_LEFT + MIN_LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
+	local NumPlayers = math_min(E:func_NumPlayers(), Octo_EventFrame.COLUMNS_MAX)
+	Octo_MainFrame_TestFrame:SetSize(MIN_LINE_WIDTH_LEFT + MIN_LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
 
 	-- Настройки фрейма
-	Octo_MainFrame_ToDo:SetDontSavePosition(true)
-	Octo_MainFrame_ToDo:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
-	Octo_MainFrame_ToDo:SetFrameStrata("HIGH")
+	Octo_MainFrame_TestFrame:SetDontSavePosition(true)
+	Octo_MainFrame_TestFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
+	Octo_MainFrame_TestFrame:SetFrameStrata("HIGH")
 
 	-- Создание скроллфрейма для горизонтальной прокрутки
-	local barPanelScroll = CreateFrame("ScrollFrame", nil, Octo_MainFrame_ToDo)
-	Octo_MainFrame_ToDo.barPanelScroll = barPanelScroll
+	local barPanelScroll = CreateFrame("ScrollFrame", nil, Octo_MainFrame_TestFrame)
+	Octo_MainFrame_TestFrame.barPanelScroll = barPanelScroll
 
 	-- Функции для обработки горизонтальной прокрутки
 	local function OnHorizontalScroll(self, offset)
@@ -285,7 +304,8 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 	barPanelScroll:SetScript("OnScrollRangeChanged", OnScrollRangeChanged)
 
 	-- Создание и настройка горизонтальной полосы прокрутки
-	local HorizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "OctoWowTrimHorizontalScrollBar")
+	local HorizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame_TestFrame, "OctoWowTrimHorizontalScrollBar")
+	Octo_EventFrame.HorizontalScrollBar = HorizontalScrollBar
 	HorizontalScrollBar.Backplate = HorizontalScrollBar:GetRegions()
 	HorizontalScrollBar.Backplate:Hide()
 
@@ -317,82 +337,82 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 	HorizontalScrollBar:SetHideIfUnscrollable(true)
 
 	-- Создание дочернего фрейма для центральной части
-	local childCENT = CreateFrame("FRAME")
-	Octo_MainFrame_ToDo.childCENT = childCENT
+	local childCENT = CreateFrame("FRAME", "childCENT")
+	Octo_MainFrame_TestFrame.childCENT = childCENT
 	barPanelScroll:SetScrollChild(childCENT)
 
 	-- Создание ScrollBox для левой колонки
-	Octo_MainFrame_ToDo.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "WowScrollBoxList")
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(INDENT_TEST+MIN_LINE_WIDTH_LEFT)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
+	Octo_MainFrame_TestFrame.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_TestFrame, "WowScrollBoxList")
+	Octo_MainFrame_TestFrame.ScrollBoxLEFT:SetWidth(INDENT_TEST+MIN_LINE_WIDTH_LEFT)
+	Octo_MainFrame_TestFrame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
+	Octo_MainFrame_TestFrame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
+	Octo_MainFrame_TestFrame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
+	Octo_MainFrame_TestFrame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
 
 	-- Настройка позиции панели прокрутки
-	barPanelScroll:SetPoint("TOPLEFT", Octo_MainFrame_ToDo.ScrollBoxLEFT, "TOPRIGHT", 0, HEADER_HEIGHT)
+	barPanelScroll:SetPoint("TOPLEFT", Octo_MainFrame_TestFrame.ScrollBoxLEFT, "TOPRIGHT", 0, HEADER_HEIGHT)
 	barPanelScroll:SetPoint("BOTTOMRIGHT")
 
 	-- Создание и настройка представления для левой колонки
-	Octo_MainFrame_ToDo.viewLEFT = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.viewLEFT:SetElementExtent(LINE_HEIGHT)
-	Octo_MainFrame_ToDo.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initLEFT(...) end)
-	Octo_MainFrame_ToDo.viewLEFT:RegisterCallback(Octo_MainFrame_ToDo.viewLEFT.Event.OnAcquiredFrame, func_OnAcquiredLEFT, Octo_MainFrame_ToDo)
+	Octo_MainFrame_TestFrame.viewLEFT = CreateScrollBoxListTreeListView(0)
+	Octo_MainFrame_TestFrame.viewLEFT:SetElementExtent(LINE_HEIGHT)
+	Octo_MainFrame_TestFrame.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initLEFT(...) end)
+	Octo_MainFrame_TestFrame.viewLEFT:RegisterCallback(Octo_MainFrame_TestFrame.viewLEFT.Event.OnAcquiredFrame, func_OnAcquiredLEFT, Octo_MainFrame_TestFrame)
 
 	-- Создание ScrollBox для центральной колонки
-	Octo_MainFrame_ToDo.ScrollBoxCENT = CreateFrame("FRAME", nil, childCENT, "WowScrollBoxList")
-	Octo_MainFrame_ToDo.ScrollBoxCENT:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
-	Octo_MainFrame_ToDo.ScrollBoxCENT:SetPoint("BOTTOMRIGHT")
-	Octo_MainFrame_ToDo.ScrollBoxCENT:SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBoxCENT:GetScrollTarget():SetPropagateMouseClicks(true)
+	Octo_MainFrame_TestFrame.ScrollBoxCENT = CreateFrame("FRAME", nil, childCENT, "WowScrollBoxList")
+	Octo_MainFrame_TestFrame.ScrollBoxCENT:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
+	Octo_MainFrame_TestFrame.ScrollBoxCENT:SetPoint("BOTTOMRIGHT")
+	Octo_MainFrame_TestFrame.ScrollBoxCENT:SetPropagateMouseClicks(true)
+	Octo_MainFrame_TestFrame.ScrollBoxCENT:GetScrollTarget():SetPropagateMouseClicks(true)
 
 	-- Создание и настройка вертикальной полосы прокрутки
-	Octo_MainFrame_ToDo.ScrollBarCENT = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "MinimalScrollBar")
-	Octo_MainFrame_ToDo.ScrollBarCENT:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "TOPRIGHT", 6, 0)
-	Octo_MainFrame_ToDo.ScrollBarCENT:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 6, 0)
+	Octo_MainFrame_TestFrame.ScrollBarCENT = CreateFrame("EventFrame", nil, Octo_MainFrame_TestFrame, "MinimalScrollBar")
+	Octo_MainFrame_TestFrame.ScrollBarCENT:SetPoint("TOPLEFT", Octo_MainFrame_TestFrame, "TOPRIGHT", 6, 0)
+	Octo_MainFrame_TestFrame.ScrollBarCENT:SetPoint("BOTTOMLEFT", Octo_MainFrame_TestFrame, "BOTTOMRIGHT", 6, 0)
 
 	-- Создание и настройка представления для центральной колонки
-	Octo_MainFrame_ToDo.viewCENT = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.viewCENT:SetElementExtent(LINE_HEIGHT)
-	Octo_MainFrame_ToDo.viewCENT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initCENT(...) end)
-	Octo_MainFrame_ToDo.viewCENT:RegisterCallback(Octo_MainFrame_ToDo.viewCENT.Event.OnAcquiredFrame, func_OnAcquiredCENT, Octo_MainFrame_ToDo)
+	Octo_MainFrame_TestFrame.viewCENT = CreateScrollBoxListTreeListView(0)
+	Octo_MainFrame_TestFrame.viewCENT:SetElementExtent(LINE_HEIGHT)
+	Octo_MainFrame_TestFrame.viewCENT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initCENT(...) end)
+	Octo_MainFrame_TestFrame.viewCENT:RegisterCallback(Octo_MainFrame_TestFrame.viewCENT.Event.OnAcquiredFrame, func_OnAcquiredCENT, Octo_MainFrame_TestFrame)
 
 	-- Инициализация ScrollBox с полосами прокрутки
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewLEFT)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT)
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewCENT)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_TestFrame.ScrollBoxLEFT, Octo_MainFrame_TestFrame.ScrollBarCENT, Octo_MainFrame_TestFrame.viewLEFT)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_TestFrame.ScrollBoxLEFT, Octo_MainFrame_TestFrame.ScrollBarCENT)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_TestFrame.ScrollBoxCENT, Octo_MainFrame_TestFrame.ScrollBarCENT, Octo_MainFrame_TestFrame.viewCENT)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_TestFrame.ScrollBoxCENT, Octo_MainFrame_TestFrame.ScrollBarCENT)
 
 	-- Настройка фона и границы главного фрейма
-	Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
-	Octo_MainFrame_ToDo:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
-	Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+	Octo_MainFrame_TestFrame:SetBackdrop(E.menuBackdrop)
+	Octo_MainFrame_TestFrame:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
+	Octo_MainFrame_TestFrame:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 
 	-- Настройка взаимодействия с фреймом
-	Octo_MainFrame_ToDo:EnableMouse(true)
-	Octo_MainFrame_ToDo:SetMovable(true)
+	Octo_MainFrame_TestFrame:EnableMouse(true)
+	Octo_MainFrame_TestFrame:SetMovable(true)
 
 	-- Обработчики перемещения фрейма
-	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
+	Octo_MainFrame_TestFrame:SetScript("OnMouseDown", function(_, button)
 		if button == "LeftButton" then
-			Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
-			Octo_MainFrame_ToDo:StartMoving()
+			Octo_MainFrame_TestFrame:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+			Octo_MainFrame_TestFrame:StartMoving()
 		end
 	end)
 
-	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
+	Octo_MainFrame_TestFrame:SetScript("OnMouseUp", function(_, button)
 		if button == "LeftButton" then
-			Octo_MainFrame_ToDo:SetAlpha(1)
-			Octo_MainFrame_ToDo:StopMovingOrSizing()
+			Octo_MainFrame_TestFrame:SetAlpha(1)
+			Octo_MainFrame_TestFrame:StopMovingOrSizing()
 
-			-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
+			-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_TestFrame:GetPoint()
 			-- print (point, relativePoint, xOfs, yOfs)
 		end
 	end)
 
 	-- Обработчик клика правой кнопкой для скрытия фрейма
-	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp")
-	Octo_MainFrame_ToDo:SetScript("OnClick", Octo_MainFrame_ToDo.Hide)
+	Octo_MainFrame_TestFrame:RegisterForClicks("RightButtonUp")
+	Octo_MainFrame_TestFrame:SetScript("OnClick", Octo_MainFrame_TestFrame.Hide)
 
 	-- Настройка заголовка левой колонки
 	HeaderFrameLEFT:SetPoint("TOPLEFT")
@@ -435,24 +455,24 @@ function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
 	end
 
 	-- Создание пула фреймов для заголовков колонок
-	Octo_MainFrame_ToDo.pool = CreateFramePool("FRAME", childCENT, nil, ResetPoolFrame, false, InitializePoolFrame)
+	Octo_MainFrame_TestFrame.pool = CreateFramePool("FRAME", childCENT, nil, ResetPoolFrame, false, InitializePoolFrame)
 end
 
 -- Функция расчета ширины колонок для левой части
 local function calculateColumnWidthsLEFT(node, totalLines)
 	local frameData = node:GetData()
-	local framesLEFT = Octo_MainFrame_ToDo.viewLEFT:GetFrames()
-	local framesCENT = Octo_MainFrame_ToDo.viewCENT:GetFrames()
+	local framesLEFT = Octo_MainFrame_TestFrame.viewLEFT:GetFrames()
+	local framesCENT = Octo_MainFrame_TestFrame.viewCENT:GetFrames()
 
 	-- Создание тестовых фреймов, если их нет
 	if #framesLEFT == 0 then
-		Octo_MainFrame_ToDo.viewLEFT:AcquireInternal(1, node)
-		Octo_MainFrame_ToDo.viewLEFT:InvokeInitializers()
+		Octo_MainFrame_TestFrame.viewLEFT:AcquireInternal(1, node)
+		Octo_MainFrame_TestFrame.viewLEFT:InvokeInitializers()
 	end
 
 	if #framesCENT == 0 then
-		Octo_MainFrame_ToDo.viewCENT:AcquireInternal(1, node)
-		Octo_MainFrame_ToDo.viewCENT:InvokeInitializers()
+		Octo_MainFrame_TestFrame.viewCENT:AcquireInternal(1, node)
+		Octo_MainFrame_TestFrame.viewCENT:InvokeInitializers()
 	end
 
 	-- Расчет ширины на основе текста
@@ -474,13 +494,13 @@ end
 -- Функция расчета ширины колонок для правой части
 local function calculateColumnWidthsRIGHT(node, totalLines)
 	local frameData = node:GetData()
-	local framesCENT = Octo_MainFrame_ToDo.viewCENT:GetFrames()
+	local framesCENT = Octo_MainFrame_TestFrame.viewCENT:GetFrames()
 
 	-- Создание тестовых фреймов, если их нет
 	if #framesCENT == 0 then
-		Octo_MainFrame_ToDo.viewCENT:AcquireInternal(1, node)
-		Octo_MainFrame_ToDo.viewCENT:InvokeInitializers()
-		framesCENT = Octo_MainFrame_ToDo.viewCENT:GetFrames()
+		Octo_MainFrame_TestFrame.viewCENT:AcquireInternal(1, node)
+		Octo_MainFrame_TestFrame.viewCENT:InvokeInitializers()
+		framesCENT = Octo_MainFrame_TestFrame.viewCENT:GetFrames()
 	end
 
 	local columnWidthsRIGHT = {}
@@ -541,9 +561,9 @@ end
 
 
 -- Функция создания и обновления провайдера данных
-function Octo_EventFrame_ToDo:CreateDataProvider()
-	-- Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT = Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT or {}
-	-- Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT = Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT or {}
+function Octo_EventFrame:CreateDataProvider()
+	-- Octo_EventFrame.COLUMN_SIZES_LEFT = Octo_EventFrame.COLUMN_SIZES_LEFT or {}
+	-- Octo_EventFrame.COLUMN_SIZES_RIGHT = Octo_EventFrame.COLUMN_SIZES_RIGHT or {}
 
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
@@ -563,8 +583,6 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	end
 
 	local totalColumns = #tbl
-	local totalPers = totalColumns
-
 	-- Обработка данных для каждой строки
 	for _, func in ipairs(E:func_Concat_Otrisovka()) do
 		totalLines = totalLines + 1
@@ -573,27 +591,32 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 			textLEFT = {},
 			colorLEFT = {},
 			textCENT = {},
-			tooltipCENT = {},
+			-- tooltipCENT = {},
 			colorCENT = {},
 			myType = {},
-			totalPers = totalPers,
+			tooltipKey = {},
+			GUID = {},
+			-- CharInfo = {},
 		}
 
 		-- Заполнение данных для каждого персонажа
 		for CharIndex, CharInfo in ipairs(tbl) do
-			local _, _, textCENT, tooltipCENT, colorCENT = func(CharInfo)
+			local _, _, textCENT, _, colorCENT = func(CharInfo)
 			zxc.textCENT[CharIndex] = textCENT
-			zxc.tooltipCENT[CharIndex] = tooltipCENT or {}
+			-- zxc.tooltipCENT[CharIndex] = tooltipCENT or {}
 			zxc.colorCENT[CharIndex] = colorCENT
+			zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
+			-- zxc.CharInfo[CharIndex] = CharInfo
 		end
 
 		-- Заполнение данных для левой колонки (берется из первого персонажа)
 		local firstChar = tbl[1]
 		if firstChar then
-			local textLEFT, colorLEFT, _, _, _, myType = func(firstChar)
+			local textLEFT, colorLEFT, _, _, _, myType, tooltipKey = func(firstChar)
 			zxc.textLEFT = textLEFT
 			zxc.colorLEFT = colorLEFT
 			zxc.myType = myType or {}
+			zxc.tooltipKey = tooltipKey
 		end
 
 		-- Установка дополнительных параметров
@@ -615,13 +638,18 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	end
 
 	-- Сохранение рассчитанных размеров колонок
-	Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
-	Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
+	Octo_EventFrame.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
+	Octo_EventFrame.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
 
 	-- Обновление интерфейса, если фрейм существует
-	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.childCENT then return end
-	Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	if not Octo_MainFrame_TestFrame or not Octo_MainFrame_TestFrame.childCENT then return end
+
+
+
+
+
+	Octo_MainFrame_TestFrame.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	Octo_MainFrame_TestFrame.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 
 	-- Расчет общей ширины правой части
 	local totalRightWidth = 0
@@ -630,7 +658,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 		maxRIGHT = MAX_FRAME_WIDTH - COLUMN_SIZES_LEFT[1]+INDENT_TEST
 	end
 
-	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
+	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame.COLUMNS_MAX) do
 		if (totalRightWidth + COLUMN_SIZES_RIGHT[i]) <= maxRIGHT then
 			totalRightWidth = totalRightWidth + COLUMN_SIZES_RIGHT[i]
 		else
@@ -639,7 +667,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	end
 
 	local totalRightWidth_childCENT = 0
-	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
+	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame.COLUMNS_MAX) do
 		totalRightWidth_childCENT = totalRightWidth_childCENT + COLUMN_SIZES_RIGHT[i]
 	end
 
@@ -652,9 +680,12 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
 		width = (COLUMN_SIZES_LEFT[1]+INDENT_TEST or MIN_LINE_WIDTH_LEFT) + totalRightWidth
 	end
+	if width%2 == 1 then
+		width = width + 1
+	end
 	local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 
-	Octo_MainFrame_ToDo:SetSize(width, height)
+	Octo_MainFrame_TestFrame:SetSize(width, height)
 
 
 	-- print (E.Blue_Color.."left|r", COLUMN_SIZES_LEFT[1]+INDENT_TEST)
@@ -663,19 +694,19 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	-- print (E.Purple_Color.."MainFrame|r", width)
 
 
-	Octo_MainFrame_ToDo.childCENT:SetSize(totalRightWidth_childCENT, height)
+	Octo_MainFrame_TestFrame.childCENT:SetSize(totalRightWidth_childCENT, height)
 
 	-- Освобождение всех фреймов из пула
-	Octo_MainFrame_ToDo.pool:ReleaseAll()
+	Octo_MainFrame_TestFrame.pool:ReleaseAll()
 
 	-- Создание заголовков для колонок персонажей
 	local accumulatedWidth = 0
 	for count, CharInfo in ipairs(tbl) do
-		local HeaderFrameRIGHT = Octo_MainFrame_ToDo.pool:Acquire()
+		local HeaderFrameRIGHT = Octo_MainFrame_TestFrame.pool:Acquire()
 		local columnWidth = COLUMN_SIZES_RIGHT[count] or MIN_LINE_WIDTH_CENT
 
 		-- Установка позиции и размера заголовка
-		HeaderFrameRIGHT:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", accumulatedWidth, -HEADER_HEIGHT)
+		HeaderFrameRIGHT:SetPoint("BOTTOMLEFT", Octo_MainFrame_TestFrame.childCENT, "TOPLEFT", accumulatedWidth, -HEADER_HEIGHT)
 		HeaderFrameRIGHT:SetSize(columnWidth, HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
 
@@ -712,14 +743,14 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
 			HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
-			E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
+			E.func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 
 		HeaderFrameRIGHT:Show()
 	end
 
 	-- Обновление позиций подфреймов в центральной колонке
-	for _, frame in ipairs(Octo_MainFrame_ToDo.viewCENT:GetFrames()) do
+	for _, frame in ipairs(Octo_MainFrame_TestFrame.viewCENT:GetFrames()) do
 		local accumulatedWidth = 0
 		for i = 1, #COLUMN_SIZES_RIGHT do
 			if frame.second[i] then
@@ -730,39 +761,39 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 			end
 		end
 	end
+
+	-- Ресет скроллбара
+	-- C_Timer.After(0, function()
+	-- 	Octo_EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
+	-- 	Octo_MainFrame_TestFrame.ScrollBoxCENT:ScrollToElementDataIndex(1)
+	-- end)
 end
 
 -- Функция переключения видимости главного фрейма
-local function Toggle_Octo_MainFrame_ToDo(frame)
-	if Octo_MainFrame_ToDo then
-		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
+local function Toggle_Octo_MainFrame_TestFrame(frame)
+	if Octo_MainFrame_TestFrame then
+		Octo_MainFrame_TestFrame:SetShown(not Octo_MainFrame_TestFrame:IsShown())
 	end
 end
 
 -- Открытие главного фрейма по /octo
-function E:main_frame_toggle()
-	if Octo_MainFrame_ToDo then
-		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
+function Octo_EventFrame:main_frame_toggle()
+	if Octo_MainFrame_TestFrame then
+		Octo_MainFrame_TestFrame:SetShown(not Octo_MainFrame_TestFrame:IsShown())
 	end
 end
 
 local MyEventsTable = {
-	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable)
-function Octo_EventFrame_ToDo:VARIABLES_LOADED()
-	--Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
-	-- local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
-	-- local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
+E:func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+function Octo_EventFrame:PLAYER_LOGIN()
+	Octo_EventFrame:Octo_Create_MainFrame()
+	E:func_Create_DDframe_ToDo(Octo_MainFrame_TestFrame, E.Faction_Color, function() Octo_EventFrame:CreateDataProvider() end)
+	Octo_TestFrame_DB_Vars = Octo_TestFrame_DB_Vars or {}
+	E:func_CreateMinimapButton(GlobalAddonName, "TestFrame", Octo_TestFrame_DB_Vars, Octo_MainFrame_TestFrame, nil, "Octo_MainFrame_TestFrame")
 end
-function Octo_EventFrame_ToDo:PLAYER_LOGIN()
-	Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
-	E:InitOptions()
-	E:func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() Octo_EventFrame_ToDo:CreateDataProvider() end)
-	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
-end
-function Octo_EventFrame_ToDo:PLAYER_REGEN_DISABLED()
-	Octo_MainFrame_ToDo:Hide()
+function Octo_EventFrame:PLAYER_REGEN_DISABLED()
+	Octo_MainFrame_TestFrame:Hide()
 end

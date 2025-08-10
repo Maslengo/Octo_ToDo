@@ -717,7 +717,7 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				-- Сбрасываем ежедневные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Daily" then
-						local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
@@ -762,7 +762,7 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				-- Сбрасываем еженедельные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Weekly" then
-						local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
@@ -783,7 +783,7 @@ function Octo_EventFrame_WTF:Month_Reset()
 				-- Сбрасываем ежемесячные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Month" then
-						local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end

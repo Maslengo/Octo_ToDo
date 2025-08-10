@@ -14,7 +14,7 @@ function E:func_Otrisovka_09_Shadowlands()
 			for iANIMA = 1, 4 do
 				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 						----------------------------------------------------------------
-						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 						----------------------------------------------------------------
 						local color = E.OctoTable_Covenant[iANIMA].color
 						-- отриосвка всего по центру
@@ -44,7 +44,7 @@ function E:func_Otrisovka_09_Shadowlands()
 						textLEFT = vivodLeft
 						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 						----------------------------------------------------------------
-						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 						----------------------------------------------------------------
 				end)
 			end

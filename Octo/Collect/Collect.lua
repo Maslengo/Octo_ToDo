@@ -381,22 +381,17 @@ function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
 	end)
 end
 function Octo_EventFrame_Collect:ENCOUNTER_END()
-	if InCombatLockdown() or self.ENCOUNTER_END_pause then return end
-	self.ENCOUNTER_END_pause = true
-	C_Timer.After(1, function()
-			E.Collect_All_JournalInstance()
-			E:func_Update("ENCOUNTER_END")
-			self.ENCOUNTER_END_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+	RequestRaidInfo()
+	E:func_Update("ENCOUNTER_END")
 end
 function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
-	if InCombatLockdown() or self.UPDATE_INSTANCE_INFO_pause then return end
-	self.UPDATE_INSTANCE_INFO_pause = true
-	C_Timer.After(1, function()
+	-- if self.UPDATE_INSTANCE_INFO_pause then return end
+	-- self.UPDATE_INSTANCE_INFO_pause = true
+	-- C_Timer.After(1, function()
 			E.Collect_All_JournalInstance()
 			E:func_Update("UPDATE_INSTANCE_INFO")
-			self.UPDATE_INSTANCE_INFO_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+			-- self.UPDATE_INSTANCE_INFO_pause = nil-- Используем nil вместо false для экономии памяти
+	-- end)
 end
 function Octo_EventFrame_Collect:TIME_PLAYED_MSG(...)
 	if InCombatLockdown() then return end

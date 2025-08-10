@@ -16,7 +16,7 @@ function E:func_Otrisovka_90_Holidays()
 			E:func_Universal(OctoTable_Otrisovka_textCENT, "HolidaysNoblegarden")
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[44791] then
 						textCENT = CharInfo.MASLENGO.ItemsInBag[44791]
@@ -25,12 +25,12 @@ function E:func_Otrisovka_90_Holidays()
 					textLEFT = E:func_itemName(44791)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[45072] then
 						textCENT = CharInfo.MASLENGO.ItemsInBag[45072]
@@ -39,7 +39,7 @@ function E:func_Otrisovka_90_Holidays()
 					textLEFT = E:func_itemName(45072)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 		end
@@ -57,7 +57,7 @@ function E:func_Otrisovka_90_Holidays()
 			E:func_Universal(OctoTable_Otrisovka_textCENT, "HolidaysTimewalk", E.Event_Color)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					----------------------------------------------------------------
 					textCENT = E:func_textCENT_Currency(CharInfo, 1166)
 					myType = {"Currency", 1166}
@@ -65,7 +65,7 @@ function E:func_Otrisovka_90_Holidays()
 					textLEFT = timewalkDungeonName .. E:func_currencyName(1166)
 					colorLEFT = E.Event_Color
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 		end
@@ -84,7 +84,7 @@ function E:func_Otrisovka_90_Holidays()
 			E:func_Universal(OctoTable_Otrisovka_textCENT, "HolidaysTheSpinnerofSummerTales")
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.LFGInstance[286] and CharInfo.MASLENGO.LFGInstance[286].donetoday then
 						textCENT = CharInfo.MASLENGO.LFGInstance[286].donetoday
@@ -93,12 +93,12 @@ function E:func_Otrisovka_90_Holidays()
 					textLEFT = E:func_texturefromIcon(E:func_GetItemIconByID(23247))..E:func_texturefromIcon(E.Icon_LFG) .. E:func_LFGdungName(286)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[23247] then
 						textCENT = CharInfo.MASLENGO.ItemsInBag[23247]
@@ -107,7 +107,7 @@ function E:func_Otrisovka_90_Holidays()
 					textLEFT = E:func_itemName(23247)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 		end
@@ -118,7 +118,7 @@ function E:func_Otrisovka_90_Holidays()
 			E:func_Universal(OctoTable_Otrisovka_textCENT, "HolidaysAGreedyEmissary", E.Red_Color)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					----------------------------------------------------------------
 					textCENT = E:func_textCENT_Currency(CharInfo, 3309)
 					myType = {"Currency", 3309}
@@ -126,7 +126,7 @@ function E:func_Otrisovka_90_Holidays()
 					textLEFT = E:func_currencyName(3309)
 					colorLEFT = E.Red_Color
 					----------------------------------------------------------------
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 		end

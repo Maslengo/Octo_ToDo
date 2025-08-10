@@ -1058,7 +1058,7 @@ function E:CreateUsableSpellFrame(id, point, parent, rPoint, x, y, size, curType
 			frame:SetScript("OnEnter", function(self)
 					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
 					E:FrameColor(self, id, curType)
-					E:func_OctoTooltip_OnEnter(frame)
+					E.func_OctoTooltip_OnEnter(frame)
 					if curType == "item" or curType == "toy" then
 						GameTooltip:AddDoubleLine(E:func_itemName(id), E:func_SecondsToClock(E:func_GetItemCooldown(id)))
 					else
@@ -1245,71 +1245,14 @@ function E:func_Universal(tbl, DESCRIPT)
 	for _, data in ipairs(E.OctoTable_UniversalQuest) do
 		if data.quests and descSTR == data.desc then
 			table_insert(tbl, function(CharInfo)
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
-					local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+					local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
+					tooltipKey = questKey
 					local showTooltip = data.showTooltip or false
 					if not data.textleft then
 						fpde(data)
 					end
 					textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
-					if showTooltip then
-						local totalQuest = 0
-						local forcedMaxQuest = data.forcedMaxQuest
-						for _, questData in ipairs(data.quests) do
-							local faction = questData.faction
-							if not faction or faction == CharInfo.PlayerData.Faction then
-								if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
-									totalQuest = totalQuest + 1
-								elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
-									totalQuest = forcedMaxQuest
-									break
-								else
-									totalQuest = totalQuest + 1
-								end
-							end
-						end
-						forcedMaxQuest = totalQuest
-						if E.DebugInfo then
-							tooltipCENT[#tooltipCENT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
-						end
-						if totalQuest > 1 then
-							tooltipCENT[#tooltipCENT+1] = {textLEFT, TOTAL..": "..totalQuest}
-							tooltipCENT[#tooltipCENT+1] = {" "}
-						end
-						local questsToShow = {}
-						for _, questData in ipairs(data.quests) do
-							local faction = questData.faction
-							if not faction or faction == CharInfo.PlayerData.Faction then
-								table_insert(questsToShow, questData)
-							end
-						end
-						if data.sorted ~= false then
-							table_sort(questsToShow, function(a, b)
-									local nameA = a.forcedText and a.forcedText.npcID and E:func_npcName(a.forcedText.npcID) or E:func_questName(a[1]) or a.forcedText.text or ""
-									local nameB = b.forcedText and b.forcedText.npcID and E:func_npcName(b.forcedText.npcID) or E:func_questName(b[1]) or b.forcedText.text or ""
-									return nameA < nameB
-							end)
-						end
-						for _, questData in ipairs(questsToShow) do
-							local questID = questData[1]
-							local faction = questData.faction
-							local forcedText = questData.forcedText
-							local vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
-							local vivod_LEFT = ""
-							if forcedText then
-								vivod_LEFT = forcedText.npcID and E:func_npcName(forcedText.npcID) or
-								forcedText.text or
-								forcedText.achievementID and E:func_achievementName(forcedText.achievementID) or
-								forcedText.itemID and E:func_itemName(forcedText.itemID) or ""
-							else
-								vivod_LEFT = E:func_questName(questID)
-							end
-							if faction == CharInfo.PlayerData.Faction then
-								vivod_LEFT = E:func_texturefromIcon(E:func_FactionIconID(faction))..vivod_LEFT
-							end
-							tooltipCENT[#tooltipCENT+1] = {vivod_LEFT, vivod_RIGHT}
-						end
-					end
 					if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] then
 						local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].textCENT
 						if LeftData then
@@ -1339,7 +1282,7 @@ function E:func_Universal(tbl, DESCRIPT)
 						end
 					end
 					colorLEFT = expColor
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 			end)
 		end
 	end
@@ -1642,7 +1585,7 @@ function E:func_Update(event_name)
 			C_Timer.After(0.1, function()
 					E.func_UpdateScheduled = false
 					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
-						E:func_TODO_CreateDataProvider()
+						-- E:func_TODO_CreateDataProvider()
 						DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("E:func_Update ", E.Green_Color, E.Yellow_Color)..event_name)
 					end
 			end)
@@ -1660,21 +1603,16 @@ function E:func_GetCurrentRegionName()
 	end
 	return GetCurrentRegionName()
 end
-function E:func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
+function E.func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
 	local tooltipCENT = {}
 	local sorted_itemList = {}
 	local ItemsInBag = CharInfo.MASLENGO.ItemsInBag
-	local GetItemQuality = function(id) return self:func_GetItemQuality(id) end
-	local GetItemIconByID = function(id) return self:func_GetItemIconByID(id) end
-	local GetItemNameByID = function(id) return self:func_itemName(id) end
-	local ItemPriceTSM = function(id, count) return self:func_ItemPriceTSM(id, count) end
-	local texturefromIcon = function(icon) return self:func_texturefromIcon(icon) end
 	for _, itemID in ipairs(TBL) do
 		local count = ItemsInBag[itemID]
 		if needShowAllItems or count then
 			table_insert(sorted_itemList, {
 					itemID = itemID,
-					quality = GetItemQuality(itemID),
+					quality = E:func_GetItemQuality(itemID),
 					count = count or 0
 			})
 		end
@@ -1690,8 +1628,8 @@ function E:func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
 	for _, item in ipairs(sorted_itemList) do
 		local itemID = item.itemID
 		local count = ItemsInBag[itemID] or ""
-		local name = GetItemNameByID(itemID)
-		local price = ItemPriceTSM(itemID, item.count)
+		local name = E:func_itemName(itemID)
+		local price = E:func_ItemPriceTSM(itemID, item.count)
 		tooltipCENT[#tooltipCENT + 1] = {name, count, price}
 	end
 	return tooltipCENT
@@ -1726,31 +1664,19 @@ function E:debugInfo(id)
 	local result = E.DebugIDs and (E.Gray_Color .. " id:" .. id .. "|r") or ""
 	return result
 end
-
 function E:func_buildIcon(id)
 	local icon = select(4, GetBuildingInfo(id))
 	return icon
 end
-
 function E:func_buildName(id)
 	-- local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
 	local name = select(2, GetBuildingInfo(id))
 	return name .. E:debugInfo(id)
 end
-
-function E:func_buildLevel(id)
+function E:func_buildRank(id)
 	local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
-
-	-- if not canUpgrade then
-	-- if isMaxLevel then
-	if rank == 3 then
-		return E.Green_Color..rank.."|r"
-	else
-		return E.Red_Color..rank.."|r"
-	end
-
+	return rank
 end
-
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
 E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"
 E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\LeftFrame.tga"
@@ -2017,3 +1943,301 @@ E.OctoTable_Covenant = {
 E.listMaxSize = 30
 E.DEVTEXT = "|T".. E.IconTexture ..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.. "DebugInfo|r: "
 E.KILLTEXT = "|T".. "Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga" ..":14:14:::64:64:4:60:4:60|t"
+function E:func_KeyTooltip(GUID, tooltipKey)
+	if not GUID and not tooltipKey then return end
+	local tooltipCENT = {}
+	local CharInfo = Octo_ToDo_DB_Levels[GUID]
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	if tooltipKey == "WoD_Garrison" then
+		if CharInfo.MASLENGO.HasGarrison[2] then
+			for garrisonType, id in next, (Enum.GarrisonType) do
+				if id == 2 then -- Warlords of Draenor
+					if CharInfo.MASLENGO.garrisonType[id] then
+						local data = CharInfo.MASLENGO.garrisonType[id]
+						for i, v in ipairs(data) do
+							if v.buildingID and v.rank then
+								local id = v.buildingID
+								tooltipCENT[#tooltipCENT+1] = {
+									E:func_texturefromIcon(E:func_buildIcon(id))..E:func_buildName(id),
+									(v.rank == 3 and E.Green_Color or E.Red_Color)..v.rank.."|r"
+								}
+							end
+						end
+					end
+				end
+			end
+		end
+		----------------------------------------------------------------
+	elseif tooltipKey == "WoD_824" then
+		local GARRISON_RESOURCE_ID = 824
+		local RESOURCE_GENERATION_INTERVAL = 600 -- 10 minutes in seconds
+		local RESOURCES_PER_INTERVAL = 1
+		local MAX_CACHE_SIZE = 500
+		if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
+			local color = E.Gray_Color
+			local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
+			local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
+			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
+			local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
+			local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
+			local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
+			if earnedSinceLastCollect > 0 then
+				if earnedSinceLastCollect >= 5 then
+					color = (earnedSinceLastCollect == cacheSize) and E.Purple_Color or E.Yellow_Color
+				end
+			end
+			tooltipCENT[#tooltipCENT+1] = {GARRISON_CACHE, color..earnedSinceLastCollect.."/"..cacheSize.."|r"}
+			tooltipCENT[#tooltipCENT+1] = {" ", " "} -- Empty separator
+			if earnedSinceLastCollect ~= cacheSize then
+				tooltipCENT[#tooltipCENT+1] = {"Time to full: ", E:func_SecondsToClock(timeUntilFull)}
+			end
+			tooltipCENT[#tooltipCENT+1] = {"Was earned: ", E:func_SecondsToClock(GetServerTime()-(CharInfo.MASLENGO.GARRISON.lastCacheTime or time()))}
+		end
+		----------------------------------------------------------------
+	elseif tooltipKey == "BfA_mechagonItems" then
+		tooltipCENT = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
+		----------------------------------------------------------------
+	elseif tooltipKey == "Other_Items" then
+		tooltipCENT = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_ALL, false)
+	elseif tooltipKey == "Other_professions" then
+		local charProf = CharInfo.MASLENGO.professions
+		for i = 1, 5 do
+			if charProf[i] and charProf[i].skillLine then
+				local leftText = E:func_ProfessionIcon(charProf[i].skillLine).." "..E:func_ProfessionName(charProf[i].skillLine)
+				local RightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
+				if charProf[i].skillModifier then
+					RightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
+				end
+				tooltipCENT[#tooltipCENT+1] = {leftText, RightText}
+				if charProf[i].child then
+					-- for expIndex, v in ipairs(charProf[i].child) do
+					for expIndex = #charProf[i].child, 1, -1 do
+						local v = charProf[i].child[expIndex]
+						if v.QWEskillLevel and v.QWEprofessionName then
+							-- for expI, j in ipairs(E.OctoTable_Expansions) do
+							-- for expI = #E.OctoTable_Expansions, 1, -1 do
+							-- local j = E.OctoTable_Expansions[expI]
+							local j = E.OctoTable_Expansions[expIndex]
+							tooltipCENT[#tooltipCENT+1] = {" "..E:func_texturefromIcon(j.icon, 16, 32).." "..j.color..j.nameVeryShort.."|r ", v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
+							-- end
+							-- end
+						end
+					end
+				end
+			end
+		end
+	elseif tooltipKey == "Other_ItemLevel" then
+		if CharInfo.PlayerData.avgItemLevelEquipped and CharInfo.PlayerData.avgItemLevel then
+			if CharInfo.PlayerData.avgItemLevelPvp and CharInfo.PlayerData.avgItemLevelPvp > CharInfo.PlayerData.avgItemLevel then
+				tooltipCENT[#tooltipCENT+1] = {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.PlayerData.avgItemLevelPvp)}
+			end
+		end
+	elseif tooltipKey == "Other_Money" then
+		if CharInfo.PlayerData.Money then
+			if CharInfo.PlayerData.MoneyOnLogin then
+				if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
+					tooltipCENT[#tooltipCENT+1] = {"lost: ", E.Red_Color..E:func_MoneyString((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+				elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
+					tooltipCENT[#tooltipCENT+1] = {"received: ", E.Green_Color..E:func_MoneyString((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)).."|r "..E:func_texturefromIcon(E.Icon_Money)}
+				end
+			end
+		end
+	elseif tooltipKey == "Other_WasOnline" then
+		local color = "|cffFFFFFF"
+		if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
+			if CharInfo.PlayerData.GUID == E.curGUID then
+				tooltipCENT[#tooltipCENT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex.. E:func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r", " "}
+				tooltipCENT[#tooltipCENT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E:func_SecondsToClock(GetSessionTime()).."|r" ), " "}
+			else
+				if CharInfo.PlayerData.needResetWeekly then
+					color = E.Gray_Color
+				elseif CharInfo.PlayerData.needResetDaily then
+					color = E.Red_Color
+				end
+				tooltipCENT[#tooltipCENT+1] = {color..E:func_FriendsFrame_GetLastOnlineText(CharInfo.PlayerData.time, CharInfo.PlayerData.classColorHex).."|r", ""}
+				tooltipCENT[#tooltipCENT+1] = {"", ""}
+				tooltipCENT[#tooltipCENT+1] = {color..CharInfo.PlayerData.loginDay.."|r", ""}
+				tooltipCENT[#tooltipCENT+1] = {color..CharInfo.PlayerData.loginHour.."|r", ""}
+			end
+		end
+		----------------------------------------------------------------
+	elseif tooltipKey == "TWW_GreatVault" then
+		local Enum_Activities_table = {}
+		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+			Enum_Activities_table[#Enum_Activities_table+1] = i
+		end
+		table.sort(Enum_Activities_table)
+		for j = 1, #Enum_Activities_table do
+			local i = Enum_Activities_table[j]
+			if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
+				-- CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
+				if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
+					if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
+						tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING}
+					elseif CharInfo.MASLENGO.GreatVault[i].progress then
+						tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
+					end
+				end
+			end
+		end
+		----------------------------------------------------------------
+	elseif tooltipKey == "TWW_CurrentKey" then
+		if CharInfo.PlayerData.CurrentKeyName then
+			tooltipCENT[#tooltipCENT+1] = {CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName, ""}
+		end
+		if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
+			tooltipCENT[#tooltipCENT+1] = {" ", " "}
+			tooltipCENT[#tooltipCENT+1] = {"Weekly Best:", CharInfo.PlayerData.RIO_weeklyBest}
+			tooltipCENT[#tooltipCENT+1] = {"RIO Score:", CharInfo.PlayerData.RIO_Score}
+		end
+		----------------------------------------------------------------
+	elseif tooltipKey:find("ItemsInBag") then
+		local number = tonumber(string.match(tooltipKey, "%d+"))
+		----------------------------------------------------------------
+	elseif tooltipKey == "ListOfQuests" then
+		if CharInfo.PlayerData.numQuests then
+			local questIDs = {}
+			for questID in next, CharInfo.MASLENGO.ListOfQuests do
+				questIDs[#questIDs+1] = questID
+			end
+			table.sort(questIDs, E.func_Reverse_order)
+			for i = 1, #questIDs do
+				local questID = questIDs[i]
+				tooltipCENT[i] = {E:func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
+			end
+		end
+	elseif tooltipKey == "Other_LFGInstance" then
+		local combinedTooltip = {}
+		for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
+			for difficultyID, w in next, (v) do
+				if w.vivod then
+					table.insert(combinedTooltip, {
+							name = w.instanceName.."("..w.difficultyName..") ".. E:debugInfo(instanceID),
+							status = w.vivod,
+							time = E:func_SecondsToClock(w.instanceReset-GetServerTime())
+					})
+				end
+			end
+		end
+		for dungeonID, v in next, (CharInfo.MASLENGO.LFGInstance) do
+			if CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday then
+				table.insert(combinedTooltip, {
+						name = CharInfo.MASLENGO.LFGInstance[dungeonID].D_name.. E:debugInfo(dungeonID),
+						status = " ",
+						time = CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday
+				})
+			end
+		end
+		for worldBossID, v in next, (CharInfo.MASLENGO.SavedWorldBoss) do
+			table.insert(combinedTooltip, {
+					-- name = E:func_texturefromIcon(E.Icon_WorldBoss).. v.name.. E:debugInfo(worldBossID),
+					name = v.name.. E:debugInfo(worldBossID),
+					status = " ",
+					time = E:func_SecondsToClock(v.reset)
+			})
+		end
+		-- Сортировка по name
+		table.sort(combinedTooltip, function(a, b)
+				return a.name < b.name
+		end)
+		-- Выводим отсортированные данные
+		for _, v in ipairs(combinedTooltip) do
+			tooltipCENT[#tooltipCENT+1] = {
+				v.name,
+				"|cff9999ff" .. v.time .. "|r",
+				v.status
+			}
+		end
+		-- if #tooltipCENT ~= 0 then
+		-- textCENT = E.Gray_Color..DUNGEONS.."|r"
+		-- end
+		----------------------------------------------------------------
+	elseif tooltipKey:find("Octopussy_") then
+		for _, data in ipairs(E.OctoTable_UniversalQuest) do
+			if not data.quests then
+				break -- Пропускаем записи без квестов
+			end
+			local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
+			local showTooltip = data.showTooltip or false
+			if showTooltip and tooltipKey == questKey then
+				-- Подсчет общего числа квестов
+				local totalQuest = 0
+				local forcedMaxQuest = data.forcedMaxQuest
+				for _, questData in ipairs(data.quests) do
+					local faction = questData.faction
+					if not faction or faction == CharInfo.PlayerData.Faction then
+						if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
+							totalQuest = totalQuest + 1
+						elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
+							totalQuest = forcedMaxQuest
+							break
+						else
+							totalQuest = totalQuest + 1
+						end
+					end
+				end
+				forcedMaxQuest = totalQuest
+				-- Заголовок тултипа (если квестов больше одного)
+				if E.DebugInfo then
+					tooltipCENT[#tooltipCENT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
+				end
+				if totalQuest > 1 then
+					local textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
+					tooltipCENT[#tooltipCENT+1] = {textLEFT, TOTAL..": "..totalQuest}
+					tooltipCENT[#tooltipCENT+1] = {" "}
+				end
+				-- Список квестов в тултипе
+				local questsToShow = {}
+				for _, questData in ipairs(data.quests) do
+					local faction = questData.faction
+					if not faction or faction == CharInfo.PlayerData.Faction then
+						table_insert(questsToShow, questData)
+					end
+				end
+				-- Сортировка (если не отключена)
+				if data.sorted ~= false then
+					table_sort(questsToShow, function(a, b)
+							local nameA = a.forcedText and a.forcedText.npcID and E:func_npcName(a.forcedText.npcID) or E:func_questName(a[1]) or a.forcedText.text or ""
+							local nameB = b.forcedText and b.forcedText.npcID and E:func_npcName(b.forcedText.npcID) or E:func_questName(b[1]) or b.forcedText.text or ""
+							return nameA < nameB
+					end)
+				end
+				-- Формирование строк тултипа
+				for _, questData in ipairs(questsToShow) do
+					local questID = questData[1]
+					local faction = questData.faction
+					local forcedText = questData.forcedText
+					local vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
+					local vivod_LEFT = ""
+					if forcedText then
+						vivod_LEFT = forcedText.npcID and E:func_npcName(forcedText.npcID) or
+						forcedText.text or
+						forcedText.achievementID and E:func_achievementName(forcedText.achievementID) or
+						forcedText.itemID and E:func_itemName(forcedText.itemID) or ""
+					else
+						vivod_LEFT = E:func_questName(questID)
+					end
+					if faction == CharInfo.PlayerData.Faction then
+						vivod_LEFT = E:func_texturefromIcon(E:func_FactionIconID(faction))..vivod_LEFT
+					end
+					tooltipCENT[#tooltipCENT+1] = {vivod_LEFT, vivod_RIGHT}
+				end
+			end
+		end
+		----------------------------------------------------------------
+		--elseif tooltipKey == "ЙЦУЙЦУ" then
+		----------------------------------------------------------------
+		--elseif tooltipKey == "ЙЦУЙЦУ" then
+		----------------------------------------------------------------
+		--elseif tooltipKey == "ЙЦУЙЦУ" then
+		----------------------------------------------------------------
+		--elseif tooltipKey == "ЙЦУЙЦУ" then
+		----------------------------------------------------------------
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	return tooltipCENT
+end

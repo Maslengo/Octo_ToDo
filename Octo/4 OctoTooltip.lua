@@ -75,7 +75,7 @@ local func_OnAcquired do
 							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
 							f.text:SetTextColor(1, 1, 1, 1)
 							-- Обработчики событий
-							-- f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
+							-- f:SetScript("OnEnter", function() E.func_OctoTooltip_OnEnter(f) end)
 							-- f:SetScript("OnHide", f.Hide)
 							rawset(self, key, f)
 							return f
@@ -286,11 +286,10 @@ function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
 		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*lines)
 	end
 end
-function E:func_OctoTooltip_OnEnter(frame, point)
 
-
+function E.func_OctoTooltip_OnEnter(frame, point) -- ПОФИКСИТЬ (3им аргументом сделать point) либо повешать на объект 1395 hidingbar
 	if not frame.tooltip or #frame.tooltip == 0 then return end
-	if point then
+	if type(point) == "table" then
 		Octo_EventFrame_OctoTooltip:func_SmartAnchorTo(frame, point)
 	else
 		Octo_EventFrame_OctoTooltip:func_SmartAnchorTo(frame)

@@ -74,8 +74,10 @@ function E.Collect_All_JournalInstance()
 	for i=1, GetNumRandomDungeons() do
 		local dungeonID, name = GetLFGRandomDungeonInfo(i)
 		if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
+		-- if dungeonID then
 			local D_name = GetLFGDungeonInfo(dungeonID)
 			local donetoday = GetLFGDungeonRewards(dungeonID)
+			collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
 			collectMASLENGO.LFGInstance[dungeonID].D_name = D_name
 			if donetoday == true then
 				collectMASLENGO.LFGInstance[dungeonID].donetoday = E.DONE

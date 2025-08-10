@@ -53,7 +53,7 @@ local function CreateUtilButton(name, frame, texture, func_onEnter, func_onClick
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
 			button.tooltip = func_onEnter()
-			E:func_OctoTooltip_OnEnter(button, {"BOTTOMLEFT", "TOPRIGHT"})
+			E.func_OctoTooltip_OnEnter(button, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 	end
 

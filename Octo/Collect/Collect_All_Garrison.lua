@@ -57,7 +57,7 @@ function E.Collect_All_GarrisonBuilds()
 			collect.garrisonType[id][i].plotID = data.plotID
 			collect.garrisonType[id][i].textureKit = data.textureKit
 			collect.garrisonType[id][i].uiTab = data.uiTab
-			collect.garrisonType[id][i].level = E:func_buildLevel(data.buildingID)
+			collect.garrisonType[id][i].rank = E:func_buildRank(data.buildingID)
 		end
 	end
 end

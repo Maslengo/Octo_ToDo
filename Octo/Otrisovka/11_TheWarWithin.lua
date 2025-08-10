@@ -10,26 +10,10 @@ function E:func_Otrisovka_11_TheWarWithin()
 	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				----------------------------------------------------------------
-				local Enum_Activities_table = {}
-				for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-					Enum_Activities_table[#Enum_Activities_table+1] = i
-				end
-				table.sort(Enum_Activities_table)
-				for j = 1, #Enum_Activities_table do
-					local i = Enum_Activities_table[j]
-					if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
-						-- CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
-						if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
-							if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
-								tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING}
-							elseif CharInfo.MASLENGO.GreatVault[i].progress then
-								tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
-							end
-						end
-					end
-				end
+				tooltipKey = "TWW_GreatVault"
+
 				if CharInfo.PlayerData.HasAvailableRewards then
 					textCENT = E.Blue_Color..">"..REWARD.."<|r"
 				end
@@ -41,21 +25,15 @@ function E:func_Otrisovka_11_TheWarWithin()
 				-- greatVault-centerPlate-dis
 				-- greatVault-whole-normal
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				----------------------------------------------------------------
-				if CharInfo.PlayerData.CurrentKeyName then
-					tooltipCENT[#tooltipCENT+1] = {CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName, ""}
-				end
-				if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
-					tooltipCENT[#tooltipCENT+1] = {" ", " "}
-					tooltipCENT[#tooltipCENT+1] = {"Weekly Best:", CharInfo.PlayerData.RIO_weeklyBest}
-					tooltipCENT[#tooltipCENT+1] = {"RIO Score:", CharInfo.PlayerData.RIO_Score}
-				end
+				tooltipKey = "TWW_CurrentKey"
+
 				if CharInfo.PlayerData.CurrentKey then
 					textCENT = CharInfo.PlayerData.CurrentKey
 				end
@@ -64,14 +42,14 @@ function E:func_Otrisovka_11_TheWarWithin()
 				-- iconLEFT = 4352494
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
 		if Octo_ToDo_DB_Vars.Currencies then
 			for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
 				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 						----------------------------------------------------------------
-						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 						----------------------------------------------------------------
 						textCENT = E:func_textCENT_Currency(CharInfo, CurrencyID)
 						myType = {"Currency", CurrencyID}
@@ -79,7 +57,7 @@ function E:func_Otrisovka_11_TheWarWithin()
 						textLEFT = E:func_currencyName(CurrencyID)
 						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 						----------------------------------------------------------------
-						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 						----------------------------------------------------------------
 				end)
 			end

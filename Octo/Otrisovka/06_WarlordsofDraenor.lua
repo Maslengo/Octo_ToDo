@@ -16,7 +16,8 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 		-- 111    Type_9_0_Garrison    Shadowlands
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+				tooltipKey = "WoD_Garrison"
 				textLEFT = E:func_texturefromIcon(E:func_GetItemIconByID(110560))..GARRISON_LOCATION_TOOLTIP
 				if CharInfo.MASLENGO.HasGarrison[2] then
 					local count = 0
@@ -25,14 +26,10 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 							if CharInfo.MASLENGO.garrisonType[id] then
 								local data = CharInfo.MASLENGO.garrisonType[id]
 								for i, v in ipairs(data) do
-									local id = v.buildingID
-									count = count + 1
-									-- local _, name, textureKit, icon, rank, isBuilding, timeStart, buildTime, canActivate, canUpgrade, isPrebuilt = C_Garrison.GetOwnedBuildingInfoAbbrev(v.plotID)
-									-- local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = C_Garrison.GetBuildingInfo(v.buildingID)
-									tooltipCENT[#tooltipCENT+1] = {
-										E:func_texturefromIcon(E:func_buildIcon(id))..E:func_buildName(id),
-										v.level
-									}
+									if v.buildingID and v.rank then
+										local id = v.buildingID
+										count = count + 1
+									end
 								end
 							end
 						end
@@ -44,31 +41,14 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 					textCENT = E.NONE
 				end
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, tooltipKey
 				----------------------------------------------------------------
 		end)
-		-- table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
-		--         ----------------------------------------------------------------
-		--         local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
-		--         ----------------------------------------------------------------
-		--         if CharInfo.MASLENGO.OctoTable_QuestID[38242] then
-		--             textCENT = CharInfo.MASLENGO.OctoTable_QuestID[38242] and E.DONE
-		--         end
-		--         if CharInfo.MASLENGO.ItemsInBag[122457] then
-		--             textCENT = textCENT.."+"..CharInfo.MASLENGO.ItemsInBag[122457]..E:func_GetItemIconByID(122457)
-		--         end
-		--         myType = {"Item", 122457}
-		--         ----------------------------------------------------------------
-		--         textLEFT = E:func_questName(38242).." (ап пета)"
-		--         colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-		--         ----------------------------------------------------------------
-		--         return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
-		--         ----------------------------------------------------------------
-		-- end)
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType = "", nil, "", {}, nil, {}
+				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				----------------------------------------------------------------
+				tooltipKey = "WoD_824"
 				local GARRISON_RESOURCE_ID = 824
 				local RESOURCE_GENERATION_INTERVAL = 600  -- 10 minutes in seconds
 				local RESOURCES_PER_INTERVAL = 1
@@ -77,24 +57,12 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 				myType = {"Currency", 824}
 				if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
 					local color = E.Gray_Color
-					-- максимальный запас ресурсов
-					-- Max resource capacity
 					local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
-					-- время последнего получения ресурсов
-					-- Last resource collection time
 					local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
-					-- это время, прошедшее с последнего сбора, в 10-минутных интервалах. Она нужна, чтобы рассчитать, сколько новых ресурсов (earnedSinceLastCollect) игрок мог получить за это время.
-					-- Time passed since last collection in 10-minute intervals
 					local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
-					-- сколько ресурсов накопилось с момента последнего сбора
-					-- Resources earned since last collection
 					local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
-					-- это время, за которое хранилище ресурсов заполнится полностью (в секундах).
-					-- Time needed to fully fill the storage
 					local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
-					-- Time remaining until storage is full
 					local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
-					-- Время до получения следующей 1 валюты
 					local timeToNextCurrency = RESOURCE_GENERATION_INTERVAL - (GetServerTime() - lastCacheTime) % RESOURCE_GENERATION_INTERVAL
 					if earnedSinceLastCollect > 0 then
 						if earnedSinceLastCollect >= 5 then
@@ -102,19 +70,12 @@ function E:func_Otrisovka_06_WarlordsofDraenor()
 						end
 						textCENT = textCENT .. color .. " +" .. earnedSinceLastCollect .. "|r"
 					end
-					-- Tooltip lines
-					tooltipCENT[#tooltipCENT+1] = {GARRISON_CACHE, color..earnedSinceLastCollect.."/"..cacheSize.."|r"}
-					tooltipCENT[#tooltipCENT+1] = {" ", " "}  -- Empty separator
-					if earnedSinceLastCollect ~= cacheSize then
-						tooltipCENT[#tooltipCENT+1] = {"Time to full: ", E:func_SecondsToClock(timeUntilFull)}
-					end
-					tooltipCENT[#tooltipCENT+1] = {"Was earned: ", E:func_SecondsToClock(GetServerTime()-(CharInfo.MASLENGO.GARRISON.lastCacheTime or time()))}
 				end
 				----------------------------------------------------------------
 				textLEFT = E:func_currencyName(824)
 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
 				----------------------------------------------------------------
-				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
 		E:funcOtrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)

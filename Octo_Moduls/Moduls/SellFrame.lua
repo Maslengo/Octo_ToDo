@@ -366,7 +366,7 @@ local function UpdateTooltip(button)
 
 	-- Обновляем тултип, если он сейчас отображается
 	if activeTooltipButton == button then
-		E:func_OctoTooltip_OnEnter(button)
+		E.func_OctoTooltip_OnEnter(button)
 	end
 end
 
@@ -500,7 +500,7 @@ function Octo_EventFrame_SellFrame:func_CreateTradeButtons()
 		OctoFrame_SellOtherBlue:SetScript("OnEnter", function()
 				activeTooltipButton = OctoFrame_SellOtherBlue
 				UpdateTooltip(OctoFrame_SellOtherBlue)
-				E:func_OctoTooltip_OnEnter(OctoFrame_SellOtherBlue)
+				E.func_OctoTooltip_OnEnter(OctoFrame_SellOtherBlue)
 		end)
 
 		OctoFrame_SellOtherBlue:SetScript("OnLeave", function()

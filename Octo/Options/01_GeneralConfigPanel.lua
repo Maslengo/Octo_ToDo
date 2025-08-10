@@ -121,7 +121,6 @@ function E:CreateGeneralOptions()
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT = value
-					print (value)
 					E.GLOBAL_LINE_HEIGHT = value
 				end,
 				width = E.FULL_WIDTH/4,

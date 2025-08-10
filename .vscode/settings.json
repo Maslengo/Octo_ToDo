@@ -263,7 +263,8 @@
 		"BATTLE_PET_SOURCE_2",
 		"SPELLS",
 		"UIParentLoadAddOn",
-		"EventTrace"
+		"EventTrace",
+		"TIME_PLAYED_ALERT"
 	],
 	"Lua.type.weakUnionCheck": true,
 	"lua.targetVersion": "5.1"

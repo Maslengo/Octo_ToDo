@@ -24,7 +24,6 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 	if not collectMASLENGO then return end
 
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
-		print ("func_ConcatAtStart_UniversalQuestQWE")
 		E.func_ConcatAtStart_UniversalQuestQWE = true
 		E:func_Universal_91_Concat()
 	end
@@ -39,7 +38,7 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 			break -- Пропускаем записи без квестов
 		end
 
-		local questKey = data.desc.."_"..data.name_save.."_"..data.reset
+		local questKey = "Octopussy_"..data.desc.."_"..data.name_save.."_"..data.reset
 		local questDataTable = {}
 		local count = 0
 		local totalQUEST = 0
@@ -61,9 +60,6 @@ function E:func_Collect_All_UNIVERSALQuestUpdate()
 					if isCompleted then
 						count = count + 1
 					end
-					-- if questID == 53435 then
-					-- 	print (53435, totalQUEST, forcedMaxQuest, #data.quests, E:func_IsOnQuest(questID))
-					-- end
 					if (totalQUEST == 1 or forcedMaxQuest == 1 or #data.quests == 1) and E:func_IsOnQuest(questID) then
 						questDataTable.textCENT = status
 						hasSingleQuestOutput = true

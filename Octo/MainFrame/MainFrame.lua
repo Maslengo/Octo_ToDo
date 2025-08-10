@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-local Octo_EventFrame_ToDo = CreateFrame("FRAME")
-Octo_EventFrame_ToDo:Hide()
+local Octo_EventFrame = CreateFrame("FRAME")
+Octo_EventFrame:Hide()
 
 -- Создание главного фрейма для тестового интерфейса
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
@@ -19,7 +19,7 @@ local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная шири�
 local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
 local MAX_FRAME_WIDTH = E.MonitorWidth*.6  		-- Максимальная ширина фрейма (80% экрана)
 local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
-Octo_EventFrame_ToDo.COLUMNS_MAX = 113     		-- Максимальное количество колонок
+Octo_EventFrame.COLUMNS_MAX = 113     		-- Максимальное количество колонок
 
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
@@ -128,7 +128,7 @@ local func_OnAcquiredCENT do
 					f.textCENT:SetTextColor(textR, textG, textB, textA)
 
 					-- Обработчик наведения курсора
-					f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
+					f:SetScript("OnEnter", function() E.func_OctoTooltip_OnEnter(f) end)
 
 					-- Обработчики скрытия
 					f:SetScript("OnHide", f.Hide)
@@ -143,12 +143,12 @@ local func_OnAcquiredCENT do
 end
 
 -- Функция инициализации данных для левой колонки
-function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
+function Octo_EventFrame:Octo_Frame_initLEFT(frame, node)
 	local frameData = node:GetData()
 
 	-- Обновление размеров колонки, если они были изменены
-	if Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT and Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT[1] then
-		local newLeftWidth = Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT[1]
+	if Octo_EventFrame.COLUMN_SIZES_LEFT and Octo_EventFrame.COLUMN_SIZES_LEFT[1] then
+		local newLeftWidth = Octo_EventFrame.COLUMN_SIZES_LEFT[1]
 		Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(newLeftWidth+INDENT_TEST)
 		frame.textLEFT:SetWidth(newLeftWidth)
 		HeaderFrameLEFT:SetWidth(newLeftWidth)
@@ -183,15 +183,15 @@ function Octo_EventFrame_ToDo:Octo_Frame_initLEFT(frame, node)
 		end
 
 		frame.tooltip = tooltipOCTO
-		E:func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
+		E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
 	end)
 end
 
 -- Функция инициализации данных для центральной колонки
-function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
+function Octo_EventFrame:Octo_Frame_initCENT(frame, node)
 	local frameData = node:GetData()
 	local accumulatedWidth = 0
-	local columnSizesRight = Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT or {}
+	local columnSizesRight = Octo_EventFrame.COLUMN_SIZES_RIGHT or {}
 
 	-- Инициализация всех колонок для текущей строки
 	for i = 1, (frameData.totalColumns or 0) do
@@ -242,20 +242,24 @@ function Octo_EventFrame_ToDo:Octo_Frame_initCENT(frame, node)
 
 		secondFrame:Show()
 	end
+
+	for i = frameData.totalColumns+1, #frame.second do
+		frame.second[i]:Hide()
+	end
 end
 
 -- Функция создания главного тестового фрейма
-function Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
+function Octo_EventFrame:Octo_Create_MainFrame()
 	-- Настройка позиции и обработчика показа фрейма
 	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.MonitorWidth*.05)
 	Octo_MainFrame_ToDo:SetPoint("CENTER")
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
-		Octo_EventFrame_ToDo:CreateDataProvider()
+		Octo_EventFrame:CreateDataProvider()
 		RequestRaidInfo()
 	end)
 
 	-- Расчет размеров фрейма на основе количества игроков
-	local NumPlayers = math_min(E:func_NumPlayers(), Octo_EventFrame_ToDo.COLUMNS_MAX)
+	local NumPlayers = math_min(E:func_NumPlayers(), Octo_EventFrame.COLUMNS_MAX)
 	Octo_MainFrame_ToDo:SetSize(MIN_LINE_WIDTH_LEFT + MIN_LINE_WIDTH_CENT * NumPlayers, LINE_HEIGHT * LINES_MAX)
 
 	-- Настройки фрейма
@@ -540,9 +544,9 @@ end
 
 
 -- Функция создания и обновления провайдера данных
-function Octo_EventFrame_ToDo:CreateDataProvider()
-	-- Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT = Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT or {}
-	-- Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT = Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT or {}
+function Octo_EventFrame:CreateDataProvider()
+	-- Octo_EventFrame.COLUMN_SIZES_LEFT = Octo_EventFrame.COLUMN_SIZES_LEFT or {}
+	-- Octo_EventFrame.COLUMN_SIZES_RIGHT = Octo_EventFrame.COLUMN_SIZES_RIGHT or {}
 
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
@@ -613,8 +617,8 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	end
 
 	-- Сохранение рассчитанных размеров колонок
-	Octo_EventFrame_ToDo.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
-	Octo_EventFrame_ToDo.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
+	Octo_EventFrame.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
+	Octo_EventFrame.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
 
 	-- Обновление интерфейса, если фрейм существует
 	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.childCENT then return end
@@ -628,7 +632,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 		maxRIGHT = MAX_FRAME_WIDTH - COLUMN_SIZES_LEFT[1]+INDENT_TEST
 	end
 
-	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
+	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame.COLUMNS_MAX) do
 		if (totalRightWidth + COLUMN_SIZES_RIGHT[i]) <= maxRIGHT then
 			totalRightWidth = totalRightWidth + COLUMN_SIZES_RIGHT[i]
 		else
@@ -637,7 +641,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	end
 
 	local totalRightWidth_childCENT = 0
-	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame_ToDo.COLUMNS_MAX) do
+	for i = 1, math_min(#COLUMN_SIZES_RIGHT, Octo_EventFrame.COLUMNS_MAX) do
 		totalRightWidth_childCENT = totalRightWidth_childCENT + COLUMN_SIZES_RIGHT[i]
 	end
 
@@ -649,6 +653,9 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 	local width = MIN_LINE_WIDTH_LEFT
 	if COLUMN_SIZES_LEFT and COLUMN_SIZES_LEFT[1] then
 		width = (COLUMN_SIZES_LEFT[1]+INDENT_TEST or MIN_LINE_WIDTH_LEFT) + totalRightWidth
+	end
+	if width%2 == 1 then
+		width = width + 1
 	end
 	local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 
@@ -710,7 +717,7 @@ function Octo_EventFrame_ToDo:CreateDataProvider()
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
 			HeaderFrameRIGHT.tooltip = E:func_Tooltip_Chars(CharInfo)
-			E:func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
+			E.func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 
 		HeaderFrameRIGHT:Show()
@@ -745,22 +752,16 @@ function E:main_frame_toggle()
 end
 
 local MyEventsTable = {
-	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
-E:func_RegisterMyEventsToFrames(Octo_EventFrame_ToDo, MyEventsTable)
-function Octo_EventFrame_ToDo:VARIABLES_LOADED()
-	--Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
-	-- local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
-	-- local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
-end
-function Octo_EventFrame_ToDo:PLAYER_LOGIN()
-	Octo_EventFrame_ToDo:Octo_Create_MainFrame_TestFrame()
+E:func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+function Octo_EventFrame:PLAYER_LOGIN()
+	Octo_EventFrame:Octo_Create_MainFrame()
 	E:InitOptions()
-	E:func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() Octo_EventFrame_ToDo:CreateDataProvider() end)
+	E:func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() Octo_EventFrame:CreateDataProvider() end)
 	E:func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 end
-function Octo_EventFrame_ToDo:PLAYER_REGEN_DISABLED()
+function Octo_EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_ToDo:Hide()
 end

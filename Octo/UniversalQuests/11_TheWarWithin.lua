@@ -482,6 +482,7 @@ function E:func_Universal_11_TheWarWithin()
 			},
 			forcedMaxQuest = 4,
 		},
+
 		{
 
 			showTooltip = true,
@@ -928,7 +929,6 @@ function E:func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-nightfall-daily",
 			name_save = "tww-nightfall-daily",
@@ -944,6 +944,43 @@ function E:func_Universal_11_TheWarWithin()
 			},
 			forcedMaxQuest = 3,
 		},
+		----------------------------------------------------------------
+		{
+			showTooltip = true,
+			textleft = "tww-karesh-warrants",
+			name_save = "tww-karesh-warrants",
+			reset = "Weekly",
+			desc = "TheWarWithin",
+			quests = {
+				{90122}, -- Eliminate Xy'vox the Twisted
+				{90123}, -- Eliminate Hollowbane
+				{90124}, -- Eliminate Shatterpulse
+				{90125}, -- Eliminate Purple Peat
+				{90126}, -- Eliminate Grubber
+				{90127}, -- Eliminate Arcana-Monger So'zer
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			showTooltip = true,
+			textleft = "tww-weekly-cache_S3",
+			name_save = "tww-weekly-cache_S3",
+			reset = "Weekly",
+			desc = "TheWarWithin", -- STORYLINE
+			quests = {
+				{91175},
+				{91176},
+				{91177},
+				{91178},
+			},
+			forcedMaxQuest = 4,
+		},
+
+
+
+
+
+
 	}
 	return OctoTable_Universal
 end

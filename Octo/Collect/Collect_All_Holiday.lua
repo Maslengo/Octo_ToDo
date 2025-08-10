@@ -146,14 +146,6 @@ function E.Collect_All_Holiday()
 
 				local duration = endDate - startDate
 
-				-- local date = C_DateAndTime.GetCurrentCalendarTime()
-
-
-				-- print (C_DateAndTime.GetServerTimeLocal() == curTime)
-				-- print (E:func_SecondsToClock(C_DateAndTime.GetServerTimeLocal()-curTime), C_DateAndTime.GetServerTimeLocal(), curTime)
-
-				-- local curTime = C_DateAndTime.GetServerTimeLocal()
-
 				holiday.event_duration = E.func_FriendsFrame_GetLastOnline(duration, true)
 				holiday.startTime = E:func_fixdate(startTime.monthDay).."/"..E:func_fixdate(startTime.month)
 				holiday.endTime = E:func_fixdate(endTime.monthDay).."/"..E:func_fixdate(endTime.month)

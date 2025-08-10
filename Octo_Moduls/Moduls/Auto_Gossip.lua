@@ -51,6 +51,7 @@ local gossipOptionIDsIGNORE = {
 	[50310] = true,
 	[48127] = true, -- BfA EXIT FROM Hram Setralis
 	[40457] = true, -- yarmarka
+	[46761] = true, -- ODIN LEGION
 }
 
 local ignoreICONS = {
