@@ -7,5 +7,4 @@ function E.Collect_All_MoneyOnLogin()
 
 	local Money = GetMoney()
 	collectPlayerData.MoneyOnLogin = Money
-
 end

@@ -51,9 +51,11 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 			break -- Пропускаем записи без квестов
 		end
 		for _, questData in ipairs(data.quests) do
-			tblQuests[questData[1]] = true
-			if questData.forcedText and questData.forcedText.npcID then
-				local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
+			if questData[1] then
+				tblQuests[questData[1]] = true
+				if questData.forcedText and questData.forcedText.npcID then
+					local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
+				end
 			end
 		end
 	end
@@ -377,7 +379,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		GarrisonFollowersCount = {},
 		GreatVault = {}, -- Данные Великого Хранилища
 		HasGarrison = {},
-		ItemsALL = {
+		ItemsALL = { -- ПОФИКСИТЬ -> itemID = {bank = 1, bag = 2}
 			Bags = {},
 			Bank = {},
 			Void = {},
@@ -466,6 +468,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		-- Устанавливаем временные метки
 		PlayerData.time = PlayerData.time or PlayerData.tmstp_Daily or ServerTime
 		PlayerData.MoneyOnLogin = PlayerData.MoneyOnLogin or PlayerData.Money
+		PlayerData.MoneyOnDaily = PlayerData.MoneyOnDaily or PlayerData.Money
+		PlayerData.MoneyOnWeekly = PlayerData.MoneyOnWeekly or PlayerData.Money
 		-- Заполняем GARRISON значениями по умолчанию
 		for k, v in next, (GARRISON_DEFAULTS) do
 			if MASLENGO.GARRISON[k] == nil then
@@ -498,6 +502,10 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugFunction = false, -- Отладка функций
 		DebugIDs = false, -- Отладка ID
 		DebugInfo = false, -- Отладка информации
+		DebugGossip = false, -- Отладка информации
+		DebugCache = false, -- Отладка информации
+
+
 		editorFontSize = 12,
 		editorTabSpaces = 4,
 		editorTheme = "Twilight",
@@ -557,9 +565,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Currency = true, -- Валюта
 		CVar = true, -- CVar настройки
 		Dungeons = true, -- Подземелья
-		Config_FontFlags = "OUTLINE",
-		Config_FontSize = 11,
-		Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r",
 		Config_Texture = "Blizzard Raid Bar",
 
 
@@ -593,9 +598,25 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	for k, v in next, (featureDefaults) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
 	end
+	-- Octo_ToDo_DB_Vars.font = Octo_ToDo_DB_Vars.font or {}
+	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang] = Octo_ToDo_DB_Vars.font[E.curLocaleLang] or {}
+	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
+	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontSize = 11
+	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontFlags = "OUTLINE"
+
+
+
+
 	-- Инициализируем таблицы настроек
-	E.func_InitField(Octo_ToDo_DB_Vars, "AchievementToShow", {[92] = true})
 	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
+
+	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = 11
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = "OUTLINE"
+
+
 	-- Настройки фрейма скорости
 	E.func_InitSubTable(Octo_ToDo_DB_Vars, "SpeedFrame")
 	local speedFrameDefaults = {
@@ -644,6 +665,9 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllReputations")
 	E.func_InitSubTable(Octo_Cache_DB, "AllSpells")
 	E.func_InitSubTable(Octo_Cache_DB, "AllFollowers")
+	E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
+	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
+
 
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 
@@ -779,6 +803,8 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				-- Устанавливаем новую временную метку вне зависимости от региона
 				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 				CharInfo.PlayerData.needResetDaily = true
+
+
 				-- Сбрасываем ежедневные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Daily" then
@@ -792,6 +818,9 @@ function Octo_EventFrame_WTF:Daily_Reset()
 					CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
 					CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
 				end
+
+				-- Сбрасываем деньги
+				PlayerData.MoneyOnDaily = PlayerData.Money
 			end
 		end
 	end
@@ -831,6 +860,9 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
+
+				-- Сбрасываем деньги
+				PlayerData.MoneyOnWeekly = PlayerData.Money
 			end
 		end
 	end
@@ -873,6 +905,8 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
+
+
 	end
 end
 
@@ -908,18 +942,7 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 	self:Weekly_Reset()
 	self:Month_Reset()
 
-	-- local fontFile, height, flags = E.OctoFont11:GetFont() -- "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
-	-- if Octo_ToDo_DB_Vars.Config_FontStyle and Octo_ToDo_DB_Vars.Config_FontStyle ~= "" then
-	-- fontFile = Octo_ToDo_DB_Vars.Config_FontStyle
-	-- end
-	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
-	-- E.OctoFont11:SetFont(Octo_ToDo_DB_Vars.Config_FontStyle, Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
-	-- E.OctoFont11:SetFont(fontFile, Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
-
-	-- E.LINES_MAX =  Octo_ToDo_DB_Vars.Config_MainFrameDefaultLines
-	-- E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.AddonHeight
-	-- E.GLOBAL_LINE_WIDTH_LEFT = Octo_ToDo_DB_Vars.AddonLeftFrameWeight
-	-- E.GLOBAL_LINE_WIDTH_RIGHT = Octo_ToDo_DB_Vars.AddonCentralFrameWeight
+	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 end
 
 

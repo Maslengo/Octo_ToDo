@@ -25,6 +25,11 @@ function Octo_EventFrame_Vignettes:OnVignetteEvent()
 	for i, instanceid in ipairs(vignetteids) do
 		local vignetteInfo = C_VignetteInfo.GetVignetteInfo(instanceid)
 		if vignetteInfo and vignetteInfo.vignetteGUID and not log[vignetteInfo.vignetteGUID] then
+			if vignetteInfo.atlasName and vignetteInfo.name and Octo_Cache_DB and Octo_Cache_DB.AllVignettes and E.curLocaleLang then
+				Octo_Cache_DB.AllVignettes[vignetteInfo.atlasName] = Octo_Cache_DB.AllVignettes[vignetteInfo.atlasName] or {}
+				Octo_Cache_DB.AllVignettes[vignetteInfo.atlasName][E.curLocaleLang] = Octo_Cache_DB.AllVignettes[vignetteInfo.atlasName][E.curLocaleLang] or {}
+				Octo_Cache_DB.AllVignettes[vignetteInfo.atlasName][E.curLocaleLang][vignetteInfo.name] = true
+			end
 			local mapID, _, x, y = VignettePosition(vignetteInfo.vignetteGUID)
 			log[vignetteInfo.vignetteGUID] = {
 				id = vignetteInfo.vignetteID,

@@ -100,7 +100,7 @@ local func_OnAcquired do
 			------------------------------------------------
 			-- second
 			local second = CreateFrame("FRAME", nil, frame)
-			local second_width = LINE_WIDTH_RIGHT
+			local second_width = LINE_WIDTH_RIGHT*2
 			local second_height = LINE_HEIGHT
 			second:SetSize(second_width, second_height)
 			second:SetPoint("TOPLEFT", first, "TOPRIGHT")
@@ -268,20 +268,27 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	end
 
 	if frameData.id then
-		frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
+		if frameData.atlas then
+			frame.second.text:SetText(frameData.atlas..E.Gray_Color.." id: "..frameData.id.."|r")
+		else -- QUEST
+			frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
+		end
 	else
 		frame.second.text:SetText("qwe")
 	end
+
+
+
 	if frameData.mapID then
 		frame.fourth.text:SetText(E.Gray_Color.."id: "..frameData.mapID.. "|r")
 	else
-		frame.second.text:SetText("qwe")
+		frame.fourth.text:SetText("qwe")
 	end
 	----------------------------------------------------------------
 	if frameData.curLocation and frameData.curLocation ~= "" then
 		frame.fifth.text:SetText(frameData.curLocation)
 	elseif frameData.mapID then
-		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
+		frame.fifth.text:SetText(E.func_mapName(frameData.mapID))
 	else
 		frame.fifth.text:SetText("qwe")
 	end

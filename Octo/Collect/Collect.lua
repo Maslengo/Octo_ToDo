@@ -98,7 +98,6 @@ function Octo_EventFrame_Collect:PLAYER_LOGIN()
 	-- Предметы и валюта
 	E.Collect_All_ItemsInBag() -- предметы в сумках
 	-- E.Collect_All_Currency() -- валюта
-	E.Collect_All_MoneyOnLogin() -- деньги при входе
 	E.Collect_All_MoneyUpdate() -- обновление денег
 	E.Collect_All_Mail() -- почта
 	-- Локации и активность

@@ -487,6 +487,36 @@ function E.func_Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			DebugGossip = {
+				type = "toggle",
+				name = "DebugGossip",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.DebugGossip
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugGossip = value
+					E.DebugGossip = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			DebugCache = {
+				type = "toggle",
+				name = "DebugCache",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.DebugCache
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugCache = value
+					E.DebugCache = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			Header999 = {
 				type = "header",
 				name = "",

@@ -1,5 +1,8 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
-..\FrameXML\UI.xsd">
+<Ui>
+
+
+
+	<Script file="5 TEST.lua"/>
 
 	<Script file="1 QuestsChanged addons.lua"/>
 	<Script file="2 QuestsChanged log.lua"/>

@@ -11,15 +11,15 @@ function E.func_Universal_05_MistsofPandaria()
 			reset = "Weekly",
 			desc = "MistsofPandaria",
 			quests = {
-				{33118, forcedText = {npcID = 72057},}, -- Ordos <Fire-God of the Yaungol>
-				{33117, forcedText = {achievementID = 7333},}, -- Celestrials
-				{32519, forcedText = {npcID = 69161},}, -- "Oondasta"
+				{33118, forcedText = {npcID = 72057},  addText = {mapID = 554},   }, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
+				{33117, forcedText = {achievementID = 7333},  addText = {mapID = 554},   }, -- Celestrials (Вневременный остров)
+				{32519, forcedText = {npcID = 69161},  addText = {mapID = 507},   }, -- "Oondasta" (Остров Великанов
 
 				-- {33109}, -- Nalak HIDDEN
-				{32518, forcedText = {npcID = 69099},}, -- "Nalak, The Storm Lord"
+				{32518, forcedText = {npcID = 69099},  addText = {mapID = 504},   }, -- "Nalak, The Storm Lord" (Остров Грома)
 
-				{32098, forcedText = {npcID = 62346},}, -- "Salyis's Warband"
-				{32099, forcedText = {npcID = 60491},}, -- "Sha of Anger"
+				{32098, forcedText = {npcID = 62346},  addText = {mapID = 376},   }, -- "Salyis's Warband" (Долина Четырех Ветров)
+				{32099, forcedText = {npcID = 60491},  addText = {mapID = 379},   }, -- "Sha of Anger" (Вершина Кунь-Лай)
 			},
 			-- forcedMaxQuest = 6,
 		},

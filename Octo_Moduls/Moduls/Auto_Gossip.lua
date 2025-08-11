@@ -23,6 +23,14 @@ local ignoreNPCID = {
 
 	[77789] = true, -- 5000
 	[153897] = true, -- 7000
+	[177927] = true, -- Кортия главный(воспроизводит долгий диалог)
+	[167745] = true, -- KYRIAN (ANIMA)
+	[168427] = true, -- KYRIAN (ENTER ARENA)
+	[175573] = true, -- KYRIAN (EXIT ARENA)
+	[171816] = true, -- KYRIAN (SHMOT ARENA)
+
+
+
 }
 -- IGNORE 120914
 local gossipOptionIDs = {
@@ -44,6 +52,10 @@ local gossipOptionIDs = {
 	[49920] = true,
 	[49826] = true,
 	[49081] = true, -- (BFA auto skip Horde) wowhead.com/ru/quest=50769
+	[53062] = true,
+	[54044] = true, -- pokopok
+	[53607] = true,
+	[53524] = true, -- Korthia research
 }
 
 
@@ -52,6 +64,7 @@ local gossipOptionIDsIGNORE = {
 	[48127] = true, -- BfA EXIT FROM Hram Setralis
 	[40457] = true, -- yarmarka
 	[46761] = true, -- ODIN LEGION
+	[53878] = true, -- ZM movie
 }
 
 local ignoreICONS = {
@@ -65,7 +78,7 @@ local function HELP_TEXT(i, icon, name)
 	return E.func_Gradient(GlobalAddonName)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
+function Octo_EventFrame_Config_Auto_Gossip:func_Config_Auto_Gossip()
 	local guid = UnitGUID("TARGET")
 	-- if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
 	if guid then
@@ -81,8 +94,10 @@ function Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
 		local name = option.name
 		local icon = option.icon
 		local flags = option.flags
-		-- print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon),name)
 
+		if Octo_ToDo_DB_Vars.DebugGossip then
+			print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
+		end
 
 
 
@@ -130,7 +145,7 @@ function Octo_EventFrame_Config_Auto_Gossip:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
 	if not Octo_ToDo_DB_Vars.Config_Auto_Gossip then return end
 	C_Timer.After(.1, function()
-			Octo_EventFrame_Config_Auto_Gossip:Config_Auto_Gossip()
+			Octo_EventFrame_Config_Auto_Gossip:func_Config_Auto_Gossip()
 	end)
 end
 ----------------------------------------------------------------

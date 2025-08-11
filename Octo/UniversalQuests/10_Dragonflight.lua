@@ -4,35 +4,28 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 function E.func_Universal_10_Dragonflight()
 	local OctoTable_Universal = {
 		{
+			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
 			desc = "Dragonflight",
 			quests = {
-				{69927},
-				{69928},
-				{69929},
-				{69930},
-				{74892},
-				{76367},
+				{69927, forcedText = {npcID = 193532}, addText = {mapID = 2024},}, -- Базуал <Чудовищное Пламя> 193532 (Лазурный Простор)
+				{69928, forcedText = {npcID = 193533}, addText = {mapID = 2025},}, -- Лисканот <Крах Мироздания> 193533 (Будущее воинов стихий)
+				{69929, forcedText = {npcID = 193534}, addText = {mapID = 2023},}, -- Струнраан <Бедствие Небес> 193534 (Равнины Он'ары)
+				{69930, forcedText = {npcID = 193535}, addText = {mapID = 2022},}, -- Базрикрон <Каменное Крыло> 193535 (Берега Пробуждения)
+				{nil},
+				{74892, addText = {mapID = 2133},}, -- Старейшины закали (Пещера Заралек)
+				{nil},
+				{76367, forcedText = {npcID = 209574}, addText = {mapID = 2200},}, -- Ауростор <Пережидающий Зиму> 209574 Изумрудный Сон  (6).
 			},
 			forcedMaxQuest = 3,
 		},
+
 		{
 			showTooltip = true,
-			textleft = E.func_questName(47148),
-			name_save = "SomethingDifferent",
-			reset = "Weekly",
-			desc = "Dragonflight",
-			quests = {
-				{47148},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			textleft = "ZaralekCavernEvents",
+			textleft = E.func_mapName(2133)..": ".."Events",
 			name_save = "ZaralekCavernEvents",
 			reset = "Daily",
 			desc = "Dragonflight",
@@ -56,11 +49,11 @@ function E.func_Universal_10_Dragonflight()
 				{75624},
 				{74352},
 			},
-			forcedMaxQuest = 18,
+			-- forcedMaxQuest = 18,
 		},
 		{
 			showTooltip = true,
-			textleft = "ZaralekCavernRares",
+			textleft = E.func_mapName(2133)..": ".."Rares",
 			name_save = "ZaralekCavernRares",
 			reset = "Daily",
 			desc = "Dragonflight",
@@ -91,22 +84,22 @@ function E.func_Universal_10_Dragonflight()
 				{75349},
 				{75364},
 			},
-			forcedMaxQuest = 25,
+			-- forcedMaxQuest = 25,
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_questName(75665),
+			textleft = E.func_mapName(2133)..": "..E.func_questName(75665),
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 			reset = "Weekly",
 			desc = "Dragonflight",
 			quests = {
 				{75665},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
-			textleft = L["Sniffenseeking"],
+			textleft = E.func_mapName(2133)..": "..L["Sniffenseeking"],
 			name_save = "ZaralekCavernSniffenseeking",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -129,11 +122,11 @@ function E.func_Universal_10_Dragonflight()
 				{76015},
 				{76084},
 			},
-			forcedMaxQuest = 17,
+			-- forcedMaxQuest = 17,
 		},
 		{
 			showTooltip = true,
-			textleft = L["Sniffenseeking (items)"],
+			textleft = E.func_mapName(2133)..": "..L["Sniffenseeking (items)"],
 			name_save = "ZaralekCavernSniffenseekingItems",
 			reset = "Weekly",
 			desc = "Dragonflight",
@@ -151,11 +144,30 @@ function E.func_Universal_10_Dragonflight()
 				{75773},
 				{76004},
 			},
-			forcedMaxQuest = 12,
+			-- forcedMaxQuest = 12,
 		},
+
+
 		{
 			showTooltip = true,
-			textleft = "TheForbiddenReachRares",
+			textleft = E.func_mapName(2133)..": "..E.func_questName(74906).." "..E.Timers.DF_ResearchersUnderFire(),
+			name_save = "ResearchersUnderFire",
+			reset = "Weekly",
+			desc = "Dragonflight",
+			quests = {
+				{75630, forcedText = {text = MAW_BUFF_QUALITY_STRING_EPIC}},
+				{75629, forcedText = {text = MAW_BUFF_QUALITY_STRING_RARE}},
+				{75628, forcedText = {text = MAW_BUFF_QUALITY_STRING_UNCOMMON}},
+				{75627, forcedText = {text = MAW_BUFF_QUALITY_STRING_COMMON}},
+			},
+			-- forcedMaxQuest = 4,
+		},
+
+
+
+		{
+			showTooltip = true,
+			textleft = E.func_mapName(2151)..": ".."Rares", -- Запретный край.
 			name_save = "TheForbiddenReachRares",
 			reset = "Daily",
 			desc = "Dragonflight",
@@ -186,7 +198,7 @@ function E.func_Universal_10_Dragonflight()
 				{74330},
 				{74328},
 			},
-			forcedMaxQuest = 25,
+			-- forcedMaxQuest = 25,
 		},
 		{
 			showTooltip = true,
@@ -197,7 +209,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{70893},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -208,7 +220,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{70866},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -219,7 +231,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{70906},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -230,7 +242,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{73162},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -241,7 +253,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{66133},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -252,21 +264,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{74567},
 			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			textleft = E.Timers.DF_ResearchersUnderFire()..E.func_questName(74906),
-			name_save = "ResearchersUnderFire",
-			reset = "Weekly",
-			desc = "Dragonflight",
-			quests = {
-				{75630},
-				{75629},
-				{75628},
-				{75627},
-			},
-			forcedMaxQuest = 4,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -289,7 +287,7 @@ function E.func_Universal_10_Dragonflight()
 			quests = {
 				{75467},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
@@ -319,57 +317,8 @@ function E.func_Universal_10_Dragonflight()
 		},
 		{
 			showTooltip = true,
-			textleft = "FightingisItsOwnReward",
-			name_save = "FightingisItsOwnReward",
-			reset = "Weekly",
-			desc = "Dragonflight",
-			quests = {
-				{76122},
-			},
-			forcedMaxQuest = 1,
-		},
-		-- {
-		-- showTooltip = true,
-		-- textleft = E.func_spellName(393294),
-		--     name_save = "CatchingUp",
-		--     reset = "Once",
-		--     desc = "Dragonflight",
-		--     quests = {
-		--         67100,
-		--         67137,
-		--         67295,
-		--         67564,
-		--         69946,
-		--         69979,
-		--     },
-		--     forcedMaxQuest = 6,
-		-- },
-		-- {
-		-- showTooltip = true,
-		-- textleft = E.func_questName(75694),
-		--     name_save = "AberrustheShadowedCrucibleSarkareth",
-		--     reset = "Once",
-		--     desc = "Dragonflight",
-		--     quests = {
-		--         75694,
-		--     },
-		--     forcedMaxQuest = 1,
-		-- },
-		-- {
-		-- showTooltip = true,
-		-- textleft = E.func_questName(66847),
-		--     name_save = "VaultoftheIncarnatesFuryoftheStormEater",
-		--     reset = "Once",
-		--     desc = "Dragonflight",
-		--     quests = {
-		--         66847,
-		--     },
-		--     forcedMaxQuest = 1,
-		-- },
-		{
-			showTooltip = true,
-			textleft = E.Timers.DF_TimeRift().."TimeRift",
-			name_save = "TimeRift",
+			textleft = E.func_mapName(2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift(),
+			name_save = L["Time Rift"],
 			reset = "Weekly",
 			desc = "Dragonflight",
 			quests = {

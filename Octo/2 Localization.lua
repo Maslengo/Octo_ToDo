@@ -2,22 +2,33 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Stolen Anima Vessel"] = true
+	L["Riftbound Cache"] = true
+	L["Spectral Bound Chest"] = true -- 369200
+	L["The Hunt"] = true
+	L["Hunt: Shadehounds"] = true
+	L["Hunt: Winged Soul Eaters"] = true
+	L["Hunt: Death Elementals"] = true
+	L["Hunt: Soul Eaters"] = true
+	L["Covenant Assault"] = true
+	L["Troubles at Home"] = true
+	L["Replenish the Reservoir"] = true
+	L["Event: Tormentors of Torghast"] = true
+	L["Prying Eye Discovery"] = true
+	L["Undulating Foliage"] = true
+	L["Time Rift"] = true
+
 	L["Min. Level"] = true
 	L["Max. Level"] = true
 	L["Clamped To Screen"] = true
 	L["Alpha On Drag"] = true
 	L["Wrath of the Jailer"] = true
-	L["Tormentors of Torghast"] = true
-
-
 	L["Removing duplicate: "] = true
 	L["Keeping current: "] = true
-
 	L["Line"] = true
 	L["Right Click:"] = true
 	L["Left Click:"] = true
 	L["Middle Click:"] = true
-
 	L["Auto Sell Grey"] = true
 	L["Auto Repair"] = true
 	L["Auto Input Delete"] = true
@@ -28,7 +39,6 @@ if L then
 	L["Auto Screenshot"] = true
 	L["Auto Cinematic Canceler"] = true
 	L["Tab Size"] = true
-
 	-- UI elements
 	L["Hide: CheckListText"] = true
 	L["Hide: SubscriptionInterstitialFrame"] = true
@@ -58,9 +68,6 @@ if L then
 	L["Hide: ErrorMessages"] = true
 	L["Hide: TalkingHeadFrame"] = true
 	L["Hide: EventToastManagerFrame"] = true
-
-
-
 	L["Only Horde"] = true
 	L["Only Alliance"] = true
 	L["Other"] = true
@@ -242,38 +249,46 @@ if L then
 	L["Only Current Realm"] = true
 	L["Daily quests"] = true
 	L["Anima Vessel"] = true
-	L["Stolen Anima Vessel"] = true
 	L["Nests"] = true
 	L["Mushrooms"] = true
 	L["Mawsworn Caches"] = true
 	L["Relic Gorgers"] = true
 	L["Purple Mobs"] = true
 	L["Bones/Stones/Relics"] = true
-	L["Spectral Bound Chest"] = true
 	L["Helsworn Chest"] = true
-	L["Riftbound Caches"] = true
 	L["Zovaal's Vault"] = true
 	L["Delver's Call"] = true
 end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Stolen Anima Vessel"] = "Сосуд с украденной анимой"
+	L["Riftbound Cache"] = "Тайник Разлома"
+	L["Spectral Bound Chest"] = "Сундук с призрачным замком"
+	L["The Hunt"] = "Охота"
+	L["Hunt: Shadehounds"] = "Охота: темные гончие"
+	L["Hunt: Winged Soul Eaters"] = "Охота: крылатые пожиратели душ"
+	L["Hunt: Death Elementals"] = "Охота: элементаль смерти"
+	L["Hunt: Soul Eaters"] = "Охота: пожиратели душ"
+	L["Covenant Assault"] = "Атака ковенанта"
+	L["Troubles at Home"] = "Беды на родине"
+	L["Replenish the Reservoir"] = "Наполнение резервуара"
+	L["Event: Tormentors of Torghast"] = "Событие: мучители из Торгаста"
+	L["Prying Eye Discovery"] = "Находка любопытных"
+	L["Undulating Foliage"] = "Колыхающаяся листва"
+	L["Time Rift"] = "Временной разлом"
+
 	L["Min. Level"] = "Мин. уровень"
 	L["Max. Level"] = "Макс. уровень"
 	L["Clamped To Screen"] = "Закреплён на экране"
 	L["Alpha On Drag"] = "Альфа при перетаскивании"
 	L["Wrath of the Jailer"] = "Гнев Тюремщика"
-	L["Tormentors of Torghast"] = "Истязатели из Торгаста"
-
-
 	L["Removing duplicate: "] = "Удаляем дубликат: "
 	L["Keeping current: "] = "Оставляем текущего: "
-
 	L["Line"] = "Строка"
 	L["Right Click:"] = "ПКМ:"
 	L["Left Click:"] = "ЛКМ:"
 	L["Middle Click:"] = "СКМ:"
-
 	L["Auto Sell Grey"] = "Автопродажа серого хлама"
 	L["Auto Repair"] = "Автопочинка"
 	L["Auto Input Delete"] = "Автозаполнение 'УДАЛИТЬ'"
@@ -283,7 +298,6 @@ if L then
 	L["Auto Clear Chat"] = "Чистка чата при заходе в игру"
 	L["Auto Screenshot"] = "Автоскриншот"
 	L["Auto Cinematic Canceler"] = "Автопропуск видео"
-
 	-- UI elements
 	L["Hide: CheckListText"] = HIDE..": CheckListText"
 	L["Hide: SubscriptionInterstitialFrame"] = HIDE..": SubscriptionInterstitialFrame"
@@ -313,12 +327,6 @@ if L then
 	L["Hide: ErrorMessages"] = HIDE..": ErrorMessages"
 	L["Hide: TalkingHeadFrame"] = HIDE..": TalkingHeadFrame"
 	L["Hide: EventToastManagerFrame"] = HIDE..": EventToastManagerFrame"
-
-
-
-
-
-
 	L["Only Horde"] = "Только Орда"
 	L["Only Alliance"] = "Только Альянс"
 	L["Other"] = "Другое"
@@ -500,16 +508,13 @@ if L then
 	L["Only Current Realm"] = "Только текущий сервер"
 	L["Daily quests"] = "Ежедневные задания"
 	L["Anima Vessel"] = "Сосуд с анимой"
-	L["Stolen Anima Vessel"] = "Сосуд с украденной анимой"
 	L["Nests"] = "Гнёзда"
 	L["Mushrooms"] = "Грибы"
 	L["Mawsworn Caches"] = "Тайники Верных Утробе"
 	L["Relic Gorgers"] = "Поглотители реликвий"
 	L["Purple Mobs"] = "Фиолетовые мобы"
 	L["Bones/Stones/Relics"] = "Кости/Камни/Реликвии"
-	L["Spectral Bound Chest"] = "Сундук с призрачным замком"
 	L["Helsworn Chest"] = "Сундук Верных Хелии"
-	L["Riftbound Caches"] = "Тайник Разлома"
 	L["Zovaal's Vault"] = "Хранилище Зоваала"
 	L["Delver's Call"] = "Вызов в вылазку"
 	L["Tab Size"] = "Размер табуляции"

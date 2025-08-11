@@ -91,9 +91,7 @@ function E.func_BuildQuestLog()
 	end
 	local function Line_OnClick(self, button, down)
 		local quest = self.data
-		if button == "RightButton" then
-			E.func_RemoveQuest(quest)
-		elseif IsShiftKeyDown() then
+		 if IsShiftKeyDown() then
 			StaticPopup_Show("QuestsChanged_CopyBox", nil, nil, ("[%d] = {quest=%d},"):format(
 					E.func_GetCoord(quest.x, quest.y),
 					quest.id or "nil"

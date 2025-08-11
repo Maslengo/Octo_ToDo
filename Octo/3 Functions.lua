@@ -108,7 +108,7 @@ local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.
 
 local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
 -- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
-
+local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
 
 
 local classR, classG, classB = GetClassColor(E.classFilename)
@@ -183,10 +183,10 @@ end
 
 
 local function GetOrCreateCache(category, id)
-    Octo_Cache_DB = Octo_Cache_DB or {}
-    Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
-    Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
-    return Octo_Cache_DB[category]
+	Octo_Cache_DB = Octo_Cache_DB or {}
+	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
+	Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
+	return Octo_Cache_DB[category]
 end
 
 local function func_itemName_CACHE(id)
@@ -198,7 +198,9 @@ local function func_itemName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		-- print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
@@ -236,7 +238,9 @@ local function func_currencyName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"..WarbandIcon
-		-- print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
@@ -269,7 +273,9 @@ local function func_npcName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		-- print (E.Lime_Color.."NPC".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color.."NPC".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
@@ -288,7 +294,9 @@ local function func_questName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		-- print (E.Lime_Color..QUESTS_LABEL.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..QUESTS_LABEL.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
@@ -320,7 +328,9 @@ local function func_reputationName_CACHE(id)
 		end
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		-- print (E.Lime_Color..REPUTATION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..REPUTATION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
@@ -350,7 +360,9 @@ local function func_spellName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		-- print (E.Lime_Color..SPELLS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..SPELLS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
@@ -374,7 +386,9 @@ local function func_followerName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		-- print (E.Lime_Color..COMPANIONS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..COMPANIONS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
 	end
 
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
@@ -387,12 +401,142 @@ function E.func_followerName(id)
 end
 
 
+local function func_achievementName_CACHE(id)
+	-- /run fpde(Octo_Cache_DB.AllAchievements)
+	local Cache = GetOrCreateCache("AllAchievements", id)
+
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		return Cache[id][E.curLocaleLang]
+	end
+
+	local name = select(2, GetAchievementInfo(id))
+	if name and name ~= "" then
+		Cache[id] = Cache[id] or {}
+		Cache[id][E.curLocaleLang] = name
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
+	end
+
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	return vivod
+end
+function E.func_achievementName(id)
+	if not id then return end
+	local cachedName = func_achievementName_CACHE(id)
+	return cachedName..E.debugInfo(id)
+end
+
+
+local function func_mountName_CACHE(id)
+	-- /run fpde(Octo_Cache_DB.AllAchievements)
+	local Cache = GetOrCreateCache("AllMounts", id)
+
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		return Cache[id][E.curLocaleLang]
+	end
+
+	local name = GetMountInfoByID(id)
+	if name and name ~= "" then
+		Cache[id] = Cache[id] or {}
+		Cache[id][E.curLocaleLang] = name
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color..MOUNTS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
+	end
+
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	return vivod
+end
+function E.func_mountName(id)
+	if not id then return end
+	local cachedName = func_mountName_CACHE(id)
+	return cachedName..E.debugInfo(id)
+end
+function E.func_mountIcon(id)
+	if not id then return end
+	return select(3, GetMountInfoByID(id))
+end
+function E.func_mountIsCollected(id)
+	if not id then return end
+	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
+	return isCollected and E.Green_Color or E.Red_Color
+end
 
 
 
 
 
 
+
+local function func_mapName_CACHE(id)
+	-- /run fpde(Octo_Cache_DB.AllAchievements)
+	local Cache = GetOrCreateCache("AllMaps", id)
+
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		return Cache[id][E.curLocaleLang]
+	end
+	local name = GetMapInfo(id).name
+	if name and name ~= "" then
+		Cache[id] = Cache[id] or {}
+		Cache[id][E.curLocaleLang] = name
+		if Octo_ToDo_DB_Vars.DebugCache then
+			print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+		end
+	end
+
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	return vivod
+end
+function E.func_mapName(id)
+	if not id then return end
+	local cachedName = func_mapName_CACHE(id)
+	return cachedName..E.debugInfo(id)
+end
+function E.func_GetMapNameFromID(id)
+	if not id then
+		return UNKNOWN
+	end
+	local info = GetMapInfo(id)
+	if not info then
+		return UNKNOWN
+	end
+	local groupID = GetMapGroupID(id)
+	if groupID then
+		local groupdata = GetMapGroupMembersInfo(groupID)
+		for _, subzonedata in ipairs(groupdata) do
+			if subzonedata.mapID == id then
+				return info.name, " ("..subzonedata.name..")"
+			end
+		end
+	end
+	return info.name, ""
+end
+
+
+
+
+
+
+
+
+
+function E.func_vignetteIcon(atlasName)
+	if not atlasName then return end
+	-- ["atlas"] = "VignetteLoot",
+	-- ["atlas"] = "VignetteKill",
+	-- ["atlas"] = "VignetteEventElite",
+	-- ["atlas"] = "TeleportationNetwork-32x32",
+	-- ["atlas"] = "VignetteEvent",
+	-- ["atlas"] = "VignetteKillElite",
+	-- ["atlas"] = "poi-scrapper",
+	-- ["atlas"] = "Object",
+	-- ["atlas"] = "VignetteLootElite",
+	-- ["atlas"] = "mechagon-projects",
+	-- ["atlas"] = "poi-soulspiritghost",
+	-- ["atlas"] = "Warfront-NeutralHero",
+	return CreateAtlasMarkup(atlasName, 16, 16)
+end
 
 function E.func_IsAccountQuest(questID)
 	return IsAccountQuest(questID)
@@ -702,32 +846,6 @@ function E.func_CurServerShort(text)
 	return utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 end
 E.curServerShort = E.func_CurServerShort(GetRealmName())
-function E.func_GetMapName(id)
-	if not id then return end
-	local info = GetMapInfo(id)
-	if info and info.name then
-		return info.name..E.debugInfo(id)
-	end
-end
-function E.func_GetMapNameFromID(id)
-	if not id then
-		return UNKNOWN
-	end
-	local info = GetMapInfo(id)
-	if not info then
-		return UNKNOWN
-	end
-	local groupID = GetMapGroupID(id)
-	if groupID then
-		local groupdata = GetMapGroupMembersInfo(groupID)
-		for _, subzonedata in ipairs(groupdata) do
-			if subzonedata.mapID == id then
-				return info.name, " ("..subzonedata.name..")"
-			end
-		end
-	end
-	return info.name, ""
-end
 function E.func_GetCoord(x, y)
 	return floor(x * 10000 + 0.5) * 10000 + floor(y * 10000 + 0.5)
 end
@@ -1259,15 +1377,6 @@ local function func_OnceDailyWeeklyMonth_Format(text)
 	end
 	return result
 end
-function E.func_achievementName(id)
-	if not id then return end
-	local name = select(2, GetAchievementInfo(id))
-	if name then
-		return name..E.debugInfo(id)
-	else
-		return E.Red_Color..UNKNOWN.."|r"
-	end
-end
 function E.func_FactionIconID(faction)
 	if faction == "Horde" then
 		return 2565244
@@ -1658,6 +1767,7 @@ function E.func_GetCurrentRegionName()
 	end
 	return GetCurrentRegionName()
 end
+
 function E.func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
 	local tooltipCENT = {}
 	local sorted_itemList = {}
@@ -1769,6 +1879,7 @@ E.backgroundColorR = .08
 E.backgroundColorG = .08
 E.backgroundColorB = .08
 E.backgroundColorA = .8
+
 E.edgeSize = 1
 E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
@@ -1940,6 +2051,7 @@ E.NightFae_b_Color = 0.76
 E.Venthyr_r_Color = 0.88
 E.Venthyr_g_Color = 0.40
 E.Venthyr_b_Color = 0.40
+E.RIFT = E.Purple_Color.." (RIFT)|r"
 E.DONE = E.Green_Color..DONE.."|r"
 E.NONE = E.Gray_Color..NONE.."|r"
 E.TRUE = E.Green_Color.."true|r"
@@ -2101,15 +2213,24 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		end
 		----------------------------------------------------------------
 	elseif tooltipKey == "Other_Money" then
-		if CharInfo.PlayerData.Money then
-			if CharInfo.PlayerData.MoneyOnLogin then
-				if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
-					tooltipCENT[#tooltipCENT+1] = {"lost: ", E.Red_Color..E.func_MoneyString((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)).."|r "..E.func_texturefromIcon(E.Icon_Money)}
-				elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
-					tooltipCENT[#tooltipCENT+1] = {"received: ", E.Green_Color..E.func_MoneyString((CharInfo.PlayerData.Money - CharInfo.PlayerData.MoneyOnLogin)).."|r "..E.func_texturefromIcon(E.Icon_Money)}
+				if CharInfo.PlayerData.Money then
+					local function addMoneyDiff(label, oldValue)
+						if not oldValue then return end
+						local diff = CharInfo.PlayerData.Money - oldValue
+						if diff == 0 then return end
+
+						local sign = diff > 0 and "+" or "-"
+						local color = diff > 0 and E.Green_Color or E.Red_Color
+						local result = sign .. E.func_MoneyString(math.abs(diff))
+
+						tooltipCENT[#tooltipCENT + 1] = {label, color .. result .. "|r"}
+					end
+
+					addMoneyDiff("SESSION", CharInfo.PlayerData.MoneyOnLogin)
+					addMoneyDiff("DAILY", CharInfo.PlayerData.MoneyOnDaily)
+					addMoneyDiff("WEEKLY", CharInfo.PlayerData.MoneyOnWeekly)
 				end
-			end
-		end
+
 		----------------------------------------------------------------
 	elseif tooltipKey == "Other_WasOnline" then
 		local color = "|cffFFFFFF"
@@ -2280,16 +2401,68 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 					local questID = questData[1]
 					local faction = questData.faction
 					local forcedText = questData.forcedText
-					local vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
+					local forcedIcon = questData.forcedIcon
+					local addText = questData.addText
 					local vivod_LEFT = ""
-					if forcedText then
-						vivod_LEFT = forcedText.npcID and E.func_npcName(forcedText.npcID) or
-						forcedText.text or
-						forcedText.achievementID and E.func_achievementName(forcedText.achievementID) or
-						forcedText.itemID and E.func_itemName(forcedText.itemID) or ""
-					else
-						vivod_LEFT = E.func_questName(questID)
+					local vivod_RIGHT = ""
+					if questID then
+						vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
 					end
+
+					if forcedText then
+						-- Добавляем текст
+						if forcedText.text then
+							vivod_LEFT = vivod_LEFT..forcedText.text.." "
+						end
+						-- Добавляем имя NPC
+						if forcedText.npcID then
+							vivod_LEFT = vivod_LEFT..E.func_npcName(forcedText.npcID).." "
+						end
+						-- Добавляем название достижения
+						if forcedText.achievementID then
+							vivod_LEFT = vivod_LEFT..E.func_achievementName(forcedText.achievementID).." "
+						end
+						-- Добавляем название предмета
+						if forcedText.itemID then
+							vivod_LEFT = vivod_LEFT..E.func_itemName(forcedText.itemID).." "
+						end
+						if forcedText.Icon then
+							vivod_LEFT = E.func_texturefromIcon(forcedText.Icon)..vivod_LEFT
+						end
+						-- Удаляем лишний пробел в конце
+						vivod_LEFT = vivod_LEFT:match("^(.-)%s*$")
+					else
+						if questID then
+							vivod_LEFT = vivod_LEFT..E.func_questName(questID)
+						end
+					end
+
+
+					if addText then
+						-- Добавляем иконку Vignette
+						if addText.IconVignette then
+							vivod_LEFT = E.func_vignetteIcon(addText.IconVignette)..vivod_LEFT
+						end
+						if addText.Icon then
+							vivod_LEFT = E.func_texturefromIcon(addText.Icon)..vivod_LEFT
+						end
+						if addText.mount then
+							-- vivod_LEFT = vivod_LEFT ..E.Purple_Color.." + "..MOUNTS ..":|r ".. E.func_mountName(addText.mount)
+							local mountIconNumber = E.func_mountIcon(addText.mount)
+							local mountIcon = E.func_texturefromIcon(mountIconNumber)
+							local mountName = mountIcon..E.func_mountIsCollected(addText.mount)..E.func_mountName(addText.mount).."|r"
+
+
+							vivod_LEFT = vivod_LEFT .. E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, mountName).."|r"
+						end
+						if addText.notes then
+							vivod_LEFT = vivod_LEFT..addText.notes
+						end
+						if addText.mapID then
+							vivod_LEFT = vivod_LEFT ..E.Gray_Color.." (".. E.func_mapName(addText.mapID)..")|r"
+						end
+					end
+
 					if faction == CharInfo.PlayerData.Faction then
 						vivod_LEFT = E.func_texturefromIcon(E.func_FactionIconID(faction))..vivod_LEFT
 					end

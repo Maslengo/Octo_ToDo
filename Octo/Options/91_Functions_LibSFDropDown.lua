@@ -511,6 +511,21 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
+
+
+
+				info.text = RESET
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.func = function(_, _, _, checked)
+					-- wipe(Octo_Achievements_DB.AchievementToShow)
+					Octo_Achievements_DB.AchievementToShow = {[92] = true}
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+
+
+
 			end
 	end)
 

@@ -155,30 +155,6 @@ function E.func_CheckQuests()
 		end
 	end
 end
-function E.func_RemoveQuest(index)
-	if index == 0 then
-		table.wipe(self.quests_completed)
-		table.wipe(self.Octo_QuestsChanged_DB.QC_Quests)
-		self:TriggerEvent(self.Event.OnAllQuestsRemoved)
-	else
-		local quest
-		if type(index) == "table" then
-			quest = index
-			index = tIndexOf(self.Octo_QuestsChanged_DB.QC_Quests, quest)
-			if not index then return end
-		else
-			quest = self.Octo_QuestsChanged_DB.QC_Quests[index]
-		end
-		for i, q in ipairs(self.quests_completed) do
-			if q.id == quest.id then
-				tremove(self.quests_completed, i)
-				break
-			end
-		end
-		tremove(self.Octo_QuestsChanged_DB.QC_Quests, index)
-		self:TriggerEvent(self.Event.OnQuestRemoved, quest, index)
-	end
-end
 local ldb = LibStub:GetLibrary("LibDataBroker-1.1")
 _G["SLASH_".. GlobalAddonName:upper().."1"] = "/questschanged"
 SlashCmdList[GlobalAddonName:upper()] = function(msg)

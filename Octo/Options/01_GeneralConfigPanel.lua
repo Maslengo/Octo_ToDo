@@ -40,6 +40,24 @@ function E.func_CreateGeneralOptions()
 				name = "Настройки фреймов аддона",
 				order = GetOrder(),
 			},
+			-------------------------------------------------
+			Config_FontStyle = {
+				name = "Font",
+				type = "select",
+				dialogControl = "LSM30_Font",
+				values = LibSharedMedia:HashTable("font"),
+				get = function()
+					return Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = value
+					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			Config_FontSize = {
 				type = "range",
 				name = "Config_FontSize",
@@ -48,11 +66,11 @@ function E.func_CreateGeneralOptions()
 				max = 32,
 				step = 1,
 				get = function()
-					return Octo_ToDo_DB_Vars.Config_FontSize
+					return Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_FontSize = value
-					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+					Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = value
+					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 				
 				end,
 				width = E.FULL_WIDTH/4,
@@ -65,28 +83,11 @@ function E.func_CreateGeneralOptions()
 				values = {},
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Config_FontFlags
+					return Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_FontFlags = value
-					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
-					
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Config_FontStyle = {
-				name = "Font",
-				type = "select",
-				dialogControl = "LSM30_Font",
-				values = LibSharedMedia:HashTable("font"),
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_FontStyle
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_FontStyle = value
-					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.Config_FontStyle), Octo_ToDo_DB_Vars.Config_FontSize, Octo_ToDo_DB_Vars.Config_FontFlags)
+					Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = value
+					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 					
 				end,
 				width = E.FULL_WIDTH/4,

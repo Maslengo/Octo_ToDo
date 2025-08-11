@@ -218,7 +218,7 @@ local function BankTransfer(fromBank)
 end
 
 --- Создает кнопки для работы с банком
-local function CreateBankButtons()
+function Octo_EventFrame_SellFrame.func_CreateBankButtons()
 	local OctoFrame_FROMBANK = CreateSellButton(BankFrame, "FROMBANK.tga", "OctoFrame_FROMBANK")
 	OctoFrame_FROMBANK:SetScript("OnClick", function()
 			-- Добавляем подтверждение для массового перемещения
@@ -290,7 +290,7 @@ end
 
 --- Обновляет информацию в тултипе для кнопки
 -- @param button Кнопка, для которой обновляется тултип
-local function UpdateTooltip(button)
+local function func_UpdateTooltip(button)
 	wipe(Octo_EventFrame_SellFrame.BagAndSlot)
 	local UsableTBL = {}
 	local totalMoney = 0
@@ -310,7 +310,9 @@ local function UpdateTooltip(button)
 				local itemName, _, _, _, _, itemClass, _, _, itemEquipLoc, _, sellPrice = GetItemInfo(hyperlink)
 				if itemName and sellPrice and sellPrice ~= 0 and quality and quality <= button.quality
 				and CreateAndProcessTooltip(itemID)
-				and IsItemInCategory(itemEquipLoc, itemClass, currentFilter) then
+				and IsItemInCategory(itemEquipLoc, itemClass, currentFilter)
+				and not E.func_IsAnimaItemByID(itemID)
+				then
 
 					table.insert(Octo_EventFrame_SellFrame.BagAndSlot, {bag, slot})
 
@@ -375,72 +377,72 @@ end
 ----------------------------------------------------------------
 
 --- Продает предметы по качеству
-function Octo_EventFrame_SellFrame.SellItemsByQuality()
+function Octo_EventFrame_SellFrame.func_SellItemsByQuality()
 	-- Защита от повторного клика
-	if self.sellLock then return end
-	self.sellLock = true
+	if Octo_EventFrame_SellFrame.sellLock then return end
+	Octo_EventFrame_SellFrame.sellLock = true
 
 	-- Обновляем список предметов перед продажей
-	UpdateTooltip(activeTooltipButton)
+	func_UpdateTooltip(activeTooltipButton)
 
-	local totalItems = #self.BagAndSlot
+	local totalItems = #Octo_EventFrame_SellFrame.BagAndSlot
 	if totalItems == 0 then
 		-- print("Нет предметов для продажи.")
-		self.sellLock = false
+		Octo_EventFrame_SellFrame.sellLock = false
 		return
 	end
 
 	-- Создаем свой фрейм для отображения прогресса
-	if not self.progressFrame then
-		self.progressFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
-		self.progressFrame:SetSize(300, 80)
-		self.progressFrame:SetPoint("CENTER")
-		self.progressFrame:SetBackdrop({
+	if not Octo_EventFrame_SellFrame.progressFrame then
+		Octo_EventFrame_SellFrame.progressFrame = CreateFrame("Frame", nil, UIParent, "BackdropTemplate")
+		Octo_EventFrame_SellFrame.progressFrame:SetSize(300, 80)
+		Octo_EventFrame_SellFrame.progressFrame:SetPoint("CENTER")
+		Octo_EventFrame_SellFrame.progressFrame:SetBackdrop({
 			bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
 			edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
 			tile = true, tileSize = 32, edgeSize = 32,
 			insets = { left = 11, right = 12, top = 12, bottom = 11 }
 		})
 
-		self.progressFrame.text = self.progressFrame:CreateFontString()
-		self.progressFrame.text:SetFontObject(OctoFont11)
-		self.progressFrame.text:SetPoint("TOP", 0, -15)
-		self.progressFrame.text:SetText("Продажа предметов...")
+		Octo_EventFrame_SellFrame.progressFrame.text = Octo_EventFrame_SellFrame.progressFrame:CreateFontString()
+		Octo_EventFrame_SellFrame.progressFrame.text:SetFontObject(OctoFont11)
+		Octo_EventFrame_SellFrame.progressFrame.text:SetPoint("TOP", 0, -15)
+		Octo_EventFrame_SellFrame.progressFrame.text:SetText("Продажа предметов...")
 
-		self.progressFrame.progressText = self.progressFrame:CreateFontString()
-		self.progressFrame.progressText:SetFontObject(OctoFont11)
-		self.progressFrame.progressText:SetPoint("CENTER", 0, 0)
+		Octo_EventFrame_SellFrame.progressFrame.progressText = Octo_EventFrame_SellFrame.progressFrame:CreateFontString()
+		Octo_EventFrame_SellFrame.progressFrame.progressText:SetFontObject(OctoFont11)
+		Octo_EventFrame_SellFrame.progressFrame.progressText:SetPoint("CENTER", 0, 0)
 
-		self.progressFrame.cancelButton = CreateFrame("Button", nil, self.progressFrame, "UIPanelButtonTemplate")
-		self.progressFrame.cancelButton:SetSize(100, 25)
-		self.progressFrame.cancelButton:SetPoint("BOTTOM", 0, 10)
-		self.progressFrame.cancelButton:SetText("Отмена")
-		self.progressFrame.cancelButton:SetScript("OnClick", function()
-			self.sellLock = false
-			self.progressFrame:Hide()
+		Octo_EventFrame_SellFrame.progressFrame.cancelButton = CreateFrame("Button", nil, Octo_EventFrame_SellFrame.progressFrame, "UIPanelButtonTemplate")
+		Octo_EventFrame_SellFrame.progressFrame.cancelButton:SetSize(100, 25)
+		Octo_EventFrame_SellFrame.progressFrame.cancelButton:SetPoint("BOTTOM", 0, 10)
+		Octo_EventFrame_SellFrame.progressFrame.cancelButton:SetText("Отмена")
+		Octo_EventFrame_SellFrame.progressFrame.cancelButton:SetScript("OnClick", function()
+			Octo_EventFrame_SellFrame.sellLock = false
+			Octo_EventFrame_SellFrame.progressFrame:Hide()
 		end)
 	end
 
 	-- Показываем наш фрейм прогресса
-	self.progressFrame.progressText:SetFormattedText("Осталось: %d/%d", totalItems, totalItems)
-	self.progressFrame:Show()
+	Octo_EventFrame_SellFrame.progressFrame.progressText:SetFormattedText("Осталось: %d/%d", totalItems, totalItems)
+	Octo_EventFrame_SellFrame.progressFrame:Show()
 
 	-- Функция для продажи одного предмета
 	local function SellNextItem()
-		if #self.BagAndSlot == 0 or not self.sellLock then
+		if #Octo_EventFrame_SellFrame.BagAndSlot == 0 or not Octo_EventFrame_SellFrame.sellLock then
 			-- Все продано или процесс отменен
-			self.progressFrame:Hide()
-			self.sellLock = false
+			Octo_EventFrame_SellFrame.progressFrame:Hide()
+			Octo_EventFrame_SellFrame.sellLock = false
 			-- print("Продажа завершена!")
 			return
 		end
 
 		-- Берем первый предмет из списка
-		local item = table.remove(self.BagAndSlot, 1)
+		local item = table.remove(Octo_EventFrame_SellFrame.BagAndSlot, 1)
 		C_Container.UseContainerItem(item[1], item[2])
 
 		-- Обновляем прогресс
-		self.progressFrame.progressText:SetFormattedText("Осталось: %d/%d", #self.BagAndSlot, totalItems)
+		Octo_EventFrame_SellFrame.progressFrame.progressText:SetFormattedText("Осталось: %d/%d", #Octo_EventFrame_SellFrame.BagAndSlot, totalItems)
 
 		-- Планируем следующую продажу через 0.3 секунды
 		C_Timer.After(0.3, SellNextItem)
@@ -455,7 +457,7 @@ end
 ----------------------------------------------------------------
 
 --- Создает кнопки для продажи предметов
-function Octo_EventFrame_SellFrame.CreateTradeButtons()
+function Octo_EventFrame_SellFrame.func_CreateTradeButtons()
 	-- Создаем кнопки для разных качеств предметов
 	for _, i in ipairs({3, 4}) do -- 0 COMMON, 3 RARE, 4 EPIC
 		local text = "OctoFrame_SellOtherBlue"
@@ -486,7 +488,7 @@ function Octo_EventFrame_SellFrame.CreateTradeButtons()
 						UIDropDownMenu_SetText(self, info.text)
 						OctoFrame_SellOtherBlue.currentFilter = info.value
 						if activeTooltipButton == OctoFrame_SellOtherBlue then
-							UpdateTooltip(OctoFrame_SellOtherBlue)
+							func_UpdateTooltip(OctoFrame_SellOtherBlue)
 						end
 					end
 					UIDropDownMenu_AddButton(info)
@@ -494,12 +496,12 @@ function Octo_EventFrame_SellFrame.CreateTradeButtons()
 		end)
 
 		OctoFrame_SellOtherBlue:SetScript("OnClick", function()
-				self:SellItemsByQuality()
+				Octo_EventFrame_SellFrame.func_SellItemsByQuality()
 		end)
 
 		OctoFrame_SellOtherBlue:SetScript("OnEnter", function()
 				activeTooltipButton = OctoFrame_SellOtherBlue
-				UpdateTooltip(OctoFrame_SellOtherBlue)
+				func_UpdateTooltip(OctoFrame_SellOtherBlue)
 				E.func_OctoTooltip_OnEnter(OctoFrame_SellOtherBlue)
 		end)
 
@@ -523,23 +525,23 @@ E.func_RegisterMyEventsToFrames(Octo_EventFrame_SellFrame, MyEventsTable)
 
 --- Обрабатывает событие загрузки аддона
 function Octo_EventFrame_SellFrame:VARIABLES_LOADED()
-	self:UnregisterEvent("VARIABLES_LOADED")
-	self.VARIABLES_LOADED = nil
-	self:CreateTradeButtons()
-	CreateBankButtons()
+	Octo_EventFrame_SellFrame:UnregisterEvent("VARIABLES_LOADED")
+	Octo_EventFrame_SellFrame.VARIABLES_LOADED = nil
+	Octo_EventFrame_SellFrame.func_CreateTradeButtons()
+	Octo_EventFrame_SellFrame.func_CreateBankButtons()
 end
 
 --- Обрабатывает событие обновления торговца
 function Octo_EventFrame_SellFrame:MERCHANT_UPDATE()
 	if activeTooltipButton and OctoTooltip:IsShown() then
-		UpdateTooltip(activeTooltipButton)
+		func_UpdateTooltip(activeTooltipButton)
 	end
 end
 
 
 function Octo_EventFrame_SellFrame:MERCHANT_CLOSED()
-	if self.sellLock then
-		self.sellLock = false
-		self.progressFrame:Hide()
+	if Octo_EventFrame_SellFrame.sellLock then
+		Octo_EventFrame_SellFrame.sellLock = false
+		Octo_EventFrame_SellFrame.progressFrame:Hide()
 	end
 end

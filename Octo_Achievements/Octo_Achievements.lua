@@ -117,10 +117,10 @@ local func_OnAcquired do
 end
 local function CreateAchievementTooltip(achievementID)
 	local tooltipData = {}
-	local _, name, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
+	local _, _, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
 	local color = completed and E.Green_Color or E.Red_Color
 	-- Build header line
-	local textLEFT = E.func_texturefromIcon(icon)..name
+	local textLEFT = E.func_texturefromIcon(icon)..E.func_achievementName(achievementID)
 	if E.DebugIDs then
 		textLEFT = textLEFT..E.Gray_Color.." id:"..achievementID.."|r"
 	end
@@ -228,12 +228,12 @@ function Octo_EventFrame_Achievements:CreateDataProvider()
 			local total = GetCategoryNumAchievements(categoryID, true)
 			if total then
 				for i = 1, total do
-					local AchievementID, name, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
+					local AchievementID, _, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
 					if AchievementID then
 						if completedAchi == false or (completedAchi == Octo_Achievements_DB.Config_AchievementShowCompleted) then
 							local color = E.Red_Color
 							if completedAchi then color = E.Green_Color end
-							local textLEFT = name
+							local textLEFT = E.func_achievementName(AchievementID)
 							if points and points ~= 0 then
 								textLEFT = textLEFT .. " " .. color..points.."|r"
 							end
