@@ -1,10 +1,10 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 ----------------------------------------------------------------
-local Octo_EventFrame_Debug = CreateFrame("FRAME")
-Octo_EventFrame_Debug:Hide()
+local Octo_EventFrame = CreateFrame("FRAME")
+Octo_EventFrame:Hide()
 ----------------------------------------------------------------
-function Octo_EventFrame_Debug:LoadOctoUIforAddons()
+function Octo_EventFrame:LoadOctoUIforAddons()
 
 	if ElvDB then
 		for name, v in next, (ElvDB.profileKeys) do
@@ -54,10 +54,8 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
-function Octo_EventFrame_Debug:VARIABLES_LOADED()
-	self:UnregisterEvent("VARIABLES_LOADED")
-	self.VARIABLES_LOADED = nil
+E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+function Octo_EventFrame:VARIABLES_LOADED()
 	self:LoadOctoUIforAddons()
 end
 ----------------------------------------------------------------

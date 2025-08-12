@@ -4,27 +4,449 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 function E.func_Universal_11_TheWarWithin()
 	local OctoTable_Universal = {
 		{
-
+			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
 			desc = "TheWarWithin",
 			quests = {
-				{81630},
-				{82653},
-				{81653},
-				{81624},
-				{85088},
+				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
+				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
+				{81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
+				{81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
+				{85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
+				{nil},
+				{87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
 			},
-			forcedMaxQuest = 1,
+			forcedMaxQuest = 2,
 		},
 		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2371)..": ".."Rares",
+			name_save = "Rares2371",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
 
+
+
+
+
+				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
+				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
+				{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
+				{nil,   forcedText = {npcID = 235104}, addText = {mapID = 2472},},
+				{86464,   forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
+
+				{nil},
+				{91276, forcedText = {npcID = 245998}, },
+				{91275, forcedText = {npcID = 245997}, },
+				{90687, forcedText = {npcID = 238144}, },
+				{90689, forcedText = {npcID = 238536}, },
+				{90692, forcedText = {npcID = 241920}, },
+				{90694, forcedText = {npcID = 238384}, },
+				{nil},
+				{nil, addText = {spellID = 1214374},},
+				{90596, forcedText = {npcID = 232128}, },
+				{90586, forcedText = {npcID = 232077}, },
+				{90594, forcedText = {npcID = 231981}, },
+				{90588, forcedText = {npcID = 232108}, },
+				{90595, forcedText = {npcID = 232127}, },
+				{90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
+				{90591, forcedText = {npcID = 232189}, },
+				{90585, forcedText = {npcID = 232006}, },
+				{90583, forcedText = {npcID = 232129}, },
+				{90592, forcedText = {npcID = 232193}, },
+				{91293, forcedText = {npcID = 234845}, },
+				{90589, forcedText = {npcID = 232111}, },
+				{90593, forcedText = {npcID = 232195}, },
+				{90584, forcedText = {npcID = 232199}, },
+
+			},
+			-- forcedMaxQuest = 3,
+		},
+		-- ========================
+		-- Azj-Kahet
+		-- ========================
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2255)..": ".."Rares",
+			name_save = "Rares2255",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{81695, forcedText = {npcID = 216031}, },
+				{78905, forcedText = {npcID = 214151}, },
+				{81704, forcedText = {npcID = 216042}, },
+				{81634, forcedText = {npcID = 216038}, },
+				{82077, forcedText = {npcID = 222624}, },
+				{81707, forcedText = {npcID = 216045}, },
+				{81699, forcedText = {npcID = 216041}, },
+				{82036, forcedText = {npcID = 216050}, },
+				{82034, forcedText = {npcID = 216048}, },
+			},
+		},
+		-- ========================
+		-- Hallowfall
+		-- ========================
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2215)..": ".."Rares",
+			name_save = "Rares2215",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{81763, forcedText = {npcID = 207802}, },
+				{82558, forcedText = {npcID = 206514}, },
+				{82560, forcedText = {npcID = 214757}, },
+				{82559, forcedText = {npcID = 206184}, },
+				{81880, forcedText = {npcID = 221753}, },
+				{80011, forcedText = {npcID = 218458}, },
+				{82562, forcedText = {npcID = 221179}, },
+				{82564, forcedText = {npcID = 207780}, },
+				{81881, forcedText = {npcID = 221767}, },
+				{81761, forcedText = {npcID = 221551}, },
+			},
+		},
+		-- ========================
+		-- Isle of Dorn
+		-- ========================
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2248)..": ".."Rares",
+			name_save = "Rares2248",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{82196, forcedText = {npcID = 219281}, },
+				{81893, forcedText = {npcID = 219264}, },
+				{81920, forcedText = {npcID = 221128}, },
+				{81895, forcedText = {npcID = 219265}, },
+				{81907, forcedText = {npcID = 219266}, },
+				{81905, forcedText = {npcID = 219279}, },
+				{81899, forcedText = {npcID = 219268}, },
+				{81902, forcedText = {npcID = 219270}, },
+				{81921, forcedText = {npcID = 220890}, },
+				{81897, forcedText = {npcID = 219267}, },
+			},
+		},
+		-- ========================
+		-- Ringing Deeps
+		-- ========================
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2214)..": ".."Rares",
+			name_save = "Rares2214",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{81674, forcedText = {npcID = 220265}, },
+				{80557, forcedText = {npcID = 220274}, },
+				{80505, forcedText = {npcID = 220276}, },
+				{81562, forcedText = {npcID = 220267}, },
+				{81511, forcedText = {npcID = 220266}, },
+				{80560, forcedText = {npcID = 220269}, },
+				{81566, forcedText = {npcID = 220272}, },
+				{80003, forcedText = {npcID = 218393}, },
+				{80536, forcedText = {npcID = 220286}, },
+				{81648, forcedText = {npcID = 221199}, },
+			},
+		},
+		-- ========================
+		-- Siren Isle
+		-- ========================
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2369)..": ".."Rares",
+			name_save = "Rares2369",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{85672, forcedText = {npcID = 229982}, },
+				{85669, forcedText = {npcID = 228201}, },
+				{85437, forcedText = {npcID = 229992}, },
+				{84801, forcedText = {npcID = 228601}, },
+				{84807, forcedText = {npcID = 228605}, },
+				{84804, forcedText = {npcID = 228603}, },
+				{84810, forcedText = {npcID = 228609}, },
+				{84813, forcedText = {npcID = 228612}, },
+			},
+		},
+		-- ========================
+		-- Undermine
+		-- ========================
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2346)..": ".."Rares",
+			name_save = "Rares2346",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{84917, forcedText = {npcID = 230931}, },
+				{84918, forcedText = {npcID = 230934}, },
+				{84919, forcedText = {npcID = 230940}, },
+				{84920, forcedText = {npcID = 230946}, },
+				{84921, forcedText = {npcID = 230951}, },
+				{84922, forcedText = {npcID = 230979}, },
+				{84926, forcedText = {npcID = 230995}, },
+				{84927, forcedText = {npcID = 231012}, },
+			},
+		},
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		-- ========================
+		-- isle_of_dorn (2248)
+		-- ========================
+		-- Treasures
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2248)..": ".."Treasures",
+			name_save = "Treasures2248",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{82715},
+				{82714},
+				{82287},
+				{82325},
+				{83243},
+				{83246},
+				{83245},
+				{83244},
+				{82326},
+				{82246},
+				{83242},
+				{83094},
+				{83840},
+			},
+		},
+		-- ========================
+		-- secrets_of_azeroth (71)
+		-- ========================
+		-- ========================
+		-- siren_isle (2369)
+		-- ========================
+		-- Treasures
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2369)..": ".."Treasures",
+			name_save = "Treasures2369",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{87446},
+				{86764},
+				{86767},
+				{86766},
+				{86732},
+				{85716},
+				{84547},
+				{84839},
+				{86765},
+				{84529},
+				{84527},
+			},
+		},
+		-- ========================
+		-- ratts_revenge (78)
+		-- ========================
+		-- ========================
+		-- undermine (2346)
+		-- ========================
+		-- Treasures
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2346)..": ".."Treasures",
+			name_save = "Treasures2346",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{85683},
+				{85698},
+				{85814},
+				{85426},
+				{85422},
+				{85424},
+				{85425},
+				{85492},
+				{85495},
+				{85494},
+				{85496},
+				{86487},
+			},
+		},
+		-- ========================
+		-- ringing_deeps (2214)
+		-- ========================
+		-- Treasures
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2214)..": ".."Treasures",
+			name_save = "Treasures2214",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{82230},
+				{82239},
+				{82820},
+				{82464},
+				{82819},
+				{80485},
+				{82235},
+				{82818},
+				{83030},
+				{79308},
+			},
+		},
+		-- ========================
+		-- azj_kahet (2255)
+		-- ========================
+		-- Treasures
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2255)..": ".."Treasures",
+			name_save = "Treasures2255",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{82520},
+				{82718},
+				{82722},
+				{82720},
+				{82529},
+				{82721},
+				{82719},
+				{82727},
+				{82527},
+				{82525},
+			},
+		},
+		-- ========================
+		-- hallowfall (2215)
+		-- ========================
+		-- Treasures
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2215)..": ".."Treasures",
+			name_save = "Treasures2215",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{83298},
+				{83263},
+				{83284},
+				{81468},
+				{81971},
+				{81978},
+				{81972},
+				{82005},
+				{83273},
+				{79275},
+				{80687},
+				{81518},
+			},
+		},
+		-- ========================
+		-- delves (2250)
+		-- ========================
+		-- ========================
+		-- undermine (2346)
+		-- ========================
+		-- Treasure
+		{
+			sorted = false,
+			showTooltip = true,
+			textleft = E.func_mapName(2346)..": ".."Treasure",
+			name_save = "Treasure2346",
+			reset = "Daily",
+			desc = "TheWarWithin",
+			quests = {
+				{85683},
+				{85698},
+				{85814},
+				{85426},
+				{85422},
+				{85424},
+				{85425},
+				{85492},
+				{85495},
+				{85494},
+				{85496},
+				{86487},
+				{86630},
+				{85781},
+				{85785},
+				{86773},
+				{85787},
+				{86772},
+				{85786},
+				{86771},
+				{85788},
+				{86774},
+				{87007},
+				{85072},
+				{85116},
+				{85117},
+				{85114},
+				{85115},
+			},
+		},
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+		----------------------------------------------------------------------------
+
+
+		----------------------------------------------------------------------------
+		{
 			showTooltip = true,
 			textleft = E.func_questName(84370),
 			name_save = "TheKeytoSuccess",
-			reset = "Weekly",
+			reset = "Once",
 			desc = "TheWarWithin",
 			quests = {
 				{84370},
@@ -32,7 +454,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.func_questName(82449),
 			name_save = "TheCalloftheWorldsoul",
@@ -132,7 +553,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "Archives",
 			name_save = "Archives",
@@ -145,7 +565,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "Delves",
 			name_save = "Delves",
@@ -188,7 +607,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
 			name_save = "TheTheaterTroupe",
@@ -200,7 +618,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.func_questName(76586),
 			name_save = "SpreadingtheLight",
@@ -212,7 +629,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.func_questName(83333),
 			name_save = "GearingUpforTrouble",
@@ -224,7 +640,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "SpecialAssignments",
 			name_save = "SpecialAssignments",
@@ -243,7 +658,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = E.func_questName(82946),
 			name_save = "RollinDownintheDeeps",
@@ -255,7 +669,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "BiergothDungeonQuest",
 			name_save = "BiergothDungeonQuest",
@@ -275,7 +688,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "TWWProfessionWeeklies",
 			name_save = "TWWProfessionWeeklies",
@@ -311,7 +723,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "TWWAlgariTreatise",
 			name_save = "TWWAlgariTreatise",
@@ -333,7 +744,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "AnniversaryRestoredCofferKey",
 			name_save = "AnniversaryRestoredCofferKey",
@@ -345,7 +755,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "SirenIsleWeekly",
 			name_save = "SirenIsleWeekly",
@@ -373,7 +782,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 6,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "MajorKeyflames",
 			name_save = "MajorKeyflames",
@@ -392,7 +800,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 8,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "MinorKeyflames",
 			name_save = "MinorKeyflames",
@@ -438,7 +845,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 8,
 		},
 		{
-
 			showTooltip = true,
 			textleft = L["Delver's Call"],
 			name_save = "DelversCall",
@@ -461,14 +867,7 @@ function E.func_Universal_11_TheWarWithin()
 			},
 			forcedMaxQuest = 13,
 		},
-
-
-
-
-
-
 		{
-
 			showTooltip = true,
 			textleft = "tww-weekly-cache",
 			name_save = "tww-weekly-cache",
@@ -482,9 +881,7 @@ function E.func_Universal_11_TheWarWithin()
 			},
 			forcedMaxQuest = 4,
 		},
-
 		{
-
 			showTooltip = true,
 			textleft = "tww-lesser-keyflame",
 			name_save = "tww-lesser-keyflame",
@@ -512,7 +909,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 8,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-brawl-weekly",
 			name_save = "tww-brawl-weekly",
@@ -524,7 +920,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-pvp-weekly",
 			name_save = "tww-pvp-weekly",
@@ -541,7 +936,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 6, -- ОДИН?
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-pvp-world",
 			name_save = "tww-pvp-world",
@@ -557,7 +951,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 5, -- ОДИН?
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-the-severed-threads",
 			name_save = "tww-the-severed-threads",
@@ -571,7 +964,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 3,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-the-call-of-the-worldsoul",
 			name_save = "tww-the-call-of-the-worldsoul",
@@ -623,15 +1015,7 @@ function E.func_Universal_11_TheWarWithin()
 			},
 			forcedMaxQuest = 1,
 		},
-
-
-
-
-
-
-
 		{
-
 			showTooltip = true,
 			textleft = "tww-archives",
 			name_save = "tww-archives",
@@ -645,7 +1029,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-delves",
 			name_save = "tww-delves",
@@ -665,7 +1048,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 8,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-the-theater-trope",
 			name_save = "tww-the-theater-trope",
@@ -677,7 +1059,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-spreading-the-light",
 			name_save = "tww-spreading-the-light",
@@ -689,7 +1070,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-gearing-up-for-trouble",
 			name_save = "tww-gearing-up-for-trouble",
@@ -701,7 +1081,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-special-assignments",
 			name_save = "tww-special-assignments",
@@ -724,7 +1103,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 3,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-rollin-down-in-the-deeps",
 			name_save = "tww-rollin-down-in-the-deeps",
@@ -736,7 +1114,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-biergoth-dungeon-quest",
 			name_save = "tww-biergoth-dungeon-quest",
@@ -756,7 +1133,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1, -- "any"
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-the-key-to-success",
 			name_save = "tww-the-key-to-success",
@@ -768,7 +1144,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-services-requested",
 			name_save = "tww-services-requested",
@@ -804,7 +1179,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-algari-treatise",
 			name_save = "tww-algari-treatise",
@@ -826,7 +1200,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 2,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-anniversary-restored-coffer-key",
 			name_save = "tww-anniversary-restored-coffer-key",
@@ -838,7 +1211,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-siren-isle-weekly",
 			name_save = "tww-siren-isle-weekly",
@@ -869,7 +1241,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 6,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-free-chett-list",
 			name_save = "tww-free-chett-list",
@@ -881,7 +1252,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-chett-list",
 			name_save = "tww-chett-list",
@@ -905,7 +1275,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 4,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-delvers-bounty",
 			name_save = "tww-delvers-bounty",
@@ -917,7 +1286,6 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			showTooltip = true,
 			textleft = "tww-nightfall-scenario",
 			name_save = "tww-nightfall-scenario",
@@ -975,12 +1343,6 @@ function E.func_Universal_11_TheWarWithin()
 			},
 			forcedMaxQuest = 4,
 		},
-
-
-
-
-
-
 	}
 	return OctoTable_Universal
 end

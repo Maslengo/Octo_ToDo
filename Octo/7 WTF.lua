@@ -504,6 +504,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugInfo = false, -- Отладка информации
 		DebugGossip = false, -- Отладка информации
 		DebugCache = false, -- Отладка информации
+		DebugQC_Vignettes = false, -- Отладка информации
+		DebugQC_Quests = false, -- Отладка информации
 
 
 		editorFontSize = 12,
@@ -561,6 +563,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
 		Config_LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		Config_prefix = 1, -- Префикс
+		Config_numberFormatMode = 1, -- по умолчанию универсальный
 		Currencies = true, -- Квесты
 		Currency = true, -- Валюта
 		CVar = true, -- CVar настройки
@@ -668,11 +671,32 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
 	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
 
-
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
-
-
 end
+----------------------------------------------------------------
+function Octo_EventFrame_WTF:Octo_ToDo_DB_Account()
+	Octo_ToDo_DB_Account = E.func_InitTable(Octo_ToDo_DB_Account)
+	-- E.func_InitField(Octo_ToDo_DB_Account, "lastBuildNumber", 1)
+	-- E.func_InitField(Octo_ToDo_DB_Account, "lastFaction", UNKNOWN)
+	-- E.func_InitField(Octo_ToDo_DB_Account, "lastLocaleLang", UNKNOWN)
+	-- Инициализация подтаблиц
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllItems")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllCurrencies")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllNPCs")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllQuests")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllReputations")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllSpells")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllFollowers")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllAchievements")
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllVignettes")
+
+	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "watchedMovies")
+end
+
+
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -804,7 +828,6 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 				CharInfo.PlayerData.needResetDaily = true
 
-
 				-- Сбрасываем ежедневные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Daily" then
@@ -820,7 +843,9 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				end
 
 				-- Сбрасываем деньги
-				PlayerData.MoneyOnDaily = PlayerData.Money
+				if CharInfo.PlayerData.MoneyOnDaily and CharInfo.PlayerData.Money then
+					CharInfo.PlayerData.MoneyOnDaily = CharInfo.PlayerData.Money
+				end
 			end
 		end
 	end
@@ -862,7 +887,9 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 				end
 
 				-- Сбрасываем деньги
-				PlayerData.MoneyOnWeekly = PlayerData.Money
+				if CharInfo.PlayerData.MoneyOnWeekly and CharInfo.PlayerData.Money then
+					CharInfo.PlayerData.MoneyOnWeekly = CharInfo.PlayerData.Money
+				end
 			end
 		end
 	end
@@ -917,6 +944,8 @@ function Octo_EventFrame_WTF:VARIABLES_LOADED()
 	-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 	-- Инициализация всех компонентов
 	self:Octo_Cache_DB() -- Кэш данных
+	self:Octo_ToDo_DB_Account() -- Данные для всего аккаунта
+
 	self:DatabaseTransfer() -- Перенос данных
 	self:Octo_ToDo_DB_Levels() -- Данные персонажей
 	self:Octo_ToDo_DB_Vars() -- Настройки

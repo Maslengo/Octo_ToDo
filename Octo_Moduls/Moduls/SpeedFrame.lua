@@ -1,11 +1,11 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-local Octo_EventFrame_SpeedFrame = CreateFrame("Frame")
-Octo_EventFrame_SpeedFrame:Hide()
+local EventFrame = CreateFrame("Frame")
+EventFrame:Hide()
 local Octo_MainFrame_SpeedFrame = CreateFrame("Frame", "Octo_MainFrame_SpeedFrame", UIParent, "BackdropTemplate")
 Octo_MainFrame_SpeedFrame:Hide()
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
-function Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
+function EventFrame:CreateSpeedFrame()
 	local vars = Octo_ToDo_DB_Vars.SpeedFrame
 	Octo_MainFrame_SpeedFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 	Octo_MainFrame_SpeedFrame:SetSize(80, 32)
@@ -25,8 +25,8 @@ function Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
 			local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_SpeedFrame:GetPoint()
 			vars.point = point
 			vars.relativePoint = relativePoint
-			vars.xOfs = E.func_CompactNumberSimple(xOfs)
-			vars.yOfs = E.func_CompactNumberSimple(yOfs)
+			vars.xOfs = E.func_CompactNumberRound(xOfs)
+			vars.yOfs = E.func_CompactNumberRound(yOfs)
 			LibCustomGlow.ButtonGlow_Stop(Octo_MainFrame_SpeedFrame)
 	end)
 	local text_glide = Octo_MainFrame_SpeedFrame:CreateFontString()
@@ -47,13 +47,13 @@ function Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
 			local base = isGliding and forwardSpeed or GetUnitSpeed("PLAYER")
 			local movespeed = base / BASE_MOVEMENT_SPEED * 100
 			if forwardSpeed > 1 then
-				text_glide:SetText("glide: ".. E.func_CompactNumberSimple(forwardSpeed))
+				text_glide:SetText("glide: ".. E.func_CompactNumberRound(forwardSpeed))
 				text_movespeed:SetPoint("CENTER", 0, -7)
 			else
 				text_glide:SetText("")
 				text_movespeed:SetPoint("CENTER", 0, 0)
 			end
-			text_movespeed:SetText(movespeed ~= 0 and E.func_CompactNumberSimple(movespeed) or "")
+			text_movespeed:SetText(movespeed ~= 0 and E.func_CompactNumberRound(movespeed) or "")
 	end)
 	Octo_MainFrame_SpeedFrame:Show()
 end
@@ -63,8 +63,8 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_SpeedFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 --- Обрабатывает событие загрузки аддона
-function Octo_EventFrame_SpeedFrame:VARIABLES_LOADED()
-	Octo_EventFrame_SpeedFrame:CreateSpeedFrame()
+function EventFrame:VARIABLES_LOADED()
+	EventFrame:CreateSpeedFrame()
 end

@@ -2,8 +2,8 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 ----------------------------------------------------------------
 -- Создаем фрейм для отладки
-local Octo_EventFrame_Debug = CreateFrame("FRAME")
-Octo_EventFrame_Debug:Hide()
+local Octo_EventFrame = CreateFrame("FRAME")
+Octo_EventFrame:Hide()
 ----------------------------------------------------------------
 -- Подключаем библиотеки
 local LibStub = LibStub
@@ -425,7 +425,7 @@ SlashCmdList["FPRINT"] = function(msg)
 	end
 end
 -- Функции для работы со списками
-function Octo_EventFrame_Debug:func_itemslist(msg)
+function Octo_EventFrame:func_itemslist(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local promise1 = LibThingsLoad:Items(GLOBAL_TABLE_ITEMS)
@@ -443,7 +443,7 @@ function Octo_EventFrame_Debug:func_itemslist(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame_Debug:func_itemslistSort24(msg)
+function Octo_EventFrame:func_itemslistSort24(msg)
 	local startTime = debugprofilestop()
 	editFrame:SetScript("OnShow", function()
 		local executionTime = (debugprofilestop() - startTime)
@@ -523,7 +523,7 @@ function Octo_EventFrame_Debug:func_itemslistSort24(msg)
 	----------------------------------------------------------------
 
 end
-function Octo_EventFrame_Debug:func_itemslistSortBOOLEN(msg)
+function Octo_EventFrame:func_itemslistSortBOOLEN(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local tbl = {}
@@ -552,7 +552,7 @@ function Octo_EventFrame_Debug:func_itemslistSortBOOLEN(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame_Debug:func_questslist(msg)
+function Octo_EventFrame:func_questslist(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID_Paragon)
@@ -571,7 +571,7 @@ function Octo_EventFrame_Debug:func_questslist(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame_Debug:func_currencieslist(msg)
+function Octo_EventFrame:func_currencieslist(msg)
 	local str1 = ""
 	local str2 = ""
 	local vivod = ""
@@ -591,7 +591,7 @@ function Octo_EventFrame_Debug:func_currencieslist(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-function Octo_EventFrame_Debug:func_reputationslist(msg)
+function Octo_EventFrame:func_reputationslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -611,7 +611,7 @@ function Octo_EventFrame_Debug:func_reputationslist(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-function Octo_EventFrame_Debug:func_spellslist(msg)
+function Octo_EventFrame:func_spellslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -637,17 +637,17 @@ end
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if (command == "quest" or command == "2") then
-		Octo_EventFrame_Debug:func_questslist(arg1)
+		Octo_EventFrame:func_questslist(arg1)
 	elseif (command == "currency" or command == "3") then
-		Octo_EventFrame_Debug:func_currencieslist(arg1)
+		Octo_EventFrame:func_currencieslist(arg1)
 	elseif (command == "rep" or command == "4") then
-		Octo_EventFrame_Debug:func_reputationslist(arg1)
+		Octo_EventFrame:func_reputationslist(arg1)
 	elseif (command == "spell" or command == "5") then
-		Octo_EventFrame_Debug:func_spellslist(arg1)
+		Octo_EventFrame:func_spellslist(arg1)
 	elseif (command == "item2" or command == "6") then
-		Octo_EventFrame_Debug:func_itemslistSort24(arg1)
+		Octo_EventFrame:func_itemslistSort24(arg1)
 	elseif (command == "item3" or command == "7") then
-		Octo_EventFrame_Debug:func_itemslistSortBOOLEN(arg1)
+		Octo_EventFrame:func_itemslistSortBOOLEN(arg1)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
 		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."quest".." (2)")
@@ -691,11 +691,11 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_Debug, MyEventsTable)
+E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
 -- Обработчик события VARIABLES_LOADED
-function Octo_EventFrame_Debug:VARIABLES_LOADED()
+function Octo_EventFrame:VARIABLES_LOADED()
 	E.func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
 end
-function Octo_EventFrame_Debug:PLAYER_LOGIN()
+function Octo_EventFrame:PLAYER_LOGIN()
 	E.func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)
 end

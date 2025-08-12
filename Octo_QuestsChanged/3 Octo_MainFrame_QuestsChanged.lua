@@ -1,8 +1,8 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 
-local Octo_EventFrame_QuestsChanged = CreateFrame("FRAME")
-Octo_EventFrame_QuestsChanged:Hide()
+local Octo_EventFrame = CreateFrame("FRAME")
+Octo_EventFrame:Hide()
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
 Octo_MainFrame_QuestsChanged:Hide()
 E.func_InitFrame(Octo_MainFrame_QuestsChanged)
@@ -25,7 +25,7 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-Octo_EventFrame_QuestsChanged.total_width = Octo_EventFrame_QuestsChanged.total_width or 500
+Octo_EventFrame.total_width = Octo_EventFrame.total_width or 500
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -223,7 +223,7 @@ local func_OnAcquired do
 
 
 			------------------------------------------------
-			Octo_EventFrame_QuestsChanged.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
+			Octo_EventFrame.total_width = icon_1_width + first_width + icon_2_width + second_width + third_width + fourth_width + fifth_width + sixth_width + seventh_width -- + eighth_width
 			------------------------------------------------
 		end
 	end
@@ -231,7 +231,7 @@ end
 ----------------------------------------------------------------
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ + ГОВНО
 -- ЭТО ФУНКЦИЯ АПДЕЙТА(ОТРИСОФКИ)
-function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
+function Octo_EventFrame:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
@@ -308,9 +308,9 @@ function Octo_EventFrame_QuestsChanged:Octo_Frame_init(frame, node)
 	end
 	-- frame.eighth.text:SetText(8)
 end
-function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
+function Octo_EventFrame:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetPoint("CENTER", 0, 0)
-	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*LINES_MAX)
+	Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame.total_width, LINE_HEIGHT*LINES_MAX)
 	Octo_MainFrame_QuestsChanged:SetDontSavePosition(true)
 	Octo_MainFrame_QuestsChanged:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_QuestsChanged:SetFrameStrata("HIGH")
@@ -349,7 +349,7 @@ function Octo_EventFrame_QuestsChanged:Octo_Create_MainFrame_QuestsChanged()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_QuestsChanged.ScrollBox, Octo_MainFrame_QuestsChanged.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 	----------------------------------------------------------------
 end
-function Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider()
+function Octo_EventFrame:func_QuestsChanged_CreateMyDataProvider()
 	local count = 0
 	local DataProvider = CreateTreeDataProvider()
 	E.DataProvider_QuestsChanged = DataProvider
@@ -403,8 +403,8 @@ function Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider()
 		end
 	end
 	if #times > 0 then
-		Octo_EventFrame_QuestsChanged.minTime = math.min(unpack(times))
-		Octo_EventFrame_QuestsChanged.maxTime = math.max(unpack(times))
+		Octo_EventFrame.minTime = math.min(unpack(times))
+		Octo_EventFrame.maxTime = math.max(unpack(times))
 	end
 	DataProvider:SetSortComparator(function(a, b)
 			local aData = a.data.zxc
@@ -416,11 +416,11 @@ function Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider()
 	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
 
 	if count > LINES_MAX then
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*LINES_MAX)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame.total_width, LINE_HEIGHT*LINES_MAX)
 	elseif count == 0 then
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*1)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame.total_width, LINE_HEIGHT*1)
 	else
-		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame_QuestsChanged.total_width, LINE_HEIGHT*count)
+		Octo_MainFrame_QuestsChanged:SetSize(Octo_EventFrame.total_width, LINE_HEIGHT*count)
 	end
 end
 ----------------------------------------------------------------
@@ -432,23 +432,23 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_QuestsChanged, MyEventsTable)
-function Octo_EventFrame_QuestsChanged:VARIABLES_LOADED()
+E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+function Octo_EventFrame:VARIABLES_LOADED()
 	self:Octo_Create_MainFrame_QuestsChanged()
 	self:func_QuestsChanged_CreateMyDataProvider()
 	----------------------------------------------------------------
-	E.func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
+	E.func_CreateMinimapButton(GlobalAddonName, "QuestsChanged", Octo_QuestsChanged_DB, Octo_MainFrame_QuestsChanged, function() Octo_EventFrame:func_QuestsChanged_CreateMyDataProvider() end, "Octo_MainFrame_QuestsChanged")
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_QuestsChanged:PLAYER_REGEN_DISABLED()
+function Octo_EventFrame:PLAYER_REGEN_DISABLED()
 	if Octo_MainFrame_QuestsChanged and Octo_MainFrame_QuestsChanged:IsShown() then
 		Octo_MainFrame_QuestsChanged:Hide()
 	end
 end
-function Octo_EventFrame_QuestsChanged:PLAYER_LOGIN()
+function Octo_EventFrame:PLAYER_LOGIN()
 	-- Cleanup event
 	self:UnregisterEvent("PLAYER_LOGIN")
 	self.PLAYER_LOGIN = nil
-	E.func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() Octo_EventFrame_QuestsChanged:func_QuestsChanged_CreateMyDataProvider() end)
+	E.func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() Octo_EventFrame:func_QuestsChanged_CreateMyDataProvider() end)
 end

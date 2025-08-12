@@ -49,7 +49,7 @@ function E.Collect_All_GarrisonFollowers(eventName)
 	end
 	E.Collect_All_GarrisonFollowers_pause = true
 
-	C_Timer.After(1, function()
+	C_Timer.After(E.SPAM_TIME, function()
 			-- print (E.Green_Color..eventName.."|r")
 			local collect = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 			if not collect or InCombatLockdown() then return end

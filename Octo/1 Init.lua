@@ -13,7 +13,7 @@ E.Holiday = {}
 E.strategies = {}
 E.altStrategies = {}
 
-
+E.SPAM_TIME = 1
 
 
 

@@ -127,15 +127,27 @@ function E.func_IsMidnight() return E.interfaceVersion > 120000 and E.interfaceV
 function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersion < 140000 end
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
-function E.func_texturefromIcon(icon, iconWidth, iconHeight)
+
+function E.func_vignetteIcon(atlasName, iconWidth, iconHeight)
+	if not atlasName then return end
 	local iconWidth = iconWidth or 16
 	local iconHeight = iconHeight or 16
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
+	return CreateAtlasMarkup(atlasName, iconWidth, iconHeight)
+end
+function E.func_texturefromIcon(icon, iconWidth, iconHeight, isAtlas)
+	local iconWidth = iconWidth or 16
+	local iconHeight = iconHeight or 16
+	if isAtlas then
+		return E.func_vignetteIcon(icon, iconWidth, iconHeight)
+	else
+		return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
+	end
 end
 function E.func_texturefromIconEVENT(icon, iconSize)
 	iconSize = iconSize or 16
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
 end
+
 function E.func_GetItemIconByID(itemID)
 	return GetItemIconByID(itemID)
 end
@@ -460,6 +472,12 @@ end
 function E.func_mountIsCollected(id)
 	if not id then return end
 	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
+	return isCollected
+end
+
+function E.func_mountIsCollectedColor(id)
+	if not id then return end
+	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
 	return isCollected and E.Green_Color or E.Red_Color
 end
 
@@ -521,23 +539,6 @@ end
 
 
 
-function E.func_vignetteIcon(atlasName)
-	if not atlasName then return end
-	-- ["atlas"] = "VignetteLoot",
-	-- ["atlas"] = "VignetteKill",
-	-- ["atlas"] = "VignetteEventElite",
-	-- ["atlas"] = "TeleportationNetwork-32x32",
-	-- ["atlas"] = "VignetteEvent",
-	-- ["atlas"] = "VignetteKillElite",
-	-- ["atlas"] = "poi-scrapper",
-	-- ["atlas"] = "Object",
-	-- ["atlas"] = "VignetteLootElite",
-	-- ["atlas"] = "mechagon-projects",
-	-- ["atlas"] = "poi-soulspiritghost",
-	-- ["atlas"] = "Warfront-NeutralHero",
-	return CreateAtlasMarkup(atlasName, 16, 16)
-end
-
 function E.func_IsAccountQuest(questID)
 	return IsAccountQuest(questID)
 end
@@ -569,14 +570,14 @@ function E.func_GetCurrentLocation()
 	if uiMapID ~= 0 then
 		local mapInfo = E.func_getMapFullNameInfo(uiMapID)
 		if FIRSTtext == "" then
-			return E.Red_Color..mapInfo.name.."|r"
+			return E.Red_Color..mapInfo.name.."|r", false
 		elseif FIRSTtext == SECONDtext then
-			return FIRSTtext
+			return FIRSTtext, true
 		else
-			return SECONDtext ~= "" and FIRSTtext.." ("..SECONDtext..")" or FIRSTtext
+			return SECONDtext ~= "" and FIRSTtext.." ("..SECONDtext..")" or FIRSTtext, true
 		end
 	end
-	return UNKNOWN
+	return UNKNOWN, true
 end
 function E.func_GetItemInfo(itemInfo)
 	return GetItemInfo(itemInfo)
@@ -618,7 +619,7 @@ function E.func_GetItemCooldown(itemID)
 	if start > 0 and duration > 0 then
 		result = (start + duration - GetTime())
 	end
-	return E.func_CompactNumberSimple(result)
+	return E.func_CompactNumberRound(result)
 end
 function E.func_GetSpellSubtext(spellID)
 	local result = GetSpellSubtext(spellID)
@@ -631,7 +632,7 @@ function E.func_GetSpellCooldown(spellID)
 	if start > 0 and duration > 0 then
 		result = (start + duration - GetTime())
 	end
-	return E.func_CompactNumberSimple(result)
+	return E.func_CompactNumberRound(result)
 end
 function E.func_hex2rgb(hex)
 	hex = hex:gsub("|cff", "")
@@ -694,7 +695,86 @@ function E.func_Gradient(text, firstColor, secondColor)
 		return text
 	end
 end
-function E.func_CompactNumberFormat(number)
+
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local CompactSuffixes = {
+	enUS = { "", "k", "M", "B", "T" },
+	enGB = { "", "k", "M", "B", "T" },
+	ruRU = { "", " тыс.", " млн", " млрд", " трлн" },
+	deDE = { "", " Tsd.", " Mio.", " Mrd.", " Bio." },
+	frFR = { "", " k", " M", " Md", " T" },
+	esES = { "", " mil", " M", " mil M", " B" },
+	esMX = { "", " mil", " M", " mil M", " B" },
+	ptBR = { "", " mil", " mi", " bi", " tri" },
+	itIT = { "", " mila", " mln", " mld", " tln" },
+	zhCN = { "", "万", "亿", "万亿" }, -- Упрощённый китайский
+	zhTW = { "", "萬", "億", "兆" },   -- Традиционный китайский
+	koKR = { "", "만", "억", "조" },   -- Корейский
+}
+
+local AsianLocales = {
+	zhCN = true,
+	zhTW = true,
+	koKR = true,
+}
+
+local function FormatWithSeparators(num)
+	local formatted = tostring(num)
+	while true do
+		local k = formatted:gsub("^(-?%d+)(%d%d%d)", "%1 %2")
+		if k == formatted then break end
+		formatted = k
+	end
+	return formatted
+end
+
+function E.func_CompactNumberFormat(num)
+	num = num or 0
+
+	-- Полный формат с разделителями
+	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 3 then
+		return FormatWithSeparators(math.floor(num + 0.5))
+	end
+
+	local locale
+	local suffixes
+	local step
+
+	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 1 then
+		locale = "enUS"
+		suffixes = CompactSuffixes["enUS"]
+		step = 1000
+	else -- локальный
+		locale = E.curLocaleLang or "enUS"
+		suffixes = CompactSuffixes[locale] or CompactSuffixes["enUS"]
+		step = AsianLocales[locale] and 10000 or 1000
+	end
+
+	local i = 1
+	while num >= step and i < #suffixes do
+		num = num / step
+		i = i + 1
+	end
+
+	local s = string.format("%.1f", num):gsub("%.0$", "")
+	return s .. suffixes[i]
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+function E.func_CompactNumberFormatOLD(number)
 	local number = number or 0
 	if number == 0 then
 		return 0
@@ -716,7 +796,7 @@ function E.func_MoneyString(number)
 		return E.func_CompactNumberFormat(number).."|r".."|TInterface\\MoneyFrame\\UI-CopperIcon:12:12|t"
 	end
 end
-function E.func_CompactNumberSimple(number)
+function E.func_CompactNumberRound(number)
 	local number = number or 0
 	if number == 0 then
 		return 0
@@ -995,7 +1075,7 @@ function E.func_debugprofileSTART()
 	return timer
 end
 function E.func_debugprofileSTOP()
-	local timer = E.func_CompactNumberSimple(debugprofilestop())
+	local timer = E.func_CompactNumberRound(debugprofilestop())
 	local result = E.func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
 	result = result..timer
 	return DEFAULT_CHAT_FRAME:AddMessage(result.."|cff63A4E0 ms.|r")
@@ -1527,28 +1607,42 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	for _, charInfo in ipairs(sortedPlayersTBL) do
 		visiblePlayers[charInfo.PlayerData.GUID] = true
 	end
-	local minItemLevel, maxItemLevel, minMoney, maxMoney = 0, 0, 0, 0
-	local itemLevelsMinMax, MoneysMinMax = {}, {}
+	local minItemLevel, maxItemLevel, minMoney, maxMoney, minOnline, maxOnline = 0, 0, 0, 0, 0, 0
+	local itemLevelsMinMax, MoneysMinMax, OnlineMinMax = {}, {}, {}
 	if myType == "ItemLevel" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				table_insert(itemLevelsMinMax, CharInfo.PlayerData.avgItemLevelEquipped)
-			end
+			-- end
 		end
 		minItemLevel = math_min(unpack(itemLevelsMinMax))
 		maxItemLevel = math_max(unpack(itemLevelsMinMax))
 	end
 	if myType == "Money" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				table_insert(MoneysMinMax, CharInfo.PlayerData.Money)
-			end
+			-- end
 		end
 		minMoney = math_min(unpack(MoneysMinMax))
 		maxMoney = math_max(unpack(MoneysMinMax))
 	end
+
+	if myType == "Online" then
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+				table_insert(OnlineMinMax, CharInfo.PlayerData.realTotalTime)
+			-- end
+		end
+		minOnline = math_min(unpack(OnlineMinMax))
+		maxOnline = math_max(unpack(OnlineMinMax))
+	end
+
+
+
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local specIcon, color, Name
 			local RIGHT1 = ""
 			local RIGHT2 = ""
@@ -1603,11 +1697,26 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 					local green = min(255, (done / totalMoney) * 510)
 					hexcolorMoney = string_format("|cff%2x%2x00", red, green)
 				end
-				RIGHT1 = hexcolorMoney..E.func_MoneyString(CharInfo.PlayerData.Money)
+				RIGHT1 = hexcolorMoney..E.func_MoneyString(CharInfo.PlayerData.Money) .. "|r"
 				RIGHTforSORT = CharInfo.PlayerData.Money
 				total = total + CharInfo.PlayerData.Money
 			elseif myType == "Online" and CharInfo.PlayerData.realTotalTime then
-				RIGHT1 = E.func_SecondsToClock(CharInfo.PlayerData.realTotalTime)
+
+
+				local hexcolorOnline = "|cff000000"
+				if minOnline then
+					local done = CharInfo.PlayerData.realTotalTime - minOnline
+					local totalOnline = maxOnline - minOnline
+					local red = min(255, (1 - done / totalOnline) * 510)
+					local green = min(255, (done / totalOnline) * 510)
+					hexcolorOnline = string_format("|cff%2x%2x00", red, green)
+				end
+
+
+
+
+
+				RIGHT1 = hexcolorOnline..E.func_SecondsToClock(CharInfo.PlayerData.realTotalTime).."|r"
 				RIGHTforSORT = CharInfo.PlayerData.realTotalTime
 				total = total + CharInfo.PlayerData.realTotalTime
 			elseif myType == "Currency" and CharInfo.MASLENGO.Currency[ID] and E.func_textCENT_Currency(CharInfo, ID) ~= "" then
@@ -1636,7 +1745,7 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 				end
 				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHT2, RIGHTforSORT}
 			end
-		end
+		-- end
 	end
 	if hasTotal == true then
 		local index = 1
@@ -2340,6 +2449,16 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		-- textCENT = E.Gray_Color..DUNGEONS.."|r"
 		-- end
 		----------------------------------------------------------------
+	elseif tooltipKey == "Other_Mounts" then
+		for mountID in next, (E.OctoTable_Mounts) do
+
+			local mountIconNumber = E.func_mountIcon(mountID)
+			local mountIcon = E.func_texturefromIcon(mountIconNumber)
+			local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
+			local leftText = mountName
+			local rightText = E.func_mountIsCollected(mountID) and E.TRUE or E.NONE
+			tooltipCENT[#tooltipCENT+1] = {leftText, rightText}
+		end
 	elseif tooltipKey:find("_COMPANIONS") then
 		tooltipCENT = E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 		----------------------------------------------------------------
@@ -2441,7 +2560,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 					if addText then
 						-- Добавляем иконку Vignette
 						if addText.IconVignette then
-							vivod_LEFT = E.func_vignetteIcon(addText.IconVignette)..vivod_LEFT
+							vivod_LEFT = E.func_texturefromIcon(addText.IconVignette, nil, nil, true)..vivod_LEFT
 						end
 						if addText.Icon then
 							vivod_LEFT = E.func_texturefromIcon(addText.Icon)..vivod_LEFT
@@ -2450,7 +2569,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							-- vivod_LEFT = vivod_LEFT ..E.Purple_Color.." + "..MOUNTS ..":|r ".. E.func_mountName(addText.mount)
 							local mountIconNumber = E.func_mountIcon(addText.mount)
 							local mountIcon = E.func_texturefromIcon(mountIconNumber)
-							local mountName = mountIcon..E.func_mountIsCollected(addText.mount)..E.func_mountName(addText.mount).."|r"
+							local mountName = mountIcon..E.func_mountIsCollectedColor(addText.mount)..E.func_mountName(addText.mount).."|r"
 
 
 							vivod_LEFT = vivod_LEFT .. E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, mountName).."|r"
@@ -2460,6 +2579,9 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 						end
 						if addText.mapID then
 							vivod_LEFT = vivod_LEFT ..E.Gray_Color.." (".. E.func_mapName(addText.mapID)..")|r"
+						end
+						if addText.spellID then
+							vivod_LEFT = vivod_LEFT ..E.Pink_Color..E.func_spellName(addText.spellID).."|r"
 						end
 					end
 

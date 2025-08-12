@@ -17,6 +17,10 @@ if L then
 	L["Prying Eye Discovery"] = true
 	L["Undulating Foliage"] = true
 	L["Time Rift"] = true
+	L["Universal (k/M/B/T)"] = true
+	L["Localized format"] = true
+	L["Full with separators"] = true
+	L["Number Format"] = true
 
 	L["Min. Level"] = true
 	L["Max. Level"] = true
@@ -277,6 +281,10 @@ if L then
 	L["Prying Eye Discovery"] = "Находка любопытных"
 	L["Undulating Foliage"] = "Колыхающаяся листва"
 	L["Time Rift"] = "Временной разлом"
+	L["Universal (k/M/B/T)"] = "Универсальный (k/M/B/T)"
+	L["Localized format"] = "Локальный формат"
+	L["Full with separators"] = "Полный с разделителями"
+	L["Number Format"] = "Формат чисел"
 
 	L["Min. Level"] = "Мин. уровень"
 	L["Max. Level"] = "Макс. уровень"

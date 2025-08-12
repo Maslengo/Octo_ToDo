@@ -30,7 +30,8 @@ local ignoreNPCID = {
 	[171816] = true, -- KYRIAN (SHMOT ARENA)
 
 
-
+	[213627] = true, -- SKIP TWW (DALARAN 70lvl)
+	[232498] = true, -- SPAM (taz)
 }
 -- IGNORE 120914
 local gossipOptionIDs = {

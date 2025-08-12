@@ -25,7 +25,7 @@ tinsert(E.Modules, function()
 
 		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message).." "..E.Yellow_Color..currentTime.."|r")
 
-		C_Timer.After(1, function()
+		C_Timer.After(E.SPAM_TIME, function()
 			Screenshot()
 		end)
 	end

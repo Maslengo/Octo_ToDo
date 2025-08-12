@@ -12,6 +12,7 @@
 	<Script file="database\Spells.lua"/>
 	<Script file="database\Timers.lua"/>
 
+	<Script file="database\OctoTable_Mounts.lua"/>
 	<Script file="database\OctoTable_Reputations.lua"/>
 	<Script file="database\OctoTable_ReputationsDB.lua"/>
 

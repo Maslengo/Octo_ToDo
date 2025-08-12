@@ -1,6 +1,29 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+
+
+
+-- Переводы для названия настройки
+local NumberFormatSettingName = {
+	enUS = "Number Format",
+	ruRU = "Формат чисел",
+	deDE = "Zahlenformat",
+	frFR = "Format des nombres",
+	esES = "Formato numérico",
+	esMX = "Formato numérico",
+	ptBR = "Formato numérico",
+	itIT = "Formato numerico",
+	zhCN = "数字格式",
+	zhTW = "數字格式",
+	koKR = "숫자 형식",
+}
+
+-- Пример применения
+local settingName = NumberFormatSettingName[E.curLocaleLang] or NumberFormatSettingName["enUS"]
+
+
+
 -------------------------------------------------------------------------
 function E.func_CreateGeneralOptions()
 	local index = 0
@@ -32,6 +55,21 @@ function E.func_CreateGeneralOptions()
 					Octo_ToDo_DB_Vars.Config_prefix = value
 				end,
 				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			["Config_numberFormatMode"] = {
+				type = "select",
+				name = settingName, -- L["Number Format"],
+				values = {},
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_numberFormatMode
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_numberFormatMode = value
+				end,
+				width = E.FULL_WIDTH/3,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -408,7 +446,21 @@ function E.func_CreateGeneralOptions()
 	for index, name in ipairs(E.OctoTable_Prefixes) do
 		generalOptions.args.Config_prefix.values[index] = name
 	end
-	local tblFontFlags = {
+
+
+
+	local table_numberFormatMode = {
+		L["Universal (k/M/B/T)"],
+		L["Localized format"],
+		L["Full with separators"],
+	}
+	for index, name in ipairs(table_numberFormatMode) do
+		generalOptions.args.Config_numberFormatMode.values[index] = name
+	end
+
+
+
+	local table_FontFlags = {
 		"", -- (пустая строка) стандартный шрифт с антиалиасингом.
 		"MONOCHROME", -- шрифт без сглаживания (пиксельный).
 		"OUTLINE", -- шрифт с тонкой черной обводкой.
@@ -416,7 +468,7 @@ function E.func_CreateGeneralOptions()
 		"MONOCHROME, OUTLINE", -- пиксельный шрифт с тонкой обводкой.
 		"MONOCHROME, THICKOUTLINE", -- пиксельный шрифт с толстой обводкой.
 	}
-	for index, name in ipairs(tblFontFlags) do
+	for index, name in ipairs(table_FontFlags) do
 		generalOptions.args.Config_FontFlags.values[name] = name
 	end
 	-------------------------------------------------

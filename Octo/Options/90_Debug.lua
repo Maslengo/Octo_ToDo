@@ -380,6 +380,23 @@ function E.func_Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			PosFrameShown = {
+				type = "toggle",
+				name = "PosFrame.Shown",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.PosFrame.Shown
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.PosFrame.Shown = value
+					if Octo_MainFrame_PosFrame then
+						Octo_MainFrame_PosFrame:SetShown(value)
+					end
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			SellFrame = {
 				type = "toggle",
 				name = "SellFrame",
@@ -512,6 +529,36 @@ function E.func_Debug()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.DebugCache = value
 					E.DebugCache = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			DebugQC_Vignettes = {
+				type = "toggle",
+				name = "DebugQC_Vignettes",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.DebugQC_Vignettes
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugQC_Vignettes = value
+					E.DebugQC_Vignettes = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			DebugQC_Quests = {
+				type = "toggle",
+				name = "DebugQC_Quests",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.DebugQC_Quests
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugQC_Quests = value
+					E.DebugQC_Quests = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),

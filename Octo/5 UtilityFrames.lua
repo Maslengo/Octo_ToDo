@@ -221,7 +221,7 @@ function Octo_EventFrame_UtilityFrames:Octo_AbandonButton(frame)
 		button2 = NO,
 		hideOnEscape = 1,
 		whileDead = 1,
-		OnAccept = function() C_Timer.After(1, f_AbandonQuests) end,
+		OnAccept = function() C_Timer.After(E.SPAM_TIME, f_AbandonQuests) end,
 	}
 
 	local function func_onClick()

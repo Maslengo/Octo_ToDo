@@ -1,8 +1,39 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
+local function isCollected(mountID)
+	return select(11, C_MountJournal.GetMountInfoByID(mountID))
+end
 function E.func_Otrisovka_91_Other()
 	local OctoTable_Otrisovka_textCENT = {}
+
+
+
+	-- table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+	-- 	local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+	-- 	textLEFT = MOUNTS
+	-- 	tooltipKey = "Other_Mounts"
+
+	-- 	local count = 0
+	-- 	local total = 0
+	-- 	for mountID in next, (E.OctoTable_Mounts) do
+	-- 		if isCollected(mountID) then
+	-- 			count = count + 1
+	-- 		end
+	-- 		total = total + 1
+	-- 	end
+	-- 	textCENT = count.."/"..total
+	-- 	return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
+	-- end)
+
+
+
+
+
+
+
+
+
 
 	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)

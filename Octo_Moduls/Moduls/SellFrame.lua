@@ -204,7 +204,7 @@ local function BankTransfer(fromBank)
 	-- Защита от повторного клика
 	if not E.fromBank_lock then
 		E.fromBank_lock = true
-		C_Timer.After(1, function() E.fromBank_lock = false end)
+		C_Timer.After(E.SPAM_TIME, function() E.fromBank_lock = false end)
 
 		for bag = startBag, endBag do
 			for slot = 1, GetContainerNumSlots(bag) do

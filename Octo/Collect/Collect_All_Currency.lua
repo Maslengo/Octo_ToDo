@@ -25,7 +25,6 @@ function E.Collect_All_Currency()
 		-- for CurrencyID, v in next, (list) do
 		----------------------------------------------------------------
 
-		-- НЕ УЧИТЫВАЕТ ТЕКУЩЕГО ПЕРСА?
 		local currencyCache = {}
 
 		for CurrencyID,	cachedName in next, (Octo_Cache_DB.AllCurrencies) do

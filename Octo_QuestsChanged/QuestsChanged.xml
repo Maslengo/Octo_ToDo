@@ -1,12 +1,7 @@
 <Ui>
 
-
-
-	<Script file="5 TEST.lua"/>
-
-	<Script file="1 QuestsChanged addons.lua"/>
-	<Script file="2 QuestsChanged log.lua"/>
-	<Script file="3 QuestsChanged vignettes.lua"/>
-	<Script file="4 QuestChanged OCTO.lua"/>
+	<Script file="1 Quests.lua"/>
+	<Script file="2 Vignettes.lua"/>
+	<Script file="3 Octo_MainFrame_QuestsChanged.lua"/>
 
 </Ui>
