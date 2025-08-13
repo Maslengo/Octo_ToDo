@@ -4,6 +4,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
 local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 local function func_InitOptions()
+	print ("func_InitOptions")
 	----------------------------------------------------------------
 	AceConfigRegistry:RegisterOptionsTable("CreateGeneralOptions", E.func_CreateGeneralOptions())
 	AceConfigRegistry:RegisterOptionsTable("Automatization", E.func_Automatization())

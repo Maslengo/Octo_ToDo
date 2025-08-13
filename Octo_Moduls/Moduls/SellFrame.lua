@@ -61,7 +61,6 @@ local textR, textG, textB, textA = 1, 1, 1, 1
 local JustifyV = "MIDDLE" -- Вертикальное выравнивание
 local JustifyH = "LEFT" -- Горизонтальное выравнивание
 
-if not Octo_ToDo_DB_Vars.SellFrame then return end
 
 ----------------------------------------------------------------
 -- Локальные переменные для работы с инвентарем
@@ -527,6 +526,9 @@ E.func_RegisterMyEventsToFrames(Octo_EventFrame_SellFrame, MyEventsTable)
 function Octo_EventFrame_SellFrame:VARIABLES_LOADED()
 	Octo_EventFrame_SellFrame:UnregisterEvent("VARIABLES_LOADED")
 	Octo_EventFrame_SellFrame.VARIABLES_LOADED = nil
+
+	-- if not Octo_ToDo_DB_Vars.SellFrame then return end
+
 	Octo_EventFrame_SellFrame.func_CreateTradeButtons()
 	Octo_EventFrame_SellFrame.func_CreateBankButtons()
 end

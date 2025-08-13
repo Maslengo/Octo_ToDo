@@ -60,7 +60,7 @@ function E.func_Otrisovka_90_Holidays()
 					textCENT = E.func_textCENT_Currency(CharInfo, 1166)
 					myType = {"Currency", 1166}
 					----------------------------------------------------------------
-					textLEFT = timewalkDungeonName .. E.func_currencyName(1166)
+					textLEFT = E.func_currencyName(1166)..timewalkDungeonName
 					colorLEFT = E.Event_Color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey

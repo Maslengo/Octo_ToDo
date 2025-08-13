@@ -7,16 +7,15 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo") -- Локализация
 local LibDataBroker = LibStub("LibDataBroker-1.1") -- Для брокера данных
 local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
-
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
+	print ("func_CreateDataCacheAtStart")
 	----------------------------------------------------------------
 	-- local tblCurrencies = {}
 	local tblQuests = {}
 	local tblItems = {}
 	local tblFollowers = {}
 	-- local tblSpells = {}
-
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
 		for _, currencyID in ipairs(v.Currencies) do
 			local currency =  E.func_currencyName(currencyID) -- "AllCurrencies"
@@ -65,63 +64,54 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 			tblQuests[info.questID] = true
 		end
 	end
-		-- local startTime = debugprofilestop()
-
-		-- local totalQuests = 0
-		-- local totalFollowers = 0
-
-		for _, CharInfo in next, Octo_ToDo_DB_Levels do
-			local MASLENGO = CharInfo.MASLENGO
-			if MASLENGO then
-				-- Квесты
-				local questList = MASLENGO.ListOfQuests
-				if questList then
-					for questID in next, questList do
-						tblQuests[questID] = true
-						-- totalQuests = totalQuests + 1
-					end
+	-- local startTime = debugprofilestop()
+	-- local totalQuests = 0
+	-- local totalFollowers = 0
+	for _, CharInfo in next, Octo_ToDo_DB_Levels do
+		local MASLENGO = CharInfo.MASLENGO
+		if MASLENGO then
+			-- Квесты
+			local questList = MASLENGO.ListOfQuests
+			if questList then
+				for questID in next, questList do
+					tblQuests[questID] = true
+					-- totalQuests = totalQuests + 1
 				end
-
-				-- Последователи
-				local garrisonFollowers = MASLENGO.GarrisonFollowers
-				if garrisonFollowers then
-					for _, followerType in ipairs(E.OctoTable_followerTypeIDs) do
-						local followers = garrisonFollowers[followerType.name]
-						if followers then
-							for _, followerID in ipairs(followers) do
-								local name = E.func_getFollowerName(followerID)
-								-- totalFollowers = totalFollowers + 1
-								-- можно логировать name, если нужно
-								-- print("Follower:", name)
-							end
+			end
+			-- Последователи
+			local garrisonFollowers = MASLENGO.GarrisonFollowers
+			if garrisonFollowers then
+				for _, followerType in ipairs(E.OctoTable_followerTypeIDs) do
+					local followers = garrisonFollowers[followerType.name]
+					if followers then
+						for _, followerID in ipairs(followers) do
+							local name = E.func_getFollowerName(followerID)
+							-- totalFollowers = totalFollowers + 1
+							-- можно логировать name, если нужно
+							-- print("Follower:", name)
 						end
 					end
 				end
-
-				local ItemsInBag = MASLENGO.ItemsInBag
-				if ItemsInBag then
-					for itemID, itemCount in next, (MASLENGO.ItemsInBag) do
-						tblItems[itemID] = true
-					end
+			end
+			local ItemsInBag = MASLENGO.ItemsInBag
+			if ItemsInBag then
+				for itemID, itemCount in next, (MASLENGO.ItemsInBag) do
+					tblItems[itemID] = true
 				end
 			end
 		end
-
-		-- local endTime = debugprofilestop()
-		-- local elapsedMs = endTime - startTime
-		-- local elapsedSec = elapsedMs / 1000
-
-		-- print(string.format("Время выполнения: %.2f мс (%.3f сек)", elapsedMs, elapsedSec))
-		-- print("Обработано квестов:", totalQuests)
-		-- print("Обработано последователей:", totalFollowers)
-
-
+	end
+	-- local endTime = debugprofilestop()
+	-- local elapsedMs = endTime - startTime
+	-- local elapsedSec = elapsedMs / 1000
+	-- print(string.format("Время выполнения: %.2f мс (%.3f сек)", elapsedMs, elapsedSec))
+	-- print("Обработано квестов:", totalQuests)
+	-- print("Обработано последователей:", totalFollowers)
 	local promise = LibThingsLoad:QuestsByKey(tblQuests)
 	promise:AddItemsByKey(tblItems)
 	-- promise:Then(function()
-	-- 	print ("THEN")
+	--     print ("THEN")
 	-- end)
-
 	promise:ThenForAllWithCached(function(promise, id, type)
 			if type == "quest" then
 				local quest = E.func_questName(id) -- "AllQuests"
@@ -130,13 +120,13 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 				local qw = C_Item.GetItemQualityByID(id)
 			end
 			-- if Octo_MainFrame_ToDo:IsShown() then
-			-- 	E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
+			--     E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
 			-- end
 	end)
 	-- promise:FailWithChecked(function(promise, id, type)
-	-- 	if type == "quest" then
-	-- 		print (id)
-	-- 	end
+	--     if type == "quest" then
+	--         print (id)
+	--     end
 	-- end)
 	----------------------------------------------------------------
 end
@@ -246,17 +236,14 @@ local function replaceZeroWithNil(tbl, smth)
 		return tbl
 	end
 end
-
 ----------------------------------------------------------------
 function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 	if not Octo_ToDo_DB_Levels then return end
-
 	-- Получаем данные текущего игрока
 	local currentGUID = E.curGUID
 	local currentName = E.curCharName
 	local currentRealm = E.curServer
 	local foundDuplicates = false
-
 	-- Проходим по всем записям
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
@@ -264,7 +251,6 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 			if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
 			CharInfo.PlayerData.Name == currentName and
 			CharInfo.PlayerData.curServer == currentRealm then
-
 				-- Если это НЕ текущий игрок - отмечаем найденный дубликат
 				if GUID ~= currentGUID then
 					foundDuplicates = true
@@ -273,7 +259,6 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 			end
 		end
 	end
-
 	-- Если дубликаты найдены - выполняем очистку
 	if foundDuplicates then
 		for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
@@ -281,7 +266,6 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 				if CharInfo.PlayerData.Name and CharInfo.PlayerData.curServer and
 				CharInfo.PlayerData.Name == currentName and
 				CharInfo.PlayerData.curServer == currentRealm then
-
 					if GUID ~= currentGUID then
 						print(L["Removing duplicate: "], CharInfo.PlayerData.Name.."-"..CharInfo.PlayerData.curServer, "GUID:", GUID)
 						Octo_ToDo_DB_Levels[GUID] = nil
@@ -401,11 +385,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		SavedWorldBoss = {}, -- Сохраненные мировые боссы
 		UniversalQuest = {}, -- Универсальные квесты
 	}
-
-
-
-
-
 	-- Стандартные значения для данных игрока
 	local GARRISON_default = {
 		cacheSize = 0,
@@ -415,7 +394,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 	-- Стандартные значения для GARRISON таблицы
 	local GARRISON_DEFAULTS = {
 		buids = {
-
 		},
 		summary = {
 			inProgress = {},
@@ -434,9 +412,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		local MASLENGO = CharInfo.MASLENGO
 		E.func_InitSubTable(CharInfo, "PlayerData")
 		local PlayerData = CharInfo.PlayerData
-
-
-
 		-- Заполняем стандартные значения
 		for k, v in next, (defaults) do
 			E.func_InitField(PlayerData, k, v)
@@ -447,20 +422,15 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
-
-
 		for garrisonType, id in next, (Enum.GarrisonType) do
 			MASLENGO.garrisonType[id] = MASLENGO.garrisonType[id] or {}
 			-- MASLENGO.HasGarrison[id] = MASLENGO.HasGarrison[id] or false
 			E.func_InitField(MASLENGO, "HasGarrison", false)
 		end
-
-
 		for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
 			MASLENGO.GarrisonFollowers[followerData.name] = MASLENGO.GarrisonFollowers[followerData.name] or {}
 			MASLENGO.GarrisonFollowersCount[followerData.name] = MASLENGO.GarrisonFollowersCount[followerData.name] or {}
 		end
-
 		-- Заполняем стандартные значения
 		for k, v in next, (GARRISON_default) do
 			E.func_InitField(MASLENGO.GARRISON, k, v)
@@ -476,7 +446,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 				MASLENGO.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
-
 		-- Инициализируем данные репутации
 		for _, tbl in ipairs(E.OctoTable_Reputations) do
 			for _, v in ipairs(tbl) do
@@ -501,13 +470,12 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		DebugEvent = false, -- Отладка событий
 		DebugFunction = false, -- Отладка функций
 		DebugIDs = false, -- Отладка ID
-		DebugInfo = false, -- Отладка информации
+		DebugCharacterInfo = false, -- Отладка информации
 		DebugGossip = false, -- Отладка информации
 		DebugCache = false, -- Отладка информации
 		DebugQC_Vignettes = false, -- Отладка информации
 		DebugQC_Quests = false, -- Отладка информации
-
-
+		DebugUniversal = false, -- Отладка информации
 		editorFontSize = 12,
 		editorTabSpaces = 4,
 		editorTheme = "Twilight",
@@ -569,10 +537,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		CVar = true, -- CVar настройки
 		Dungeons = true, -- Подземелья
 		Config_Texture = "Blizzard Raid Bar",
-
-
-
-
 		Gold = true, -- Золото
 		Holidays = true, -- Праздники
 		ItemLevel = true, -- Уровень предметов
@@ -606,20 +570,13 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
 	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontSize = 11
 	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontFlags = "OUTLINE"
-
-
-
-
 	-- Инициализируем таблицы настроек
 	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
-
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = "OUTLINE"
-
-
 	-- Настройки фрейма скорости
 	E.func_InitSubTable(Octo_ToDo_DB_Vars, "SpeedFrame")
 	local speedFrameDefaults = {
@@ -630,6 +587,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		yOfs = 67 -- Смещение по Y
 	}
 	for k, v in next, (speedFrameDefaults) do
+		print ("speedFrameDefaults")
 		E.func_InitField(Octo_ToDo_DB_Vars.SpeedFrame, k, v)
 	end
 	-- Настройки позиционного фрейма
@@ -670,7 +628,6 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllFollowers")
 	E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
 	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
-
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
@@ -689,14 +646,8 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Account()
 	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllFollowers")
 	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllAchievements")
 	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllVignettes")
-
 	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "watchedMovies")
 end
-
-
-
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -763,10 +714,8 @@ end
 function Octo_EventFrame_WTF:Octo_Debug_DB()
 	Octo_Debug_DB = E.func_InitTable(Octo_Debug_DB)
 	E.func_InitSubTable(Octo_Debug_DB, "Functions")
-
 	if not Octo_Debug_DB then return end
 	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local currentKey = CharInfo.PlayerData.Name.." - "..CharInfo.PlayerData.curServer
@@ -827,7 +776,6 @@ function Octo_EventFrame_WTF:Daily_Reset()
 				-- Устанавливаем новую временную метку вне зависимости от региона
 				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 				CharInfo.PlayerData.needResetDaily = true
-
 				-- Сбрасываем ежедневные квесты
 				for _, data in ipairs(E.OctoTable_UniversalQuest) do
 					if data.reset == "Daily" then
@@ -841,7 +789,6 @@ function Octo_EventFrame_WTF:Daily_Reset()
 					CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
 					CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
 				end
-
 				-- Сбрасываем деньги
 				if CharInfo.PlayerData.MoneyOnDaily and CharInfo.PlayerData.Money then
 					CharInfo.PlayerData.MoneyOnDaily = CharInfo.PlayerData.Money
@@ -885,7 +832,6 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 					end
 				end
-
 				-- Сбрасываем деньги
 				if CharInfo.PlayerData.MoneyOnWeekly and CharInfo.PlayerData.Money then
 					CharInfo.PlayerData.MoneyOnWeekly = CharInfo.PlayerData.Money
@@ -916,6 +862,61 @@ function Octo_EventFrame_WTF:Month_Reset()
 	end
 end
 ----------------------------------------------------------------
+
+function Octo_EventFrame_WTF:func_CheckAll()
+	-- Чистка персонажей при старте
+	self:CleaningIdenticalCharacters()
+	-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
+	-- Инициализация всех компонентов
+	self:Octo_Cache_DB() -- Кэш данных
+	self:Octo_ToDo_DB_Account() -- Данные для всего аккаунта
+	self:DatabaseTransfer() -- Перенос данных
+	self:Octo_ToDo_DB_Levels() -- Данные персонажей
+	self:Octo_ToDo_DB_Vars() -- Настройки
+	self:Octo_ToDo_DB_Other() -- Другие данные
+	self:Octo_Minecraft_DB() -- Minecraft стиль
+	self:Octo_Achievements_DB() -- Достижения
+	self:Octo_AddonsTable_DB() -- Таблица аддонов
+	self:Octo_AddonsManager_DB() -- Менеджер аддонов
+	self:Octo_Debug_DB() -- Отладка
+	self:Octo_LoadAddons_DB()
+	self:Octo_Moduls_DB()
+	self:Octo_QuestsChanged_DB() -- Изменения квестов
+	-- Применяем старые изменения
+	E.func_setOldChanges()
+	if not E.func_ConcatAtStart_UniversalQuestQWE then
+		E.func_ConcatAtStart_UniversalQuestQWE = true
+		E.func_Universal_91_Concat()
+	end
+	-- Очистка и сброс данных
+	self:Daily_Reset()
+	self:Weekly_Reset()
+	self:Month_Reset()
+	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+end
+local function GetSecondsUntilReset()
+	if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then
+		return C_DateAndTime.GetSecondsUntilDailyReset()
+	else
+		return GetQuestResetTime()
+	end
+end
+function Octo_EventFrame_WTF:ScheduleNextReset()
+	local seconds = GetSecondsUntilReset()
+	if seconds and seconds > 0 then
+		-- На случай, если уже был таймер — отменим
+		if timerHandle then
+			timerHandle:Cancel()
+		end
+		-- Запускаем новый
+		timerHandle = C_Timer.NewTimer(seconds + 1, function()
+				Octo_EventFrame_WTF:func_CheckAll()
+				Octo_EventFrame_WTF:ScheduleNextReset() -- Планируем следующий ресет
+		end)
+		print("Next daily reset in " .. E.func_SecondsToClock(seconds) .. " seconds")
+	end
+end
+----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED", -- Событие загрузки аддона
 	"VARIABLES_LOADED", -- Событие загрузки переменных
@@ -932,68 +933,28 @@ function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
 		self.ADDON_LOADED = nil
 		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-
-
 	end
 end
-
-
 function Octo_EventFrame_WTF:VARIABLES_LOADED()
-	-- Чистка персонажей при старте
-	self:CleaningIdenticalCharacters()
-	-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
-	-- Инициализация всех компонентов
-	self:Octo_Cache_DB() -- Кэш данных
-	self:Octo_ToDo_DB_Account() -- Данные для всего аккаунта
-
-	self:DatabaseTransfer() -- Перенос данных
-	self:Octo_ToDo_DB_Levels() -- Данные персонажей
-	self:Octo_ToDo_DB_Vars() -- Настройки
-	self:Octo_ToDo_DB_Other() -- Другие данные
-	self:Octo_Minecraft_DB() -- Minecraft стиль
-	self:Octo_Achievements_DB() -- Достижения
-	self:Octo_AddonsTable_DB() -- Таблица аддонов
-	self:Octo_AddonsManager_DB() -- Менеджер аддонов
-	self:Octo_Debug_DB() -- Отладка
-	self:Octo_LoadAddons_DB()
-	self:Octo_Moduls_DB()
-	self:Octo_QuestsChanged_DB() -- Изменения квестов
-	-- Применяем старые изменения
-	E.func_setOldChanges()
-
-	if not E.func_ConcatAtStart_UniversalQuestQWE then
-		E.func_ConcatAtStart_UniversalQuestQWE = true
-		E.func_Universal_91_Concat()
-	end
-
-	-- Очистка и сброс данных
-	self:Daily_Reset()
-	self:Weekly_Reset()
-	self:Month_Reset()
-
-	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+	self:func_CheckAll()
 end
-
-
 function Octo_EventFrame_WTF:PLAYER_LOGIN()
 	-- Обновляем кэш
-	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
-		self:func_CreateDataCacheAtStart()
+	if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
+		Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
 		Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
-
-
-
-
-
-		Octo_ToDo_DB_Vars.DebugButton = E.DebugButton -- Отладка кнопок
-		Octo_ToDo_DB_Vars.DebugEvent = E.DebugEvent -- Отладка событий
-		Octo_ToDo_DB_Vars.DebugFunction = E.DebugFunction -- Отладка функций
-		Octo_ToDo_DB_Vars.DebugIDs = E.DebugIDs  -- Отладка ID
-		Octo_ToDo_DB_Vars.DebugInfo = E.DebugInfo -- Отладка информации
-
-
-
-	-- end
+		Octo_ToDo_DB_Vars.DebugButton = E.DebugButton
+		Octo_ToDo_DB_Vars.DebugEvent = E.DebugEvent
+		Octo_ToDo_DB_Vars.DebugFunction = E.DebugFunction
+		Octo_ToDo_DB_Vars.DebugIDs = E.DebugIDs
+		Octo_ToDo_DB_Vars.DebugCharacterInfo = E.DebugCharacterInfo
+		Octo_ToDo_DB_Vars.DebugGossip = E.DebugGossip
+		Octo_ToDo_DB_Vars.DebugCache = E.DebugCache
+		Octo_ToDo_DB_Vars.DebugQC_Vignettes = E.DebugQC_Vignettes
+		Octo_ToDo_DB_Vars.DebugQC_Quests = E.DebugQC_Quests
+		Octo_ToDo_DB_Vars.DebugUniversal = E.DebugUniversal
+	end
+	self:ScheduleNextReset()
 end

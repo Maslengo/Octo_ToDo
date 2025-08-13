@@ -2491,12 +2491,12 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 				end
 				forcedMaxQuest = totalQuest
 				-- Заголовок тултипа (если квестов больше одного)
-				if E.DebugInfo then
+				if E.DebugUniversal then
 					tooltipCENT[#tooltipCENT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 				end
 				if totalQuest > 1 then
 					local textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
-					tooltipCENT[#tooltipCENT+1] = {textLEFT, TOTAL..": "..totalQuest}
+					tooltipCENT[#tooltipCENT+1] = {" ", TOTAL..": "..totalQuest}
 					tooltipCENT[#tooltipCENT+1] = {" "}
 				end
 				-- Список квестов в тултипе
@@ -2853,7 +2853,7 @@ function E.func_Tooltip_Chars(CharInfo)
 		tooltip_Chars[#tooltip_Chars+1] = {E.func_itemName(122284), CharInfo.MASLENGO.ItemsInBag[122284]}
 	end
 	-- Debug information
-	if E.DebugInfo then
+	if E.DebugCharacterInfo then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", ""}
 		tooltip_Chars[#tooltip_Chars+1] = {E.DEVTEXT, ""}
 		if CharInfo.PlayerData.tmstp_Daily then

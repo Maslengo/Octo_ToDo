@@ -265,7 +265,7 @@ function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
 			elseif value == false then
 				value = E.FALSE
 			end
-			if E.DebugInfo then
+			if E.DebugCharacterInfo then
 				if type(value) ~= "table" then
 					value = tostring(value)
 					if value == "" then value = " " end

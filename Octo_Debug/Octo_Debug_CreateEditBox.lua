@@ -1,5 +1,6 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+if not Octo_ToDo_DB_Vars then return end
 ----------------------------------------------------------------
 -- Создаем фрейм для отладки
 local Octo_EventFrame = CreateFrame("FRAME")
@@ -211,7 +212,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	local editBox = frame.editFrame:GetEditBox()
 	editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
 	editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
-	editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize or 12, "")
+	editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize, "")
 	editBox:HookScript("OnCursorChanged", function(editBox)
 			local text = frame.HZ.GetText(editBox)
 			local pos = editBox:GetCursorPosition()

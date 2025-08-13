@@ -6,6 +6,7 @@ local AceConfigDialog = LibStub("AceConfigDialog-3.0")
 -------------------------------------------------------------------------
 -------------------------------------------------------------------------
 function E.func_Debug()
+	print ("func_Debug")
 	local index = 0
 	local function GetOrder()
 		index = index + 1
@@ -444,16 +445,16 @@ function E.func_Debug()
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			DebugInfo = {
+			DebugCharacterInfo = {
 				type = "toggle",
-				name = "DebugInfo",
+				name = "DebugCharacterInfo",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.DebugInfo
+					return Octo_ToDo_DB_Vars.DebugCharacterInfo
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.DebugInfo = value
-					E.DebugInfo = value
+					Octo_ToDo_DB_Vars.DebugCharacterInfo = value
+					E.DebugCharacterInfo = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -559,6 +560,21 @@ function E.func_Debug()
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.DebugQC_Quests = value
 					E.DebugQC_Quests = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			DebugUniversal = {
+				type = "toggle",
+				name = "DebugUniversal",
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.DebugUniversal
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.DebugUniversal = value
+					E.DebugUniversal = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),

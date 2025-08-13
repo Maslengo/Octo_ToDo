@@ -26,7 +26,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2371)..": ".."Rares",
 			name_save = "Rares2371",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 
@@ -75,7 +75,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2255)..": ".."Rares",
 			name_save = "Rares2255",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{81695, forcedText = {npcID = 216031}, },
@@ -97,7 +97,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2215)..": ".."Rares",
 			name_save = "Rares2215",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{81763, forcedText = {npcID = 207802}, },
@@ -120,7 +120,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2248)..": ".."Rares",
 			name_save = "Rares2248",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{82196, forcedText = {npcID = 219281}, },
@@ -143,7 +143,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2214)..": ".."Rares",
 			name_save = "Rares2214",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{81674, forcedText = {npcID = 220265}, },
@@ -166,7 +166,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2369)..": ".."Rares",
 			name_save = "Rares2369",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{85672, forcedText = {npcID = 229982}, },
@@ -187,7 +187,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2346)..": ".."Rares",
 			name_save = "Rares2346",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{84917, forcedText = {npcID = 230931}, },
@@ -224,7 +224,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2248)..": ".."Treasures",
 			name_save = "Treasures2248",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{82715},
@@ -254,7 +254,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2369)..": ".."Treasures",
 			name_save = "Treasures2369",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{87446},
@@ -282,7 +282,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2346)..": ".."Treasures",
 			name_save = "Treasures2346",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{85683},
@@ -308,7 +308,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2214)..": ".."Treasures",
 			name_save = "Treasures2214",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{82230},
@@ -332,7 +332,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2255)..": ".."Treasures",
 			name_save = "Treasures2255",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{82520},
@@ -356,7 +356,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2215)..": ".."Treasures",
 			name_save = "Treasures2215",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{83298},
@@ -385,7 +385,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_mapName(2346)..": ".."Treasure",
 			name_save = "Treasure2346",
-			reset = "Daily",
+			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
 				{85683},
@@ -446,7 +446,7 @@ function E.func_Universal_11_TheWarWithin()
 			showTooltip = true,
 			textleft = E.func_questName(84370),
 			name_save = "TheKeytoSuccess",
-			reset = "Once",
+			reset = "Daily", -- "Once", ???
 			desc = "TheWarWithin",
 			quests = {
 				{84370},
