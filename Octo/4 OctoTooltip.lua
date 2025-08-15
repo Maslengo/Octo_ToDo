@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local Octo_EventFrame_OctoTooltip = CreateFrame("FRAME")
-Octo_EventFrame_OctoTooltip:Hide()
+local EventFrame = CreateFrame("FRAME")
 local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemplate")
 OctoTooltip:Hide()
 ----------------------------------------------------------------
@@ -88,15 +87,14 @@ local func_OnAcquired do
 		end
 	end
 end
-function Octo_EventFrame_OctoTooltip:Octo_Frame_init(frame, node)
+function EventFrame:Octo_Frame_init(frame, node)
 	-- Получаем данные из узла и кэшируем часто используемые переменные
 	local frameData = node:GetData()
 	local lineFrames = frame.lineFrames  -- Кэшируем для быстрого доступа
 	-- local numData = #frameData           -- Количество элементов в данных
-	local numData = Octo_EventFrame_OctoTooltip.columns or 1           -- Количество элементов в данных
-	-- print (Octo_EventFrame_OctoTooltip.columns, totalColumns, numData)
+	local numData = EventFrame.columns or 1           -- Количество элементов в данных
 	local numLines = #lineFrames         -- Количество доступных lineFrames
-	local columnSizes = Octo_EventFrame_OctoTooltip.COLUMN_SIZES  -- Размеры колонок (если есть)
+	local columnSizes = EventFrame.COLUMN_SIZES  -- Размеры колонок (если есть)
 	-- Обрабатываем данные и обновляем соответствующие lineFrames
 	for i = 1, numData do
 		local currentText = frameData[i] or ""
@@ -122,7 +120,6 @@ function Octo_EventFrame_OctoTooltip:Octo_Frame_init(frame, node)
 	for i = numData + 1, numLines do
 		lineFrames[i].text:SetText()
 	end
-
 end
 local function GetTipAnchor(frame)
 	local x, y = frame:GetCenter()
@@ -133,7 +130,7 @@ local function GetTipAnchor(frame)
 	local vhalf = (y > UIParent:GetHeight() / 2) and "TOP" or "BOTTOM"
 	return vhalf .. hhalf, frame, (vhalf == "TOP" and "BOTTOM" or "TOP") .. hhalf
 end
-function Octo_EventFrame_OctoTooltip:func_SmartAnchorTo(frame, point)
+function EventFrame:func_SmartAnchorTo(frame, point)
 	if not frame then
 		return error("Invalid frame provided.", 2)
 	end
@@ -146,24 +143,20 @@ function Octo_EventFrame_OctoTooltip:func_SmartAnchorTo(frame, point)
 		-- OctoTooltip:SetPoint(GetTipAnchor(frame))
 	end
 end
-
-
 local function TooltipOnEnter()
-	if Octo_EventFrame_OctoTooltip.shouldShowScrollBar then
+	if EventFrame.shouldShowScrollBar then
 		OctoTooltip:Show()
 		OctoTooltip:SetPropagateMouseMotion(false)
 	else
 		OctoTooltip:SetPropagateMouseMotion(true)
 	end
 end
-
 local function TooltipOnLeave()
 	OctoTooltip:Hide()
 end
-
 local function TooltipOnShow()
 	local scrollBar = OctoTooltip.ScrollBar
-	local shouldShow = Octo_EventFrame_OctoTooltip.shouldShowScrollBar
+	local shouldShow = EventFrame.shouldShowScrollBar
 	if shouldShow ~= scrollBar:IsShown() then
 		if shouldShow then
 			scrollBar:Show()
@@ -172,8 +165,7 @@ local function TooltipOnShow()
 		end
 	end
 end
-
-function Octo_EventFrame_OctoTooltip:Create_OctoTooltip()
+function EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetPropagateMouseClicks(false)
 	OctoTooltip:SetPropagateMouseMotion(false)
 	OctoTooltip:SetHitRectInsets(-1, -1, -1, -1) -- Коррекция области нажатия (-4 увеличение)
@@ -198,7 +190,6 @@ function Octo_EventFrame_OctoTooltip:Create_OctoTooltip()
 	OctoTooltip.ScrollBar = CreateFrame("EventFrame", nil, OctoTooltip, "MinimalScrollBar")
 	OctoTooltip.ScrollBar:SetPoint("TOPLEFT", OctoTooltip.ScrollBox, "TOPRIGHT", -15, -3)
 	OctoTooltip.ScrollBar:SetPoint("BOTTOMLEFT", OctoTooltip.ScrollBox, "BOTTOMRIGHT", -15, 3)
-
 	OctoTooltip.ScrollBar:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Back:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Forward:SetPropagateMouseMotion(true)
@@ -231,15 +222,12 @@ local function calculateColumnWidths(node)
 	end
 	return columnWidths
 end
-function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
+function EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 	-- fpde(tbl)
 	local lines = 0
 	local columns = 0
 	local DataProvider = CreateTreeDataProvider()
 	local COLUMN_SIZES = {}
-
-
-
 	-- Если есть заголовки, вычисляем их ширину, но не добавляем в DataProvider
 	if tbl.Header then
 		-- Создаем временный узел только для расчета ширины
@@ -251,7 +239,6 @@ function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
 		-- DataProvider:Remove(tempHeaderNode) -- Удаляем, чтобы не мешал
 	end
 	local newColumnsNumber = 0
-
 	for stroka, v in ipairs(tbl) do
 		lines = lines + 1
 		local zxc = {}
@@ -290,17 +277,15 @@ function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
 			end
 		end
 	end
-	-- print ("newColumnsNumber:", newColumnsNumber, "columns:", columns)
-
-	Octo_EventFrame_OctoTooltip.COLUMN_SIZES = COLUMN_SIZES
-	Octo_EventFrame_OctoTooltip.columns = columns
+	EventFrame.COLUMN_SIZES = COLUMN_SIZES
+	EventFrame.columns = columns
 	local total_width = INDENT_TEST*2 -- ОТСТУП
 	for i = 1, columns do
-		total_width = total_width + Octo_EventFrame_OctoTooltip.COLUMN_SIZES[i]
+		total_width = total_width + EventFrame.COLUMN_SIZES[i]
 	end
 	-- lines = #tbl
 	local shouldShowScrollBar = LINES_MAX < lines
-	Octo_EventFrame_OctoTooltip.shouldShowScrollBar = shouldShowScrollBar
+	EventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
 		total_width = total_width + INDENT_SCROLL
 	end
@@ -313,20 +298,19 @@ function Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(tbl)
 		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*lines)
 	end
 end
-
 function E.func_OctoTooltip_OnEnter(frame, point) -- ПОФИКСИТЬ (3им аргументом сделать point) либо повешать на объект 1395 hidingbar
 	if not frame.tooltip or #frame.tooltip == 0 then return end
 	if type(point) == "table" then
-		Octo_EventFrame_OctoTooltip:func_SmartAnchorTo(frame, point)
+		EventFrame:func_SmartAnchorTo(frame, point)
 	else
-		Octo_EventFrame_OctoTooltip:func_SmartAnchorTo(frame)
+		EventFrame:func_SmartAnchorTo(frame)
 	end
-	Octo_EventFrame_OctoTooltip:func_OctoTooltip_CreateDataProvider(frame.tooltip)
+	EventFrame:func_OctoTooltip_CreateDataProvider(frame.tooltip)
 	OctoTooltip:Show()
 	if not frame.initScripts then
 		frame.initScripts = true
 		frame:SetScript("OnLeave", function()
-				if not Octo_EventFrame_OctoTooltip.shouldShowScrollBar or not OctoTooltip:IsMouseOver() then
+				if not EventFrame.shouldShowScrollBar or not OctoTooltip:IsMouseOver() then
 					OctoTooltip:Hide()
 				end
 		end)
@@ -338,9 +322,8 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_OctoTooltip, MyEventsTable)
-
-function Octo_EventFrame_OctoTooltip:VARIABLES_LOADED()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")
 	self.VARIABLES_LOADED = nil
 	self:Create_OctoTooltip()

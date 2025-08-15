@@ -28,10 +28,8 @@ function E.func_Universal_06_WarlordsofDraenor()
 			quests = {
 				{34378, faction = "Horde",},
 				{34586, faction = "Alliance",},
-
 				{36567, faction = "Horde",},
 				{36592, faction = "Alliance",},
-
 				{36614, faction = "Horde",},
 				{36615, faction = "Alliance",},
 			},

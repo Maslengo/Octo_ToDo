@@ -1,10 +1,9 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+--
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 if not C_EventUtils.IsEventValid("VIGNETTE_MINIMAP_UPDATED") then return end
-local Octo_EventFrame = CreateFrame("FRAME")
-Octo_EventFrame:Hide()
-
-
 local GetVignettePosition = GetVignettePosition or C_VignetteInfo.GetVignettePosition
 local GetVignettes = GetVignettes or C_VignetteInfo.GetVignettes
 local GetVignetteInfo = GetVignetteInfo or C_VignetteInfo.GetVignetteInfo
@@ -19,8 +18,6 @@ local function VignettePosition(vignetteGUID)
 end
 --  Добавление новой виньетки в базу
 local function AddVignettesToDB(vignetteInfo)
-	if not Octo_QuestsChanged_DB then return end
-	Octo_QuestsChanged_DB.QC_Vignettes = Octo_QuestsChanged_DB.QC_Vignettes or {}
 	local GUID = vignetteInfo.vignetteGUID
 	local atlasName = vignetteInfo.atlasName
 	local id = vignetteInfo.vignetteID
@@ -29,8 +26,8 @@ local function AddVignettesToDB(vignetteInfo)
 	local curLocation, locationsFind = E.func_GetCurrentLocation()
 	if mapID and locationsFind then
 		local vignetteKey = atlasName..name..mapID..E.curCharName
-		if not Octo_QuestsChanged_DB.QC_Vignettes[vignetteKey] then
-			if Octo_ToDo_DB_Vars.DebugQC_Vignettes then
+		if not EventFrame.savedVars.QC_Vignettes[vignetteKey] then
+			if Octo_Debug_DB.DebugQC_Vignettes then
 				print (atlasName, E.Gray_Color.."id:"..id.."|r", E.func_texturefromIcon(atlasName, nil, nil, true), name)
 			end
 			local vignettes = {
@@ -48,11 +45,11 @@ local function AddVignettesToDB(vignetteInfo)
 				name = name,
 				atlas = atlasName,
 			}
-			Octo_QuestsChanged_DB.QC_Vignettes[vignetteKey] = vignettes
+			EventFrame.savedVars.QC_Vignettes[vignetteKey] = vignettes
 		end
 	end
 end
-function Octo_EventFrame:OnVignetteEvent()
+function EventFrame:OnVignetteEvent()
 	local vignetteids = GetVignettes()
 	if not vignetteids then return end
 	for _, instanceid in ipairs(vignetteids) do
@@ -68,6 +65,7 @@ function Octo_EventFrame:OnVignetteEvent()
 	end
 end
 local MyEventsTable = {
+	"ADDON_LOADED",
 	"PLAYER_ENTERING_WORLD",
 	"VIGNETTES_UPDATED",
 	"VIGNETTE_MINIMAP_UPDATED",
@@ -75,22 +73,28 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA",
 	"ZONE_CHANGED_INDOORS",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
-function Octo_EventFrame:PLAYER_ENTERING_WORLD()
-	Octo_EventFrame:OnVignetteEvent()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 end
-function Octo_EventFrame:VIGNETTES_UPDATED()
-	Octo_EventFrame:OnVignetteEvent()
+function EventFrame:PLAYER_ENTERING_WORLD()
+	EventFrame:OnVignetteEvent()
 end
-function Octo_EventFrame:VIGNETTE_MINIMAP_UPDATED()
-	Octo_EventFrame:OnVignetteEvent()
+function EventFrame:VIGNETTES_UPDATED()
+	EventFrame:OnVignetteEvent()
 end
-function Octo_EventFrame:ZONE_CHANGED()
-	Octo_EventFrame:OnVignetteEvent()
+function EventFrame:VIGNETTE_MINIMAP_UPDATED()
+	EventFrame:OnVignetteEvent()
 end
-function Octo_EventFrame:ZONE_CHANGED_NEW_AREA()
-	Octo_EventFrame:OnVignetteEvent()
+function EventFrame:ZONE_CHANGED()
+	EventFrame:OnVignetteEvent()
 end
-function Octo_EventFrame:ZONE_CHANGED_INDOORS()
-	Octo_EventFrame:OnVignetteEvent()
+function EventFrame:ZONE_CHANGED_NEW_AREA()
+	EventFrame:OnVignetteEvent()
+end
+function EventFrame:ZONE_CHANGED_INDOORS()
+	EventFrame:OnVignetteEvent()
 end

@@ -1,14 +1,12 @@
 local GlobalAddonName, E = ...
-
 function E.Collect_All_PlayerInfo()
+	if E.func_SpamBlock("Collect_All_PlayerInfo", false) then return end
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
-
 	local curServerShort = E.curServerShort
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 	local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")
-	----
 	collectPlayerData.curServerShort = curServerShort
 	collectPlayerData.Name = E.curCharName
 	collectPlayerData.curServer = E.curServer
@@ -75,5 +73,5 @@ function E.Collect_All_PlayerInfo()
 	else
 		collectPlayerData.IsVeteranTrialAccount = nil
 	end
-	collectPlayerData.DBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
+collectPlayerData.DBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)"))
 end

@@ -1,7 +1,6 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-local Octo_EventFrame_Config_Auto_Gossip = CreateFrame("FRAME")
-Octo_EventFrame_Config_Auto_Gossip:Hide()
+local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 local targetNPCID = nil
 local ignoreNPCID = {
@@ -18,9 +17,6 @@ local ignoreNPCID = {
 	[231036] = true, -- Enter Delve
 	-- [47502] = true,
 	[153993] = true, -- BfA Chromi
-
-
-
 	[77789] = true, -- 5000
 	[153897] = true, -- 7000
 	[177927] = true, -- Кортия главный(воспроизводит долгий диалог)
@@ -28,10 +24,9 @@ local ignoreNPCID = {
 	[168427] = true, -- KYRIAN (ENTER ARENA)
 	[175573] = true, -- KYRIAN (EXIT ARENA)
 	[171816] = true, -- KYRIAN (SHMOT ARENA)
-
-
 	[213627] = true, -- SKIP TWW (DALARAN 70lvl)
 	[232498] = true, -- SPAM (taz)
+	[217861] = true, -- dornogal (SKIP)
 }
 -- IGNORE 120914
 local gossipOptionIDs = {
@@ -58,8 +53,6 @@ local gossipOptionIDs = {
 	[53607] = true,
 	[53524] = true, -- Korthia research
 }
-
-
 local gossipOptionIDsIGNORE = {
 	[50310] = true,
 	[48127] = true, -- BfA EXIT FROM Hram Setralis
@@ -67,7 +60,6 @@ local gossipOptionIDsIGNORE = {
 	[46761] = true, -- ODIN LEGION
 	[53878] = true, -- ZM movie
 }
-
 local ignoreICONS = {
 	[132060] = true, -- TRADER
 	[132058] = true, -- SKILL MASTER
@@ -79,7 +71,7 @@ local function HELP_TEXT(i, icon, name)
 	return E.func_Gradient(GlobalAddonName)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_Config_Auto_Gossip:func_Config_Auto_Gossip()
+function EventFrame:func_Config_Auto_Gossip()
 	local guid = UnitGUID("TARGET")
 	-- if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
 	if guid then
@@ -95,22 +87,14 @@ function Octo_EventFrame_Config_Auto_Gossip:func_Config_Auto_Gossip()
 		local name = option.name
 		local icon = option.icon
 		local flags = option.flags
-
-		if Octo_ToDo_DB_Vars.DebugGossip then
+		if Octo_Debug_DB.DebugGossip then
 			print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
 		end
-
-
-
-
-
 		if option.gossipOptionID and not ignoreICONS[icon] and not gossipOptionIDsIGNORE[option.gossipOptionID] then
 			if string.find(option.name:gsub("|", ""), "FF0000") then
 				-- print ("break")
 				break
 			end
-
-
 			if gossipOptionIDs[option.gossipOptionID] or flags == 1 or string.find(option.name:gsub("|", ""), "0000FF") then
 				C_GossipInfo.SelectOption(option.gossipOptionID)
 				StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
@@ -139,14 +123,21 @@ function Octo_EventFrame_Config_Auto_Gossip:func_Config_Auto_Gossip()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
+	"ADDON_LOADED",
 	"GOSSIP_SHOW",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_Config_Auto_Gossip, MyEventsTable)
-function Octo_EventFrame_Config_Auto_Gossip:GOSSIP_SHOW()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
+end
+function EventFrame:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
-	if not Octo_ToDo_DB_Vars.Config_Auto_Gossip then return end
+	if not EventFrame.savedVars.Config_Auto_Gossip then return end
 	C_Timer.After(.1, function()
-			Octo_EventFrame_Config_Auto_Gossip:func_Config_Auto_Gossip()
+			EventFrame:func_Config_Auto_Gossip()
 	end)
 end
 ----------------------------------------------------------------

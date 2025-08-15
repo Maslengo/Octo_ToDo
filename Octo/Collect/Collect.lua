@@ -1,7 +1,5 @@
 local GlobalAddonName, E = ...
-local Octo_EventFrame_Collect = CreateFrame("FRAME")
-Octo_EventFrame_Collect:Hide()
-----------------------------------------------------------------
+local EventFrame = CreateFrame("FRAME")
 local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_UPDATE_RESTING",
@@ -22,7 +20,6 @@ local MyEventsTable = {
 	"MAIL_SHOW",
 	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
 	"PLAYER_DEAD",
-	-- "PLAYER_ENTERING_WORLD",
 	"PLAYER_EQUIPMENT_CHANGED",
 	"PLAYER_LEVEL_UP",
 	"PLAYER_MONEY",
@@ -43,13 +40,6 @@ local MyEventsTable = {
 	"BARBER_SHOP_APPEARANCE_APPLIED",
 	"PLAYER_FLAGS_CHANGED",
 	"UPDATE_FACTION",
-	-- "UNIT_FACTION",
-	-- "GARRISON_LANDINGPAGE_SHIPMENTS",
-	-- "GARRISON_TALENT_UPDATE",
-	-- "GARRISON_TALENT_COMPLETE",
-	-- "GARRISON_MISSION_LIST_UPDATE",
-	-- "GET_ITEM_INFO_RECEIVED",
-	-- "GARRISON_SHIPMENT_RECEIVED",
 	"GARRISON_UPDATE",
 	"GARRISON_BUILDING_UPDATE",
 	"GARRISON_BUILDING_PLACED",
@@ -71,603 +61,295 @@ local MyEventsTable = {
 	"GARRISON_FOLLOWER_ADDED",
 	"GARRISON_FOLLOWER_REMOVED",
 }
-function E.func_Collect_All_Table()
-	E.Collect_All_PlayerLevel()
-	E.Collect_All_ItemLevel()
-	E.Collect_All_PlayerDurability()
-	E.Collect_All_Holiday()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:PLAYER_LOGIN()
+	C_Timer.After(1, function()
+		RequestTimePlayed()
+		RequestRaidInfo()
+		E.func_Collect_All()
+		E.func_Update("PLAYER_LOGIN")
+	end)
 end
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_Collect, MyEventsTable)
-----------------------------------------------------------------
-function Octo_EventFrame_Collect:PLAYER_LOGIN()
-	RequestTimePlayed()
-	RequestRaidInfo()
-	E.Collect_All_MoneyOnLogin()
-	-- Персонаж и прогресс
-	E.Collect_All_PlayerInfo() -- общая информация о персонаже
-	E.Collect_All_PlayerLevel() -- уровень персонажа
-	E.Collect_All_ItemLevel() -- уровень предметов
-	E.Collect_All_PlayerDurability() -- прочность экипировки
-	E.Collect_All_Professions() -- профессии
-	E.Collect_All_Reputations() -- репутации
-	E.Collect_All_Quests() -- квесты
+function E.func_Collect_All()
+	E.Collect_All_PlayerInfo()
+	E.Collect_All_PlayerLevel()
+	E.Collect_All_BfA_Azerite()
+	E.Collect_All_BfA_Cloaklvl()
+	E.Collect_All_Chromie()
+	E.Collect_All_Covenant()
+	E.Collect_All_Currency()
+	E.Collect_All_Delves()
 	E.Collect_All_Garrison()
 	E.Collect_All_GarrisonBuilds()
-	E.Collect_All_GarrisonFollowers("PLAYER_LOGIN")
-	E.func_Collect_All_UNIVERSALQuestUpdate() -- обновления квестов
-	-- Предметы и валюта
-	E.Collect_All_ItemsInBag() -- предметы в сумках
-	-- E.Collect_All_Currency() -- валюта
-	E.Collect_All_MoneyUpdate() -- обновление денег
-	E.Collect_All_Mail() -- почта
-	-- Локации и активность
-	E.Collect_All_Locations() -- местоположение
-	E.Collect_All_JournalInstance() -- информация о подземельях/рейдах
-	E.Collect_All_WarMode() -- режим войны
-	E.Collect_All_Chromie() -- хроми
-	-- Системные и служебные данные
-	E.Collect_All_LoginTime() -- время входа (УБРАТЬ?)
-	E.Collect_All_Holiday() -- праздничные события
-	-- Особые системы (BfA, Shadowlands и др.)
-	E.Collect_All_BfA_Azerite() -- азерит, Battle for Azeroth
-	E.Collect_All_BfA_Cloaklvl() -- уровень плаща, BfA
-	E.Collect_All_Covenant() -- ковенанты, Shadowlands
-	E.Collect_All_GreatVault() -- Великое Хранилище
-	E.func_Update("PLAYER_LOGIN")
+	E.Collect_All_GarrisonFollowers()
+	E.Collect_All_GreatVault()
+	E.Collect_All_Holiday()
+	E.Collect_All_ItemsInBag()
+	E.Collect_All_ItemLevel()
+	E.Collect_All_JournalInstance()
+	E.Collect_All_Locations()
+	E.Collect_All_LoginTime()
+	E.Collect_All_Mail()
+	E.Collect_All_MoneyOnLogin()
+	E.Collect_All_MoneyUpdate()
+	E.Collect_All_PlayerDurability()
+	E.Collect_All_Professions()
+	E.Collect_All_Quests()
+	E.Collect_All_Reputations()
+	E.Collect_All_UNIVERSALQuestUpdate()
+	E.Collect_All_WarMode()
 end
-function Octo_EventFrame_Collect:SKILL_LINES_CHANGED()
-	if InCombatLockdown() or self.SKILL_LINES_CHANGED_pause then return end
-	self.SKILL_LINES_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Professions()
-			E.func_Update("SKILL_LINES_CHANGED")
-			self.SKILL_LINES_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:SKILL_LINES_CHANGED()
+	E.Collect_All_Professions()
+	E.func_Update("SKILL_LINES_CHANGED")
 end
-function Octo_EventFrame_Collect:TRADE_SKILL_SHOW()
-	if InCombatLockdown() or self.TRADE_SKILL_SHOW_Pause then return end
-	self.TRADE_SKILL_SHOW_Pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Professions()
-			E.func_Update("TRADE_SKILL_SHOW")
-			self.SKILL_LINES_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:TRADE_SKILL_SHOW()
+	E.Collect_All_Professions()
+	E.func_Update("TRADE_SKILL_SHOW")
 end
-function Octo_EventFrame_Collect:PLAYER_XP_UPDATE()
-	if InCombatLockdown() or UnitLevel("player") == E.currentMaxLevel or self.PLAYER_XP_UPDATE_pause then return end
-	self.PLAYER_XP_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_PlayerLevel()
-			E.func_Update("PLAYER_XP_UPDATE")
-			self.PLAYER_XP_UPDATE_pause = nil
-	end)
+function EventFrame:PLAYER_XP_UPDATE()
+	E.Collect_All_PlayerLevel()
+	E.func_Update("PLAYER_XP_UPDATE")
 end
-function Octo_EventFrame_Collect:PLAYER_LEVEL_UP()
-	if InCombatLockdown() or self.PLAYER_LEVEL_UP_Pause then return end
-	self.PLAYER_LEVEL_UP_Pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			RequestTimePlayed()
-			E.Collect_All_PlayerLevel()
-			E.func_Update("PLAYER_LEVEL_UP")
-			self.PLAYER_LEVEL_UP_Pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_LEVEL_UP()
+	-- RequestTimePlayed()
+	E.Collect_All_PlayerLevel()
+	E.func_Update("PLAYER_LEVEL_UP")
 end
-function Octo_EventFrame_Collect:QUEST_LOG_UPDATE()
-	if InCombatLockdown() or self.QUEST_LOG_UPDATE_Pause then return end
-	self.QUEST_LOG_UPDATE_Pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Quests()
-			E.Collect_All_Garrison()
-			E.func_Collect_All_UNIVERSALQuestUpdate()
-			E.Collect_All_Chromie()
-			E.Collect_All_GreatVault() -- Великое Хранилище
-			E.func_Update("QUEST_LOG_UPDATE")
-			self.QUEST_LOG_UPDATE_Pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:QUEST_LOG_UPDATE()
+	E.Collect_All_Quests()
+	E.Collect_All_Garrison()
+	E.Collect_All_UNIVERSALQuestUpdate()
+	E.Collect_All_Chromie()
+	E.Collect_All_GreatVault()
+	E.func_Update("QUEST_LOG_UPDATE")
 end
-function Octo_EventFrame_Collect:BAG_UPDATE()
-	if InCombatLockdown() or self.BAG_UPDATE_pause then return end
-	self.BAG_UPDATE_pause = true
-	C_Timer.After(5, function()
-			E.Collect_All_ItemsInBag()
-			E.Collect_All_BfA_Azerite()
-			E.Collect_All_BfA_Cloaklvl()
-			E.Collect_All_GreatVault() -- Великое Хранилище
-			E.func_Update("BAG_UPDATE")
-			self.BAG_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:BAG_UPDATE()
+	E.Collect_All_ItemsInBag()
+	E.Collect_All_BfA_Azerite()
+	E.Collect_All_BfA_Cloaklvl()
+	E.Collect_All_GreatVault()
+	E.func_Update("BAG_UPDATE")
 end
-function Octo_EventFrame_Collect:ITEM_CHANGED(...)
+function EventFrame:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
 		E.Collect_CurrentKey_ITEM_CHANGED(arg2)
 		E.func_Update("ITEM_CHANGED")
 	end
 end
-function Octo_EventFrame_Collect:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
-	if InCombatLockdown() or self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause then return end
-	self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_ItemsInBag()
-			E.func_Update("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
-			self.PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
+	E.Collect_All_ItemsInBag()
+	E.func_Update("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
 end
-function Octo_EventFrame_Collect:PLAYER_MONEY()
-	if InCombatLockdown() or self.PLAYER_MONEY_pause then return end
-	self.PLAYER_MONEY_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_MoneyUpdate()
-			E.func_Update("PLAYER_MONEY")
-			self.PLAYER_MONEY_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_MONEY()
+	E.Collect_All_MoneyUpdate()
+	E.func_Update("PLAYER_MONEY")
 end
-function Octo_EventFrame_Collect:ACCOUNT_MONEY()
-	if InCombatLockdown() or self.ACCOUNT_MONEY_pause then return end
-	self.ACCOUNT_MONEY_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_MoneyUpdate()
-			E.func_Update("ACCOUNT_MONEY")
-			self.ACCOUNT_MONEY_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:ACCOUNT_MONEY()
+	E.Collect_All_MoneyUpdate()
+	E.func_Update("ACCOUNT_MONEY")
 end
-function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
-	if InCombatLockdown() or self.CURRENCY_DISPLAY_UPDATE_pause then return end
-	self.CURRENCY_DISPLAY_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Currency()
-			E.Collect_All_Covenant()
-			E.Collect_All_GarrisonBuilds()
-			E.func_Update("CURRENCY_DISPLAY_UPDATE")
-			self.CURRENCY_DISPLAY_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:CURRENCY_DISPLAY_UPDATE()
+	E.Collect_All_Currency()
+	E.Collect_All_Covenant()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("CURRENCY_DISPLAY_UPDATE")
 end
-function Octo_EventFrame_Collect:CURRENCY_TRANSFER_LOG_UPDATE()
-	if InCombatLockdown() or self.CURRENCY_TRANSFER_LOG_UPDATE_pause then return end
-	self.CURRENCY_TRANSFER_LOG_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Currency()
-			E.Collect_All_Covenant()
-			E.func_Update("CURRENCY_TRANSFER_LOG_UPDATE")
-			self.CURRENCY_TRANSFER_LOG_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:CURRENCY_TRANSFER_LOG_UPDATE()
+	E.Collect_All_Currency()
+	E.Collect_All_Covenant()
+	E.func_Update("CURRENCY_TRANSFER_LOG_UPDATE")
 end
-function Octo_EventFrame_Collect:PLAYER_EQUIPMENT_CHANGED()
-	if InCombatLockdown() or self.PLAYER_EQUIPMENT_CHANGED_pause then return end
-	self.PLAYER_EQUIPMENT_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_ItemLevel()
-			E.Collect_All_BfA_Azerite()
-			E.Collect_All_BfA_Cloaklvl()
-			E.func_Update("PLAYER_EQUIPMENT_CHANGED")
-			self.PLAYER_EQUIPMENT_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_EQUIPMENT_CHANGED()
+	E.Collect_All_ItemLevel()
+	E.Collect_All_BfA_Azerite()
+	E.Collect_All_BfA_Cloaklvl()
+	E.func_Update("PLAYER_EQUIPMENT_CHANGED")
 end
-function Octo_EventFrame_Collect:PLAYER_LEAVING_WORLD()
-	if not InCombatLockdown() then return end
+function EventFrame:PLAYER_LEAVING_WORLD()
 	self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 	self.PLAYER_LEAVING_WORLD = nil
 	E.Collect_All_GreatVault()
 	E.Collect_All_LoginTime()
 end
-function Octo_EventFrame_Collect:AZERITE_ITEM_EXPERIENCE_CHANGED()
-	if InCombatLockdown() or self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause then return end
-	self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_BfA_Azerite()
-			E.Collect_All_BfA_Cloaklvl()
-			E.func_Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
-			self.AZERITE_ITEM_EXPERIENCE_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:AZERITE_ITEM_EXPERIENCE_CHANGED()
+	E.Collect_All_BfA_Azerite()
+	E.Collect_All_BfA_Cloaklvl()
+	E.func_Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
 end
-function Octo_EventFrame_Collect:COVENANT_CHOSEN()
-	if InCombatLockdown() or self.COVENANT_CHOSEN_pause then return end
-	self.COVENANT_CHOSEN_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Covenant()
-			E.func_Update("COVENANT_CHOSEN")
-			self.COVENANT_CHOSEN_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:COVENANT_CHOSEN()
+	E.Collect_All_Covenant()
+	E.func_Update("COVENANT_CHOSEN")
 end
-function Octo_EventFrame_Collect:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
-	if InCombatLockdown() or self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause then return end
-	self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Covenant()
-			E.func_Update("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
-			self.COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
+	E.Collect_All_Covenant()
+	E.func_Update("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
 end
-function Octo_EventFrame_Collect:PLAYER_DEAD()
-	if InCombatLockdown() or self.PLAYER_DEAD_pause then return end
-	self.PLAYER_DEAD_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_PlayerDurability()
-			E.func_Update("PLAYER_DEAD")
-			self.PLAYER_DEAD_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_DEAD()
+	E.Collect_All_PlayerDurability()
+	E.func_Update("PLAYER_DEAD")
 end
-function Octo_EventFrame_Collect:UPDATE_INVENTORY_DURABILITY()
-	if InCombatLockdown() or self.UPDATE_INVENTORY_DURABILITY_pause then return end
-	self.UPDATE_INVENTORY_DURABILITY_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_PlayerDurability()
-			E.func_Update("UPDATE_INVENTORY_DURABILITY")
-			self.UPDATE_INVENTORY_DURABILITY_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:UPDATE_INVENTORY_DURABILITY()
+	E.Collect_All_PlayerDurability()
+	E.func_Update("UPDATE_INVENTORY_DURABILITY")
 end
-function Octo_EventFrame_Collect:PLAYER_SPECIALIZATION_CHANGED()
-	if InCombatLockdown() or self.PLAYER_SPECIALIZATION_CHANGED_pause then return end
-	self.PLAYER_SPECIALIZATION_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_PlayerInfo()
-			E.func_Update("PLAYER_SPECIALIZATION_CHANGED")
-			self.PLAYER_SPECIALIZATION_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_SPECIALIZATION_CHANGED()
+	E.Collect_All_PlayerInfo()
+	E.func_Update("PLAYER_SPECIALIZATION_CHANGED")
 end
-function Octo_EventFrame_Collect:HEARTHSTONE_BOUND()
-	if InCombatLockdown() or self.HEARTHSTONE_BOUND_pause then return end
-	self.HEARTHSTONE_BOUND_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Locations()
-			E.func_Update("HEARTHSTONE_BOUND")
-			self.HEARTHSTONE_BOUND_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:HEARTHSTONE_BOUND()
+	E.Collect_All_Locations()
+	E.func_Update("HEARTHSTONE_BOUND")
 end
-function Octo_EventFrame_Collect:ZONE_CHANGED()
-	if InCombatLockdown() or self.ZONE_CHANGED_pause then return end
-	self.ZONE_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Locations()
-			E.func_Update("ZONE_CHANGED")
-			self.ZONE_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:ZONE_CHANGED()
+	E.Collect_All_Locations()
+	E.func_Update("ZONE_CHANGED")
 end
-function Octo_EventFrame_Collect:ZONE_CHANGED_NEW_AREA()
-	if InCombatLockdown() or self.ZONE_CHANGED_NEW_AREA_pause then return end
-	self.ZONE_CHANGED_NEW_AREA_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Locations()
-			E.func_Update("ZONE_CHANGED_NEW_AREA")
-			self.ZONE_CHANGED_NEW_AREA_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:ZONE_CHANGED_NEW_AREA()
+	E.Collect_All_Locations()
+	E.func_Update("ZONE_CHANGED_NEW_AREA")
 end
-function Octo_EventFrame_Collect:SPELLS_CHANGED()
-	if InCombatLockdown() or self.SPELLS_CHANGED_pause then return end
-	self.SPELLS_CHANGED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_WarMode()
-			E.func_Update("SPELLS_CHANGED")
-			self.SPELLS_CHANGED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:SPELLS_CHANGED()
+	E.Collect_All_WarMode()
+	E.func_Update("SPELLS_CHANGED")
 end
-function Octo_EventFrame_Collect:MAIL_INBOX_UPDATE()
-	if InCombatLockdown() or self.MAIL_INBOX_UPDATE_pause then return end
-	self.MAIL_INBOX_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Mail()
-			E.func_Update("MAIL_INBOX_UPDATE")
-			self.MAIL_INBOX_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:MAIL_INBOX_UPDATE()
+	E.Collect_All_Mail()
+	E.func_Update("MAIL_INBOX_UPDATE")
 end
-function Octo_EventFrame_Collect:MAIL_SHOW()
-	if InCombatLockdown() or self.MAIL_SHOW_pause then return end
-	self.MAIL_SHOW_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Mail()
-			E.func_Update("MAIL_SHOW")
-			self.MAIL_SHOW_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:MAIL_SHOW()
+	E.Collect_All_Mail()
+	E.func_Update("MAIL_SHOW")
 end
-function Octo_EventFrame_Collect:UPDATE_PENDING_MAIL()
-	if InCombatLockdown() or self.UPDATE_PENDING_MAIL_pause then return end
-	self.UPDATE_PENDING_MAIL_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Mail()
-			E.func_Update("UPDATE_PENDING_MAIL")
-			self.UPDATE_PENDING_MAIL_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:UPDATE_PENDING_MAIL()
+	E.Collect_All_Mail()
+	E.func_Update("UPDATE_PENDING_MAIL")
 end
-function Octo_EventFrame_Collect:PLAYER_REGEN_ENABLED()
-	if InCombatLockdown() or self.PLAYER_REGEN_ENABLED_pause then return end
-	self.PLAYER_REGEN_ENABLED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Quests()
-			E.Collect_All_Garrison()
-			E.func_Collect_All_UNIVERSALQuestUpdate()
-			E.Collect_All_Reputations()
-			E.Collect_All_Currency()
-			E.func_Update("PLAYER_REGEN_ENABLED")
-			self.PLAYER_REGEN_ENABLED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:PLAYER_REGEN_ENABLED()
+	E.Collect_All_Quests()
+	E.Collect_All_Garrison()
+	E.Collect_All_UNIVERSALQuestUpdate()
+	E.Collect_All_Reputations()
+	E.Collect_All_Currency()
+	E.func_Update("PLAYER_REGEN_ENABLED")
 end
-function Octo_EventFrame_Collect:ENCOUNTER_END()
+function EventFrame:ENCOUNTER_END()
 	RequestRaidInfo()
 	E.func_Update("ENCOUNTER_END")
 end
-function Octo_EventFrame_Collect:UPDATE_INSTANCE_INFO()
-	-- if self.UPDATE_INSTANCE_INFO_pause then return end
-	-- self.UPDATE_INSTANCE_INFO_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_JournalInstance()
-			E.func_Update("UPDATE_INSTANCE_INFO")
-			-- self.UPDATE_INSTANCE_INFO_pause = nil-- Используем nil вместо false для экономии памяти
-	-- end)
+function EventFrame:UPDATE_INSTANCE_INFO()
+	E.Collect_All_JournalInstance()
+	E.func_Update("UPDATE_INSTANCE_INFO")
 end
-function Octo_EventFrame_Collect:TIME_PLAYED_MSG(...)
-	if InCombatLockdown() then return end
+function EventFrame:TIME_PLAYED_MSG(...)
 	E.Collect_All_Played(...)
+	E.Collect_All_PlayerLevel()
 	E.func_Update("TIME_PLAYED_MSG")
 end
-function Octo_EventFrame_Collect:QUEST_POI_UPDATE()
-	if InCombatLockdown() or self.QUEST_POI_UPDATE_pause then return end
-	self.QUEST_POI_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Chromie()
-			E.func_Update("QUEST_POI_UPDATE")
-			self.QUEST_POI_UPDATE_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:QUEST_POI_UPDATE()
+	E.Collect_All_Chromie()
+	E.func_Update("QUEST_POI_UPDATE")
 end
-function Octo_EventFrame_Collect:QUEST_REMOVED()
-	if InCombatLockdown() or self.QUEST_REMOVED_pause then return end
-	self.QUEST_REMOVED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Quests()
-			E.func_Update("QUEST_REMOVED")
-			self.QUEST_REMOVED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:QUEST_REMOVED()
+	E.Collect_All_Quests()
+	E.func_Update("QUEST_REMOVED")
 end
-function Octo_EventFrame_Collect:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
-	if InCombatLockdown() or self.SHOW_LOOT_TOAST_pause then return end
-	self.SHOW_LOOT_TOAST_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_lastCacheTime(rt, rl, q, _4, _5, _6, source)
-			E.func_Update("SHOW_LOOT_TOAST")
-			self.SHOW_LOOT_TOAST_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
+	E.Collect_All_lastCacheTime(rt, rl, q, _4, _5, _6, source)
+	E.func_Update("SHOW_LOOT_TOAST")
 end
-function Octo_EventFrame_Collect:BARBER_SHOP_APPEARANCE_APPLIED()
-	if InCombatLockdown() or self.BARBER_SHOP_APPEARANCE_APPLIED_pause then return end
-	self.BARBER_SHOP_APPEARANCE_APPLIED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_PlayerInfo()
-			E.func_Update("BARBER_SHOP_APPEARANCE_APPLIED")
-			self.BARBER_SHOP_APPEARANCE_APPLIED_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:BARBER_SHOP_APPEARANCE_APPLIED()
+	E.Collect_All_PlayerInfo()
+	E.func_Update("BARBER_SHOP_APPEARANCE_APPLIED")
 end
-function Octo_EventFrame_Collect:UPDATE_FACTION()
-	if InCombatLockdown() or self.UPDATE_FACTION_pause then return end
-	self.UPDATE_FACTION_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-			E.Collect_All_Reputations()
-			E.func_Update("UPDATE_FACTION")
-			self.UPDATE_FACTION_pause = nil-- Используем nil вместо false для экономии памяти
-	end)
+function EventFrame:UPDATE_FACTION()
+	E.Collect_All_Reputations()
+	E.func_Update("UPDATE_FACTION")
 end
-function Octo_EventFrame_Collect:PLAYER_FLAGS_CHANGED()
-	if InCombatLockdown() then return end
+function EventFrame:PLAYER_FLAGS_CHANGED()
 	E.Collect_All_PlayerInfo()
 end
-function Octo_EventFrame_Collect:PLAYER_UPDATE_RESTING()
-	if InCombatLockdown() then return end
+function EventFrame:PLAYER_UPDATE_RESTING()
 	E.Collect_All_PlayerInfo()
 end
--- function Octo_EventFrame_Collect:GARRISON_LANDINGPAGE_SHIPMENTS()
--- 	if InCombatLockdown() then return end
--- 	E.Collect_All_GarrisonBuilds()
--- end
--- function Octo_EventFrame_Collect:GARRISON_TALENT_UPDATE()
--- 	if InCombatLockdown() then return end
--- 	E.Collect_All_GarrisonBuilds()
--- end
--- function Octo_EventFrame_Collect:GARRISON_TALENT_COMPLETE()
--- 	if InCombatLockdown() then return end
--- 	E.Collect_All_GarrisonBuilds()
--- end
--- function Octo_EventFrame_Collect:GARRISON_MISSION_LIST_UPDATE()
--- 	if InCombatLockdown() then return end
--- 	E.Collect_All_GarrisonBuilds()
--- end
--- function Octo_EventFrame_Collect:GET_ITEM_INFO_RECEIVED()
--- 	if InCombatLockdown() then return end
--- 	E.Collect_All_GarrisonBuilds()
--- end
--- function Octo_EventFrame_Collect:GARRISON_SHIPMENT_RECEIVED()
--- 	if InCombatLockdown() then return end
--- 	E.Collect_All_GarrisonBuilds()
--- end
-function Octo_EventFrame_Collect:GARRISON_UPDATE()
-	if InCombatLockdown() or self.GARRISON_UPDATE_pause then return end
-	self.GARRISON_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_UPDATE")
-		self.GARRISON_UPDATE_pause = nil
-	end)
+function EventFrame:GARRISON_UPDATE()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_UPDATE")
 end
--- function Octo_EventFrame_Collect:CURRENCY_DISPLAY_UPDATE()
--- 	if InCombatLockdown() or self.CURRENCY_DISPLAY_UPDATE then return end
--- 	self.CURRENCY_DISPLAY_UPDATE = true
--- 	C_Timer.After(E.SPAM_TIME, function()
--- 		E.Collect_All_GarrisonBuilds()
--- 		E.func_Update("CURRENCY_DISPLAY_UPDATE")
--- 		self.CURRENCY_DISPLAY_UPDATE = nil
--- 	end)
--- end
-function Octo_EventFrame_Collect:GARRISON_BUILDING_UPDATE()
-	if InCombatLockdown() or self.GARRISON_BUILDING_UPDATE_pause then return end
-	self.GARRISON_BUILDING_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_BUILDING_UPDATE")
-		self.GARRISON_BUILDING_UPDATE_pause = nil
-	end)
+function EventFrame:GARRISON_BUILDING_UPDATE()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_BUILDING_UPDATE")
 end
-function Octo_EventFrame_Collect:GARRISON_BUILDING_PLACED()
-	if InCombatLockdown() or self.GARRISON_BUILDING_PLACED_pause then return end
-	self.GARRISON_BUILDING_PLACED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_BUILDING_PLACED")
-		self.GARRISON_BUILDING_PLACED_pause = nil
-	end)
+function EventFrame:GARRISON_BUILDING_PLACED()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_BUILDING_PLACED")
 end
-function Octo_EventFrame_Collect:GARRISON_BUILDING_REMOVED()
-	if InCombatLockdown() or self.GARRISON_BUILDING_REMOVED_pause then return end
-	self.GARRISON_BUILDING_REMOVED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_BUILDING_REMOVED")
-		self.GARRISON_BUILDING_REMOVED_pause = nil
-	end)
+function EventFrame:GARRISON_BUILDING_REMOVED()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_BUILDING_REMOVED")
 end
-function Octo_EventFrame_Collect:GARRISON_BUILDING_LIST_UPDATE()
-	if InCombatLockdown() or self.GARRISON_BUILDING_LIST_UPDATE_pause then return end
-	self.GARRISON_BUILDING_LIST_UPDATE_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_BUILDING_LIST_UPDATE")
-		self.GARRISON_BUILDING_LIST_UPDATE_pause = nil
-	end)
+function EventFrame:GARRISON_BUILDING_LIST_UPDATE()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_BUILDING_LIST_UPDATE")
 end
-function Octo_EventFrame_Collect:GARRISON_BUILDING_ACTIVATED()
-	if InCombatLockdown() or self.GARRISON_BUILDING_ACTIVATED_pause then return end
-	self.GARRISON_BUILDING_ACTIVATED_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_BUILDING_ACTIVATED")
-		self.GARRISON_BUILDING_ACTIVATED_pause = nil
-	end)
+function EventFrame:GARRISON_BUILDING_ACTIVATED()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_BUILDING_ACTIVATED")
 end
-function Octo_EventFrame_Collect:GARRISON_UPGRADEABLE_RESULT()
-	if InCombatLockdown() or self.GARRISON_UPGRADEABLE_RESULT_pause then return end
-	self.GARRISON_UPGRADEABLE_RESULT_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_UPGRADEABLE_RESULT")
-		self.GARRISON_UPGRADEABLE_RESULT_pause = nil
-	end)
+function EventFrame:GARRISON_UPGRADEABLE_RESULT()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_UPGRADEABLE_RESULT")
 end
-function Octo_EventFrame_Collect:GARRISON_BUILDING_ERROR()
-	if InCombatLockdown() or self.GARRISON_BUILDING_ERROR_pause then return end
-	self.GARRISON_BUILDING_ERROR_pause = true
-	C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonBuilds()
-		E.func_Update("GARRISON_BUILDING_ERROR")
-		self.GARRISON_BUILDING_ERROR_pause = nil
-	end)
+function EventFrame:GARRISON_BUILDING_ERROR()
+	E.Collect_All_GarrisonBuilds()
+	E.func_Update("GARRISON_BUILDING_ERROR")
 end
-
-
-
-
-
-
-function Octo_EventFrame_Collect:GARRISON_MISSION_NPC_OPENED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_MISSION_NPC_OPENED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_MISSION_NPC_OPENED")
-		E.func_Update("GARRISON_MISSION_NPC_OPENED")
-		-- self.GARRISON_MISSION_NPC_OPENED_pause = nil
-	-- end)
+function EventFrame:GARRISON_MISSION_NPC_OPENED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_MISSION_NPC_OPENED")
 end
-function Octo_EventFrame_Collect:GARRISON_MISSION_COMPLETE_RESPONSE()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_MISSION_COMPLETE_RESPONSE_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_MISSION_COMPLETE_RESPONSE")
-		E.func_Update("GARRISON_MISSION_COMPLETE_RESPONSE")
-		-- self.GARRISON_MISSION_COMPLETE_RESPONSE_pause = nil
-	-- end)
+function EventFrame:GARRISON_MISSION_COMPLETE_RESPONSE()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_MISSION_COMPLETE_RESPONSE")
 end
-function Octo_EventFrame_Collect:GARRISON_MISSION_BONUS_ROLL_COMPLETE()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_MISSION_BONUS_ROLL_COMPLETE_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_MISSION_BONUS_ROLL_COMPLETE")
-		E.func_Update("GARRISON_MISSION_BONUS_ROLL_COMPLETE")
-		-- self.GARRISON_MISSION_BONUS_ROLL_COMPLETE_pause = nil
-	-- end)
+function EventFrame:GARRISON_MISSION_BONUS_ROLL_COMPLETE()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_MISSION_BONUS_ROLL_COMPLETE")
 end
-function Octo_EventFrame_Collect:GARRISON_MISSION_BONUS_ROLL_LOOT()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_MISSION_BONUS_ROLL_LOOT_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_MISSION_BONUS_ROLL_LOOT")
-		E.func_Update("GARRISON_MISSION_BONUS_ROLL_LOOT")
-		-- self.GARRISON_MISSION_BONUS_ROLL_LOOT_pause = nil
-	-- end)
+function EventFrame:GARRISON_MISSION_BONUS_ROLL_LOOT()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_MISSION_BONUS_ROLL_LOOT")
 end
-function Octo_EventFrame_Collect:GARRISON_MISSION_LIST_UPDATE()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_MISSION_LIST_UPDATE_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_MISSION_LIST_UPDATE")
-		E.func_Update("GARRISON_MISSION_LIST_UPDATE")
-		-- self.GARRISON_MISSION_LIST_UPDATE_pause = nil
-	-- end)
+function EventFrame:GARRISON_MISSION_LIST_UPDATE()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_MISSION_LIST_UPDATE")
 end
-function Octo_EventFrame_Collect:GARRISON_FOLLOWER_XP_CHANGED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_FOLLOWER_XP_CHANGED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_FOLLOWER_XP_CHANGED")
-		E.func_Update("GARRISON_FOLLOWER_XP_CHANGED")
-		-- self.GARRISON_FOLLOWER_XP_CHANGED_pause = nil
-	-- end)
+function EventFrame:GARRISON_FOLLOWER_XP_CHANGED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_FOLLOWER_XP_CHANGED")
 end
-function Octo_EventFrame_Collect:GARRISON_FOLLOWER_LIST_UPDATE()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_FOLLOWER_LIST_UPDATE_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_FOLLOWER_LIST_UPDATE")
-		E.func_Update("GARRISON_FOLLOWER_LIST_UPDATE")
-		-- self.GARRISON_FOLLOWER_LIST_UPDATE_pause = nil
-	-- end)
+function EventFrame:GARRISON_FOLLOWER_LIST_UPDATE()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_FOLLOWER_LIST_UPDATE")
 end
-function Octo_EventFrame_Collect:GARRISON_MISSION_STARTED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_MISSION_STARTED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_MISSION_STARTED")
-		E.func_Update("GARRISON_MISSION_STARTED")
-		-- self.GARRISON_MISSION_STARTED_pause = nil
-	-- end)
+function EventFrame:GARRISON_MISSION_STARTED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_MISSION_STARTED")
 end
-function Octo_EventFrame_Collect:GARRISON_SHIPYARD_NPC_OPENED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_SHIPYARD_NPC_OPENED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_SHIPYARD_NPC_OPENED")
-		E.func_Update("GARRISON_SHIPYARD_NPC_OPENED")
-		-- self.GARRISON_SHIPYARD_NPC_OPENED_pause = nil
-	-- end)
+function EventFrame:GARRISON_SHIPYARD_NPC_OPENED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_SHIPYARD_NPC_OPENED")
 end
-function Octo_EventFrame_Collect:GARRISON_FOLLOWER_CATEGORIES_UPDATED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_FOLLOWER_CATEGORIES_UPDATED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_FOLLOWER_CATEGORIES_UPDATED")
-		E.func_Update("GARRISON_FOLLOWER_CATEGORIES_UPDATED")
-		-- self.GARRISON_FOLLOWER_CATEGORIES_UPDATED_pause = nil
-	-- end)
+function EventFrame:GARRISON_FOLLOWER_CATEGORIES_UPDATED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_FOLLOWER_CATEGORIES_UPDATED")
 end
-function Octo_EventFrame_Collect:GARRISON_FOLLOWER_ADDED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_FOLLOWER_ADDED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_FOLLOWER_ADDED")
-		E.func_Update("GARRISON_FOLLOWER_ADDED")
-		-- self.GARRISON_FOLLOWER_ADDED_pause = nil
-	-- end)
+function EventFrame:GARRISON_FOLLOWER_ADDED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_FOLLOWER_ADDED")
 end
-function Octo_EventFrame_Collect:GARRISON_FOLLOWER_REMOVED()
-	-- if InCombatLockdown() then return end
-	-- self.GARRISON_FOLLOWER_REMOVED_pause = true
-	-- C_Timer.After(E.SPAM_TIME, function()
-		E.Collect_All_GarrisonFollowers("GARRISON_FOLLOWER_REMOVED")
-		E.func_Update("GARRISON_FOLLOWER_REMOVED")
-		-- self.GARRISON_FOLLOWER_REMOVED_pause = nil
-	-- end)
+function EventFrame:GARRISON_FOLLOWER_REMOVED()
+	E.Collect_All_GarrisonFollowers()
+	E.func_Update("GARRISON_FOLLOWER_REMOVED")
 end

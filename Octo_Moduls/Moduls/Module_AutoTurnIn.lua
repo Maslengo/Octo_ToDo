@@ -1,10 +1,10 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
-local Octo_EventFrame_AutoTurnIn = CreateFrame("Frame")
-Octo_EventFrame_AutoTurnIn:Hide()
+local EventFrame = CreateFrame("Frame")
 ----------------------------------------------------------------
-function Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
+function EventFrame:Module_AutoTurnIn()
 	local NumActiveQuests = 0
 	if GetNumActiveQuests() ~= 0 then
 		NumActiveQuests = GetNumActiveQuests()
@@ -21,8 +21,6 @@ function Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
 	end
 	local ActiveQuests = C_GossipInfo.GetActiveQuests() or {}
 	-- local AvailableQuests = C_GossipInfo.GetAvailableQuests() or {}
-
-
 	for i = 1, NumActiveQuests do
 		local questID = 0
 		if #C_GossipInfo.GetActiveQuests() ~= 0 then
@@ -39,14 +37,9 @@ function Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
 			-- C_GossipInfo.SelectActiveQuest(questID)
 		end
 	end
-
-
-
-
-
 	for i = 1, NumAvailableQuests do
 		local info = C_GossipInfo.GetAvailableQuests()
-		if info then
+		if info and info[i] then
 			local newInfo = info[i]
 			local title = newInfo.title
 			local questID = newInfo.questID
@@ -56,7 +49,9 @@ function Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
 		else
 			local isTrivial, frequency, isRepeatable, isLegendary, questID = GetAvailableQuestInfo(i)
 			if not (isTrivial and isRepeatable) then
-				C_GossipInfo.SelectAvailableQuest(questID)
+				-- print ("ELSE", questID)
+				SelectAvailableQuest(i)
+				-- C_GossipInfo.SelectAvailableQuest(questID)
 			end
 		end
 	end
@@ -69,8 +64,8 @@ local MyEventsTable = {
 	"GOSSIP_SHOW",
 	"QUEST_PROGRESS",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_AutoTurnIn, MyEventsTable)
-function Octo_EventFrame_AutoTurnIn:QUEST_DETAIL()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:QUEST_DETAIL()
 	if not IsShiftKeyDown() then
 		if QuestIsFromAreaTrigger() then
 			AcceptQuest()
@@ -81,23 +76,23 @@ function Octo_EventFrame_AutoTurnIn:QUEST_DETAIL()
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_AutoTurnIn:QUEST_COMPLETE()
+function EventFrame:QUEST_COMPLETE()
 	if not IsShiftKeyDown() and GetNumQuestChoices() <= 1 then
 		GetQuestReward(1)
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_AutoTurnIn:QUEST_GREETING()
+function EventFrame:QUEST_GREETING()
 	if IsShiftKeyDown() then return end
 	self:Module_AutoTurnIn()
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_AutoTurnIn:GOSSIP_SHOW()
+function EventFrame:GOSSIP_SHOW()
 	if IsShiftKeyDown() then return end
-	Octo_EventFrame_AutoTurnIn:Module_AutoTurnIn()
+	EventFrame:Module_AutoTurnIn()
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_AutoTurnIn:QUEST_PROGRESS()
+function EventFrame:QUEST_PROGRESS()
 	if IsShiftKeyDown() then return end
 	CompleteQuest()
 end

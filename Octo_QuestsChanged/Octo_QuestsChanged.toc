@@ -4,5 +4,7 @@
 ## Version: v1.00(11.1.7)(18.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\QuestsChanged
 ## Dependencies: Octo
-
+## SavedVariables: Octo_QuestsChanged_DB
+WTF.lua
 QuestsChanged.xml
+Options\Options.xml

@@ -1,0 +1,35 @@
+/dump C_Map.GetMapInfo(572)
+MonsterFriend
+-- СОРТИРОВКА ТЕКУЩЕЙ ТАБЛЫ
+OPENVAULT
+градиент для уровня предметов
+local quality = string.match(itemLink, "|cnIQ(.)")
+color = ColorManager.GetColorDataForItemQuality(quality and tonumber(quality) or 0).color:GenerateHexColor()
+для изучения скиллов "шкатулки многих тайн"
+GARRISON_TALENT_UPDATE 111
+GARRISON_TALENT_RESEARCH_STARTED 111, 461, 1794
+GARRISON_TALENT_COMPLETE 111, false
+CVAR_UPDATE "garrisonCompleteTalentType", "111"
+кроман? /run print(C_QuestLog.IsQuestFlaggedCompleted(62991))
+/run print(C_QuestLog.IsQuestFlaggedCompleted(61215))
+-- local ANNIVERSARY = core.conditions.CalendarEvent(1500) -- this needs to be updated each year...
+local ANNIVERSARY = core.conditions.CalendarEventStartTexture(6238552)
+local GREEDY = core.conditions.AuraActive(1250685) -- core.conditions.CalendarEvent(1382)
+конкатинация через .. создает каждый раз объект(новую строку), в цикле лучше делать через format
+КАСТБАР СПЕЛЛОВ
+СКРОЛЛ ПО КОНТРЛ КАК В ВАРМАПЕ
+DELVES_NEW_CURIO - НОВОЕ
+NEW_CAPS - НОВОЕ
+дренорский квест
+МЕХАГОН
+обновлять репу провайдером если видно
+при кнопки отмены квестов не считается кол-во(либо не отрисовывается)
+UIParent:GetEffectiveScale()
+GetCursorPosition()
+-- ДАТА ПРОВАЙДЕР - ОБНОВЛЕНИЕ ПРИ КЛИКЕ
+QuestsChanged_CopyBox??
+Octo_ToDo_DB_Other.ActiveHoliday -> E.ActiveHoliday
+центральный фрейм изменить текстуру
+UniversalQuest Переделать сохранения на цифру
+OctoTable_QuestID
+ТУЛТИПЫ СДЕЛАТЬ В ОНШОУ

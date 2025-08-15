@@ -105,12 +105,9 @@ local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
 local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
 local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
-
 local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
 -- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
 local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
-
-
 local classR, classG, classB = GetClassColor(E.classFilename)
 function E.func_IsClassic() return E.interfaceVersion > 10000 and E.interfaceVersion < 20000 end
 function E.func_IsBC() return E.interfaceVersion > 20000 and E.interfaceVersion < 30000 end
@@ -127,7 +124,6 @@ function E.func_IsMidnight() return E.interfaceVersion > 120000 and E.interfaceV
 function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersion < 140000 end
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
-
 function E.func_vignetteIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
@@ -147,7 +143,6 @@ function E.func_texturefromIconEVENT(icon, iconSize)
 	iconSize = iconSize or 16
 	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
 end
-
 function E.func_GetItemIconByID(itemID)
 	return GetItemIconByID(itemID)
 end
@@ -192,15 +187,12 @@ function E.func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
 	return info and info.iconFileID or E.Icon_Empty
 end
-
-
 local function GetOrCreateCache(category, id)
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
 	Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
 	return Octo_Cache_DB[category]
 end
-
 local function func_itemName_CACHE(id)
 	local Cache = GetOrCreateCache("AllItems", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -210,11 +202,10 @@ local function func_itemName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -250,11 +241,10 @@ local function func_currencyName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"..WarbandIcon
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -285,7 +275,7 @@ local function func_npcName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color.."NPC".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -306,7 +296,7 @@ local function func_questName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..QUESTS_LABEL.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -340,7 +330,7 @@ local function func_reputationName_CACHE(id)
 		end
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..REPUTATION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -372,11 +362,10 @@ local function func_spellName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..SPELLS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -385,24 +374,20 @@ function E.func_spellName(id)
 	local cachedName = func_spellName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
-
 local function func_followerName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllFollowers)
 	local Cache = GetOrCreateCache("AllFollowers", id)
-
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
 	end
-
 	local name = GetFollowerNameByID(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..COMPANIONS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -411,25 +396,20 @@ function E.func_followerName(id)
 	local cachedName = func_followerName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
-
-
 local function func_achievementName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllAchievements", id)
-
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
 	end
-
 	local name = select(2, GetAchievementInfo(id))
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -438,25 +418,20 @@ function E.func_achievementName(id)
 	local cachedName = func_achievementName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
-
-
 local function func_mountName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllMounts", id)
-
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
 	end
-
 	local name = GetMountInfoByID(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..MOUNTS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -474,23 +449,14 @@ function E.func_mountIsCollected(id)
 	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
 	return isCollected
 end
-
 function E.func_mountIsCollectedColor(id)
 	if not id then return end
 	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
 	return isCollected and E.Green_Color or E.Red_Color
 end
-
-
-
-
-
-
-
 local function func_mapName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllMaps", id)
-
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
 	end
@@ -498,11 +464,10 @@ local function func_mapName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_ToDo_DB_Vars.DebugCache then
+		if Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -530,15 +495,6 @@ function E.func_GetMapNameFromID(id)
 	end
 	return info.name, ""
 end
-
-
-
-
-
-
-
-
-
 function E.func_IsAccountQuest(questID)
 	return IsAccountQuest(questID)
 end
@@ -695,7 +651,6 @@ function E.func_Gradient(text, firstColor, secondColor)
 		return text
 	end
 end
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -713,13 +668,11 @@ local CompactSuffixes = {
 	zhTW = { "", "萬", "億", "兆" },   -- Традиционный китайский
 	koKR = { "", "만", "억", "조" },   -- Корейский
 }
-
 local AsianLocales = {
 	zhCN = true,
 	zhTW = true,
 	koKR = true,
 }
-
 local function FormatWithSeparators(num)
 	local formatted = tostring(num)
 	while true do
@@ -729,19 +682,15 @@ local function FormatWithSeparators(num)
 	end
 	return formatted
 end
-
 function E.func_CompactNumberFormat(num)
 	num = num or 0
-
 	-- Полный формат с разделителями
 	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 3 then
 		return FormatWithSeparators(math.floor(num + 0.5))
 	end
-
 	local locale
 	local suffixes
 	local step
-
 	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 1 then
 		locale = "enUS"
 		suffixes = CompactSuffixes["enUS"]
@@ -751,29 +700,17 @@ function E.func_CompactNumberFormat(num)
 		suffixes = CompactSuffixes[locale] or CompactSuffixes["enUS"]
 		step = AsianLocales[locale] and 10000 or 1000
 	end
-
 	local i = 1
 	while num >= step and i < #suffixes do
 		num = num / step
 		i = i + 1
 	end
-
 	local s = string.format("%.1f", num):gsub("%.0$", "")
-	return s .. suffixes[i]
+	return s..suffixes[i]
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 function E.func_CompactNumberFormatOLD(number)
 	local number = number or 0
 	if number == 0 then
@@ -1627,7 +1564,6 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		minMoney = math_min(unpack(MoneysMinMax))
 		maxMoney = math_max(unpack(MoneysMinMax))
 	end
-
 	if myType == "Online" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -1637,10 +1573,6 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 		minOnline = math_min(unpack(OnlineMinMax))
 		maxOnline = math_max(unpack(OnlineMinMax))
 	end
-
-
-
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local specIcon, color, Name
@@ -1697,12 +1629,10 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 					local green = min(255, (done / totalMoney) * 510)
 					hexcolorMoney = string_format("|cff%2x%2x00", red, green)
 				end
-				RIGHT1 = hexcolorMoney..E.func_MoneyString(CharInfo.PlayerData.Money) .. "|r"
+				RIGHT1 = hexcolorMoney..E.func_MoneyString(CharInfo.PlayerData.Money).."|r"
 				RIGHTforSORT = CharInfo.PlayerData.Money
 				total = total + CharInfo.PlayerData.Money
 			elseif myType == "Online" and CharInfo.PlayerData.realTotalTime then
-
-
 				local hexcolorOnline = "|cff000000"
 				if minOnline then
 					local done = CharInfo.PlayerData.realTotalTime - minOnline
@@ -1711,11 +1641,6 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 					local green = min(255, (done / totalOnline) * 510)
 					hexcolorOnline = string_format("|cff%2x%2x00", red, green)
 				end
-
-
-
-
-
 				RIGHT1 = hexcolorOnline..E.func_SecondsToClock(CharInfo.PlayerData.realTotalTime).."|r"
 				RIGHTforSORT = CharInfo.PlayerData.realTotalTime
 				total = total + CharInfo.PlayerData.realTotalTime
@@ -1836,16 +1761,13 @@ function E.func_textCENT_Currency(CharInfo, currencyID, itemID)
 	end
 	return result
 end
-function E.func_InitTable(tbl)
-	return tbl or {}
-end
 function E.func_InitField(tbl, field, default)
 	if tbl[field] == nil then
 		tbl[field] = default
 	end
 end
 function E.func_InitSubTable(tbl, field)
-	if tbl[field] == nil then
+	if type(tbl[field]) ~= "table" then
 		tbl[field] = {}
 	end
 end
@@ -1876,7 +1798,6 @@ function E.func_GetCurrentRegionName()
 	end
 	return GetCurrentRegionName()
 end
-
 function E.func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
 	local tooltipCENT = {}
 	local sorted_itemList = {}
@@ -1988,7 +1909,6 @@ E.backgroundColorR = .08
 E.backgroundColorG = .08
 E.backgroundColorB = .08
 E.backgroundColorA = .8
-
 E.edgeSize = 1
 E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
@@ -2327,19 +2247,15 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 						if not oldValue then return end
 						local diff = CharInfo.PlayerData.Money - oldValue
 						if diff == 0 then return end
-
 						local sign = diff > 0 and "+" or "-"
 						local color = diff > 0 and E.Green_Color or E.Red_Color
-						local result = sign .. E.func_MoneyString(math.abs(diff))
-
-						tooltipCENT[#tooltipCENT + 1] = {label, color .. result .. "|r"}
+						local result = sign..E.func_MoneyString(math.abs(diff))
+						tooltipCENT[#tooltipCENT + 1] = {label, color..result.."|r"}
 					end
-
 					addMoneyDiff("SESSION", CharInfo.PlayerData.MoneyOnLogin)
 					addMoneyDiff("DAILY", CharInfo.PlayerData.MoneyOnDaily)
 					addMoneyDiff("WEEKLY", CharInfo.PlayerData.MoneyOnWeekly)
 				end
-
 		----------------------------------------------------------------
 	elseif tooltipKey == "Other_WasOnline" then
 		local color = "|cffFFFFFF"
@@ -2451,7 +2367,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		----------------------------------------------------------------
 	elseif tooltipKey == "Other_Mounts" then
 		for mountID in next, (E.OctoTable_Mounts) do
-
 			local mountIconNumber = E.func_mountIcon(mountID)
 			local mountIcon = E.func_texturefromIcon(mountIconNumber)
 			local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
@@ -2527,7 +2442,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 					if questID then
 						vivod_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.Gray_Color..NONE.."|r"
 					end
-
 					if forcedText then
 						-- Добавляем текст
 						if forcedText.text then
@@ -2555,8 +2469,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							vivod_LEFT = vivod_LEFT..E.func_questName(questID)
 						end
 					end
-
-
 					if addText then
 						-- Добавляем иконку Vignette
 						if addText.IconVignette then
@@ -2570,9 +2482,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							local mountIconNumber = E.func_mountIcon(addText.mount)
 							local mountIcon = E.func_texturefromIcon(mountIconNumber)
 							local mountName = mountIcon..E.func_mountIsCollectedColor(addText.mount)..E.func_mountName(addText.mount).."|r"
-
-
-							vivod_LEFT = vivod_LEFT .. E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, mountName).."|r"
+							vivod_LEFT = vivod_LEFT..E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, mountName).."|r"
 						end
 						if addText.notes then
 							vivod_LEFT = vivod_LEFT..addText.notes
@@ -2584,7 +2494,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							vivod_LEFT = vivod_LEFT ..E.Pink_Color..E.func_spellName(addText.spellID).."|r"
 						end
 					end
-
 					if faction == CharInfo.PlayerData.Faction then
 						vivod_LEFT = E.func_texturefromIcon(E.func_FactionIconID(faction))..vivod_LEFT
 					end
@@ -2608,8 +2517,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 	----------------------------------------------------------------
 	return tooltipCENT
 end
-
-
 function E.func_getFollowerName(v)
 	if v.garrFollowerID and type(v.garrFollowerID) == "number" then
 		return E.func_followerName(v.garrFollowerID) or ""
@@ -2618,18 +2525,9 @@ function E.func_getFollowerName(v)
 	end
 	return v.name or ""
 end
-
-
-
 function E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 	local tooltipCENT = {}
 	local followerType = tooltipKey:gsub("_COMPANIONS", "")
-
-
-
-
-
-
 	-- Находим нужный тип фолловеров
 	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
 		local QWEname = followerData.name
@@ -2638,7 +2536,6 @@ function E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 			if CharInfo.MASLENGO.GarrisonFollowers and CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
 				local numActiveFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].numActiveFollowers or 0 -- C_Garrison.GetNumActiveFollowers(followerData.id) or 0
 				local maxFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].maxFollowers or 0 -- C_Garrison.GetFollowerSoftCap(followerData.id)
-
 				if numActiveFollowers ~= 0 then
 					if ( numActiveFollowers > maxFollowers ) then
 						local text = GARRISON_MAX_FOLLOWERS_TOOLTIP -- "У вас слишком много соратников. Освободите лишних от службы, чтобы нанять новых или приступить к новым заданиям."
@@ -2649,71 +2546,50 @@ function E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 						end
 						tooltipCENT[#tooltipCENT+1] = {}
 					end
-
 					local collectedFollowers = {}
 					for _, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[QWEname]) do
 						-- if v.isCollected then -- ПОФИКСИТЬ в опции
 							table_insert(collectedFollowers, v)
 						-- end
 					end
-
-
-
-
 						table.sort(collectedFollowers, function(a, b)
 							-- Функция для получения имени с учетом всех условий
-
-
 							-- Получаем имена для сравнения
 							local a_name = E.func_getFollowerName(a)
 							local b_name = E.func_getFollowerName(b)
-
 							-- 1. Разделяем собранных и несобранных (несобранные всегда ниже)
 							if a.isCollected ~= b.isCollected then
 								return a.isCollected  -- true > false (собранные выше)
 							end
-
 							-- 2. Если оба НЕ собранные - сортируем их по quality и имени
 							if not a.isCollected and not b.isCollected then
 								if a_name ~= b_name then
 									return a_name < b_name  -- по алфавиту
 								end
 							end
-
 							-- 3. Если оба собранные - применяем полную сортировку:
 							--    статус -> качество -> имя -> ID
 							local A_status = a.status or ""
 							local B_status = b.status or ""
-
 							-- 3.1. Сначала идут боевые спутники
 							if (A_status == GARRISON_FOLLOWER_COMBAT_ALLY) ~= (B_status == GARRISON_FOLLOWER_COMBAT_ALLY) then
 								return A_status == GARRISON_FOLLOWER_COMBAT_ALLY
 							end
-
 							-- 3.2. Сначала неактивные идут ниже активных
 							if (A_status == GARRISON_FOLLOWER_INACTIVE) ~= (B_status == GARRISON_FOLLOWER_INACTIVE) then
 								return B_status == GARRISON_FOLLOWER_INACTIVE
 							end
-
 							-- 3.3. Затем по качеству (высокое качество первым)
 							if a.quality ~= b.quality then
 								return a.quality > b.quality
 							end
-
 							-- 3.4. Затем по имени (алфавитный порядок)
 							if a_name ~= b_name then
 								return a_name < b_name
 							end
-
 							-- 3.5. Если всё совпадает - сортируем по ID
 							return (a.garrFollowerID or 0) < (b.garrFollowerID or 0)
 						end)
-
-
-
-
-
-
 					if followerData.name == "SHADOWNLANDS" and CharInfo.MASLENGO.CovenantAndAnima and CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 						local covenandID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
 						tooltipCENT[#tooltipCENT+1] = {
@@ -2728,8 +2604,6 @@ function E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 						local portraitIconID = v.portraitIconID and E.func_texturefromIcon(v.portraitIconID) or ""
 						local classAtlas = v.classAtlas and CreateAtlasMarkup(v.classAtlas, 16, 16) or ""
 						local status = ""
-
-
 						if v.status then
 							if v.status == GARRISON_FOLLOWER_COMBAT_ALLY then
 								status = E.Gold_Color ..">".. v.status.."<|r"
@@ -2758,8 +2632,6 @@ function E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 						if v.isCollected then
 							color = E.func_GetHexColorFromQuality(v.quality)
 						end
-
-
 						local leftText = portraitIconID.." "..color..E.func_getFollowerName(v).."|r" ..level
 						local centText = durability
 						local mission = IsFollowerOnCompletedMission(v.garrFollowerID or v.followerID) and E.TRUE or E.FALSE
@@ -2909,3 +2781,118 @@ function E.func_Tooltip_Chars(CharInfo)
 	end
 	return tooltip_Chars
 end
+----------------------------------------------------------------
+function E.func_AddonNameForOptionsFunc(addonName)
+	return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title").." "..E.Gray_Color..E.func_GetAddOnMetadata(addonName, "Version").."|r"
+end
+function E.func_AddonNameForOptionsInit(addonName)
+	return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title")
+end
+----------------------------------------------------------------
+-- function E.InitGlobalDB(addonName)
+-- 	local savedVarName = addonName.."_DB"
+-- 	_G[savedVarName] = _G[savedVarName] or {}
+-- 	-------------------------- ПОВТОР? -----------------------------
+-- 	for _, entry in ipairs(E.OctoTable_SavedVariables) do
+-- 		if entry.name == savedVarName then
+-- 			return _G[savedVarName], savedVarName
+-- 		end
+-- 	end
+-- 	----------------------------------------------------------------
+-- 	table.insert(E.OctoTable_SavedVariables, {
+-- 		tbl = _G[savedVarName],
+-- 		name = savedVarName
+-- 	})
+-- 	return _G[savedVarName], savedVarName
+-- end
+----------------------------------------------------------------
+function E.InitGlobalDB(addonName)
+	local savedVarName = addonName .. "_DB"
+	_G[savedVarName] = _G[savedVarName] or {}
+	-- Защита от повторов
+	for _, entry in ipairs(E.OctoTable_SavedVariables or {}) do
+		if entry.name == savedVarName then
+			E.SavedVarsByAddon = E.SavedVarsByAddon or {}
+			E.SavedVarsByAddon[addonName] = _G[savedVarName]
+			return _G[savedVarName], savedVarName
+		end
+	end
+	E.OctoTable_SavedVariables = E.OctoTable_SavedVariables or {}
+	table.insert(E.OctoTable_SavedVariables, {
+		tbl = _G[savedVarName],
+		name = savedVarName
+	})
+	E.SavedVarsByAddon = E.SavedVarsByAddon or {}
+	E.SavedVarsByAddon[addonName] = _G[savedVarName]
+	return _G[savedVarName], savedVarName
+end
+----------------------------------------------------------------
+local countSavedVars = 0
+function E.func_GetSavedVars(addonName)
+	if not (E.SavedVarsByAddon and E.SavedVarsByAddon[addonName]) then
+		E.InitGlobalDB(addonName)
+	end
+	countSavedVars = countSavedVars + 1
+	-- print (countSavedVars)
+	return E.SavedVarsByAddon[addonName]
+end
+----------------------------------------------------------------
+-- local function safecall(f, ...)
+-- 	local ok, err = pcall(f, ...)
+-- 	if not ok then
+-- 		print("Ошибка в отложенной функции:", err)
+-- 	end
+-- end
+-- function E.func_SpamBlock(key, isCombat, callback)
+-- 	E._spamLocks = E._spamLocks or {}
+-- 	E._spamCombatQueue = E._spamCombatQueue or {}
+-- 	if isCombat and InCombatLockdown() then
+-- 		-- если уже есть отложенный вызов — не ставим второй раз
+-- 		if not E._spamCombatQueue[key] and type(callback) == "function" then
+-- 			E._spamCombatQueue[key] = callback
+-- 			-- один раз подписываемся на событие выхода из боя
+-- 			if not E._spamCombatFrame then
+-- 				E._spamCombatFrame = CreateFrame("Frame")
+-- 				E._spamCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+-- 				E._spamCombatFrame:SetScript("OnEvent", function()
+-- 					for k, func in pairs(E._spamCombatQueue) do
+-- 						safecall(func) -- безопасный вызов, чтобы не крашнуло
+-- 						E._spamCombatQueue[k] = nil
+-- 					end
+-- 				end)
+-- 			end
+-- 		end
+-- 		return true -- Заблокировано
+-- 	end
+-- 	if E._spamLocks[key] then
+-- 		return true -- Всё ещё в задержке
+-- 	end
+-- 	E._spamLocks[key] = true
+-- 	C_Timer.After(E.SPAM_TIME or 0.5, function()
+-- 		E._spamLocks[key] = nil
+-- 	end)
+-- 	return false -- Всё нормально, можно выполнять
+-- end
+----------------------------------------------------------------
+function E.func_SpamBlock(key, needCheckCombat)
+	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
+		return false
+	end
+	E._spamLocks = E._spamLocks or {}
+	if E._spamLocks[key] then
+		-- print (E.Red_Color..key.."|r")
+		return true -- Заблокировано, прерываем
+	end
+	E._spamLocks[key] = true
+	C_Timer.After(E.SPAM_TIME or 0.5, function()
+			E._spamLocks[key] = nil
+	end)
+	-- print (E.Green_Color..key.."|r")
+	return false -- Всё нормально, можно выполнять
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

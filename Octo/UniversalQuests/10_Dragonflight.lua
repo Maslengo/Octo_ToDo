@@ -22,7 +22,6 @@ function E.func_Universal_10_Dragonflight()
 			},
 			forcedMaxQuest = 3,
 		},
-
 		{
 			showTooltip = true,
 			textleft = E.func_mapName(2133)..": ".."Events",
@@ -146,8 +145,6 @@ function E.func_Universal_10_Dragonflight()
 			},
 			-- forcedMaxQuest = 12,
 		},
-
-
 		{
 			showTooltip = true,
 			textleft = E.func_mapName(2133)..": "..E.func_questName(74906).." "..E.Timers.DF_ResearchersUnderFire(),
@@ -162,9 +159,6 @@ function E.func_Universal_10_Dragonflight()
 			},
 			-- forcedMaxQuest = 4,
 		},
-
-
-
 		{
 			showTooltip = true,
 			textleft = E.func_mapName(2151)..": ".."Rares", -- Запретный край.

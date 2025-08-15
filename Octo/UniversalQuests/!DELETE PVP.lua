@@ -12,9 +12,3 @@
 wowhead.com/ptr-2/ru/quest=90781
 wowhead.com/ptr-2/ru/quest=80186
 wowhead.com/ptr-2/ru/quest=80189
-
-
-
-
-
-

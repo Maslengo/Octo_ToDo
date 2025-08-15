@@ -3,8 +3,7 @@ E = _G.OctoEngine
 if not Octo_ToDo_DB_Vars then return end
 ----------------------------------------------------------------
 -- Создаем фрейм для отладки
-local Octo_EventFrame = CreateFrame("FRAME")
-Octo_EventFrame:Hide()
+local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 -- Подключаем библиотеки
 local LibStub = LibStub
@@ -299,7 +298,6 @@ local editFrame = CreateMyAddonEditFrameTemplate("editFrame", UIParent)
 -- E.func_InitFrame(editFrame)
 editFrame:ClearAllPoints()
 editFrame:SetPoint("CENTER")
-
 local editBox = editFrame.editFrame
 ------------------------------------------------------------
 ------------------------------------------------------------
@@ -426,7 +424,7 @@ SlashCmdList["FPRINT"] = function(msg)
 	end
 end
 -- Функции для работы со списками
-function Octo_EventFrame:func_itemslist(msg)
+function EventFrame:func_itemslist(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local promise1 = LibThingsLoad:Items(GLOBAL_TABLE_ITEMS)
@@ -444,7 +442,7 @@ function Octo_EventFrame:func_itemslist(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame:func_itemslistSort24(msg)
+function EventFrame:func_itemslistSort24(msg)
 	local startTime = debugprofilestop()
 	editFrame:SetScript("OnShow", function()
 		local executionTime = (debugprofilestop() - startTime)
@@ -481,7 +479,6 @@ function Octo_EventFrame:func_itemslistSort24(msg)
 	----------------------------------------------------------------
 	-- E.func_TableRemoveDuplicates(GLOBAL_TABLE_ITEMS)
 	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_Reverse_order)
-
 	-- local vivod, count = "", 0
 	-- for _, itemID in ipairs(GLOBAL_TABLE_ITEMS) do
 	-- 	count = count + 1
@@ -503,11 +500,9 @@ function Octo_EventFrame:func_itemslistSort24(msg)
 	print (tbl)
 	E.func_TableRemoveDuplicates(tbl)
 	table.sort(tbl, E.func_Reverse_order)
-
 	local chunks = {}
 	local chunk_size = 24
 	local count = #tbl
-
 	for i = 1, count, chunk_size do
 		local chunk = {}
 		local last = math.min(i + chunk_size - 1, count)
@@ -516,15 +511,13 @@ function Octo_EventFrame:func_itemslistSort24(msg)
 		end
 		table.insert(chunks, table.concat(chunk, ", "))
 	end
-
 	editBox:SetText(table.concat(chunks, ",|n"))
 	editFrame:Show()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
 end
-function Octo_EventFrame:func_itemslistSortBOOLEN(msg)
+function EventFrame:func_itemslistSortBOOLEN(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local tbl = {}
@@ -553,7 +546,7 @@ function Octo_EventFrame:func_itemslistSortBOOLEN(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame:func_questslist(msg)
+function EventFrame:func_questslist(msg)
 	local str = ""
 	local list1, list2 = {}, {}
 	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID_Paragon)
@@ -572,7 +565,7 @@ function Octo_EventFrame:func_questslist(msg)
 			editFrame:Show()
 	end)
 end
-function Octo_EventFrame:func_currencieslist(msg)
+function EventFrame:func_currencieslist(msg)
 	local str1 = ""
 	local str2 = ""
 	local vivod = ""
@@ -592,7 +585,7 @@ function Octo_EventFrame:func_currencieslist(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-function Octo_EventFrame:func_reputationslist(msg)
+function EventFrame:func_reputationslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -612,7 +605,7 @@ function Octo_EventFrame:func_reputationslist(msg)
 	editBox:SetText(vivod)
 	editFrame:Show()
 end
-function Octo_EventFrame:func_spellslist(msg)
+function EventFrame:func_spellslist(msg)
 	local str4 = ""
 	local str5 = ""
 	local vivod = ""
@@ -638,17 +631,17 @@ end
 local function func_HandleCommand(msg)
 	local command, arg1, arg2 = strsplit(" ", msg, 3)
 	if (command == "quest" or command == "2") then
-		Octo_EventFrame:func_questslist(arg1)
+		EventFrame:func_questslist(arg1)
 	elseif (command == "currency" or command == "3") then
-		Octo_EventFrame:func_currencieslist(arg1)
+		EventFrame:func_currencieslist(arg1)
 	elseif (command == "rep" or command == "4") then
-		Octo_EventFrame:func_reputationslist(arg1)
+		EventFrame:func_reputationslist(arg1)
 	elseif (command == "spell" or command == "5") then
-		Octo_EventFrame:func_spellslist(arg1)
+		EventFrame:func_spellslist(arg1)
 	elseif (command == "item2" or command == "6") then
-		Octo_EventFrame:func_itemslistSort24(arg1)
+		EventFrame:func_itemslistSort24(arg1)
 	elseif (command == "item3" or command == "7") then
-		Octo_EventFrame:func_itemslistSortBOOLEN(arg1)
+		EventFrame:func_itemslistSortBOOLEN(arg1)
 	else
 		DEFAULT_CHAT_FRAME:AddMessage("Команды:")
 		DEFAULT_CHAT_FRAME:AddMessage("/fp ".."quest".." (2)")
@@ -692,11 +685,11 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 -- Обработчик события VARIABLES_LOADED
-function Octo_EventFrame:VARIABLES_LOADED()
+function EventFrame:VARIABLES_LOADED()
 	E.func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_Debug_DB)
 end
-function Octo_EventFrame:PLAYER_LOGIN()
+function EventFrame:PLAYER_LOGIN()
 	E.func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)
 end

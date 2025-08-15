@@ -1,6 +1,4 @@
 <Ui>
-
 	<Script file="MainFrame\MainFrame.lua"/>
 	<Script file="MainFrame\slashCommands.lua"/>
-
 </Ui>

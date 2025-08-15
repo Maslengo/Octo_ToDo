@@ -4,7 +4,5 @@
 ## Version: v1.0(11.2.0)(08.08.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\TestFrame
 ## Dependencies: Octo
-
 ## SavedVariables: Octo_TestFrame_DB_Vars
-
 Octo_TestFrame.lua

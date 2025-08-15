@@ -54,14 +54,11 @@ E.OctoTable_QuestID_Paragon = {
 	46745, -- Припасы от Двора Фарондиса
 	46743, -- Припасы из Крутогорья
 }
-
 E.OctoTable_QuestID = {
 	38242,
 	39246,
-
 	37485, --- 1000 RESOURS
 }
-
 local function func_TableConcat(table1, table2)
 	local len = #table1
 	for i = 1, #table2 do
@@ -70,5 +67,4 @@ local function func_TableConcat(table1, table2)
 	end
 	return table1
 end
-
 func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)

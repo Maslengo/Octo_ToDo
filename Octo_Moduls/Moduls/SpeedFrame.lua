@@ -1,16 +1,17 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 local EventFrame = CreateFrame("Frame")
-EventFrame:Hide()
 local Octo_MainFrame_SpeedFrame = CreateFrame("Frame", "Octo_MainFrame_SpeedFrame", UIParent, "BackdropTemplate")
 Octo_MainFrame_SpeedFrame:Hide()
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 function EventFrame:CreateSpeedFrame()
-	local vars = Octo_ToDo_DB_Vars.SpeedFrame
+	local vars = EventFrame.savedVars.SpeedFrame
 	Octo_MainFrame_SpeedFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 	Octo_MainFrame_SpeedFrame:SetSize(80, 32)
 	Octo_MainFrame_SpeedFrame:SetDontSavePosition(true)
-	Octo_MainFrame_SpeedFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
+	Octo_MainFrame_SpeedFrame:SetClampedToScreen(true)
 	Octo_MainFrame_SpeedFrame:SetFrameStrata("HIGH")
 	Octo_MainFrame_SpeedFrame:EnableMouse(true)
 	Octo_MainFrame_SpeedFrame:SetMovable(true)
@@ -61,10 +62,16 @@ end
 -- Обработчики событий
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"VARIABLES_LOADED",
+	"ADDON_LOADED",
+	"PLAYER_LOGIN",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
---- Обрабатывает событие загрузки аддона
-function EventFrame:VARIABLES_LOADED()
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
+end
+function EventFrame:PLAYER_LOGIN()
 	EventFrame:CreateSpeedFrame()
 end

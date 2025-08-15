@@ -1,66 +1,29 @@
 local GlobalAddonName, E = ...
-
 function E.Collect_All_Currency()
-
+	if E.func_SpamBlock("Collect_All_Currency") then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	if not Octo_Cache_DB and not Octo_Cache_DB.AllCurrencies then return end
-		----------------------------------------------------------------
-		-- local listSize = C_CurrencyInfo.GetCurrencyListSize()
-		-- local headerIndex
-		-- for i = 1, listSize do
-		-- local info = C_CurrencyInfo.GetCurrencyListInfo(i)
-		-- if info and info.isHeader then
-		-- C_CurrencyInfo.ExpandCurrencyList(i, true)
-		-- listSize = C_CurrencyInfo.GetCurrencyListSize()
-		-- headerIndex = i
-		-- elseif info and info.name then
-		-- local currencyLink = C_CurrencyInfo.GetCurrencyListLink(i)
-		-- local currencyID = currencyLink and C_CurrencyInfo.GetCurrencyIDFromLink(currencyLink)
-		-- if currencyID then
-		-- list[currencyID] = list[currencyID] or false
-		-- end
-		-- end
-		-- end
-		-- for CurrencyID, v in next, (list) do
-		----------------------------------------------------------------
-
 		local currencyCache = {}
-
 		for CurrencyID,	cachedName in next, (Octo_Cache_DB.AllCurrencies) do
 			local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID)
-
 			collectMASLENGO.Currency[CurrencyID] = collectMASLENGO.Currency[CurrencyID] or {}
 			local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
 			if data then
 				local quantity = data.quantity
 				local maxQuantity = data.maxQuantity
 				local totalEarned = data.totalEarned
-
 				local maxWeeklyQuantity = data.maxWeeklyQuantity
 				local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
-				-- local discovered = data.discovered
-				-- local transferPercentage = data.transferPercentage
-				-- local rechargingCycleDurationMS = data.rechargingCycleDurationMS
-				-- local rechargingAmountPerCycle = data.rechargingAmountPerCycle
-
-
-				----------------------------------------------------------------
-				----------------------------------------------------------------
-				----------------------------------------------------------------
-				-- Проверяем, есть ли данные в кэше
 				if not currencyCache[CurrencyID] then
 					currencyCache[CurrencyID] = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(CurrencyID)
 				end
-
 				local rosterCurrencyData = currencyCache[CurrencyID]
 				if rosterCurrencyData then
-					-- Создаем таблицу для быстрого доступа по GUID
 					local currencyMap = {}
 					for _, v in ipairs(rosterCurrencyData) do
 						currencyMap[v.characterGUID] = v.quantity
 					end
-
 					for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
 						CharInfo.MASLENGO.Currency[CurrencyID] = CharInfo.MASLENGO.Currency[CurrencyID] or {}
 						if currencyMap[GUID] then
@@ -71,12 +34,8 @@ function E.Collect_All_Currency()
 						end
 					end
 				end
-				----------------------------------------------------------------
-				----------------------------------------------------------------
-				----------------------------------------------------------------
 				if not isAccountWideCurrency then
-					if collectMASLENGO and not InCombatLockdown() then
-						----------------------------------------------------------------
+					if collectMASLENGO then
 						if quantity and quantity ~= 0 then
 							collectMASLENGO.Currency[CurrencyID].quantity = quantity
 						else
@@ -102,12 +61,10 @@ function E.Collect_All_Currency()
 						else
 							collectMASLENGO.Currency[CurrencyID].useTotalEarnedForMaxQty = nil
 						end
-						----------------------------------------------------------------
 					end
 				else
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						if CharInfo and not InCombatLockdown() then
-							----------------------------------------------------------------
+						if CharInfo then
 						if quantity and quantity ~= 0 then
 							collectMASLENGO.Currency[CurrencyID].quantity = quantity
 						else
@@ -133,7 +90,6 @@ function E.Collect_All_Currency()
 						else
 							collectMASLENGO.Currency[CurrencyID].useTotalEarnedForMaxQty = nil
 						end
-							----------------------------------------------------------------
 						end
 					end
 				end
@@ -141,5 +97,4 @@ function E.Collect_All_Currency()
 				collectMASLENGO.Currency[CurrencyID] = nil
 			end
 		end
-		----------------------------------------------------------------
 end

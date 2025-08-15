@@ -1,12 +1,7 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-
-
-
-
-local Octo_EventFrame_HideFrames = CreateFrame("FRAME")
-Octo_EventFrame_HideFrames:Hide()
-
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 function E.func_Config_Hide_CheckListText()
 	local frame = CheckListText
 	if frame and not E[frame] then
@@ -19,15 +14,6 @@ function E.func_Config_Hide_CheckListText()
 		end
 	end
 end
-
-
-
-
-
-
-
-
-
 -- function E.func_Config_Hide_SubscriptionInterstitialFrame()
 -- 	local frame = SubscriptionInterstitialFrame
 -- 	if frame and not E[frame] then
@@ -40,7 +26,6 @@ end
 -- 		end
 -- 	end
 -- end
-
 function E.func_Config_Hide_ActionStatusText()
 	local frame = ActionStatus.Text
 	if frame and not E[frame] then
@@ -53,7 +38,6 @@ function E.func_Config_Hide_ActionStatusText()
 		end
 	end
 end
-
 function E.func_Config_Hide_SecondaryStatusTrackingBarContainer()
 	local frame = SecondaryStatusTrackingBarContainer
 	if frame and not E[frame] then
@@ -66,7 +50,6 @@ function E.func_Config_Hide_SecondaryStatusTrackingBarContainer()
 		end
 	end
 end
-
 function E.func_Config_Hide_MainStatusTrackingBarContainer()
 	local frame = MainStatusTrackingBarContainer
 	if frame and not E[frame] then
@@ -79,7 +62,6 @@ function E.func_Config_Hide_MainStatusTrackingBarContainer()
 		end
 	end
 end
-
 function E.func_Config_Hide_WeeklyRewardExpirationWarningDialog()
 	local frame = WeeklyRewardExpirationWarningDialog
 	if frame and not E[frame] then
@@ -92,7 +74,6 @@ function E.func_Config_Hide_WeeklyRewardExpirationWarningDialog()
 		end
 	end
 end
-
 function E.func_Config_Hide_MajorFactionsRenownToast()
 	local frame = MajorFactionsRenownToast
 	if frame and not E[frame] then
@@ -105,7 +86,6 @@ function E.func_Config_Hide_MajorFactionsRenownToast()
 		end
 	end
 end
-
 function E.func_Config_Hide_UIWidgetTopCenterContainerFrame()
 	local frame = UIWidgetTopCenterContainerFrame
 	if frame and not E[frame] then
@@ -118,7 +98,6 @@ function E.func_Config_Hide_UIWidgetTopCenterContainerFrame()
 		end
 	end
 end
-
 function E.func_Config_Hide_BossBanner()
 	local frame = BossBanner
 	if frame and not E[frame] then
@@ -131,7 +110,6 @@ function E.func_Config_Hide_BossBanner()
 		end
 	end
 end
-
 function E.func_Config_Hide_RaidWarningFrame()
 	local frame = RaidWarningFrame
 	if frame and not E[frame] then
@@ -144,7 +122,6 @@ function E.func_Config_Hide_RaidWarningFrame()
 		end
 	end
 end
-
 function E.func_Config_Hide_RaidBossEmoteFrame()
 	local frame = RaidBossEmoteFrame
 	if frame and not E[frame] then
@@ -157,7 +134,6 @@ function E.func_Config_Hide_RaidBossEmoteFrame()
 		end
 	end
 end
-
 function E.func_Config_Hide_PrivateRaidBossEmoteFrameAnchor()
 	local frame = PrivateRaidBossEmoteFrameAnchor
 	if frame and not E[frame] then
@@ -170,7 +146,6 @@ function E.func_Config_Hide_PrivateRaidBossEmoteFrameAnchor()
 		end
 	end
 end
-
 function E.func_Config_Hide_SplashFrame()
 	local frame = SplashFrame
 	if frame and not E[frame] then
@@ -183,7 +158,6 @@ function E.func_Config_Hide_SplashFrame()
 		end
 	end
 end
-
 function E.func_Config_Hide_PTRReporter()
 	local frame = PTR_Reporter
 	if frame and not E[frame] then
@@ -196,7 +170,6 @@ function E.func_Config_Hide_PTRReporter()
 		end
 	end
 end
-
 function E.func_Config_Hide_PTRIssueReporter()
 	local frame = PTR_IssueReporter
 	if frame and not E[frame] then
@@ -209,7 +182,6 @@ function E.func_Config_Hide_PTRIssueReporter()
 		end
 	end
 end
-
 function E.func_Config_Hide_PTRIssueReporterAlertFrame()
 	local frame = PTRIssueReporterAlertFrame
 	if frame then
@@ -217,7 +189,6 @@ function E.func_Config_Hide_PTRIssueReporterAlertFrame()
 			frame:Hide()
 		end)
 	end
-
 	-- if frame and not E[frame] then
 	-- 	E[frame] = true
 	-- 	if frame:IsShown() then frame:Hide()
@@ -228,7 +199,6 @@ function E.func_Config_Hide_PTRIssueReporterAlertFrame()
 	-- 	end
 	-- end
 end
-
 function E.func_Config_Hide_Bug()
 	local frame = Bug
 	if frame and not E[frame] then
@@ -241,7 +211,6 @@ function E.func_Config_Hide_Bug()
 		end
 	end
 end
-
 function E.func_Config_Hide_CovenantRenownToast()
 	local frame = CovenantRenownToast
 	if frame and not E[frame] then
@@ -254,7 +223,6 @@ function E.func_Config_Hide_CovenantRenownToast()
 		end
 	end
 end
-
 function E.func_Config_Hide_CovenantChoiceToast()
 	local frame = CovenantChoiceToast
 	if frame and not E[frame] then
@@ -267,7 +235,6 @@ function E.func_Config_Hide_CovenantChoiceToast()
 		end
 	end
 end
-
 function E.func_Config_Hide_ZoneTextFrame()
 	local frame = ZoneTextFrame
 	if frame and not E[frame] then
@@ -280,7 +247,6 @@ function E.func_Config_Hide_ZoneTextFrame()
 		end
 	end
 end
-
 function E.func_Config_Hide_SubZoneTextFrame()
 	local frame = SubZoneTextFrame
 	if frame and not E[frame] then
@@ -293,7 +259,6 @@ function E.func_Config_Hide_SubZoneTextFrame()
 		end
 	end
 end
-
 function E.func_Config_Hide_PVPArenaTextString()
 	local frame = PVPArenaTextString
 	if frame and not E[frame] then
@@ -306,7 +271,6 @@ function E.func_Config_Hide_PVPArenaTextString()
 		end
 	end
 end
-
 function E.func_Config_Hide_ZoneTextString()
 	local frame = ZoneTextString
 	if frame and not E[frame] then
@@ -319,7 +283,6 @@ function E.func_Config_Hide_ZoneTextString()
 		end
 	end
 end
-
 function E.func_Config_Hide_SubZoneTextString()
 	local frame = SubZoneTextString
 	if frame and not E[frame] then
@@ -332,7 +295,6 @@ function E.func_Config_Hide_SubZoneTextString()
 		end
 	end
 end
-
 function E.func_Config_Hide_OrderHallCommandBar()
 	if not E.OrderHallCommandBar then
 		E.OrderHallCommandBar = true
@@ -363,7 +325,6 @@ function E.func_Config_Hide_OrderHallCommandBar()
 		end
 	end
 end
-
 function E.func_Config_Hide_ErrorMessages()
 	if not E.ErrorMessages then
 		E.ErrorMessages = true
@@ -393,7 +354,6 @@ function E.func_Config_Hide_ErrorMessages()
 			end)
 	end
 end
-
 function E.func_Config_Hide_TalkingHeadFrame()
 	if TalkingHeadFrame and not E.TalkingHeadFrame then
 		E.TalkingHeadFrame = true
@@ -402,7 +362,6 @@ function E.func_Config_Hide_TalkingHeadFrame()
 		end)
 	end
 end
-
 function E.func_Config_Hide_EventToastManagerFrame()
 	if EventToastManagerFrame and not E.EventToastManagerFrame then
 		E.EventToastManagerFrame = true
@@ -427,8 +386,8 @@ function E.func_Config_Hide_EventToastManagerFrame()
 		end)
 	end
 end
-
 local MyEventsTable = {
+	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_ENABLED",
 	"PLAYER_REGEN_DISABLED",
@@ -436,71 +395,66 @@ local MyEventsTable = {
 	"TALKINGHEAD_REQUESTED",
 	"SHOW_SUBSCRIPTION_INTERSTITIAL",
 }
-
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_HideFrames, MyEventsTable)
-function Octo_EventFrame_HideFrames:START_HF_functions()
-	if Octo_ToDo_DB_Vars.Config_Hide_CheckListText then E.func_Config_Hide_CheckListText() end
-	-- if Octo_ToDo_DB_Vars.Config_Hide_SubscriptionInterstitialFrame then E.func_Config_Hide_SubscriptionInterstitialFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_ActionStatusText then E.func_Config_Hide_ActionStatusText() end
-	if Octo_ToDo_DB_Vars.Config_Hide_SecondaryStatusTrackingBarContainer then E.func_Config_Hide_SecondaryStatusTrackingBarContainer() end
-	if Octo_ToDo_DB_Vars.Config_Hide_MainStatusTrackingBarContainer then E.func_Config_Hide_MainStatusTrackingBarContainer() end
-	if Octo_ToDo_DB_Vars.Config_Hide_WeeklyRewardExpirationWarningDialog then E.func_Config_Hide_WeeklyRewardExpirationWarningDialog() end
-	if Octo_ToDo_DB_Vars.Config_Hide_MajorFactionsRenownToast then E.func_Config_Hide_MajorFactionsRenownToast() end
-	if Octo_ToDo_DB_Vars.Config_Hide_UIWidgetTopCenterContainerFrame then E.func_Config_Hide_UIWidgetTopCenterContainerFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_BossBanner then E.func_Config_Hide_BossBanner() end
-	if Octo_ToDo_DB_Vars.Config_Hide_RaidWarningFrame then E.func_Config_Hide_RaidWarningFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_RaidBossEmoteFrame then E.func_Config_Hide_RaidBossEmoteFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_PrivateRaidBossEmoteFrameAnchor then E.func_Config_Hide_PrivateRaidBossEmoteFrameAnchor() end
-	if Octo_ToDo_DB_Vars.Config_Hide_SplashFrame then E.func_Config_Hide_SplashFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_PTRReporter then E.func_Config_Hide_PTRReporter() end
-	if Octo_ToDo_DB_Vars.Config_Hide_PTRIssueReporter then E.func_Config_Hide_PTRIssueReporter() end
-	if Octo_ToDo_DB_Vars.Config_Hide_PTRIssueReporterAlertFrame then E.func_Config_Hide_PTRIssueReporterAlertFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_Bug then E.func_Config_Hide_Bug() end
-	if Octo_ToDo_DB_Vars.Config_Hide_CovenantRenownToast then E.func_Config_Hide_CovenantRenownToast() end
-	if Octo_ToDo_DB_Vars.Config_Hide_CovenantChoiceToast then E.func_Config_Hide_CovenantChoiceToast() end
-	if Octo_ToDo_DB_Vars.Config_Hide_ZoneTextFrame then E.func_Config_Hide_ZoneTextFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_SubZoneTextFrame then E.func_Config_Hide_SubZoneTextFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_PVPArenaTextString then E.func_Config_Hide_PVPArenaTextString() end
-	if Octo_ToDo_DB_Vars.Config_Hide_ZoneTextString then E.func_Config_Hide_ZoneTextString() end
-	if Octo_ToDo_DB_Vars.Config_Hide_SubZoneTextString then E.func_Config_Hide_SubZoneTextString() end
-	if Octo_ToDo_DB_Vars.Config_Hide_OrderHallCommandBar then E.func_Config_Hide_OrderHallCommandBar() end
-	if Octo_ToDo_DB_Vars.Config_Hide_ErrorMessages then E.func_Config_Hide_ErrorMessages() end
-	if Octo_ToDo_DB_Vars.Config_Hide_TalkingHeadFrame then E.func_Config_Hide_TalkingHeadFrame() end
-	if Octo_ToDo_DB_Vars.Config_Hide_EventToastManagerFrame then E.func_Config_Hide_EventToastManagerFrame() end
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 end
-
-function Octo_EventFrame_HideFrames:PLAYER_LOGIN()
+function EventFrame:START_HF_functions()
+	if EventFrame.savedVars.Config_Hide_CheckListText then E.func_Config_Hide_CheckListText() end
+	-- if EventFrame.savedVars.Config_Hide_SubscriptionInterstitialFrame then E.func_Config_Hide_SubscriptionInterstitialFrame() end
+	if EventFrame.savedVars.Config_Hide_ActionStatusText then E.func_Config_Hide_ActionStatusText() end
+	if EventFrame.savedVars.Config_Hide_SecondaryStatusTrackingBarContainer then E.func_Config_Hide_SecondaryStatusTrackingBarContainer() end
+	if EventFrame.savedVars.Config_Hide_MainStatusTrackingBarContainer then E.func_Config_Hide_MainStatusTrackingBarContainer() end
+	if EventFrame.savedVars.Config_Hide_WeeklyRewardExpirationWarningDialog then E.func_Config_Hide_WeeklyRewardExpirationWarningDialog() end
+	if EventFrame.savedVars.Config_Hide_MajorFactionsRenownToast then E.func_Config_Hide_MajorFactionsRenownToast() end
+	if EventFrame.savedVars.Config_Hide_UIWidgetTopCenterContainerFrame then E.func_Config_Hide_UIWidgetTopCenterContainerFrame() end
+	if EventFrame.savedVars.Config_Hide_BossBanner then E.func_Config_Hide_BossBanner() end
+	if EventFrame.savedVars.Config_Hide_RaidWarningFrame then E.func_Config_Hide_RaidWarningFrame() end
+	if EventFrame.savedVars.Config_Hide_RaidBossEmoteFrame then E.func_Config_Hide_RaidBossEmoteFrame() end
+	if EventFrame.savedVars.Config_Hide_PrivateRaidBossEmoteFrameAnchor then E.func_Config_Hide_PrivateRaidBossEmoteFrameAnchor() end
+	if EventFrame.savedVars.Config_Hide_SplashFrame then E.func_Config_Hide_SplashFrame() end
+	if EventFrame.savedVars.Config_Hide_PTRReporter then E.func_Config_Hide_PTRReporter() end
+	if EventFrame.savedVars.Config_Hide_PTRIssueReporter then E.func_Config_Hide_PTRIssueReporter() end
+	if EventFrame.savedVars.Config_Hide_PTRIssueReporterAlertFrame then E.func_Config_Hide_PTRIssueReporterAlertFrame() end
+	if EventFrame.savedVars.Config_Hide_Bug then E.func_Config_Hide_Bug() end
+	if EventFrame.savedVars.Config_Hide_CovenantRenownToast then E.func_Config_Hide_CovenantRenownToast() end
+	if EventFrame.savedVars.Config_Hide_CovenantChoiceToast then E.func_Config_Hide_CovenantChoiceToast() end
+	if EventFrame.savedVars.Config_Hide_ZoneTextFrame then E.func_Config_Hide_ZoneTextFrame() end
+	if EventFrame.savedVars.Config_Hide_SubZoneTextFrame then E.func_Config_Hide_SubZoneTextFrame() end
+	if EventFrame.savedVars.Config_Hide_PVPArenaTextString then E.func_Config_Hide_PVPArenaTextString() end
+	if EventFrame.savedVars.Config_Hide_ZoneTextString then E.func_Config_Hide_ZoneTextString() end
+	if EventFrame.savedVars.Config_Hide_SubZoneTextString then E.func_Config_Hide_SubZoneTextString() end
+	if EventFrame.savedVars.Config_Hide_OrderHallCommandBar then E.func_Config_Hide_OrderHallCommandBar() end
+	if EventFrame.savedVars.Config_Hide_ErrorMessages then E.func_Config_Hide_ErrorMessages() end
+	if EventFrame.savedVars.Config_Hide_TalkingHeadFrame then E.func_Config_Hide_TalkingHeadFrame() end
+	if EventFrame.savedVars.Config_Hide_EventToastManagerFrame then E.func_Config_Hide_EventToastManagerFrame() end
+end
+function EventFrame:PLAYER_LOGIN()
 	self:START_HF_functions()
 end
-
-function Octo_EventFrame_HideFrames:PLAYER_REGEN_ENABLED()
+function EventFrame:PLAYER_REGEN_ENABLED()
 	self:START_HF_functions()
 end
-
-function Octo_EventFrame_HideFrames:PLAYER_REGEN_DISABLED()
+function EventFrame:PLAYER_REGEN_DISABLED()
 	self:START_HF_functions()
 end
-
-function Octo_EventFrame_HideFrames:PLAYER_STARTED_MOVING()
+function EventFrame:PLAYER_STARTED_MOVING()
 	self:START_HF_functions()
 	-- local size1, size2 = GetPhysicalScreenSize()
 	-- local scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
-
 	-- print (E.Red_Color.."UIParent:|r", UIParent:GetSize())
 	-- print (E.Blue_Color.."WorldFrame:|r", WorldFrame:GetSize())
-
 	-- print (E.Green_Color.."GetPhysicalScreenSize:|r", size1, size2)
 	-- print (scale, E.scale)
 	-- /script WorldFrame:ClearAllPoints(); WorldFrame:SetWidth(1920); WorldFrame:SetHeight(1080); WorldFrame:SetPoint("CENTER", 0, 0);
 	-- /script UIParent:ClearAllPoints(); UIParent:SetWidth(1920); UIParent:SetHeight(1080); UIParent:SetPoint("CENTER", 0, 0);
-
 end
-
-function Octo_EventFrame_HideFrames:TALKINGHEAD_REQUESTED()
+function EventFrame:TALKINGHEAD_REQUESTED()
 	self:START_HF_functions()
 end
-
-
 function E.func_Config_Hide_SubscriptionInterstitialFrame()
 	local frame = SubscriptionInterstitialFrame
 	if frame and not E[frame] then
@@ -508,7 +462,6 @@ function E.func_Config_Hide_SubscriptionInterstitialFrame()
 		SubscriptionInterstitialFrame:UnregisterAllEvents()
 	end
 end
-
-function Octo_EventFrame_HideFrames:SHOW_SUBSCRIPTION_INTERSTITIAL()
-	if Octo_ToDo_DB_Vars.Config_Hide_SubscriptionInterstitialFrame then E.func_Config_Hide_SubscriptionInterstitialFrame() end
+function EventFrame:SHOW_SUBSCRIPTION_INTERSTITIAL()
+	if EventFrame.savedVars.Config_Hide_SubscriptionInterstitialFrame then E.func_Config_Hide_SubscriptionInterstitialFrame() end
 end

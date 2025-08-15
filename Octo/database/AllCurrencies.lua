@@ -274,10 +274,6 @@ E.OctoTable_Currencies = {
 	3093,
 	2839,
 	3139,
-
-
-
-
 	3149, -- Displaced Corrupted Mementos
 	3303, -- Untethered Coin
 	3356, -- Untainted Mana-Crystals
@@ -287,5 +283,4 @@ E.OctoTable_Currencies = {
 	3288, -- Runed Ethereal Crest
 	3290, -- Gilded Ethereal Crest
 	3141, -- Starlight Spark Dust
-
 }

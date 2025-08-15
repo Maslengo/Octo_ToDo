@@ -1,15 +1,13 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local Octo_EventFrame_WTF = CreateFrame("FRAME")
-Octo_EventFrame_WTF:Hide()
+local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo") -- Локализация
 local LibDataBroker = LibStub("LibDataBroker-1.1") -- Для брокера данных
 local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
-	print ("func_CreateDataCacheAtStart")
+function EventFrame:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
 	-- local tblCurrencies = {}
 	local tblQuests = {}
@@ -131,13 +129,14 @@ function Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:DatabaseTransfer()
+function EventFrame:DatabaseTransfer()
 	local enable = false -- Флаг для включения/отключения переноса
 	if not enable then return end
 	-- Обрабатываем основную таблицу персонажей
 	if Octo_ToDo_DB_Levels then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			-- Инициализируем таблицу данных игрока
+			-- GUID = GUID or {}
 			CharInfo.PlayerData = CharInfo.PlayerData or {}
 			-- Переносим простые поля в PlayerData
 			for k, value in pairs(CharInfo) do
@@ -237,7 +236,7 @@ local function replaceZeroWithNil(tbl, smth)
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
+function EventFrame:CleaningIdenticalCharacters()
 	if not Octo_ToDo_DB_Levels then return end
 	-- Получаем данные текущего игрока
 	local currentGUID = E.curGUID
@@ -278,7 +277,7 @@ function Octo_EventFrame_WTF:CleaningIdenticalCharacters()
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:DatabaseClear()
+function EventFrame:DatabaseClear()
 	local enable = true -- Флаг включения/отключения очистки
 	if not enable then return end
 	if Octo_ToDo_DB_Levels then
@@ -294,27 +293,17 @@ function Octo_EventFrame_WTF:DatabaseClear()
 				Octo_ToDo_DB_Levels[GUID] = nil
 			end
 		end
-		-- Очищаем другие таблицы БД от нулевых и ложных значений
-		-- replaceZeroWithNil(Octo_ToDo_DB_Other, {false, 0})
-		-- replaceZeroWithNil(Octo_Minecraft_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_Achievements_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_AddonsTable_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_AddonsManager_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_Debug_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_ToDo_DB_Vars, {false, 0})
-		-- replaceZeroWithNil(Octo_QuestsChanged_DB, {false, 0})
-		-- replaceZeroWithNil(Octo_Cache_DB, {false, 0})
 	end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
+function EventFrame:Octo_ToDo_DB_Levels()
 	-- Получаем GUID текущего игрока
 	local curGUID = UnitGUID("player")
 	-- Инициализируем основную таблицу данных
-	Octo_ToDo_DB_Levels = E.func_InitTable(Octo_ToDo_DB_Levels)
-	Octo_ToDo_DB_Levels[curGUID] = E.func_InitTable(Octo_ToDo_DB_Levels[curGUID])
+	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
+	Octo_ToDo_DB_Levels[curGUID] = Octo_ToDo_DB_Levels[curGUID] or {}
 	-- Получаем текущее серверное время и дату
 	local ServerTime = GetServerTime()
 	local currentDate = date("%d.%m.%Y")
@@ -454,80 +443,22 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Levels()
 		end
 		-- Инициализируем данные LFG инстансов
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
-			MASLENGO.LFGInstance[dungeonID] = E.func_InitTable(MASLENGO.LFGInstance[dungeonID])
+			MASLENGO.LFGInstance[dungeonID] = MASLENGO.LFGInstance[dungeonID] or {}
 			E.func_InitField(MASLENGO.LFGInstance[dungeonID], "D_name", name)
 			MASLENGO.LFGInstance[dungeonID].donetoday = MASLENGO.LFGInstance[dungeonID].donetoday or nil
 		end
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
-	Octo_ToDo_DB_Vars = E.func_InitTable(Octo_ToDo_DB_Vars)
+function EventFrame:Octo_ToDo_DB_Vars()
+	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	-- Настройки отладки
-	local debugDefaults = {
-		addonFontSize = 11,
-		DebugButton = false, -- Отладка кнопок
-		DebugEvent = false, -- Отладка событий
-		DebugFunction = false, -- Отладка функций
-		DebugIDs = false, -- Отладка ID
-		DebugCharacterInfo = false, -- Отладка информации
-		DebugGossip = false, -- Отладка информации
-		DebugCache = false, -- Отладка информации
-		DebugQC_Vignettes = false, -- Отладка информации
-		DebugQC_Quests = false, -- Отладка информации
-		DebugUniversal = false, -- Отладка информации
-		editorFontSize = 12,
-		editorTabSpaces = 4,
-		editorTheme = "Twilight",
-	}
-	for k, v in next, (debugDefaults) do
-		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
-		E[k] = Octo_ToDo_DB_Vars[k] -- Копируем в глобальную таблицу
-	end
 	-- Настройки функций аддона
 	local featureDefaults = {
 		Config_ADDON_HEIGHT = 20,
 		Config_AlphaOnDrag = 0.8, -- Альфа при перетаскивании
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
-		Config_Auto_ChatClearing = false, -- Автоочистка чата
-		Config_Auto_CinematicCanceler = true, -- Пропуск заставок
-		Config_Auto_CinematicFastSkip = true, -- Быстрый пропуск заставок
-		Config_Auto_Gossip = true, -- Автопропуск диалогов
-		Config_Auto_InputDelete = true, -- Автоочистка ввода
-		Config_Auto_OpenItems = true, -- Автооткрытие предметов
-		Config_Auto_Repair = true, -- Авторемонт
-		Config_Auto_Screenshot = true, -- Автоскриншоты
-		Config_Auto_SellGrey = true, -- Автопродажа серых предметов
-		Config_Auto_TurnQuests = true, -- Автосдача квестов
 		Config_ClampedToScreen = true, -- Не привязывать к границам экрана
-		Config_Hide_ActionStatusText = true, -- Скрыть текст статуса действий
-		Config_Hide_BossBanner = true, -- Скрыть баннер босса
-		Config_Hide_Bug = true, -- Скрыть баг-репортер
-		Config_Hide_CheckListText = true, -- Скрыть текст чеклиста
-		Config_Hide_CovenantChoiceToast = true, -- Скрыть тост выбора ковенанта
-		Config_Hide_CovenantRenownToast = true, -- Скрыть тост ковенанта
-		Config_Hide_ErrorMessages = true, -- Скрыть сообщения об ошибках
-		Config_Hide_EventToastManagerFrame = true, -- Скрыть тосты событий
-		Config_Hide_MainStatusTrackingBarContainer = true, -- Скрыть главную полосу отслеживания
-		Config_Hide_MajorFactionsRenownToast = true, -- Скрыть тост репутации фракций
-		Config_Hide_OrderHallCommandBar = true, -- Скрыть панель команд
-		Config_Hide_PrivateRaidBossEmoteFrameAnchor = true, -- Скрыть якорь эмоций
-		Config_Hide_PTRReporter = true, -- Скрыть PTR репортер
-		Config_Hide_PTRIssueReporter = true, -- Скрыть репортер проблем
-		Config_Hide_PTRIssueReporterAlertFrame = true, -- Скрыть алерт репортера
-		Config_Hide_PVPArenaTextString = true, -- Скрыть текст арены
-		Config_Hide_RaidBossEmoteFrame = true, -- Скрыть эмоции боссов
-		Config_Hide_RaidWarningFrame = true, -- Скрыть предупреждения рейда
-		Config_Hide_SecondaryStatusTrackingBarContainer = true, -- Скрыть вторую полосу отслеживания
-		Config_Hide_SplashFrame = true, -- Скрыть заставку
-		Config_Hide_SubscriptionInterstitialFrame = true, -- Скрыть фрейм подписки
-		Config_Hide_SubZoneTextFrame = true, -- Скрыть текст подзоны
-		Config_Hide_SubZoneTextString = true, -- Скрыть строку подзоны
-		Config_Hide_TalkingHeadFrame = true, -- Скрыть говорящую голову
-		Config_Hide_UIWidgetTopCenterContainerFrame = true, -- Скрыть верхний центр виджетов
-		Config_Hide_WeeklyRewardExpirationWarningDialog = true, -- Скрыть предупреждение о наградах
-		Config_Hide_ZoneTextFrame = true, -- Скрыть текст зоны
-		Config_Hide_ZoneTextString = true, -- Скрыть строку зоны
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
 		Config_LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		Config_prefix = 1, -- Префикс
@@ -543,8 +474,6 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 		Items = true, -- Предметы
 		OnlyCurrentFaction = false, -- Только текущая фракция
 		Professions = true, -- Профессии
-		QC_Quests = true, -- Квесты
-		QC_Vignettes = false, -- Вигнеты
 		Quests = true, -- Квесты
 		QuestsShowAllways = false, -- Всегда показывать квесты
 		Reputations = false, -- Репутация
@@ -577,44 +506,17 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = "OUTLINE"
-	-- Настройки фрейма скорости
-	E.func_InitSubTable(Octo_ToDo_DB_Vars, "SpeedFrame")
-	local speedFrameDefaults = {
-		Shown = true, -- Показывать фрейм
-		point = "BOTTOM", -- Точка привязки
-		relativePoint = "BOTTOM", -- Относительная точка
-		xOfs = 129, -- Смещение по X
-		yOfs = 67 -- Смещение по Y
-	}
-	for k, v in next, (speedFrameDefaults) do
-		print ("speedFrameDefaults")
-		E.func_InitField(Octo_ToDo_DB_Vars.SpeedFrame, k, v)
-	end
-	-- Настройки позиционного фрейма
-	E.func_InitSubTable(Octo_ToDo_DB_Vars, "PosFrame")
-	local posFrameDefaults = {
-		Shown = true, -- Показывать фрейм
-		point = "BOTTOM", -- Точка привязки
-		relativePoint = "BOTTOM", -- Относительная точка
-		xOfs = 129, -- Смещение по X
-		yOfs = 67, -- Смещение по Y
-	}
-	for k, v in next, (posFrameDefaults) do
-		E.func_InitField(Octo_ToDo_DB_Vars.PosFrame, k, v)
-	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_ToDo_DB_Other()
-	Octo_ToDo_DB_Other = E.func_InitTable(Octo_ToDo_DB_Other)
+function EventFrame:Octo_ToDo_DB_Other()
+	Octo_ToDo_DB_Other = Octo_ToDo_DB_Other or {}
 	-- Инициализация таблицы денег аккаунта
 	E.func_InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
 	E.func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.CurrentRegionName, 0)
-	-- Инициализация таблиц настроек
-	-- E.func_InitSubTable(Octo_ToDo_DB_Other, "CVar")
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_Cache_DB()
-	Octo_Cache_DB = E.func_InitTable(Octo_Cache_DB)
+function EventFrame:Octo_Cache_DB()
+	Octo_Cache_DB = Octo_Cache_DB or {}
 	E.func_InitField(Octo_Cache_DB, "lastBuildNumber", 1)
 	E.func_InitField(Octo_Cache_DB, "lastFaction", UNKNOWN)
 	E.func_InitField(Octo_Cache_DB, "lastLocaleLang", UNKNOWN)
@@ -631,8 +533,8 @@ function Octo_EventFrame_WTF:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_ToDo_DB_Account()
-	Octo_ToDo_DB_Account = E.func_InitTable(Octo_ToDo_DB_Account)
+function EventFrame:Octo_ToDo_DB_Account()
+	Octo_ToDo_DB_Account = Octo_ToDo_DB_Account or {}
 	-- E.func_InitField(Octo_ToDo_DB_Account, "lastBuildNumber", 1)
 	-- E.func_InitField(Octo_ToDo_DB_Account, "lastFaction", UNKNOWN)
 	-- E.func_InitField(Octo_ToDo_DB_Account, "lastLocaleLang", UNKNOWN)
@@ -648,124 +550,7 @@ function Octo_EventFrame_WTF:Octo_ToDo_DB_Account()
 	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllVignettes")
 	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "watchedMovies")
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_Achievements_DB()
-	Octo_Achievements_DB = E.func_InitTable(Octo_Achievements_DB)
-	-- Настройки отображения достижений
-	E.func_InitField(Octo_Achievements_DB, "Config_AchievementShowCompleted", true)
-	E.func_InitField(Octo_Achievements_DB, "AchievementToShow", {[92] = true})
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_AddonsManager_DB()
-	Octo_AddonsManager_DB = E.func_InitTable(Octo_AddonsManager_DB)
-	-- Инициализация подтаблиц
-	E.func_InitSubTable(Octo_AddonsManager_DB, "collapsedAddons")
-	E.func_InitSubTable(Octo_AddonsManager_DB, "profiles")
-	E.func_InitSubTable(Octo_AddonsManager_DB.profiles, "forceload")
-	-- Настройка принудительной загрузки текущего аддона
-	E.func_InitField(Octo_AddonsManager_DB.profiles.forceload, GlobalAddonName, true)
-	-- Настройки конфигурации
-	E.func_InitSubTable(Octo_AddonsManager_DB, "config")
-	local configDefaults = {
-		addonListStyle = "tree", -- Стиль списка как дерево
-		autofocusSearch = nil, -- Автофокус в поиске
-		fullName = nil, -- Полное имя
-		hookMenuButton = nil, -- Хук кнопки меню
-		localizeCategoryName = nil, -- Локализовать имена категорий
-		minimaphide = nil, -- Скрыть на миникарте
-		profilingcpuShowAverage = nil, -- Показывать среднюю нагрузку
-		profilingcpuShowCurrent = nil, -- Показывать текущую нагрузку CPU
-		profilingcpuShowEncounter = nil, -- Показывать нагрузку в бою
-		profilingcpuShowPeak = nil, -- Показывать пиковую нагрузку
-		profilingcpuUpdate = nil, -- Обновление профилирования CPU
-		showIcons = nil, -- Показывать иконки
-		showIconsQuestionMark = nil, -- Показывать знаки вопроса у иконок
-		showIndex = nil, -- Показывать индекс
-		showMemoryInBrokerTtp = nil, -- Показывать память в брокере
-		showSecureAddons = nil, -- Показывать защищенные аддоны
-		showTocCategory = nil, -- Показывать категории TOC
-		showTocXCategory = nil, -- Показывать категории TOC
-		showVersion = nil, -- Показывать версию
-		showVersions = nil, -- Показывать версии
-		sorting = "title", -- Сортировка по названию
-		sortingCpu = nil, -- Сортировка по CPU
-	}
-	-- Устанавливаем значения по умолчанию
-	for k, v in next, (configDefaults) do
-		E.func_InitField(Octo_AddonsManager_DB.config, k, v)
-	end
-	-- Дополнительные настройки
-	E.func_InitField(Octo_AddonsManager_DB, "isCategoryFrameVisible", true)
-	E.func_InitSubTable(Octo_AddonsManager_DB, "lock")
-	E.func_InitSubTable(Octo_AddonsManager_DB.lock, "addons")
-	E.func_InitField(Octo_AddonsManager_DB.lock.addons, E.MainAddonName, true)
-end
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_AddonsTable_DB()
-	Octo_AddonsTable_DB = E.func_InitTable(Octo_AddonsTable_DB)
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_Debug_DB()
-	Octo_Debug_DB = E.func_InitTable(Octo_Debug_DB)
-	E.func_InitSubTable(Octo_Debug_DB, "Functions")
-	if not Octo_Debug_DB then return end
-	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData then
-			local currentKey = CharInfo.PlayerData.Name.." - "..CharInfo.PlayerData.curServer
-			Octo_Debug_DB.profileKeys[currentKey] = "OctoUI"
-		end
-	end
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_LoadAddons_DB()
-	Octo_LoadAddons_DB = E.func_InitTable(Octo_LoadAddons_DB)
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_Minecraft_DB()
-	Octo_Minecraft_DB = E.func_InitTable(Octo_Minecraft_DB)
-	-- Настройки цвета переднего плана
-	E.func_InitSubTable(Octo_Minecraft_DB, "ColorFG")
-	E.func_InitField(Octo_Minecraft_DB.ColorFG, "r", 1) -- Красный
-	E.func_InitField(Octo_Minecraft_DB.ColorFG, "g", 1) -- Зеленый
-	E.func_InitField(Octo_Minecraft_DB.ColorFG, "b", 1) -- Синий
-	E.func_InitField(Octo_Minecraft_DB.ColorFG, "a", 1) -- Альфа
-	-- Настройки цвета фона
-	E.func_InitSubTable(Octo_Minecraft_DB, "ColorBG")
-	E.func_InitField(Octo_Minecraft_DB.ColorBG, "r", 1) -- Красный
-	E.func_InitField(Octo_Minecraft_DB.ColorBG, "g", 1) -- Зеленый
-	E.func_InitField(Octo_Minecraft_DB.ColorBG, "b", 1) -- Синий
-	E.func_InitField(Octo_Minecraft_DB.ColorBG, "a", 1) -- Альфа
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_Moduls_DB()
-	Octo_Moduls_DB = E.func_InitTable(Octo_Moduls_DB)
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Octo_QuestsChanged_DB()
-	Octo_QuestsChanged_DB = E.func_InitTable(Octo_QuestsChanged_DB)
-	-- Инициализация подтаблиц
-	E.func_InitSubTable(Octo_QuestsChanged_DB, "QC_Quests")
-	E.func_InitSubTable(Octo_QuestsChanged_DB, "QC_Vignettes")
-end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:Daily_Reset()
+function EventFrame:Daily_Reset()
 	if E.func_IsRetail() then
 		local ServerTime = GetServerTime()
 		local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
@@ -798,7 +583,7 @@ function Octo_EventFrame_WTF:Daily_Reset()
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Weekly_Reset()
+function EventFrame:Weekly_Reset()
 	if E.func_IsRetail() then
 		local ServerTime = GetServerTime()
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -841,7 +626,7 @@ function Octo_EventFrame_WTF:Weekly_Reset()
 	end
 end
 ----------------------------------------------------------------
-function Octo_EventFrame_WTF:Month_Reset()
+function EventFrame:Month_Reset()
 	if E.func_IsRetail() then
 		local tmstp_Month = E.func_tmstpDayReset(365/12)
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -862,26 +647,17 @@ function Octo_EventFrame_WTF:Month_Reset()
 	end
 end
 ----------------------------------------------------------------
-
-function Octo_EventFrame_WTF:func_CheckAll()
+function E.func_CheckAll()
 	-- Чистка персонажей при старте
-	self:CleaningIdenticalCharacters()
-	-- self:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
+	EventFrame:CleaningIdenticalCharacters()
+	-- EventFrame:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 	-- Инициализация всех компонентов
-	self:Octo_Cache_DB() -- Кэш данных
-	self:Octo_ToDo_DB_Account() -- Данные для всего аккаунта
-	self:DatabaseTransfer() -- Перенос данных
-	self:Octo_ToDo_DB_Levels() -- Данные персонажей
-	self:Octo_ToDo_DB_Vars() -- Настройки
-	self:Octo_ToDo_DB_Other() -- Другие данные
-	self:Octo_Minecraft_DB() -- Minecraft стиль
-	self:Octo_Achievements_DB() -- Достижения
-	self:Octo_AddonsTable_DB() -- Таблица аддонов
-	self:Octo_AddonsManager_DB() -- Менеджер аддонов
-	self:Octo_Debug_DB() -- Отладка
-	self:Octo_LoadAddons_DB()
-	self:Octo_Moduls_DB()
-	self:Octo_QuestsChanged_DB() -- Изменения квестов
+	EventFrame:Octo_Cache_DB() -- Кэш данных
+	EventFrame:Octo_ToDo_DB_Account() -- Данные для всего аккаунта
+	EventFrame:DatabaseTransfer() -- Перенос данных
+	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
+	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
+	EventFrame:Octo_ToDo_DB_Other() -- Другие данные
 	-- Применяем старые изменения
 	E.func_setOldChanges()
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
@@ -889,10 +665,9 @@ function Octo_EventFrame_WTF:func_CheckAll()
 		E.func_Universal_91_Concat()
 	end
 	-- Очистка и сброс данных
-	self:Daily_Reset()
-	self:Weekly_Reset()
-	self:Month_Reset()
-	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+	EventFrame:Daily_Reset()
+	EventFrame:Weekly_Reset()
+	EventFrame:Month_Reset()
 end
 local function GetSecondsUntilReset()
 	if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then
@@ -901,7 +676,7 @@ local function GetSecondsUntilReset()
 		return GetQuestResetTime()
 	end
 end
-function Octo_EventFrame_WTF:ScheduleNextReset()
+function EventFrame:ScheduleNextReset()
 	local seconds = GetSecondsUntilReset()
 	if seconds and seconds > 0 then
 		-- На случай, если уже был таймер — отменим
@@ -909,52 +684,40 @@ function Octo_EventFrame_WTF:ScheduleNextReset()
 			timerHandle:Cancel()
 		end
 		-- Запускаем новый
-		timerHandle = C_Timer.NewTimer(seconds + 1, function()
-				Octo_EventFrame_WTF:func_CheckAll()
-				Octo_EventFrame_WTF:ScheduleNextReset() -- Планируем следующий ресет
+		timerHandle = C_Timer.NewTimer(seconds + 4, function()
+				E.func_CheckAll()
+				E.func_Collect_All()
+				EventFrame:ScheduleNextReset() -- Планируем следующий ресет
 		end)
-		print("Next daily reset in " .. E.func_SecondsToClock(seconds) .. " seconds")
 	end
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED", -- Событие загрузки аддона
-	"VARIABLES_LOADED", -- Событие загрузки переменных
+	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_WTF, MyEventsTable)
-------------------------------------------------------------
-----------------------------------------------------------------
-function Octo_EventFrame_WTF:ADDON_LOADED(addonName)
-	-- Проверяем что загрузился наш аддон
-	if addonName == GlobalAddonName then
-		self:UnregisterEvent("ADDON_LOADED")
-		self.ADDON_LOADED = nil
-		OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
-		OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	end
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
+	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
+	E.func_CheckAll()
 end
-function Octo_EventFrame_WTF:VARIABLES_LOADED()
-	self:func_CheckAll()
+function EventFrame:VARIABLES_LOADED()
+	E.func_CheckAll()
 end
-function Octo_EventFrame_WTF:PLAYER_LOGIN()
+function EventFrame:PLAYER_LOGIN()
 	-- Обновляем кэш
 	if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
-		Octo_EventFrame_WTF:func_CreateDataCacheAtStart()
+		EventFrame:func_CreateDataCacheAtStart()
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
 		Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
-		Octo_ToDo_DB_Vars.DebugButton = E.DebugButton
-		Octo_ToDo_DB_Vars.DebugEvent = E.DebugEvent
-		Octo_ToDo_DB_Vars.DebugFunction = E.DebugFunction
-		Octo_ToDo_DB_Vars.DebugIDs = E.DebugIDs
-		Octo_ToDo_DB_Vars.DebugCharacterInfo = E.DebugCharacterInfo
-		Octo_ToDo_DB_Vars.DebugGossip = E.DebugGossip
-		Octo_ToDo_DB_Vars.DebugCache = E.DebugCache
-		Octo_ToDo_DB_Vars.DebugQC_Vignettes = E.DebugQC_Vignettes
-		Octo_ToDo_DB_Vars.DebugQC_Quests = E.DebugQC_Quests
-		Octo_ToDo_DB_Vars.DebugUniversal = E.DebugUniversal
 	end
 	self:ScheduleNextReset()
+	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 end

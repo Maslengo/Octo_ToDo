@@ -1,0 +1,53 @@
+function EventFrame:Octo_LoadAddons_DB()
+	Octo_LoadAddons_DB = E.func_InitTable(Octo_LoadAddons_DB)
+end
+----------------------------------------------------------------
+function EventFrame:Octo_AddonsTable_DB()
+	Octo_AddonsTable_DB = E.func_InitTable(Octo_AddonsTable_DB)
+end
+function EventFrame:Octo_AddonsManager_DB()
+	Octo_AddonsManager_DB = E.func_InitTable(Octo_AddonsManager_DB)
+	-- Инициализация подтаблиц
+	E.func_InitSubTable(Octo_AddonsManager_DB, "collapsedAddons")
+	E.func_InitSubTable(Octo_AddonsManager_DB, "profiles")
+	E.func_InitSubTable(Octo_AddonsManager_DB.profiles, "forceload")
+	-- Настройка принудительной загрузки текущего аддона
+	E.func_InitField(Octo_AddonsManager_DB.profiles.forceload, GlobalAddonName, true)
+	-- Настройки конфигурации
+	E.func_InitSubTable(Octo_AddonsManager_DB, "config")
+	local configDefaults = {
+		addonListStyle = "tree", -- Стиль списка как дерево
+		autofocusSearch = nil, -- Автофокус в поиске
+		fullName = nil, -- Полное имя
+		hookMenuButton = nil, -- Хук кнопки меню
+		localizeCategoryName = nil, -- Локализовать имена категорий
+		minimaphide = nil, -- Скрыть на миникарте
+		profilingcpuShowAverage = nil, -- Показывать среднюю нагрузку
+		profilingcpuShowCurrent = nil, -- Показывать текущую нагрузку CPU
+		profilingcpuShowEncounter = nil, -- Показывать нагрузку в бою
+		profilingcpuShowPeak = nil, -- Показывать пиковую нагрузку
+		profilingcpuUpdate = nil, -- Обновление профилирования CPU
+		showIcons = nil, -- Показывать иконки
+		showIconsQuestionMark = nil, -- Показывать знаки вопроса у иконок
+		showIndex = nil, -- Показывать индекс
+		showMemoryInBrokerTtp = nil, -- Показывать память в брокере
+		showSecureAddons = nil, -- Показывать защищенные аддоны
+		showTocCategory = nil, -- Показывать категории TOC
+		showTocXCategory = nil, -- Показывать категории TOC
+		showVersion = nil, -- Показывать версию
+		showVersions = nil, -- Показывать версии
+		sorting = "title", -- Сортировка по названию
+		sortingCpu = nil, -- Сортировка по CPU
+	}
+	-- Устанавливаем значения по умолчанию
+	for k, v in next, (configDefaults) do
+		E.func_InitField(Octo_AddonsManager_DB.config, k, v)
+	end
+	-- Дополнительные настройки
+	E.func_InitField(Octo_AddonsManager_DB, "isCategoryFrameVisible", true)
+	E.func_InitSubTable(Octo_AddonsManager_DB, "lock")
+	E.func_InitSubTable(Octo_AddonsManager_DB.lock, "addons")
+	E.func_InitField(Octo_AddonsManager_DB.lock.addons, E.MainAddonName, true)
+end
+	add_args(Octo_AddonsManager_DB, "Octo_AddonsManager_DB")
+	add_args(Octo_AddonsTable_DB, "Octo_AddonsTable_DB", 1)

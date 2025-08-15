@@ -4,6 +4,8 @@
 ## Version: v1.00(11.1.7)(18.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Moduls
 ## Dependencies: Octo
-
+## SavedVariables: Octo_Moduls_DB
+WTF.lua
 Moduls\Moduls.xml
 Octo_Moduls.lua
+Options\Options.xml

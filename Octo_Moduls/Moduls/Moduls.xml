@@ -1,6 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-
 	<Script file="Moduls\Auto_ChatClearing.lua"/>
 	<Script file="Moduls\Auto_CinematicCanceler.lua"/>
 	<Script file="Moduls\Auto_Gossip.lua"/>
@@ -8,7 +7,6 @@
 	<Script file="Moduls\Auto_Repair.lua"/>
 	<Script file="Moduls\Auto_Screenshot.lua"/>
 	<Script file="Moduls\Auto_Sell_Grey.lua"/>
-	<Script file="Moduls\CVAR.lua"/>
 	<Script file="Moduls\Module_AutoTurnIn.lua"/>
 	<Script file="Moduls\Module_HideFrames.lua"/>
 	<Script file="Moduls\Module_ItemsUsable.lua"/>
@@ -18,5 +16,4 @@
 	<Script file="Moduls\PosFrame.lua"/>
 	<Script file="Moduls\SellFrame.lua"/>
 	<Script file="Moduls\SpeedFrame.lua"/>
-
 </Ui>

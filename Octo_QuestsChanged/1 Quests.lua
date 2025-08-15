@@ -1,12 +1,11 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-local Octo_EventFrame = CreateFrame("Frame")
-Octo_EventFrame:Hide()
-
+--
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 local GetBestMapForUnit = GetBestMapForUnit or C_Map.GetBestMapForUnit
 local GetPlayerMapPosition = GetPlayerMapPosition or C_Map.GetPlayerMapPosition
 local GetAllCompletedQuestIDs = GetAllCompletedQuestIDs or C_QuestLog.GetAllCompletedQuestIDs
-
 local C_Timer_After = C_Timer.After
 local session_quests = {}
 local known_completed_quests = {}
@@ -49,16 +48,10 @@ local function GetCompletedQuestsSafe()
 end
 -- Добавление нового квеста в базу
 local function AddQuestToDB(questID)
-	if not Octo_QuestsChanged_DB then return end
-	Octo_QuestsChanged_DB.QC_Quests = Octo_QuestsChanged_DB.QC_Quests or {}
 	local mapID, x, y = GetPlayerMapData()
-
-
-
-	if Octo_ToDo_DB_Vars.DebugQC_Vignettes then
+	if Octo_Debug_DB.DebugQC_Vignettes then
 		print (E.func_questName(questID), E.Gray_Color.."id:"..id.."|r")
 	end
-
 	local quest = {
 		id = questID,
 		time = time(),
@@ -71,10 +64,10 @@ local function AddQuestToDB(questID)
 		curLocation = E.func_GetCurrentLocation and E.func_GetCurrentLocation() or "",
 		specIcon = GetSpecializationIconSafe(),
 	}
-	Octo_QuestsChanged_DB.QC_Quests[questID] = quest
+	EventFrame.savedVars.QC_Quests[questID] = quest
 end
 -- Проверка на новые квесты
-function Octo_EventFrame:func_CheckQuests()
+function EventFrame:func_CheckQuests()
 	if E.func_CheckQuests_pause then return end
 	E.func_CheckQuests_pause = true
 	C_Timer_After(E.SPAM_TIME, function()
@@ -83,10 +76,6 @@ function Octo_EventFrame:func_CheckQuests()
 				if not known_completed_quests[questID] and not session_quests[questID] and not SPAM_QUESTS[questID] then
 					session_quests[questID] = true
 					known_completed_quests[questID] = true
-
-
-
-
 					AddQuestToDB(questID)
 				end
 			end
@@ -102,16 +91,23 @@ local function InitializeKnownQuests()
 end
 -- Обработка событий
 local MyEventsTable = {
+	"ADDON_LOADED",
 	"QUEST_LOG_UPDATE",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
-function Octo_EventFrame:PLAYER_LOGIN()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
+end
+function EventFrame:PLAYER_LOGIN()
 	InitializeKnownQuests()
 end
--- function Octo_EventFrame:PLAYER_ENTERING_WORLD()
+-- function EventFrame:PLAYER_ENTERING_WORLD()
 --     InitializeKnownQuests
 -- end
-function Octo_EventFrame:QUEST_LOG_UPDATE()
+function EventFrame:QUEST_LOG_UPDATE()
 	self:func_CheckQuests()
 end

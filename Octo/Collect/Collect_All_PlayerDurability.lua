@@ -1,9 +1,8 @@
 local GlobalAddonName, E = ...
-
 function E.Collect_All_PlayerDurability()
+	if E.func_SpamBlock("Collect_All_PlayerDurability", false) then return end
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
-
 	local totalDurability = 100
 	local slots = {
 		[1] = _G.INVTYPE_HEAD,

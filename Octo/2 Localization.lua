@@ -21,7 +21,6 @@ if L then
 	L["Localized format"] = true
 	L["Full with separators"] = true
 	L["Number Format"] = true
-
 	L["Min. Level"] = true
 	L["Max. Level"] = true
 	L["Clamped To Screen"] = true
@@ -285,7 +284,6 @@ if L then
 	L["Localized format"] = "Локальный формат"
 	L["Full with separators"] = "Полный с разделителями"
 	L["Number Format"] = "Формат чисел"
-
 	L["Min. Level"] = "Мин. уровень"
 	L["Max. Level"] = "Макс. уровень"
 	L["Clamped To Screen"] = "Закреплён на экране"

@@ -12,7 +12,6 @@
 	<Script file="Otrisovka\11_TheWarWithin.lua"/>
 	<Script file="Otrisovka\12_Midnight.lua"/>
 	<Script file="Otrisovka\13_TheLastTitan.lua"/>
-
 	<Script file="Otrisovka\90_Holidays.lua"/>
 	<Script file="Otrisovka\91_Other.lua"/>
 </Ui>

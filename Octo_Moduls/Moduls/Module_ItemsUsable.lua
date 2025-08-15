@@ -1,10 +1,9 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 local enable = false
 if not enable then return end
-
-
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")-- Подключаем библиотеку для свечения кнопок
 -- Создаем кнопки для использования и удаления предметов
 local Clickable_ItemsUsable = CreateFrame("Button", "Clickable_ItemsUsable", UIParent, "SecureActionButtonTemplate, BackDropTemplate")
@@ -19,14 +18,11 @@ local GetItemInfo = C_Item.GetItemInfo
 -- Функции для работы с предметами
 local PickupContainerItem = C_Container.PickupContainerItem
 local DeleteCursorItem = DeleteCursorItem
--- Создаем фрейм для обработки событий
-local Octo_EventFrame_ItemsUsable = CreateFrame("Frame")
-Octo_EventFrame_ItemsUsable:Hide()
 -- Создаем tooltip для проверки, можно ли использовать предмет
 local inspectScantipUsable = CreateFrame("GameTooltip", "OctoScanningTooltipUsable", nil, "GameTooltipTemplate")
 inspectScantipUsable:SetOwner(UIParent, "ANCHOR_NONE")
 -- Функция для настройки общих параметров кнопок
-function Octo_EventFrame_ItemsUsable:CreateCommonButtonSettings(button, pointY, borderColor)
+function EventFrame:CreateCommonButtonSettings(button, pointY, borderColor)
 	button:Hide()
 	button:SetSize(48, 48)-- Размер кнопки
 	button:SetPoint("TOPLEFT", 0, pointY)-- Позиция кнопки
@@ -85,7 +81,7 @@ local function IsItemUsable(itemLink)
 	return true-- Если красного текста нет, предмет можно использовать
 end
 -- Обновление кнопки для использования предметов
-function Octo_EventFrame_ItemsUsable:UpdateItemsUsableFrame()
+function EventFrame:UpdateItemsUsableFrame()
 	if InCombatLockdown() then return end-- Не обновляем в бою
 	if not Clickable_ItemsUsable then return end
 	-- Сбрасываем кнопку
@@ -131,7 +127,7 @@ function Octo_EventFrame_ItemsUsable:UpdateItemsUsableFrame()
 	end
 end
 -- Обновление кнопки для удаления предметов
-function Octo_EventFrame_ItemsUsable:UpdateItemsDeleteFrame()
+function EventFrame:UpdateItemsDeleteFrame()
 	if InCombatLockdown() then return end-- Не обновляем в бою
 	if not Clickable_ItemsDelete then return end
 	-- Сбрасываем кнопку
@@ -171,9 +167,9 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",-- При выходе из боя
 }
 -- Регистрируем события
-	E.func_RegisterMyEventsToFrames(Octo_EventFrame_ItemsUsable, MyEventsTable)
+	E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 -- Обработчик события загрузки аддона
-function Octo_EventFrame_ItemsUsable:VARIABLES_LOADED()
+function EventFrame:VARIABLES_LOADED()
 	-- Настраиваем кнопку для использования предметов
 	self:CreateCommonButtonSettings(Clickable_ItemsUsable, 0, {1, 1, 1, 1})
 	Clickable_ItemsUsable:SetAttribute("type", "macro")
@@ -197,17 +193,17 @@ function Octo_EventFrame_ItemsUsable:VARIABLES_LOADED()
 	end)
 end
 -- Обработчик изменения содержимого сумок
-function Octo_EventFrame_ItemsUsable:BAG_UPDATE_DELAYED()
+function EventFrame:BAG_UPDATE_DELAYED()
 	self:UpdateItemsUsableFrame()-- Обновляем кнопку использования
 	self:UpdateItemsDeleteFrame()-- Обновляем кнопку удаления
 end
 -- Обработчик выхода из боя
-function Octo_EventFrame_ItemsUsable:PLAYER_REGEN_ENABLED()
+function EventFrame:PLAYER_REGEN_ENABLED()
 	self:UpdateItemsUsableFrame()-- Обновляем кнопку использования
 	self:UpdateItemsDeleteFrame()-- Обновляем кнопку удаления
 end
 -- Обработчик входа в бой
-function Octo_EventFrame_ItemsUsable:PLAYER_REGEN_DISABLED()
+function EventFrame:PLAYER_REGEN_DISABLED()
 	-- Скрываем кнопки в бою
 	if Clickable_ItemsUsable then Clickable_ItemsUsable:Hide() end
 	if Clickable_ItemsDelete then Clickable_ItemsDelete:Hide() end

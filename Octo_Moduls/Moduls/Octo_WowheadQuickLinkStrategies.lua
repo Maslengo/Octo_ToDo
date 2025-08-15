@@ -1,9 +1,7 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-
-
-
-
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 local utf8lower = string.utf8lower
 -- Octo_WowheadQuickLinkStrategies
 local strategies = {
@@ -21,7 +19,6 @@ local regions = {
 	[5] = "cn"
 }
 local output_preffix = ""
-
 if E.func_IsRetail() == true then
 	E.baseWowheadUrl = "wowhead.com/%s%s=%s"
 end
@@ -34,17 +31,16 @@ end
 if E.func_IsPTR() then
 	E.baseWowheadUrl = E.interfaceVersion >= E.interfaceVersion_PTR and "wowhead.com/ptr-2/%s%s=%s" or "wowhead.com/ptr/%s%s=%s"
 end
-
 local function check_WTF()
-	if Octo_ToDo_DB_Vars.Config_prefix == 1 then output_preffix = "ru/" -- Русский"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 2 then output_preffix = "de/" -- Deutsch"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 3 then output_preffix = "" -- English"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 4 then output_preffix = "es/" -- Español"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 5 then output_preffix = "fr/" -- Français"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 6 then output_preffix = "it/" -- Italiano"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 7 then output_preffix = "pt/" -- Português Brasileiro
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 8 then output_preffix = "ko/" -- 한국어"
-	elseif Octo_ToDo_DB_Vars.Config_prefix == 9 then output_preffix = "cn/" -- 简体中文"
+	if EventFrame.savedVars.Config_prefix == 1 then output_preffix = "ru/" -- Русский"
+	elseif EventFrame.savedVars.Config_prefix == 2 then output_preffix = "de/" -- Deutsch"
+	elseif EventFrame.savedVars.Config_prefix == 3 then output_preffix = "" -- English"
+	elseif EventFrame.savedVars.Config_prefix == 4 then output_preffix = "es/" -- Español"
+	elseif EventFrame.savedVars.Config_prefix == 5 then output_preffix = "fr/" -- Français"
+	elseif EventFrame.savedVars.Config_prefix == 6 then output_preffix = "it/" -- Italiano"
+	elseif EventFrame.savedVars.Config_prefix == 7 then output_preffix = "pt/" -- Português Brasileiro
+	elseif EventFrame.savedVars.Config_prefix == 8 then output_preffix = "ko/" -- 한국어"
+	elseif EventFrame.savedVars.Config_prefix == 9 then output_preffix = "cn/" -- 简体中文"
 	end
 end
 function E.strategies.GetWowheadUrl(dataSources)
@@ -227,10 +223,7 @@ function strategies.wowhead.GetQuestFromFocus(data)
 	return data.focus.questID, "quest"
 end
 function strategies.wowhead.GetTrackerFromFocus(data)
-
 	if not data.focus.GetParent then return end
-
-
 	local parent = data.focus:GetParent()
 	if not parent or not parent.parentModule then
 		return
@@ -467,3 +460,15 @@ eventHookFrame:SetScript("OnEvent", function(self, event, arg1)
 		end
 	end
 )
+local MyEventsTable = {
+	"ADDON_LOADED",
+}
+----------------------------------------------------------------
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+------------------------------------------------------------
+function EventFrame:ADDON_LOADED(addonName)
+	if addonName ~= GlobalAddonName then return end
+	self:UnregisterEvent("ADDON_LOADED")
+	self.ADDON_LOADED = nil
+	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
+end

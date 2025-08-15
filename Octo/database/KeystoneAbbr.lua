@@ -5,16 +5,13 @@ E.OctoTable_KeystoneAbbr = {
 	[438] = {abbreviation = "VP", portal = 410080}, -- The Vortex Pinnacle
 	[456] = {abbreviation = "TOTT", portal = 424142}, -- Throne of the Tides (Cataclysm)
 	[507] = {abbreviation = "GB", portal = 445424}, -- Grim Batol
-
 	-- Mists of Pandaria
 	[2] = {abbreviation = "TJS", portal = 131204}, -- Temple of the Jade Serpent
-
 	-- Warlords of Draenor
 	[165] = {abbreviation = "SBG", portal = 159899}, -- Shadowmoon Burial Grounds
 	[166] = {abbreviation = "GD", portal = 159900}, -- Grimrail Depot
 	[168] = {abbreviation = "EB", portal = 159901}, -- "TE"}, -- The Everbloom
 	[169] = {abbreviation = "ID", portal = 159896}, -- Iron Docks
-
 	-- Legion
 	[197] = {abbreviation = "EoA", portal = 000000}, -- Eye of Azshara
 	[198] = {abbreviation = "DHT", portal = 424163}, -- Darkheart Thicket
@@ -29,7 +26,6 @@ E.OctoTable_KeystoneAbbr = {
 	[233] = {abbreviation = "CoEN", portal = 000000}, -- Cathedral of Eternal Night
 	[234] = {abbreviation = "RtKU", portal = 373262}, -- Return to Karazhan: Upper
 	[239] = {abbreviation = "SotT", portal = 000000}, -- Seat of the Triumvirate
-
 	-- Battle for Azeroth
 	[244] = {abbreviation = "AD", portal = 424187}, -- Atal'Dazar
 	[245] = {abbreviation = "FH", portal = 410071}, -- Freehold
@@ -44,7 +40,6 @@ E.OctoTable_KeystoneAbbr = {
 	[353] = {abbreviation = "SIEGE", portal = 464256, f = "Horde"}, -- Siege of Boralus
 	[369] = {abbreviation = "OMJ", portal = 373274}, -- Operation: Mechagon - Junkyard
 	[370] = {abbreviation = "OMW", portal = 373274}, -- Operation: Mechagon - Workshop
-
 	-- Shadowlands
 	[375] = {abbreviation = "MoTS", portal = 354464}, -- Mists of Tirna Scithe
 	[376] = {abbreviation = "TNW", portal = 354462}, -- The Necrotic Wake
@@ -56,7 +51,6 @@ E.OctoTable_KeystoneAbbr = {
 	[382] = {abbreviation = "ToP", portal = 354467}, -- Theater of Pain
 	[391] = {abbreviation = "STRT", portal = 367416}, -- Tazavesh: Streets of Wonder
 	[392] = {abbreviation = "GMBT", portal = 367416}, -- Tazavesh: So'leah's Gambit
-
 	-- Dragonflight
 	[399] = {abbreviation = "RLP", portal = 393256}, -- Ruby Life Pools
 	[400] = {abbreviation = "NO", portal = 393262}, -- The Nokhud Offensive
@@ -68,7 +62,6 @@ E.OctoTable_KeystoneAbbr = {
 	[406] = {abbreviation = "HOI", portal = 393283}, -- Halls of Infusion
 	[463] = {abbreviation = "FALL", portal = 424197}, -- Dawn of the Infinites: Galakrond's Fall
 	[464] = {abbreviation = "RISE", portal = 424197}, -- Dawn of the Infinites: Murozond's Rise
-
 	-- The War Within
 	[499] = {abbreviation = "PSF", portal = 445444}, -- Priory of the Sacred Flame /PRIO
 	[500] = {abbreviation = "ROOK", portal = 445443}, -- The Rookery
@@ -80,7 +73,6 @@ E.OctoTable_KeystoneAbbr = {
 	[506] = {abbreviation = "BREW", portal = 445440}, -- Cinderbrew Maedery
 	[525] = {abbreviation = "FLOOD", portal = 123123}, -- Операция: шлюз
 	[542] = {abbreviation = "EDA", portal = 1237215}, -- Eco-Dome Al'dani
-
 	-- OTHER
 	[56] = {abbreviation = "SB", portal = 131205}, -- Stormstout Brewery
 	[57] = {abbreviation = "GSS", portal = 131225}, -- Gate of the Setting Sun
@@ -94,13 +86,9 @@ E.OctoTable_KeystoneAbbr = {
 	[163] = {abbreviation = "BSM", portal = 159895}, -- Bloodmaul Slag Mines
 	[164] = {abbreviation = "Auch", portal = 159897}, -- Auchindoun
 	[167] = {abbreviation = "UBS", portal = 159902}, -- Upper Blackrock Spire
-
 	-- 1216786
 	-- AATDH - raid
 }
-
-
-
 E.OctoTable_LFGDungeons = {
 	[286] = "Повелитель Холода Ахун",
 	[287] = "Корен Худовар",

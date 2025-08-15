@@ -5,7 +5,6 @@ local strbyte, strlen, strsub, type = string.byte, string.len, string.sub, type
 local utf8len, utf8sub, utf8reverse, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8reverse, string.utf8upper, string.utf8lower
 local mod = math.fmod -- (тоже самое что и %)
 -- Helper function to create consistent timers
-
 	-- Базовое время, Интервал, Длительность
 local function CreateTimer(baseTime, interval, duration, label)
 	local nextEventIn = interval - mod(tonumber(GetServerTime()) - baseTime, interval)
@@ -16,7 +15,6 @@ local function CreateTimer(baseTime, interval, duration, label)
 	end
 	return timerText..(label or "")
 end
-
 E.Timers = {}
 -- Legion Invasion
 function E.Timers.Legion_Invasion()
@@ -103,7 +101,6 @@ function E.Timers.SL_Maw_Assault()
 end
 -- Shadowlands Maw: Tormentors of Torghast
 function E.Timers.SL_Maw_TormentorsofTorghast() --  12.05, 14.05 и так далее это по московскому времени если по серверному времени то по нечётным получается.
-
 	local TIMER = {
 		US = 1754917310,
 		EU = 1754917310, -- HZ
@@ -111,7 +108,6 @@ function E.Timers.SL_Maw_TormentorsofTorghast() --  12.05, 14.05 и так да�
 	}
 	return CreateTimer(TIMER[E.regionName], 7200, 900)
 end
-
 -- Daily Reset
 function E.Timers.Daily_Reset()
 	local timerText = CreateTimer(1687579264, 86400, 1)

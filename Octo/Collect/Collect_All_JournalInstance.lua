@@ -1,11 +1,9 @@
 local GlobalAddonName, E = ...
-
 function E.Collect_All_JournalInstance()
+	if E.func_SpamBlock("Collect_All_JournalInstance") then return end
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-
 	if not collectPlayerData then return end
-
 	local NumSavedInstances = GetNumSavedInstances()
 	local NumSavedWorldBosses = GetNumSavedWorldBosses()
 	local DiffAbbr = ""
@@ -65,7 +63,6 @@ function E.Collect_All_JournalInstance()
 	if NumSavedWorldBosses > 0 then
 		for i = 1, NumSavedWorldBosses do
 			local name, worldBossID, reset = GetSavedWorldBossInfo(i)
-			-- collectMASLENGO.SavedWorldBoss[worldBossID] = collectMASLENGO.SavedWorldBoss[worldBossID] or {}
 			collectMASLENGO.SavedWorldBoss[worldBossID] = {}
 			collectMASLENGO.SavedWorldBoss[worldBossID].name = name
 			collectMASLENGO.SavedWorldBoss[worldBossID].reset = reset
@@ -74,7 +71,6 @@ function E.Collect_All_JournalInstance()
 	for i=1, GetNumRandomDungeons() do
 		local dungeonID, name = GetLFGRandomDungeonInfo(i)
 		if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
-		-- if dungeonID then
 			local D_name = GetLFGDungeonInfo(dungeonID)
 			local donetoday = GetLFGDungeonRewards(dungeonID)
 			collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}

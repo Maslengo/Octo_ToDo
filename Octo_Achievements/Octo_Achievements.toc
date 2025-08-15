@@ -4,5 +4,6 @@
 ## Version: v1.00(11.1.7)(18.07.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Achievements
 ## Dependencies: Octo
-
+## SavedVariables: Octo_Achievements_DB
 Octo_Achievements.lua
+Options\Options.xml

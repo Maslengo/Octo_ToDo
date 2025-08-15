@@ -1,30 +1,24 @@
 local GlobalAddonName, E = ...
 function E.Collect_All_Garrison()
+	if E.func_SpamBlock("Collect_All_Garrison") then return end
 	local collectGARRISON = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GARRISON
 	if not collectGARRISON then return end
 	collectGARRISON.cacheSize = C_QuestLog.IsQuestFlaggedCompleted(37485) and 1000 or 500
 end
 function E.Collect_All_lastCacheTime(rt, rl, q, _4, _5, _6, source)
+	if E.func_SpamBlock("Collect_All_lastCacheTime") then return end
 	local collectGARRISON = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GARRISON
-	if not collectGARRISON or InCombatLockdown() then return end
+	if not collectGARRISON then return end
 	if rt == "currency" and source == 10 and rl:match("currency:824") then
 		collectGARRISON.lastCacheTime = GetServerTime()
 	end
 end
--- Blizzard_GarrisonBuildingUI.lua
--- 2	Type_6_0_Garrison	Warlords of Draenor
--- 3	Type_7_0_Garrison	Legion
--- 9	Type_8_0_Garrison	Battle for Azeroth
--- 111	Type_9_0_Garrison	Shadowlands
--- C_Garrison.GetLandingPageGarrisonType() = 111
--- C_Garrison.GetBuildingSizes()
--- looseShipments = C_Garrison.GetLooseShipments(garrisonType)
--- hasAdventures = C_Garrison.HasAdventures() ???????
 function E.Collect_All_GarrisonBuilds()
+	if E.func_SpamBlock("Collect_All_GarrisonBuilds") then return end
 	local collect = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collect or InCombatLockdown() then return end
+	if not collect then return end
 	local HasShipyard = HasShipyard or C_Garrison.HasShipyard
-	local HasGarrison = HasGarrison or C_Garrison.HasGarrison  --MASLENGO.HasGarrison[id]
+	local HasGarrison = HasGarrison or C_Garrison.HasGarrison
 	wipe(collect.garrisonType)
 	for garrisonType, id in next, (Enum.GarrisonType) do
 		collect.HasGarrison[id] = HasGarrison(id)
@@ -39,35 +33,15 @@ function E.Collect_All_GarrisonBuilds()
 		end
 	end
 end
-
-
-
-function E.Collect_All_GarrisonFollowers(eventName)
-	if E.Collect_All_GarrisonFollowers_pause or InCombatLockdown() then
-		-- print (E.Red_Color..eventName.."|r")
-		return
+function E.Collect_All_GarrisonFollowers()
+	if E.func_SpamBlock("Collect_All_GarrisonFollowers") then return end
+	local collect = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	if not collect then return end
+	wipe(collect.GarrisonFollowers)
+	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
+		collect.GarrisonFollowers[followerData.name] = collect.GarrisonFollowers[followerData.name] or {}
+		collect.GarrisonFollowers[followerData.name] = C_Garrison.GetFollowers(followerData.id)
+		collect.GarrisonFollowersCount[followerData.name].maxFollowers = C_Garrison.GetFollowerSoftCap(followerData.id)
+		collect.GarrisonFollowersCount[followerData.name].numActiveFollowers = C_Garrison.GetNumActiveFollowers(followerData.id) or 0
 	end
-	E.Collect_All_GarrisonFollowers_pause = true
-
-	C_Timer.After(E.SPAM_TIME, function()
-			-- print (E.Green_Color..eventName.."|r")
-			local collect = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-			if not collect or InCombatLockdown() then return end
-
-			wipe(collect.GarrisonFollowers)
-			for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
-				collect.GarrisonFollowers[followerData.name] = collect.GarrisonFollowers[followerData.name] or {}
-				collect.GarrisonFollowers[followerData.name] = C_Garrison.GetFollowers(followerData.id)
-
-				collect.GarrisonFollowersCount[followerData.name].maxFollowers = C_Garrison.GetFollowerSoftCap(followerData.id)
-				collect.GarrisonFollowersCount[followerData.name].numActiveFollowers = C_Garrison.GetNumActiveFollowers(followerData.id) or 0
-			end
-
-
-
-
-
-
-			E.Collect_All_GarrisonFollowers_pause = nil
-	end)
 end

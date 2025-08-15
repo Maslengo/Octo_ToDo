@@ -11,7 +11,6 @@ function E.func_Otrisovka_11_TheWarWithin()
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				----------------------------------------------------------------
 				tooltipKey = "TWW_GreatVault"
-
 				if CharInfo.PlayerData.HasAvailableRewards then
 					textCENT = E.Blue_Color..">"..REWARD.."<|r"
 				end
@@ -31,7 +30,6 @@ function E.func_Otrisovka_11_TheWarWithin()
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				----------------------------------------------------------------
 				tooltipKey = "TWW_CurrentKey"
-
 				if CharInfo.PlayerData.CurrentKey then
 					textCENT = CharInfo.PlayerData.CurrentKey
 				end

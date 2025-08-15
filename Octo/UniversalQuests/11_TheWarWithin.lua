@@ -29,17 +29,11 @@ function E.func_Universal_11_TheWarWithin()
 			reset = "Once", -- "Daily",
 			desc = "TheWarWithin",
 			quests = {
-
-
-
-
-
 				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
 				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
 				{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
 				{nil,   forcedText = {npcID = 235104}, addText = {mapID = 2472},},
 				{86464,   forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
-
 				{nil},
 				{91276, forcedText = {npcID = 245998}, },
 				{91275, forcedText = {npcID = 245997}, },
@@ -63,7 +57,6 @@ function E.func_Universal_11_TheWarWithin()
 				{90589, forcedText = {npcID = 232111}, },
 				{90593, forcedText = {npcID = 232195}, },
 				{90584, forcedText = {npcID = 232199}, },
-
 			},
 			-- forcedMaxQuest = 3,
 		},
@@ -439,8 +432,6 @@ function E.func_Universal_11_TheWarWithin()
 		----------------------------------------------------------------------------
 		----------------------------------------------------------------------------
 		----------------------------------------------------------------------------
-
-
 		----------------------------------------------------------------------------
 		{
 			showTooltip = true,

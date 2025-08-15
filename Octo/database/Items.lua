@@ -111,49 +111,70 @@ E.OctoTable_itemID_AutoOpen = {
 	-- 21191, 20393, 17727, 17726, 17685, 15874,
 }
 E.OctoTable_itemID_Ignore_List = {
-
-186685,
-187322,
-187457,
-187324,
-187323,
-187460,
-187458,
-187459,
-187465,
-187327,
-187463,
-187325,
-187325,
-187326,
-187462,
-187478,
-187336,
-187466,
-187332,
-187328,
-187334,
-187330,
-187329,
-187467,
-187331,
-187311,
-187333,
-187350,
-187335,
-
-
+-- wowhead.com/ptr-2/ru/item=212283
+-- wowhead.com/ptr-2/ru/item=212301
+-- wowhead.com/ptr-2/ru/item=212271
+-- wowhead.com/ptr-2/ru/item=212274
+-- wowhead.com/ptr-2/ru/item=212280
+-- wowhead.com/ptr-2/ru/item=212277
+-- wowhead.com/ptr-2/ru/item=212721
+-- wowhead.com/ptr-2/ru/item=212265
+-- wowhead.com/ptr-2/ru/item=212244
+-- wowhead.com/ptr-2/ru/item=211880
+-- wowhead.com/ptr-2/ru/item=212250
+-- wowhead.com/ptr-2/ru/item=212241
+-- wowhead.com/ptr-2/ru/item=212256
+-- wowhead.com/ptr-2/ru/item=212259
+-- wowhead.com/ptr-2/ru/item=212247
+-- wowhead.com/ptr-2/ru/item=212268
+-- wowhead.com/ptr-2/ru/item=212253
+-- wowhead.com/ptr-2/ru/item=212262
+-- wowhead.com/ptr-2/ru/item=212753
+-- wowhead.com/ptr-2/ru/item=221874
+-- wowhead.com/ptr-2/ru/item=221878
+-- wowhead.com/ptr-2/ru/item=221882
+-- wowhead.com/ptr-2/ru/item=212310
+-- wowhead.com/ptr-2/ru/item=212307
+-- wowhead.com/ptr-2/ru/item=212313
+-- wowhead.com/ptr-2/ru/item=212316
+-- wowhead.com/ptr-2/ru/item=244839
+-- wowhead.com/ptr-2/ru/item=248586
+	186685,
+	187322,
+	187457,
+	187324,
+	187323,
+	187460,
+	187458,
+	187459,
+	187465,
+	187327,
+	187463,
+	187325,
+	187325,
+	187326,
+	187462,
+	187478,
+	187336,
+	187466,
+	187332,
+	187328,
+	187334,
+	187330,
+	187329,
+	187467,
+	187331,
+	187311,
+	187333,
+	187350,
+	187335,
 	184652,
 	226060, 226057, 211495, 208485, 208153, 207030, 206021, 206017, 206016, 206015, 206014, 206013, 206012, 206011, 206010, 206009, 205982, 205151, 203703, 201437, 193201, 188152, 187532, 187508,
 	186731, 180653, 173523, 167555, 166751, 154177, 154176, 154175, 154174, 154173, 154172, 134111, 134110, 111820, 109076, 90146, 81055, 77530, 49908, 49888, 49040, 35857, 34008, 8529,
 }
-
-
 for _, value in ipairs(E.OctoTable_itemID_MECHAGON) do
 	table.insert(E.OctoTable_itemID_Ignore_List, value)
 end
-
-
 ----------------------------------------------------------------
 E.OctoTable_itemID_ItemsDelete = {
 	[225378] = true,

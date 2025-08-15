@@ -25,11 +25,7 @@ E.OctoTable_Reputations = {
 		-- { id = 2644,},
 		-- { id = 2613,},
 		-- { id = 2659,},
-
-
 		-- { id = 2645,},
-
-
 		-- { id = 2669,},
 		-- { id = 2685,},
 		-- { id = 2677,},
@@ -42,16 +38,12 @@ E.OctoTable_Reputations = {
 		-- { id = 2674,},
 		-- { id = 2676,},
 		-- { id = 2672,},
-
-
 		-- { id = 2601,},
 		-- { id = 2607,},
 		-- { id = 2605,},
 		-- { id = 2647,},
 		-- { id = 2648,},
 		-- { id = 2649,},
-
-
 		-- { id = 2658, },
 		{ id = 2653, }, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
 		{ id = 2640, }, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
@@ -451,7 +443,6 @@ E.OctoTable_Reputations = {
 		{ id = 76, }, --name = "Оргриммар", side = "Horde", category = "Орда", }, --[faction=76]
 		{ id = 68, }, --name = "Подгород", side = "Horde", category = "Орда", }, --[faction=68]
 		----------------------------------------------------------------
-
 		{ id = 2372, }, --name = "Арена \"Морд'Бой\"", side = "Horde", category = "Силы Орды", }, --[faction=2372]
 		{ id = 2010, }, --name = "Арена \"Морд'Бой\" (3-й сезон)", side = "Horde", category = "Силы Орды", }, --[faction=2010]
 		{ id = 1690, }, --name = "Арена \"Морд'Бой\" (сезон 2)", side = "Horde", category = "Силы Орды", }, --[faction=1690]

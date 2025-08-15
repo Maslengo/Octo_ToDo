@@ -1,30 +1,18 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 local enable = false
 if not enable then return end
-
-
-local Octo_EventFrame_READY_CHECK = CreateFrame("FRAME")
-Octo_EventFrame_READY_CHECK:Hide()
-
-
-
-
-
+local EventFrame = CreateFrame("FRAME")
 -- Таблица событий для регистрации
 local MyEventsTable = {
 	"READY_CHECK", -- Проверка готовности
 }
-
 -- Регистрация событий
-E.func_RegisterMyEventsToFrames(Octo_EventFrame_READY_CHECK, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 -- Обработчик проверки готовности
-function Octo_EventFrame_READY_CHECK:READY_CHECK()
+function EventFrame:READY_CHECK()
 	if InCombatLockdown() then return end
 	PlaySoundFile("Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Other\\Readycheck.ogg", "Master")
 end
-
-
-
-

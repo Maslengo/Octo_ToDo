@@ -1,17 +1,11 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-
-
-
-
+local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
 local popupText = "%s Link\nCTRL-C to copy"
-
-
 local function ShowUrlPopup(header, url)
 	StaticPopup_Show("WowheadQuickLink_CopyBox", header, _, url)
 end
-
-
 local function CreateUrl(dataSources, strategies)
 	for _, strategy in pairs(strategies) do
 		local header, url = strategy(dataSources)
@@ -21,7 +15,6 @@ local function CreateUrl(dataSources, strategies)
 		end
 	end
 end
-
 local function GetDataSources()
 	local focus = {}
 	local foci = GetMouseFoci()
@@ -31,19 +24,12 @@ local function GetDataSources()
 	local tooltip = GameTooltip
 	return {focus = focus, tooltip = tooltip}
 end
-
-
 function RunWowheadQuickLink()
 	CreateUrl(GetDataSources(), E.strategies)
 end
-
-
 function RunAlternativeQuickLink()
 	CreateUrl(GetDataSources(), E.altStrategies)
 end
-
-
-
 ----------------------------------------------------------------
 local dialogConfig = {
 	text = E.classColorHexCurrent.."CTRL-C|r|n"..CALENDAR_COPY_EVENT,

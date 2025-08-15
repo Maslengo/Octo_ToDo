@@ -1,7 +1,5 @@
 <Ui>
-
 	<Script file="1 Quests.lua"/>
 	<Script file="2 Vignettes.lua"/>
 	<Script file="3 Octo_MainFrame_QuestsChanged.lua"/>
-
 </Ui>

@@ -1,5 +1,4 @@
 <Ui>
-
 	<EventFrame name="OctoWowTrimHorizontalScrollBar" inherits="HorizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
 		<Size x="560" y="8"/>
 		<KeyValues>
@@ -22,7 +21,6 @@
 					<Anchor point="TOPLEFT" x="19" y="0"/>
 					<Anchor point="BOTTOMRIGHT" x="-19" y="0"/>
 				</Anchors>
-
 				<Layers>
 					<Layer level="ARTWORK">
 						<Texture parentKey="Begin" atlas="minimal-scrollbar-track-top" useAtlasSize="true">
@@ -43,7 +41,6 @@
 						</Texture>
 					</Layer>
 				</Layers>
-
 				<Frames>
 					<EventButton parentKey="Thumb" mixin="MinimalScrollBarThumbScriptsMixin" enableMouse="true">
 						<Size y="8"/>
@@ -147,5 +144,4 @@
 			<OnLoad method="OnLoad"/>
 		</Scripts>
 	</EventFrame>
-
 </Ui>

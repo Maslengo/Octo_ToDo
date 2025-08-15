@@ -4,6 +4,7 @@
 	<Script file="Collect\Collect_All_Chromie.lua"/>
 	<Script file="Collect\Collect_All_Covenant.lua"/>
 	<Script file="Collect\Collect_All_Currency.lua"/>
+	<Script file="Collect\Collect_All_Delves.lua"/>
 	<Script file="Collect\Collect_All_Garrison.lua"/>
 	<Script file="Collect\Collect_All_GreatVault.lua"/>
 	<Script file="Collect\Collect_All_Holiday.lua"/>
@@ -25,6 +26,5 @@
 	<Script file="Collect\Collect_All_UNIVERSALQuestUpdate.lua"/>
 	<Script file="Collect\Collect_All_WarMode.lua"/>
 	<Script file="Collect\Collect_CurrentKey_ITEM_CHANGED.lua"/>
-
 	<Script file="Collect\Collect.lua"/>
 </Ui>

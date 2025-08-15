@@ -46,7 +46,6 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
-
 					tooltipKey = "BfA_mechagonItems"
 					textCENT = E.Gray_Color..ITEMS.."|r"
 					----------------------------------------------------------------

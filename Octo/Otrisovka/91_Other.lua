@@ -6,14 +6,10 @@ local function isCollected(mountID)
 end
 function E.func_Otrisovka_91_Other()
 	local OctoTable_Otrisovka_textCENT = {}
-
-
-
 	-- table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 	-- 	local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 	-- 	textLEFT = MOUNTS
 	-- 	tooltipKey = "Other_Mounts"
-
 	-- 	local count = 0
 	-- 	local total = 0
 	-- 	for mountID in next, (E.OctoTable_Mounts) do
@@ -25,44 +21,22 @@ function E.func_Otrisovka_91_Other()
 	-- 	textCENT = count.."/"..total
 	-- 	return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 	-- end)
-
-
-
-
-
-
-
-
-
-
 	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				local QWEname = followerData.name
 				tooltipKey = QWEname.."_COMPANIONS"
-
-
 				textLEFT = COMPANIONS.." ("..QWEname..")"
-
 				local countColor = HIGHLIGHT_FONT_COLOR_CODE
-
-
-
 				if CharInfo.MASLENGO.GarrisonFollowersCount[QWEname] and CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].maxFollowers and CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].numActiveFollowers then
 					local numActiveFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].numActiveFollowers or 0 -- C_Garrison.GetNumActiveFollowers(followerData.id) or 0
 					local maxFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].maxFollowers or 0 -- C_Garrison.GetFollowerSoftCap(followerData.id)
-
-
 					if ( numActiveFollowers > maxFollowers ) then
 						countColor = E.Red_Color
 					elseif numActiveFollowers == maxFollowers then
 						countColor = E.Green_Color
 					end
-
-
-
-
 					-- if CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
 					if numActiveFollowers ~= 0 then
 						textCENT = countColor..numActiveFollowers.."/"..maxFollowers..FONT_COLOR_CODE_CLOSE
@@ -72,8 +46,6 @@ function E.func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 		end)
 	end
-
-
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -103,9 +75,6 @@ function E.func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				tooltipKey = "Other_LFGInstance"
 				local count = 0
-
-
-
 					for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
 						if v then
 							for difficultyID, w in next, (v) do
@@ -127,7 +96,6 @@ function E.func_Otrisovka_91_Other()
 							count = count + 1
 						end
 					end
-
 				if count ~= 0 then
 					textCENT = count
 					-- textCENT = E.Gray_Color..DUNGEONS.."|r"

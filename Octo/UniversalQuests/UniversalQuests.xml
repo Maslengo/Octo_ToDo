@@ -1,6 +1,4 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
-..\FrameXML\UI.xsd">
-
+<Ui>
 	<Script file="UniversalQuests\01_WorldofWarcraft.lua"/>
 	<Script file="UniversalQuests\02_TheBurningCrusade.lua"/>
 	<Script file="UniversalQuests\03_WrathoftheLichKing.lua"/>
@@ -15,5 +13,4 @@
 	<Script file="UniversalQuests\12_Midnight.lua"/>
 	<Script file="UniversalQuests\13_TheLastTitan.lua"/>
 	<Script file="UniversalQuests\90_Other.lua"/>
-
 </Ui>

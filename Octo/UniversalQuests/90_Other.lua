@@ -5,7 +5,6 @@ function E.func_Universal_90_Other()
 	local OctoTable_Universal = {
 		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
 		{
-
 			textleft = E.func_questName(13503),
 			showTooltip = true,
 			name_save = "ATisketaTasketaNoblegardenBasket",
@@ -17,7 +16,6 @@ function E.func_Universal_90_Other()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = E.func_questName(79575),
 			showTooltip = true,
 			name_save = "WhattheDuck",
@@ -29,7 +27,6 @@ function E.func_Universal_90_Other()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = E.func_questName(13479),
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
@@ -41,7 +38,6 @@ function E.func_Universal_90_Other()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = E.func_questName(79576),
 			showTooltip = true,
 			name_save = "AFowlConcoction",
@@ -53,7 +49,6 @@ function E.func_Universal_90_Other()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = E.func_questName(79577),
 			showTooltip = true,
 			name_save = "DuckTales",
@@ -65,7 +60,6 @@ function E.func_Universal_90_Other()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = E.func_questName(79578),
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
@@ -78,7 +72,6 @@ function E.func_Universal_90_Other()
 			-- forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = E.func_questName(79558),
 			showTooltip = true,
 			name_save = "FeatheredFiend",
@@ -90,7 +83,6 @@ function E.func_Universal_90_Other()
 			},
 		},
 		{
-
 			textleft = E.func_questName(79135),
 			showTooltip = true,
 			name_save = "QuackingDown",
@@ -106,7 +98,6 @@ function E.func_Universal_90_Other()
 		-- E.func_EventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
 		{
-
 			textleft = "Orgrimmar/Stormwind",
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
@@ -132,7 +123,6 @@ function E.func_Universal_90_Other()
 		},
 		----------------------------------------------------------------
 		{
-
 			textleft = "Shattrath",
 			showTooltip = true,
 			name_save = "Shattrath", --
@@ -160,7 +150,6 @@ function E.func_Universal_90_Other()
 		},
 		----------------------------------------------------------------
 		{
-
 			textleft = L["Daily quests"],
 			showTooltip = true,
 			name_save = "orgrimmarStormwindDAILY", --
@@ -178,7 +167,6 @@ function E.func_Universal_90_Other()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		{
-
 			textleft = RAIDS,
 			showTooltip = true,
 			name_save = "Raid",
@@ -193,7 +181,6 @@ function E.func_Universal_90_Other()
 			forcedMaxQuest = 1,
 		},
 		{
-
 			textleft = DUNGEONS,
 			showTooltip = true,
 			name_save = "Dungeons",
@@ -223,7 +210,6 @@ function E.func_Universal_90_Other()
 			forcedMaxQuest = 1,
 		},
 		-- {
-
 		-- 	textleft = "Profession Monthlies",
 		-- 	showTooltip = true,
 		-- 	name_save = "ProfessionMonthlies",
@@ -248,7 +234,6 @@ function E.func_Universal_90_Other()
 		-- 	-- forcedMaxQuest = 14,
 		-- },
 		-- {
-
 		-- 	textleft = "Monthly Quests",
 		-- 	showTooltip = true,
 		-- 	name_save = "MonthlyQuests",
@@ -261,7 +246,6 @@ function E.func_Universal_90_Other()
 		-- 	-- forcedMaxQuest = 2,
 		-- },
 		-- {
-
 		-- 	textleft = "Acount-wide Dailies",
 		-- 	showTooltip = true,
 		-- 	name_save = "AcountwideDailies",
@@ -274,7 +258,6 @@ function E.func_Universal_90_Other()
 		-- 	-- forcedMaxQuest = 2,
 		-- },
 		-- {
-
 		-- 	textleft = "item turns ins",
 		-- 	showTooltip = true,
 		-- 	name_save = "itemturnsins",
@@ -294,7 +277,6 @@ function E.func_Universal_90_Other()
 		-- 	-- forcedMaxQuest = 9,
 		-- },
 		-- {
-
 		-- 	textleft = E.func_itemName(93724),
 		-- 	showTooltip = true,
 		-- 	name_save = "DarkmoonFaire",
@@ -314,7 +296,6 @@ function E.func_Universal_90_Other()
 		-- 	-- forcedMaxQuest = 9,
 		-- },
 		{
-
 			textleft = E.func_itemName(92441),
 			showTooltip = true,
 			name_save = "GreenFire",

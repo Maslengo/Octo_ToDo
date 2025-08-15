@@ -1,17 +1,14 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 ----------------------------------------------------------------
-local Octo_EventFrame = CreateFrame("FRAME")
-Octo_EventFrame:Hide()
+local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
-function Octo_EventFrame:LoadOctoUIforAddons()
-
+function EventFrame:LoadOctoUIforAddons()
 	if ElvDB then
 		for name, v in next, (ElvDB.profileKeys) do
 			Octo_Debug_DB.profileKeys[name] = "OctoUI"
 		end
 	end
-
 	local AddonsAndDB = {
 		{database = AddonCpuUsageDB, profileName = "OctoUI"},
 		{database = AddOnSkinsDB, profileName = "OctoUI"},
@@ -34,7 +31,6 @@ function Octo_EventFrame:LoadOctoUIforAddons()
 		{database = GreatVaultList2DB, profileName = "OctoUI"},
 		{database = RarityDB, profileName = "OctoUI"},
 	}
-
 	for _, v in ipairs(AddonsAndDB) do
 		if v.database then
 			v.database.profileKeys = v.database.profileKeys or {}
@@ -48,14 +44,13 @@ function Octo_EventFrame:LoadOctoUIforAddons()
 			end
 		end
 	end
-
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(Octo_EventFrame, MyEventsTable)
-function Octo_EventFrame:VARIABLES_LOADED()
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+function EventFrame:VARIABLES_LOADED()
 	self:LoadOctoUIforAddons()
 end
 ----------------------------------------------------------------
