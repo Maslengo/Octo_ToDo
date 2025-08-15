@@ -202,7 +202,7 @@ local function func_itemName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -241,7 +241,7 @@ local function func_currencyName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"..WarbandIcon
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -275,7 +275,7 @@ local function func_npcName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color.."NPC".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -296,7 +296,7 @@ local function func_questName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..QUESTS_LABEL.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -330,7 +330,7 @@ local function func_reputationName_CACHE(id)
 		end
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..REPUTATION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -362,7 +362,7 @@ local function func_spellName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..SPELLS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -384,7 +384,7 @@ local function func_followerName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..COMPANIONS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -406,7 +406,7 @@ local function func_achievementName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -428,7 +428,7 @@ local function func_mountName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..MOUNTS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
@@ -464,7 +464,7 @@ local function func_mapName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end

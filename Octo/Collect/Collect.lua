@@ -125,11 +125,11 @@ function EventFrame:QUEST_LOG_UPDATE()
 	E.func_Update("QUEST_LOG_UPDATE")
 end
 function EventFrame:BAG_UPDATE()
-	E.Collect_All_ItemsInBag()
-	E.Collect_All_BfA_Azerite()
-	E.Collect_All_BfA_Cloaklvl()
-	E.Collect_All_GreatVault()
-	E.func_Update("BAG_UPDATE")
+	-- E.Collect_All_ItemsInBag()
+	-- E.Collect_All_BfA_Azerite()
+	-- E.Collect_All_BfA_Cloaklvl()
+	-- E.Collect_All_GreatVault()
+	-- E.func_Update("BAG_UPDATE")
 end
 function EventFrame:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
