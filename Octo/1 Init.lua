@@ -10,7 +10,6 @@ E.ActiveHoliday = {}
 E.Holiday = {}
 E.strategies = {}
 E.altStrategies = {}
-E.SPAM_TIME = 1
 E.OctoTable_SavedVariables = {}
 -- local GlobalAddonName, E = ...
 -- local GlobalAddonName, ns = ... |n local E = ns.E

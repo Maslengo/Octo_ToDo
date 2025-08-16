@@ -3,6 +3,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 function E.func_Universal_11_TheWarWithin()
 	local OctoTable_Universal = {
+
 		{
 			sorted = false,
 			showTooltip = true,
@@ -836,27 +837,35 @@ function E.func_Universal_11_TheWarWithin()
 			forcedMaxQuest = 8,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
 			textleft = L["Delver's Call"],
 			name_save = "DelversCall",
 			reset = "Once",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = "TheWarWithin",
 			quests = {
-				{83766},
-				{85649},
+				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
 				{85648},
-				{83758},
 				{83759},
-				{83769},
+				{83758},
+				{nil},
+				{nil, addText = {mapID = 2215},}, -- Hallowfall
+				{83768},
 				{85664},
 				{83767},
-				{83768},
+				{83769},
+				{nil},
+				{nil, addText = {mapID = 2214},}, -- The Ringing Deeps (Гулкие глубины.)
+				{85649},
+				{83766},
+				{nil},
+				{nil, addText = {mapID = 2255},}, -- Azj-Kahet
 				{83770},
-				{85666},
 				{83771},
 				{85667},
+				{85666},
 			},
-			forcedMaxQuest = 13,
+			-- forcedMaxQuest = 13,
 		},
 		{
 			showTooltip = true,

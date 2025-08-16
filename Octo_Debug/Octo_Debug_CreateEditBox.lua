@@ -211,7 +211,11 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	local editBox = frame.editFrame:GetEditBox()
 	editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
 	editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
-	editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize, "")
+	if Octo_ToDo_DB_Vars then
+		editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize, "")
+	else
+		editBox:SetFont(E.Octo_font, 11, "")
+	end
 	editBox:HookScript("OnCursorChanged", function(editBox)
 			local text = frame.HZ.GetText(editBox)
 			local pos = editBox:GetCursorPosition()

@@ -1872,6 +1872,7 @@ function E.func_buildRank(id)
 	local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
 	return rank
 end
+E.SPAM_TIME = 2
 E.UNIVERSAL = "UNIVERSAL_"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
 E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"
@@ -2423,13 +2424,29 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 					end
 				end
 				-- Сортировка (если не отключена)
+				-- if data.sorted ~= false then
+				-- 	table_sort(questsToShow, function(a, b)
+				-- 			local nameA = a.forcedText and a.forcedText.npcID and E.func_npcName(a.forcedText.npcID) or E.func_questName(a[1]) or a.forcedText.text or ""
+				-- 			local nameB = b.forcedText and b.forcedText.npcID and E.func_npcName(b.forcedText.npcID) or E.func_questName(b[1]) or b.forcedText.text or ""
+				-- 			return nameA < nameB
+				-- 	end)
+				-- end
 				if data.sorted ~= false then
 					table_sort(questsToShow, function(a, b)
-							local nameA = a.forcedText and a.forcedText.npcID and E.func_npcName(a.forcedText.npcID) or E.func_questName(a[1]) or a.forcedText.text or ""
-							local nameB = b.forcedText and b.forcedText.npcID and E.func_npcName(b.forcedText.npcID) or E.func_questName(b[1]) or b.forcedText.text or ""
-							return nameA < nameB
+						local function getName(entry)
+							if entry.forcedText then
+								if entry.forcedText.npcID then
+									return E.func_npcName(entry.forcedText.npcID) or ""
+								elseif entry.forcedText.text then
+									return entry.forcedText.text or ""
+								end
+							end
+							return E.func_questName(entry[1]) or ""
+						end
+						return getName(a) < getName(b)
 					end)
 				end
+
 				-- Формирование строк тултипа
 				for _, questData in ipairs(questsToShow) do
 					local questID = questData[1]
