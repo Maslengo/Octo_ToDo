@@ -22,6 +22,72 @@ function E.func_Octo_Moduls_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			SpeedFrameShown = {
+				type = "toggle",
+				name = "SpeedFrame.Shown",
+				desc = "",
+				get = function()
+					return Octo_Moduls_DB.SpeedFrame.Shown
+				end,
+				set = function(_, value)
+					Octo_Moduls_DB.SpeedFrame.Shown = value
+					if Octo_MainFrame_SpeedFrame then
+						Octo_MainFrame_SpeedFrame:SetShown(value)
+					end
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			PosFrameShown = {
+				type = "toggle",
+				name = "PosFrame.Shown",
+				desc = "",
+				get = function()
+					return Octo_Moduls_DB.PosFrame.Shown
+				end,
+				set = function(_, value)
+					Octo_Moduls_DB.PosFrame.Shown = value
+					if Octo_MainFrame_PosFrame then
+						Octo_MainFrame_PosFrame:SetShown(value)
+					end
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			SellFrame = {
+				type = "toggle",
+				name = "SellFrame",
+				desc = "",
+				get = function()
+					return Octo_Moduls_DB.SellFrame
+				end,
+				set = function(_, value)
+					Octo_Moduls_DB.SellFrame = value
+					if Octo_MainFrame_SellFrame1 then
+						Octo_MainFrame_SellFrame1:SetShown(value)
+					end
+					if Octo_MainFrame_SellFrame2 then
+						Octo_MainFrame_SellFrame2:SetShown(value)
+					end
+					if Octo_MainFrame_SellFrame3 then
+						Octo_MainFrame_SellFrame3:SetShown(value)
+					end
+					if Octo_MainFrame_SellFrame4 then
+						Octo_MainFrame_SellFrame4:SetShown(value)
+					end
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			Config_Auto_SellGrey = {
 				type = "toggle",
 				name = L["Auto Sell Grey"], -- "AUTO "..SELL_ALL_JUNK_ITEMS_EXCLUDE_HEADER, --

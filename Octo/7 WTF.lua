@@ -465,7 +465,6 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		Config_numberFormatMode = 1, -- по умолчанию универсальный
 		Currencies = true, -- Квесты
 		Currency = true, -- Валюта
-		CVar = true, -- CVar настройки
 		Dungeons = true, -- Подземелья
 		Config_Texture = "Blizzard Raid Bar",
 		Gold = true, -- Золото
@@ -477,7 +476,6 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		Quests = true, -- Квесты
 		QuestsShowAllways = false, -- Всегда показывать квесты
 		Reputations = false, -- Репутация
-		SellFrame = true,
 		ShowIDS = true, -- Показывать ID
 		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер

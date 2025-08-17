@@ -44,6 +44,7 @@ EventFrame[funcName] = function(self)
 		Config_Hide_WeeklyRewardExpirationWarningDialog = true, -- Скрыть предупреждение о наградах
 		Config_Hide_ZoneTextFrame = true, -- Скрыть текст зоны
 		Config_Hide_ZoneTextString = true, -- Скрыть строку зоны
+		SellFrame = true,
 	}
 	for k, v in next, (defaultOptions) do
 		E.func_InitField(EventFrame.savedVars, k, v)

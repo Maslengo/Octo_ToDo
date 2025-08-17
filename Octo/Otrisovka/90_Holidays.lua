@@ -56,6 +56,7 @@ function E.func_Otrisovka_90_Holidays()
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
 					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+					tooltipKey = "Timewalk_Mounts"
 					----------------------------------------------------------------
 					textCENT = E.func_textCENT_Currency(CharInfo, 1166)
 					myType = {"Currency", 1166}

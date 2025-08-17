@@ -2,8 +2,6 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 local function RegisterMyTables(myType, value, number, index, path)
 	local leftText = E.Addon_Right_Color..tostring(number).."|r"
 	if myType == "sound" then

@@ -1,9 +1,0 @@
-## Interface: 90205
-## Author: Octo
-## Title: !|T3586268:0|t |cFF00A3FFOcto|r |cFFFF5771Renown Checker|r
-## Version: 1
-## Notes: Renown and anima checker
-## SavedVariables: OctoRenownLevels  OctoRenownVars
-embeds.xml
-SlashCommands.lua
-Renown.lua

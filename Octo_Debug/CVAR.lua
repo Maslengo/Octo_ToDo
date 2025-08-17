@@ -1,5 +1,6 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+----------------------------------------------------------------
 function E.func_LoadCVars()
 	-- Grouped CVars by functionality
 	local cvars = {

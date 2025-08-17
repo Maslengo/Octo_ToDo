@@ -1,6 +1,5 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function EventFrame:LoadOctoUIforAddons()

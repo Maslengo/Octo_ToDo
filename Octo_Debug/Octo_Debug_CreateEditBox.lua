@@ -1,11 +1,7 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-if not Octo_ToDo_DB_Vars then return end
-----------------------------------------------------------------
--- Создаем фрейм для отладки
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
--- Подключаем библиотеки
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
@@ -61,6 +57,7 @@ E.editorThemes = {
 		["String"] = "|cff829D61", -- строки (зелёный)
 	},
 }
+if not Octo_Debug_DB then return end
 function E.func_createColorScheme(themeName)
 	local theme = E.editorThemes[themeName] or E.editorThemes["Twilight"]
 	return {
@@ -211,8 +208,8 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	local editBox = frame.editFrame:GetEditBox()
 	editBox:HookScript("OnEnterPressed", function(self) self:Insert("\n") end)
 	editBox:HookScript("OnEscapePressed", function(self) self:ClearFocus() end)
-	if Octo_ToDo_DB_Vars then
-		editBox:SetFont(E.Octo_font, Octo_ToDo_DB_Vars.editorFontSize, "")
+	if Octo_Debug_DB then
+		editBox:SetFont(E.Octo_font, Octo_Debug_DB.editorFontSize, "")
 	else
 		editBox:SetFont(E.Octo_font, 11, "")
 	end
@@ -236,7 +233,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Обработчики перемещения фрейма
 	frame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				frame:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				frame:SetAlpha(Octo_Debug_DB.Config_AlphaOnDrag or E.backgroundColorA)
 				frame:StartMoving()
 			end
 	end)
@@ -265,7 +262,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	frame.resize:SetScript("OnDragStart", function(self)
 			isResizing = true
 			self:GetParent():StartSizing("BOTTOMRIGHT", true)
-			self:GetParent():SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+			self:GetParent():SetAlpha(Octo_Debug_DB.Config_AlphaOnDrag or E.backgroundColorA)
 	end)
 	frame.resize:SetScript("OnDragStop", function(self)
 			isResizing = false
@@ -333,7 +330,7 @@ local function dumpEdit(indent, msg, tables)
 		end
 	end
 	if indent == 0 then
-		LibIndentation.enable(editBox:GetEditBox(), E.func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces) -- 4 - ширина табуляции в пробелах
+		LibIndentation.enable(editBox:GetEditBox(), E.func_createColorScheme(Octo_Debug_DB.editorTheme or "Twilight"), Octo_Debug_DB.editorTabSpaces) -- 4 - ширина табуляции в пробелах
 		editBox:SetText(str)
 		LibIndentation.indentEditbox(editBox:GetEditBox())
 		editFrame:Show()

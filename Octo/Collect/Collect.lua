@@ -71,7 +71,7 @@ function EventFrame:PLAYER_LOGIN()
 	end)
 end
 function E.func_Collect_All()
-	local start = debugprofilestop()
+	-- local start = debugprofilestop()
 	local color = E.Green_Color
 	if E.func_SpamBlock("func_Collect_All") then
 		color = E.Red_Color
@@ -104,8 +104,8 @@ function E.func_Collect_All()
 		E.Collect_All_UNIVERSALQuestUpdate()
 		E.Collect_All_WarMode()
 	end
-	local elapsed = debugprofilestop() - start
-	print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
+	-- local elapsed = debugprofilestop() - start
+	-- print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
 
 end
 

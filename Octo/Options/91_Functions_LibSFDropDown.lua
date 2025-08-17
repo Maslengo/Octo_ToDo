@@ -531,8 +531,8 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	-- Выносим общие функции за пределы ddSetInitFunc, чтобы не создавать их каждый раз
 	local function makeThemeHandler(themeName)
 		return function(btn)
-			Octo_ToDo_DB_Vars.editorTheme = themeName
-			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_ToDo_DB_Vars.editorTabSpaces)
+			Octo_Debug_DB.editorTheme = themeName
+			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_Debug_DB.editorTabSpaces)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(1)
@@ -540,8 +540,8 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	end
 	local function makeTabSizeHandler(tabSize)
 		return function(btn)
-			Octo_ToDo_DB_Vars.editorTabSpaces = tabSize
-			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_ToDo_DB_Vars.editorTheme or "Twilight"), tabSize)
+			Octo_Debug_DB.editorTabSpaces = tabSize
+			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_Debug_DB.editorTheme or "Twilight"), tabSize)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(2)
@@ -549,7 +549,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	end
 	local function makeFontSizeHandler(fontSize)
 		return function(btn)
-			Octo_ToDo_DB_Vars.editorFontSize = fontSize
+			Octo_Debug_DB.editorFontSize = fontSize
 			editBox:SetFont(E.Octo_font, fontSize, "")
 			DropDown:ddRefresh(2)
 		end
@@ -566,7 +566,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					end
 					info.text = name
 					info.value = name
-					info.checked = function(btn) return Octo_ToDo_DB_Vars.editorTheme == name end
+					info.checked = function(btn) return Octo_Debug_DB.editorTheme == name end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
 				end
@@ -590,7 +590,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					end
 					info.text = v
 					info.value = v
-					info.checked = function(btn) return btn.value == Octo_ToDo_DB_Vars.editorTabSpaces end
+					info.checked = function(btn) return btn.value == Octo_Debug_DB.editorTabSpaces end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
 				end
@@ -603,7 +603,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					end
 					info.text = i
 					info.value = i
-					info.checked = function(btn) return btn.value == Octo_ToDo_DB_Vars.editorFontSize end
+					info.checked = function(btn) return btn.value == Octo_Debug_DB.editorFontSize end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
 				end

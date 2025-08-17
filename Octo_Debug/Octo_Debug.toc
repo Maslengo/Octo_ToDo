@@ -5,6 +5,8 @@
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Debug
 ## Dependencies: Octo
 ## SavedVariables: Octo_Debug_DB
+
+CVAR.lua
 WTF.lua
 Octo_Debug_CreateEditBox.lua
 Octo_Debug_LoadOctoUIforAddons.lua

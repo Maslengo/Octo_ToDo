@@ -8,7 +8,7 @@ function E.func_Octo_Debug_Options(savedVars)
 		index = index + 1
 		return index
 	end
-	local Debug = {
+	local Option_FUNC = {
 		type = "group",
 		childGroups = "tab",
 		name = E.func_AddonNameForOptionsFunc(GlobalAddonName), -- BINDING_HEADER_DEBUG
@@ -342,70 +342,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "CVar",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.CVar
+					return Octo_Debug_DB.CVar
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.CVar = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			SpeedFrameShown = {
-				type = "toggle",
-				name = "SpeedFrame.Shown",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.SpeedFrame.Shown
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.SpeedFrame.Shown = value
-					if Octo_MainFrame_SpeedFrame then
-						Octo_MainFrame_SpeedFrame:SetShown(value)
-					end
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			PosFrameShown = {
-				type = "toggle",
-				name = "PosFrame.Shown",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.PosFrame.Shown
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.PosFrame.Shown = value
-					if Octo_MainFrame_PosFrame then
-						Octo_MainFrame_PosFrame:SetShown(value)
-					end
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			SellFrame = {
-				type = "toggle",
-				name = "SellFrame",
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.SellFrame
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.SellFrame = value
-					if Octo_MainFrame_SellFrame1 then
-						Octo_MainFrame_SellFrame1:SetShown(value)
-					end
-					if Octo_MainFrame_SellFrame2 then
-						Octo_MainFrame_SellFrame2:SetShown(value)
-					end
-					if Octo_MainFrame_SellFrame3 then
-						Octo_MainFrame_SellFrame3:SetShown(value)
-					end
-					if Octo_MainFrame_SellFrame4 then
-						Octo_MainFrame_SellFrame4:SetShown(value)
-					end
+					Octo_Debug_DB.CVar = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -413,7 +353,7 @@ function E.func_Octo_Debug_Options(savedVars)
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
-				name = "Debug",
+				name = "",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -567,13 +507,84 @@ function E.func_Octo_Debug_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			-- ["Header"..GetOrder()] = {
-			-- 	type = "header",
-			-- 	name = "",
-			-- 	order = GetOrder(),
-			-- },
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "",
+				order = GetOrder(),
+			},
 			-------------------------------------------------
+			["editorFontSize"] = {
+				type = "select",
+				name = "editorFontSize",
+				values = (function()
+					local t = {}
+					for i = 10, 16 do
+						t[i] = i
+					end
+					return t
+				end)(),
+				desc = "",
+				get = function()
+					return Octo_Debug_DB.editorFontSize
+				end,
+				set = function(_, value)
+					Octo_Debug_DB.editorFontSize = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+
 			-------------------------------------------------
+			["editorTabSpaces"] = {
+				type = "select",
+				name = "editorTabSpaces",
+				values = (function()
+					local t = {}
+					for _, v in ipairs({0, 2, 3, 4}) do
+						t[v] = v
+					end
+					return t
+				end)(),
+				desc = "",
+				get = function()
+					return Octo_Debug_DB.editorTabSpaces
+				end,
+				set = function(_, value)
+					Octo_Debug_DB.editorTabSpaces = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+
+			-------------------------------------------------
+			["editorTheme"] = {
+				type = "select",
+				name = "editorTheme",
+				values = (function()
+					local t, keys = {}, {}
+					for k in pairs(E.editorThemes) do
+						table.insert(keys, k)
+					end
+					table.sort(keys)
+					for i, k in ipairs(keys) do
+						t[i] = k
+					end
+					return t
+				end)(),
+
+				desc = "",
+				get = function()
+					return Octo_Debug_DB.editorTheme
+				end,
+				set = function(_, value)
+					Octo_Debug_DB.editorTheme = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
@@ -581,6 +592,19 @@ function E.func_Octo_Debug_Options(savedVars)
 			-------------------------------------------------
 		},
 	}
+
+	-- for index = 10, 16 do
+	-- 	Option_FUNC.args.editorFontSize.values[index] = index
+	-- end
+	-- for index, v in ipairs({0, 2, 3, 4}) do
+	-- 	Option_FUNC.args.editorTabSpaces.values[index] = index
+	-- end
+
+	-- local countET = 0
+	-- for name in next, (E.editorThemes) do
+	-- 	countET = countET + 1
+	-- 	Option_FUNC.args.editorTheme.values[countET] = name
+	-- end
 	-------------------------------------------------
 	-------------------------------------------------
 	-------------------------------------------------
@@ -592,7 +616,7 @@ function E.func_Octo_Debug_Options(savedVars)
 				local order = GetOrder()
 				local str_key = tostring(key)
 				local path = parent_path.."."..str_key
-				Debug.args[str_key..order] = {
+				Option_FUNC.args[str_key..order] = {
 					type = "execute",
 					name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r"  -- Красный для последнего уровня
 					or "|cffFFF371"..str_key.."|r",  -- Жёлтый для остальных
@@ -613,13 +637,13 @@ function E.func_Octo_Debug_Options(savedVars)
 	local function add_args(tbl, name, max_depth)
 		if tbl then
 			local header_order = GetOrder()
-			Debug.args[name..header_order] = {
+			Option_FUNC.args[name..header_order] = {
 				type = "header",
 				name = "",
 				order = header_order,
 			}
 			local execute_order = GetOrder()
-			Debug.args[name..execute_order] = {
+			Option_FUNC.args[name..execute_order] = {
 				type = "execute",
 				name = max_depth and "|cff00BFFF"..name.."|r"  -- Голубой, если есть ограничение глубины
 				or "|cff4fff79"..name.."|r",  -- Зеленый, если рекурсия без лимита
@@ -650,5 +674,5 @@ function E.func_Octo_Debug_Options(savedVars)
 	-------------------------------------------------
 	-------------------------------------------------
 	-------------------------------------------------
-	return Debug
+	return Option_FUNC
 end

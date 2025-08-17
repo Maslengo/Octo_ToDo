@@ -265,6 +265,7 @@ E.OctoTable_itemID_Cataloged_Research = {
 }
 ----------------------------------------------------------------
 E.OctoTable_itemID_ItemsUsable_Other = {
+	237812, 245925,
 	94225, 94227, 94223, 94226,
 	94159,
 	94158,

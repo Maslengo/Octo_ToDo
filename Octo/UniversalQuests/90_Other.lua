@@ -181,6 +181,7 @@ function E.func_Universal_90_Other()
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			textleft = DUNGEONS,
 			showTooltip = true,
 			name_save = "Dungeons",

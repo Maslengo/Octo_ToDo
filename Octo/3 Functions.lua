@@ -106,6 +106,7 @@ local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
 local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
 local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
+local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
 -- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
 local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
 local classR, classG, classB = GetClassColor(E.classFilename)
@@ -1792,12 +1793,18 @@ end
 function E.func_GetCurrentRegion()
 	return GetCurrentRegion()
 end
+----------------------------------------------------------------
 function E.func_GetCurrentRegionName()
-	if GetCurrentRegionName() == "" then
-		return "PTR "..E.buildVersion
+	local result = GetCurrentRegionName()
+	if result == "" then
+		result = "PTR "..E.buildVersion
 	end
-	return GetCurrentRegionName()
+	if GetPlayerAuraBySpellID(1213439) then
+		result = result .. " (REMIX)"
+	end
+	return result
 end
+----------------------------------------------------------------
 function E.func_tooltipCENT_ITEMS(CharInfo, TBL, needShowAllItems)
 	local tooltipCENT = {}
 	local sorted_itemList = {}
@@ -1844,12 +1851,15 @@ function E.func_InitFrame(frame)
 			end)
 	end)
 end
+function E.func_ExpansionVivod(expID)
+	return " "..E.func_texturefromIcon(E.OctoTable_Expansions[expID].icon, 16, 32)..E.OctoTable_Expansions[expID].color..E.OctoTable_Expansions[expID].nameVeryShort.."|r"
+end
 function E.func_joinableDung()
 	local joinable, timewalkDungeonName, result = false, "", ""
 	for expID, v in ipairs(E.OctoTable_Expansions) do
 		if v.timewalkDungeonID and IsLFGDungeonJoinable(v.timewalkDungeonID) then
 			joinable = true
-			result = E.func_texturefromIcon(v.icon, 16, 32)..v.color..v.nameVeryShort.."|r"
+			result = E.func_ExpansionVivod(expID)
 			timewalkDungeonName = GetLFGDungeonInfo(v.timewalkDungeonID)
 		end
 	end
@@ -2148,6 +2158,15 @@ E.OctoTable_followerTypeIDs = {
 E.listMaxSize = 30
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.."DebugInfo|r: "
 E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
+
+function E.func_pizda(mountID)
+	local mountIconNumber = E.func_mountIcon(mountID)
+	local mountIcon = E.func_texturefromIcon(mountIconNumber)
+	local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
+	return mountName
+end
+
+
 function E.func_KeyTooltip(GUID, tooltipKey)
 	if not GUID and not tooltipKey then return end
 	local tooltipCENT = {}
@@ -2226,7 +2245,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							-- for expI = #E.OctoTable_Expansions, 1, -1 do
 							-- local j = E.OctoTable_Expansions[expI]
 							local j = E.OctoTable_Expansions[expIndex]
-							tooltipCENT[#tooltipCENT+1] = {" "..E.func_texturefromIcon(j.icon, 16, 32).." "..j.color..j.nameVeryShort.."|r ", v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
+							tooltipCENT[#tooltipCENT+1] = {E.func_ExpansionVivod(expIndex), v.QWEskillLevel.."/"..v.QWEmaxSkillLevel}
 							-- end
 							-- end
 						end
@@ -2368,10 +2387,11 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		----------------------------------------------------------------
 	elseif tooltipKey == "Other_Mounts" then
 		for mountID in next, (E.OctoTable_Mounts) do
-			local mountIconNumber = E.func_mountIcon(mountID)
-			local mountIcon = E.func_texturefromIcon(mountIconNumber)
-			local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
-			local leftText = mountName
+			-- local mountIconNumber = E.func_mountIcon(mountID)
+			-- local mountIcon = E.func_texturefromIcon(mountIconNumber)
+			-- local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
+			-- local leftText = mountName
+			local leftText = E.func_pizda(mountID)
 			local rightText = E.func_mountIsCollected(mountID) and E.TRUE or E.NONE
 			tooltipCENT[#tooltipCENT+1] = {leftText, rightText}
 		end
@@ -2495,11 +2515,11 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							vivod_LEFT = E.func_texturefromIcon(addText.Icon)..vivod_LEFT
 						end
 						if addText.mount then
-							-- vivod_LEFT = vivod_LEFT ..E.Purple_Color.." + "..MOUNTS ..":|r ".. E.func_mountName(addText.mount)
-							local mountIconNumber = E.func_mountIcon(addText.mount)
-							local mountIcon = E.func_texturefromIcon(mountIconNumber)
-							local mountName = mountIcon..E.func_mountIsCollectedColor(addText.mount)..E.func_mountName(addText.mount).."|r"
-							vivod_LEFT = vivod_LEFT..E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, mountName).."|r"
+							-- local mountIconNumber = E.func_mountIcon(addText.mount)
+							-- local mountIcon = E.func_texturefromIcon(mountIconNumber)
+							-- local mountName = mountIcon..E.func_mountIsCollectedColor(addText.mount)..E.func_mountName(addText.mount).."|r"
+
+							vivod_LEFT = vivod_LEFT..E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_pizda(addText.mount)).."|r"
 						end
 						if addText.notes then
 							vivod_LEFT = vivod_LEFT..addText.notes
@@ -2510,6 +2530,9 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 						if addText.spellID then
 							vivod_LEFT = vivod_LEFT ..E.Pink_Color..E.func_spellName(addText.spellID).."|r"
 						end
+						if addText.text then
+							vivod_LEFT = vivod_LEFT..addText.text
+						end
 					end
 					if faction == CharInfo.PlayerData.Faction then
 						vivod_LEFT = E.func_texturefromIcon(E.func_FactionIconID(faction))..vivod_LEFT
@@ -2519,15 +2542,50 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 			end
 		end
 		----------------------------------------------------------------
-		--elseif tooltipKey == "ЙЦУЙЦУ" then
-		----------------------------------------------------------------
-		--elseif tooltipKey == "ЙЦУЙЦУ" then
-		----------------------------------------------------------------
-		--elseif tooltipKey == "ЙЦУЙЦУ" then
-		----------------------------------------------------------------
-		--elseif tooltipKey == "ЙЦУЙЦУ" then
-		----------------------------------------------------------------
-		----------------------------------------------------------------
+	elseif tooltipKey == "Timewalk_Mounts" then
+
+
+
+
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2473), E.func_ExpansionVivod(1)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(778), E.func_ExpansionVivod(2)} -- Eclipse Dragonhawk (TBC Timewalking)
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2225), E.func_ExpansionVivod(2)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(552), E.func_ExpansionVivod(3)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2317), E.func_ExpansionVivod(3)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2474), E.func_ExpansionVivod(5)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1242), E.func_ExpansionVivod(6)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1243), E.func_ExpansionVivod(6)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2470), E.func_ExpansionVivod(6)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1521), E.func_ExpansionVivod(7)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2471), E.func_ExpansionVivod(7)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(781), E.func_ExpansionVivod(8)} -- Infinite Timereaver (Timewalking boss drop)
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2586), E.func_ExpansionVivod(8)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2587), E.func_ExpansionVivod(8)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(293), E.func_ExpansionVivod(11)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1798), E.func_ExpansionVivod(11)}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2224), E.func_ExpansionVivod(11)}
+
+
+
+
+
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2321), "ALL"}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1737), "ALL"}
+	----------------------------------------------------------------
+	--elseif tooltipKey == "ЙЦУЙЦУ" then
+	----------------------------------------------------------------
+	--elseif tooltipKey == "ЙЦУЙЦУ" then
+	----------------------------------------------------------------
+	--elseif tooltipKey == "ЙЦУЙЦУ" then
+	----------------------------------------------------------------
+	----------------------------------------------------------------
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -2907,7 +2965,6 @@ function E.func_SpamBlock(key, needCheckCombat)
 	-- print (E.Green_Color..key.."|r")
 	return false -- Всё нормально, можно выполнять
 end
-----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

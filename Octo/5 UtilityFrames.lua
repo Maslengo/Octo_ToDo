@@ -273,7 +273,8 @@ function EventFrame:Octo_FramerateFrame(frame)
 		Octo_FramerateFrame.ticker = nil
 		Octo_FramerateFrame.isTickerActive = false
 		local function UpdateFPS()
-			local FPS = math.floor(GetFramerate() * 10) / 10
+			-- local FPS = math.floor(GetFramerate() * 10) / 10
+			local FPS = math.floor(GetFramerate())
 			if FPS >= 144 then
 				Octo_FramerateFrame.text:SetTextColor(0, 1, 1, 1)
 			elseif FPS >= 60 then

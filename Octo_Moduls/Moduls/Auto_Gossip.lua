@@ -27,6 +27,7 @@ local ignoreNPCID = {
 	[213627] = true, -- SKIP TWW (DALARAN 70lvl)
 	[232498] = true, -- SPAM (taz)
 	[217861] = true, -- dornogal (SKIP)
+	[241748] = true, -- remix legion
 }
 -- IGNORE 120914
 local gossipOptionIDs = {

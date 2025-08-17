@@ -1,6 +1,5 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
--- 
 local EventFrame = CreateFrame("FRAME")
 local funcName = GlobalAddonName.."WTF"
 ----------------------------------------------------------------
@@ -8,20 +7,21 @@ EventFrame[funcName] = function(self)
 	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 	----------------------------------------------------------------
 	local defaultOptions = {
-		addonFontSize = 11,
-		DebugButton = false, -- Отладка кнопок
-		DebugEvent = false, -- Отладка событий
-		DebugFunction = false, -- Отладка функций
-		DebugIDs = false, -- Отладка ID
-		DebugCharacterInfo = false, -- Отладка информации
-		DebugGossip = false, -- Отладка информации
-		DebugCache = false, -- Отладка информации
-		DebugQC_Vignettes = false, -- Отладка информации
-		DebugQC_Quests = false, -- Отладка информации
-		DebugUniversal = false, -- Отладка информации
-		editorFontSize = 12,
-		editorTabSpaces = 4,
-		editorTheme = "Twilight",
+		DebugIDs = false,
+		DebugCharacterInfo = false,
+		DebugEvent = false,
+		DebugFunction = false,
+		DebugButton = false,
+		DebugGossip = false,
+		DebugCache = false,
+		DebugQC_Vignettes = false,
+		DebugQC_Quests = false,
+		DebugUniversal = false,
+		CVar = false, -- CVar настройки
+
+		editorFontSize = 12, -- for i = 10, 16 do
+		editorTabSpaces = 4, -- for _, v in ipairs({0, 2, 3, 4}) do
+		editorTheme = "Twilight", -- for name in next, E.editorThemes do
 	}
 	for k, v in next, (defaultOptions) do
 		E.func_InitField(EventFrame.savedVars, k, v)
@@ -39,7 +39,8 @@ EventFrame[funcName] = function(self)
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED", -- Событие загрузки аддона
+	"ADDON_LOADED",
+	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
 ----------------------------------------------------------------
@@ -51,6 +52,11 @@ function EventFrame:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	EventFrame[funcName](EventFrame)
+end
+function EventFrame:VARIABLES_LOADED()
+	if Octo_Debug_DB.CVar then
+		E.func_LoadCVars()
+	end
 end
 function EventFrame:PLAYER_LOGIN()
 	E.DebugButton = Octo_Debug_DB.DebugButton

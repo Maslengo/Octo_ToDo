@@ -9,6 +9,7 @@ E.func_InitFrame(Octo_MainFrame_ToDo)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 -- Константы для настройки интерфейса
+local INDENT_LEFT = 10
 local INDENT_TEST = 4                      		-- Отступ для текста
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
 local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
@@ -401,7 +402,7 @@ local function calculateColumnWidthsLEFT(node, totalLines)
 	local columnHeightsLEFT = {}
 	local sampleFrameLEFT = framesLEFT[1]
 	sampleFrameLEFT.textLEFT:SetText(frameData.textLEFT)
-	columnWidthsLEFT[1] = math.ceil(sampleFrameLEFT.textLEFT:GetStringWidth())
+	columnWidthsLEFT[1] = math.ceil(sampleFrameLEFT.textLEFT:GetStringWidth()) + INDENT_LEFT
 	-- print (sampleFrameLEFT.textLEFT:GetStringHeight())
 	return columnWidthsLEFT
 end
