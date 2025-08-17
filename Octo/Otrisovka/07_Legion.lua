@@ -23,6 +23,15 @@ function E.func_Otrisovka_07_Legion()
 		end)
 		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+
+
+
+
+		if E.func_IsRemix() then
+
+
+		end
+
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

@@ -20,7 +20,7 @@ end
 local function AddVignettesToDB(vignetteInfo)
 	local GUID = vignetteInfo.vignetteGUID
 	local atlasName = vignetteInfo.atlasName
-	local id = vignetteInfo.vignetteID
+	local vignetteID = vignetteInfo.vignetteID
 	local name = vignetteInfo.name
 	local mapID, x, y = VignettePosition(GUID)
 	local curLocation, locationsFind = E.func_GetCurrentLocation()
@@ -28,10 +28,10 @@ local function AddVignettesToDB(vignetteInfo)
 		local vignetteKey = atlasName..name..mapID..E.curCharName
 		if not EventFrame.savedVars.QC_Vignettes[vignetteKey] then
 			if Octo_Debug_DB.DebugQC_Vignettes then
-				print (atlasName, E.Gray_Color.."id:"..id.."|r", E.func_texturefromIcon(atlasName, nil, nil, true), name)
+				print (atlasName, E.Gray_Color.."id:"..vignetteID.."|r", E.func_texturefromIcon(atlasName, nil, nil, true), name)
 			end
 			local vignettes = {
-				id = id,
+				id = vignetteID,
 				time = time(),
 				mapID = mapID, -- locations might be nil if it's from an instance
 				x = x,

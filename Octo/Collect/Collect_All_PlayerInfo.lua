@@ -38,6 +38,13 @@ function E.Collect_All_PlayerInfo()
 	collectPlayerData.interfaceVersion = E.interfaceVersion
 	collectPlayerData.currentTier = E.currentTier
 	collectPlayerData.LuaVersion =  _VERSION
+
+	if E.func_IsRemix() then
+		collectPlayerData.PlayerOnRemixServer = true
+	else
+		collectPlayerData.PlayerOnRemixServer = nil
+	end
+
 	if E.IsPublicBuild then
 		collectPlayerData.IsPublicBuild = E.IsPublicBuild
 	else

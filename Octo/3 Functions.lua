@@ -125,6 +125,8 @@ function E.func_IsMidnight() return E.interfaceVersion > 120000 and E.interfaceV
 function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersion < 140000 end
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
+function E.func_IsRemix() return PlayerIsTimerunning() end -- GetPlayerAuraBySpellID(1213439)
+
 function E.func_vignetteIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
@@ -1477,20 +1479,20 @@ function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
 	local expansionData = E.OctoTable_Expansions[expansionID]
 	local Data = E.OctoTables_DataOtrisovka[expansionID]
 	if not Data then return end
-	local func_textCENT_Items = function(...) return E.func_textCENT_Items(...) end
-	local func_itemName = function(...) return E.func_itemName(...) end
-	local func_GetItemIconByID = function(...) return E.func_GetItemIconByID(...) end
-	local func_textCENT_Currency = function(...) return E.func_textCENT_Currency(...) end
-	local func_currencyName = function(...) return E.func_currencyName(...) end
-	local func_GetCurrencyIcon = function(...) return E.func_GetCurrencyIcon(...) end
+	-- local func_textCENT_Items = function(...) return E.func_textCENT_Items(...) end
+	-- local func_itemName = function(...) return E.func_itemName(...) end
+	-- local func_GetItemIconByID = function(...) return E.func_GetItemIconByID(...) end
+	-- local func_textCENT_Currency = function(...) return E.func_textCENT_Currency(...) end
+	-- local func_currencyName = function(...) return E.func_currencyName(...) end
+	-- local func_GetCurrencyIcon = function(...) return E.func_GetCurrencyIcon(...) end
 	local Purple_Color = E.Purple_Color
 	local function getItemProcessor(itemID)
 		local processor = itemProcessors[itemID]
 		if not processor then
 			processor = function(CharInfo)
-				return func_itemName(itemID),
+				return E.func_itemName(itemID),
 				expansionData.color,
-				func_textCENT_Items(CharInfo, itemID),
+				E.func_textCENT_Items(CharInfo, itemID),
 				{},
 				nil,
 				{"Item", itemID}
@@ -1503,11 +1505,11 @@ function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
 		local processor = currencyProcessors[currencyID]
 		if not processor then
 			processor = function(CharInfo)
-				local textCENT = func_textCENT_Currency(CharInfo, currencyID)
+				local textCENT = E.func_textCENT_Currency(CharInfo, currencyID)
 				if currencyID == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
 					textCENT = string_format("%s%s +%d|r", textCENT, Purple_Color, CharInfo.PlayerData.Possible_CatalogedResearch)
 				end
-				return func_currencyName(currencyID),
+				return E.func_currencyName(currencyID),
 				expansionData.color,
 				textCENT,
 				{},
@@ -1799,7 +1801,7 @@ function E.func_GetCurrentRegionName()
 	if result == "" then
 		result = "PTR "..E.buildVersion
 	end
-	if GetPlayerAuraBySpellID(1213439) then
+	if E.func_IsRemix() then
 		result = result .. " (REMIX)"
 	end
 	return result

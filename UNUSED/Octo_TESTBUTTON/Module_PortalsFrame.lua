@@ -33,7 +33,7 @@ function EventFrame:PortalsFrame()
 	AnchorFrame.icon:SetAllPoints(AnchorFrame)
 	AnchorFrame.icon:SetTexture("Interface\\Addons\\"..E.MainAddonName.."\\Media\\Arrow72.tga")
 	AnchorFrame.icon:SetRotation(math.pi * 0.75)
-	E:func_SetBackdrop(AnchorFrame)
+	E.func_SetBackdrop(AnchorFrame)
 	-- Add click handler if not already added
 	if not AnchorFrame.isInit2 then
 		AnchorFrame.isInit2 = true
@@ -52,7 +52,7 @@ function EventFrame:PortalsFrame()
 				if ShouldShowButton(v, curFaction, curRace, curClass, curProfession, curLevel) then
 					local id = type(v) == "number" and v or v.id
 					local curType = type(v) == "number" and "spell" or v.curType
-					if E:func_IsAvailable(id, curType) then
+					if E.func_IsAvailable(id, curType) then
 						-- E:CreateUsableSpellFrame(
 						E:OctoCreateButton(
 							id,

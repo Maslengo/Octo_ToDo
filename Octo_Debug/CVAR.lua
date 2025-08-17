@@ -160,6 +160,9 @@ function E.func_LoadCVars()
 	for cvar, value in next, (cvars) do
 		C_CVar.SetCVar(cvar, value)
 	end
+	-- print (C_Container.GetSortBagsRightToLeft())
+	C_Container.SetSortBagsRightToLeft(false)
+	-- print (C_Container.GetSortBagsRightToLeft())
 end
 -- C_CVar.SetCVar("closedExtraAbilityTutorials", 1)
 -- C_CVar.SetCVar("covenantMissionTutorial", 1)

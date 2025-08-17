@@ -70,7 +70,7 @@ local function SetTextureByItemId(frame, itemId)
 	local item = Item:CreateFromItemID(itemId)
 	item:ContinueOnItemLoad(function()
 			local icon = item:GetItemIcon()
-			frame.Icon:SetTexture(E:func_GetItemIconByID(itemId))
+			frame.Icon:SetTexture(E.func_GetItemIconByID(itemId))
 	end)
 end
 local function ClearAllInvalidHighlights()
@@ -92,7 +92,7 @@ local function createCooldownFrame(frame)
 	frame.cooldown = CreateFrame("Cooldown", nil, frame, "CooldownFrameTemplate")
 	frame.cooldown:SetAllPoints()
 	function frame.cooldown:CheckCooldown(id, curType)
-		if not id or not E:func_IsAvailable(id, curType) then return end
+		if not id or not E.func_IsAvailable(id, curType) then return end
 		if frame:IsVisible() then
 			local start, duration, enabled
 			if curType == "toy" or curType == "item" then
@@ -219,12 +219,12 @@ function E:OctoCreateButton(id, point, parent, rPoint, x, y, size, curType)
 		-- button:SetHighlightAtlas("UI-HUD-ActionBar-IconFrame-Mouseover", "ADD")
 		-- button.HighlightTexture:SetSize(size, size)
 		if curType == "spell" then
-			button.Icon:SetTexture(E:func_GetSpellIcon(id))
+			button.Icon:SetTexture(E.func_GetSpellIcon(id))
 		else -- item or toy
 			SetTextureByItemId(button, id)
 		end
 		-- Attribute
-		if E:func_IsAvailable(id, curType) == false then
+		if E.func_IsAvailable(id, curType) == false then
 			button.Icon:SetDesaturated(true)
 			button:SetAlpha(.3)
 		else
@@ -289,7 +289,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
-E:func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end

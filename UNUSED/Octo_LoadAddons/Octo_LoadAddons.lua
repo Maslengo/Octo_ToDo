@@ -24,7 +24,7 @@ function EventFrame:OnLoad()
 		"Rarity_Options",
 	}
 	for _, name in ipairs(addons) do
-		E:func_LoadAddOnFORCED(name)
+		E.func_LoadAddOnFORCED(name)
 	end
 	C_AddOns.SaveAddOns()
 end
@@ -32,12 +32,12 @@ end
 local MyEventsTable = {
 	"ADDON_LOADED",
 }
-E:func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-	E:func_CreateMinimapButton(GlobalAddonName, "LoadAddons", Octo_LoadAddons_DB)
+	E.func_CreateMinimapButton(GlobalAddonName, "LoadAddons", Octo_LoadAddons_DB)
 	if not WarmupSV then
 		self:OnLoad()
 	end

@@ -735,7 +735,8 @@ function E.func_Octo_Moduls_Options(savedVars)
 				end,
 				set = function(_, value)
 					C_Timer.After(0.5, function()
-						AceConfigRegistry:NotifyChange("Cvars")
+						-- AceConfigRegistry:NotifyChange("Cvars")
+						AceConfigRegistry:NotifyChange(E.func_AddonNameForOptionsInit(GlobalAddonName))
 					end)
 					if C_Container and C_Container.SetSortBagsRightToLeft then
 						C_Container.SetSortBagsRightToLeft(value)

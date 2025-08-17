@@ -586,6 +586,36 @@ function E.func_Octo_Debug_Options(savedVars)
 			},
 
 			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "",
+				order = GetOrder(),
+			},
+
+			["SPAM_TIME"] = {
+				type = "select",
+				name = "SPAM_TIME",
+				values = (function()
+					local t = {}
+					for i = 1, 10 do
+						t[i] = i
+					end
+					return t
+				end)(),
+				desc = "",
+				get = function()
+					return Octo_Debug_DB.SPAM_TIME
+				end,
+				set = function(_, value)
+					Octo_Debug_DB.SPAM_TIME = value
+					E.SPAM_TIME = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+
+			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------

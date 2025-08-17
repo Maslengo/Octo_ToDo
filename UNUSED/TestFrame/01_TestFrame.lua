@@ -4,7 +4,7 @@ local EventFrame = CreateFrame("FRAME")
 local ItemsUsable = CreateFrame("BUTTON", "ItemsUsable", UIParent, "BackDropTemplate")
 ItemsUsable:Hide()
 local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
-E:func_InitFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
+E.func_InitFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
 ----------------------------------------------------------------
 -- Локальные переменные для работы с инвентарем
 local BACKPACK_CONTAINER = BACKPACK_CONTAINER
@@ -235,7 +235,7 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
 	local OctoTable_itemID_Ignore_List = E.OctoTable_itemID_Ignore_List
 	local OctoTable_itemID_ItemsDelete = E.OctoTable_itemID_ItemsDelete
-	local func_GetItemCount = function(...) return E:func_GetItemCount(...) end
+	local func_GetItemCount = function(...) return E.func_GetItemCount(...) end
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
 		for slot = numSlots, 1, -1 do
@@ -298,7 +298,7 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 		local itemID = item.itemID
 		if itemID then
 			color = item.usable and E.Green_Color or E.Red_Color
-			itemName = E:func_itemName(itemID, item.quality)
+			itemName = E.func_itemName(itemID, item.quality)
 			lines = lines + 1
 			local node = DataProvider:Insert({
 				itemName,
@@ -372,7 +372,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",
 	"PLAYER_REGEN_DISABLED",
 }
-E:func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	EventFrame:Create_ItemsUsable()
 	self:CreateTestButton1()

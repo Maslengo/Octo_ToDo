@@ -2,7 +2,9 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
--- Регистрация событий
+local function HELP_TEXT(name)
+	return E.func_Gradient(name)
+end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
@@ -18,6 +20,7 @@ function EventFrame:ADDON_LOADED(addonName)
 end
 function EventFrame:CINEMATIC_START()
 	if EventFrame.savedVars.Config_Auto_CinematicCanceler then
+		DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT("Cancel Cinematic"))
 		CinematicFrame_CancelCinematic()
 	end
 end
@@ -33,7 +36,7 @@ tinsert(E.Modules, function()
 			if dialog.Hide then dialog:Hide() end
 			confirmButton:Click()
 			if message then
-				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message))
+				DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(message))
 			end
 		end
 		local function OnKeyUp(self, key)

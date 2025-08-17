@@ -4,6 +4,7 @@
 	<Script file="Moduls\Auto_CinematicCanceler.lua"/>
 	<Script file="Moduls\Auto_Gossip.lua"/>
 	<Script file="Moduls\Auto_InputDelete.lua"/>
+	<Script file="Moduls\Auto_Open.lua"/>
 	<Script file="Moduls\Auto_Repair.lua"/>
 	<Script file="Moduls\Auto_Screenshot.lua"/>
 	<Script file="Moduls\Auto_Sell_Grey.lua"/>

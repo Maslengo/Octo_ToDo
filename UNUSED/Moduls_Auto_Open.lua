@@ -1,10 +1,11 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-local Octo_AUTO_OPEN = CreateFrame("Frame", GlobalAddonName.."Auto_Open"..E:func_GenerateUniqueID())
-Octo_AUTO_OPEN:RegisterEvent("BAG_UPDATE_DELAYED")
-Octo_AUTO_OPEN:RegisterEvent("PLAYER_REGEN_ENABLED")
-Octo_AUTO_OPEN:RegisterEvent("LOOT_READY")
-Octo_AUTO_OPEN:RegisterEvent("PLAYER_STARTED_MOVING")
+local EventFrame = CreateFrame("Frame")
+
+EventFrame:RegisterEvent("BAG_UPDATE_DELAYED")
+EventFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+EventFrame:RegisterEvent("LOOT_READY")
+EventFrame:RegisterEvent("PLAYER_STARTED_MOVING")
 -- Кэшируем часто используемые функции
 local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemInfo = C_Container.GetContainerItemInfo
@@ -35,7 +36,7 @@ local function OpenableScan()
 				-- 	C_Timer.After(1, function()
 				-- 			if not InCombatLockdown() then
 				-- 				UseContainerItem(bag, slot)
-				-- 				DEFAULT_CHAT_FRAME:AddMessage(E:func_Gradient("Auto Open Item ")..E:func_texturefromIcon(containerInfo.iconFileID)..itemLink)
+				-- 				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ")..E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
 				-- 			end
 				-- 	end)
 				-- end
@@ -44,7 +45,7 @@ local function OpenableScan()
 	end
 end
 local openableScanQueued = false
-Octo_AUTO_OPEN:SetScript("OnEvent", function(self, event)
+EventFrame:SetScript("OnEvent", function(self, event)
 		-- if not Octo_ToDo_DB_Vars.AutoOpen then return end
 		if event == "BAG_UPDATE_DELAYED" then
 			if not InCombatLockdown() and not UnitIsDead("player") then

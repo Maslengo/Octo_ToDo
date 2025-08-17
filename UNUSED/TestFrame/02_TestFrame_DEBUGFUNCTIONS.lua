@@ -4,7 +4,7 @@ local EventFrame = CreateFrame("FRAME")
 local OctoDebugFunctions = CreateFrame("BUTTON", "OctoDebugFunctions", UIParent, "BackDropTemplate")
 OctoDebugFunctions:Hide()
 local TestButton3 = CreateFrame("Button", "TestButton3", UIParent, "UIPanelButtonTemplate")
-E:func_InitFrame(OctoDebugFunctions) -- С ДАТА ПРОВАЙДЕРОМ
+E.func_InitFrame(OctoDebugFunctions) -- С ДАТА ПРОВАЙДЕРОМ
 ----------------------------------------------------------------
 local INDEND_TEST = 4
 local INDEND_SCROLL = 20
@@ -308,7 +308,7 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"BAG_UPDATE_DELAYED",
 }
-E:func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	EventFrame:Create_OctoDebugFunctions()
 	self:CreateTestButton3()

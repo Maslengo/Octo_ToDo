@@ -82,7 +82,21 @@ E.OctoTables_DataOtrisovka = {
 		["Items"] = {
 		},
 		["Currencies"] = {
-			1508, 1342, 1220, 1226, 1533, 1155, 1149, 1416, 1273, -- (1273 MONETKA)
+			1508,
+			1342,
+			1220,
+			1226,
+			1533,
+			1155,
+			1149,
+			1416,
+			1273, -- (1273 MONETKA)
+
+			3292, -- E.func_IsRemix()
+			3268, -- E.func_IsRemix()
+			3252, -- E.func_IsRemix()
+
+
 		},
 	},
 	-- "Battle for Azeroth",
@@ -283,4 +297,11 @@ E.OctoTable_Currencies = {
 	3288, -- Runed Ethereal Crest
 	3290, -- Gilded Ethereal Crest
 	3141, -- Starlight Spark Dust
+
+
+	3292, -- E.func_IsRemix()
+	3268, -- E.func_IsRemix()
+	3252, -- E.func_IsRemix()
+
+
 }

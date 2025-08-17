@@ -2,6 +2,10 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
+local function HELP_TEXT(i, icon, name)
+	return E.func_Gradient("Gossip:")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
+end
+----------------------------------------------------------------
 local targetNPCID = nil
 local ignoreNPCID = {
 	[213837] = true,
@@ -67,10 +71,6 @@ local ignoreICONS = {
 	[136458] = true, -- BIND NEW HOME
 	[132057] = true, -- FLY
 }
-----------------------------------------------------------------
-local function HELP_TEXT(i, icon, name)
-	return E.func_Gradient(GlobalAddonName)..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
-end
 ----------------------------------------------------------------
 function EventFrame:func_Config_Auto_Gossip()
 	local guid = UnitGUID("TARGET")

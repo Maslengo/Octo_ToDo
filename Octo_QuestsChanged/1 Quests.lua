@@ -49,8 +49,8 @@ end
 -- Добавление нового квеста в базу
 local function AddQuestToDB(questID)
 	local mapID, x, y = GetPlayerMapData()
-	if Octo_Debug_DB.DebugQC_Vignettes then
-		print (E.func_questName(questID), E.Gray_Color.."id:"..id.."|r")
+	if Octo_Debug_DB.Config_QC_Quests then
+		print (E.func_questName(questID), E.Gray_Color.."id:"..questID.."|r")
 	end
 	local quest = {
 		id = questID,
@@ -73,6 +73,7 @@ function EventFrame:func_CheckQuests()
 	C_Timer_After(E.SPAM_TIME, function()
 			local current = GetCompletedQuestsSafe()
 			for _, questID in ipairs(current) do
+				-- local nameTEST = E.func_questName(questID)
 				if not known_completed_quests[questID] and not session_quests[questID] and not SPAM_QUESTS[questID] then
 					session_quests[questID] = true
 					known_completed_quests[questID] = true
