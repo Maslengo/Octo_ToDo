@@ -129,7 +129,7 @@ function EventFrame:OpenableScan()
 		local itemLink = select(2, GetItemInfo(entry.itemID))
 		if itemLink then
 			UseContainerItem(entry.bag, entry.slot)
-			DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(entry.icon, itemLink).." bag:"..entry.bag.." slot:"..entry.slot)
+			DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(entry.icon, itemLink)) -- .." bag:"..entry.bag.." slot:"..entry.slot
 			return
 		end
 

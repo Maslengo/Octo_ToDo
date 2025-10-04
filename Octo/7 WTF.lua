@@ -15,9 +15,9 @@ function EventFrame:func_CreateDataCacheAtStart()
 	local tblFollowers = {}
 	-- local tblSpells = {}
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
-		for _, currencyID in ipairs(v.Currencies) do
-			local currency =  E.func_currencyName(currencyID) -- "AllCurrencies"
-		end
+		-- for _, currencyID in ipairs(v.Currencies) do
+		-- 	local currencyName =  E.func_currencyName(currencyID) -- "AllCurrencies"
+		-- end
 		for _, itemID in ipairs(v.Items) do
 			if type(itemID) == "number" then
 				tblItems[itemID] = true
@@ -26,8 +26,14 @@ function EventFrame:func_CreateDataCacheAtStart()
 		end
 	end
 	----------------------------------------------------------------
-	for _, currencyID in ipairs(E.OctoTable_Currencies) do
-		local currency = E.func_currencyName(currencyID) -- "AllCurrencies"
+	-- for _, currencyID in ipairs(E.OctoTable_Currencies) do
+	-- 	local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
+	-- end
+	----------------------------------------------------------------
+	-- for _, currencyID in ipairs(E.OctoTable_Currencies) do
+	for currencyID = 42, 4000 do -- 42, 3372
+		local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
+
 	end
 	----------------------------------------------------------------
 	for _, expansionID in ipairs(E.OctoTable_Reputations) do
@@ -241,7 +247,7 @@ function EventFrame:CleaningIdenticalCharacters()
 	-- Получаем данные текущего игрока
 	local currentGUID = E.curGUID
 	local currentName = E.curCharName
-	local currentRealm = E.curServer
+	local currentRealm = E.func_GetRealmName()
 	local foundDuplicates = false
 	-- Проходим по всем записям
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
@@ -301,6 +307,7 @@ end
 function EventFrame:Octo_ToDo_DB_Levels()
 	-- Получаем GUID текущего игрока
 	local curGUID = UnitGUID("player")
+	if not curGUID then return end
 	-- Инициализируем основную таблицу данных
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	Octo_ToDo_DB_Levels[curGUID] = Octo_ToDo_DB_Levels[curGUID] or {}
@@ -321,8 +328,8 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		className = E.className, -- Имя класса
 		classFilename = E.classFilename, -- Техническое имя класса
 		CurrentRegion = E.func_GetCurrentRegion(),
-		CurrentRegionName = E.func_GetCurrentRegionName(),
-		curServer = E.curServer, -- Текущий сервер
+		CurrentRegionName = E.CurrentRegionName,
+		curServer = E.func_GetRealmName(), -- Текущий сервер
 		curServerShort = E.curServerShort, -- Короткое имя сервера
 		currentTier = E.currentTier, -- Текущий игровой тир
 		Faction = "Horde", -- Фракция
@@ -458,7 +465,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		Config_ADDON_HEIGHT = 20,
 		Config_AlphaOnDrag = 0.8, -- Альфа при перетаскивании
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
-		Config_ClampedToScreen = true, -- Не привязывать к границам экрана
+		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
 		Config_LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		Config_prefix = 1, -- Префикс
@@ -710,12 +717,12 @@ function EventFrame:VARIABLES_LOADED()
 end
 function EventFrame:PLAYER_LOGIN()
 	-- Обновляем кэш
-	if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
+	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
 		EventFrame:func_CreateDataCacheAtStart()
 		Octo_Cache_DB.lastBuildNumber = E.buildNumber
 		Octo_Cache_DB.lastFaction = E.curFaction
 		Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
-	end
+	-- end
 	self:ScheduleNextReset()
 	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 end

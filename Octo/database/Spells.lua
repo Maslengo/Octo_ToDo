@@ -106,6 +106,7 @@ E.OctoTable_Portals = {
 		{id = 395277, faction = "Alliance", class = "MAGE",},
 		{id = 446540, faction = "Alliance", class = "MAGE",},
 		{id = 193759, faction = "Alliance", class = "MAGE",},
+		-- {id = 204287, class = "MAGE",}, -- REMIX
 	},
 	--["Portals_Mage_Group"] = {
 	{

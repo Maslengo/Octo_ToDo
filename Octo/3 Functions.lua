@@ -7,6 +7,7 @@ local table_insert = table.insert
 local table_concat = table.concat
 local table_remove = table.remove
 local string_format = string.format
+
 local math_floor = math.floor
 local math_ceil = math.ceil
 local math_min = math.min
@@ -44,6 +45,7 @@ local SettingsPanel = SettingsPanel
 local HideUIPanel = HideUIPanel
 local UIParent = UIParent
 local WorldFrame = WorldFrame
+
 local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
@@ -125,7 +127,8 @@ function E.func_IsMidnight() return E.interfaceVersion > 120000 and E.interfaceV
 function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersion < 140000 end
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
-function E.func_IsRemix() return PlayerIsTimerunning() end -- GetPlayerAuraBySpellID(1213439)
+function E.func_IsRemix() return GetPlayerAuraBySpellID(1213439) end -- PlayerIsTimerunning()
+
 
 function E.func_vignetteIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
@@ -193,7 +196,7 @@ end
 local function GetOrCreateCache(category, id)
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
-	Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
+	-- Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
 	return Octo_Cache_DB[category]
 end
 local function func_itemName_CACHE(id)
@@ -229,24 +232,24 @@ local function func_currencyName_CACHE(id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
 	end
+	local info = GetCurrencyInfo(id)
+	if not info then
+		return E.Red_Color..UNKNOWN.."|r"
+	end
 	local WarbandIcon = ""
 	if IsAccountTransferableCurrency(id) then
 		WarbandIcon = E.Icon_AccountTransferable
 	elseif IsAccountWideCurrency(id) then
 		WarbandIcon = E.Icon_AccountWide
 	end
-	local info = GetCurrencyInfo(id)
-	if not info then
-		return E.Red_Color..UNKNOWN.."|r"
-	end
 	local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
 	local name = info.name
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"..WarbandIcon
-		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
+		-- if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
-		end
+		-- end
 	end
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
@@ -1299,7 +1302,7 @@ function E.func_NumPlayers()
 	local count = 0
 	local curGUID = E.curGUID
 	local curFaction = E.curFaction
-	local curServer = E.curServer
+	local curServer = E.func_GetRealmName()
 	local CurrentRegionName = E.CurrentRegionName
 	local checkCurrentServer = ShowOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
@@ -1337,7 +1340,7 @@ function E.func_sorted()
 	local sorted = {}
 	local curGUID = E.curGUID
 	local curFaction = E.curFaction
-	local curServer = E.curServer
+	local curServer = E.func_GetRealmName()
 	local CurrentRegionName = E.CurrentRegionName
 	local checkCurrentServer = ShowOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
@@ -1551,33 +1554,33 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	local itemLevelsMinMax, MoneysMinMax, OnlineMinMax = {}, {}, {}
 	if myType == "ItemLevel" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				table_insert(itemLevelsMinMax, CharInfo.PlayerData.avgItemLevelEquipped)
-			-- end
+			end
 		end
 		minItemLevel = math_min(unpack(itemLevelsMinMax))
 		maxItemLevel = math_max(unpack(itemLevelsMinMax))
 	end
 	if myType == "Money" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				table_insert(MoneysMinMax, CharInfo.PlayerData.Money)
-			-- end
+			end
 		end
 		minMoney = math_min(unpack(MoneysMinMax))
 		maxMoney = math_max(unpack(MoneysMinMax))
 	end
 	if myType == "Online" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				table_insert(OnlineMinMax, CharInfo.PlayerData.realTotalTime)
-			-- end
+			end
 		end
 		minOnline = math_min(unpack(OnlineMinMax))
 		maxOnline = math_max(unpack(OnlineMinMax))
 	end
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local specIcon, color, Name
 			local RIGHT1 = ""
 			local RIGHT2 = ""
@@ -1668,12 +1671,12 @@ function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 				if CharInfo.PlayerData.GUID == E.curGUID then
 					curPers = E.Green_Color.."*|r"
 				end
-				if CharInfo.PlayerData.curServer ~= E.curServer then
+				if CharInfo.PlayerData.curServer ~= E.func_GetRealmName() then
 					curServer = "-"..CharInfo.PlayerData.curServer
 				end
 				sorted[#sorted+1] = {specIcon, colorPlayer, Name, curPers, colorServer, curServer, RIGHT1, RIGHT2, RIGHTforSORT}
 			end
-		-- end
+		end
 	end
 	if hasTotal == true then
 		local index = 1
@@ -1801,9 +1804,6 @@ function E.func_GetCurrentRegionName()
 	if result == "" then
 		result = "PTR "..E.buildVersion
 	end
-	if E.func_IsRemix() then
-		result = result .. " (REMIX)"
-	end
 	return result
 end
 ----------------------------------------------------------------
@@ -1854,7 +1854,9 @@ function E.func_InitFrame(frame)
 	end)
 end
 function E.func_ExpansionVivod(expID)
-	return " "..E.func_texturefromIcon(E.OctoTable_Expansions[expID].icon, 16, 32)..E.OctoTable_Expansions[expID].color..E.OctoTable_Expansions[expID].nameVeryShort.."|r"
+	local expIcon = E.func_texturefromIcon(E.OctoTable_Expansions[expID].icon, 16, 32)
+	local expName = E.OctoTable_Expansions[expID].color..E.OctoTable_Expansions[expID].nameVeryShort
+	return " "..expName..expIcon.."|r"
 end
 function E.func_joinableDung()
 	local joinable, timewalkDungeonName, result = false, "", ""
@@ -1884,6 +1886,21 @@ function E.func_buildRank(id)
 	local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
 	return rank
 end
+
+
+
+
+function E.func_GetRealmName()
+	local result = GetRealmName()
+	if E.func_IsRemix() then
+		result = result .. " (REMIX)"
+	end
+	return result
+end
+-- E.curServer = E.func_GetRealmName()
+
+
+
 E.SPAM_TIME = 2
 E.UNIVERSAL = "UNIVERSAL_"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
@@ -1903,7 +1920,6 @@ E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
 E.curCharName = UnitFullName("PLAYER")
-E.curServer = GetRealmName()
 E.Class_Warrior_Color = C_ClassColor.GetClassColor("WARRIOR"):GenerateHexColorMarkup()
 E.Class_Paladin_Color = C_ClassColor.GetClassColor("PALADIN"):GenerateHexColorMarkup()
 E.Class_Hunter_Color = C_ClassColor.GetClassColor("HUNTER"):GenerateHexColorMarkup()
@@ -2556,6 +2572,8 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 -- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(552), E.func_ExpansionVivod(3)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2317), E.func_ExpansionVivod(3)}
+-- tooltipCENT[#tooltipCENT+1] = {nil}
+		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2473), E.func_ExpansionVivod(4)}
 -- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2474), E.func_ExpansionVivod(5)}
 -- tooltipCENT[#tooltipCENT+1] = {nil}

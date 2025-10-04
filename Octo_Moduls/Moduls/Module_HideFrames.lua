@@ -336,7 +336,7 @@ function E.func_Config_Hide_ErrorMessages()
 					or err == ERR_RAID_GROUP_ONLY
 					or err == ERR_PARTY_LFG_BOOT_LIMIT
 					or err == ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE
-					or err == ERR_PARTY_LFG_BOOT_IN_COMBAT
+					-- or err == ERR_PARTY_LFG_BOOT_IN_COMBAT
 					or err == ERR_PARTY_LFG_BOOT_IN_PROGRESS
 					or err == ERR_PARTY_LFG_BOOT_LOOT_ROLLS
 					or err == ERR_PARTY_LFG_TELEPORT_IN_COMBAT

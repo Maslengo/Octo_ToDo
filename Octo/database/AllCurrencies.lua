@@ -97,6 +97,18 @@ E.OctoTables_DataOtrisovka = {
 			3252, -- E.func_IsRemix()
 
 
+
+			-- 3251,
+			-- 3252,
+			-- 3267,
+			-- 3288,
+			-- 3292,
+			-- 3293,
+			-- 3364, -- WOW LEGION REMIX
+			-- 3372,
+
+
+
 		},
 	},
 	-- "Battle for Azeroth",
@@ -153,6 +165,8 @@ E.OctoTables_DataOtrisovka = {
 	},
 }
 E.OctoTable_Currencies = {
+	2032,
+
 	81, -- Epicurean Award
 	515, -- Darkmoon Prize Ticket
 	2588, -- Riders of Azeroth Badge

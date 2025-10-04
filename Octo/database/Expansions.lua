@@ -48,7 +48,7 @@ E.OctoTable_Expansions = {
 		icon = 901157,
 		iconOLD = 896622, -- UNUSED
 		id = 5,
-		timewalkDungeonID = 1453,
+		timewalkDungeonID = 1453, -- (2538 REMIX)
 	},
 	{
 		color = E.WarlordsofDraenor_Color, --E.func_rgb2hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b)
@@ -68,7 +68,7 @@ E.OctoTable_Expansions = {
 		icon = 1715536,
 		iconOLD = 1711335, -- UNUSED
 		id = 7,
-		timewalkDungeonID = 2274,
+		timewalkDungeonID = 2274, -- (2817 REMIX)
 	},
 	{
 		color = E.BattleforAzeroth_Color, --E.func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b)

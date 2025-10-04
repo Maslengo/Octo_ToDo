@@ -148,10 +148,10 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					info.notCheckable = true
 					local vivod = Server
 					-- Подсвечиваем текущий сервер
-					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (value ~= E.CurrentRegionName or Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer)
-					or not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.curServer then
+					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (value ~= E.CurrentRegionName or Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.func_GetRealmName())
+					or not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.func_GetRealmName() then
 						vivod = E.Gray_Color..vivod.."|r"
-					elseif Server == E.curServer then
+					elseif Server == E.func_GetRealmName() then
 						vivod = E.classColorHexCurrent..vivod.."|r"
 					end
 					info.text = vivod

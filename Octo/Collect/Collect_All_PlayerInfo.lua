@@ -3,13 +3,12 @@ function E.Collect_All_PlayerInfo()
 	if E.func_SpamBlock("Collect_All_PlayerInfo", false) then return end
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
-	local curServerShort = E.curServerShort
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 	local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")
-	collectPlayerData.curServerShort = curServerShort
+	collectPlayerData.curServerShort = E.curServerShort
 	collectPlayerData.Name = E.curCharName
-	collectPlayerData.curServer = E.curServer
+	collectPlayerData.curServer = E.func_GetRealmName()
 	collectPlayerData.className = E.className
 	collectPlayerData.classFilename = E.classFilename
 	collectPlayerData.classId = E.classId

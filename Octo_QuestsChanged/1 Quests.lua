@@ -59,7 +59,7 @@ local function AddQuestToDB(questID)
 		x = x,
 		y = y,
 		playerName = E.curCharName,
-		curServer = GetRealmName(),
+		curServer = E.func_GetRealmName(),
 		classColorHex = E.classColorHexCurrent,
 		curLocation = E.func_GetCurrentLocation and E.func_GetCurrentLocation() or "",
 		specIcon = GetSpecializationIconSafe(),

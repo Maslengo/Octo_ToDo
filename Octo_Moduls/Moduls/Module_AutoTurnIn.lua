@@ -43,7 +43,7 @@ function EventFrame:Module_AutoTurnIn()
 			local newInfo = info[i]
 			local title = newInfo.title
 			local questID = newInfo.questID
-			if not isTrivial then
+			if not newInfo.isTrivial then
 				C_GossipInfo.SelectAvailableQuest(questID)
 			end
 		else

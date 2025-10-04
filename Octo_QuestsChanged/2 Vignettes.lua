@@ -37,7 +37,7 @@ local function AddVignettesToDB(vignetteInfo)
 				x = x,
 				y = y,
 				playerName = E.curCharName,
-				curServer = GetRealmName(),
+				curServer = E.func_GetRealmName(),
 				classColorHex = E.classColorHexCurrent,
 				curLocation = curLocation,
 				specIcon = select(4, GetSpecializationInfo(GetSpecialization())),

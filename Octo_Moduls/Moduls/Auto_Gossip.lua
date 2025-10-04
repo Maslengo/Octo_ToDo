@@ -32,6 +32,7 @@ local ignoreNPCID = {
 	[232498] = true, -- SPAM (taz)
 	[217861] = true, -- dornogal (SKIP)
 	[241748] = true, -- remix legion
+	[38297] = true, -- koren hoodovar (napast)
 }
 -- IGNORE 120914
 local gossipOptionIDs = {
@@ -88,7 +89,7 @@ function EventFrame:func_Config_Auto_Gossip()
 		local name = option.name
 		local icon = option.icon
 		local flags = option.flags
-		if Octo_Debug_DB.DebugGossip then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugGossip then
 			print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
 		end
 		if option.gossipOptionID and not ignoreICONS[icon] and not gossipOptionIDsIGNORE[option.gossipOptionID] then
