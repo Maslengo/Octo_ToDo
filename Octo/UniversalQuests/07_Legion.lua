@@ -99,10 +99,11 @@ function E.func_Universal_07_Legion()
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = "InfiniteResearch",
+			textleft = "|cffFF00FFInfiniteResearch|r",
 			name_save = "InfiniteResearch",
 			reset = "Daily",
 			desc = "Legion",
+			isOnQuestOnly = true,
 			quests = {
 				-- {89476},
 				-- {91847},

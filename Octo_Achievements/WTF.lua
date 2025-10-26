@@ -8,7 +8,7 @@ EventFrame[funcName] = function(self)
 	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 	E.func_InitSubTable(EventFrame.savedVars, "Config_Achievements")
 	E.func_InitField(EventFrame.savedVars.Config_Achievements, "ShowCompleted", true)
-	E.func_InitField(EventFrame.savedVars.Config_Achievements, "ToShow", { [92] = true })
+	E.func_InitField(EventFrame.savedVars.Config_Achievements, "AchievementToShow", { [92] = true })
 end
 ----------------------------------------------------------------
 local MyEventsTable = {

@@ -221,7 +221,7 @@ function EventFrame:CreateDataProvider()
 	if Octo_MainFrame_Achievements then
 		EventFrame.DataProvider = CreateTreeDataProvider()
 		local count = 0
-		for categoryID, v in next, (Octo_Achievements_DB.AchievementToShow) do
+		for categoryID, v in next, (Octo_Achievements_DB.Config_Achievements.AchievementToShow) do
 			local total = GetCategoryNumAchievements(categoryID, true)
 			if total then
 				for i = 1, total do

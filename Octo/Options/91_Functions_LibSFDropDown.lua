@@ -391,7 +391,7 @@ end
 function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
 	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
-		Octo_Achievements_DB.AchievementToShow[menuButton.value] = checked or nil
+		Octo_Achievements_DB.Config_Achievements.AchievementToShow[menuButton.value] = checked or nil
 		if arg2 == 2 then
 			DropDown:ddRefresh(arg2-1)
 		end
@@ -403,7 +403,7 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 		for i = 1, #categories do
 			local categoryID = categories[i]
 			local _, parentCategoryID = GetCategoryInfo(categoryID)
-			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.AchievementToShow[categoryID] == true then
+			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.Config_Achievements.AchievementToShow[categoryID] == true then
 				return E.func_Gradient(arg1.name)..arg1.vivod
 			end
 		end
@@ -441,7 +441,7 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 					info.arg1 = {name = name, vivod = vivod}
 					info.arg2 = level
 					info.value = categoryID
-					info.checked = Octo_Achievements_DB.AchievementToShow[categoryID]
+					info.checked = Octo_Achievements_DB.Config_Achievements.AchievementToShow[categoryID]
 					info.func = selectFunctionAchievementToShow
 					tinsert(list, info)
 				end
@@ -466,8 +466,8 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.func = function(_, _, _, checked)
-					-- wipe(Octo_Achievements_DB.AchievementToShow)
-					Octo_Achievements_DB.AchievementToShow = {[92] = true}
+					-- wipe(Octo_Achievements_DB.Config_Achievements.AchievementToShow)
+					Octo_Achievements_DB.Config_Achievements.AchievementToShow = {[92] = true}
 					providerfunc()
 				end
 				self:ddAddButton(info, level)

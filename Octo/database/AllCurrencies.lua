@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 E.OctoTable_Catalysts = {
 	-- The War Within
 	-- (Season 4)
-	-- (Season 3)
+	3269, -- (Season 3)
 	3116, -- Essence of Kaja'mite (Season 2)
 	-- 2813, -- Harmonized Silk (Season 1)
 	-- Dragonflight

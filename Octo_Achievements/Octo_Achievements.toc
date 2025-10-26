@@ -5,5 +5,7 @@
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Achievements
 ## Dependencies: Octo
 ## SavedVariables: Octo_Achievements_DB
+
+WTF.lua
 Octo_Achievements.lua
 Options\Options.xml

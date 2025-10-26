@@ -2448,6 +2448,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 				if E.DebugUniversal then
 					tooltipCENT[#tooltipCENT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 				end
+
 				if totalQuest > 1 then
 					local textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
 					tooltipCENT[#tooltipCENT+1] = {" ", TOTAL..": "..totalQuest}
