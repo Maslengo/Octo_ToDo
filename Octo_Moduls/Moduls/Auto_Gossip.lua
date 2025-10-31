@@ -33,6 +33,7 @@ local ignoreNPCID = {
 	[217861] = true, -- dornogal (SKIP)
 	[241748] = true, -- remix legion
 	[38297] = true, -- koren hoodovar (napast)
+	[241140] = true, -- LEGION REMIX (SKIP)
 }
 -- IGNORE 120914
 local gossipOptionIDs = {

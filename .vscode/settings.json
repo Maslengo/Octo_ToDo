@@ -281,7 +281,9 @@
 		"MAW_BUFF_QUALITY_STRING_UNCOMMON",
 		"MAW_BUFF_QUALITY_STRING_COMMON",
 		"TIME_REMAINING",
-		"GameTooltip_SetTitle"
+		"GameTooltip_SetTitle",
+		"MinimalScrollBarStepperScriptsMixin",
+		"MinimalScrollBarThumbScriptsMixin"
 	],
 	"Lua.type.weakUnionCheck": true,
 	"lua.targetVersion": "5.1"

@@ -11,6 +11,7 @@
 	<Script file="Collect\Collect_All_ItemLevel.lua"/>
 	<Script file="Collect\Collect_All_ItemsInBag.lua"/>
 	<Script file="Collect\Collect_All_JournalInstance.lua"/>
+	<Script file="Collect\Collect_All_LegionRemixData.lua"/>
 	<Script file="Collect\Collect_All_Locations.lua"/>
 	<Script file="Collect\Collect_All_LoginTime.lua"/>
 	<Script file="Collect\Collect_All_Mail.lua"/>

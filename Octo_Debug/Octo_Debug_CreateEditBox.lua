@@ -57,7 +57,7 @@ E.editorThemes = {
 		["String"] = "|cff829D61", -- строки (зелёный)
 	},
 }
-if not Octo_Debug_DB then return end
+-- if not Octo_Debug_DB then return end
 function E.func_createColorScheme(themeName)
 	local theme = E.editorThemes[themeName] or E.editorThemes["Twilight"]
 	return {

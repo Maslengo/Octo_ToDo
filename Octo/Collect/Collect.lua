@@ -109,6 +109,7 @@ function E.func_Collect_All()
 		E.Collect_All_Reputations()
 		E.Collect_All_UNIVERSALQuestUpdate()
 		E.Collect_All_WarMode()
+		E.Collect_All_LegionRemixData()
 	end
 	-- local elapsed = debugprofilestop() - start
 	-- print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
@@ -138,6 +139,7 @@ function EventFrame:QUEST_LOG_UPDATE()
 	E.Collect_All_UNIVERSALQuestUpdate()
 	E.Collect_All_Chromie()
 	E.Collect_All_GreatVault()
+	E.Collect_All_LegionRemixData()
 	E.func_Update("QUEST_LOG_UPDATE")
 end
 function EventFrame:BAG_UPDATE()
@@ -248,6 +250,7 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 	E.Collect_All_UNIVERSALQuestUpdate()
 	E.Collect_All_Reputations()
 	E.Collect_All_Currency()
+	E.Collect_All_LegionRemixData()
 	E.func_Update("PLAYER_REGEN_ENABLED")
 end
 function EventFrame:ENCOUNTER_END()
@@ -269,6 +272,7 @@ function EventFrame:QUEST_POI_UPDATE()
 end
 function EventFrame:QUEST_REMOVED()
 	E.Collect_All_Quests()
+	E.Collect_All_LegionRemixData()
 	E.func_Update("QUEST_REMOVED")
 end
 function EventFrame:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)

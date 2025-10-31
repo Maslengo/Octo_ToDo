@@ -3,6 +3,9 @@ E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function EventFrame:LoadOctoUIforAddons()
+	-- if PlaterDB then
+	-- 	print (PlaterDB.profileKeys)
+	-- end
 	if ElvDB then
 		for name, v in next, (ElvDB.profileKeys) do
 			Octo_Debug_DB.profileKeys[name] = "OctoUI"

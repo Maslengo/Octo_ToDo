@@ -2600,7 +2600,12 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2321), "ALL"}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1737), "ALL"}
 	----------------------------------------------------------------
-	--elseif tooltipKey == "ЙЦУЙЦУ" then
+	elseif tooltipKey == "LegionRemixResearch" then
+		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
+			if CharInfo.MASLENGO.ListOfQuests[questID] then
+				tooltipCENT[#tooltipCENT+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
+			end
+		end
 	----------------------------------------------------------------
 	--elseif tooltipKey == "ЙЦУЙЦУ" then
 	----------------------------------------------------------------

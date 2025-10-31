@@ -2,7 +2,7 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
-local enable = false
+local enable = true
 if not enable then return end
 local LibCustomGlow = LibStub("LibCustomGlow-1.0")-- Подключаем библиотеку для свечения кнопок
 -- Создаем кнопки для использования и удаления предметов
