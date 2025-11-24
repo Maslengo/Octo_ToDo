@@ -110,22 +110,22 @@ E.OctoTable_Expansions = {
 		id = 11,
 		-- timewalkDungeonID = 2634,
 	},
-	-- {
-	-- color = E.Midnight_Color, --E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
-	-- name = "Midnight",
-	-- nameBlizzard = EXPANSION_NAME11, -- UNUSED
-	-- nameVeryShort = "MN",
-	-- icon = 132123,
-	-- id = 12,
-		-- timewalkDungeonID = 2634,
-	-- },
-	-- {
-	-- color = E.TheLastTitan_Color, --E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
-	-- name = "The Last Titan",
-	-- nameBlizzard = EXPANSION_NAME12, -- UNUSED
-	-- nameVeryShort = "TLT",
-	-- icon = 4622478,
-	-- id = 13,
-		-- timewalkDungeonID = 2634,
-	-- },
+	{
+		color = E.Midnight_Color, --E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
+		name = "Midnight",
+		nameBlizzard = EXPANSION_NAME11, -- UNUSED
+		nameVeryShort = "MN",
+		icon = 132123,
+		id = 12,
+		timewalkDungeonID = 2634,
+	},
+	{
+		color = E.TheLastTitan_Color, --E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
+		name = "The Last Titan",
+		nameBlizzard = EXPANSION_NAME12, -- UNUSED
+		nameVeryShort = "TLT",
+		icon = 4622478,
+		id = 13,
+		timewalkDungeonID = 2634,
+	},
 }

@@ -16,7 +16,7 @@ local GetItemInfo = C_Item.GetItemInfo
 ----------------------------------------------------------------
 local INDEND_TEST = 4
 local INDEND_SCROLL = 20
-local LINE_HEIGHT = 20
+local LINE_HEIGHT = 32
 local LINE_WIDTH = 256
 local LINES_MAX = 20
 local INDENT_BETWEEN_LINES = LINE_HEIGHT

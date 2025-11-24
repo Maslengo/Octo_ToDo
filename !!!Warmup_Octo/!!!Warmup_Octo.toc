@@ -1,0 +1,16 @@
+## Interface: 110200, 110107
+## Title: !!!Warmup_Octo
+## Author: tomchapin
+## Version: 0.4.3
+## IconTexture: Interface\AddOns\!!!Warmup_Octo\icon
+
+## SavedVariables: WarmupSV
+
+## DefaultState: disabled
+
+## Notes: Tracks how long between addon loadup events
+## X-Credits: Tekkub, Cybelorias/Dridzt, Phanx, Bezal1
+
+Libs\embeds.xml
+
+!!!Warmup_Octo.lua

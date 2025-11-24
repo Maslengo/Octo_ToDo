@@ -41,23 +41,23 @@ function E.func_Otrisovka_11_TheWarWithin()
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
-		if Octo_ToDo_DB_Vars.Currencies then
-			for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
-				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
-						----------------------------------------------------------------
-						local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
-						----------------------------------------------------------------
-						textCENT = E.func_textCENT_Currency(CharInfo, CurrencyID)
-						myType = {"Currency", CurrencyID}
-						----------------------------------------------------------------
-						textLEFT = E.func_currencyName(CurrencyID)
-						colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
-						----------------------------------------------------------------
-						return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
-						----------------------------------------------------------------
-				end)
-			end
-		end
+		-- if Octo_ToDo_DB_Vars.Currencies then
+		-- 	for _, CurrencyID in ipairs(E.OctoTable_Catalysts) do
+		-- 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+		-- 				----------------------------------------------------------------
+		-- 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+		-- 				----------------------------------------------------------------
+		-- 				textCENT = E.func_textCENT_Currency(CharInfo, CurrencyID)
+		-- 				myType = {"Currency", CurrencyID}
+		-- 				----------------------------------------------------------------
+		-- 				textLEFT = E.func_currencyName(CurrencyID)
+		-- 				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+		-- 				----------------------------------------------------------------
+		-- 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
+		-- 				----------------------------------------------------------------
+		-- 		end)
+		-- 	end
+		-- end
 		----------------------------------------------------------------
 		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
 		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)

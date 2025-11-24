@@ -26,20 +26,13 @@ function EventFrame:func_CreateDataCacheAtStart()
 		end
 	end
 	----------------------------------------------------------------
-	-- for _, currencyID in ipairs(E.OctoTable_Currencies) do
-	-- 	local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
-	-- end
-	----------------------------------------------------------------
-	-- for _, currencyID in ipairs(E.OctoTable_Currencies) do
 	for currencyID = 42, 4000 do -- 42, 3372
 		local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
 
 	end
 	----------------------------------------------------------------
-	for _, expansionID in ipairs(E.OctoTable_Reputations) do
-		for k, v in next, (expansionID) do
-			local reputation = E.func_reputationName(v.id) -- "AllReputations"
-		end
+	for _, id in ipairs(E.ALL_Reputations) do
+		local reputation = E.func_reputationName(id) -- "AllReputations"
 	end
 	E.Collect_All_Reputations()
 	----------------------------------------------------------------
@@ -80,21 +73,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 				for questID in next, questList do
 					tblQuests[questID] = true
 					-- totalQuests = totalQuests + 1
-				end
-			end
-			-- Последователи
-			local garrisonFollowers = MASLENGO.GarrisonFollowers
-			if garrisonFollowers then
-				for _, followerType in ipairs(E.OctoTable_followerTypeIDs) do
-					local followers = garrisonFollowers[followerType.name]
-					if followers then
-						for _, followerID in ipairs(followers) do
-							local name = E.func_getFollowerName(followerID)
-							-- totalFollowers = totalFollowers + 1
-							-- можно логировать name, если нужно
-							-- print("Follower:", name)
-						end
-					end
 				end
 			end
 			local ItemsInBag = MASLENGO.ItemsInBag
@@ -353,10 +331,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 			[4] = {},
 		},
 		Currency = {}, -- Данные валют
-		garrisonType = {},
 		GARRISON = {},
-		GarrisonFollowers = {},
-		GarrisonFollowersCount = {},
 		LegionRemixData = {},
 		GreatVault = {}, -- Данные Великого Хранилища
 		HasGarrison = {},
@@ -419,15 +394,6 @@ function EventFrame:Octo_ToDo_DB_Levels()
 				MASLENGO[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
-		for garrisonType, id in next, (Enum.GarrisonType) do
-			MASLENGO.garrisonType[id] = MASLENGO.garrisonType[id] or {}
-			-- MASLENGO.HasGarrison[id] = MASLENGO.HasGarrison[id] or false
-			E.func_InitField(MASLENGO, "HasGarrison", false)
-		end
-		for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
-			MASLENGO.GarrisonFollowers[followerData.name] = MASLENGO.GarrisonFollowers[followerData.name] or {}
-			MASLENGO.GarrisonFollowersCount[followerData.name] = MASLENGO.GarrisonFollowersCount[followerData.name] or {}
-		end
 		-- Заполняем стандартные значения
 		for k, v in next, (GARRISON_default) do
 			E.func_InitField(MASLENGO.GARRISON, k, v)
@@ -444,11 +410,13 @@ function EventFrame:Octo_ToDo_DB_Levels()
 			end
 		end
 		-- Инициализируем данные репутации
-		for _, tbl in ipairs(E.OctoTable_Reputations) do
-			for _, v in ipairs(tbl) do
-				MASLENGO.Reputation[v.id] = MASLENGO.Reputation[v.id] or "0#0###"
-			end
+
+		for _, id in ipairs(E.ALL_Reputations) do
+			MASLENGO.Reputation[id] = MASLENGO.Reputation[id] or "0#0###"
 		end
+
+
+
 		-- Инициализируем данные LFG инстансов
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
 			MASLENGO.LFGInstance[dungeonID] = MASLENGO.LFGInstance[dungeonID] or {}
@@ -471,6 +439,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		Config_LevelToShowMAX = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		Config_prefix = 1, -- Префикс
 		Config_numberFormatMode = 1, -- по умолчанию универсальный
+		Config_GameMenuFrame = 1,
 		Currencies = true, -- Квесты
 		Currency = true, -- Валюта
 		Dungeons = true, -- Подземелья
@@ -726,4 +695,8 @@ function EventFrame:PLAYER_LOGIN()
 	-- end
 	self:ScheduleNextReset()
 	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+	if GameMenuFrame and Octo_ToDo_DB_Vars.Config_GameMenuFrame then
+		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.Config_GameMenuFrame)
+	end
+
 end

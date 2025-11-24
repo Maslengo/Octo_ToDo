@@ -22,3 +22,12 @@ E.OctoTable_SavedVariables = {}
 -- local OctoEngineFrame = CreateFrame("Frame", "OctoEngineFrame")
 -- E.OctoEngineFrame = OctoEngineFrame
 -- лучше вешать на кор обьект аддона функции а он уже в глобале а не на нс
+
+E.OctoTables_DataOtrisovka = {}
+
+E.ALL_Currencies = {}
+E.ALL_Items = {}
+E.ALL_Reputations = {}
+E.ALL_UniversalQuests = {}
+
+E.OctoTables_Vibor = {}

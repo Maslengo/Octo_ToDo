@@ -480,6 +480,11 @@ function EventFrame:CreateDataProvider()
 			break
 		end
 	end
+	-- if Octo_ToDo_DB_Vars.Reputations then
+	-- 	print ("Reputations")
+	-- else
+	-- 	print ("OTHER")
+	-- end
 	local totalColumns = #tbl
 	-- Обработка данных для каждой строки
 	for _, func in ipairs(E.func_Concat_Otrisovka()) do

@@ -92,20 +92,6 @@ function E.func_Octo_Debug_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			garrisonType = {
-				type = "execute",
-				name = "garrisonType",
-				desc = "CharInfo.MASLENGO.garrisonType = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.garrisonType= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			GARRISON = {
 				type = "execute",
 				name = "GARRISON",
@@ -113,34 +99,6 @@ function E.func_Octo_Debug_Options(savedVars)
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.GARRISON= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			GarrisonFollowers = {
-				type = "execute",
-				name = "GarrisonFollowers",
-				desc = "CharInfo.MASLENGO.GarrisonFollowers = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.GarrisonFollowers= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			GarrisonFollowersCount = {
-				type = "execute",
-				name = "GarrisonFollowersCount",
-				desc = "CharInfo.MASLENGO.GarrisonFollowersCount = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.GarrisonFollowersCount= {}
 					end
 					return
 				end,
@@ -309,21 +267,6 @@ function E.func_Octo_Debug_Options(savedVars)
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 						CharInfo.MASLENGO.UniversalQuest= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			GARRISON = {
-				type = "execute",
-				name = "GARRISON",
-				desc = "CharInfo.GARRISON = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						-- CharInfo.GARRISON = {}
-						CharInfo.GARRISON = nil
 					end
 					return
 				end,

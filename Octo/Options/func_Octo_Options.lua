@@ -431,6 +431,26 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			Config_GameMenuFrame = {
+				type = "range",
+				name = "GameMenuFrame Scale",
+				desc = "",
+				min = 0.5,
+				max = 1.5,
+				step = .05,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_GameMenuFrame
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_GameMenuFrame = value
+					if GameMenuFrame then
+						GameMenuFrame:SetScale(value)
+					end
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			-------------------------------------------------
 		},
 	}

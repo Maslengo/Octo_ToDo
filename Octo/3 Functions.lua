@@ -2166,13 +2166,6 @@ E.OctoTable_Covenant = {
 		b = 0.49,
 	},
 }
-E.OctoTable_followerTypeIDs = {
-	{name = "DRAENOR", id = Enum.GarrisonFollowerType.FollowerType_6_0_GarrisonFollower,}, -- 1 DRAENOR
-	{name = "DRAENOR_BOAT", id = Enum.GarrisonFollowerType.FollowerType_6_0_Boat,}, -- 2 DRAENOR SHIPS
-	{name = "LEGION", id = Enum.GarrisonFollowerType.FollowerType_7_0_GarrisonFollower,}, -- 4 LEGION
-	{name = "BATTLEFORAZEROTH", id = Enum.GarrisonFollowerType.FollowerType_8_0_GarrisonFollower,}, -- 22 бфа что ли?
-	{name = "SHADOWNLANDS", id = Enum.GarrisonFollowerType.FollowerType_9_0_GarrisonFollower,}, -- 123 SHADOWNLANDS (для каждого ковенанта)
-}
 E.listMaxSize = 30
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.."DebugInfo|r: "
 E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
@@ -2192,27 +2185,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if tooltipKey == "WoD_Garrison" then
-		if CharInfo.MASLENGO.HasGarrison[2] then
-			for garrisonType, id in next, (Enum.GarrisonType) do
-				if id == 2 then -- Warlords of Draenor
-					if CharInfo.MASLENGO.garrisonType[id] then
-						local data = CharInfo.MASLENGO.garrisonType[id]
-						for i, v in ipairs(data) do
-							if v.buildingID and v.rank then
-								local id = v.buildingID
-								tooltipCENT[#tooltipCENT+1] = {
-									E.func_texturefromIcon(E.func_buildIcon(id))..E.func_buildName(id),
-									(v.rank == 3 and E.Green_Color or E.Red_Color)..v.rank.."|r"
-								}
-							end
-						end
-					end
-				end
-			end
-		end
-		----------------------------------------------------------------
-	elseif tooltipKey == "WoD_824" then
+	if tooltipKey == "WoD_824" then
 		local GARRISON_RESOURCE_ID = 824
 		local RESOURCE_GENERATION_INTERVAL = 600 -- 10 minutes in seconds
 		local RESOURCES_PER_INTERVAL = 1
@@ -2413,8 +2386,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 			local rightText = E.func_mountIsCollected(mountID) and E.TRUE or E.NONE
 			tooltipCENT[#tooltipCENT+1] = {leftText, rightText}
 		end
-	elseif tooltipKey:find("_COMPANIONS") then
-		tooltipCENT = E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
 		----------------------------------------------------------------
 	elseif tooltipKey:find("ItemsInBag") then
 		local number = tonumber(string.match(tooltipKey, "%d+"))
@@ -2625,130 +2596,6 @@ function E.func_getFollowerName(v)
 		return E.func_followerName(v.followerID) or ""
 	end
 	return v.name or ""
-end
-function E.func_CompanionsTOOLTIP(CharInfo, tooltipKey)
-	local tooltipCENT = {}
-	local followerType = tooltipKey:gsub("_COMPANIONS", "")
-	-- Находим нужный тип фолловеров
-	for _, followerData in ipairs(E.OctoTable_followerTypeIDs) do
-		local QWEname = followerData.name
-		if QWEname == followerType then
-			-- Собираем всех собранных фолловеров
-			if CharInfo.MASLENGO.GarrisonFollowers and CharInfo.MASLENGO.GarrisonFollowers[QWEname] then
-				local numActiveFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].numActiveFollowers or 0 -- C_Garrison.GetNumActiveFollowers(followerData.id) or 0
-				local maxFollowers = CharInfo.MASLENGO.GarrisonFollowersCount[QWEname].maxFollowers or 0 -- C_Garrison.GetFollowerSoftCap(followerData.id)
-				if numActiveFollowers ~= 0 then
-					if ( numActiveFollowers > maxFollowers ) then
-						local text = GARRISON_MAX_FOLLOWERS_TOOLTIP -- "У вас слишком много соратников. Освободите лишних от службы, чтобы нанять новых или приступить к новым заданиям."
-						text = text:gsub(",", ".")
-						for part in text:gmatch("([^%.]+)%.%s*") do
-							tooltipCENT[#tooltipCENT+1] = {E.Red_Color..part.."|r"}
-							break
-						end
-						tooltipCENT[#tooltipCENT+1] = {}
-					end
-					local collectedFollowers = {}
-					for _, v in ipairs(CharInfo.MASLENGO.GarrisonFollowers[QWEname]) do
-						-- if v.isCollected then -- ПОФИКСИТЬ в опции
-							table_insert(collectedFollowers, v)
-						-- end
-					end
-						table.sort(collectedFollowers, function(a, b)
-							-- Функция для получения имени с учетом всех условий
-							-- Получаем имена для сравнения
-							local a_name = E.func_getFollowerName(a)
-							local b_name = E.func_getFollowerName(b)
-							-- 1. Разделяем собранных и несобранных (несобранные всегда ниже)
-							if a.isCollected ~= b.isCollected then
-								return a.isCollected  -- true > false (собранные выше)
-							end
-							-- 2. Если оба НЕ собранные - сортируем их по quality и имени
-							if not a.isCollected and not b.isCollected then
-								if a_name ~= b_name then
-									return a_name < b_name  -- по алфавиту
-								end
-							end
-							-- 3. Если оба собранные - применяем полную сортировку:
-							--    статус -> качество -> имя -> ID
-							local A_status = a.status or ""
-							local B_status = b.status or ""
-							-- 3.1. Сначала идут боевые спутники
-							if (A_status == GARRISON_FOLLOWER_COMBAT_ALLY) ~= (B_status == GARRISON_FOLLOWER_COMBAT_ALLY) then
-								return A_status == GARRISON_FOLLOWER_COMBAT_ALLY
-							end
-							-- 3.2. Сначала неактивные идут ниже активных
-							if (A_status == GARRISON_FOLLOWER_INACTIVE) ~= (B_status == GARRISON_FOLLOWER_INACTIVE) then
-								return B_status == GARRISON_FOLLOWER_INACTIVE
-							end
-							-- 3.3. Затем по качеству (высокое качество первым)
-							if a.quality ~= b.quality then
-								return a.quality > b.quality
-							end
-							-- 3.4. Затем по имени (алфавитный порядок)
-							if a_name ~= b_name then
-								return a_name < b_name
-							end
-							-- 3.5. Если всё совпадает - сортируем по ID
-							return (a.garrFollowerID or 0) < (b.garrFollowerID or 0)
-						end)
-					if followerData.name == "SHADOWNLANDS" and CharInfo.MASLENGO.CovenantAndAnima and CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-						local covenandID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-						tooltipCENT[#tooltipCENT+1] = {
-							E.func_texturefromIcon(E.OctoTable_Covenant[covenandID].icon).." "..E.OctoTable_Covenant[covenandID].color..E.OctoTable_Covenant[covenandID].name.."|r"..": "..CharInfo.MASLENGO.CovenantAndAnima[covenandID][1],
-							"",
-							E.func_currencyName(1813)..": "..(CharInfo.MASLENGO.CovenantAndAnima[covenandID][2] or 0)
-						}
-						tooltipCENT[#tooltipCENT+1] = {}
-					end
-					-- Формируем tooltip данные
-					for index, v in ipairs(collectedFollowers) do
-						local portraitIconID = v.portraitIconID and E.func_texturefromIcon(v.portraitIconID) or ""
-						local classAtlas = v.classAtlas and CreateAtlasMarkup(v.classAtlas, 16, 16) or ""
-						local status = ""
-						if v.status then
-							if v.status == GARRISON_FOLLOWER_COMBAT_ALLY then
-								status = E.Gold_Color ..">".. v.status.."<|r"
-							elseif v.status == GARRISON_FOLLOWER_INACTIVE then
-								status = E.Red_Color..v.status.."|r"
-							elseif followerData.name == "SHADOWNLANDS" and v.status == GARRISON_FOLLOWER_ON_MISSION then
-								status = E.Skyblue_Color..COVENANT_MISSIONS_HEAL_ERROR_ON_ADVENTURE.."|r"
-							else
-								status = E.Skyblue_Color..v.status.."|r"
-							end
-						end
-						local level = ""
-						if v.level and v.isCollected then
-							level = v.isMaxLevel
-							and " "..E.Green_Color..v.level.."|r"
-							or " "..E.Red_Color..v.level.."|r"
-							if not v.isMaxLevel and v.xp and v.levelXP then
-								level = level.." ("..v.xp.."/"..v.levelXP..")"
-							end
-						end
-						local durability = ""
-						if v.durability and v.maxDurability then
-							durability = v.durability.."/"..v.maxDurability
-						end
-						local color = E.Gray_Color
-						if v.isCollected then
-							color = E.func_GetHexColorFromQuality(v.quality)
-						end
-						local leftText = portraitIconID.." "..color..E.func_getFollowerName(v).."|r" ..level
-						local centText = durability
-						local mission = IsFollowerOnCompletedMission(v.garrFollowerID or v.followerID) and E.TRUE or E.FALSE
-						local rightText = status
-						table_insert(tooltipCENT, {
-								leftText,
-								centText,
-								rightText
-						})
-					end
-				end
-				break  -- Выходим из цикла после нахождения нужного типа
-			end
-		end
-	end
-	return tooltipCENT
 end
 ----------------------------------------------------------------
 function E.func_textCENT_Chars(CharInfo)

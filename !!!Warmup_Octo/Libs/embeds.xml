@@ -1,0 +1,8 @@
+<UI>
+
+	<Script file="LibStub\LibStub.lua"/>
+	<Include file="LibDataBroker-1.1\lib.xml"/>
+	<Include file="LibDBIcon-1.0\lib.xml"/>
+
+
+</UI>

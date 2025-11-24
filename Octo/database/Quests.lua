@@ -71,14 +71,8 @@ func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
 
 
 
-
-
-
-
-
-
 E.OctoTable_RemixInfinityResearch = {
-
+	92442,
 	89517,
 	89531,
 	89516,
@@ -183,5 +177,25 @@ E.OctoTable_RemixInfinityResearch = {
 	89598,
 	89622,
 	89682,
+	-- 93112,
+	93114,
+	93113,
+	93118,
+	92441,
+	92439,
+	92440,
+	91612,
+	90115,
+	89476,
+	93120,
+	91846,
+	91847,
+	-- 91845,
+	93117,
+	91849,
+	93116,
+	91848,
+	-- 91844,
+	-- 91613,
 
 }

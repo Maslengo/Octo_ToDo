@@ -1,5 +1,41 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
+function E.func_Collect_All()
+	-- local start = debugprofilestop()
+	local color = E.Green_Color
+	if E.func_SpamBlock("func_Collect_All") then
+		color = E.Red_Color
+	else
+		E.Collect_All_PlayerInfo()
+		E.Collect_All_PlayerLevel()
+		E.Collect_All_BfA_Azerite()
+		E.Collect_All_BfA_Cloaklvl()
+		E.Collect_All_Chromie()
+		E.Collect_All_Covenant()
+		E.Collect_All_Currency()
+		E.Collect_All_Delves()
+		E.Collect_All_Garrison()
+		E.Collect_All_GreatVault()
+		E.Collect_All_Holiday()
+		E.Collect_All_ItemsInBag()
+		E.Collect_All_ItemLevel()
+		E.Collect_All_JournalInstance()
+		E.Collect_All_Locations()
+		E.Collect_All_LoginTime()
+		E.Collect_All_Mail()
+		E.Collect_All_MoneyOnLogin()
+		E.Collect_All_MoneyUpdate()
+		E.Collect_All_PlayerDurability()
+		E.Collect_All_Professions()
+		E.Collect_All_Quests()
+		E.Collect_All_Reputations()
+		E.Collect_All_UNIVERSALQuestUpdate()
+		E.Collect_All_WarMode()
+		E.Collect_All_LegionRemixData()
+	end
+	-- local elapsed = debugprofilestop() - start
+	-- print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
+end
 local MyEventsTable = {
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
@@ -65,7 +101,6 @@ local MyEventsTable = {
 	"QUEST_WATCH_UPDATE",
 	"QUEST_ACCEPTED",
 	"QUEST_DATA_LOAD_RESULT",
-
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -76,46 +111,6 @@ function EventFrame:PLAYER_LOGIN()
 		E.func_Update("PLAYER_LOGIN")
 	end)
 end
-function E.func_Collect_All()
-	-- local start = debugprofilestop()
-	local color = E.Green_Color
-	if E.func_SpamBlock("func_Collect_All") then
-		color = E.Red_Color
-	else
-		E.Collect_All_PlayerInfo()
-		E.Collect_All_PlayerLevel()
-		E.Collect_All_BfA_Azerite()
-		E.Collect_All_BfA_Cloaklvl()
-		E.Collect_All_Chromie()
-		E.Collect_All_Covenant()
-		E.Collect_All_Currency()
-		E.Collect_All_Delves()
-		E.Collect_All_Garrison()
-		E.Collect_All_GarrisonBuilds()
-		E.Collect_All_GarrisonFollowers()
-		E.Collect_All_GreatVault()
-		E.Collect_All_Holiday()
-		E.Collect_All_ItemsInBag()
-		E.Collect_All_ItemLevel()
-		E.Collect_All_JournalInstance()
-		E.Collect_All_Locations()
-		E.Collect_All_LoginTime()
-		E.Collect_All_Mail()
-		E.Collect_All_MoneyOnLogin()
-		E.Collect_All_MoneyUpdate()
-		E.Collect_All_PlayerDurability()
-		E.Collect_All_Professions()
-		E.Collect_All_Quests()
-		E.Collect_All_Reputations()
-		E.Collect_All_UNIVERSALQuestUpdate()
-		E.Collect_All_WarMode()
-		E.Collect_All_LegionRemixData()
-	end
-	-- local elapsed = debugprofilestop() - start
-	-- print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
-
-end
-
 function EventFrame:SKILL_LINES_CHANGED()
 	E.Collect_All_Professions()
 	E.func_Update("SKILL_LINES_CHANGED")
@@ -171,7 +166,6 @@ end
 function EventFrame:CURRENCY_DISPLAY_UPDATE()
 	E.Collect_All_Currency()
 	E.Collect_All_Covenant()
-	E.Collect_All_GarrisonBuilds()
 	E.func_Update("CURRENCY_DISPLAY_UPDATE")
 end
 function EventFrame:CURRENCY_TRANSFER_LOG_UPDATE()
@@ -293,89 +287,6 @@ end
 function EventFrame:PLAYER_UPDATE_RESTING()
 	E.Collect_All_PlayerInfo()
 end
-function EventFrame:GARRISON_UPDATE()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_UPDATE")
-end
-function EventFrame:GARRISON_BUILDING_UPDATE()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_BUILDING_UPDATE")
-end
-function EventFrame:GARRISON_BUILDING_PLACED()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_BUILDING_PLACED")
-end
-function EventFrame:GARRISON_BUILDING_REMOVED()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_BUILDING_REMOVED")
-end
-function EventFrame:GARRISON_BUILDING_LIST_UPDATE()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_BUILDING_LIST_UPDATE")
-end
-function EventFrame:GARRISON_BUILDING_ACTIVATED()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_BUILDING_ACTIVATED")
-end
-function EventFrame:GARRISON_UPGRADEABLE_RESULT()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_UPGRADEABLE_RESULT")
-end
-function EventFrame:GARRISON_BUILDING_ERROR()
-	E.Collect_All_GarrisonBuilds()
-	E.func_Update("GARRISON_BUILDING_ERROR")
-end
-function EventFrame:GARRISON_MISSION_NPC_OPENED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_MISSION_NPC_OPENED")
-end
-function EventFrame:GARRISON_MISSION_COMPLETE_RESPONSE()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_MISSION_COMPLETE_RESPONSE")
-end
-function EventFrame:GARRISON_MISSION_BONUS_ROLL_COMPLETE()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_MISSION_BONUS_ROLL_COMPLETE")
-end
-function EventFrame:GARRISON_MISSION_BONUS_ROLL_LOOT()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_MISSION_BONUS_ROLL_LOOT")
-end
-function EventFrame:GARRISON_MISSION_LIST_UPDATE()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_MISSION_LIST_UPDATE")
-end
-function EventFrame:GARRISON_FOLLOWER_XP_CHANGED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_FOLLOWER_XP_CHANGED")
-end
-function EventFrame:GARRISON_FOLLOWER_LIST_UPDATE()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_FOLLOWER_LIST_UPDATE")
-end
-function EventFrame:GARRISON_MISSION_STARTED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_MISSION_STARTED")
-end
-function EventFrame:GARRISON_SHIPYARD_NPC_OPENED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_SHIPYARD_NPC_OPENED")
-end
-function EventFrame:GARRISON_FOLLOWER_CATEGORIES_UPDATED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_FOLLOWER_CATEGORIES_UPDATED")
-end
-function EventFrame:GARRISON_FOLLOWER_ADDED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_FOLLOWER_ADDED")
-end
-function EventFrame:GARRISON_FOLLOWER_REMOVED()
-	E.Collect_All_GarrisonFollowers()
-	E.func_Update("GARRISON_FOLLOWER_REMOVED")
-end
-
-
-
 
 
 function EventFrame:QUEST_REMOVED(...)
@@ -408,9 +319,3 @@ function EventFrame:QUEST_DATA_LOAD_RESULT(...)
 	-- print ("QUEST_DATA_LOAD_RESULT", questID, E.func_questName(questID))
 	E.func_Update("QUEST_DATA_LOAD_RESULT")
 end
-
-
-
-
-
-
