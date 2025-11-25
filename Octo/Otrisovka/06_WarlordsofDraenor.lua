@@ -1,13 +1,13 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local OCTOexpansionID = 6
+local currentSTATE = 6
 function E.func_Otrisovka_06_WarlordsofDraenor()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
+	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
 				local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
@@ -37,13 +37,14 @@ function E.func_Otrisovka_06_WarlordsofDraenor()
 				end
 				----------------------------------------------------------------
 				textLEFT = E.func_currencyName(824)
-				colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+				colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 				----------------------------------------------------------------
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 				----------------------------------------------------------------
 		end)
-		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

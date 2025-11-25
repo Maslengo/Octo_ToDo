@@ -7,7 +7,6 @@ local table_insert = table.insert
 local table_concat = table.concat
 local table_remove = table.remove
 local string_format = string.format
-
 local math_floor = math.floor
 local math_ceil = math.ceil
 local math_min = math.min
@@ -45,7 +44,6 @@ local SettingsPanel = SettingsPanel
 local HideUIPanel = HideUIPanel
 local UIParent = UIParent
 local WorldFrame = WorldFrame
-
 local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
@@ -128,8 +126,6 @@ function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersio
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end
 function E.func_IsRemix() return GetPlayerAuraBySpellID(1213439) end -- PlayerIsTimerunning()
-
-
 function E.func_vignetteIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
@@ -359,6 +355,16 @@ function E.func_reputationName(id)
 	end
 	return sideIcon..func_reputationName_CACHE(id)..E.debugInfo(id)
 end
+
+function E.func_reputaionIcon(id)
+
+	return E.OctoTable_ReputationsDB[id].icon
+
+end
+
+
+
+
 local function func_spellName_CACHE(id)
 	local Cache = GetOrCreateCache("AllSpells", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -1412,25 +1418,26 @@ end
 function E.func_Universal(tbl, DESCRIPT)
 	if not tbl or not DESCRIPT then return end
 	if not Octo_ToDo_DB_Vars.Quests and not Octo_ToDo_DB_Vars.Holidays then return end
-	local expID, expColor, expName, descSTR
-	if type(DESCRIPT) == "number" and Octo_ToDo_DB_Vars.Quests then
-		local expansionData = E.OctoTable_Expansions[DESCRIPT]
-		if expansionData then
-			expID = expansionData.id
-			expColor = expansionData.color
-			expName = expansionData.name
-			descSTR = expName:gsub(" ", "")
-		else
-			return
-		end
-	elseif type(DESCRIPT) == "string" and Octo_ToDo_DB_Vars.Holidays then
-		expColor = E.Holiday_Color
-		descSTR = DESCRIPT
-	else
-		return
-	end
+	-- local expID, expColor, expName, descSTR
+	-- if type(DESCRIPT) == "number" and Octo_ToDo_DB_Vars.Quests then
+	-- 	local expansionData = E.OctoTable_Expansions[DESCRIPT]
+	-- 	if expansionData then
+	-- 		expID = expansionData.id
+	-- 		expColor = expansionData.color
+	-- 		expName = expansionData.name
+	-- 		descSTR = expName:gsub(" ", "")
+	-- 	else
+	-- 		return
+	-- 	end
+	-- elseif type(DESCRIPT) == "string" and Octo_ToDo_DB_Vars.Holidays then
+	-- 	expColor = E.Holiday_Color
+	-- 	descSTR = DESCRIPT
+	-- else
+	-- 	return
+	-- end
 	for _, data in ipairs(E.OctoTable_UniversalQuest) do
-		if data.quests and descSTR == data.desc then
+		-- if data.quests and descSTR == data.desc then
+		if data.quests and DESCRIPT == data.desc then
 			table_insert(tbl, function(CharInfo)
 					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
@@ -1468,19 +1475,19 @@ function E.func_Universal(tbl, DESCRIPT)
 							end
 						end
 					end
-					colorLEFT = expColor
+					-- colorLEFT = expColor
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 			end)
 		end
 	end
 end
-function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
-	if not OctoTable_Otrisovka_textCENT or not E.OctoTable_Expansions[expansionID] then return end
+function E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
 	if not (Octo_ToDo_DB_Vars.Currencies or Octo_ToDo_DB_Vars.Items) then return end
 	local itemProcessors = setmetatable({}, {__mode = "v"})
 	local currencyProcessors = setmetatable({}, {__mode = "v"})
-	local expansionData = E.OctoTable_Expansions[expansionID]
-	local Data = E.OctoTables_DataOtrisovka[expansionID]
+	local expansionData = E.OctoTable_Expansions[currentSTATE]
+	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
 	if not Data then return end
 	-- local func_textCENT_Items = function(...) return E.func_textCENT_Items(...) end
 	-- local func_itemName = function(...) return E.func_itemName(...) end
@@ -1494,7 +1501,7 @@ function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
 		if not processor then
 			processor = function(CharInfo)
 				return E.func_itemName(itemID),
-				expansionData.color,
+				E.TheBurningCrusade_Color or expansionData.color,
 				E.func_textCENT_Items(CharInfo, itemID),
 				{},
 				nil,
@@ -1513,7 +1520,7 @@ function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
 					textCENT = string_format("%s%s +%d|r", textCENT, Purple_Color, CharInfo.PlayerData.Possible_CatalogedResearch)
 				end
 				return E.func_currencyName(currencyID),
-				expansionData.color,
+				E.TheBurningCrusade_Color or expansionData.color,
 				textCENT,
 				{},
 				nil,
@@ -1540,6 +1547,52 @@ function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, expansionID)
 		end
 	end
 end
+
+
+
+
+
+function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
+	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
+	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
+	if not Data then return end
+	----------------------------------------------------------------
+	local reputationProcessors = setmetatable({}, {__mode = "v"})
+	local function getReputationProcessor(reputationID)
+		local processor = reputationProcessors[reputationID]
+		if not processor then
+			processor = function(CharInfo)
+				-- local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+
+				local textLEFT = E.func_texturefromIcon(E.func_reputaionIcon(reputationID))..E.func_reputationName(reputationID)
+				local colorLEFT = nil
+				local textCENT = E.func_textCENT_Reputation(CharInfo, reputationID)
+				local tooltipCENT = {}
+				local colorCENT = nil
+				local myType = {"Reputation", reputationID}
+				local tooltipKey = nil
+
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
+			end
+			reputationProcessors[reputationID] = processor
+		end
+		return processor
+	end
+	----------------------------------------------------------------
+	if Octo_ToDo_DB_Vars.Reputations and Data.Reputations then
+		for i, reputationID in ipairs(Data.Reputations) do
+			textCENT = E.func_reputationName(reputationID)
+
+			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getReputationProcessor(reputationID)
+
+		end
+	end
+	----------------------------------------------------------------
+end
+
+
+
+
 function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	local tooltip = {}
 	local total = 0
@@ -1767,6 +1820,20 @@ function E.func_textCENT_Currency(CharInfo, currencyID, itemID)
 	end
 	return result
 end
+
+
+
+function E.func_textCENT_Reputation(CharInfo, reputationID)
+	if not reputationID then return "" end
+	local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
+
+	return FIRST.."/"..SECOND..colorCENT.." "..standing.."|r"
+end
+
+
+
+
+
 function E.func_InitField(tbl, field, default)
 	if tbl[field] == nil then
 		tbl[field] = default
@@ -1886,10 +1953,6 @@ function E.func_buildRank(id)
 	local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
 	return rank
 end
-
-
-
-
 function E.func_GetRealmName()
 	local result = GetRealmName()
 	if E.func_IsRemix() then
@@ -1898,9 +1961,6 @@ function E.func_GetRealmName()
 	return result
 end
 -- E.curServer = E.func_GetRealmName()
-
-
-
 E.SPAM_TIME = 2
 E.UNIVERSAL = "UNIVERSAL_"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
@@ -2169,15 +2229,12 @@ E.OctoTable_Covenant = {
 E.listMaxSize = 30
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.."DebugInfo|r: "
 E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
-
 function E.func_pizda(mountID)
 	local mountIconNumber = E.func_mountIcon(mountID)
 	local mountIcon = E.func_texturefromIcon(mountIconNumber)
 	local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
 	return mountName
 end
-
-
 function E.func_KeyTooltip(GUID, tooltipKey)
 	if not GUID and not tooltipKey then return end
 	local tooltipCENT = {}
@@ -2419,7 +2476,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 				if E.DebugUniversal then
 					tooltipCENT[#tooltipCENT+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 				end
-
 				if totalQuest > 1 then
 					local textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
 					tooltipCENT[#tooltipCENT+1] = {" ", TOTAL..": "..totalQuest}
@@ -2456,7 +2512,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 						return getName(a) < getName(b)
 					end)
 				end
-
 				-- Формирование строк тултипа
 				for _, questData in ipairs(questsToShow) do
 					local questID = questData[1]
@@ -2508,7 +2563,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 							-- local mountIconNumber = E.func_mountIcon(addText.mount)
 							-- local mountIcon = E.func_texturefromIcon(mountIconNumber)
 							-- local mountName = mountIcon..E.func_mountIsCollectedColor(addText.mount)..E.func_mountName(addText.mount).."|r"
-
 							vivod_LEFT = vivod_LEFT..E.Purple_Color.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_pizda(addText.mount)).."|r"
 						end
 						if addText.notes then
@@ -2533,10 +2587,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		end
 		----------------------------------------------------------------
 	elseif tooltipKey == "Timewalk_Mounts" then
-
-
-
-
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2473), E.func_ExpansionVivod(1)}
 -- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(778), E.func_ExpansionVivod(2)} -- Eclipse Dragonhawk (TBC Timewalking)
@@ -2563,11 +2613,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(293), E.func_ExpansionVivod(11)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1798), E.func_ExpansionVivod(11)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2224), E.func_ExpansionVivod(11)}
-
-
-
-
-
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2321), "ALL"}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1737), "ALL"}
 	----------------------------------------------------------------

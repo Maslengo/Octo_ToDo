@@ -1,13 +1,13 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local OCTOexpansionID = 8
+local currentSTATE = 8
 function E.func_Otrisovka_08_BattleforAzeroth()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
+	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
 		if Octo_ToDo_DB_Vars.Items then
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
@@ -19,7 +19,7 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 					myType = {"Item", 158075}
 					----------------------------------------------------------------
 					textLEFT = E.func_itemName(158075)
-					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
@@ -38,7 +38,7 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 					myType = {"Item", 169223}
 					----------------------------------------------------------------
 					textLEFT = E.func_itemName(169223)
-					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
@@ -50,14 +50,15 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 					textCENT = E.Gray_Color..ITEMS.."|r"
 					----------------------------------------------------------------
 					textLEFT = "МЕХАГОН"
-					colorLEFT = E.OctoTable_Expansions[OCTOexpansionID].color
+					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 					----------------------------------------------------------------
 					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 					----------------------------------------------------------------
 			end)
 		end
-		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

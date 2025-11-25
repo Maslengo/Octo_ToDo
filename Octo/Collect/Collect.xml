@@ -21,6 +21,7 @@
 	<Script file="Collect\Collect_All_PlayerDurability.lua"/>
 	<Script file="Collect\Collect_All_PlayerInfo.lua"/>
 	<Script file="Collect\Collect_All_PlayerLevel.lua"/>
+	<Script file="Collect\Collect_All_PlayerStats.lua"/>
 	<Script file="Collect\Collect_All_Professions.lua"/>
 	<Script file="Collect\Collect_All_Quests.lua"/>
 	<Script file="Collect\Collect_All_Reputations.lua"/>

@@ -1,23 +1,24 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WrathoftheLichKing = {}
-E.OctoTables_DataOtrisovka.WrathoftheLichKing.Text = {E.OctoTable_Expansions[3].color..E.OctoTable_Expansions[3].name.."|r"}
+local currentSTATE = 3
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WrathoftheLichKing.Currencies = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 	241, -- Champion's Seal
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WrathoftheLichKing.Items = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 	45087,
 	47556,
 	49908,
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WrathoftheLichKing.Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[3].icon, name = E.OctoTable_Expansions[3].color..E.OctoTable_Expansions[3].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Wrath of the Lich King"] = {
 	1156, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
 	1119, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
@@ -46,13 +47,13 @@ E.OctoTables_DataOtrisovka.WrathoftheLichKing.Reputations = {
 	1050, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WrathoftheLichKing.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			showTooltip = true,
 			textleft = E.func_questName(24748),
 			name_save = "Shadowmourne",
 			reset = "Once",
-			desc = "WrathoftheLichKing",
+			desc = currentSTATE,
 			quests = {
 				{24545},
 				{24743},
@@ -68,12 +69,7 @@ E.OctoTables_DataOtrisovka.WrathoftheLichKing.UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-
-
-
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.WrathoftheLichKing.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.WrathoftheLichKing.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.WrathoftheLichKing.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.WrathoftheLichKing.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.WrathoftheLichKing.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

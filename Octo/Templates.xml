@@ -1,5 +1,4 @@
 <Ui>
-
 	<EventFrame name="OctoWowTrimHorizontalScrollBar" inherits="HorizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
 		<Size x="560" y="8"/>
 		<KeyValues>
@@ -145,7 +144,6 @@
 			<OnLoad method="OnLoad"/>
 		</Scripts>
 	</EventFrame>
-
 	<EditBox name="OCTOEditBoxTemplate" inherits="InputBoxScriptTemplate,BackdropTemplate" multiLine="false" autoFocus="false" virtual="true">
 		<FontString inherits="GameFontHighlightSmall" justifyH="CENTER"/>
 		<Scripts>
@@ -161,9 +159,4 @@
 			<OnDisable>self:SetTextColor(GRAY_FONT_COLOR:GetRGB())</OnDisable>
 		</Scripts>
 	</EditBox>
-
 </Ui>
-
-
-
-

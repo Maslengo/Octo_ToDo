@@ -1,5 +1,4 @@
 <Ui>
-
 	<Script file="NEW\01_WorldofWarcraft.lua"/>
 	<Script file="NEW\02_TheBurningCrusade.lua"/>
 	<Script file="NEW\03_WrathoftheLichKing.lua"/>
@@ -14,5 +13,4 @@
 	<Script file="NEW\12_Midnight.lua"/>
 	<Script file="NEW\13_TheLastTitan.lua"/>
 	<Script file="NEW\14_Legion_Remix.lua"/>
-
 </Ui>

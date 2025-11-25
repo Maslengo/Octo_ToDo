@@ -1,19 +1,21 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Shadowlands = {}
-E.OctoTables_DataOtrisovka.Shadowlands.Text = {E.OctoTable_Expansions[9].color..E.OctoTable_Expansions[9].name.."|r"}
+local currentSTATE = 9
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Shadowlands.Currencies = {
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 	2009, 1906, 1828, 1979, 1931,
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Shadowlands.Items = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Shadowlands.Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[9].icon, name = E.OctoTable_Expansions[9].color..E.OctoTable_Expansions[9].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Shadowlands"] = {
 	2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
 	2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
@@ -48,14 +50,14 @@ E.OctoTables_DataOtrisovka.Shadowlands.Reputations = {
 	2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = "Other: Rares",
 			name_save = "OtherRares",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				-- Bastion
 				{nil, addText = {mapID = 1533},},
@@ -99,7 +101,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{61813, forcedText = {npcID = 167524}, addText = {mapID = 1533},}, -- "Валинор" <Свет эпох> Бастион
 				{61816, forcedText = {npcID = 167525}, addText = {mapID = 1536},}, -- Мортанис Малдраксус  (2).
@@ -120,7 +122,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
 			name_save = "anima1k",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{61982, addText = {Icon = E.Icon_Kyrian}},
 				{61983, addText = {Icon = E.Icon_Necrolord}},
@@ -135,7 +137,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = L["Troubles at Home"], -- E.func_questName(61981),
 			name_save = "Troubles at Home",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{60425, addText = {Icon = E.Icon_Kyrian}},
 				{60429, addText = {Icon = E.Icon_Necrolord}},
@@ -150,7 +152,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": "..L["Covenant Assault"],
 			name_save = "MAWassault",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63824, addText = {Icon = E.Icon_Kyrian}},
 				{63543, addText = {Icon = E.Icon_Necrolord}},
@@ -164,7 +166,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": "..L["The Hunt"],
 			name_save = "MAWhunt",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63180, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Hunt: Shadehounds"]},},
 				{63194, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Hunt: Winged Soul Eaters"]},},
@@ -178,7 +180,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": "..L["Wrath of the Jailer"],
 			name_save = "MAWwrathofthejailer",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63414, addText = {IconVignette = "VignetteEventElite"}, forcedText = {text = L["Wrath of the Jailer"]},},
 			},
@@ -189,7 +191,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": "..L["Event: Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast(),
 			name_save = "MAWtormentor",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63854, addText = {IconVignette = "Tormentors-Boss",}, forcedText = {text = L["Event: Tormentors of Torghast"]},},
 			},
@@ -200,7 +202,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": "..L["Helsworn Chest"],
 			name_save = "MAWHelswornChest",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64256, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Helsworn Chest"]},}, -- Maw chest in Desmotaeron
 			},
@@ -211,7 +213,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": "..L["Stolen Anima Vessel"]..E.RIFT,
 			name_save = "MAWStolenAnimaVesselRIFT",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64265, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Stolen Anima Vessel"]},},
 				{64269, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Stolen Anima Vessel"]},},
@@ -224,7 +226,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": ".."Daily",--E.func_currencyName(1880),
 			name_save = "MAWdailyQuests",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{60646},
 				{60762},
@@ -245,7 +247,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1543)..": ".."Rares",
 			name_save = "MAWRares",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{57469, forcedText = {npcID = 157833}},
 				{57482, forcedText = {npcID = 157964}},
@@ -280,7 +282,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": "..E.func_questName(63949), --"Weekly",
 			name_save = "KORTHIAweekly",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63949},
 			},
@@ -291,7 +293,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".."Lost Research", -- E.func_questName(65266),
 			name_save = "KORTHIAlostresearch",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{65266},
 			},
@@ -303,7 +305,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": "..E.func_questName(64552),    --"anima table mission",
 			name_save = "KORTHIAanimatablemission",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64552, addText = {Icon = E.Icon_Kyrian},}, -- ker
 				{64551, addText = {Icon = E.Icon_Necrolord},}, -- necr
@@ -317,7 +319,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".."Rares",
 			name_save = "KORTHIARares",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63830, forcedText = {npcID = 177903},},
 				{64233, forcedText = {npcID = 179684}, addText = {mount = 1506},},
@@ -349,7 +351,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. L["Daily quests"],
 			name_save = "KORTHIADailyQuest",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{63787},
 				{64103},
@@ -363,7 +365,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. E.func_questName(64522),
 			name_save = "KORTHIAStolenKorthianSupplies",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64522},
 			},
@@ -374,7 +376,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. L["Purple Mobs"],
 			name_save = "KORTHIAPurpleMobs",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64341},
 				{64342},
@@ -399,7 +401,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. L["Relic Gorgers"],
 			name_save = "KORTHIARelicGorgers",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64433},
 				{64434},
@@ -414,7 +416,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. AREA_LOOTING_UNLOCKED, -- L["Mushrooms"]
 			name_save = "KORTHIACollectionMushrooms",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64351, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 1"},},
 				{64354, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 2"},},
@@ -459,7 +461,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".."Items",
 			name_save = "KORTHIAitems",
 			reset = "Once",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
 				{64307, forcedText = {itemID = 187145}}, -- Treatise: Recognizing StygiaanditsUses
@@ -479,7 +481,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1970)..": ".."Weekly", -- E.func_questName(66042),
 			name_save = "ZMpatternswithinpatterns",
 			reset = "Weekly",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{66042},
 			},
@@ -490,7 +492,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1970)..": ".."Rares",
 			name_save = "ZMRares",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{65557, forcedText = {npcID = 178229}},
 				{65547, forcedText = {npcID = 178508}},
@@ -532,7 +534,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1970)..": ".."WorldQuests",
 			name_save = "ZMWorldQuests",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{64960},
 				{64974},
@@ -572,7 +574,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1970)..": "..AREA_LOOTING_UNLOCKED, -- AREA_LOOTING_UNLOCKED "Treasures"
 			name_save = "ZMtreasures",
 			reset = "Once",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{65520},
 				{65573},
@@ -608,7 +610,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1970)..": "..L["Undulating Foliage"],
 			name_save = "ZMUndulatingFoliage",
 			reset = "Once",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{65572, forcedText = {text = L["Undulating Foliage"]},},
 			},
@@ -619,7 +621,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 			textleft = E.func_mapName(1970)..": "..L["Prying Eye Discovery"],
 			name_save = "ZMPryingEyeDiscovery",
 			reset = "Daily",
-			desc = "Shadowlands",
+			desc = currentSTATE,
 			quests = {
 				{65184, forcedText = {text = L["Prying Eye Discovery"]},},
 				{65501, forcedText = {text = L["Prying Eye Discovery"]},},
@@ -632,7 +634,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 		--     textleft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
 		--     name_save = "ZMPUZZLECACHES",
 		--     reset = "Daily",
-		--     desc = "Shadowlands",
+		--     desc = currentSTATE,
 		--     quests = {
 		--         {65094},
 		--         {65323},
@@ -658,7 +660,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 		--     textleft = E.func_mapName(1970)..": ".."ZMConcordance",
 		--     name_save = "ZMConcordance",
 		--     reset = "Once",
-		--     desc = "Shadowlands",
+		--     desc = currentSTATE,
 		--     quests = {
 		--         {65179},
 		--         {65213},
@@ -683,7 +685,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 		-- textleft = E.func_questName(62858),
 		-- name_save = "ReturnLostSouls",
 		-- reset = "Weekly",
-		-- desc = "Shadowlands",
+		-- desc = currentSTATE,
 		-- quests = {
 		-- 62858,
 		-- 62859,
@@ -705,7 +707,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 		-- textleft = "TradingFavors",
 		-- name_save = "TradingFavors",
 		-- reset = "Weekly",
-		-- desc = "Shadowlands",
+		-- desc = currentSTATE,
 		-- quests = {
 		-- 60242,
 		-- 60243,
@@ -728,9 +730,7 @@ E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests = {
 		-- },
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.Shadowlands.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.Shadowlands.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.Shadowlands.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.Shadowlands.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.Shadowlands.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

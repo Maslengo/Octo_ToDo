@@ -27,12 +27,10 @@ local GetContainerNumSlots = C_Container.GetContainerNumSlots
 local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetItemInfo = C_Item.GetItemInfo
 local UseContainerItem = C_Container.UseContainerItem
-
 local autoOpenItems = {}
 local needRescan = false
 local rescanScheduled = false
 local openableScanQueued = false
-
 -- Инициализация списка предметов для автоматического открытия
 for _, id in ipairs(E.OctoTable_itemID_AutoOpen) do
 	autoOpenItems[id] = true
@@ -41,7 +39,6 @@ end
 local function HasEnoughFreeBagSpace()
 	local totalSlots = 0
 	local usedSlots = 0
-
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
 		if numSlots and numSlots > 0 then
@@ -54,12 +51,10 @@ local function HasEnoughFreeBagSpace()
 			end
 		end
 	end
-
 	if totalSlots == 0 then return true end
 	local freePercent = ((totalSlots - usedSlots) / totalSlots) * 100
 	return freePercent >= freeSpaceThreshold
 end
-
 ----------------------------------------------------------------
 function EventFrame:OpenableScan()
 	if E.func_SpamBlock("OpenableScan") then return end
@@ -68,9 +63,7 @@ function EventFrame:OpenableScan()
 		openableScanQueued = true
 		return
 	end
-
 	local openList = {}
-
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
 		if numSlots and numSlots > 0 then
@@ -87,18 +80,15 @@ function EventFrame:OpenableScan()
 			end
 		end
 	end
-
 	-- Если предметов нет — ничего не делаем
 	if #openList == 0 then
 		return
 	end
-
 	-- Предметы есть, но места мало — сообщим и выходим
 	if not HasEnoughFreeBagSpace() then
 		DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[AutoOpen]|r Not enough bag space to auto-open containers.")
 		return
 	end
-
 	-- Функция последовательного открытия
 	local function OpenNext()
 		local entry = table.remove(openList, 1)
@@ -113,48 +103,39 @@ function EventFrame:OpenableScan()
 			end
 			return
 		end
-
 		if InCombatLockdown() or UnitIsDead("player") then
 			openableScanQueued = true
 			return
 		end
-
 		if not HasEnoughFreeBagSpace() then
 			DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[AutoOpen]|r Bag space too low — stopping.")
 			needRescan = true
 			openList = {}
 			return
 		end
-
 		local itemLink = select(2, GetItemInfo(entry.itemID))
 		if itemLink then
 			UseContainerItem(entry.bag, entry.slot)
 			DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(entry.icon, itemLink)) -- .." bag:"..entry.bag.." slot:"..entry.slot
 			return
 		end
-
 		if #openList > 0 then
 			C_Timer.After(openDelay, OpenNext)
 			return
 		end
 	end
-
 	-- Запуск первой итерации
 	OpenNext()
 end
-
-
 ----------------------------------------------------------------
 local function HandleBagUpdate()
 	if not EventFrame.savedVars.Config_Auto_OpenItems then return end
-
 	if E._spamLocks and E._spamLocks["OpenableScan"] then
 		needRescan = true
 	else
 		EventFrame:OpenableScan()
 	end
 end
-
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"BAG_UPDATE",
@@ -163,27 +144,22 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",
 	"MERCHANT_CLOSED",
 }
-
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
-
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 end
-
 EventFrame.BAG_UPDATE = HandleBagUpdate
 EventFrame.BAG_UPDATE_COOLDOWN = HandleBagUpdate
 EventFrame.BAG_UPDATE_DELAYED = HandleBagUpdate
-
 function EventFrame:PLAYER_REGEN_ENABLED()
 	if openableScanQueued and EventFrame.savedVars.Config_Auto_OpenItems then
 		openableScanQueued = false
 		EventFrame:OpenableScan()
 	end
 end
-
 function EventFrame:MERCHANT_CLOSED()
 	if not InCombatLockdown() and EventFrame.savedVars.Config_Auto_OpenItems then
 		EventFrame:OpenableScan()

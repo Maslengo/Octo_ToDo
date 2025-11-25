@@ -1,10 +1,13 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Legion = {}
-E.OctoTables_DataOtrisovka.Legion.Text = {E.OctoTable_Expansions[7].color..E.OctoTable_Expansions[7].name.."|r"}
+local currentSTATE = 7
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Legion.Currencies = {
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 			1508,
 			1342,
 			1220,
@@ -16,22 +19,24 @@ E.OctoTables_DataOtrisovka.Legion.Currencies = {
 			1273, -- (1273 MONETKA)
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Legion.Items = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Legion.Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[7].icon, name = E.OctoTable_Expansions[7].color..E.OctoTable_Expansions[7].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Legion"] = {
 	2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
 	2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
 	2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
+
+	1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
+	1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
+
 	2018, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
+
 	1948, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
 	1900, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
-	1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
 	1883, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
-	1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
 	1828, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
 		----------------------------------------------------------------
 	2097, --name = "Илиссия Водная", side = "-", category = "Legion", }, --[faction=2097]
@@ -50,14 +55,14 @@ E.OctoTables_DataOtrisovka.Legion.Reputations = {
 	1975, --name = "Кудесник Маргосс", side = "-", category = "Legion", }, --[faction=1975]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.Legion.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = "Legion",
+			desc = currentSTATE,
 			quests = {
 				{43193, forcedText = {npcID = 109331}, addText = {mapID = 630},}, -- Каламир 109331 Азсуна  (4).
 				{43192, forcedText = {npcID = 108829}, addText = {mapID = 630},}, -- Левантия 108829 Азсуна  (2).
@@ -87,7 +92,7 @@ E.OctoTables_DataOtrisovka.Legion.UniversalQuests = {
 			textleft = E.func_questName(43533),
 			name_save = "BalanceofPower",
 			reset = "Once",
-			desc = "Legion",
+			desc = currentSTATE,
 			MainquestID = 43533,
 			quests = {
 				{43496},
@@ -133,7 +138,7 @@ E.OctoTables_DataOtrisovka.Legion.UniversalQuests = {
 			textleft = E.Timers.Legion_Invasion(),
 			name_save = "InvasionQuests",
 			reset = "Daily",
-			desc = "Legion",
+			desc = currentSTATE,
 			quests = {
 				{45838},
 				{45812},
@@ -142,15 +147,13 @@ E.OctoTables_DataOtrisovka.Legion.UniversalQuests = {
 			},
 			forcedMaxQuest = 1,
 		},
-
-
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
 		-- 	textleft = "|cffFF00FFInfiniteResearch|r",
 		-- 	name_save = "InfiniteResearch",
 		-- 	reset = "Daily",
-		-- 	desc = "Legion",
+		-- 	desc = currentSTATE,
 		-- 	isOnQuestOnly = true,
 		-- 	quests = {
 		-- 		-- {89476},
@@ -269,29 +272,20 @@ E.OctoTables_DataOtrisovka.Legion.UniversalQuests = {
 		-- 	},
 		-- 	-- forcedMaxQuest = 1,
 		-- },
-
-
-
-
 		{
 			showTooltip = true,
 			textleft = E.func_questName(92855),
 			name_save = "MakeHasteNotWaste",
 			reset = "Daily",
-			desc = "Legion",
+			desc = currentSTATE,
 			quests = {
 				{92855},
 			},
 			-- forcedMaxQuest = 1,
 		},
-
-
-
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.Legion.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.Legion.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.Legion.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.Legion.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.Legion.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

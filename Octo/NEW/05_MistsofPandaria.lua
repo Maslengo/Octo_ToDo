@@ -1,11 +1,13 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.MistsofPandaria = {}
-E.OctoTables_DataOtrisovka.MistsofPandaria.Text = {E.OctoTable_Expansions[5].color..E.OctoTable_Expansions[5].name.."|r"}
+local currentSTATE = 5
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.MistsofPandaria.Currencies = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 			402, -- Ironpaw Token
 			738, -- Lesser Charm of Good Fortune
 			752, -- Mogu Rune of Fate
@@ -15,12 +17,11 @@ E.OctoTables_DataOtrisovka.MistsofPandaria.Currencies = {
 			697, -- (697 MONETKA)
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.MistsofPandaria.Items = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.MistsofPandaria.Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[5].icon, name = E.OctoTable_Expansions[5].color..E.OctoTable_Expansions[5].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Mists of Pandaria"] = {
 	1492, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
 	1435, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
@@ -57,13 +58,13 @@ E.OctoTables_DataOtrisovka.MistsofPandaria.Reputations = {
 	1357, --name = "Номи", side = "-", category = "Другое", }, --[faction=1357]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.MistsofPandaria.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = "MistsofPandaria",
+			desc = currentSTATE,
 			quests = {
 				{33118, forcedText = {npcID = 72057},  addText = {mapID = 554},   }, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
 				{33117, forcedText = {achievementID = 7333},  addText = {mapID = 554},   }, -- Celestrials (Вневременный остров)
@@ -77,10 +78,7 @@ E.OctoTables_DataOtrisovka.MistsofPandaria.UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.MistsofPandaria.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.MistsofPandaria.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.MistsofPandaria.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.MistsofPandaria.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.MistsofPandaria.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

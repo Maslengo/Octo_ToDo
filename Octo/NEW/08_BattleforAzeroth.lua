@@ -1,10 +1,13 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.BattleforAzeroth = {}
-E.OctoTables_DataOtrisovka.BattleforAzeroth.Text = {E.OctoTable_Expansions[8].color..E.OctoTable_Expansions[8].name.."|r"}
+local currentSTATE = 8
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.BattleforAzeroth.Currencies = {
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 	1560,
 	1721,
 	1803,
@@ -17,12 +20,11 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.Currencies = {
 	1580,
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.BattleforAzeroth.Items = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.BattleforAzeroth.Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[8].icon, name = E.OctoTable_Expansions[8].color..E.OctoTable_Expansions[8].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Battle for Azeroth"] = {
 	2164, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
 	2415, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
@@ -54,14 +56,14 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.Reputations = {
 	2377, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{nil},
 				{52196, addText = {mapID = 864}, }, -- Занесенные песком кости (Вол'дун)
@@ -89,7 +91,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436)),
 			name_save = "AzeriteForTheFaction",
 			reset = "Weekly",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
 				{53435, faction = "Horde",}, -- /dump C_QuestLog.IsOnQuest(53435)
@@ -102,7 +104,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = E.Timers.BfA_Invasion(),
 			name_save = "InvasionQuests",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{54134},
 				{54136},
@@ -125,7 +127,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 			name_save = "AssaultTheBlackEmpire",
 			reset = "Weekly",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{57157}, -- _Uldum
 				{56308}, -- _Uldum
@@ -141,7 +143,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "miniVision",
 			name_save = "miniVision",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{58168},
 				{58155},
@@ -157,7 +159,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Warfront",
 			name_save = "Warfront",
 			reset = "Weekly",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{53416, faction = "Horde"},
 				{53414, faction = "Alliance"},
@@ -176,7 +178,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Darkshore: Rares",
 			name_save = "DarkshoreRares",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				-- Alash'anir
 				{54695, faction = "Alliance", forcedText = {npcID = 148787},},
@@ -269,7 +271,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: "..E.func_questName(54088),
 			name_save = "TheMechagonianThreat",
 			reset = "Once",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				-- Только для Альянса
 				{54088, faction = "Alliance"},
@@ -307,7 +309,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Dailies",
 			name_save = "MechagonDAILYQUESTS",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				-- {56765, faction = "Horde",}, Ржавоболтский запрос: полосатый окунь
 				-- {56761, faction = "Alliance",},
@@ -379,7 +381,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Rares",
 			name_save = "MechagonRares",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{55512, forcedText = {npcID = 151934},}, -- RARE ELITE 154342 -- MOUNT
 				{55539, forcedText = {npcID = 151308},},
@@ -426,7 +428,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Treasures",
 			name_save = "MechagonTREASURE",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{55547},
 				{55548},
@@ -446,7 +448,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 		--     textleft = "MechagonTREASURE_MISCELLANEOUS",
 		--     name_save = "MechagonTREASURE_MISCELLANEOUS",
 		--     reset = "Daily",
-		--     desc = "BattleforAzeroth",
+		--     desc = currentSTATE,
 		--     quests = {
 		--         {55743},
 		--         {56117},
@@ -459,7 +461,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 		--     textleft = "MechagonLOCKED_CHESTS1",
 		--     name_save = "MechagonLOCKED_CHESTS1",
 		--     reset = "Daily",
-		--     desc = "BattleforAzeroth",
+		--     desc = currentSTATE,
 		--     quests = {
 		--         {56907},
 		--     },
@@ -470,7 +472,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 		--     textleft = "MechagonLOCKED_CHESTS2",
 		--     name_save = "MechagonLOCKED_CHESTS2",
 		--     reset = "Daily",
-		--     desc = "BattleforAzeroth",
+		--     desc = currentSTATE,
 		--     quests = {
 		--         {57133},
 		--     },
@@ -482,7 +484,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 		-- textleft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- reset = "Once",
-		-- desc = "BattleforAzeroth",
+		-- desc = currentSTATE,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
 		-- {56031, faction = "Alliance"},
@@ -516,7 +518,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 		-- textleft = "UNLOCKING MECHAGON PART 2",
 		-- name_save = "UNLOCKING MECHAGON PART 2",
 		-- reset = "Once",
-		-- desc = "BattleforAzeroth",
+		-- desc = currentSTATE,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
 		-- {55851},
@@ -546,7 +548,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Dailies Visitor Quests",
 			name_save = "DAILY_VISITOR_QUESTS",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{55463},
 				{55658},
@@ -590,7 +592,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Daily WQ",
 			name_save = "MechagonDAILYWQ",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{56139}, -- WQ
 				{56141}, -- WQ
@@ -603,7 +605,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Secret Fish",
 			name_save = "MechagonSecretFish",
 			reset = "Daily",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{55309},
 				{55299},
@@ -624,7 +626,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 			textleft = "Mechagon: Making a Mount",
 			name_save = "MechagonMakingAMount",
 			reset = "Once",
-			desc = "BattleforAzeroth",
+			desc = currentSTATE,
 			quests = {
 				{55608},
 				{54086},
@@ -643,9 +645,7 @@ E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.BattleforAzeroth.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.BattleforAzeroth.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.BattleforAzeroth.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.BattleforAzeroth.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.BattleforAzeroth.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

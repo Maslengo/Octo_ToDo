@@ -476,8 +476,6 @@ function E.func_Octo_Debug_Options(savedVars)
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
-
 			-------------------------------------------------
 			["editorTabSpaces"] = {
 				type = "select",
@@ -499,8 +497,6 @@ function E.func_Octo_Debug_Options(savedVars)
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
-
 			-------------------------------------------------
 			["editorTheme"] = {
 				type = "select",
@@ -516,7 +512,6 @@ function E.func_Octo_Debug_Options(savedVars)
 					end
 					return t
 				end)(),
-
 				desc = "",
 				get = function()
 					return Octo_Debug_DB.editorTheme
@@ -527,14 +522,12 @@ function E.func_Octo_Debug_Options(savedVars)
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
 				name = "",
 				order = GetOrder(),
 			},
-
 			["SPAM_TIME"] = {
 				type = "select",
 				name = "SPAM_TIME",
@@ -556,8 +549,6 @@ function E.func_Octo_Debug_Options(savedVars)
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-
-
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
@@ -565,14 +556,12 @@ function E.func_Octo_Debug_Options(savedVars)
 			-------------------------------------------------
 		},
 	}
-
 	-- for index = 10, 16 do
 	-- 	Option_FUNC.args.editorFontSize.values[index] = index
 	-- end
 	-- for index, v in ipairs({0, 2, 3, 4}) do
 	-- 	Option_FUNC.args.editorTabSpaces.values[index] = index
 	-- end
-
 	-- local countET = 0
 	-- for name in next, (E.editorThemes) do
 	-- 	countET = countET + 1

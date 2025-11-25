@@ -138,7 +138,7 @@ function E.func_Otrisovka_90_Holidays()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT)
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT)
 		E.func_Universal(OctoTable_Otrisovka_textCENT)
 	end
 	----------------------------------------------------------------

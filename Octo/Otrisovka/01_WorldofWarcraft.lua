@@ -1,18 +1,16 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local OCTOexpansionID = 1
+local currentSTATE = 1
 function E.func_Otrisovka_01_WorldofWarcraft()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		----------------------------------------------------------------
-		E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
-		E.func_Universal(OctoTable_Otrisovka_textCENT, OCTOexpansionID)
+	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

@@ -1,11 +1,13 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WarlordsofDraenor = {}
-E.OctoTables_DataOtrisovka.WarlordsofDraenor.Text = {E.OctoTable_Expansions[6].color..E.OctoTable_Expansions[6].name.."|r"}
+local currentSTATE = 6
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WarlordsofDraenor.Currencies = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 	1101,
 	823,
 	1129,
@@ -13,12 +15,11 @@ E.OctoTables_DataOtrisovka.WarlordsofDraenor.Currencies = {
 	-- (1129, 994 MONETKA) (824 GARRISON_RESOURCE_ID)
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WarlordsofDraenor.Items = {
-
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WarlordsofDraenor.Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[6].icon, name = E.OctoTable_Expansions[6].color..E.OctoTable_Expansions[6].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Warlords of Draenor"] = {
 	1850, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
 	1849, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
@@ -42,14 +43,14 @@ E.OctoTables_DataOtrisovka.WarlordsofDraenor.Reputations = {
 	1733, --name = "Делвар Железный Кулак", side = "-", category = "Телохранители из казарм", }, --[faction=1733]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.WarlordsofDraenor.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = "WarlordsofDraenor",
+			desc = currentSTATE,
 			quests = {
 				{37460, forcedText = {npcID = 81252}, addText = {mapID = 543},  }, -- Drov the Ruiner (Горгронд)
 				{37462, forcedText = {npcID = 81535}, addText = {mapID = 543},  }, -- Tarlna the Ageless (Горгронд)
@@ -64,7 +65,7 @@ E.OctoTables_DataOtrisovka.WarlordsofDraenor.UniversalQuests = {
 			textleft = GARRISON_LOCATION_TOOLTIP,
 			name_save = "GarrisonLevel",
 			reset = "Once",
-			desc = "WarlordsofDraenor",
+			desc = currentSTATE,
 			quests = {
 				{34378, faction = "Horde",},
 				{34586, faction = "Alliance",},
@@ -77,10 +78,7 @@ E.OctoTables_DataOtrisovka.WarlordsofDraenor.UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.WarlordsofDraenor.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.WarlordsofDraenor.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.WarlordsofDraenor.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.WarlordsofDraenor.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.WarlordsofDraenor.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

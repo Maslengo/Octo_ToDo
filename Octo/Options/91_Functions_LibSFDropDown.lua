@@ -79,7 +79,6 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 		end
 		C_Timer.After(1, providerfunc)
 	end
-
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
 		providerfunc()
@@ -199,7 +198,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
 						info.arg1 = {self, level, value}
 						info.remove = func_remove_GUID
-						info.removeDoNotHide = false
+						info.removeDoNotHide = true
 						info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
 						info.iconInfo = {tSizeX = 16, tSizeY = 16}
 						tinsert(list, info)
@@ -303,7 +302,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						icon = "interface/worldmap/worldmappartyicon",
 						OnClick = function(btn)
 							PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-							for expansionID = #E.OctoTable_Expansions, 1, -1 do
+							-- for expansionID = #E.OctoTable_Expansions, 1, -1 do
+							for expansionID, v in next,(E.OctoTables_Vibor) do
 								Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
 							end
 							Octo_ToDo_DB_Vars.ExpansionToShow[btn.value] = true
@@ -317,12 +317,13 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.func = selectFunctionExpansion
 				info.iconInfo = {tSizeX = ddMenuButtonHeight*2, tSizeY = ddMenuButtonHeight}
 				-- Добавляем кнопки для каждого дополнения (в обратном порядке)
-				for expansionID = #E.OctoTable_Expansions, 1, -1 do
-					local v = E.OctoTable_Expansions[expansionID]
+				for expansionID, v in next,(E.OctoTables_Vibor) do
+				-- for expansionID = #E.OctoTable_Expansions, 1, -1 do
+					-- local v = E.OctoTable_Expansions[expansionID]
 					info.isNotRadio = true
 					info.notCheckable = false
 					info.keepShownOnClick = true
-					info.text = v.color..v.name.."|r"
+					info.text = v.name
 					info.value = expansionID
 					info.icon = v.icon
 					self:ddAddButton(info, level)
@@ -339,7 +340,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.text = INTERACT_ICONS_SHOW_ALL
 				info.icon = false
 				info.func = function(_, _, _, checked)
-					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+					-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
+					for expansionID, v in next,(E.OctoTables_Vibor) do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
 					end
 					self:ddRefresh(level)
@@ -348,7 +350,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				self:ddAddButton(info, level)
 				info.text = HIDE
 				info.func = function(_, _, _, checked)
-					for expansionID, v in ipairs(E.OctoTable_Expansions) do
+					-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
+					for expansionID, v in next,(E.OctoTables_Vibor) do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
 					end
 					self:ddRefresh(level)

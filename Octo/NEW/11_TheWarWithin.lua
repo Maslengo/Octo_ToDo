@@ -1,15 +1,17 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.TheWarWithin = {}
-E.OctoTables_DataOtrisovka.TheWarWithin.Text = {E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r"}
+local currentSTATE = 11
+E.OctoTables_DataOtrisovka[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE] = {}
+E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
+E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.TheWarWithin.Currencies = {
+E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 	-- 3056, 2815,
 	-- season 3
 	3356, 3290, 3288, 3286, 3284, 3141, 3028, 3008, 2803,
 	-- 3149, 3226, 3218, 3090, 3028, 2803, 3116, 2815, 3056, 3008, 3110, 3109, 3108, 3107,
-
 	-- https://warcraft.wiki.gg/wiki/Catalyst
 	-- The War Within
 	-- (Season 4)
@@ -23,11 +25,11 @@ E.OctoTables_DataOtrisovka.TheWarWithin.Currencies = {
 	-- 2167, -- Catalyst Charges (Season 1)
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.TheWarWithin.Items = {
+E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.TheWarWithin.Reputations = {
-	-- header = {icon = E.OctoTable_Expansions[11].icon, name = E.OctoTable_Expansions[11].color..E.OctoTable_Expansions[11].name.."|r",},
+E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+	-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 	-- ["The War Within"] = {
 	-- { id = 2688,},
 	-- { id = 2653,},
@@ -89,14 +91,14 @@ E.OctoTables_DataOtrisovka.TheWarWithin.Reputations = {
 	2669, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
 }
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
+E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
 				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
@@ -114,7 +116,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2371)..": ".."Rares",
 			name_save = "Rares2371",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
 				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
@@ -156,7 +158,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2255)..": ".."Rares",
 			name_save = "Rares2255",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{81695, forcedText = {npcID = 216031}, },
 				{78905, forcedText = {npcID = 214151}, },
@@ -178,7 +180,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2215)..": ".."Rares",
 			name_save = "Rares2215",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{81763, forcedText = {npcID = 207802}, },
 				{82558, forcedText = {npcID = 206514}, },
@@ -201,7 +203,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2248)..": ".."Rares",
 			name_save = "Rares2248",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82196, forcedText = {npcID = 219281}, },
 				{81893, forcedText = {npcID = 219264}, },
@@ -224,7 +226,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2214)..": ".."Rares",
 			name_save = "Rares2214",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{81674, forcedText = {npcID = 220265}, },
 				{80557, forcedText = {npcID = 220274}, },
@@ -247,7 +249,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2369)..": ".."Rares",
 			name_save = "Rares2369",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{85672, forcedText = {npcID = 229982}, },
 				{85669, forcedText = {npcID = 228201}, },
@@ -268,7 +270,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2346)..": ".."Rares",
 			name_save = "Rares2346",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{84917, forcedText = {npcID = 230931}, },
 				{84918, forcedText = {npcID = 230934}, },
@@ -305,7 +307,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2248)..": ".."Treasures",
 			name_save = "Treasures2248",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82715},
 				{82714},
@@ -335,7 +337,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2369)..": ".."Treasures",
 			name_save = "Treasures2369",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{87446},
 				{86764},
@@ -363,7 +365,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2346)..": ".."Treasures",
 			name_save = "Treasures2346",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{85683},
 				{85698},
@@ -389,7 +391,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2214)..": ".."Treasures",
 			name_save = "Treasures2214",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82230},
 				{82239},
@@ -413,7 +415,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2255)..": ".."Treasures",
 			name_save = "Treasures2255",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82520},
 				{82718},
@@ -437,7 +439,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2215)..": ".."Treasures",
 			name_save = "Treasures2215",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{83298},
 				{83263},
@@ -466,7 +468,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_mapName(2346)..": ".."Treasure",
 			name_save = "Treasure2346",
 			reset = "Once", -- "Daily",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{85683},
 				{85698},
@@ -525,7 +527,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_questName(84370),
 			name_save = "TheKeytoSuccess",
 			reset = "Daily", -- "Once", ???
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{84370},
 			},
@@ -536,7 +538,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_questName(82449),
 			name_save = "TheCalloftheWorldsoul",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 			quests = {
 				-- 87424,
@@ -635,7 +637,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "Archives",
 			name_save = "Archives",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82678},
 				{82679},
@@ -647,7 +649,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "Delves",
 			name_save = "Delves",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82708},
 				{82707},
@@ -689,7 +691,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
 			name_save = "TheTheaterTroupe",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{83240},
 			},
@@ -700,7 +702,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_questName(76586),
 			name_save = "SpreadingtheLight",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{76586},
 			},
@@ -711,7 +713,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_questName(83333),
 			name_save = "GearingUpforTrouble",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{83333},
 			},
@@ -722,7 +724,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "SpecialAssignments",
 			name_save = "SpecialAssignments",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82355},
 				{81649},
@@ -740,7 +742,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = E.func_questName(82946),
 			name_save = "RollinDownintheDeeps",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{82946},
 			},
@@ -751,7 +753,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "BiergothDungeonQuest",
 			name_save = "BiergothDungeonQuest",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{83432},
 				{83436},
@@ -770,7 +772,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "TWWProfessionWeeklies",
 			name_save = "TWWProfessionWeeklies",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{84127},
 				{84128},
@@ -805,7 +807,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "TWWAlgariTreatise",
 			name_save = "TWWAlgariTreatise",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{83725},
 				{83726},
@@ -826,7 +828,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "AnniversaryRestoredCofferKey",
 			name_save = "AnniversaryRestoredCofferKey",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{86202},
 			},
@@ -837,7 +839,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "SirenIsleWeekly",
 			name_save = "SirenIsleWeekly",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{84852},
 				{84680},
@@ -864,7 +866,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "MajorKeyflames",
 			name_save = "MajorKeyflames",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{79471},
 				{79470},
@@ -882,7 +884,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "MinorKeyflames",
 			name_save = "MinorKeyflames",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{81632},
 				-- 81574,
@@ -928,7 +930,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = L["Delver's Call"],
 			name_save = "DelversCall",
 			reset = "Once",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
 				{85648},
@@ -958,7 +960,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-weekly-cache",
 			name_save = "tww-weekly-cache",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{84736},
 				{84737},
@@ -972,7 +974,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-lesser-keyflame",
 			name_save = "tww-lesser-keyflame",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{76169}, -- Glow in the Dark
 				{76394}, -- Shadows of Flavor
@@ -999,7 +1001,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-brawl-weekly",
 			name_save = "tww-brawl-weekly",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{47148},
 			},
@@ -1010,7 +1012,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-pvp-weekly",
 			name_save = "tww-pvp-weekly",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{80184}, -- Preserving in Battle
 				{80185}, -- Preserving Solo
@@ -1026,7 +1028,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-pvp-world",
 			name_save = "tww-pvp-world",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{81793}, -- Sparks of War: Isle of Dorn
 				{81794}, -- Sparks of War: The Ringing Deeps
@@ -1041,7 +1043,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-the-severed-threads",
 			name_save = "tww-the-severed-threads",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{80670}, -- Eyes of the Weaver
 				{80671}, -- Blade of the General
@@ -1054,7 +1056,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-the-call-of-the-worldsoul",
 			name_save = "tww-the-call-of-the-worldsoul",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82482}, -- Worldsoul: Snuffling
@@ -1106,7 +1108,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-archives",
 			name_save = "tww-archives",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82679}, -- Archives: Seeking History
@@ -1119,7 +1121,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-delves",
 			name_save = "tww-delves",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82708}, -- Delves: Nerubian Menace
@@ -1138,7 +1140,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-the-theater-trope",
 			name_save = "tww-the-theater-trope",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{83240},
 			},
@@ -1149,7 +1151,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-spreading-the-light",
 			name_save = "tww-spreading-the-light",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{76586},
 			},
@@ -1160,7 +1162,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-gearing-up-for-trouble",
 			name_save = "tww-gearing-up-for-trouble",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{83333},
 			},
@@ -1171,7 +1173,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-special-assignments",
 			name_save = "tww-special-assignments",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{82355}, -- Special Assignment: Cinderbee Surge (Completing)
 				{81647}, -- Special Assignment: Titanic Resurgence (Completing)
@@ -1193,7 +1195,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-rollin-down-in-the-deeps",
 			name_save = "tww-rollin-down-in-the-deeps",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{82946},
 			},
@@ -1204,7 +1206,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-biergoth-dungeon-quest",
 			name_save = "tww-biergoth-dungeon-quest",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{83432}, -- The Rookery
 				{83436}, -- Cinderbrew Meadery
@@ -1223,7 +1225,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-the-key-to-success",
 			name_save = "tww-the-key-to-success",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{84370},
 			},
@@ -1234,7 +1236,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-services-requested",
 			name_save = "tww-services-requested",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{84127}, -- Blacksmithing Services Requested
 				{84128}, -- Engineering Services Requested
@@ -1269,7 +1271,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-algari-treatise",
 			name_save = "tww-algari-treatise",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{83725}, -- Algari Treatise on Alchemy
 				{83726}, -- Algari Treatise on Blacksmithing
@@ -1290,7 +1292,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-anniversary-restored-coffer-key",
 			name_save = "tww-anniversary-restored-coffer-key",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{86202},
 			},
@@ -1301,7 +1303,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-siren-isle-weekly",
 			name_save = "tww-siren-isle-weekly",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				-- Vrykul invasion
 				{84852}, -- Legacy of the Vrykul
@@ -1331,7 +1333,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-free-chett-list",
 			name_save = "tww-free-chett-list",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{87296},
 			},
@@ -1342,7 +1344,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-chett-list",
 			name_save = "tww-chett-list",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{86915}, -- Side with a Cartel
 				{86917}, -- Ship Right
@@ -1365,7 +1367,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-delvers-bounty",
 			name_save = "tww-delvers-bounty",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{86371},
 			},
@@ -1376,7 +1378,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-nightfall-scenario",
 			name_save = "tww-nightfall-scenario",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{91173},
 			},
@@ -1387,7 +1389,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-nightfall-daily",
 			name_save = "tww-nightfall-daily",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{87475}, -- Sureki Incursion: Hold the Wall
 				{87477}, -- Sureki Incursion: Southern Swarm
@@ -1404,7 +1406,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-karesh-warrants",
 			name_save = "tww-karesh-warrants",
 			reset = "Weekly",
-			desc = "TheWarWithin",
+			desc = currentSTATE,
 			quests = {
 				{90122}, -- Eliminate Xy'vox the Twisted
 				{90123}, -- Eliminate Hollowbane
@@ -1420,7 +1422,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 			textleft = "tww-weekly-cache_S3",
 			name_save = "tww-weekly-cache_S3",
 			reset = "Weekly",
-			desc = "TheWarWithin", -- STORYLINE
+			desc = currentSTATE, -- STORYLINE
 			quests = {
 				{91175},
 				{91176},
@@ -1431,9 +1433,7 @@ E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka.TheWarWithin.Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka.TheWarWithin.Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka.TheWarWithin.Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka.TheWarWithin.UniversalQuests)
-
-E.func_TableConcat(E.OctoTables_Vibor, E.OctoTables_DataOtrisovka.TheWarWithin.Text)
+E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)

@@ -5,7 +5,6 @@ local EventFrame = CreateFrame("FRAME")
 function EventFrame:Auto_SellGrey()
 	if E.func_SpamBlock("Auto_SellGrey") then return end
 	if InCombatLockdown() or UnitIsDead("player") then return end
-
 	local totalPrice = 0
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		for slot = 1, C_Container.GetContainerNumSlots(bag) do
@@ -24,28 +23,22 @@ function EventFrame:Auto_SellGrey()
 		PickupMerchantItem(0) -- Закрываем окно продажи
 	end
 end
-
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"MERCHANT_SHOW",
 	"MERCHANT_CLOSED",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
-
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 end
-
-
 function EventFrame:MERCHANT_SHOW()
 	if not EventFrame.savedVars.Config_Auto_SellGrey then return end
 	self:Auto_SellGrey()
 end
-
-
 function EventFrame:MERCHANT_CLOSED()
 	if not EventFrame.savedVars.Config_Auto_SellGrey then return end
 	-- self:Auto_SellGrey()

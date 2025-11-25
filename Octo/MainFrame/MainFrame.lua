@@ -18,13 +18,13 @@ local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная шири�
 local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
 local MAX_FRAME_WIDTH = E.MonitorWidth*.8  		-- Максимальная ширина фрейма (80% экрана)
 local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
-EventFrame.COLUMNS_MAX = 113     		-- Максимальное количество колонок
+EventFrame.COLUMNS_MAX = 113     				-- Максимальное количество колонок
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1  -- Цвет границы (черный)
 local textR, textG, textB, textA = 1, 1, 1, 1                              -- Цвет текста (белый)
-local classR, classG, classB = GetClassColor(E.classFilename)               -- Цвет класса игрока
-local LEFT_TEXTURE_ALPHA = 0.1                                              -- Прозрачность текстуры левой колонки
+local classR, classG, classB = GetClassColor(E.classFilename)              -- Цвет класса игрока
+local LEFT_TEXTURE_ALPHA = 0.1                                             -- Прозрачность текстуры левой колонки
 local charR, charG, charB = 1, 1, 1
 -- Локальные ссылки на часто используемые функции для оптимизации
 local math_min = math.min
@@ -444,6 +444,7 @@ end
 function E.func_Concat_Otrisovka()
 	local tbl = {}
 	-- Объединяем таблицы для каждого дополнения в обратном порядке (от нового к старому)
+	E.func_TableConcat(tbl, E.func_Otrisovka_14_Legion_Remix())
 	E.func_TableConcat(tbl, E.func_Otrisovka_13_TheLastTitan())
 	E.func_TableConcat(tbl, E.func_Otrisovka_12_Midnight())
 	E.func_TableConcat(tbl, E.func_Otrisovka_11_TheWarWithin())
@@ -493,21 +494,17 @@ function EventFrame:CreateDataProvider()
 			textLEFT = {},
 			colorLEFT = {},
 			textCENT = {},
-			-- tooltipCENT = {},
 			colorCENT = {},
 			myType = {},
 			tooltipKey = {},
 			GUID = {},
-			-- CharInfo = {},
 		}
 		-- Заполнение данных для каждого персонажа
 		for CharIndex, CharInfo in ipairs(tbl) do
 			local _, _, textCENT, _, colorCENT = func(CharInfo)
 			zxc.textCENT[CharIndex] = textCENT
-			-- zxc.tooltipCENT[CharIndex] = tooltipCENT or {}
 			zxc.colorCENT[CharIndex] = colorCENT
 			zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
-			-- zxc.CharInfo[CharIndex] = CharInfo
 		end
 		-- Заполнение данных для левой колонки (берется из первого персонажа)
 		local firstChar = tbl[1]

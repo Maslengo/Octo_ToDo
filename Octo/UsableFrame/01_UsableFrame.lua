@@ -4,7 +4,7 @@ local EventFrame = CreateFrame("FRAME")
 local ItemsUsable = CreateFrame("BUTTON", "ItemsUsable", UIParent, "BackDropTemplate")
 ItemsUsable:Hide()
 local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
-E.func_InitFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
+-- E.func_InitFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
 ----------------------------------------------------------------
 -- Локальные переменные для работы с инвентарем
 local BACKPACK_CONTAINER = BACKPACK_CONTAINER
@@ -33,6 +33,18 @@ local function func_OnShow(frame)
 	frame.highlightFrame:Show()
 end
 local func_OnAcquired do
+
+
+	local function func_OnEnter(frame)
+		local frameData = frame:GetData()
+		local itemID = frameData.itemID
+		-- Получение данных для тултипа
+		local tooltipOCTO = {}
+		tooltipOCTO[#tooltipOCTO+1] = {E.func_itemName(itemID), itemID}
+		frame.tooltip = tooltipOCTO
+		E.func_OctoTooltip_OnEnter(frame, {"LEFT", "RIGHT"})
+	end
+	-- Функция инициализации элементов колонки
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
 			frame:SetPropagateMouseClicks(true)
@@ -95,6 +107,8 @@ local func_OnAcquired do
 			-- frame:SetScript("OnClick", func_OnClick)
 			frame:SetScript("OnHide", func_OnHide)
 			frame:SetScript("OnShow", func_OnShow)
+			-- Обработчик наведения курсора для отображения тултипа
+			frame:SetScript("OnEnter", func_OnEnter)
 			----------------
 		end
 	end
@@ -332,6 +346,14 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	else
 		ItemsUsable:SetSize(total_width, LINE_HEIGHT*lines)
 	end
+
+
+
+
+
+
+
+
 end
 local function Toggle_ItemsUsable()
 	if not ItemsUsable:IsShown() then

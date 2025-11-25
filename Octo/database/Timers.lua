@@ -15,7 +15,6 @@ local function CreateTimer(baseTime, interval, duration, label)
 	end
 	return timerText..(label or "")
 end
-E.Timers = {}
 -- Legion Invasion
 function E.Timers.Legion_Invasion()
 	local maps = {
@@ -41,6 +40,40 @@ function E.Timers.Legion_Invasion()
 	end
 	return timerText..str
 end
+
+
+-- Legion_Remix Invasion
+function E.Timers.Legion_Remix_Invasion()
+	local maps = {
+		[630] = 5175, -- Azsuna
+		[641] = 5210, -- Val'sharah
+		[650] = 5177, -- Highmountain
+		[634] = 5178, -- Stormheim
+	}
+	local TIMER = {
+		["US"] = 1762333200, -- US: Nov 7, 2025, 1:00 AM (user-confirmed correct)
+		["EU"] = 1762434000, -- EU: Nov 6, 2025, 12:00 PM (user-confirmed correct)
+		["CN"] = 1762434000+741600,
+	}
+	local interval = (14 * 3600) + (30 * 60)  -- 18h 30m = 66600 seconds
+	local duration = 21600
+	local timerText = CreateTimer(TIMER[E.regionName], interval, duration)
+	local str = L["Legion Invasion"]
+	for uiMapID, areaPoiID in pairs(maps) do
+		local seconds = C_AreaPoiInfo.GetAreaPOISecondsLeft(areaPoiID)
+		if seconds and seconds > 0 then
+			str = C_Map.GetMapInfo(uiMapID).name
+			break
+		end
+	end
+	return timerText..str
+end
+
+
+
+
+
+
 -- BfA Invasion
 function E.Timers.BfA_Invasion()
 	local maps = {

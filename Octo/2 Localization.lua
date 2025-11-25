@@ -261,6 +261,7 @@ if L then
 	L["Helsworn Chest"] = true
 	L["Zovaal's Vault"] = true
 	L["Delver's Call"] = true
+	L["Infinite Research"] = true
 end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
@@ -524,4 +525,5 @@ if L then
 	L["Zovaal's Vault"] = "Хранилище Зоваала"
 	L["Delver's Call"] = "Вызов в вылазку"
 	L["Tab Size"] = "Размер табуляции"
+	L["Infinite Research"] = "Бесконечные исследования"
 end

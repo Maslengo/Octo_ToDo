@@ -28,7 +28,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
 	for currencyID = 42, 4000 do -- 42, 3372
 		local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
-
 	end
 	----------------------------------------------------------------
 	for _, id in ipairs(E.ALL_Reputations) do
@@ -410,13 +409,9 @@ function EventFrame:Octo_ToDo_DB_Levels()
 			end
 		end
 		-- Инициализируем данные репутации
-
 		for _, id in ipairs(E.ALL_Reputations) do
 			MASLENGO.Reputation[id] = MASLENGO.Reputation[id] or "0#0###"
 		end
-
-
-
 		-- Инициализируем данные LFG инстансов
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
 			MASLENGO.LFGInstance[dungeonID] = MASLENGO.LFGInstance[dungeonID] or {}
@@ -698,5 +693,4 @@ function EventFrame:PLAYER_LOGIN()
 	if GameMenuFrame and Octo_ToDo_DB_Vars.Config_GameMenuFrame then
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.Config_GameMenuFrame)
 	end
-
 end

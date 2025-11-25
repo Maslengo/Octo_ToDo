@@ -18,9 +18,7 @@ EventFrame[funcName] = function(self)
 		DebugQC_Quests = false,
 		DebugUniversal = false,
 		CVar = false, -- CVar настройки
-
 		SPAM_TIME = 2,
-
 		editorFontSize = 12, -- for i = 10, 16 do
 		editorTabSpaces = 4, -- for _, v in ipairs({0, 2, 3, 4}) do
 		editorTheme = "Twilight", -- for name in next, E.editorThemes do
@@ -71,7 +69,6 @@ function EventFrame:PLAYER_LOGIN()
 	E.DebugQC_Vignettes = Octo_Debug_DB.DebugQC_Vignettes
 	E.DebugQC_Quests = Octo_Debug_DB.DebugQC_Quests
 	E.DebugUniversal = Octo_Debug_DB.DebugUniversal
-
 	E.SPAM_TIME = Octo_Debug_DB.SPAM_TIME
 end
 ----------------------------------------------------------------

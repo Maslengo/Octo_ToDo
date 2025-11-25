@@ -68,9 +68,6 @@ local function func_TableConcat(table1, table2)
 	return table1
 end
 func_TableConcat(E.OctoTable_QuestID, E.OctoTable_QuestID_Paragon)
-
-
-
 E.OctoTable_RemixInfinityResearch = {
 	92442,
 	89517,
@@ -188,7 +185,7 @@ E.OctoTable_RemixInfinityResearch = {
 	90115,
 	89476,
 	93120,
-	91846,
+	-- 91846,
 	91847,
 	-- 91845,
 	93117,
@@ -197,5 +194,4 @@ E.OctoTable_RemixInfinityResearch = {
 	91848,
 	-- 91844,
 	-- 91613,
-
 }

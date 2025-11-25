@@ -1,13 +1,14 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
+local ENABLE_DEBUG_TIMER = false
+
+
 function E.func_Collect_All()
-	-- local start = debugprofilestop()
+	local start = debugprofilestop()
 	local color = E.Green_Color
 	if E.func_SpamBlock("func_Collect_All") then
 		color = E.Red_Color
 	else
-		E.Collect_All_PlayerInfo()
-		E.Collect_All_PlayerLevel()
 		E.Collect_All_BfA_Azerite()
 		E.Collect_All_BfA_Cloaklvl()
 		E.Collect_All_Chromie()
@@ -17,24 +18,29 @@ function E.func_Collect_All()
 		E.Collect_All_Garrison()
 		E.Collect_All_GreatVault()
 		E.Collect_All_Holiday()
-		E.Collect_All_ItemsInBag()
 		E.Collect_All_ItemLevel()
+		E.Collect_All_ItemsInBag()
 		E.Collect_All_JournalInstance()
+		E.Collect_All_LegionRemixData()
 		E.Collect_All_Locations()
 		E.Collect_All_LoginTime()
 		E.Collect_All_Mail()
 		E.Collect_All_MoneyOnLogin()
 		E.Collect_All_MoneyUpdate()
 		E.Collect_All_PlayerDurability()
+		E.Collect_All_PlayerInfo()
+		E.Collect_All_PlayerLevel()
+		E.Collect_All_PlayerStats()
 		E.Collect_All_Professions()
 		E.Collect_All_Quests()
 		E.Collect_All_Reputations()
 		E.Collect_All_UNIVERSALQuestUpdate()
 		E.Collect_All_WarMode()
-		E.Collect_All_LegionRemixData()
 	end
-	-- local elapsed = debugprofilestop() - start
-	-- print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
+	local elapsed = debugprofilestop() - start
+	if ENABLE_DEBUG_TIMER then
+		print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
+	end
 end
 local MyEventsTable = {
 	"ACCOUNT_MONEY",
@@ -46,26 +52,26 @@ local MyEventsTable = {
 	"CURRENCY_DISPLAY_UPDATE",
 	"CURRENCY_TRANSFER_LOG_UPDATE",
 	"ENCOUNTER_END",
-	"GARRISON_BUILDING_ACTIVATED",
-	"GARRISON_BUILDING_ERROR",
-	"GARRISON_BUILDING_LIST_UPDATE",
-	"GARRISON_BUILDING_PLACED",
-	"GARRISON_BUILDING_REMOVED",
-	"GARRISON_BUILDING_UPDATE",
-	"GARRISON_FOLLOWER_ADDED",
-	"GARRISON_FOLLOWER_CATEGORIES_UPDATED",
-	"GARRISON_FOLLOWER_LIST_UPDATE",
-	"GARRISON_FOLLOWER_REMOVED",
-	"GARRISON_FOLLOWER_XP_CHANGED",
-	"GARRISON_MISSION_BONUS_ROLL_COMPLETE",
-	"GARRISON_MISSION_BONUS_ROLL_LOOT",
-	"GARRISON_MISSION_COMPLETE_RESPONSE",
-	"GARRISON_MISSION_LIST_UPDATE",
-	"GARRISON_MISSION_NPC_OPENED",
-	"GARRISON_MISSION_STARTED",
-	"GARRISON_SHIPYARD_NPC_OPENED",
-	"GARRISON_UPDATE",
-	"GARRISON_UPGRADEABLE_RESULT",
+	-- "GARRISON_BUILDING_ACTIVATED",
+	-- "GARRISON_BUILDING_ERROR",
+	-- "GARRISON_BUILDING_LIST_UPDATE",
+	-- "GARRISON_BUILDING_PLACED",
+	-- "GARRISON_BUILDING_REMOVED",
+	-- "GARRISON_BUILDING_UPDATE",
+	-- "GARRISON_FOLLOWER_ADDED",
+	-- "GARRISON_FOLLOWER_CATEGORIES_UPDATED",
+	-- "GARRISON_FOLLOWER_LIST_UPDATE",
+	-- "GARRISON_FOLLOWER_REMOVED",
+	-- "GARRISON_FOLLOWER_XP_CHANGED",
+	-- "GARRISON_MISSION_BONUS_ROLL_COMPLETE",
+	-- "GARRISON_MISSION_BONUS_ROLL_LOOT",
+	-- "GARRISON_MISSION_COMPLETE_RESPONSE",
+	-- "GARRISON_MISSION_LIST_UPDATE",
+	-- "GARRISON_MISSION_NPC_OPENED",
+	-- "GARRISON_MISSION_STARTED",
+	-- "GARRISON_SHIPYARD_NPC_OPENED",
+	-- "GARRISON_UPDATE",
+	-- "GARRISON_UPGRADEABLE_RESULT",
 	"HEARTHSTONE_BOUND",
 	"ITEM_CHANGED",
 	"MAIL_INBOX_UPDATE",
@@ -84,7 +90,6 @@ local MyEventsTable = {
 	"PLAYER_XP_UPDATE",
 	"QUEST_LOG_UPDATE",
 	"QUEST_POI_UPDATE",
-	"QUEST_REMOVED",
 	"SHOW_LOOT_TOAST",
 	"SKILL_LINES_CHANGED",
 	"SPELLS_CHANGED",
@@ -287,8 +292,6 @@ end
 function EventFrame:PLAYER_UPDATE_RESTING()
 	E.Collect_All_PlayerInfo()
 end
-
-
 function EventFrame:QUEST_REMOVED(...)
 	local questID = ...
 	local questName = E.func_questName(questID)

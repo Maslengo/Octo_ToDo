@@ -1,6 +1,4 @@
 local GlobalAddonName, E = ...
-
-
 E.OctoTables_DataOtrisovka_OLD = {
 	-- "World of Warcraft",
 	{
@@ -80,13 +78,9 @@ E.OctoTables_DataOtrisovka_OLD = {
 			1149,
 			1416,
 			1273, -- (1273 MONETKA)
-
 			3292, -- E.func_IsRemix()
 			3268, -- E.func_IsRemix()
 			3252, -- E.func_IsRemix()
-
-
-
 			-- 3251,
 			-- 3252,
 			-- 3267,
@@ -95,9 +89,6 @@ E.OctoTables_DataOtrisovka_OLD = {
 			-- 3293,
 			-- 3364, -- WOW LEGION REMIX
 			-- 3372,
-
-
-
 		},
 	},
 	-- "Battle for Azeroth",
