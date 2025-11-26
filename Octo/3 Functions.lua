@@ -198,6 +198,7 @@ end
 local function func_itemName_CACHE(id)
 	local Cache = GetOrCreateCache("AllItems", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Items[id] = Octo_ToDo_DB_NeedToTrack.Items[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetItemNameByID(id)
@@ -224,8 +225,11 @@ function E.func_itemName(id, newQuality)
 	return result..E.debugInfo(id)
 end
 local function func_currencyName_CACHE(id)
+
+
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Currencies[id] = Octo_ToDo_DB_NeedToTrack.Currencies[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local info = GetCurrencyInfo(id)
@@ -256,8 +260,13 @@ function E.func_currencyName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_npcName_CACHE(id)
+
+
+
+
 	local Cache = GetOrCreateCache("AllNPCs", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.npcNames[id] = Octo_ToDo_DB_NeedToTrack.npcNames[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
@@ -290,8 +299,12 @@ function E.func_npcName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_questName_CACHE(id)
+
+
+
 	local Cache = GetOrCreateCache("AllQuests", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Quests[id] = Octo_ToDo_DB_NeedToTrack.Quests[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = (GetTitleForQuestID or GetQuestInfo)(id)
@@ -311,8 +324,10 @@ function E.func_questName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_reputationName_CACHE(id)
+
 	local Cache = GetOrCreateCache("AllReputations", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Reputations[id] = Octo_ToDo_DB_NeedToTrack.Reputations[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = ""
@@ -357,17 +372,17 @@ function E.func_reputationName(id)
 end
 
 function E.func_reputaionIcon(id)
-
 	return E.OctoTable_ReputationsDB[id].icon
-
 end
 
 
 
 
 local function func_spellName_CACHE(id)
+
 	local Cache = GetOrCreateCache("AllSpells", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Spells[id] = Octo_ToDo_DB_NeedToTrack.Spells[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetSpellName(id)
@@ -386,32 +401,13 @@ function E.func_spellName(id)
 	local cachedName = func_spellName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
-local function func_followerName_CACHE(id)
-	-- /run fpde(Octo_Cache_DB.AllFollowers)
-	local Cache = GetOrCreateCache("AllFollowers", id)
-	if Cache[id] and Cache[id][E.curLocaleLang] then
-		return Cache[id][E.curLocaleLang]
-	end
-	local name = GetFollowerNameByID(id)
-	if name and name ~= "" then
-		Cache[id] = Cache[id] or {}
-		Cache[id][E.curLocaleLang] = name
-		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
-			print (E.Lime_Color..COMPANIONS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
-		end
-	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
-	return vivod
-end
-function E.func_followerName(id)
-	if not id then return end
-	local cachedName = func_followerName_CACHE(id)
-	return cachedName..E.debugInfo(id)
-end
 local function func_achievementName_CACHE(id)
+
+
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllAchievements", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Achievements[id] = Octo_ToDo_DB_NeedToTrack.Achievements[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = select(2, GetAchievementInfo(id))
@@ -431,9 +427,12 @@ function E.func_achievementName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_mountName_CACHE(id)
+
+
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllMounts", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.Mounts[id] = Octo_ToDo_DB_NeedToTrack.Mounts[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetMountInfoByID(id)
@@ -467,9 +466,10 @@ function E.func_mountIsCollectedColor(id)
 	return isCollected and E.Green_Color or E.Red_Color
 end
 local function func_mapName_CACHE(id)
-	-- /run fpde(Octo_Cache_DB.AllAchievements)
+
 	local Cache = GetOrCreateCache("AllMaps", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.MapNames[id] = Octo_ToDo_DB_NeedToTrack.MapNames[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetMapInfo(id).name
@@ -1570,7 +1570,7 @@ function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 				local tooltipCENT = {}
 				local colorCENT = nil
 				local myType = {"Reputation", reputationID}
-				local tooltipKey = nil
+				local tooltipKey = "Reputation_"..reputationID
 
 				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
 			end
@@ -1590,7 +1590,22 @@ function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	----------------------------------------------------------------
 end
 
+function E.func_textCENT_Reputation(CharInfo, reputationID)
+	if not reputationID then return "" end
+	local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
 
+	local isParagonRewardEnableLEFT = ""
+	local isParagonRewardEnableRIGHT = ""
+	local textVIVOD = colorCENT..FIRST.."/"..SECOND.."|r"
+
+	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+		if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+			textVIVOD = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
+		end
+	end
+
+	return textVIVOD
+end
 
 
 function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
@@ -1823,15 +1838,6 @@ end
 
 
 
-function E.func_textCENT_Reputation(CharInfo, reputationID)
-	if not reputationID then return "" end
-	local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
-
-	return FIRST.."/"..SECOND..colorCENT.." "..standing.."|r"
-end
-
-
-
 
 
 function E.func_InitField(tbl, field, default)
@@ -1939,19 +1945,6 @@ end
 function E.debugInfo(id)
 	local result = E.DebugIDs and (E.Gray_Color.." id:"..id.."|r") or ""
 	return result
-end
-function E.func_buildIcon(id)
-	local icon = select(4, GetBuildingInfo(id))
-	return icon
-end
-function E.func_buildName(id)
-	-- local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
-	local name = select(2, GetBuildingInfo(id))
-	return name..E.debugInfo(id)
-end
-function E.func_buildRank(id)
-	local id, name, textureKit, icon, description, rank, currencyID, currencyQty, goldQty, buildTime, needsPlan, isPrebuilt, possSpecs, upgrades, canUpgrade, isMaxLevel, hasFollowerSlot = GetBuildingInfo(id)
-	return rank
 end
 function E.func_GetRealmName()
 	local result = GetRealmName()
@@ -2353,7 +2346,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		for j = 1, #Enum_Activities_table do
 			local i = Enum_Activities_table[j]
 			if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
-				-- CharInfo.MASLENGO.GreatVault[i] = CharInfo.MASLENGO.GreatVault[i] or {}
 				if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
 					if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
 						tooltipCENT[#tooltipCENT+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING}
@@ -2623,6 +2615,35 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 			end
 		end
 	----------------------------------------------------------------
+	elseif tooltipKey:find("Reputation_") then
+		local _, reputationID = strsplit("_", tooltipKey)
+		reputationID = tonumber(reputationID)
+		local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
+		local firstTEXT = E.func_texturefromIcon(E.func_reputaionIcon(reputationID))..E.func_reputationName(reputationID)
+		local secondTEXT = colorCENT..FIRST.."/"..SECOND.."|r"
+		local thirdTEXT = standing
+
+		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+			if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+				isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
+			end
+		end
+
+		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+			if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+				-- isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
+				secondTEXT = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
+			end
+		end
+
+
+
+
+
+
+		tooltipCENT[#tooltipCENT+1] = {firstTEXT}
+		tooltipCENT[#tooltipCENT+1] = {secondTEXT, thirdTEXT}
+	----------------------------------------------------------------
 	--elseif tooltipKey == "ЙЦУЙЦУ" then
 	----------------------------------------------------------------
 	--elseif tooltipKey == "ЙЦУЙЦУ" then
@@ -2633,14 +2654,6 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	return tooltipCENT
-end
-function E.func_getFollowerName(v)
-	if v.garrFollowerID and type(v.garrFollowerID) == "number" then
-		return E.func_followerName(v.garrFollowerID) or ""
-	elseif v.followerID and type(v.followerID) == "number" then
-		return E.func_followerName(v.followerID) or ""
-	end
-	return v.name or ""
 end
 ----------------------------------------------------------------
 function E.func_textCENT_Chars(CharInfo)

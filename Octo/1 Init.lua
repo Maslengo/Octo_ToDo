@@ -65,3 +65,16 @@ local dataMeta = {
 for i = 1, 14 do
 	E.OctoTables_DataOtrisovka[i] = setmetatable({}, dataMeta)
 end
+
+
+
+Octo_ToDo_DB_NeedToTrack = Octo_ToDo_DB_NeedToTrack or {}
+Octo_ToDo_DB_NeedToTrack.Items = Octo_ToDo_DB_NeedToTrack.Items or {}
+Octo_ToDo_DB_NeedToTrack.Reputations = Octo_ToDo_DB_NeedToTrack.Reputations or {}
+Octo_ToDo_DB_NeedToTrack.Currencies = Octo_ToDo_DB_NeedToTrack.Currencies or {}
+Octo_ToDo_DB_NeedToTrack.Quests = Octo_ToDo_DB_NeedToTrack.Quests or {}
+Octo_ToDo_DB_NeedToTrack.Spells = Octo_ToDo_DB_NeedToTrack.Spells or {}
+Octo_ToDo_DB_NeedToTrack.Achievements = Octo_ToDo_DB_NeedToTrack.Achievements or {}
+Octo_ToDo_DB_NeedToTrack.Mounts = Octo_ToDo_DB_NeedToTrack.Mounts or {}
+Octo_ToDo_DB_NeedToTrack.MapNames = Octo_ToDo_DB_NeedToTrack.MapNames or {}
+Octo_ToDo_DB_NeedToTrack.npcNames = Octo_ToDo_DB_NeedToTrack.npcNames or {}

@@ -5,6 +5,7 @@ function E.Collect_All_Quests()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectPlayerData or not collectMASLENGO then return end
 	wipe(collectMASLENGO.ListOfQuests)
+	wipe(collectMASLENGO.ListOfParagonQuests)
 	wipe(collectMASLENGO.OctoTable_QuestID)
 	for _, questID in ipairs(E.OctoTable_QuestID) do
 		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
@@ -27,4 +28,11 @@ function E.Collect_All_Quests()
 	end
 	collectPlayerData.numShownEntries = numShownEntries
 	collectPlayerData.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
+
+
+	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+		if E.func_IsOnQuest(questID) then
+			collectMASLENGO.ListOfParagonQuests[questID] = true
+		end
+	end
 end

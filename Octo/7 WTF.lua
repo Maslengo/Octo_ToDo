@@ -12,7 +12,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- local tblCurrencies = {}
 	local tblQuests = {}
 	local tblItems = {}
-	local tblFollowers = {}
 	-- local tblSpells = {}
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
 		-- for _, currencyID in ipairs(v.Currencies) do
@@ -60,9 +59,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 			tblQuests[info.questID] = true
 		end
 	end
-	-- local startTime = debugprofilestop()
-	-- local totalQuests = 0
-	-- local totalFollowers = 0
 	for _, CharInfo in next, Octo_ToDo_DB_Levels do
 		local MASLENGO = CharInfo.MASLENGO
 		if MASLENGO then
@@ -82,12 +78,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 			end
 		end
 	end
-	-- local endTime = debugprofilestop()
-	-- local elapsedMs = endTime - startTime
-	-- local elapsedSec = elapsedMs / 1000
-	-- print(string.format("Время выполнения: %.2f мс (%.3f сек)", elapsedMs, elapsedSec))
-	-- print("Обработано квестов:", totalQuests)
-	-- print("Обработано последователей:", totalFollowers)
 	local promise = LibThingsLoad:QuestsByKey(tblQuests)
 	promise:AddItemsByKey(tblItems)
 	-- promise:Then(function()
@@ -344,6 +334,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		journalInstance = {}, -- Инстансы из журнала
 		LFGInstance = {}, -- Данные LFG
 		ListOfQuests = {}, -- Список квестов
+		ListOfParagonQuests = {}, -- Список квестов парагона
 		OctoTable_QuestID = {}, -- Квесты по ID
 		professions = { -- Профессии
 			[1] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
@@ -497,28 +488,22 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
 	E.func_InitSubTable(Octo_Cache_DB, "AllReputations")
 	E.func_InitSubTable(Octo_Cache_DB, "AllSpells")
-	E.func_InitSubTable(Octo_Cache_DB, "AllFollowers")
 	E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
 	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
-function EventFrame:Octo_ToDo_DB_Account()
-	Octo_ToDo_DB_Account = Octo_ToDo_DB_Account or {}
-	-- E.func_InitField(Octo_ToDo_DB_Account, "lastBuildNumber", 1)
-	-- E.func_InitField(Octo_ToDo_DB_Account, "lastFaction", UNKNOWN)
-	-- E.func_InitField(Octo_ToDo_DB_Account, "lastLocaleLang", UNKNOWN)
-	-- Инициализация подтаблиц
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllItems")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllCurrencies")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllNPCs")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllQuests")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllReputations")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllSpells")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllFollowers")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllAchievements")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "AllVignettes")
-	-- E.func_InitSubTable(Octo_ToDo_DB_Account, "watchedMovies")
+function EventFrame:Octo_ToDo_DB_NeedToTrack()
+	-- Octo_ToDo_DB_NeedToTrack = Octo_ToDo_DB_NeedToTrack or {}
+	-- Octo_ToDo_DB_NeedToTrack.Items = Octo_ToDo_DB_NeedToTrack.Items or {}
+	-- Octo_ToDo_DB_NeedToTrack.Reputations = Octo_ToDo_DB_NeedToTrack.Reputations or {}
+	-- Octo_ToDo_DB_NeedToTrack.Currencies = Octo_ToDo_DB_NeedToTrack.Currencies or {}
+	-- Octo_ToDo_DB_NeedToTrack.Quests = Octo_ToDo_DB_NeedToTrack.Quests or {}
+	-- Octo_ToDo_DB_NeedToTrack.Spells = Octo_ToDo_DB_NeedToTrack.Spells or {}
+	-- Octo_ToDo_DB_NeedToTrack.Achievements = Octo_ToDo_DB_NeedToTrack.Achievements or {}
+	-- Octo_ToDo_DB_NeedToTrack.Mounts = Octo_ToDo_DB_NeedToTrack.Mounts or {}
+	-- Octo_ToDo_DB_NeedToTrack.MapNames = Octo_ToDo_DB_NeedToTrack.MapNames or {}
+	-- Octo_ToDo_DB_NeedToTrack.npcNames = Octo_ToDo_DB_NeedToTrack.npcNames or {}
 end
 function EventFrame:Daily_Reset()
 	if E.func_IsRetail() then
@@ -623,11 +608,11 @@ function E.func_CheckAll()
 	-- EventFrame:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 	-- Инициализация всех компонентов
 	EventFrame:Octo_Cache_DB() -- Кэш данных
-	EventFrame:Octo_ToDo_DB_Account() -- Данные для всего аккаунта
 	EventFrame:DatabaseTransfer() -- Перенос данных
 	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
 	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
 	EventFrame:Octo_ToDo_DB_Other() -- Другие данные
+	EventFrame:Octo_ToDo_DB_NeedToTrack() -- Нужно трекать
 	-- Применяем старые изменения
 	E.func_setOldChanges()
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
