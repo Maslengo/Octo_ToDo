@@ -225,8 +225,6 @@ function E.func_itemName(id, newQuality)
 	return result..E.debugInfo(id)
 end
 local function func_currencyName_CACHE(id)
-
-
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		Octo_ToDo_DB_NeedToTrack.Currencies[id] = Octo_ToDo_DB_NeedToTrack.Currencies[id] or true
@@ -260,10 +258,6 @@ function E.func_currencyName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_npcName_CACHE(id)
-
-
-
-
 	local Cache = GetOrCreateCache("AllNPCs", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		Octo_ToDo_DB_NeedToTrack.npcNames[id] = Octo_ToDo_DB_NeedToTrack.npcNames[id] or true
@@ -299,9 +293,6 @@ function E.func_npcName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_questName_CACHE(id)
-
-
-
 	local Cache = GetOrCreateCache("AllQuests", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		Octo_ToDo_DB_NeedToTrack.Quests[id] = Octo_ToDo_DB_NeedToTrack.Quests[id] or true
@@ -324,7 +315,6 @@ function E.func_questName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_reputationName_CACHE(id)
-
 	local Cache = GetOrCreateCache("AllReputations", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		Octo_ToDo_DB_NeedToTrack.Reputations[id] = Octo_ToDo_DB_NeedToTrack.Reputations[id] or true
@@ -370,16 +360,10 @@ function E.func_reputationName(id)
 	end
 	return sideIcon..func_reputationName_CACHE(id)..E.debugInfo(id)
 end
-
 function E.func_reputaionIcon(id)
 	return E.OctoTable_ReputationsDB[id].icon
 end
-
-
-
-
 local function func_spellName_CACHE(id)
-
 	local Cache = GetOrCreateCache("AllSpells", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		Octo_ToDo_DB_NeedToTrack.Spells[id] = Octo_ToDo_DB_NeedToTrack.Spells[id] or true
@@ -402,8 +386,6 @@ function E.func_spellName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_achievementName_CACHE(id)
-
-
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllAchievements", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -427,8 +409,6 @@ function E.func_achievementName(id)
 	return cachedName..E.debugInfo(id)
 end
 local function func_mountName_CACHE(id)
-
-
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllMounts", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -466,7 +446,6 @@ function E.func_mountIsCollectedColor(id)
 	return isCollected and E.Green_Color or E.Red_Color
 end
 local function func_mapName_CACHE(id)
-
 	local Cache = GetOrCreateCache("AllMaps", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		Octo_ToDo_DB_NeedToTrack.MapNames[id] = Octo_ToDo_DB_NeedToTrack.MapNames[id] or true
@@ -1547,11 +1526,6 @@ function E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, current
 		end
 	end
 end
-
-
-
-
-
 function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
 	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
@@ -1562,17 +1536,19 @@ function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 		local processor = reputationProcessors[reputationID]
 		if not processor then
 			processor = function(CharInfo)
-				-- local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 
+				local FIRSTrep, SECONDrep, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
+
+				-- local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
 				local textLEFT = E.func_texturefromIcon(E.func_reputaionIcon(reputationID))..E.func_reputationName(reputationID)
 				local colorLEFT = nil
 				local textCENT = E.func_textCENT_Reputation(CharInfo, reputationID)
 				local tooltipCENT = {}
-				local colorCENT = nil
-				local myType = {"Reputation", reputationID}
+				-- local colorCENT = nil
+				local myType = {}
 				local tooltipKey = "Reputation_"..reputationID
-
-				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
+				local isReputation = true
+				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			end
 			reputationProcessors[reputationID] = processor
 		end
@@ -1582,32 +1558,25 @@ function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if Octo_ToDo_DB_Vars.Reputations and Data.Reputations then
 		for i, reputationID in ipairs(Data.Reputations) do
 			textCENT = E.func_reputationName(reputationID)
-
 			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getReputationProcessor(reputationID)
-
 		end
 	end
 	----------------------------------------------------------------
 end
-
 function E.func_textCENT_Reputation(CharInfo, reputationID)
 	if not reputationID then return "" end
 	local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
-
 	local isParagonRewardEnableLEFT = ""
 	local isParagonRewardEnableRIGHT = ""
-	local textVIVOD = colorCENT..FIRST.."/"..SECOND.."|r"
-
+	-- local textVIVOD = colorCENT..FIRST.."/"..SECOND.."|r"
+	local textVIVOD = FIRST.."/"..SECOND
 	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 		if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
 			textVIVOD = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
 		end
 	end
-
 	return textVIVOD
 end
-
-
 function E.func_tooltipCurrencyAllPlayers(myType, ID, iANIMA, kCovenant)
 	local tooltip = {}
 	local total = 0
@@ -1835,11 +1804,6 @@ function E.func_textCENT_Currency(CharInfo, currencyID, itemID)
 	end
 	return result
 end
-
-
-
-
-
 function E.func_InitField(tbl, field, default)
 	if tbl[field] == nil then
 		tbl[field] = default
@@ -2622,25 +2586,17 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		local firstTEXT = E.func_texturefromIcon(E.func_reputaionIcon(reputationID))..E.func_reputationName(reputationID)
 		local secondTEXT = colorCENT..FIRST.."/"..SECOND.."|r"
 		local thirdTEXT = standing
-
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
 				isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
 			end
 		end
-
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
 				-- isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
 				secondTEXT = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
 			end
 		end
-
-
-
-
-
-
 		tooltipCENT[#tooltipCENT+1] = {firstTEXT}
 		tooltipCENT[#tooltipCENT+1] = {secondTEXT, thirdTEXT}
 	----------------------------------------------------------------

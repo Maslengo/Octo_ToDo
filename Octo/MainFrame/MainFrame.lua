@@ -51,8 +51,8 @@ local func_OnAcquiredLEFT do
 	function func_OnAcquiredLEFT(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-		local JustifyV = "MIDDLE"  -- Вертикальное выравнивание
-		local JustifyH = "LEFT"     -- Горизонтальное выравнивание
+		local JustifyV = "MIDDLE"	-- Вертикальное выравнивание
+		local JustifyH = "LEFT"		-- Горизонтальное выравнивание
 		-- Настройки фрейма
 		frame:SetPropagateMouseClicks(true)
 		frame:SetPropagateMouseMotion(true)
@@ -186,9 +186,21 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 			-- Установка цвета фона, если он задан
 			if frameData.colorCENT and frameData.colorCENT[i] then
 				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.colorCENT[i])
-				secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
 				secondFrame.ReputTextureAndBG:Show()
 				secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
+
+				if frameData.isReputation and frameData.FIRSTrep and tonumber(frameData.FIRSTrep[i]) ~= 0 then
+					local FIRSTrep = tonumber(frameData.FIRSTrep[i])
+					local SECONDrep = tonumber(frameData.SECONDrep[i])
+					if FIRSTrep == SECONDrep then
+						secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
+					elseif FIRSTrep >= 1 then
+						secondFrame.ReputTextureAndBG:SetWidth(columnWidth/SECONDrep*FIRSTrep)
+					end
+				else
+					secondFrame.ReputTextureAndBG:Hide()
+					-- secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
+				end
 			end
 			secondFrame.textCENT:SetText(textCENT)
 			-- Подсветка колонки текущего персонажа если больше 1 персонажа
@@ -341,7 +353,6 @@ function EventFrame:Octo_Create_MainFrame()
 			Octo_MainFrame_ToDo:SetAlpha(1)
 			Octo_MainFrame_ToDo:StopMovingOrSizing()
 			-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
-			-- print (point, relativePoint, xOfs, yOfs)
 		end
 	end)
 	-- Обработчик клика правой кнопкой для скрытия фрейма
@@ -403,7 +414,6 @@ local function calculateColumnWidthsLEFT(node, totalLines)
 	local sampleFrameLEFT = framesLEFT[1]
 	sampleFrameLEFT.textLEFT:SetText(frameData.textLEFT)
 	columnWidthsLEFT[1] = math.ceil(sampleFrameLEFT.textLEFT:GetStringWidth()) + INDENT_LEFT
-	-- print (sampleFrameLEFT.textLEFT:GetStringHeight())
 	return columnWidthsLEFT
 end
 -- Функция расчета ширины колонок для правой части
@@ -481,11 +491,6 @@ function EventFrame:CreateDataProvider()
 			break
 		end
 	end
-	-- if Octo_ToDo_DB_Vars.Reputations then
-	-- 	print ("Reputations")
-	-- else
-	-- 	print ("OTHER")
-	-- end
 	local totalColumns = #tbl
 	-- Обработка данных для каждой строки
 	for _, func in ipairs(E.func_Concat_Otrisovka()) do
@@ -498,22 +503,30 @@ function EventFrame:CreateDataProvider()
 			myType = {},
 			tooltipKey = {},
 			GUID = {},
+			isReputation = {},
+			FIRSTrep = {},
+			SECONDrep = {},
 		}
 		-- Заполнение данных для каждого персонажа
 		for CharIndex, CharInfo in ipairs(tbl) do
-			local _, _, textCENT, _, colorCENT = func(CharInfo)
+			local _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
 			zxc.textCENT[CharIndex] = textCENT
 			zxc.colorCENT[CharIndex] = colorCENT
 			zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
+			zxc.FIRSTrep[CharIndex] = FIRSTrep or 0
+			zxc.SECONDrep[CharIndex] = SECONDrep or 0
 		end
 		-- Заполнение данных для левой колонки (берется из первого персонажа)
 		local firstChar = tbl[1]
 		if firstChar then
-			local textLEFT, colorLEFT, _, _, _, myType, tooltipKey = func(firstChar)
+			local textLEFT, colorLEFT, _, _, _, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = func(firstChar)
 			zxc.textLEFT = textLEFT
 			zxc.colorLEFT = colorLEFT
 			zxc.myType = myType or {}
 			zxc.tooltipKey = tooltipKey
+			zxc.isReputation = isReputation or false
+			-- zxc.FIRSTrep = FIRSTrep or 0
+			-- zxc.SECONDrep = SECONDrep or 0
 		end
 		-- Установка дополнительных параметров
 		zxc.currentCharacterIndex = currentCharacterIndex
@@ -566,10 +579,6 @@ function EventFrame:CreateDataProvider()
 	end
 	local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
 	Octo_MainFrame_ToDo:SetSize(width, height)
-	-- print (E.Blue_Color.."left|r", COLUMN_SIZES_LEFT[1]+INDENT_TEST)
-	-- print (E.Red_Color.."rightChild|r", totalRightWidth_childCENT)
-	-- print (E.Gray_Color.."rightChild|r", totalRightWidth)
-	-- print (E.Purple_Color.."MainFrame|r", width)
 	Octo_MainFrame_ToDo.childCENT:SetSize(totalRightWidth_childCENT, height)
 	-- Освобождение всех фреймов из пула
 	Octo_MainFrame_ToDo.pool:ReleaseAll()

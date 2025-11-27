@@ -1,13 +1,13 @@
 ## Interface: 110205, 110200
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v102.9(11.2.5)(26.11.2025)
+## Version: v103.0(11.2.5)(27.11.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\ToDo
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_Cache_DB
 ## SavedVariables: Octo_ToDo_DB_NeedToTrack
 Libs\Libs.xml
 Templates.xml
-1 Init.lua
+1 Initialization.lua
 2 Localization.lua
 3 Functions.lua
 4 OctoTooltip.lua
