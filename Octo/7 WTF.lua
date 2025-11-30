@@ -40,7 +40,7 @@ function EventFrame:func_CreateDataCacheAtStart()
 	for _, questID in ipairs(E.OctoTable_QuestID_Paragon) do
 		tblQuests[questID] = true
 	end
-	for _, data in ipairs(E.OctoTable_UniversalQuest) do
+	for _, data in next,(E.ALL_UniversalQuests) do
 		if not data.quests then
 			break -- Пропускаем записи без квестов
 		end
@@ -442,6 +442,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		ShowIDS = true, -- Показывать ID
 		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер
+		SettingsEnabled = false,
 		-- TalentTreeTweaks = true, -- Настройки дерева талантов
 		-- TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
 		-- TalentTreeTweaks_Scale = 1, -- Масштаб дерева
@@ -517,7 +518,7 @@ function EventFrame:Daily_Reset()
 				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
 				CharInfo.PlayerData.needResetDaily = true
 				-- Сбрасываем ежедневные квесты
-				for _, data in ipairs(E.OctoTable_UniversalQuest) do
+				for _, data in next,(E.ALL_UniversalQuests) do
 					if data.reset == "Daily" then
 						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
@@ -566,7 +567,7 @@ function EventFrame:Weekly_Reset()
 				CharInfo.MASLENGO.SavedWorldBoss = {}
 				CharInfo.MASLENGO.GreatVault = {}
 				-- Сбрасываем еженедельные квесты
-				for _, data in ipairs(E.OctoTable_UniversalQuest) do
+				for _, data in next,(E.ALL_UniversalQuests) do
 					if data.reset == "Weekly" then
 						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
@@ -591,7 +592,7 @@ function EventFrame:Month_Reset()
 				CharInfo.PlayerData.tmstp_Month = tmstp_Month
 				CharInfo.PlayerData.needResetMonth = true
 				-- Сбрасываем ежемесячные квесты
-				for _, data in ipairs(E.OctoTable_UniversalQuest) do
+				for _, data in next,(E.ALL_UniversalQuests) do
 					if data.reset == "Month" then
 						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
@@ -615,10 +616,11 @@ function E.func_CheckAll()
 	EventFrame:Octo_ToDo_DB_NeedToTrack() -- Нужно трекать
 	-- Применяем старые изменения
 	E.func_setOldChanges()
-	if not E.func_ConcatAtStart_UniversalQuestQWE then
-		E.func_ConcatAtStart_UniversalQuestQWE = true
-		E.func_Universal_91_Concat()
-	end
+
+	-- if not E.func_ConcatAtStart_UniversalQuestQWE then
+	-- 	E.func_ConcatAtStart_UniversalQuestQWE = true
+	-- end
+
 	-- Очистка и сброс данных
 	EventFrame:Daily_Reset()
 	EventFrame:Weekly_Reset()

@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 2
+
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
@@ -21,8 +22,6 @@ E.OctoTables_DataOtrisovka[currentSTATE].Items = {
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[2].icon, name = E.OctoTable_Expansions[2].color..E.OctoTable_Expansions[2].name.."|r",},
-		-- ["The Burning Crusade"] = {
 	1038, --name = "Огри'ла", side = "-", category = "The Burning Crusade", }, --[faction=1038]
 	1015, --name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", }, --[faction=1015]
 	1012, --name = "Пеплоусты-служители", side = "-", category = "The Burning Crusade", }, --[faction=1012]
@@ -53,7 +52,9 @@ E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
 E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
+E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+
+}
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

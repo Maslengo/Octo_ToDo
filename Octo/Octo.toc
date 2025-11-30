@@ -1,7 +1,7 @@
 ## Interface: 110205, 110200
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r
 ## Author: Octo
-## Version: v103.0(11.2.5)(27.11.2025)
+## Version: v103.1(11.2.5)(30.11.2025)
 ## IconTexture: Interface\AddOns\Octo\Media\IconTexture\ToDo
 ## SavedVariables: Octo_ToDo_DB_Levels Octo_ToDo_DB_Vars Octo_ToDo_DB_Other Octo_Cache_DB
 ## SavedVariables: Octo_ToDo_DB_NeedToTrack
@@ -17,8 +17,6 @@ Templates.xml
 8 WTF_OLD.lua
 database\database.xml
 NEW\NEW.xml
-Otrisovka\Otrisovka.xml
-UniversalQuests\UniversalQuests.xml
 Collect\Collect.xml
 MainFrame\MainFrame.xml
 Options\Options.xml

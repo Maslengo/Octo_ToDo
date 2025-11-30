@@ -10,15 +10,15 @@ E.func_InitFrame(Octo_MainFrame_ToDo)
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
-local INDENT_TEST = 4                      		-- Отступ для текста
-local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
-local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
-local MIN_LINE_WIDTH_LEFT = 200            		-- Минимальная ширина левой колонки
-local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная ширина центральной колонки
+local INDENT_TEST = 4                              -- Отступ для текста
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT        -- Высота одной строки
+local HEADER_HEIGHT = LINE_HEIGHT*2                -- Высота заголовка
+local MIN_LINE_WIDTH_LEFT = 200                    -- Минимальная ширина левой колонки
+local MIN_LINE_WIDTH_CENT = 90                     -- Минимальная ширина центральной колонки
 local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.MonitorWidth*.8  		-- Максимальная ширина фрейма (80% экрана)
-local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
-EventFrame.COLUMNS_MAX = 113     				-- Максимальное количество колонок
+local MAX_FRAME_WIDTH = E.MonitorWidth*.8          -- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_HEIGHT = E.MonitorHeight*.6     -- Максимальная высота фрейма (60% экрана)
+EventFrame.COLUMNS_MAX = 113                     -- Максимальное количество колонок
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1  -- Цвет границы (черный)
@@ -51,8 +51,8 @@ local func_OnAcquiredLEFT do
 	function func_OnAcquiredLEFT(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-		local JustifyV = "MIDDLE"	-- Вертикальное выравнивание
-		local JustifyH = "LEFT"		-- Горизонтальное выравнивание
+		local JustifyV = "MIDDLE"    -- Вертикальное выравнивание
+		local JustifyH = "LEFT"        -- Горизонтальное выравнивание
 		-- Настройки фрейма
 		frame:SetPropagateMouseClicks(true)
 		frame:SetPropagateMouseMotion(true)
@@ -69,11 +69,25 @@ local func_OnAcquiredLEFT do
 		frameFULL:SetPoint("TOP", frame)
 		frameFULL:SetPoint("BOTTOM", frame)
 		frameFULL:SetPoint("RIGHT")
+		------------------------------------------------
+		frame.icon_settings = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+		frame.icon_settings:SetPoint("TOPLEFT", 1, -1)
+		frame.icon_settings:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
+		frame.icon_settings:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		-- frame.icon_settings:RegisterForClicks("LeftButtonUp")
+		-- frame.icon_settings:EnableMouse(true)
+		------------------------------------------------
+		------------------------------------------------
+		frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+		frame.icon_1:SetPoint("TOPLEFT", 1, -1)
+		frame.icon_1:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
+		frame.icon_1:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
+		------------------------------------------------
 		frame.frameFULL = frameFULL
 		-- Текстовое поле для левой колонки
 		frame.textLEFT = frame:CreateFontString()
 		frame.textLEFT:SetFontObject(OctoFont11)
-		frame.textLEFT:SetPoint("LEFT", INDENT_TEST+0, 0)
+		frame.textLEFT:SetPoint("LEFT", LINE_HEIGHT+INDENT_TEST+0, 0)
 		frame.textLEFT:SetWidth(INDENT_TEST+MIN_LINE_WIDTH_LEFT)
 		frame.textLEFT:SetWordWrap(false)
 		frame.textLEFT:SetJustifyV(JustifyV)
@@ -86,10 +100,10 @@ local func_OnAcquiredLEFT do
 		frame.textureLEFT:SetTexture(E.TEXTURE_LEFT_PATH)
 		-- Обработчики событий показа/скрытия фрейма
 		frame:SetScript("OnHide", function()
-			frame.frameFULL:Hide()
+				frame.frameFULL:Hide()
 		end)
 		frame:SetScript("OnShow", function()
-			frame.frameFULL:Show()
+				frame.frameFULL:Show()
 		end)
 		-- Обработчик наведения курсора для отображения тултипа
 		frame:SetScript("OnEnter", func_OnEnter)
@@ -103,48 +117,85 @@ local func_OnAcquiredCENT do
 		frame:SetPropagateMouseClicks(true)
 		-- Создание метатаблицы для динамического создания подфреймов
 		frame.second = setmetatable({}, {
-			__index = function(self, key)
-				if key then
-					-- Создание нового подфрейма для колонки
-					local f = CreateFrame("BUTTON", nil, frame)
-					f:SetPropagateMouseClicks(true)
-					f:SetPropagateMouseMotion(true)
-					f:SetHeight(LINE_HEIGHT)
-					f:SetHitRectInsets(1, 1, 1, 1)
-					f:SetPoint("LEFT", frame, "LEFT", 0, 0)
-					-- Текстура для фона текущего персонажа
-					f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-					f.curCharTextureBG:SetAllPoints()
-					f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-					f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
-					f.curCharTextureBG:Hide()
-					-- Текстура для фона репутации
-					f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
-					f.ReputTextureAndBG:SetPoint("LEFT")
-					f.ReputTextureAndBG:SetHeight(LINE_HEIGHT)
-					f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-					-- Текстовое поле для центральной колонки
-					f.textCENT = f:CreateFontString()
-					f.textCENT:SetFontObject(OctoFont11)
-					f.textCENT:SetAllPoints()
-					f.textCENT:SetWordWrap(false)
-					f.textCENT:SetJustifyV("MIDDLE")
-					f.textCENT:SetJustifyH("CENTER")
-					f.textCENT:SetTextColor(textR, textG, textB, textA)
-					-- f:SetScript("OnEnter", E.func_OctoTooltip_OnEnter)
-					-- Обработчики скрытия
-					f:SetScript("OnHide", f.Hide)
-					f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
-					rawset(self, key, f)
-					return f
+				__index = function(self, key)
+					if key then
+						-- Создание нового подфрейма для колонки
+						local f = CreateFrame("BUTTON", nil, frame)
+						f:SetPropagateMouseClicks(true)
+						f:SetPropagateMouseMotion(true)
+						f:SetHeight(LINE_HEIGHT)
+						f:SetHitRectInsets(1, 1, 1, 1)
+						f:SetPoint("LEFT", frame, "LEFT", 0, 0)
+						-- Текстура для фона текущего персонажа
+						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+						f.curCharTextureBG:SetAllPoints()
+						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
+						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
+						f.curCharTextureBG:Hide()
+						-- Текстура для фона репутации
+						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
+						f.ReputTextureAndBG:SetPoint("LEFT")
+						f.ReputTextureAndBG:SetHeight(LINE_HEIGHT)
+						f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
+						-- Текстовое поле для центральной колонки
+						f.textCENT = f:CreateFontString()
+						f.textCENT:SetFontObject(OctoFont11)
+						f.textCENT:SetAllPoints()
+						f.textCENT:SetWordWrap(false)
+						f.textCENT:SetJustifyV("MIDDLE")
+						f.textCENT:SetJustifyH("CENTER")
+						f.textCENT:SetTextColor(textR, textG, textB, textA)
+						-- f:SetScript("OnEnter", E.func_OctoTooltip_OnEnter)
+						-- Обработчики скрытия
+						f:SetScript("OnHide", f.Hide)
+						f.curCharTextureBG:SetScript("OnHide", f.curCharTextureBG.Hide)
+						rawset(self, key, f)
+						return f
+					end
 				end
-			end
 		})
 	end
 end
+
+
+
+
+function E.func_icon_settings_OnEnter(frame)
+		frame:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen")
+end
+function E.func_icon_settings_OnLeave(frame)
+		frame:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred")
+end
+
+-- function E.func_icon_settings_OnClick(frame)
+-- 		frame:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFyellow")
+-- end
+
 -- Функция инициализации данных для левой колонки
 function EventFrame:Octo_Frame_initLEFT(frame, node)
 	local frameData = node:GetData()
+	if frameData.iconLEFT then
+		frame.icon_1:SetTexture(frameData.iconLEFT)
+	else
+		frame.icon_1:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
+	end
+	if Octo_ToDo_DB_Vars.SettingsEnabled then
+		frame.icon_settings:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred")
+		frame.icon_1:Hide()
+		frame.icon_settings:Show()
+	else
+		frame.icon_1:Show()
+		frame.icon_settings:Hide()
+	end
+
+
+	if frame.icon_settings:IsShown() then
+		frame.icon_settings:SetScript("OnEnter", E.func_icon_settings_OnEnter)
+		frame.icon_settings:SetScript("OnLeave", E.func_icon_settings_OnLeave)
+		-- frame.icon_settings:SetScript("OnClick", E.func_icon_settings_OnClick)
+	end
+
+
 	-- Обновление размеров колонки, если они были изменены
 	if EventFrame.COLUMN_SIZES_LEFT and EventFrame.COLUMN_SIZES_LEFT[1] then
 		local newLeftWidth = EventFrame.COLUMN_SIZES_LEFT[1]
@@ -188,7 +239,6 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.colorCENT[i])
 				secondFrame.ReputTextureAndBG:Show()
 				secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
-
 				if frameData.isReputation and frameData.FIRSTrep and tonumber(frameData.FIRSTrep[i]) ~= 0 then
 					local FIRSTrep = tonumber(frameData.FIRSTrep[i])
 					local SECONDrep = tonumber(frameData.SECONDrep[i])
@@ -216,17 +266,17 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 		end
 		-- Установка тултипа для колонки, если он есть
 		-- if frameData.tooltipCENT and frameData.tooltipCENT[i] then
-		-- 	secondFrame.tooltip = frameData.tooltipCENT[i]
+		--     secondFrame.tooltip = frameData.tooltipCENT[i]
 		-- else
-		-- 	secondFrame.tooltip = nil
+		--     secondFrame.tooltip = nil
 		-- end
 		secondFrame:SetScript("OnEnter", function()
-			if frameData.tooltipKey and frameData.GUID[i] then
-				secondFrame.tooltip = E.func_KeyTooltip(frameData.GUID[i], frameData.tooltipKey)
-			else
-				secondFrame.tooltip = nil
-			end
-			E.func_OctoTooltip_OnEnter(secondFrame)
+				if frameData.tooltipKey and frameData.GUID[i] then
+					secondFrame.tooltip = E.func_KeyTooltip(frameData.GUID[i], frameData.tooltipKey)
+				else
+					secondFrame.tooltip = nil
+				end
+				E.func_OctoTooltip_OnEnter(secondFrame)
 		end)
 		secondFrame:Show()
 	end
@@ -240,9 +290,9 @@ function EventFrame:Octo_Create_MainFrame()
 	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.MonitorWidth*.05)
 	Octo_MainFrame_ToDo:SetPoint("CENTER")
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
-		RequestRaidInfo()
-		E.func_Collect_All()
-		EventFrame:CreateDataProvider()
+			RequestRaidInfo()
+			E.func_Collect_All()
+			EventFrame:CreateDataProvider()
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
 	local NumPlayers = math_min(E.func_NumPlayers(), EventFrame.COLUMNS_MAX)
@@ -292,7 +342,7 @@ function EventFrame:Octo_Create_MainFrame()
 	HorizontalScrollBar:SetPoint("TOPRIGHT", barPanelScroll, "BOTTOMRIGHT")
 	-- Обработчик прокрутки
 	HorizontalScrollBar:RegisterCallback(HorizontalScrollBar.Event.OnScroll, function(_, scrollPercentage)
-		barPanelScroll:SetHorizontalScroll(scrollPercentage * barPanelScroll:GetHorizontalScrollRange())
+			barPanelScroll:SetHorizontalScroll(scrollPercentage * barPanelScroll:GetHorizontalScrollRange())
 	end)
 	HorizontalScrollBar:SetHideIfUnscrollable(true)
 	-- Создание дочернего фрейма для центральной части
@@ -343,17 +393,17 @@ function EventFrame:Octo_Create_MainFrame()
 	Octo_MainFrame_ToDo:SetMovable(true)
 	-- Обработчики перемещения фрейма
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
-		if button == "LeftButton" then
-			Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
-			Octo_MainFrame_ToDo:StartMoving()
-		end
+			if button == "LeftButton" then
+				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				Octo_MainFrame_ToDo:StartMoving()
+			end
 	end)
 	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
-		if button == "LeftButton" then
-			Octo_MainFrame_ToDo:SetAlpha(1)
-			Octo_MainFrame_ToDo:StopMovingOrSizing()
-			-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
-		end
+			if button == "LeftButton" then
+				Octo_MainFrame_ToDo:SetAlpha(1)
+				Octo_MainFrame_ToDo:StopMovingOrSizing()
+				-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
+			end
 	end)
 	-- Обработчик клика правой кнопкой для скрытия фрейма
 	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp")
@@ -370,8 +420,8 @@ function EventFrame:Octo_Create_MainFrame()
 	HeaderFrameLEFT.text:SetTextColor(textR, textG, textB, textA)
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
-		-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
-		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r  ")
+			-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
+			HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r  ")
 	end)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
@@ -413,7 +463,7 @@ local function calculateColumnWidthsLEFT(node, totalLines)
 	local columnHeightsLEFT = {}
 	local sampleFrameLEFT = framesLEFT[1]
 	sampleFrameLEFT.textLEFT:SetText(frameData.textLEFT)
-	columnWidthsLEFT[1] = math.ceil(sampleFrameLEFT.textLEFT:GetStringWidth()) + INDENT_LEFT
+	columnWidthsLEFT[1] = math.ceil(sampleFrameLEFT.textLEFT:GetStringWidth()) + INDENT_LEFT + LINE_HEIGHT -- (иконка)
 	return columnWidthsLEFT
 end
 -- Функция расчета ширины колонок для правой части
@@ -439,9 +489,9 @@ local function calculateColumnWidthsRIGHT(node, totalLines)
 		if frameData.textCENT[i] then
 			sampleFrameCENT.second[i].textCENT:SetText(frameData.textCENT[i])
 			columnWidthsRIGHT[i] = math.ceil(math_max(
-							sampleFrameCENT.second[i].textCENT:GetStringWidth() + 10,
-							MIN_LINE_WIDTH_CENT
-						))
+					sampleFrameCENT.second[i].textCENT:GetStringWidth() + 10,
+					MIN_LINE_WIDTH_CENT
+			))
 		else
 			columnWidthsRIGHT[i] = MIN_LINE_WIDTH_CENT
 		end
@@ -452,27 +502,35 @@ end
 -- Функция для объединения таблиц отрисовки
 ----------------------------------------------------------------
 function E.func_Concat_Otrisovka()
-	local tbl = {}
-	-- Объединяем таблицы для каждого дополнения в обратном порядке (от нового к старому)
-	E.func_TableConcat(tbl, E.func_Otrisovka_14_Legion_Remix())
-	E.func_TableConcat(tbl, E.func_Otrisovka_13_TheLastTitan())
-	E.func_TableConcat(tbl, E.func_Otrisovka_12_Midnight())
-	E.func_TableConcat(tbl, E.func_Otrisovka_11_TheWarWithin())
-	E.func_TableConcat(tbl, E.func_Otrisovka_10_Dragonflight())
-	E.func_TableConcat(tbl, E.func_Otrisovka_09_Shadowlands())
-	E.func_TableConcat(tbl, E.func_Otrisovka_08_BattleforAzeroth())
-	E.func_TableConcat(tbl, E.func_Otrisovka_07_Legion())
-	E.func_TableConcat(tbl, E.func_Otrisovka_06_WarlordsofDraenor())
-	E.func_TableConcat(tbl, E.func_Otrisovka_05_MistsofPandaria())
-	E.func_TableConcat(tbl, E.func_Otrisovka_04_Cataclysm())
-	E.func_TableConcat(tbl, E.func_Otrisovka_03_WrathoftheLichKing())
-	E.func_TableConcat(tbl, E.func_Otrisovka_02_TheBurningCrusade())
-	E.func_TableConcat(tbl, E.func_Otrisovka_01_WorldofWarcraft())
-	-- Добавляем праздники и другие данные
-	E.func_TableConcat(tbl, E.func_Otrisovka_90_Holidays())
-	E.func_TableConcat(tbl, E.func_Otrisovka_91_Other())
-	return tbl
+	print (E.Blue_Color.. "E.func_Concat_Otrisovka()|r")
+	wipe(E.ALL_Currencies)
+	wipe(E.ALL_Items)
+	wipe(E.ALL_Reputations)
+	wipe(E.ALL_UniversalQuests)
+	wipe(E.ALL_Additionally)
+
+	local OctoTable_Otrisovka_textCENT = {}
+
+	for currentSTATE, value in next,(E.OctoTables_Vibor) do
+		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
+		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
+		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
+		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
+		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[currentSTATE].Additionally)
+
+		if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+			E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, currentSTATE) -- РАЗДЕЛИТЬ ОТДЕЛЬНО (ПОФИКСИТЬ)
+			E.func_Otrisivka_ITEMS(OctoTable_Otrisovka_textCENT, currentSTATE) -- РАЗДЕЛИТЬ ОТДЕЛЬНО (ПОФИКСИТЬ)
+			E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+			E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
+		end
+	end
+	-- print (E.func_EventName(479))
+	-- print (Octo_Cache_DB.AllEvents[479][E.curLocaleLang])
+	return OctoTable_Otrisovka_textCENT
 end
+
+
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	-- EventFrame.COLUMN_SIZES_LEFT = EventFrame.COLUMN_SIZES_LEFT or {}
@@ -496,6 +554,7 @@ function EventFrame:CreateDataProvider()
 	for _, func in ipairs(E.func_Concat_Otrisovka()) do
 		totalLines = totalLines + 1
 		local zxc = {
+			iconLEFT = {},
 			textLEFT = {},
 			colorLEFT = {},
 			textCENT = {},
@@ -509,7 +568,7 @@ function EventFrame:CreateDataProvider()
 		}
 		-- Заполнение данных для каждого персонажа
 		for CharIndex, CharInfo in ipairs(tbl) do
-			local _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
+			local _, _, _, textCENT, tooltipCENT, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
 			zxc.textCENT[CharIndex] = textCENT
 			zxc.colorCENT[CharIndex] = colorCENT
 			zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
@@ -519,14 +578,13 @@ function EventFrame:CreateDataProvider()
 		-- Заполнение данных для левой колонки (берется из первого персонажа)
 		local firstChar = tbl[1]
 		if firstChar then
-			local textLEFT, colorLEFT, _, _, _, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = func(firstChar)
-			zxc.textLEFT = textLEFT
-			zxc.colorLEFT = colorLEFT
+			local iconLEFT, textLEFT, colorLEFT, _, tooltipCENT, _, myType, tooltipKey, isReputation = func(firstChar)
+			zxc.iconLEFT = iconLEFT
+			zxc.textLEFT = textLEFT or "NONE"
+			zxc.colorLEFT = colorLEFT or E.Blue_Color
 			zxc.myType = myType or {}
 			zxc.tooltipKey = tooltipKey
 			zxc.isReputation = isReputation or false
-			-- zxc.FIRSTrep = FIRSTrep or 0
-			-- zxc.SECONDrep = SECONDrep or 0
 		end
 		-- Установка дополнительных параметров
 		zxc.currentCharacterIndex = currentCharacterIndex
@@ -616,8 +674,8 @@ function EventFrame:CreateDataProvider()
 		HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
-			HeaderFrameRIGHT.tooltip = E.func_Tooltip_Chars(CharInfo)
-			E.func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
+				HeaderFrameRIGHT.tooltip = E.func_Tooltip_Chars(CharInfo)
+				E.func_OctoTooltip_OnEnter(HeaderFrameRIGHT, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 		HeaderFrameRIGHT:Show()
 	end
@@ -635,8 +693,8 @@ function EventFrame:CreateDataProvider()
 	end
 	-- Ресет скроллбара
 	-- C_Timer.After(0, function()
-	-- 	EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
-	-- 	Octo_MainFrame_ToDo.ScrollBoxCENT:ScrollToElementDataIndex(1)
+	--     EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
+	--     Octo_MainFrame_ToDo.ScrollBoxCENT:ScrollToElementDataIndex(1)
 	-- end)
 end
 -- Функция переключения видимости главного фрейма

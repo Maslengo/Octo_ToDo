@@ -1,33 +1,15 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-function E.func_Universal_91_Concat()
-	-- E.func_TableConcat(E.OctoTable_UniversalQuest, E.func_Universal_90_Other())
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[1].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[2].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[3].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[4].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[5].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[6].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[7].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[8].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[9].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[10].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[11].UniversalQuests)
-	-- E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[12].UniversalQuests)
-	-- E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[13].UniversalQuests)
-	E.func_TableConcat(E.OctoTable_UniversalQuest, E.OctoTables_DataOtrisovka[14].UniversalQuests)
-end
 function E.Collect_All_UNIVERSALQuestUpdate()
 	if E.func_SpamBlock("Collect_All_UNIVERSALQuestUpdate") then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	if not E.func_ConcatAtStart_UniversalQuestQWE then
 		E.func_ConcatAtStart_UniversalQuestQWE = true
-		E.func_Universal_91_Concat()
 	end
 	local hasDataToSave = false
 	local tempUniversalQuest = {}
-	for _, data in ipairs(E.OctoTable_UniversalQuest) do
+	for _, data in next,(E.ALL_UniversalQuests) do
 		if not data.quests then
 			break
 		end

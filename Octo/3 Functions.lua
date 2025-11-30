@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
 local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local strsplit = strsplit
 local table_sort = table.sort
 local table_insert = table.insert
 local table_concat = table.concat
@@ -101,12 +102,16 @@ local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMember
 local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
 local GetSecondsUntilWeeklyReset = GetSecondsUntilWeeklyReset or C_DateAndTime.GetSecondsUntilWeeklyReset
 local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
+local GetHolidayInfo = C_Calendar.GetHolidayInfo
+local GetDayEvent = C_Calendar.GetDayEvent
+local GetMonthInfo = C_Calendar.GetMonthInfo
+local SetAbsMonth = C_Calendar.SetAbsMonth
 local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
-local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
 local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
 local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
 local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
+local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
 -- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
 local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
 local classR, classG, classB = GetClassColor(E.classFilename)
@@ -195,6 +200,9 @@ local function GetOrCreateCache(category, id)
 	-- Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
 	return Octo_Cache_DB[category]
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_itemName_CACHE(id)
 	local Cache = GetOrCreateCache("AllItems", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -218,12 +226,16 @@ function E.func_itemName(id, newQuality)
 	if newQuality then
 		quality = newQuality
 	end
-	local icon = E.func_texturefromIcon(E.func_GetItemIconByID(id)) or ""
+	-- local icon = E.func_texturefromIcon(E.func_GetItemIconByID(id)) or ""
 	local colorHex = ITEM_QUALITY_COLORS[quality].hex
 	local name = func_itemName_CACHE(id)
-	local result = icon..colorHex..name.."|r"
+	-- local result = icon..colorHex..name.."|r"
+	local result = colorHex..name.."|r"
 	return result..E.debugInfo(id)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_currencyName_CACHE(id)
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -245,18 +257,22 @@ local function func_currencyName_CACHE(id)
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"..WarbandIcon
-		-- if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
+		if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
-		-- end
+		end
 	end
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
 function E.func_currencyName(id)
 	if not id then return end
-	local cachedName = (E.func_texturefromIcon(E.func_GetCurrencyIcon(id)) or "")..func_currencyName_CACHE(id)
+	-- local cachedName = (E.func_texturefromIcon(E.func_GetCurrencyIcon(id)) or "")..func_currencyName_CACHE(id)
+	local cachedName = func_currencyName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_npcName_CACHE(id)
 	local Cache = GetOrCreateCache("AllNPCs", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -292,6 +308,9 @@ function E.func_npcName(id)
 	local cachedName = func_npcName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_questName_CACHE(id)
 	local Cache = GetOrCreateCache("AllQuests", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -314,6 +333,9 @@ function E.func_questName(id)
 	local cachedName = func_questName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_reputationName_CACHE(id)
 	local Cache = GetOrCreateCache("AllReputations", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -363,6 +385,9 @@ end
 function E.func_reputaionIcon(id)
 	return E.OctoTable_ReputationsDB[id].icon
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_spellName_CACHE(id)
 	local Cache = GetOrCreateCache("AllSpells", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -385,6 +410,9 @@ function E.func_spellName(id)
 	local cachedName = func_spellName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_achievementName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllAchievements", id)
@@ -408,6 +436,9 @@ function E.func_achievementName(id)
 	local cachedName = func_achievementName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_mountName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllMounts", id)
@@ -445,6 +476,9 @@ function E.func_mountIsCollectedColor(id)
 	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
 	return isCollected and E.Green_Color or E.Red_Color
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function func_mapName_CACHE(id)
 	local Cache = GetOrCreateCache("AllMaps", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -486,6 +520,98 @@ function E.func_GetMapNameFromID(id)
 	end
 	return info.name, ""
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+function E.Cache_All_EventNames_Year()
+	if not GetNumDayEvents then return end
+	local currentYear = GetCurrentCalendarTime().year
+
+	for month = 1, 12 do
+		local monthInfo = GetMonthInfo(month, currentYear)
+		if not monthInfo then break end
+		SetAbsMonth(month, currentYear)
+
+		for day = 1, monthInfo.numDays do
+			local numEvents = GetNumDayEvents(0, day)
+			for i = 1, numEvents do
+				local event = GetDayEvent(0, day, i)
+				if not event or event.calendarType ~= "HOLIDAY" then break end
+
+				-- сразу в кэш для func_EventName
+				local Cache = GetOrCreateCache("AllEvents", event.eventID)
+				Cache[event.eventID] = Cache[event.eventID] or {}
+				Cache[event.eventID][E.curLocaleLang] = event.title
+			end
+		end
+	end
+end
+
+
+
+
+do
+	C_Timer.After(1, E.Cache_All_EventNames_Year)
+end
+
+
+
+local function func_EventName_CACHE(id)
+	-- E.Cache_All_EventNames_Year()
+	local Cache = GetOrCreateCache("AllEvents", id)
+
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		Octo_ToDo_DB_NeedToTrack.EventNames[id] = Octo_ToDo_DB_NeedToTrack.EventNames[id] or true
+		print (E.Green_Color..Cache[id][E.curLocaleLang].."|r")
+		return Cache[id][E.curLocaleLang]
+	end
+	local name
+
+	if not E.Holiday or next(E.Holiday) == nil then
+		if E.Collect_All_Holiday then
+			pcall(E.Collect_All_Holiday)
+		end
+	end
+
+	for eventKey, v in next, (E.Holiday) do
+		if id == v.eventID then
+			print (v.title)
+			name = v.title or ""
+		end
+	end
+
+	if not name or name == "" then
+		-- print (id, E.Red_Color..UNKNOWN.."|r")
+		return E.Red_Color..UNKNOWN.."|r"
+	end
+
+	Cache[id] = Cache[id] or {}
+	Cache[id][E.curLocaleLang] = name
+	if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
+		print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
+	end
+
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	return vivod
+end
+function E.func_EventName(id)
+	if not id then return end
+	local cachedName = func_EventName_CACHE(id)
+	return cachedName..E.debugInfo(id)
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E.func_ProfessionName(id)
+	if not id then return end
+	local result = GetTradeSkillDisplayName(id) or E.Red_Color..UNKNOWN.."|r"
+	return result..E.debugInfo(id)
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_IsAccountQuest(questID)
 	return IsAccountQuest(questID)
 end
@@ -677,7 +803,7 @@ function E.func_CompactNumberFormat(num)
 	num = num or 0
 	-- Полный формат с разделителями
 	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 3 then
-		return FormatWithSeparators(math.floor(num + 0.5))
+		return FormatWithSeparators(math_floor(num + 0.5))
 	end
 	local locale
 	local suffixes
@@ -733,16 +859,16 @@ function E.func_CompactNumberRound(number)
 	end
 end
 function E.func_SecondsToClock(time, showSecond)
-	time = tonumber(time) or 0
+	local time = tonumber(time) or 0
 	if time <= 0 then
 		return ""
 	end
-	local years = floor(time / 31536000)
-	local days = floor(time % 31536000 / 86400)
-	local hours = floor(time % 86400 / 3600)
-	local mins = floor(time % 3600 / 60)
-	local secs = floor(time % 60)
-	local ms = time - floor(time)
+	local years = math_floor(time / 31536000)
+	local days = math_floor(time % 31536000 / 86400)
+	local hours = math_floor(time % 86400 / 3600)
+	local mins = math_floor(time % 3600 / 60)
+	local secs = math_floor(time % 60)
+	local ms = time - math_floor(time)
 	local parts = {}
 	if years > 0 then
 		table_insert(parts, years..(L["time_YEAR"] or "y").." ")
@@ -855,7 +981,7 @@ function E.func_CurServerShort(text)
 end
 E.curServerShort = E.func_CurServerShort(GetRealmName())
 function E.func_GetCoord(x, y)
-	return floor(x * 10000 + 0.5) * 10000 + floor(y * 10000 + 0.5)
+	return math_floor(x * 10000 + 0.5) * 10000 + math_floor(y * 10000 + 0.5)
 end
 function E.func_GetCoordFormated(x, y)
 	if not x or not y then return "" end
@@ -976,25 +1102,6 @@ function E.func_CurrentExpansion()
 		return 1
 	end
 end
-function E.func_EventName(id)
-	if not id then return end
-	local monthDay = GetCurrentCalendarTime().monthDay
-	local month = 0
-	local numEvents = GetNumDayEvents(month, monthDay)
-	for i = 1, numEvents do
-		local event = GetDayEvent(month, monthDay, i)
-		if event.eventID == id then
-			local result = event.title
-			return result..E.debugInfo(id)
-		end
-	end
-	return nil
-end
-function E.func_ProfessionName(id)
-	if not id then return end
-	local result = GetTradeSkillDisplayName(id) or E.Red_Color..UNKNOWN.."|r"
-	return result..E.debugInfo(id)
-end
 function E.func_ProfessionIcon(skillLine)
 	return skillLine and E.func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
 end
@@ -1022,15 +1129,15 @@ function E.func_FriendsFrame_GetLastOnline(timeDiff, isAbsolute)
 	if timeDiff < SECONDS_PER_MIN then
 		return LASTONLINE_SECS
 	elseif timeDiff < SECONDS_PER_HOUR then
-		return format(LASTONLINE_MINUTES, floor(timeDiff / SECONDS_PER_MIN))
+		return format(LASTONLINE_MINUTES, math_floor(timeDiff / SECONDS_PER_MIN))
 	elseif timeDiff < SECONDS_PER_DAY then
-		return format(LASTONLINE_HOURS, floor(timeDiff / SECONDS_PER_HOUR))
+		return format(LASTONLINE_HOURS, math_floor(timeDiff / SECONDS_PER_HOUR))
 	elseif timeDiff < SECONDS_PER_MONTH then
-		return format(LASTONLINE_DAYS, floor(timeDiff / SECONDS_PER_DAY))
+		return format(LASTONLINE_DAYS, math_floor(timeDiff / SECONDS_PER_DAY))
 	elseif timeDiff < SECONDS_PER_YEAR then
-		return format(LASTONLINE_MONTHS, floor(timeDiff / SECONDS_PER_MONTH))
+		return format(LASTONLINE_MONTHS, math_floor(timeDiff / SECONDS_PER_MONTH))
 	else
-		return format(LASTONLINE_YEARS, floor(timeDiff / SECONDS_PER_YEAR))
+		return format(LASTONLINE_YEARS, math_floor(timeDiff / SECONDS_PER_YEAR))
 	end
 end
 function E.func_TableConcat(table1, table2)
@@ -1118,6 +1225,7 @@ function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
+						Octo_ToDo_DB_Vars.SettingsEnabled = false
 						if func then func() end
 						if frame then
 							frame:SetShown(not frame:IsShown())
@@ -1414,11 +1522,11 @@ function E.func_Universal(tbl, DESCRIPT)
 	-- else
 	-- 	return
 	-- end
-	for _, data in ipairs(E.OctoTable_UniversalQuest) do
+	for _, data in next,(E.ALL_UniversalQuests) do
 		-- if data.quests and descSTR == data.desc then
 		if data.quests and DESCRIPT == data.desc then
 			table_insert(tbl, function(CharInfo)
-					local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
 					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 					tooltipKey = questKey
 					local showTooltip = data.showTooltip or false
@@ -1455,16 +1563,93 @@ function E.func_Universal(tbl, DESCRIPT)
 						end
 					end
 					-- colorLEFT = expColor
-					return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
+					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			end)
 		end
 	end
 end
-function E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+
+
+function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
 	if not (Octo_ToDo_DB_Vars.Currencies or Octo_ToDo_DB_Vars.Items) then return end
-	local itemProcessors = setmetatable({}, {__mode = "v"})
 	local currencyProcessors = setmetatable({}, {__mode = "v"})
+	local expansionData = E.OctoTable_Expansions[currentSTATE]
+	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
+	if not Data then return end
+	-- local func_textCENT_Items = function(...) return E.func_textCENT_Items(...) end
+	-- local func_itemName = function(...) return E.func_itemName(...) end
+	-- local func_GetItemIconByID = function(...) return E.func_GetItemIconByID(...) end
+	-- local func_textCENT_Currency = function(...) return E.func_textCENT_Currency(...) end
+	-- local func_currencyName = function(...) return E.func_currencyName(...) end
+	-- local func_GetCurrencyIcon = function(...) return E.func_GetCurrencyIcon(...) end
+	local Purple_Color = E.Purple_Color
+
+	local function getCurrencyProcessor(currencyID)
+		local processor = currencyProcessors[currencyID]
+		if not processor then
+			processor = function(CharInfo)
+
+				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+
+				iconLEFT = E.func_GetCurrencyIcon(currencyID)
+				textLEFT = E.func_currencyName(currencyID)
+				colorLEFT = E.TheBurningCrusade_Color or expansionData.color
+				textCENT = E.func_textCENT_Currency(CharInfo, currencyID)
+				-- tooltipCENT =
+				-- colorCENT =
+				myType = {"Currency", currencyID}
+				-- tooltipKey =
+				-- isReputation =
+				-- FIRSTrep =
+				-- SECONDrep =
+				if currencyID == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
+					textCENT = string_format("%s%s +%d|r", textCENT, Purple_Color, CharInfo.PlayerData.Possible_CatalogedResearch)
+				end
+				if currencyID == 824 then
+					tooltipKey = "WoD_824"
+					local GARRISON_RESOURCE_ID = 824
+					local RESOURCE_GENERATION_INTERVAL = 600  -- 10 minutes in seconds
+					local RESOURCES_PER_INTERVAL = 1
+					local MAX_CACHE_SIZE = 500
+					if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
+						local color = E.Gray_Color
+						local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
+						local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
+						local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
+						local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
+						local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
+						local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
+						local timeToNextCurrency = RESOURCE_GENERATION_INTERVAL - (GetServerTime() - lastCacheTime) % RESOURCE_GENERATION_INTERVAL
+						if earnedSinceLastCollect > 0 then
+							if earnedSinceLastCollect >= 5 then
+								color = (earnedSinceLastCollect == cacheSize) and E.Purple_Color or E.Yellow_Color
+							end
+							textCENT = textCENT .. color .. " +" .. earnedSinceLastCollect .. "|r"
+						end
+					end
+
+				end
+				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+
+			end
+			currencyProcessors[currencyID] = processor
+		end
+		return processor
+	end
+	if Octo_ToDo_DB_Vars.Currencies and Data.Currencies then
+		for _, currencyID in ipairs(Data.Currencies) do
+			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getCurrencyProcessor(currencyID)
+		end
+	end
+end
+
+
+
+function E.func_Otrisivka_ITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
+	if not Octo_ToDo_DB_Vars.Items then return end
+	local itemProcessors = setmetatable({}, {__mode = "v"})
 	local expansionData = E.OctoTable_Expansions[currentSTATE]
 	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
 	if not Data then return end
@@ -1479,33 +1664,25 @@ function E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, current
 		local processor = itemProcessors[itemID]
 		if not processor then
 			processor = function(CharInfo)
-				return E.func_itemName(itemID),
-				E.TheBurningCrusade_Color or expansionData.color,
-				E.func_textCENT_Items(CharInfo, itemID),
-				{},
-				nil,
-				{"Item", itemID}
+
+				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+
+				iconLEFT = E.func_GetItemIconByID(itemID)
+				textLEFT = E.func_itemName(itemID)
+				colorLEFT = E.TheBurningCrusade_Color or expansionData.color
+				textCENT = E.func_textCENT_Items(CharInfo, itemID)
+				-- tooltipCENT =
+				-- colorCENT =
+				myType = {"Item", itemID}
+				-- tooltipKey =
+				-- isReputation =
+				-- FIRSTrep =
+				-- SECONDrep =
+
+				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+
 			end
 			itemProcessors[itemID] = processor
-		end
-		return processor
-	end
-	local function getCurrencyProcessor(currencyID)
-		local processor = currencyProcessors[currencyID]
-		if not processor then
-			processor = function(CharInfo)
-				local textCENT = E.func_textCENT_Currency(CharInfo, currencyID)
-				if currencyID == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
-					textCENT = string_format("%s%s +%d|r", textCENT, Purple_Color, CharInfo.PlayerData.Possible_CatalogedResearch)
-				end
-				return E.func_currencyName(currencyID),
-				E.TheBurningCrusade_Color or expansionData.color,
-				textCENT,
-				{},
-				nil,
-				{"Currency", currencyID}
-			end
-			currencyProcessors[currencyID] = processor
 		end
 		return processor
 	end
@@ -1520,12 +1697,24 @@ function E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, current
 			end
 		end
 	end
-	if Octo_ToDo_DB_Vars.Currencies and Data.Currencies then
-		for _, currencyID in ipairs(Data.Currencies) do
-			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getCurrencyProcessor(currencyID)
-		end
-	end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
 	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
@@ -1537,18 +1726,29 @@ function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 		if not processor then
 			processor = function(CharInfo)
 
+				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+
+
+
+				iconLEFT = E.func_reputaionIcon(reputationID)
+				textLEFT = E.func_reputationName(reputationID)
+				-- colorLEFT =
+				textCENT = E.func_textCENT_Reputation(CharInfo, reputationID)
+				tooltipCENT = {}
+				-- colorCENT =
+				-- myType =
+				tooltipKey = "Reputation_"..reputationID
+				isReputation = true
+				-- FIRSTrep =
+				-- SECONDrep =
+
+
+
+
+
 				local FIRSTrep, SECONDrep, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
 
-				-- local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
-				local textLEFT = E.func_texturefromIcon(E.func_reputaionIcon(reputationID))..E.func_reputationName(reputationID)
-				local colorLEFT = nil
-				local textCENT = E.func_textCENT_Reputation(CharInfo, reputationID)
-				local tooltipCENT = {}
-				-- local colorCENT = nil
-				local myType = {}
-				local tooltipKey = "Reputation_"..reputationID
-				local isReputation = true
-				return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			end
 			reputationProcessors[reputationID] = processor
 		end
@@ -1878,8 +2078,8 @@ end
 function E.func_InitFrame(frame)
 	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
 	frame.insertIn_SecuredFrames_SequredFrames = true
-	tinsert(E.OctoTable_Frames, frame)
-	tinsert(UISpecialFrames, frame:GetName())
+	table_insert(E.OctoTable_Frames, frame)
+	table_insert(UISpecialFrames, frame:GetName())
 	C_Timer.After(0, function()
 			frame:HookScript("OnShow", function()
 					for i, other in ipairs(E.OctoTable_Frames) do
@@ -2193,7 +2393,7 @@ function E.func_pizda(mountID)
 	return mountName
 end
 function E.func_KeyTooltip(GUID, tooltipKey)
-	if not GUID and not tooltipKey then return end
+	if not GUID or not tooltipKey then return end
 	local tooltipCENT = {}
 	local CharInfo = Octo_ToDo_DB_Levels[GUID]
 	----------------------------------------------------------------
@@ -2209,7 +2409,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 			local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
 			local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
 			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
-			local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
+			local earnedSinceLastCollect = min(cacheSize, math_floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
 			local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
 			local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
 			if earnedSinceLastCollect > 0 then
@@ -2286,7 +2486,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		local color = "|cffFFFFFF"
 		if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
 			if CharInfo.PlayerData.GUID == E.curGUID then
-				tooltipCENT[#tooltipCENT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r", " "}
+				-- tooltipCENT[#tooltipCENT+1] = {"Время после релоуда: "..CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(GetServerTime() - CharInfo.PlayerData.time).."|r", " "}
 				tooltipCENT[#tooltipCENT+1] = {string.format(TIME_PLAYED_ALERT, CharInfo.PlayerData.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r" ), " "}
 			else
 				if CharInfo.PlayerData.needResetWeekly then
@@ -2404,7 +2604,7 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		local number = tonumber(string.match(tooltipKey, "%d+"))
 		----------------------------------------------------------------
 	elseif tooltipKey:find(E.UNIVERSAL) then
-		for _, data in ipairs(E.OctoTable_UniversalQuest) do
+		for _, data in next,(E.ALL_UniversalQuests) do
 			if not data.quests then
 				break -- Пропускаем записи без квестов
 			end

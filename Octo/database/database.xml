@@ -1,5 +1,4 @@
 <Ui>
-	<Script file="database\AllCurrencies.lua"/>
 	<Script file="database\Expansions.lua"/>
 	<Script file="database\Garrison.lua"/>
 	<Script file="database\Gossip.lua"/>

@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 10
+
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
@@ -11,8 +12,6 @@ E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
 	2122,
 	2118,
 	2003,
-	1191,
-	1602,
 	2245,
 	2594,
 	-- (УСТАРЕЛО АСПЕКТЫ 2812, 2809, 2807, 2806)
@@ -577,7 +576,9 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 	},
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
+E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+
+}
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

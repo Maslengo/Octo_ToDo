@@ -13,4 +13,7 @@
 	<Script file="NEW\12_Midnight.lua"/>
 	<Script file="NEW\13_TheLastTitan.lua"/>
 	<Script file="NEW\14_Legion_Remix.lua"/>
+	<Script file="NEW\15_PVP.lua"/>
+	<Script file="NEW\90_Holidays.lua"/>
+	<Script file="NEW\91_Other.lua"/>
 </Ui>

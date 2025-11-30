@@ -44,9 +44,9 @@ local OctoTable_Otrisovka_TestFrame = {}
 if Octo_ToDo_DB_Vars.ExpansionToShow[OCTOexpansionID] then
 	table.insert(OctoTable_Otrisovka_TestFrame, function(CharInfo)
 			----------------------------------------------------------------
-			local textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey = "", nil, "", {}, nil, {}, nil
+			local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
 			----------------------------------------------------------------
-			return textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey
+			return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			----------------------------------------------------------------
 	end)
 end

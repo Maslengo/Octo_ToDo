@@ -227,11 +227,13 @@ function EventFrame:Octo_EventsButton(frame)
 			local v = E.Holiday[eventKey]
 			local titleText = E.func_texturefromIconEVENT(v.iconTexture)
 			local timeText = v.startTime.." - "..v.endTime
+			-- local name = v.title
+			local name = E.func_EventName(v.eventID)
 			if v.Active then
-				titleText = titleText..E.White_Color..v.title.."|r"..E.Green_Color.." ("..v.ENDS..")|r"
+				titleText = titleText..E.White_Color..name.."|r"..E.Green_Color.." ("..v.ENDS..")|r"
 				timeText = E.White_Color..timeText.."|r"
 			else
-				titleText = titleText..E.Gray_Color..v.title.."|r"
+				titleText = titleText..E.Gray_Color..name.."|r"
 				timeText = E.Gray_Color..timeText.."|r"
 			end
 			if E.DebugIDs then

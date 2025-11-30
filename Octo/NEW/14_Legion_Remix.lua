@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 14
+
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[7].icon
@@ -29,15 +30,49 @@ E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
 	2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
 	2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
 	2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
-
-
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
+E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+
+}
+----------------------------------------------------------------
+function E.func_Otrisovka_14_Legion_Remix()
+	local OctoTable_Otrisovka_textCENT = {}
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+				----------------------------------------------------------------
+				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				tooltipKey = "LegionRemixResearch"
+				if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
+					local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
+					local barMax = CharInfo.MASLENGO.LegionRemixData.barMax
+					local new_textCENT = barValue.."/"..barMax
+					if CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests then
+						new_textCENT = barValue..E.Blue_Color.."("..CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests..")|r" .."/"..barMax
+					end
+					textCENT = new_textCENT
+				end
+				----------------------------------------------------------------
+				textLEFT = L["Infinite Research"]
+				colorLEFT = E.OctoTable_Expansions[7].color
+				----------------------------------------------------------------
+				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				----------------------------------------------------------------
+		end)
+	----------------------------------------------------------------
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	return OctoTable_Otrisovka_textCENT
+end

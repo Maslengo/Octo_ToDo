@@ -1,7 +1,9 @@
+local GlobalAddonName, E = ...
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = true
 	L["Stolen Anima Vessel"] = true
 	L["Riftbound Cache"] = true
 	L["Spectral Bound Chest"] = true -- 369200
@@ -266,6 +268,7 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = "Разработка аддонов требует много времени и усилий. Если вам нравится пользоваться "..GlobalAddonName..", пожалуйста, поддержите его разработку, сделав пожертвование. Ваша поддержка помогает обеспечить дальнейшее улучшение и поддержку аддона. Спасибо за вашу щедрость!"
 	L["Stolen Anima Vessel"] = "Сосуд с украденной анимой"
 	L["Riftbound Cache"] = "Тайник Разлома"
 	L["Spectral Bound Chest"] = "Сундук с призрачным замком"

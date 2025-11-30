@@ -280,6 +280,14 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						providerfunc()
 					end
 					self:ddAddButton(info, level)
+					-- SettingsEnabled
+					info.text = "SettingsEnabled"
+					info.checked = Octo_ToDo_DB_Vars.SettingsEnabled
+					info.func = function(_, _, _, checked)
+						Octo_ToDo_DB_Vars.SettingsEnabled = checked
+						providerfunc()
+					end
+					self:ddAddButton(info, level)
 					self:ddAddSeparator(level)
 				end
 				AddShowHideButtons()

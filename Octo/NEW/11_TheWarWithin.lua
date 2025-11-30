@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 11
+
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
@@ -1433,7 +1434,58 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
+E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+
+}
+----------------------------------------------------------------
+function E.func_Otrisovka_11_TheWarWithin()
+	local OctoTable_Otrisovka_textCENT = {}
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+				----------------------------------------------------------------
+				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				----------------------------------------------------------------
+				tooltipKey = "TWW_GreatVault"
+				if CharInfo.PlayerData.HasAvailableRewards then
+					textCENT = E.Blue_Color..">"..REWARD.."<|r"
+				end
+				textLEFT = E.Blue_Color..RATED_PVP_WEEKLY_VAULT.."|r"-- DELVES_GREAT_VAULT_LABEL
+				-- iconLEFT = "greatVault-whole-normal"
+				colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+				-- CreateAtlasMarkup("greatVault-whole-normal", 20, 20)..
+				-- greatVault-handles-dis
+				-- greatVault-centerPlate-dis
+				-- greatVault-whole-normal
+				----------------------------------------------------------------
+				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				----------------------------------------------------------------
+		end)
+		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+				----------------------------------------------------------------
+				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				----------------------------------------------------------------
+				tooltipKey = "TWW_CurrentKey"
+				if CharInfo.PlayerData.CurrentKey then
+					textCENT = CharInfo.PlayerData.CurrentKey
+				end
+				----------------------------------------------------------------
+				textLEFT = E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
+				-- iconLEFT = 4352494
+				colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+				----------------------------------------------------------------
+				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				----------------------------------------------------------------
+		end)
+		----------------------------------------------------------------
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	return OctoTable_Otrisovka_textCENT
+end

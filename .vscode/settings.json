@@ -283,7 +283,8 @@
 		"TIME_REMAINING",
 		"GameTooltip_SetTitle",
 		"MinimalScrollBarStepperScriptsMixin",
-		"MinimalScrollBarThumbScriptsMixin"
+		"MinimalScrollBarThumbScriptsMixin",
+		"CONTRIBUTION_REWARD_TOOLTIP_TITLE"
 	],
 	"Lua.type.weakUnionCheck": true,
 	"lua.targetVersion": "5.1"

@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 8
+
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
@@ -645,7 +646,70 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		},
 }
 ----------------------------------------------------------------
-E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
+E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+
+}
+----------------------------------------------------------------
+function E.func_Otrisovka_08_BattleforAzeroth()
+	local OctoTable_Otrisovka_textCENT = {}
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+		if Octo_ToDo_DB_Vars.Items then
+			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+					----------------------------------------------------------------
+					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+					----------------------------------------------------------------
+					if CharInfo.MASLENGO.ItemsInBag[158075] then
+						textCENT = CharInfo.PlayerData.azeriteLVL and E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r" or E.Orange_Color.."in bank|r"
+					end
+					myType = {"Item", 158075}
+					----------------------------------------------------------------
+					textLEFT = E.func_itemName(158075)
+					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+					----------------------------------------------------------------
+					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+					----------------------------------------------------------------
+			end)
+			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+					----------------------------------------------------------------
+					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+					----------------------------------------------------------------
+					if CharInfo.MASLENGO.ItemsInBag[169223] then
+						if CharInfo.PlayerData.cloak_lvl then
+							textCENT = E.Cyan_Color..AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.cloak_lvl).."|r"
+						else
+							textCENT = E.Orange_Color.."in bank|r"
+						end
+					end
+					myType = {"Item", 169223}
+					----------------------------------------------------------------
+					textLEFT = E.func_itemName(169223)
+					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+					----------------------------------------------------------------
+					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+					----------------------------------------------------------------
+			end)
+			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+					----------------------------------------------------------------
+					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+					tooltipKey = "BfA_mechagonItems"
+					textCENT = E.Gray_Color..ITEMS.."|r"
+					----------------------------------------------------------------
+					textLEFT = "МЕХАГОН"
+					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+					----------------------------------------------------------------
+					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+					----------------------------------------------------------------
+			end)
+		end
+		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
+		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
+	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	return OctoTable_Otrisovka_textCENT
+end
