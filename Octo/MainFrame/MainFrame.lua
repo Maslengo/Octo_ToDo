@@ -58,13 +58,25 @@ local func_OnAcquiredLEFT do
 		frame:SetPropagateMouseMotion(true)
 		frame:SetHitRectInsets(1, 1, 1, 1)
 		-- Создание полноразмерного фрейма для подсветки
-		local frameFULL = CreateFrame("BUTTON", nil, owner)
+		local frameFULL = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
 		frameFULL:SetPropagateMouseClicks(true)
 		frameFULL:SetPropagateMouseMotion(true)
 		frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-		frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
-		frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-		frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
+
+
+		if 1 ~= 1 then
+			frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- "auctionhouse-ui-row-highlight"
+			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+			frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
+		end
+
+
+
+
+
+
+
+
 		frameFULL:SetPoint("LEFT", frame)
 		frameFULL:SetPoint("TOP", frame)
 		frameFULL:SetPoint("BOTTOM", frame)
@@ -502,7 +514,6 @@ end
 -- Функция для объединения таблиц отрисовки
 ----------------------------------------------------------------
 function E.func_Concat_Otrisovka()
-	print (E.Blue_Color.. "E.func_Concat_Otrisovka()|r")
 	wipe(E.ALL_Currencies)
 	wipe(E.ALL_Items)
 	wipe(E.ALL_Reputations)
@@ -715,6 +726,7 @@ local MyEventsTable = {
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
+	print ("PLAYER_LOGIN")
 	EventFrame:Octo_Create_MainFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")

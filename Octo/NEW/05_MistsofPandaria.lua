@@ -9,13 +9,13 @@ E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].ico
 E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-			402, -- Ironpaw Token
-			738, -- Lesser Charm of Good Fortune
-			752, -- Mogu Rune of Fate
-			776, -- Warforged Seal
-			777,
-			789,
-			697, -- (697 MONETKA)
+	402, -- Ironpaw Token
+	738, -- Lesser Charm of Good Fortune
+	752, -- Mogu Rune of Fate
+	776, -- Warforged Seal
+	777,
+	789,
+	697, -- (697 MONETKA)
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[currentSTATE].Items = {

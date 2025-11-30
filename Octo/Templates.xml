@@ -159,4 +159,57 @@
 			<OnDisable>self:SetTextColor(GRAY_FONT_COLOR:GetRGB())</OnDisable>
 		</Scripts>
 	</EditBox>
+
+
+
+
+
+
+
+
+
+	<Frame name="OctoHighlightAnimationTemplate" virtual="true">
+		<Layers>
+			<Layer level="BACKGROUND">
+				<!-- моё -->
+				<Texture parentKey="highlight" alpha="0" atlas="auctionhouse-ui-row-highlight" alphaMode="ADD">
+				<!-- <Texture parentKey="highlight" alpha="0"> -->
+					<Anchors>
+						<Anchor point="TOPLEFT" x="0" y="0"/>
+						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
+					</Anchors>
+					<!-- <Color r=".8" g=".6" b=".1" a="1"/> -->
+				</Texture>
+			</Layer>
+		</Layers>
+		<Animations>
+			<AnimationGroup parentKey="highlightLeave" setToFinalAlpha="true">
+				<Alpha parentKey="alpha" smoothing="IN_OUT" duration=".3" order="1" fromAlpha=".3" toAlpha="0"/>
+			</AnimationGroup>
+		</Animations>
+		<Scripts>
+			<OnLoad inherit="prepend">
+				self.highlightLeave.alpha:SetTarget(self.highlight)
+			</OnLoad>
+			<OnEnter>
+				if 1 == 1 then
+					self.highlightLeave:Stop()
+					self.highlight:SetAlpha(.3)
+				end
+			</OnEnter>
+			<OnLeave>
+				if 1 == 1 then
+					self.highlightLeave:Restart()
+					GameTooltip:Hide()
+				end
+			</OnLeave>
+		</Scripts>
+	</Frame>
+
+
+
+
+
+
+
 </Ui>

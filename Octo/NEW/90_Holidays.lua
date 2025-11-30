@@ -24,13 +24,11 @@ E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
-
-
 		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_questName(13503) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(13503) .. " (", --..E.func_EventName(181)..")",
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			reset = "Month",
 			desc = currentSTATE, --  "HolidaysNoblegarden",
@@ -40,7 +38,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 1,
 		},
 		{
-			textleft = E.func_questName(79575) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(79575) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "WhattheDuck",
 			reset = "Month",
@@ -51,7 +49,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 1,
 		},
 		{
-			textleft = E.func_questName(13479) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(13479) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
 			reset = "Daily",
@@ -62,7 +60,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 1,
 		},
 		{
-			textleft = E.func_questName(79576) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(79576) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "AFowlConcoction",
 			reset = "Month",
@@ -73,7 +71,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 1,
 		},
 		{
-			textleft = E.func_questName(79577) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(79577) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "DuckTales",
 			reset = "Month",
@@ -84,7 +82,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 1,
 		},
 		{
-			textleft = E.func_questName(79578) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(79578) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
 			reset = "Month",
@@ -96,7 +94,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 1,
 		},
 		{
-			textleft = E.func_questName(79558) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(79558) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "FeatheredFiend",
 			reset = "Daily",
@@ -107,7 +105,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			},
 		},
 		{
-			textleft = E.func_questName(79135) .. " ("..E.func_EventName(181)..")",
+			textleft = E.func_questName(79135) .. " (", --..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "QuackingDown",
 			reset = "Daily",
@@ -122,7 +120,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		-- E.func_EventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
 		{
-			textleft = "Orgrimmar/Stormwind" .. " ("..E.func_EventName(201)..")",
+			textleft = "Orgrimmar/Stormwind" .. " (", --..E.func_EventName(201)..")",
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
 			reset = "Month",
@@ -147,7 +145,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		},
 		----------------------------------------------------------------
 		{
-			textleft = "Shattrath" .. " ("..E.func_EventName(201)..")",
+			textleft = "Shattrath" .. " (", --..E.func_EventName(201)..")",
 			showTooltip = true,
 			name_save = "Shattrath", --
 			reset = "Month",
@@ -174,7 +172,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		},
 		----------------------------------------------------------------
 		{
-			textleft = L["Daily quests"] .. " ("..E.func_EventName(181)..")", -- ПОФИКСИТЬ
+			textleft = L["Daily quests"] .. " (", --..E.func_EventName(181)..")", -- ПОФИКСИТЬ
 			showTooltip = true,
 			name_save = "orgrimmarStormwindDAILY", --
 			reset = "Daily",
@@ -191,7 +189,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		{
-			textleft = RAIDS .. " ("..E.func_EventName(1583)..")",
+			textleft = RAIDS .. " (", --..E.func_EventName(1583)..")",
 			showTooltip = true,
 			name_save = "Raid",
 			reset = "Weekly",
@@ -206,7 +204,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		},
 		{
 			sorted = false,
-			textleft = DUNGEONS .. " ("..E.func_EventName(1583)..")",
+			textleft = DUNGEONS .. " (", --..E.func_EventName(1583)..")",
 			showTooltip = true,
 			name_save = "Dungeons",
 			reset = "Weekly",
@@ -235,7 +233,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			forcedMaxQuest = 1,
 		},
 		{
-			textleft = "Profession Monthlies" .. " ("..E.func_EventName(479)..")",
+			textleft = "Profession Monthlies" .. " (", --..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "ProfessionMonthlies",
 			reset = "Month",
@@ -259,7 +257,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 14,
 		},
 		{
-			textleft = "Monthly Quests" .. " ("..E.func_EventName(479)..")",
+			textleft = "Monthly Quests" .. " (", --..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "MonthlyQuests",
 			reset = "Month",
@@ -271,7 +269,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 2,
 		},
 		{
-			textleft = "Acount-wide Dailies" .. " ("..E.func_EventName(479)..")",
+			textleft = "Acount-wide Dailies" .. " (", --..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "AcountwideDailies",
 			reset = "Daily",
@@ -283,7 +281,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 2,
 		},
 		{
-			textleft = "item turns ins" .. " ("..E.func_EventName(479)..")",
+			textleft = "item turns ins" .. " (", --..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "itemturnsins",
 			reset = "Daily",
@@ -302,7 +300,7 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			-- forcedMaxQuest = 9,
 		},
 		{
-			textleft = E.func_itemName(93724) .. " ("..E.func_EventName(479)..")",
+			textleft = E.func_itemName(93724) .. " (", --..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "DarkmoonFaire",
 			reset = "Daily",

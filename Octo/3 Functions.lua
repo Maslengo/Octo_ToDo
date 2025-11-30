@@ -194,10 +194,9 @@ function E.func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
 	return info and info.iconFileID or E.Icon_Empty
 end
-local function GetOrCreateCache(category, id)
+local function GetOrCreateCache(category)
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
-	-- Octo_Cache_DB[category][id] = Octo_Cache_DB[category][id] or {}
 	return Octo_Cache_DB[category]
 end
 ----------------------------------------------------------------
@@ -531,7 +530,10 @@ function E.Cache_All_EventNames_Year()
 
 	for month = 1, 12 do
 		local monthInfo = GetMonthInfo(month, currentYear)
-		if not monthInfo then break end
+		if not monthInfo then
+			break
+		end
+
 		SetAbsMonth(month, currentYear)
 
 		for day = 1, monthInfo.numDays do
@@ -540,7 +542,6 @@ function E.Cache_All_EventNames_Year()
 				local event = GetDayEvent(0, day, i)
 				if not event or event.calendarType ~= "HOLIDAY" then break end
 
-				-- сразу в кэш для func_EventName
 				local Cache = GetOrCreateCache("AllEvents", event.eventID)
 				Cache[event.eventID] = Cache[event.eventID] or {}
 				Cache[event.eventID][E.curLocaleLang] = event.title
@@ -557,14 +558,13 @@ do
 end
 
 
-
 local function func_EventName_CACHE(id)
 	-- E.Cache_All_EventNames_Year()
-	local Cache = GetOrCreateCache("AllEvents", id)
+	-- local Cache = GetOrCreateCache("AllEvents")
+	local Cache = Octo_Cache_DB.AllEvents
 
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.EventNames[id] = Octo_ToDo_DB_NeedToTrack.EventNames[id] or true
-		print (E.Green_Color..Cache[id][E.curLocaleLang].."|r")
+		-- Octo_ToDo_DB_NeedToTrack.EventNames[id] = Octo_ToDo_DB_NeedToTrack.EventNames[id] or true
 		return Cache[id][E.curLocaleLang]
 	end
 	local name
@@ -577,7 +577,6 @@ local function func_EventName_CACHE(id)
 
 	for eventKey, v in next, (E.Holiday) do
 		if id == v.eventID then
-			print (v.title)
 			name = v.title or ""
 		end
 	end
