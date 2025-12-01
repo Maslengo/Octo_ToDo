@@ -28,8 +28,6 @@ function E.Collect_All_Quests()
 	end
 	collectPlayerData.numShownEntries = numShownEntries
 	collectPlayerData.maxNumQuestsCanAccept = C_QuestLog.GetMaxNumQuestsCanAccept()
-
-
 	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 		if E.func_IsOnQuest(questID) then
 			collectMASLENGO.ListOfParagonQuests[questID] = true

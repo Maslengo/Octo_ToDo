@@ -272,19 +272,11 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						providerfunc()
 					end
 					self:ddAddButton(info, level)
-					-- Репутация
-					info.text = REPUTATION
-					info.checked = Octo_ToDo_DB_Vars.Reputations
-					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_Vars.Reputations = checked
-						providerfunc()
-					end
-					self:ddAddButton(info, level)
 					-- SettingsEnabled
 					info.text = "SettingsEnabled"
-					info.checked = Octo_ToDo_DB_Vars.SettingsEnabled
+					info.checked = Octo_ToDo_DB_VisualUserSettings.SettingsEnabled
 					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_Vars.SettingsEnabled = checked
+						Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = checked
 						providerfunc()
 					end
 					self:ddAddButton(info, level)

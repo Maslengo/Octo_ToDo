@@ -2,51 +2,51 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 3
-
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
 E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-	241, -- Champion's Seal
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Items = {
-	45087,
-	47556,
-	49908,
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-	1156, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
-	1119, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
-	1106, --name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", }, --[faction=1106]
-	1098, --name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", }, --[faction=1098]
-	1091, --name = "Драконий союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1091]
-	1090, --name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", }, --[faction=1090]
-	1073, --name = "Калу'ак", side = "-", category = "Wrath of the Lich King", }, --[faction=1073]
+local function localfunc()
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+		241, -- Champion's Seal
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+		45087,
+		47556,
+		49908,
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		1156, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
+		1119, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
+		1106, --name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", }, --[faction=1106]
+		1098, --name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", }, --[faction=1098]
+		1091, --name = "Драконий союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1091]
+		1090, --name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", }, --[faction=1090]
+		1073, --name = "Калу'ак", side = "-", category = "Wrath of the Lich King", }, --[faction=1073]
 		----------------------------------------------------------------
-	1117, --name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", }, --[faction=1117]
-	1105, --name = "Оракулы", side = "-", category = "Низина Шолазар", }, --[faction=1105]
-	1104, --name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", }, --[faction=1104]
+		1117, --name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", }, --[faction=1117]
+		1105, --name = "Оракулы", side = "-", category = "Низина Шолазар", }, --[faction=1105]
+		1104, --name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", }, --[faction=1104]
 		----------------------------------------------------------------
-	1052, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052] -- ОРДА
+		1052, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052] -- ОРДА
 		----------------------------------------------------------------
-	1124, --name = "Похитители Солнца", side = "-", category = "Экспедиция Орды", }, --[faction=1124]
-	1085, --name = "Армия Песни Войны", side = "-", category = "Экспедиция Орды", }, --[faction=1085]
-	1067, --name = "Карающая Длань", side = "-", category = "Экспедиция Орды", }, --[faction=1067]
-	1064, --name = "Таунка", side = "-", category = "Экспедиция Орды", }, --[faction=1064]
+		1124, --name = "Похитители Солнца", side = "-", category = "Экспедиция Орды", }, --[faction=1124]
+		1085, --name = "Армия Песни Войны", side = "-", category = "Экспедиция Орды", }, --[faction=1085]
+		1067, --name = "Карающая Длань", side = "-", category = "Экспедиция Орды", }, --[faction=1067]
+		1064, --name = "Таунка", side = "-", category = "Экспедиция Орды", }, --[faction=1064]
 		----------------------------------------------------------------
-	1037, --name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", }, --[faction=1037] -- АЛЬЯНС
+		1037, --name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", }, --[faction=1037] -- АЛЬЯНС
 		----------------------------------------------------------------
-	1094, --name = "Серебряный Союз", side = "-", category = "Авангард Альянса", }, --[faction=1094]
-	1126, --name = "Зиморожденные", side = "-", category = "Авангард Альянса", }, --[faction=1126]
-	1068, --name = "Лига исследователей", side = "-", category = "Авангард Альянса", }, --[faction=1068]
-	1050, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+		1094, --name = "Серебряный Союз", side = "-", category = "Авангард Альянса", }, --[faction=1094]
+		1126, --name = "Зиморожденные", side = "-", category = "Авангард Альянса", }, --[faction=1126]
+		1068, --name = "Лига исследователей", side = "-", category = "Авангард Альянса", }, --[faction=1068]
+		1050, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			showTooltip = true,
 			textleft = E.func_questName(24748),
@@ -66,11 +66,19 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			},
 			forcedMaxQuest = 9,
 		},
-}
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	}
+end
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
-
-}
+----------------------------------------------------------------
+----------------------------------------------------------------
+local function localfunc2()
+	return
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+tinsert(E.newOTRISOVKA, localfunc)
+tinsert(E.newOTRISOVKA2, localfunc2)

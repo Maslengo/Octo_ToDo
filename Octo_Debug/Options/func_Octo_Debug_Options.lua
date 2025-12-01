@@ -632,6 +632,7 @@ function E.func_Octo_Debug_Options(savedVars)
 	if Octo_Moduls_DB then
 		add_args(Octo_Moduls_DB, "Octo_Moduls_DB")
 	end
+	add_args(Octo_ToDo_DB_VisualUserSettings, "Octo_ToDo_DB_VisualUserSettings")
 	-- add_args(Octo_QuestsChanged_DB, "Octo_QuestsChanged_DB", 1)
 	-------------------------------------------------
 	-------------------------------------------------

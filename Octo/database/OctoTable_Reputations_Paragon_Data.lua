@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_Reputations_Paragon_Data = {
-
 	--Legion
 	[48976] = { -- Argussian Reach
 		factionID = 2170,
@@ -39,7 +38,6 @@ E.OctoTable_Reputations_Paragon_Data = {
 		factionID = 1948,
 		cache = 152106,
 	},
-
 	--Battle for Azeroth
 	--Neutral
 	[54453] = { --Champions of Azeroth
@@ -62,7 +60,6 @@ E.OctoTable_Reputations_Paragon_Data = {
 		factionID = 2417,
 		cache = 174484,
 	},
-
 	--Horde
 	[54460] = { --Talanji's Expedition
 		factionID = 2156,
@@ -84,7 +81,6 @@ E.OctoTable_Reputations_Paragon_Data = {
 		factionID = 2103,
 		cache = 166292,
 	},
-
 	--Alliance
 	[54456] = { --Order of Embers
 		factionID = 2161,
@@ -106,7 +102,6 @@ E.OctoTable_Reputations_Paragon_Data = {
 		factionID = 2400,
 		cache = 169939,
 	},
-
 	--Shadowlands
 	[61100] = { --Court of Harvesters
 		factionID = 2413,
@@ -140,7 +135,6 @@ E.OctoTable_Reputations_Paragon_Data = {
 		factionID = 2432,
 		cache = 187029,
 	},
-
 	--Dragonflight
 	[66156] = { -- Dragonscale Expedition
 		factionID = 2507,
@@ -166,7 +160,6 @@ E.OctoTable_Reputations_Paragon_Data = {
 		factionID = 2510,
 		cache = 199475,
 	},
-
 	--War Within
 	[79219] = { -- Council of Dornogal
 		factionID = 2590,

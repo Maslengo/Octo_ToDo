@@ -2,56 +2,56 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 9
-
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
 E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-	2009, 1906, 1828, 1979, 1931,
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Items = {
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+local function localfunc()
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+		2009, 1906, 1828, 1979, 1931,
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Shadowlands"] = {
-	2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
-	2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
-	2470, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
-	2462, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
-	2472, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
-	2407, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
-	2439, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
-	2478, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
-	2410, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
-	2465, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
-	2432, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
-	2445, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
-	2469, --name = "Понимание фракталов", side = "-", category = "Темные Земли", }, --[faction=2469]
-	2463, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
+		2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
+		2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
+		2470, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
+		2462, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
+		2472, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
+		2407, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
+		2439, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
+		2478, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
+		2410, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
+		2465, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
+		2432, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
+		2445, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
+		2469, --name = "Понимание фракталов", side = "-", category = "Темные Земли", }, --[faction=2469]
+		2463, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
 		----------------------------------------------------------------
-	2455, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
-	2458, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
-	2453, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
-	2460, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
-	2461, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
-	2459, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
-	2457, --name = "Великий мастер Воул", side = "-", category = "Пепельный двор", }, --[faction=2457]
-	2456, --name = "Дроман Алиот", side = "-", category = "Пепельный двор", }, --[faction=2456]
-	2454, --name = "Чуфа", side = "-", category = "Пепельный двор", }, --[faction=2454]
-	2452, --name = "Полемарх Адрест", side = "-", category = "Пепельный двор", }, --[faction=2452]
-	2451, --name = "Капитан-егерь Корейн", side = "-", category = "Пепельный двор", }, --[faction=2451]
-	2450, --name = "Александрос Могрейн", side = "-", category = "Пепельный двор", }, --[faction=2450]
-	2449, --name = "Графиня", side = "-", category = "Пепельный двор", }, --[faction=2449]
-	2448, --name = "Миканикос", side = "-", category = "Пепельный двор", }, --[faction=2448]
-	2447, --name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", }, --[faction=2447]
-	2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+		2455, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
+		2458, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
+		2453, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
+		2460, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
+		2461, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
+		2459, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
+		2457, --name = "Великий мастер Воул", side = "-", category = "Пепельный двор", }, --[faction=2457]
+		2456, --name = "Дроман Алиот", side = "-", category = "Пепельный двор", }, --[faction=2456]
+		2454, --name = "Чуфа", side = "-", category = "Пепельный двор", }, --[faction=2454]
+		2452, --name = "Полемарх Адрест", side = "-", category = "Пепельный двор", }, --[faction=2452]
+		2451, --name = "Капитан-егерь Корейн", side = "-", category = "Пепельный двор", }, --[faction=2451]
+		2450, --name = "Александрос Могрейн", side = "-", category = "Пепельный двор", }, --[faction=2450]
+		2449, --name = "Графиня", side = "-", category = "Пепельный двор", }, --[faction=2449]
+		2448, --name = "Миканикос", side = "-", category = "Пепельный двор", }, --[faction=2448]
+		2447, --name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", }, --[faction=2447]
+		2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
@@ -729,13 +729,13 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		-- },
 		-- forcedMaxQuest = 2,
 		-- },
-}
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	}
+end
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
-
-}
-----------------------------------------------------------------
-function E.func_Otrisovka_09_Shadowlands()
+local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -745,7 +745,7 @@ function E.func_Otrisovka_09_Shadowlands()
 			for iANIMA = 1, 4 do
 				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 						----------------------------------------------------------------
-						local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+						local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil, false, nil, nil
 						----------------------------------------------------------------
 						local color = E.OctoTable_Covenant[iANIMA].color
 						-- отриосвка всего по центру
@@ -775,17 +775,19 @@ function E.func_Otrisovka_09_Shadowlands()
 						textLEFT = vivodLeft
 						colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 						----------------------------------------------------------------
-						return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+						return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 						----------------------------------------------------------------
 				end)
 			end
 		end
-		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
-		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
-		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka_textCENT
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+tinsert(E.newOTRISOVKA, localfunc)
+tinsert(E.newOTRISOVKA2, localfunc2)

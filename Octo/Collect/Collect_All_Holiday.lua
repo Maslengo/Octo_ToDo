@@ -132,7 +132,3 @@ function E.Collect_All_Holiday()
 	end
 	function_restoreBackup(backup)
 end
-
-
-
-

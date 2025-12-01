@@ -4,9 +4,6 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 	if E.func_SpamBlock("Collect_All_UNIVERSALQuestUpdate") then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
-	if not E.func_ConcatAtStart_UniversalQuestQWE then
-		E.func_ConcatAtStart_UniversalQuestQWE = true
-	end
 	local hasDataToSave = false
 	local tempUniversalQuest = {}
 	for _, data in next,(E.ALL_UniversalQuests) do

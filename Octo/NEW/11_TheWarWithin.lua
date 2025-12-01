@@ -2,97 +2,97 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 11
-
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
 E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-	-- 3056, 2815,
-	-- season 3
-	3356, 3290, 3288, 3286, 3284, 3141, 3028, 3008, 2803,
-	-- 3149, 3226, 3218, 3090, 3028, 2803, 3116, 2815, 3056, 3008, 3110, 3109, 3108, 3107,
-	-- https://warcraft.wiki.gg/wiki/Catalyst
-	-- The War Within
-	-- (Season 4)
-	3269, -- (Season 3)
-	3116, -- Essence of Kaja'mite (Season 2)
-	-- 2813, -- Harmonized Silk (Season 1)
-	-- Dragonflight
-	-- 2912, -- Renascent Awakening ()
-	-- 2796, -- Renascent Dream (Season 3)
-	-- 2533, -- Renascent Shadowflame (Season 2)
-	-- 2167, -- Catalyst Charges (Season 1)
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Items = {
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-	-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
-	-- ["The War Within"] = {
-	-- { id = 2688,},
-	-- { id = 2653,},
-	-- { id = 2570,},
-	-- { id = 2590,},
-	-- { id = 2594,},
-	-- { id = 2600,},
-	-- { id = 2640,},
-	-- { id = 2658,},
-	-- { id = 2667,},
-	-- { id = 2736,},
-	-- { id = 2689,},
-	-- { id = 2693,},
-	-- { id = 2683,},
-	-- { id = 2596,},
-	-- { id = 2739,}, -- INACTIVE
-	-- { id = 2611,},
-	-- { id = 2612,},
-	-- { id = 2722,},
-	-- { id = 2644,},
-	-- { id = 2613,},
-	-- { id = 2659,},
-	-- { id = 2645,},
-	-- { id = 2669,},
-	-- { id = 2685,},
-	-- { id = 2677,},
-	-- { id = 2673,},
-	-- { id = 2675,},
-	-- { id = 2671,},
-	-- { id = 2668,},
-	-- { id = 2684,},
-	-- { id = 2670,},
-	-- { id = 2674,},
-	-- { id = 2676,},
-	-- { id = 2672,},
-	-- { id = 2601,},
-	-- { id = 2607,},
-	-- { id = 2605,},
-	-- { id = 2647,},
-	-- { id = 2648,},
-	-- { id = 2649,},
-	-- { id = 2658, },
-	2653, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-	2640, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
-	2600, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-	2594, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
-	2590, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
-	2570, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+local function localfunc()
 	----------------------------------------------------------------
-	2607, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
-	2605, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
-	2601, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
+	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+		-- 3056, 2815,
+		-- season 3
+		3356, 3290, 3288, 3286, 3284, 3141, 3028, 3008, 2803,
+		-- 3149, 3226, 3218, 3090, 3028, 2803, 3116, 2815, 3056, 3008, 3110, 3109, 3108, 3107,
+		-- https://warcraft.wiki.gg/wiki/Catalyst
+		-- The War Within
+		-- (Season 4)
+		3269, -- (Season 3)
+		3116, -- Essence of Kaja'mite (Season 2)
+		-- 2813, -- Harmonized Silk (Season 1)
+		-- Dragonflight
+		-- 2912, -- Renascent Awakening ()
+		-- 2796, -- Renascent Dream (Season 3)
+		-- 2533, -- Renascent Shadowflame (Season 2)
+		-- 2167, -- Catalyst Charges (Season 1)
+	}
 	----------------------------------------------------------------
-	2685, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
-	2677, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
-	2675, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
-	2673, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
-	2671, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
-	2669, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
+		-- ["The War Within"] = {
+		-- { id = 2688,},
+		-- { id = 2653,},
+		-- { id = 2570,},
+		-- { id = 2590,},
+		-- { id = 2594,},
+		-- { id = 2600,},
+		-- { id = 2640,},
+		-- { id = 2658,},
+		-- { id = 2667,},
+		-- { id = 2736,},
+		-- { id = 2689,},
+		-- { id = 2693,},
+		-- { id = 2683,},
+		-- { id = 2596,},
+		-- { id = 2739,}, -- INACTIVE
+		-- { id = 2611,},
+		-- { id = 2612,},
+		-- { id = 2722,},
+		-- { id = 2644,},
+		-- { id = 2613,},
+		-- { id = 2659,},
+		-- { id = 2645,},
+		-- { id = 2669,},
+		-- { id = 2685,},
+		-- { id = 2677,},
+		-- { id = 2673,},
+		-- { id = 2675,},
+		-- { id = 2671,},
+		-- { id = 2668,},
+		-- { id = 2684,},
+		-- { id = 2670,},
+		-- { id = 2674,},
+		-- { id = 2676,},
+		-- { id = 2672,},
+		-- { id = 2601,},
+		-- { id = 2607,},
+		-- { id = 2605,},
+		-- { id = 2647,},
+		-- { id = 2648,},
+		-- { id = 2649,},
+		-- { id = 2658, },
+		2653, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
+		2640, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
+		2600, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
+		2594, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
+		2590, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
+		2570, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+		----------------------------------------------------------------
+		2607, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
+		2605, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
+		2601, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
+		----------------------------------------------------------------
+		2685, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
+		2677, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
+		2675, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
+		2673, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
+		2671, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
+		2669, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
@@ -1432,13 +1432,13 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			},
 			forcedMaxQuest = 4,
 		},
-}
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	}
+end
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
-
-}
-----------------------------------------------------------------
-function E.func_Otrisovka_11_TheWarWithin()
+local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -1446,7 +1446,7 @@ function E.func_Otrisovka_11_TheWarWithin()
 	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				----------------------------------------------------------------
 				tooltipKey = "TWW_GreatVault"
 				if CharInfo.PlayerData.HasAvailableRewards then
@@ -1460,12 +1460,12 @@ function E.func_Otrisovka_11_TheWarWithin()
 				-- greatVault-centerPlate-dis
 				-- greatVault-whole-normal
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				----------------------------------------------------------------
 				tooltipKey = "TWW_CurrentKey"
 				if CharInfo.PlayerData.CurrentKey then
@@ -1476,16 +1476,17 @@ function E.func_Otrisovka_11_TheWarWithin()
 				-- iconLEFT = 4352494
 				colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
-		----------------------------------------------------------------
-		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
-		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
-		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka_textCENT
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+tinsert(E.newOTRISOVKA, localfunc)
+tinsert(E.newOTRISOVKA2, localfunc2)

@@ -14,7 +14,7 @@ local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
 ----------------------------------------------------------------
-local INDEND_TEST = 4
+local INDENT_TEST = 4
 local INDEND_SCROLL = 20
 local LINE_HEIGHT = 32
 local LINE_WIDTH = 256
@@ -26,50 +26,52 @@ if LINES_MAX > LINES_TOTAL then
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
-local function func_OnHide(frame)
-	frame.highlightFrame:Hide()
-end
-local function func_OnShow(frame)
-	frame.highlightFrame:Show()
-end
 local func_OnAcquired do
-
-
 	local function func_OnEnter(frame)
 		local frameData = frame:GetData()
 		local itemID = frameData.itemID
 		-- Получение данных для тултипа
 		local tooltipOCTO = {}
-		tooltipOCTO[#tooltipOCTO+1] = {E.func_itemName(itemID), itemID}
+		local tooltipInfo = C_TooltipInfo.GetItemByID(itemID)
+		-- fpde(tooltipInfo.lines)
+		for i, v in next,(tooltipInfo.lines) do
+			local r, g, b = v.leftColor.r, v.leftColor.g, v.leftColor.b
+			local colorHEX = E.func_rgb2hex(r, g, b)
+			local leftText = v.leftText
+			tooltipOCTO[#tooltipOCTO+1] = {colorHEX..leftText.."|r"}
+		end
 		frame.tooltip = tooltipOCTO
 		E.func_OctoTooltip_OnEnter(frame, {"LEFT", "RIGHT"})
+		-- GameTooltip:SetToyByItemID(itemID)
+		-- GameTooltip:SetItemByID(itemID)
 	end
 	-- Функция инициализации элементов колонки
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
 			frame:SetPropagateMouseClicks(true)
 			frame:SetPropagateMouseMotion(true)
+			frame:SetHitRectInsets(1, 1, 1, 1)
 			----------------
-			local highlightFrame = CreateFrame("Button", nil, ItemsUsable)
-			highlightFrame:Hide()
-			highlightFrame:SetPropagateMouseClicks(true)
-			highlightFrame:SetPropagateMouseMotion(true)
-			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
-			highlightFrame:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
-			highlightFrame.HighlightTexture = highlightFrame:GetHighlightTexture()
-			highlightFrame.HighlightTexture:SetAlpha(.2)
-			highlightFrame:SetPoint("LEFT", frame)
-			highlightFrame:SetPoint("TOP", frame)
-			highlightFrame:SetPoint("BOTTOM", frame)
-			highlightFrame:SetPoint("RIGHT")
-			frame.highlightFrame = highlightFrame
-			----------------
-			local textureFULL = highlightFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
-			textureFULL:Hide()
-			textureFULL:SetAllPoints()
-			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
-			frame.textureFULL = textureFULL
+			-- Создание полноразмерного фрейма для подсветки
+			local frameFULL = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
+			frameFULL:SetPropagateMouseClicks(true)
+			frameFULL:SetPropagateMouseMotion(true)
+			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
+			if 1 ~= 1 then
+				frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- "auctionhouse-ui-row-highlight"
+				frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
+				frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
+			end
+			frameFULL:SetPoint("LEFT", frame)
+			frameFULL:SetPoint("TOP", frame)
+			frameFULL:SetPoint("BOTTOM", frame)
+			frameFULL:SetPoint("RIGHT")
+			frame.frameFULL = frameFULL
+			------------------------------------------------
+			frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+			frame.icon_1:SetPoint("TOPLEFT", 1, -1)
+			frame.icon_1:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
+			frame.icon_1:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 			----------------
 			-- Создаем метатаблицу для дочерних фреймов
 			frame.lineFrames = setmetatable({}, {
@@ -83,7 +85,7 @@ local func_OnAcquired do
 							-- f:SetSize(LINE_WIDTH, LINE_HEIGHT)
 							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 							if key == 1 then
-								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDEND_TEST, 0) -- ОТСТУП
+								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEST, 0) -- ОТСТУП
 							else
 								local prevKey = key - 1
 								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
@@ -92,7 +94,8 @@ local func_OnAcquired do
 							-- Текст в центре
 							f.text = f:CreateFontString()
 							f.text:SetFontObject(OctoFont11)
-							f.text:SetAllPoints()
+							-- f.text:SetAllPoints()
+							f.text:SetPoint("LEFT", LINE_HEIGHT+INDENT_TEST+0, 0)
 							f.text:SetWordWrap(false)
 							f.text:SetJustifyV("MIDDLE") -- TOP, MIDDLE, BOTTOM
 							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
@@ -104,9 +107,13 @@ local func_OnAcquired do
 						end
 					end
 			})
-			-- frame:SetScript("OnClick", func_OnClick)
-			frame:SetScript("OnHide", func_OnHide)
-			frame:SetScript("OnShow", func_OnShow)
+			-- Обработчики событий показа/скрытия фрейма
+			frame:SetScript("OnHide", function()
+					frame.frameFULL:Hide()
+			end)
+			frame:SetScript("OnShow", function()
+					frame.frameFULL:Show()
+			end)
 			-- Обработчик наведения курсора для отображения тултипа
 			frame:SetScript("OnEnter", func_OnEnter)
 			----------------
@@ -146,6 +153,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		lineFrames[i].text:SetText()
 	end
 	local itemID = frameData.itemID
+	frame.icon_1:SetTexture(E.func_GetItemIconByID(itemID))
 	-- local itemID = frame.lineFrames[2].text:GetText()
 	-- frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 	frame:SetAttribute("useOnKeyDown", false)
@@ -327,7 +335,7 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	end
 	local columns = 3
 	EventFrame.COLUMN_SIZES = COLUMN_SIZES
-	local total_width = INDEND_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) -- ОТСТУП
+	local total_width = INDENT_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) + LINE_HEIGHT-- ОТСТУП  -- (иконка)
 	if EventFrame.COLUMN_SIZES[1] then
 		for i = 1, columns do
 			total_width = total_width + EventFrame.COLUMN_SIZES[i]
@@ -346,14 +354,6 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	else
 		ItemsUsable:SetSize(total_width, LINE_HEIGHT*lines)
 	end
-
-
-
-
-
-
-
-
 end
 local function Toggle_ItemsUsable()
 	if not ItemsUsable:IsShown() then

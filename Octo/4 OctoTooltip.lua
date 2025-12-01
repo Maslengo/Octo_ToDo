@@ -25,8 +25,9 @@ local func_OnAcquired do
 		if new then
 			frame:SetPropagateMouseClicks(false)
 			frame:SetPropagateMouseMotion(true)
+			frame:SetHitRectInsets(1, 1, 1, 1)
 			----------------
-			local highlightFrame = CreateFrame("Button", nil, OctoTooltip)
+			local highlightFrame = CreateFrame("Button", nil, OctoTooltip, "OctoHighlightAnimationTemplate")
 			highlightFrame:SetPropagateMouseClicks(false)
 			highlightFrame:SetPropagateMouseMotion(true)
 			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
@@ -298,7 +299,7 @@ function EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*lines)
 	end
 end
-function E.func_OctoTooltip_OnEnter(frame, point) -- ПОФИКСИТЬ (3им аргументом сделать point) либо повешать на объект 1395 hidingbar
+function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft) -- ПОФИКСИТЬ (3им аргументом сделать point) либо повешать на объект 1395 hidingbar
 	if not frame.tooltip or #frame.tooltip == 0 then return end
 	if type(point) == "table" then
 		EventFrame:func_SmartAnchorTo(frame, point)

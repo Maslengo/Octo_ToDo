@@ -161,24 +161,14 @@
 	</EditBox>
 
 
-
-
-
-
-
-
-
 	<Frame name="OctoHighlightAnimationTemplate" virtual="true">
 		<Layers>
 			<Layer level="BACKGROUND">
-				<!-- моё -->
 				<Texture parentKey="highlight" alpha="0" atlas="auctionhouse-ui-row-highlight" alphaMode="ADD">
-				<!-- <Texture parentKey="highlight" alpha="0"> -->
 					<Anchors>
 						<Anchor point="TOPLEFT" x="0" y="0"/>
 						<Anchor point="BOTTOMRIGHT" x="0" y="0"/>
 					</Anchors>
-					<!-- <Color r=".8" g=".6" b=".1" a="1"/> -->
 				</Texture>
 			</Layer>
 		</Layers>
@@ -203,13 +193,11 @@
 					GameTooltip:Hide()
 				end
 			</OnLeave>
+			<OnShow>
+				if 1 == 1 then
+					self.highlight:SetAlpha(0)
+				end
+			</OnShow>
 		</Scripts>
 	</Frame>
-
-
-
-
-
-
-
 </Ui>

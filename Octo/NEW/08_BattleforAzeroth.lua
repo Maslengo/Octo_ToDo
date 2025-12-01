@@ -2,62 +2,62 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 8
-
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
 E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-	1560,
-	1721,
-	1803,
-	1755,
-	1719,
-	1710,
-	1716,
-	1717,
-	1718,
-	1580,
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Items = {
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+local function localfunc()
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+		1560,
+		1721,
+		1803,
+		1755,
+		1719,
+		1710,
+		1716,
+		1717,
+		1718,
+		1580,
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
 		-- ["Battle for Azeroth"] = {
-	2164, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
-	2415, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-	2391, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-	2163, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-	2417, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-	2427, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
-	2157, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
-	2373, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
-	2158, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
-	2103, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
-	2156, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
-	2233, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
-	2370, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
-	2390, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
-	2389, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
-	2388, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
-	2159, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
-	2160, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
-	2400, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
-	2162, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
-	2161, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
-	2395, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
-	2398, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
-	2397, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
-	2396, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
-	2376, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
-	2375, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
-	2377, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+		2164, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+		2415, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+		2391, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
+		2163, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
+		2417, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+		2427, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+		2157, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
+		2373, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
+		2158, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
+		2103, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
+		2156, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
+		2233, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
+		2370, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
+		2390, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
+		2389, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
+		2388, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+		2159, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
+		2160, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
+		2400, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
+		2162, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
+		2161, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
+		2395, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
+		2398, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
+		2397, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
+		2396, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
+		2376, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
+		2375, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
+		2377, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
@@ -644,13 +644,13 @@ E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
 			},
 			-- forcedMaxQuest = 10,
 		},
-}
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	}
+end
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
-
-}
-----------------------------------------------------------------
-function E.func_Otrisovka_08_BattleforAzeroth()
+local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -659,7 +659,7 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 		if Octo_ToDo_DB_Vars.Items then
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[158075] then
 						textCENT = CharInfo.PlayerData.azeriteLVL and E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r" or E.Orange_Color.."in bank|r"
@@ -669,12 +669,12 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 					textLEFT = E.func_itemName(158075)
 					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 					----------------------------------------------------------------
-					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 					----------------------------------------------------------------
 			end)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[169223] then
 						if CharInfo.PlayerData.cloak_lvl then
@@ -688,28 +688,30 @@ function E.func_Otrisovka_08_BattleforAzeroth()
 					textLEFT = E.func_itemName(169223)
 					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 					----------------------------------------------------------------
-					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 					----------------------------------------------------------------
 			end)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
-					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 					tooltipKey = "BfA_mechagonItems"
 					textCENT = E.Gray_Color..ITEMS.."|r"
 					----------------------------------------------------------------
 					textLEFT = "МЕХАГОН"
 					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
 					----------------------------------------------------------------
-					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 					----------------------------------------------------------------
 			end)
 		end
-		E.func_Otrisivka_CURRENCIESnITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
-		E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
-		E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka_textCENT
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+tinsert(E.newOTRISOVKA, localfunc)
+tinsert(E.newOTRISOVKA2, localfunc2)

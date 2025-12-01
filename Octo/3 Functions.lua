@@ -205,7 +205,7 @@ end
 local function func_itemName_CACHE(id)
 	local Cache = GetOrCreateCache("AllItems", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Items[id] = Octo_ToDo_DB_NeedToTrack.Items[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetItemNameByID(id)
@@ -238,7 +238,7 @@ end
 local function func_currencyName_CACHE(id)
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Currencies[id] = Octo_ToDo_DB_NeedToTrack.Currencies[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local info = GetCurrencyInfo(id)
@@ -275,7 +275,7 @@ end
 local function func_npcName_CACHE(id)
 	local Cache = GetOrCreateCache("AllNPCs", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.npcNames[id] = Octo_ToDo_DB_NeedToTrack.npcNames[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
@@ -313,7 +313,7 @@ end
 local function func_questName_CACHE(id)
 	local Cache = GetOrCreateCache("AllQuests", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Quests[id] = Octo_ToDo_DB_NeedToTrack.Quests[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = (GetTitleForQuestID or GetQuestInfo)(id)
@@ -338,7 +338,7 @@ end
 local function func_reputationName_CACHE(id)
 	local Cache = GetOrCreateCache("AllReputations", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Reputations[id] = Octo_ToDo_DB_NeedToTrack.Reputations[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = ""
@@ -390,7 +390,7 @@ end
 local function func_spellName_CACHE(id)
 	local Cache = GetOrCreateCache("AllSpells", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Spells[id] = Octo_ToDo_DB_NeedToTrack.Spells[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetSpellName(id)
@@ -416,7 +416,7 @@ local function func_achievementName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllAchievements", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Achievements[id] = Octo_ToDo_DB_NeedToTrack.Achievements[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = select(2, GetAchievementInfo(id))
@@ -442,7 +442,7 @@ local function func_mountName_CACHE(id)
 	-- /run fpde(Octo_Cache_DB.AllAchievements)
 	local Cache = GetOrCreateCache("AllMounts", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.Mounts[id] = Octo_ToDo_DB_NeedToTrack.Mounts[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetMountInfoByID(id)
@@ -481,7 +481,7 @@ end
 local function func_mapName_CACHE(id)
 	local Cache = GetOrCreateCache("AllMaps", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		Octo_ToDo_DB_NeedToTrack.MapNames[id] = Octo_ToDo_DB_NeedToTrack.MapNames[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetMapInfo(id).name
@@ -522,26 +522,20 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
 function E.Cache_All_EventNames_Year()
 	if not GetNumDayEvents then return end
 	local currentYear = GetCurrentCalendarTime().year
-
 	for month = 1, 12 do
 		local monthInfo = GetMonthInfo(month, currentYear)
 		if not monthInfo then
 			break
 		end
-
 		SetAbsMonth(month, currentYear)
-
 		for day = 1, monthInfo.numDays do
 			local numEvents = GetNumDayEvents(0, day)
 			for i = 1, numEvents do
 				local event = GetDayEvent(0, day, i)
 				if not event or event.calendarType ~= "HOLIDAY" then break end
-
 				local Cache = GetOrCreateCache("AllEvents", event.eventID)
 				Cache[event.eventID] = Cache[event.eventID] or {}
 				Cache[event.eventID][E.curLocaleLang] = event.title
@@ -549,49 +543,37 @@ function E.Cache_All_EventNames_Year()
 		end
 	end
 end
-
-
-
-
 do
 	C_Timer.After(1, E.Cache_All_EventNames_Year)
 end
-
-
 local function func_EventName_CACHE(id)
 	-- E.Cache_All_EventNames_Year()
 	-- local Cache = GetOrCreateCache("AllEvents")
 	local Cache = Octo_Cache_DB.AllEvents
-
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		-- Octo_ToDo_DB_NeedToTrack.EventNames[id] = Octo_ToDo_DB_NeedToTrack.EventNames[id] or true
+
 		return Cache[id][E.curLocaleLang]
 	end
 	local name
-
 	if not E.Holiday or next(E.Holiday) == nil then
 		if E.Collect_All_Holiday then
 			pcall(E.Collect_All_Holiday)
 		end
 	end
-
 	for eventKey, v in next, (E.Holiday) do
 		if id == v.eventID then
 			name = v.title or ""
 		end
 	end
-
 	if not name or name == "" then
 		-- print (id, E.Red_Color..UNKNOWN.."|r")
 		return E.Red_Color..UNKNOWN.."|r"
 	end
-
 	Cache[id] = Cache[id] or {}
 	Cache[id][E.curLocaleLang] = name
 	if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 		print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 	end
-
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
@@ -1224,7 +1206,7 @@ function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
-						Octo_ToDo_DB_Vars.SettingsEnabled = false
+						Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = false
 						if func then func() end
 						if frame then
 							frame:SetShown(not frame:IsShown())
@@ -1501,43 +1483,52 @@ function E.func_FactionIconID(faction)
 		return 775462
 	end
 end
-function E.func_Universal(tbl, DESCRIPT)
+function E.func_Otrisivka_Universal(tbl, DESCRIPT)
 	if not tbl or not DESCRIPT then return end
-	if not Octo_ToDo_DB_Vars.Quests and not Octo_ToDo_DB_Vars.Holidays then return end
-	-- local expID, expColor, expName, descSTR
-	-- if type(DESCRIPT) == "number" and Octo_ToDo_DB_Vars.Quests then
-	-- 	local expansionData = E.OctoTable_Expansions[DESCRIPT]
-	-- 	if expansionData then
-	-- 		expID = expansionData.id
-	-- 		expColor = expansionData.color
-	-- 		expName = expansionData.name
-	-- 		descSTR = expName:gsub(" ", "")
-	-- 	else
-	-- 		return
-	-- 	end
-	-- elseif type(DESCRIPT) == "string" and Octo_ToDo_DB_Vars.Holidays then
-	-- 	expColor = E.Holiday_Color
-	-- 	descSTR = DESCRIPT
-	-- else
-	-- 	return
-	-- end
+
 	for _, data in next,(E.ALL_UniversalQuests) do
-		-- if data.quests and descSTR == data.desc then
 		if data.quests and DESCRIPT == data.desc then
-			table_insert(tbl, function(CharInfo)
-					local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
-					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+			local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+			local settingsType = "UniversalQuests#"..questKey
+
+			-- Проверка видимости
+			local shouldShow = false
+
+			if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled then
+				-- Режим настройки включен - показываем все
+				shouldShow = true
+			else
+				-- Режим настройки выключен - проверяем настройки
+				local univSettings = Octo_ToDo_DB_VisualUserSettings.UniversalQuests
+				if univSettings then
+					-- Проверяем строковый ключ (для UniversalQuests ID всегда строка)
+					if univSettings[questKey] then
+						shouldShow = true
+					end
+				end
+			end
+
+			-- Если нужно показать, добавляем процессор
+			if shouldShow then
+				table_insert(tbl, function(CharInfo)
+					local iconLEFT, textLEFT, colorLEFT, textCENT, _, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil, false, nil, nil
+
 					tooltipKey = questKey
 					local showTooltip = data.showTooltip or false
+
 					if not data.textleft then
 						fpde(data)
 					end
+
 					textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
+
 					if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] then
 						local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].textCENT
 						if LeftData then
 							local totalQuest = 0
 							local forcedMaxQuest = data.forcedMaxQuest
+
+							-- Подсчет общего числа квестов
 							for _, questData in ipairs(data.quests) do
 								local faction = questData.faction
 								if not faction or faction == CharInfo.PlayerData.Faction then
@@ -1551,7 +1542,10 @@ function E.func_Universal(tbl, DESCRIPT)
 									end
 								end
 							end
+
 							forcedMaxQuest = totalQuest
+
+							-- Формирование текста в центре
 							if type(LeftData) == "number" and forcedMaxQuest then
 								textCENT = LeftData >= forcedMaxQuest and E.DONE or LeftData.."/"..forcedMaxQuest
 							elseif forcedMaxQuest ~= 1 then
@@ -1561,65 +1555,50 @@ function E.func_Universal(tbl, DESCRIPT)
 							end
 						end
 					end
-					-- colorLEFT = expColor
-					return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
-			end)
+
+					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				end)
+			end
 		end
 	end
 end
-
-
 function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
-	if not (Octo_ToDo_DB_Vars.Currencies or Octo_ToDo_DB_Vars.Items) then return end
 	local currencyProcessors = setmetatable({}, {__mode = "v"})
 	local expansionData = E.OctoTable_Expansions[currentSTATE]
 	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
 	if not Data then return end
-	-- local func_textCENT_Items = function(...) return E.func_textCENT_Items(...) end
-	-- local func_itemName = function(...) return E.func_itemName(...) end
-	-- local func_GetItemIconByID = function(...) return E.func_GetItemIconByID(...) end
-	-- local func_textCENT_Currency = function(...) return E.func_textCENT_Currency(...) end
-	-- local func_currencyName = function(...) return E.func_currencyName(...) end
-	-- local func_GetCurrencyIcon = function(...) return E.func_GetCurrencyIcon(...) end
-	local Purple_Color = E.Purple_Color
 
+	local Purple_Color = E.Purple_Color
 	local function getCurrencyProcessor(currencyID)
 		local processor = currencyProcessors[currencyID]
 		if not processor then
 			processor = function(CharInfo)
-
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
-
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil, false, nil, nil
 				iconLEFT = E.func_GetCurrencyIcon(currencyID)
 				textLEFT = E.func_currencyName(currencyID)
 				colorLEFT = E.TheBurningCrusade_Color or expansionData.color
 				textCENT = E.func_textCENT_Currency(CharInfo, currencyID)
-				-- tooltipCENT =
-				-- colorCENT =
 				myType = {"Currency", currencyID}
-				-- tooltipKey =
-				-- isReputation =
-				-- FIRSTrep =
-				-- SECONDrep =
+
 				if currencyID == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
 					textCENT = string_format("%s%s +%d|r", textCENT, Purple_Color, CharInfo.PlayerData.Possible_CatalogedResearch)
 				end
+
 				if currencyID == 824 then
 					tooltipKey = "WoD_824"
 					local GARRISON_RESOURCE_ID = 824
-					local RESOURCE_GENERATION_INTERVAL = 600  -- 10 minutes in seconds
+					local RESOURCE_GENERATION_INTERVAL = 600
 					local RESOURCES_PER_INTERVAL = 1
 					local MAX_CACHE_SIZE = 500
+
 					if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
 						local color = E.Gray_Color
 						local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
 						local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
 						local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
 						local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
-						local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
-						local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
-						local timeToNextCurrency = RESOURCE_GENERATION_INTERVAL - (GetServerTime() - lastCacheTime) % RESOURCE_GENERATION_INTERVAL
+
 						if earnedSinceLastCollect > 0 then
 							if earnedSinceLastCollect >= 5 then
 								color = (earnedSinceLastCollect == cacheSize) and E.Purple_Color or E.Yellow_Color
@@ -1627,71 +1606,111 @@ function E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, currentSTATE)
 							textCENT = textCENT .. color .. " +" .. earnedSinceLastCollect .. "|r"
 						end
 					end
-
 				end
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 
+				settingsType = "Currencies#"..currencyID
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			end
 			currencyProcessors[currencyID] = processor
 		end
 		return processor
 	end
-	if Octo_ToDo_DB_Vars.Currencies and Data.Currencies then
+
+	if Data.Currencies then
 		for _, currencyID in ipairs(Data.Currencies) do
-			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getCurrencyProcessor(currencyID)
+			local shouldShow = false
+
+			if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled then
+				-- Режим настройки включен - показываем все валюты
+				shouldShow = true
+			else
+				-- Режим настройки выключен - проверяем настройки валют
+				local currenciesSettings = Octo_ToDo_DB_VisualUserSettings.Currencies
+				if currenciesSettings then
+					-- Проверяем числовой ключ
+					if currenciesSettings[currencyID] then
+						shouldShow = true
+					end
+					-- Проверяем строковый ключ
+					if currenciesSettings[tostring(currencyID)] then
+						shouldShow = true
+					end
+				end
+			end
+
+			-- Если нужно показать, добавляем процессор
+			if shouldShow then
+				OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getCurrencyProcessor(currencyID)
+			end
 		end
 	end
 end
-
-
-
 function E.func_Otrisivka_ITEMS(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
-	if not Octo_ToDo_DB_Vars.Items then return end
 	local itemProcessors = setmetatable({}, {__mode = "v"})
 	local expansionData = E.OctoTable_Expansions[currentSTATE]
 	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
 	if not Data then return end
-	-- local func_textCENT_Items = function(...) return E.func_textCENT_Items(...) end
-	-- local func_itemName = function(...) return E.func_itemName(...) end
-	-- local func_GetItemIconByID = function(...) return E.func_GetItemIconByID(...) end
-	-- local func_textCENT_Currency = function(...) return E.func_textCENT_Currency(...) end
-	-- local func_currencyName = function(...) return E.func_currencyName(...) end
-	-- local func_GetCurrencyIcon = function(...) return E.func_GetCurrencyIcon(...) end
+
 	local Purple_Color = E.Purple_Color
 	local function getItemProcessor(itemID)
 		local processor = itemProcessors[itemID]
 		if not processor then
 			processor = function(CharInfo)
-
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
-
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil, false, nil, nil
 				iconLEFT = E.func_GetItemIconByID(itemID)
 				textLEFT = E.func_itemName(itemID)
 				colorLEFT = E.TheBurningCrusade_Color or expansionData.color
 				textCENT = E.func_textCENT_Items(CharInfo, itemID)
-				-- tooltipCENT =
-				-- colorCENT =
 				myType = {"Item", itemID}
-				-- tooltipKey =
-				-- isReputation =
-				-- FIRSTrep =
-				-- SECONDrep =
-
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
-
+				settingsType = "Items#"..itemID
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			end
 			itemProcessors[itemID] = processor
 		end
 		return processor
 	end
-	if Octo_ToDo_DB_Vars.Items and Data.Items then
+
+	if Data.Items then
 		for _, itemID in ipairs(Data.Items) do
-			if type(itemID) == "number" then
-				OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getItemProcessor(itemID)
-			elseif type(itemID) == "table" then
-				for _, ItemID_new in ipairs(itemID) do
-					OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getItemProcessor(ItemID_new)
+			local shouldShow = false
+
+			if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled then
+				-- Режим настройки включен - показываем все предметы
+				shouldShow = true
+			else
+				-- Режим настройки выключен - проверяем настройки предметов
+				local itemsSettings = Octo_ToDo_DB_VisualUserSettings.Items
+				if itemsSettings then
+					if type(itemID) == "number" then
+						-- Проверяем числовой ключ
+						if itemsSettings[itemID] then
+							shouldShow = true
+						end
+						-- Проверяем строковый ключ
+						if itemsSettings[tostring(itemID)] then
+							shouldShow = true
+						end
+					elseif type(itemID) == "table" then
+						-- Для таблицы предметов показываем, если хоть один включен
+						for _, subItemID in ipairs(itemID) do
+							if itemsSettings[subItemID] or itemsSettings[tostring(subItemID)] then
+								shouldShow = true
+								break
+							end
+						end
+					end
+				end
+			end
+
+			-- Если нужно показать, добавляем процессор
+			if shouldShow then
+				if type(itemID) == "number" then
+					OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getItemProcessor(itemID)
+				elseif type(itemID) == "table" then
+					for _, ItemID_new in ipairs(itemID) do
+						OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getItemProcessor(ItemID_new)
+					end
 				end
 			end
 		end
@@ -1700,64 +1719,82 @@ end
 
 
 
+function E.getSettings(type, id)
+    -- Проверяем, существует ли таблица настроек для этого типа
+    if not Octo_ToDo_DB_VisualUserSettings then
+        return false
+    end
 
+    local settingsTable = Octo_ToDo_DB_VisualUserSettings[type]
+    if not settingsTable then
+        return false
+    end
 
+    -- Определяем ключ (строковый или числовой)
+    local key = id
+    local numID = tonumber(id)
+    if numID and settingsTable[numID] ~= nil then
+        key = numID
+    end
 
-
-
-
-
-
-
-
-
-
+    -- Возвращаем значение, если оно существует, иначе false
+    return settingsTable[key] or false
+end
 
 
 function E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
 	if not OctoTable_Otrisovka_textCENT or not currentSTATE then return end
 	local Data = E.OctoTables_DataOtrisovka[currentSTATE]
 	if not Data then return end
+
 	----------------------------------------------------------------
 	local reputationProcessors = setmetatable({}, {__mode = "v"})
 	local function getReputationProcessor(reputationID)
 		local processor = reputationProcessors[reputationID]
 		if not processor then
 			processor = function(CharInfo)
-
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
-
-
-
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil, false, nil, nil
 				iconLEFT = E.func_reputaionIcon(reputationID)
 				textLEFT = E.func_reputationName(reputationID)
-				-- colorLEFT =
 				textCENT = E.func_textCENT_Reputation(CharInfo, reputationID)
-				tooltipCENT = {}
-				-- colorCENT =
-				-- myType =
 				tooltipKey = "Reputation_"..reputationID
 				isReputation = true
-				-- FIRSTrep =
-				-- SECONDrep =
-
-
-
-
-
+				settingsType = "Reputations#"..reputationID
 				local FIRSTrep, SECONDrep, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
-
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 			end
 			reputationProcessors[reputationID] = processor
 		end
 		return processor
 	end
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Reputations and Data.Reputations then
+
+	if Data.Reputations then
 		for i, reputationID in ipairs(Data.Reputations) do
-			textCENT = E.func_reputationName(reputationID)
-			OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getReputationProcessor(reputationID)
+			local shouldShow = false
+
+			if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled then
+				-- Режим настройки включен - показываем все репутации
+				shouldShow = true
+			else
+				-- Режим настройки выключен - проверяем настройки репутаций
+				local repSettings = Octo_ToDo_DB_VisualUserSettings.Reputations
+				if repSettings then
+					-- Проверяем числовой ключ
+					if repSettings[reputationID] then
+						shouldShow = true
+					end
+					-- Проверяем строковый ключ
+					if repSettings[tostring(reputationID)] then
+						shouldShow = true
+					end
+				end
+			end
+
+			-- Если нужно показать, добавляем процессор
+			if shouldShow then
+				OctoTable_Otrisovka_textCENT[#OctoTable_Otrisovka_textCENT + 1] = getReputationProcessor(reputationID)
+			end
 		end
 	end
 	----------------------------------------------------------------
@@ -2743,28 +2780,28 @@ function E.func_KeyTooltip(GUID, tooltipKey)
 		----------------------------------------------------------------
 	elseif tooltipKey == "Timewalk_Mounts" then
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2473), E.func_ExpansionVivod(1)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(778), E.func_ExpansionVivod(2)} -- Eclipse Dragonhawk (TBC Timewalking)
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2225), E.func_ExpansionVivod(2)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(552), E.func_ExpansionVivod(3)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2317), E.func_ExpansionVivod(3)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2473), E.func_ExpansionVivod(4)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2474), E.func_ExpansionVivod(5)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1242), E.func_ExpansionVivod(6)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1243), E.func_ExpansionVivod(6)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2470), E.func_ExpansionVivod(6)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1521), E.func_ExpansionVivod(7)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2471), E.func_ExpansionVivod(7)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(781), E.func_ExpansionVivod(8)} -- Infinite Timereaver (Timewalking boss drop)
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2586), E.func_ExpansionVivod(8)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2587), E.func_ExpansionVivod(8)}
--- tooltipCENT[#tooltipCENT+1] = {nil}
+		-- tooltipCENT[#tooltipCENT+1] = {nil}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(293), E.func_ExpansionVivod(11)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(1798), E.func_ExpansionVivod(11)}
 		tooltipCENT[#tooltipCENT+1] = {E.func_pizda(2224), E.func_ExpansionVivod(11)}

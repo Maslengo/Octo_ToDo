@@ -40,8 +40,6 @@ function E.Timers.Legion_Invasion()
 	end
 	return timerText..str
 end
-
-
 -- Legion_Remix Invasion
 function E.Timers.Legion_Remix_Invasion()
 	local maps = {
@@ -68,12 +66,6 @@ function E.Timers.Legion_Remix_Invasion()
 	end
 	return timerText..str
 end
-
-
-
-
-
-
 -- BfA Invasion
 function E.Timers.BfA_Invasion()
 	local maps = {

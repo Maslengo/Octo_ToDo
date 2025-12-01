@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local ENABLE_DEBUG_TIMER = false
-
-
 function E.func_Collect_All()
 	local start = debugprofilestop()
 	local color = E.Green_Color

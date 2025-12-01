@@ -2,43 +2,51 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 4
-
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
 E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-			391, -- Tol Barad Commendation
-			416, -- Mark of the World Tree
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Items = {
-			52078,
-			69237,
-			71998,
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-	1204, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
-	1173, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
-	1171, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
-	1158, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
-	1135, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
+local function localfunc()
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+		391, -- Tol Barad Commendation
+		416, -- Mark of the World Tree
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+		52078,
+		69237,
+		71998,
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+		1204, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
+		1173, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
+		1171, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
+		1158, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
+		1135, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
 		----------------------------------------------------------------
-	1178, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
-	1172, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]
+		1178, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
+		1172, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]
 		----------------------------------------------------------------
-	1177, --name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, --[faction=1177]
-	1174, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
-}
+		1177, --name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, --[faction=1177]
+		1174, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	}
+end
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
-
-}
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+local function localfunc2()
+	return
+end
 ----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+tinsert(E.newOTRISOVKA, localfunc)
+tinsert(E.newOTRISOVKA2, localfunc2)

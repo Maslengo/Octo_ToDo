@@ -62,40 +62,36 @@ local func_OnAcquiredLEFT do
 		frameFULL:SetPropagateMouseClicks(true)
 		frameFULL:SetPropagateMouseMotion(true)
 		frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-
-
 		if 1 ~= 1 then
 			frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- "auctionhouse-ui-row-highlight"
 			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
 			frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
 		end
-
-
-
-
-
-
-
-
 		frameFULL:SetPoint("LEFT", frame)
 		frameFULL:SetPoint("TOP", frame)
 		frameFULL:SetPoint("BOTTOM", frame)
 		frameFULL:SetPoint("RIGHT")
+		frame.frameFULL = frameFULL
 		------------------------------------------------
-		frame.icon_settings = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
-		frame.icon_settings:SetPoint("TOPLEFT", 1, -1)
-		frame.icon_settings:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
-		frame.icon_settings:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		-- frame.icon_settings:RegisterForClicks("LeftButtonUp")
-		-- frame.icon_settings:EnableMouse(true)
-		------------------------------------------------
+		frame.settings_button = CreateFrame("BUTTON", nil, frame)
+		local texture = frame.settings_button:CreateTexture(nil, "BACKGROUND", nil, 5)
+		texture:SetPoint("TOPLEFT", 1, -1)
+		texture:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
+		texture:SetTexCoord(.10, .90, .10, .90)
+		-- Сохраняем текстуру в кнопке и во фрейме
+		frame.settings_button.icon_settings_texture = texture
+		frame.icon_settings_texture = texture
+		-- Настраиваем КНОПКУ (settings_button), а не текстуру!
+		frame.settings_button:SetSize(LINE_HEIGHT, LINE_HEIGHT)
+		frame.settings_button:SetPoint("TOPLEFT", 1, -1)
+		frame.settings_button:RegisterForClicks("LeftButtonUp")
+		frame.settings_button:EnableMouse(true)
 		------------------------------------------------
 		frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		frame.icon_1:SetPoint("TOPLEFT", 1, -1)
 		frame.icon_1:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
 		frame.icon_1:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 		------------------------------------------------
-		frame.frameFULL = frameFULL
 		-- Текстовое поле для левой колонки
 		frame.textLEFT = frame:CreateFontString()
 		frame.textLEFT:SetFontObject(OctoFont11)
@@ -169,19 +165,31 @@ local func_OnAcquiredCENT do
 	end
 end
 
+function E.func_icon_settings_OnClick(button, frameData)
+	local type, id = ("#"):split(frameData.settingsType)
 
+	-- Получаем таблицу настроек для типа
+	local settingsTable = Octo_ToDo_DB_VisualUserSettings[type]
+	if not settingsTable then return end
 
+	-- Определяем ключ (строковый или числовой)
+	local key = id
+	if settingsTable[tonumber(id)] ~= nil then
+		key = tonumber(id)
+	end
 
-function E.func_icon_settings_OnEnter(frame)
-		frame:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen")
+	-- Если запись существует, переключаем, иначе создаем с true
+	local newValue = not (settingsTable[key] or false)
+	settingsTable[key] = newValue
+
+	-- print("Настройка обновлена:", type, key, "=", newValue)
+
+	-- Обновляем текстуру
+	local texture = newValue and
+		"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen" or
+		"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
+	button.icon_settings_texture:SetTexture(texture)
 end
-function E.func_icon_settings_OnLeave(frame)
-		frame:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred")
-end
-
--- function E.func_icon_settings_OnClick(frame)
--- 		frame:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFyellow")
--- end
 
 -- Функция инициализации данных для левой колонки
 function EventFrame:Octo_Frame_initLEFT(frame, node)
@@ -191,22 +199,26 @@ function EventFrame:Octo_Frame_initLEFT(frame, node)
 	else
 		frame.icon_1:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
-	if Octo_ToDo_DB_Vars.SettingsEnabled then
-		frame.icon_settings:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred")
+	if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled and frameData.settingsType then
+		local type, id = ("#"):split(frameData.settingsType)
+		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
+
+		if Octo_ToDo_DB_VisualUserSettings[type][id] or Octo_ToDo_DB_VisualUserSettings[type][tonumber(id)] then
+			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
+		else
+			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
+		end
+		frame.icon_settings_texture:SetTexture(texture)
 		frame.icon_1:Hide()
-		frame.icon_settings:Show()
+		frame.settings_button:Show()
 	else
 		frame.icon_1:Show()
-		frame.icon_settings:Hide()
+		frame.settings_button:Hide()
 	end
 
-
-	if frame.icon_settings:IsShown() then
-		frame.icon_settings:SetScript("OnEnter", E.func_icon_settings_OnEnter)
-		frame.icon_settings:SetScript("OnLeave", E.func_icon_settings_OnLeave)
-		-- frame.icon_settings:SetScript("OnClick", E.func_icon_settings_OnClick)
-	end
-
+	frame.settings_button:SetScript("OnClick", function(self)
+		E.func_icon_settings_OnClick(self, frameData)
+	end)
 
 	-- Обновление размеров колонки, если они были изменены
 	if EventFrame.COLUMN_SIZES_LEFT and EventFrame.COLUMN_SIZES_LEFT[1] then
@@ -259,9 +271,10 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 					elseif FIRSTrep >= 1 then
 						secondFrame.ReputTextureAndBG:SetWidth(columnWidth/SECONDrep*FIRSTrep)
 					end
-				else
+				elseif frameData.isReputation and frameData.FIRSTrep and tonumber(frameData.FIRSTrep[i]) == 0 then
 					secondFrame.ReputTextureAndBG:Hide()
-					-- secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
+				else
+					secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
 				end
 			end
 			secondFrame.textCENT:SetText(textCENT)
@@ -276,12 +289,6 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 			secondFrame.ReputTextureAndBG:SetVertexColor(0, 0, 0, 0)
 			secondFrame.curCharTextureBG:Hide()
 		end
-		-- Установка тултипа для колонки, если он есть
-		-- if frameData.tooltipCENT and frameData.tooltipCENT[i] then
-		--     secondFrame.tooltip = frameData.tooltipCENT[i]
-		-- else
-		--     secondFrame.tooltip = nil
-		-- end
 		secondFrame:SetScript("OnEnter", function()
 				if frameData.tooltipKey and frameData.GUID[i] then
 					secondFrame.tooltip = E.func_KeyTooltip(frameData.GUID[i], frameData.tooltipKey)
@@ -514,34 +521,28 @@ end
 -- Функция для объединения таблиц отрисовки
 ----------------------------------------------------------------
 function E.func_Concat_Otrisovka()
-	wipe(E.ALL_Currencies)
-	wipe(E.ALL_Items)
-	wipe(E.ALL_Reputations)
-	wipe(E.ALL_UniversalQuests)
-	wipe(E.ALL_Additionally)
-
-	local OctoTable_Otrisovka_textCENT = {}
-
-	for currentSTATE, value in next,(E.OctoTables_Vibor) do
-		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
-		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[currentSTATE].Additionally)
-
-		if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
-			E.func_Otrisivka_CURRENCIES(OctoTable_Otrisovka_textCENT, currentSTATE) -- РАЗДЕЛИТЬ ОТДЕЛЬНО (ПОФИКСИТЬ)
-			E.func_Otrisivka_ITEMS(OctoTable_Otrisovka_textCENT, currentSTATE) -- РАЗДЕЛИТЬ ОТДЕЛЬНО (ПОФИКСИТЬ)
-			E.func_Universal(OctoTable_Otrisovka_textCENT, currentSTATE)
-			E.func_Otrisovka_REPUTATION(OctoTable_Otrisovka_textCENT, currentSTATE)
+	for k, func in next, (E.newOTRISOVKA) do
+		func()
+	end
+	local OctoTable_OtrisovkaQWE = {}
+	for _, func in ipairs(E.newOTRISOVKA2) do
+		local tbl = func()
+		if tbl then
+			for _, func2 in ipairs(tbl) do
+				tinsert(OctoTable_OtrisovkaQWE, func2)
+			end
 		end
 	end
-	-- print (E.func_EventName(479))
-	-- print (Octo_Cache_DB.AllEvents[479][E.curLocaleLang])
-	return OctoTable_Otrisovka_textCENT
+	for currentSTATE, value in next,(E.OctoTables_Vibor) do
+		if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+			E.func_Otrisivka_CURRENCIES(OctoTable_OtrisovkaQWE, currentSTATE)
+			E.func_Otrisivka_ITEMS(OctoTable_OtrisovkaQWE, currentSTATE)
+			E.func_Otrisivka_Universal(OctoTable_OtrisovkaQWE, currentSTATE)
+			E.func_Otrisovka_REPUTATION(OctoTable_OtrisovkaQWE, currentSTATE)
+		end
+	end
+	return OctoTable_OtrisovkaQWE
 end
-
-
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	-- EventFrame.COLUMN_SIZES_LEFT = EventFrame.COLUMN_SIZES_LEFT or {}
@@ -576,10 +577,11 @@ function EventFrame:CreateDataProvider()
 			isReputation = {},
 			FIRSTrep = {},
 			SECONDrep = {},
+			settingsType = {},
 		}
 		-- Заполнение данных для каждого персонажа
 		for CharIndex, CharInfo in ipairs(tbl) do
-			local _, _, _, textCENT, tooltipCENT, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
+			local _, _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
 			zxc.textCENT[CharIndex] = textCENT
 			zxc.colorCENT[CharIndex] = colorCENT
 			zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
@@ -589,13 +591,14 @@ function EventFrame:CreateDataProvider()
 		-- Заполнение данных для левой колонки (берется из первого персонажа)
 		local firstChar = tbl[1]
 		if firstChar then
-			local iconLEFT, textLEFT, colorLEFT, _, tooltipCENT, _, myType, tooltipKey, isReputation = func(firstChar)
+			local iconLEFT, textLEFT, colorLEFT, _, settingsType, _, myType, tooltipKey, isReputation = func(firstChar)
 			zxc.iconLEFT = iconLEFT
 			zxc.textLEFT = textLEFT or "NONE"
 			zxc.colorLEFT = colorLEFT or E.Blue_Color
 			zxc.myType = myType or {}
 			zxc.tooltipKey = tooltipKey
 			zxc.isReputation = isReputation or false
+			zxc.settingsType = settingsType
 		end
 		-- Установка дополнительных параметров
 		zxc.currentCharacterIndex = currentCharacterIndex
@@ -726,7 +729,8 @@ local MyEventsTable = {
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
-	print ("PLAYER_LOGIN")
+	AlertFrame:ClearAllPoints()
+	AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
 	EventFrame:Octo_Create_MainFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.Faction_Color, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")

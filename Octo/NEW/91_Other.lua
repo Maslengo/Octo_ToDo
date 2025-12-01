@@ -2,33 +2,29 @@ local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local currentSTATE = 91
-
 E.OctoTables_DataOtrisovka[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE] = {}
 E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[9].icon
 E.OctoTables_Vibor[currentSTATE].name = "91_Other"
+local function localfunc()
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	}
+end
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
-
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Items = {
-
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
-
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
-
-}
-----------------------------------------------------------------
-function E.func_Otrisovka_91_Other()
+local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -36,7 +32,7 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Quests then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				tooltipKey = "ListOfQuests"
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.numQuests then
@@ -45,7 +41,7 @@ function E.func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = QUESTS_LABEL
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -55,31 +51,31 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Dungeons then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				----------------------------------------------------------------
 				tooltipKey = "Other_LFGInstance"
 				local count = 0
-					for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
-						if v then
-							for difficultyID, w in next, (v) do
-								if w.vivod then
-									count = count + 1
-								end
-							end
-						end
-					end
-					for dungeonID, v in next, (CharInfo.MASLENGO.LFGInstance) do
-						if v then
-							if CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday then
+				for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
+					if v then
+						for difficultyID, w in next, (v) do
+							if w.vivod then
 								count = count + 1
 							end
 						end
 					end
-					for worldBossID, v in next, (CharInfo.MASLENGO.SavedWorldBoss) do
-						if v then
+				end
+				for dungeonID, v in next, (CharInfo.MASLENGO.LFGInstance) do
+					if v then
+						if CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday then
 							count = count + 1
 						end
 					end
+				end
+				for worldBossID, v in next, (CharInfo.MASLENGO.SavedWorldBoss) do
+					if v then
+						count = count + 1
+					end
+				end
 				if count ~= 0 then
 					textCENT = count
 					-- textCENT = E.Gray_Color..DUNGEONS.."|r"
@@ -87,7 +83,7 @@ function E.func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = DUNGEONS
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -97,7 +93,7 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Items then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				----------------------------------------------------------------
 				tooltipKey = "Other_Items"
 				local count = 0
@@ -113,7 +109,7 @@ function E.func_Otrisovka_91_Other()
 				----------------------------------------------------------------
 				textLEFT = ITEMS
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -123,7 +119,7 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Professions then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				tooltipKey = "Other_professions"
 				----------------------------------------------------------------
 				local charProf = CharInfo.MASLENGO.professions
@@ -138,7 +134,7 @@ function E.func_Otrisovka_91_Other()
 				textLEFT = PROFESSIONS_BUTTON
 				myType = {"professions"}
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -148,7 +144,7 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.ItemLevel then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				tooltipKey = "Other_ItemLevel"
 				----------------------------------------------------------------
 				local color = E.Red_Color
@@ -177,7 +173,7 @@ function E.func_Otrisovka_91_Other()
 				textLEFT = STAT_AVERAGE_ITEM_LEVEL
 				myType = {"ItemLevel"}
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -187,7 +183,7 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Gold then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				tooltipKey = "Other_Money"
 				----------------------------------------------------------------
 				if CharInfo.PlayerData.Money then
@@ -204,7 +200,7 @@ function E.func_Otrisovka_91_Other()
 				textLEFT = BONUS_ROLL_REWARD_MONEY
 				myType = {"Money"}
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -214,7 +210,7 @@ function E.func_Otrisovka_91_Other()
 	if Octo_ToDo_DB_Vars.Config_WasOnline then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
 				tooltipKey = "Other_WasOnline"
 				----------------------------------------------------------------
 				local color = "|cffFFFFFF"
@@ -234,7 +230,7 @@ function E.func_Otrisovka_91_Other()
 				myType = {"Online"}
 				----------------------------------------------------------------
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -243,3 +239,8 @@ function E.func_Otrisovka_91_Other()
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka_textCENT
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+tinsert(E.newOTRISOVKA, localfunc)
+tinsert(E.newOTRISOVKA2, localfunc2)
