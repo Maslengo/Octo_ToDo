@@ -1,14 +1,15 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 7
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 7
+local expansionID = 7
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		1508,
 		1342,
 		1220,
@@ -20,22 +21,21 @@ local function localfunc()
 		1273, -- (1273 MONETKA)
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
-		-- ["Legion"] = {
-		2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
-		2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
-		2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
-		1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
-		1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
-		2018, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
-		1948, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 		1900, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
 		1883, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
 		1828, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
+		1948, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
+		1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
+		1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
+		2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
+		2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
+		2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
+		----------------------------------------------------------------
+		2018, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
 		----------------------------------------------------------------
 		2097, --name = "Илиссия Водная", side = "-", category = "Legion", }, --[faction=2097]
 		2099, --name = "Акуле Речной Рог", side = "-", category = "Legion", }, --[faction=2099]
@@ -53,14 +53,14 @@ local function localfunc()
 		1975, --name = "Кудесник Маргосс", side = "-", category = "Legion", }, --[faction=1975]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{43193, forcedText = {npcID = 109331}, addText = {mapID = 630},}, -- Каламир 109331 Азсуна  (4).
 				{43192, forcedText = {npcID = 108829}, addText = {mapID = 630},}, -- Левантия 108829 Азсуна  (2).
@@ -90,7 +90,7 @@ local function localfunc()
 			textleft = E.func_questName(43533),
 			name_save = "BalanceofPower",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			MainquestID = 43533,
 			quests = {
 				{43496},
@@ -133,10 +133,10 @@ local function localfunc()
 		},
 		{
 			showTooltip = true,
-			textleft = E.Timers.Legion_Invasion(),
+			textleft = E.Timers.Legion_Remix_Invasion(),
 			name_save = "InvasionQuests",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{45838},
 				{45812},
@@ -146,144 +146,19 @@ local function localfunc()
 			forcedMaxQuest = 1,
 		},
 		-- {
-		--     sorted = false,
-		--     showTooltip = true,
-		--     textleft = "|cffFF00FFInfiniteResearch|r",
-		--     name_save = "InfiniteResearch",
-		--     reset = "Daily",
-		--     desc = currentSTATE,
-		--     isOnQuestOnly = true,
-		--     quests = {
-		--         -- {89476},
-		--         -- {91847},
-		--         -- {91848},
-		--         -- {91849},
-		--         -- {91437},
-		--         -- {92563},
-		--         -- {91612},
-		--         -- {92430},
-		--         -- {nil},
-		--         {89517},
-		--         {89531},
-		--         {89516},
-		--         {89519},
-		--         {89528},
-		--         {89523},
-		--         {89518},
-		--         {89522},
-		--         {89530},
-		--         {89521},
-		--         {89556},
-		--         {89529},
-		--         {89558},
-		--         {89520},
-		--         {89557},
-		--         {89527},
-		--         {89525},
-		--         {89526},
-		--         {89551},
-		--         {89552},
-		--         {89550},
-		--         {89540},
-		--         {89469},
-		--         {89468},
-		--         {89554},
-		--         {89555},
-		--         {89553},
-		--         {89546},
-		--         {89547},
-		--         {89524},
-		--         {89549},
-		--         {89532},
-		--         {89548},
-		--         {89533},
-		--         {89544},
-		--         {89545},
-		--         {89543},
-		--         {89535},
-		--         {89534},
-		--         {89536},
-		--         {89541},
-		--         {89542},
-		--         {89537},
-		--         {89539},
-		--         {89538},
-		--         {89464},
-		--         {91445},
-		--         {91449},
-		--         {90111},
-		--         {91447},
-		--         {90112},
-		--         {91444},
-		--         {90100},
-		--         {91446},
-		--         {90099},
-		--         {91443},
-		--         {90101},
-		--         {91448},
-		--         {90113},
-		--         {90114},
-		--         {90108},
-		--         {90109},
-		--         {90110},
-		--         {90098},
-		--         {91441},
-		--         {90103},
-		--         {89465},
-		--         {91440},
-		--         {90097},
-		--         {91439},
-		--         {90096},
-		--         {91438},
-		--         {90102},
-		--         {89595},
-		--         {89679},
-		--         {89599},
-		--         {89602},
-		--         {89596},
-		--         {89466},
-		--         {89467},
-		--         {89590},
-		--         {89591},
-		--         {89644},
-		--         {89665},
-		--         {89676},
-		--         {89678},
-		--         {89683},
-		--         {89593},
-		--         {89594},
-		--         {89604},
-		--         {89605},
-		--         {89606},
-		--         {89607},
-		--         {89681},
-		--         {89601},
-		--         {89680},
-		--         {89600},
-		--         {89603},
-		--         {89597},
-		--         {89592},
-		--         {89677},
-		--         {89598},
-		--         {89622},
-		--         {89682},
-		--     },
-		--     -- forcedMaxQuest = 1,
+		-- 	showTooltip = true,
+		-- 	textleft = E.func_questName(92855),
+		-- 	name_save = "MakeHasteNotWaste",
+		-- 	reset = "Daily",
+		-- 	desc = dropdownOrder,
+		-- 	quests = {
+		-- 		{92855},
+		-- 	},
+		-- 	forcedMaxQuest = 1,
 		-- },
-		{
-			showTooltip = true,
-			textleft = E.func_questName(92855),
-			name_save = "MakeHasteNotWaste",
-			reset = "Daily",
-			desc = currentSTATE,
-			quests = {
-				{92855},
-			},
-			-- forcedMaxQuest = 1,
-		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------

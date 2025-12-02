@@ -358,33 +358,15 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
-				self:ddAddSeparator(level)
+
+
+
 				-- Кнопки фильтров для разных типов контента
 				local info = {}
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
 				info.notCheckable = false
 				info.isNotRadio = true
-				local filterButtons = {
-					{text = ITEMS, var = "Items"},
-					{text = CURRENCY, var = "Currencies"},
-					{text = QUESTS_LABEL, var = "Quests"},
-					{text = CALENDAR_FILTER_HOLIDAYS, var = "Holidays"},
-					{text = DUNGEONS, var = "Dungeons"},
-					{text = TRADE_SKILLS, var = "Professions"},
-					{text = BONUS_ROLL_REWARD_MONEY, var = "Gold"},
-					{text = STAT_AVERAGE_ITEM_LEVEL, var = "ItemLevel"},
-					{text = L["Was online"], var = "Config_WasOnline"},
-				}
-				for _, btn in ipairs(filterButtons) do
-					info.text = btn.text
-					info.checked = Octo_ToDo_DB_Vars[btn.var]
-					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_Vars[btn.var] = checked
-						providerfunc()
-					end
-					self:ddAddButton(info, level)
-				end
 			end
 	end)
 end

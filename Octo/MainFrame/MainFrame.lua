@@ -306,8 +306,8 @@ end
 -- Функция создания главного тестового фрейма
 function EventFrame:Octo_Create_MainFrame()
 	-- Настройка позиции и обработчика показа фрейма
-	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.MonitorWidth*.05)
-	Octo_MainFrame_ToDo:SetPoint("CENTER")
+	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.MonitorWidth*.12)
+	-- Octo_MainFrame_ToDo:SetPoint("CENTER")
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
 			RequestRaidInfo()
 			E.func_Collect_All()
@@ -524,24 +524,24 @@ function E.func_Concat_Otrisovka()
 	for k, func in next, (E.newOTRISOVKA) do
 		func()
 	end
-	local OctoTable_OtrisovkaQWE = {}
+	local tbl_1 = {}
 	for _, func in ipairs(E.newOTRISOVKA2) do
-		local tbl = func()
-		if tbl then
-			for _, func2 in ipairs(tbl) do
-				tinsert(OctoTable_OtrisovkaQWE, func2)
+		local tbl_2 = func()
+		if tbl_2 then
+			for _, func2 in ipairs(tbl_2) do
+				tinsert(tbl_1, func2)
 			end
 		end
 	end
-	for currentSTATE, value in next,(E.OctoTables_Vibor) do
-		if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
-			E.func_Otrisivka_CURRENCIES(OctoTable_OtrisovkaQWE, currentSTATE)
-			E.func_Otrisivka_ITEMS(OctoTable_OtrisovkaQWE, currentSTATE)
-			E.func_Otrisivka_Universal(OctoTable_OtrisovkaQWE, currentSTATE)
-			E.func_Otrisovka_REPUTATION(OctoTable_OtrisovkaQWE, currentSTATE)
+	for dropdownOrder, value in next,(E.OctoTables_Vibor) do
+		if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
+			E.func_Otrisivka_Currencies(tbl_1, dropdownOrder)
+			E.func_Otrisivka_Items(tbl_1, dropdownOrder)
+			E.func_Otrisivka_UniversalQuests(tbl_1, dropdownOrder)
+			E.func_Otrisovka_Reputations(tbl_1, dropdownOrder)
 		end
 	end
-	return OctoTable_OtrisovkaQWE
+	return tbl_1
 end
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()

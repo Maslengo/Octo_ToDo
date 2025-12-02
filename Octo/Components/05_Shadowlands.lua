@@ -1,22 +1,23 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 9
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 5
+local expansionID = 9
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		2009, 1906, 1828, 1979, 1931,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[dropdownOrder].icon, name = E.OctoTable_Expansions[dropdownOrder].color..E.OctoTable_Expansions[dropdownOrder].name.."|r",},
 		-- ["Shadowlands"] = {
 		2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
 		2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
@@ -51,14 +52,14 @@ local function localfunc()
 		2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = "Other: Rares",
 			name_save = "OtherRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				-- Bastion
 				{nil, addText = {mapID = 1533},},
@@ -102,7 +103,7 @@ local function localfunc()
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{61813, forcedText = {npcID = 167524}, addText = {mapID = 1533},}, -- "Валинор" <Свет эпох> Бастион
 				{61816, forcedText = {npcID = 167525}, addText = {mapID = 1536},}, -- Мортанис Малдраксус  (2).
@@ -123,7 +124,7 @@ local function localfunc()
 			textleft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
 			name_save = "anima1k",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{61982, addText = {Icon = E.Icon_Kyrian}},
 				{61983, addText = {Icon = E.Icon_Necrolord}},
@@ -138,7 +139,7 @@ local function localfunc()
 			textleft = L["Troubles at Home"], -- E.func_questName(61981),
 			name_save = "Troubles at Home",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{60425, addText = {Icon = E.Icon_Kyrian}},
 				{60429, addText = {Icon = E.Icon_Necrolord}},
@@ -153,7 +154,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": "..L["Covenant Assault"],
 			name_save = "MAWassault",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63824, addText = {Icon = E.Icon_Kyrian}},
 				{63543, addText = {Icon = E.Icon_Necrolord}},
@@ -167,7 +168,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": "..L["The Hunt"],
 			name_save = "MAWhunt",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63180, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Hunt: Shadehounds"]},},
 				{63194, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Hunt: Winged Soul Eaters"]},},
@@ -181,7 +182,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": "..L["Wrath of the Jailer"],
 			name_save = "MAWwrathofthejailer",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63414, addText = {IconVignette = "VignetteEventElite"}, forcedText = {text = L["Wrath of the Jailer"]},},
 			},
@@ -192,7 +193,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": "..L["Event: Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast(),
 			name_save = "MAWtormentor",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63854, addText = {IconVignette = "Tormentors-Boss",}, forcedText = {text = L["Event: Tormentors of Torghast"]},},
 			},
@@ -203,7 +204,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": "..L["Helsworn Chest"],
 			name_save = "MAWHelswornChest",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64256, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Helsworn Chest"]},}, -- Maw chest in Desmotaeron
 			},
@@ -214,7 +215,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": "..L["Stolen Anima Vessel"]..E.RIFT,
 			name_save = "MAWStolenAnimaVesselRIFT",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64265, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Stolen Anima Vessel"]},},
 				{64269, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Stolen Anima Vessel"]},},
@@ -227,7 +228,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": ".."Daily",--E.func_currencyName(1880),
 			name_save = "MAWdailyQuests",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{60646},
 				{60762},
@@ -248,7 +249,7 @@ local function localfunc()
 			textleft = E.func_mapName(1543)..": ".."Rares",
 			name_save = "MAWRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{57469, forcedText = {npcID = 157833}},
 				{57482, forcedText = {npcID = 157964}},
@@ -283,7 +284,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": "..E.func_questName(63949), --"Weekly",
 			name_save = "KORTHIAweekly",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63949},
 			},
@@ -294,7 +295,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".."Lost Research", -- E.func_questName(65266),
 			name_save = "KORTHIAlostresearch",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{65266},
 			},
@@ -306,7 +307,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": "..E.func_questName(64552),    --"anima table mission",
 			name_save = "KORTHIAanimatablemission",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64552, addText = {Icon = E.Icon_Kyrian},}, -- ker
 				{64551, addText = {Icon = E.Icon_Necrolord},}, -- necr
@@ -320,7 +321,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".."Rares",
 			name_save = "KORTHIARares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63830, forcedText = {npcID = 177903},},
 				{64233, forcedText = {npcID = 179684}, addText = {mount = 1506},},
@@ -352,7 +353,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. L["Daily quests"],
 			name_save = "KORTHIADailyQuest",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{63787},
 				{64103},
@@ -366,7 +367,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. E.func_questName(64522),
 			name_save = "KORTHIAStolenKorthianSupplies",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64522},
 			},
@@ -377,7 +378,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. L["Purple Mobs"],
 			name_save = "KORTHIAPurpleMobs",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64341},
 				{64342},
@@ -402,7 +403,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. L["Relic Gorgers"],
 			name_save = "KORTHIARelicGorgers",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64433},
 				{64434},
@@ -417,7 +418,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".. AREA_LOOTING_UNLOCKED, -- L["Mushrooms"]
 			name_save = "KORTHIACollectionMushrooms",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64351, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 1"},},
 				{64354, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 2"},},
@@ -462,7 +463,7 @@ local function localfunc()
 			textleft = E.func_texturefromIcon(456578)..E.func_mapName(1961)..": ".."Items",
 			name_save = "KORTHIAitems",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
 				{64307, forcedText = {itemID = 187145}}, -- Treatise: Recognizing StygiaanditsUses
@@ -482,7 +483,7 @@ local function localfunc()
 			textleft = E.func_mapName(1970)..": ".."Weekly", -- E.func_questName(66042),
 			name_save = "ZMpatternswithinpatterns",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{66042},
 			},
@@ -493,7 +494,7 @@ local function localfunc()
 			textleft = E.func_mapName(1970)..": ".."Rares",
 			name_save = "ZMRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{65557, forcedText = {npcID = 178229}},
 				{65547, forcedText = {npcID = 178508}},
@@ -535,7 +536,7 @@ local function localfunc()
 			textleft = E.func_mapName(1970)..": ".."WorldQuests",
 			name_save = "ZMWorldQuests",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{64960},
 				{64974},
@@ -575,7 +576,7 @@ local function localfunc()
 			textleft = E.func_mapName(1970)..": "..AREA_LOOTING_UNLOCKED, -- AREA_LOOTING_UNLOCKED "Treasures"
 			name_save = "ZMtreasures",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{65520},
 				{65573},
@@ -611,7 +612,7 @@ local function localfunc()
 			textleft = E.func_mapName(1970)..": "..L["Undulating Foliage"],
 			name_save = "ZMUndulatingFoliage",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{65572, forcedText = {text = L["Undulating Foliage"]},},
 			},
@@ -622,7 +623,7 @@ local function localfunc()
 			textleft = E.func_mapName(1970)..": "..L["Prying Eye Discovery"],
 			name_save = "ZMPryingEyeDiscovery",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{65184, forcedText = {text = L["Prying Eye Discovery"]},},
 				{65501, forcedText = {text = L["Prying Eye Discovery"]},},
@@ -635,7 +636,7 @@ local function localfunc()
 		--     textleft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
 		--     name_save = "ZMPUZZLECACHES",
 		--     reset = "Daily",
-		--     desc = currentSTATE,
+		--     desc = dropdownOrder,
 		--     quests = {
 		--         {65094},
 		--         {65323},
@@ -661,7 +662,7 @@ local function localfunc()
 		--     textleft = E.func_mapName(1970)..": ".."ZMConcordance",
 		--     name_save = "ZMConcordance",
 		--     reset = "Once",
-		--     desc = currentSTATE,
+		--     desc = dropdownOrder,
 		--     quests = {
 		--         {65179},
 		--         {65213},
@@ -686,7 +687,7 @@ local function localfunc()
 		-- textleft = E.func_questName(62858),
 		-- name_save = "ReturnLostSouls",
 		-- reset = "Weekly",
-		-- desc = currentSTATE,
+		-- desc = dropdownOrder,
 		-- quests = {
 		-- 62858,
 		-- 62859,
@@ -708,7 +709,7 @@ local function localfunc()
 		-- textleft = "TradingFavors",
 		-- name_save = "TradingFavors",
 		-- reset = "Weekly",
-		-- desc = currentSTATE,
+		-- desc = dropdownOrder,
 		-- quests = {
 		-- 60242,
 		-- 60243,
@@ -731,7 +732,7 @@ local function localfunc()
 		-- },
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------
@@ -740,7 +741,7 @@ local function localfunc2()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
 		for kCovenant = 1, 2 do
 			for iANIMA = 1, 4 do
 				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
@@ -773,7 +774,7 @@ local function localfunc2()
 						vivodLeft = color..E.OctoTable_Covenant[iANIMA].name.."|r"
 						----------------------------------------------------------------
 						textLEFT = vivodLeft
-						colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+						colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
 						----------------------------------------------------------------
 						return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 						----------------------------------------------------------------

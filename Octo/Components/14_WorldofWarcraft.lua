@@ -1,20 +1,21 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 1
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 14
+local expansionID = 1
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 		910, --name = "Род Ноздорму", side = "-", category = "World of Warcraft", }, --[faction=910]
 		909, --name = "Ярмарка Новолуния", side = "-", category = "World of Warcraft", }, --[faction=909]
 		809, --name = "Шен'дралар", side = "-", category = "World of Warcraft", }, --[faction=809]
@@ -76,10 +77,10 @@ local function localfunc()
 		589, --name = "Укротители ледопардов", side = "Alliance", category = "World of Warcraft", }, --[faction=589]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------

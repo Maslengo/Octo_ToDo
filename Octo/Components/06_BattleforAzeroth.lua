@@ -1,14 +1,15 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 8
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 6
+local expansionID = 8
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		1560,
 		1721,
 		1803,
@@ -21,11 +22,11 @@ local function localfunc()
 		1580,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[dropdownOrder].icon, name = E.OctoTable_Expansions[dropdownOrder].color..E.OctoTable_Expansions[dropdownOrder].name.."|r",},
 		-- ["Battle for Azeroth"] = {
 		2164, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
 		2415, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
@@ -57,14 +58,14 @@ local function localfunc()
 		2377, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{nil},
 				{52196, addText = {mapID = 864}, }, -- Занесенные песком кости (Вол'дун)
@@ -92,7 +93,7 @@ local function localfunc()
 			textleft = E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436)),
 			name_save = "AzeriteForTheFaction",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
 				{53435, faction = "Horde",}, -- /dump C_QuestLog.IsOnQuest(53435)
@@ -105,7 +106,7 @@ local function localfunc()
 			textleft = E.Timers.BfA_Invasion(),
 			name_save = "InvasionQuests",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{54134},
 				{54136},
@@ -128,7 +129,7 @@ local function localfunc()
 			textleft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 			name_save = "AssaultTheBlackEmpire",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{57157}, -- _Uldum
 				{56308}, -- _Uldum
@@ -144,7 +145,7 @@ local function localfunc()
 			textleft = "miniVision",
 			name_save = "miniVision",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{58168},
 				{58155},
@@ -160,7 +161,7 @@ local function localfunc()
 			textleft = "Warfront",
 			name_save = "Warfront",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{53416, faction = "Horde"},
 				{53414, faction = "Alliance"},
@@ -179,7 +180,7 @@ local function localfunc()
 			textleft = "Darkshore: Rares",
 			name_save = "DarkshoreRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				-- Alash'anir
 				{54695, faction = "Alliance", forcedText = {npcID = 148787},},
@@ -272,7 +273,7 @@ local function localfunc()
 			textleft = "Mechagon: "..E.func_questName(54088),
 			name_save = "TheMechagonianThreat",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				-- Только для Альянса
 				{54088, faction = "Alliance"},
@@ -310,7 +311,7 @@ local function localfunc()
 			textleft = "Mechagon: Dailies",
 			name_save = "MechagonDAILYQUESTS",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				-- {56765, faction = "Horde",}, Ржавоболтский запрос: полосатый окунь
 				-- {56761, faction = "Alliance",},
@@ -382,7 +383,7 @@ local function localfunc()
 			textleft = "Mechagon: Rares",
 			name_save = "MechagonRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{55512, forcedText = {npcID = 151934},}, -- RARE ELITE 154342 -- MOUNT
 				{55539, forcedText = {npcID = 151308},},
@@ -429,7 +430,7 @@ local function localfunc()
 			textleft = "Mechagon: Treasures",
 			name_save = "MechagonTREASURE",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{55547},
 				{55548},
@@ -449,7 +450,7 @@ local function localfunc()
 		--     textleft = "MechagonTREASURE_MISCELLANEOUS",
 		--     name_save = "MechagonTREASURE_MISCELLANEOUS",
 		--     reset = "Daily",
-		--     desc = currentSTATE,
+		--     desc = dropdownOrder,
 		--     quests = {
 		--         {55743},
 		--         {56117},
@@ -462,7 +463,7 @@ local function localfunc()
 		--     textleft = "MechagonLOCKED_CHESTS1",
 		--     name_save = "MechagonLOCKED_CHESTS1",
 		--     reset = "Daily",
-		--     desc = currentSTATE,
+		--     desc = dropdownOrder,
 		--     quests = {
 		--         {56907},
 		--     },
@@ -473,7 +474,7 @@ local function localfunc()
 		--     textleft = "MechagonLOCKED_CHESTS2",
 		--     name_save = "MechagonLOCKED_CHESTS2",
 		--     reset = "Daily",
-		--     desc = currentSTATE,
+		--     desc = dropdownOrder,
 		--     quests = {
 		--         {57133},
 		--     },
@@ -485,7 +486,7 @@ local function localfunc()
 		-- textleft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- reset = "Once",
-		-- desc = currentSTATE,
+		-- desc = dropdownOrder,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
 		-- {56031, faction = "Alliance"},
@@ -519,7 +520,7 @@ local function localfunc()
 		-- textleft = "UNLOCKING MECHAGON PART 2",
 		-- name_save = "UNLOCKING MECHAGON PART 2",
 		-- reset = "Once",
-		-- desc = currentSTATE,
+		-- desc = dropdownOrder,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
 		-- {55851},
@@ -549,7 +550,7 @@ local function localfunc()
 			textleft = "Mechagon: Dailies Visitor Quests",
 			name_save = "DAILY_VISITOR_QUESTS",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{55463},
 				{55658},
@@ -593,7 +594,7 @@ local function localfunc()
 			textleft = "Mechagon: Daily WQ",
 			name_save = "MechagonDAILYWQ",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{56139}, -- WQ
 				{56141}, -- WQ
@@ -606,7 +607,7 @@ local function localfunc()
 			textleft = "Mechagon: Secret Fish",
 			name_save = "MechagonSecretFish",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{55309},
 				{55299},
@@ -627,7 +628,7 @@ local function localfunc()
 			textleft = "Mechagon: Making a Mount",
 			name_save = "MechagonMakingAMount",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{55608},
 				{54086},
@@ -646,7 +647,7 @@ local function localfunc()
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------
@@ -655,7 +656,7 @@ local function localfunc2()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
 		if Octo_ToDo_DB_Vars.Items then
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
@@ -667,7 +668,7 @@ local function localfunc2()
 					myType = {"Item", 158075}
 					----------------------------------------------------------------
 					textLEFT = E.func_itemName(158075)
-					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+					colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
 					----------------------------------------------------------------
 					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 					----------------------------------------------------------------
@@ -686,7 +687,7 @@ local function localfunc2()
 					myType = {"Item", 169223}
 					----------------------------------------------------------------
 					textLEFT = E.func_itemName(169223)
-					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+					colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
 					----------------------------------------------------------------
 					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 					----------------------------------------------------------------
@@ -698,7 +699,7 @@ local function localfunc2()
 					textCENT = E.Gray_Color..ITEMS.."|r"
 					----------------------------------------------------------------
 					textLEFT = "МЕХАГОН"
-					colorLEFT = E.OctoTable_Expansions[currentSTATE].color
+					colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
 					----------------------------------------------------------------
 					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 					----------------------------------------------------------------

@@ -1,0 +1,20 @@
+<Ui>
+	<Script file="Components\01_TheLastTitan.lua"/>
+	<Script file="Components\02_Midnight.lua"/>
+	<Script file="Components\03_TheWarWithin.lua"/>
+	<Script file="Components\04_Dragonflight.lua"/>
+	<Script file="Components\05_Shadowlands.lua"/>
+	<Script file="Components\06_BattleforAzeroth.lua"/>
+	<Script file="Components\07_Legion.lua"/>
+	<Script file="Components\08_Legion_Remix.lua"/>
+	<Script file="Components\09_WarlordsofDraenor.lua"/>
+	<Script file="Components\10_MistsofPandaria.lua"/>
+	<Script file="Components\11_Cataclysm.lua"/>
+	<Script file="Components\12_WrathoftheLichKing.lua"/>
+	<Script file="Components\13_TheBurningCrusade.lua"/>
+	<Script file="Components\14_WorldofWarcraft.lua"/>
+
+	<Script file="Components\97_PVP.lua"/>
+	<Script file="Components\98_Holidays.lua"/>
+	<Script file="Components\99_Other.lua"/>
+</Ui>

@@ -9,3 +9,4 @@ WTF.lua
 Moduls\Moduls.xml
 Octo_Moduls.lua
 Options\Options.xml
+UsableFrame\UsableFrame.xml

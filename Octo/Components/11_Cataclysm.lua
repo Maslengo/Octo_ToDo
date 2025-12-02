@@ -1,25 +1,26 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 4
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 11
+local expansionID = 4
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		391, -- Tol Barad Commendation
 		416, -- Mark of the World Tree
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 		52078,
 		69237,
 		71998,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 		1204, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
 		1173, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
 		1171, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
@@ -33,10 +34,10 @@ local function localfunc()
 		1174, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------

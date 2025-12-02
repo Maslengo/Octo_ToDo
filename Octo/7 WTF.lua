@@ -483,6 +483,7 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
 	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
 	E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
+	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
@@ -627,7 +628,18 @@ end
 
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_VisualUserSettings()
-
+	-- PlaterDB = {
+	-- 	["profileKeys"] = {
+	-- 		["Октоп - Broxigar"] = "OctoUI",
+	-- 		["Октовр - Raszageth"] = "OctoUI",
+	-- 	},
+	-- 	["profiles"] = {
+	-- 		["OctoUI"] = {
+	-- 			["extra_icon_use_blizzard_border_color"] = false,
+	-- 			["aura_sort"] = true,
+	-- 		},
+	-- 	},
+	-- }
 
 	Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
 	Octo_ToDo_DB_VisualUserSettings.Items = Octo_ToDo_DB_VisualUserSettings.Items or {}
@@ -636,6 +648,7 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	Octo_ToDo_DB_VisualUserSettings.Reputations = Octo_ToDo_DB_VisualUserSettings.Reputations or {}
 	Octo_ToDo_DB_VisualUserSettings.UniversalQuests = Octo_ToDo_DB_VisualUserSettings.UniversalQuests or {}
 	Octo_ToDo_DB_VisualUserSettings.Additionally = Octo_ToDo_DB_VisualUserSettings.Additionally or {}
+	Octo_ToDo_DB_VisualUserSettings.Other = Octo_ToDo_DB_VisualUserSettings.Other or {}
 
 
 
@@ -649,12 +662,12 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	wipe(E.ALL_UniversalQuests)
 	wipe(E.ALL_Additionally)
 
-	for currentSTATE, value in next,(E.OctoTables_Vibor) do
-		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[currentSTATE].Currencies)
-		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[currentSTATE].Items)
-		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[currentSTATE].Reputations)
-		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests)
-		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[currentSTATE].Additionally)
+	for dropdownOrder, value in next,(E.OctoTables_Vibor) do
+		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[dropdownOrder].Currencies)
+		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[dropdownOrder].Items)
+		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[dropdownOrder].Reputations)
+		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests)
+		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[dropdownOrder].Additionally)
 	end
 		----------------------------------------------------------------
 		for i, id in next,(E.ALL_Currencies) do
@@ -721,102 +734,6 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 		end
 		----------------------------------------------------------------
 end
-
-
-
-
-
--- function EventFrame:Octo_ToDo_DB_VisualUserSettings()
---     -- Инициализация таблицы
---     Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
---     local db = Octo_ToDo_DB_VisualUserSettings
-
---     -- Инициализация подтаблиц
---     local sections = {
---         "Items", "Currencies", "Reputations", "UniversalQuests", "Additionally"
---     }
-
---     for _, section in ipairs(sections) do
---         db[section] = db[section] or {}
---     end
-
---     db.SettingsEnabled = false
-
---     -- Выполнение функций инициализации
---     for _, func in pairs(E.newOTRISOVKA) do
---         func()
---     end
-
---     -- Очистка таблиц
---     local allTables = {
---         "ALL_Currencies", "ALL_Items", "ALL_Reputations",
---         "ALL_UniversalQuests", "ALL_Additionally"
---     }
-
---     for _, tableName in ipairs(allTables) do
---         wipe(E[tableName])
---     end
-
---     -- Объединение данных из всех состояний
---     for currentSTATE in pairs(E.OctoTables_Vibor) do
---         local stateData = E.OctoTables_DataOtrisovka[currentSTATE]
---         if stateData then
---             for _, tableName in ipairs(allTables) do
---                 local sourceTable = stateData[tableName:sub(5)] -- Убираем "ALL_"
---                 if sourceTable then
---                     E.func_TableConcat(E[tableName], sourceTable)
---                 end
---             end
---         end
---     end
-
---     -- Обработка ID с использованием общей функции
---     local function processIds(idList, targetTable)
---         for _, id in pairs(idList) do
---             if type(id) == "number" then
---                 targetTable[id] = targetTable[id] or true
---             elseif type(id) == "table" then
---                 for _, id_new in ipairs(id) do
---                     targetTable[id_new] = targetTable[id_new] or true
---                 end
---             end
---         end
---     end
-
---     -- Обработка каждой категории
---     local categoryMap = {
---         ALL_Currencies = "Currencies",
---         ALL_Items = "Items",
---         ALL_Reputations = "Reputations",
---         ALL_Additionally = "Additionally"
---     }
-
---     for sourceKey, targetKey in pairs(categoryMap) do
---         if E[sourceKey] then
---             processIds(E[sourceKey], db[targetKey])
---         end
---     end
-
---     -- Особый обработчик для универсальных квестов
---     if E.ALL_UniversalQuests then
---         for _, data in pairs(E.ALL_UniversalQuests) do
---             if data then
---                 local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
---                 db.UniversalQuests[questKey] = db.UniversalQuests[questKey] or true
---             end
---         end
---     end
--- end
-
-
-
-
-
-
-
-
-
-
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",

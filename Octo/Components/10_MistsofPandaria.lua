@@ -1,14 +1,15 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 5
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 10
+local expansionID = 5
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		402, -- Ironpaw Token
 		738, -- Lesser Charm of Good Fortune
 		752, -- Mogu Rune of Fate
@@ -18,10 +19,10 @@ local function localfunc()
 		697, -- (697 MONETKA)
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 		1492, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
 		1435, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
 		1359, --name = "Черный принц", side = "-", category = "Mists of Pandaria", }, --[faction=1359]
@@ -57,13 +58,13 @@ local function localfunc()
 		1357, --name = "Номи", side = "-", category = "Другое", }, --[faction=1357]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		{
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{33118, forcedText = {npcID = 72057},  addText = {mapID = 554},   }, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
 				{33117, forcedText = {achievementID = 7333},  addText = {mapID = 554},   }, -- Celestrials (Вневременный остров)
@@ -77,7 +78,7 @@ local function localfunc()
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------

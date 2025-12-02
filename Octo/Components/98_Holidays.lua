@@ -1,29 +1,29 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 90
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[8].icon
-E.OctoTables_Vibor[currentSTATE].name = "90_Holidays"
+local dropdownOrder = 98
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[8].icon
+E.OctoTables_Vibor[dropdownOrder].name = "90_Holidays"
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		1166,
 		3309,
 		2588,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 		44791,
 		45072,
 		23247,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
 		{
 			sorted = false,
@@ -31,7 +31,7 @@ local function localfunc()
 			textleft = E.func_questName(13503) .. " ("..E.func_EventName(181)..")",
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{13503},
 			},
@@ -42,7 +42,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "WhattheDuck",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{79575},
 			},
@@ -53,7 +53,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{13479},
 			},
@@ -64,7 +64,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "AFowlConcoction",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{79576},
 			},
@@ -75,7 +75,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "DuckTales",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{79577},
 			},
@@ -86,7 +86,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{79578, faction = "Horde",}, -- Horde
 				{79331, faction = "Alliance"}, -- Alliance
@@ -98,7 +98,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "FeatheredFiend",
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{79558, faction = "Horde",}, -- Horde
 				{73192, faction = "Alliance"}, -- Alliance
@@ -109,7 +109,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "QuackingDown",
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysNoblegarden",
+			desc = dropdownOrder, --  "HolidaysNoblegarden",
 			quests = {
 				{79135},
 			},
@@ -124,7 +124,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysChildrensWeek",
+			desc = dropdownOrder, --  "HolidaysChildrensWeek",
 			quests = {
 				{172, faction = "Horde",}, -- Horde, -- Horde
 				{29146, faction = "Horde",}, -- Horde, -- Horde
@@ -149,7 +149,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "Shattrath", --
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysChildrensWeek",
+			desc = dropdownOrder, --  "HolidaysChildrensWeek",
 			quests = {
 				{10942, faction = "Horde",}, -- Horde
 				{10953, faction = "Horde",}, -- Horde
@@ -176,7 +176,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "orgrimmarStormwindDAILY", --
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysTheSpinnerofSummerTales",
+			desc = dropdownOrder, --  "HolidaysTheSpinnerofSummerTales",
 			quests = {
 				{82109, faction = "Horde",}, -- Horde
 				{11925, faction = "Horde",}, -- Horde
@@ -193,7 +193,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "Raid",
 			reset = "Weekly",
-			desc = currentSTATE, --  "HolidaysTimewalk",
+			desc = dropdownOrder, --  "HolidaysTimewalk",
 			quests = {
 				{57637},
 				{50316},
@@ -208,7 +208,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "Dungeons",
 			reset = "Weekly",
-			desc = currentSTATE, --  "HolidaysTimewalk",
+			desc = dropdownOrder, --  "HolidaysTimewalk",
 			quests = {
 				{88808},
 				{86564},
@@ -237,7 +237,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "ProfessionMonthlies",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysDarkmoonFaire",
+			desc = dropdownOrder, --  "HolidaysDarkmoonFaire",
 			quests = {
 				{29506},
 				{29507},
@@ -261,7 +261,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "MonthlyQuests",
 			reset = "Month",
-			desc = currentSTATE, --  "HolidaysDarkmoonFaire",
+			desc = dropdownOrder, --  "HolidaysDarkmoonFaire",
 			quests = {
 				{33354},
 				{29443},
@@ -273,7 +273,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "AcountwideDailies",
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysDarkmoonFaire",
+			desc = dropdownOrder, --  "HolidaysDarkmoonFaire",
 			quests = {
 				{32175},
 				{36471},
@@ -285,7 +285,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "itemturnsins",
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysDarkmoonFaire",
+			desc = dropdownOrder, --  "HolidaysDarkmoonFaire",
 			quests = {
 				{29458},
 				{29456},
@@ -304,7 +304,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "DarkmoonFaire",
 			reset = "Daily",
-			desc = currentSTATE, --  "HolidaysDarkmoonFaire",
+			desc = dropdownOrder, --  "HolidaysDarkmoonFaire",
 			quests = {
 				{37911},
 				{29438},
@@ -323,7 +323,7 @@ local function localfunc()
 			showTooltip = true,
 			name_save = "GreenFire",
 			reset = "Once",
-			desc = currentSTATE, --  "Warlock",
+			desc = dropdownOrder, --  "Warlock",
 			quests = {
 				{32295},
 				{32307},
@@ -337,7 +337,7 @@ local function localfunc()
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------
@@ -348,7 +348,7 @@ local function localfunc2()
 	----------------------------------------------------------------
 	if Octo_ToDo_DB_Vars.Holidays then
 		if E.ActiveHoliday[181] then
-			E.func_Otrisivka_Universal(OctoTable_Otrisovka_textCENT, "HolidaysNoblegarden")
+			E.func_Otrisivka_UniversalQuests(OctoTable_Otrisovka_textCENT, "HolidaysNoblegarden")
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
 					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
@@ -389,7 +389,7 @@ local function localfunc2()
 		--     if E.ActiveHoliday[HolidayID] then
 		local joinable, timewalkDungeonName = E.func_joinableDung()
 		if joinable then
-			E.func_Otrisivka_Universal(OctoTable_Otrisovka_textCENT, "HolidaysTimewalk", E.Event_Color)
+			E.func_Otrisivka_UniversalQuests(OctoTable_Otrisovka_textCENT, "HolidaysTimewalk", E.Event_Color)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
 					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
@@ -411,13 +411,13 @@ local function localfunc2()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		-- if E.ActiveHoliday[201] then
-		--     E.func_Otrisivka_Universal(OctoTable_Otrisovka_textCENT, "HolidaysChildrensWeek")
+		--     E.func_Otrisivka_UniversalQuests(OctoTable_Otrisovka_textCENT, "HolidaysChildrensWeek")
 		-- end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
-			E.func_Otrisivka_Universal(OctoTable_Otrisovka_textCENT, "HolidaysTheSpinnerofSummerTales")
+			E.func_Otrisivka_UniversalQuests(OctoTable_Otrisovka_textCENT, "HolidaysTheSpinnerofSummerTales")
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
 					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
@@ -451,7 +451,7 @@ local function localfunc2()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[1691] then -- Алчный посланец
-			E.func_Otrisivka_Universal(OctoTable_Otrisovka_textCENT, "HolidaysAGreedyEmissary", E.Red_Color)
+			E.func_Otrisivka_UniversalQuests(OctoTable_Otrisovka_textCENT, "HolidaysAGreedyEmissary", E.Red_Color)
 			table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 					----------------------------------------------------------------
 					local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
@@ -470,7 +470,7 @@ local function localfunc2()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		if E.ActiveHoliday[479] then -- Ярмарка новолунья
-			E.func_Otrisivka_Universal(OctoTable_Otrisovka_textCENT, "HolidaysDarkmoonFaire", E.Purple_Color)
+			E.func_Otrisivka_UniversalQuests(OctoTable_Otrisovka_textCENT, "HolidaysDarkmoonFaire", E.Purple_Color)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------

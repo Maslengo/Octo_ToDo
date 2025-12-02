@@ -1,13 +1,13 @@
 <Ui>
-	<Script file="database\Expansions.lua"/>
-	<Script file="database\Garrison.lua"/>
-	<Script file="database\Gossip.lua"/>
-	<Script file="database\Items.lua"/>
-	<Script file="database\KeystoneAbbr.lua"/>
-	<Script file="database\OctoTable_Mounts.lua"/>
-	<Script file="database\OctoTable_ReputationsDB.lua"/>
-	<Script file="database\OctoTable_Reputations_Paragon_Data.lua"/>
-	<Script file="database\Quests.lua"/>
-	<Script file="database\Spells.lua"/>
-	<Script file="database\Timers.lua"/>
+	<Script file="Database\Expansions.lua"/>
+	<Script file="Database\Garrison.lua"/>
+	<Script file="Database\Gossip.lua"/>
+	<Script file="Database\Items.lua"/>
+	<Script file="Database\KeystoneAbbr.lua"/>
+	<Script file="Database\OctoTable_Mounts.lua"/>
+	<Script file="Database\OctoTable_ReputationsDB.lua"/>
+	<Script file="Database\OctoTable_Reputations_Paragon_Data.lua"/>
+	<Script file="Database\Quests.lua"/>
+	<Script file="Database\Spells.lua"/>
+	<Script file="Database\Timers.lua"/>
 </Ui>

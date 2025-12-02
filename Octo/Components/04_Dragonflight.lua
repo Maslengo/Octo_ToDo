@@ -1,14 +1,15 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 10
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[currentSTATE].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name
+local dropdownOrder = 4
+local expansionID = 10
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		2122,
 		2118,
 		2003,
@@ -17,7 +18,7 @@ local function localfunc()
 		-- (УСТАРЕЛО АСПЕКТЫ 2812, 2809, 2807, 2806)
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 		209856,
 		207002,
 		210254,
@@ -26,8 +27,8 @@ local function localfunc()
 		211515,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[currentSTATE].icon, name = E.OctoTable_Expansions[currentSTATE].color..E.OctoTable_Expansions[currentSTATE].name.."|r",},
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[dropdownOrder].icon, name = E.OctoTable_Expansions[dropdownOrder].color..E.OctoTable_Expansions[dropdownOrder].name.."|r",},
 		-- ["Dragonflight"] = {
 		2507, --name = "Драконья экспедиция", side = "-", category = "Dragonflight", }, --[faction=2507]
 		2574, --name = "Стражи Сна", side = "-", category = "Dragonflight", }, --[faction=2574]
@@ -50,14 +51,14 @@ local function localfunc()
 		2526, --name = "Фурболги из клана Зимней Шкуры", side = "-", category = "Dragonflight", }, --[faction=2526]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			textleft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{69927, forcedText = {npcID = 193532}, addText = {mapID = 2024},}, -- Базуал <Чудовищное Пламя> 193532 (Лазурный Простор)
 				{69928, forcedText = {npcID = 193533}, addText = {mapID = 2025},}, -- Лисканот <Крах Мироздания> 193533 (Будущее воинов стихий)
@@ -75,7 +76,7 @@ local function localfunc()
 			textleft = E.func_mapName(2133)..": ".."Events",
 			name_save = "ZaralekCavernEvents",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75612},
 				{75471},
@@ -103,7 +104,7 @@ local function localfunc()
 			textleft = E.func_mapName(2133)..": ".."Rares",
 			name_save = "ZaralekCavernRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75271},
 				{75285},
@@ -138,7 +139,7 @@ local function localfunc()
 			textleft = E.func_mapName(2133)..": "..E.func_questName(75665),
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75665},
 			},
@@ -149,7 +150,7 @@ local function localfunc()
 			textleft = E.func_mapName(2133)..": "..L["Sniffenseeking"],
 			name_save = "ZaralekCavernSniffenseeking",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75459},
 				{76027},
@@ -176,7 +177,7 @@ local function localfunc()
 			textleft = E.func_mapName(2133)..": "..L["Sniffenseeking (items)"],
 			name_save = "ZaralekCavernSniffenseekingItems",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75771},
 				{75772},
@@ -198,7 +199,7 @@ local function localfunc()
 			textleft = E.func_mapName(2133)..": "..E.func_questName(74906).." "..E.Timers.DF_ResearchersUnderFire(),
 			name_save = "ResearchersUnderFire",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75630, forcedText = {text = MAW_BUFF_QUALITY_STRING_EPIC}},
 				{75629, forcedText = {text = MAW_BUFF_QUALITY_STRING_RARE}},
@@ -212,7 +213,7 @@ local function localfunc()
 			textleft = E.func_mapName(2151)..": ".."Rares", -- Запретный край.
 			name_save = "TheForbiddenReachRares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{74331},
 				{74347},
@@ -247,7 +248,7 @@ local function localfunc()
 			textleft = E.Timers.DF_CommunityFeast()..L["Community Feast"],
 			name_save = "CommunityFeast",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{70893},
 			},
@@ -258,7 +259,7 @@ local function localfunc()
 			textleft = E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"],
 			name_save = "DragonbaneKeep",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{70866},
 			},
@@ -269,7 +270,7 @@ local function localfunc()
 			textleft = E.Timers.DF_GrandHunts()..L["Grand Hunt"],
 			name_save = "TheGrandHunt",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{70906},
 			},
@@ -280,7 +281,7 @@ local function localfunc()
 			textleft = E.Timers.DF_PrimalStorms()..L["The Storm's Fury"],
 			name_save = "StormsFury",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{73162},
 			},
@@ -291,7 +292,7 @@ local function localfunc()
 			textleft = E.func_questName(66133),
 			name_save = "KeysofLoyalty",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{66133},
 			},
@@ -302,7 +303,7 @@ local function localfunc()
 			textleft = "StormBoundChest",
 			name_save = "StormBoundChest",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{74567},
 			},
@@ -313,7 +314,7 @@ local function localfunc()
 			textleft = "FyrakkAssaults",
 			name_save = "FyrakkAssaults",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{74501},
 				{75280},
@@ -325,7 +326,7 @@ local function localfunc()
 			textleft = "DiscipleofFyrakk",
 			name_save = "DiscipleofFyrakk",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{75467},
 			},
@@ -336,7 +337,7 @@ local function localfunc()
 			textleft = E.func_questName(70750),
 			name_save = "AidingtheAccord",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{70750},
 				{72068},
@@ -362,7 +363,7 @@ local function localfunc()
 			textleft = E.func_mapName(2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift(),
 			name_save = L["Time Rift"],
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77836},
 			},
@@ -373,7 +374,7 @@ local function localfunc()
 			textleft = E.Timers.DF_Dreamsurges()..E.func_questName(77414),
 			name_save = "DreamsurgeInvestigation",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77414},
 			},
@@ -384,7 +385,7 @@ local function localfunc()
 			textleft = E.func_questName(77251),
 			name_save = "ShapingtheDreamsurge",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77251},
 			},
@@ -395,7 +396,7 @@ local function localfunc()
 			textleft = E.func_questName(77236),
 			name_save = "WhenTimeNeedsMending",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77236},
 			},
@@ -406,7 +407,7 @@ local function localfunc()
 			textleft = "TemporalAcquisitionsSpecialist",
 			name_save = "TemporalAcquisitionsSpecialist",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{76406},
 				{76547},
@@ -433,7 +434,7 @@ local function localfunc()
 			textleft = E.func_questName(78444),
 			name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{78444},
 			},
@@ -444,7 +445,7 @@ local function localfunc()
 			textleft = E.func_questName(78821),
 			name_save = "EmeraldDream_BloomingDreamseeds",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{78821},
 			},
@@ -455,7 +456,7 @@ local function localfunc()
 			textleft = E.Timers.DF_Flower()..E.func_questName(78319),
 			name_save = "EmeraldDream_TheSuperbloom",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{78319},
 			},
@@ -466,7 +467,7 @@ local function localfunc()
 			textleft = "EmeraldDream_Rares",
 			name_save = "EmeraldDream_Rares",
 			reset = "Daily",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77942},
 				{77867},
@@ -503,7 +504,7 @@ local function localfunc()
 			textleft = "EmeraldDream_Treasures",
 			name_save = "EmeraldDream_Treasures",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77872},
 				{77950},
@@ -532,7 +533,7 @@ local function localfunc()
 			textleft = E.func_questName(78381),
 			name_save = "EmeraldDream_DreamsUnified",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{78381},
 			},
@@ -543,7 +544,7 @@ local function localfunc()
 			textleft = "EmeraldDream_Seeds",
 			name_save = "EmeraldDream_Seeds",
 			reset = "Weekly",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{77350},
 				{77353},
@@ -556,7 +557,7 @@ local function localfunc()
 			textleft = "TheGilneasReclamation_Storylines",
 			name_save = "TheGilneasReclamation_Storylines",
 			reset = "Once",
-			desc = currentSTATE,
+			desc = dropdownOrder,
 			quests = {
 				{78178},
 				{78180},
@@ -576,7 +577,7 @@ local function localfunc()
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------

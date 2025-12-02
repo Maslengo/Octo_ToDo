@@ -1,45 +1,37 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local currentSTATE = 14
-E.OctoTables_DataOtrisovka[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE] = {}
-E.OctoTables_Vibor[currentSTATE].icon = E.OctoTable_Expansions[7].icon
-E.OctoTables_Vibor[currentSTATE].name = E.OctoTable_Expansions[7].color..E.OctoTable_Expansions[7].name.." (REMIX)|r"
+local dropdownOrder = 8
+local expansionID = 7
+E.OctoTables_DataOtrisovka[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder] = {}
+E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (REMIX)|r"
 local function localfunc()
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Currencies = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 		3292, -- E.func_IsRemix()
 		3268, -- E.func_IsRemix()
 		3252, -- E.func_IsRemix()
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Items = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 		254267,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Reputations = {
-		1900, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
-		1883, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
-		1828, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
-		1948, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
-		1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
-		1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
-		2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
-		2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
-		2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[currentSTATE].Additionally = {
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
 	}
 end
 ----------------------------------------------------------------
 local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
-	if Octo_ToDo_DB_Vars.ExpansionToShow[currentSTATE] then
+	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
 				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
@@ -56,6 +48,7 @@ local function localfunc2()
 				----------------------------------------------------------------
 				textLEFT = L["Infinite Research"]
 				colorLEFT = E.OctoTable_Expansions[7].color
+				settingsType = "Other#".."LegionRemixResearch"
 				----------------------------------------------------------------
 				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
