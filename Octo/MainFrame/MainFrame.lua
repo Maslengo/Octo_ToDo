@@ -10,49 +10,51 @@ E.func_InitFrame(Octo_MainFrame_ToDo)
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
-local INDENT_TEST = 4                              -- Отступ для текста
-local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT        -- Высота одной строки
-local HEADER_HEIGHT = LINE_HEIGHT*2                -- Высота заголовка
-local MIN_LINE_WIDTH_LEFT = 200                    -- Минимальная ширина левой колонки
-local MIN_LINE_WIDTH_CENT = 90                     -- Минимальная ширина центральной колонки
-local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.MonitorWidth*.8          -- Максимальная ширина фрейма (80% экрана)
-local MAX_FRAME_HEIGHT = E.MonitorHeight*.6     -- Максимальная высота фрейма (60% экрана)
-EventFrame.COLUMNS_MAX = 113                     -- Максимальное количество колонок
+local INDENT_TEST = 4 -- Отступ для текста
+local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT -- Высота одной строки
+local HEADER_HEIGHT = LINE_HEIGHT*2 -- Высота заголовка
+local MIN_LINE_WIDTH_LEFT = 200 -- Минимальная ширина левой колонки
+local MIN_LINE_WIDTH_CENT = 90 -- Минимальная ширина центральной колонки
+local LINES_MAX = E.LINES_MAX -- Максимальное количество строк
+local MAX_FRAME_WIDTH = E.MonitorWidth*.8 -- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 -- Максимальная высота фрейма (60% экрана)
+EventFrame.COLUMNS_MAX = 113 -- Максимальное количество колонок
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
-local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1  -- Цвет границы (черный)
-local textR, textG, textB, textA = 1, 1, 1, 1                              -- Цвет текста (белый)
-local classR, classG, classB = GetClassColor(E.classFilename)              -- Цвет класса игрока
-local LEFT_TEXTURE_ALPHA = 0.1                                             -- Прозрачность текстуры левой колонки
+local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
+local textR, textG, textB, textA = 1, 1, 1, 1 -- Цвет текста (белый)
+local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
+local LEFT_TEXTURE_ALPHA = 0.1 -- Прозрачность текстуры левой колонки
 local charR, charG, charB = 1, 1, 1
 -- Локальные ссылки на часто используемые функции для оптимизации
 local math_min = math.min
 local math_max = math.max
 local func_OnAcquiredLEFT do
-	local function func_OnEnter(frame)
-		local frameData = frame:GetData()
-		-- Получение данных для тултипа
-		local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
-		local tooltipOCTO = {}
-		if type(ID) == "table" then
-			-- Обработка нескольких ID
-			for _, tblID in ipairs(ID) do
-				E.func_TableConcat(tooltipOCTO, E.func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
-			end
-		else
-			-- Обработка одиночного ID
-			tooltipOCTO = E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
-		end
-		frame.tooltip = tooltipOCTO
-		E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
-	end
+	-- local function func_OnEnter(frame)
+	-- 	local frameData = frame:GetData()
+	-- 	-- Получение данных для тултипа
+	-- 	if frameData.myType then
+	-- 		local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
+	-- 	end
+	-- 	local tooltipOCTO = {}
+	-- 	if type(ID) == "table" then
+	-- 		-- Обработка нескольких ID
+	-- 		for _, tblID in ipairs(ID) do
+	-- 			E.func_TableConcat(tooltipOCTO, E.func_KeyTooltip_LEFT(typeQ, tblID, iANIMA, kCovenant))
+	-- 		end
+	-- 	else
+	-- 		-- Обработка одиночного ID
+	-- 		tooltipOCTO = E.func_KeyTooltip_LEFT(typeQ, ID, iANIMA, kCovenant)
+	-- 	end
+	-- 	frame.tooltip = tooltipOCTO
+	-- 	E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
+	-- end
 	-- Функция инициализации элементов левой колонки
 	function func_OnAcquiredLEFT(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-		local JustifyV = "MIDDLE"    -- Вертикальное выравнивание
-		local JustifyH = "LEFT"        -- Горизонтальное выравнивание
+		local JustifyV = "MIDDLE" -- Вертикальное выравнивание
+		local JustifyH = "LEFT" -- Горизонтальное выравнивание
 		-- Настройки фрейма
 		frame:SetPropagateMouseClicks(true)
 		frame:SetPropagateMouseMotion(true)
@@ -114,7 +116,13 @@ local func_OnAcquiredLEFT do
 				frame.frameFULL:Show()
 		end)
 		-- Обработчик наведения курсора для отображения тултипа
-		frame:SetScript("OnEnter", func_OnEnter)
+		-- frame:SetScript("OnEnter", func_OnEnter)
+
+
+
+
+
+
 	end
 end
 -- Функция инициализации элементов центральной колонки
@@ -166,10 +174,10 @@ local func_OnAcquiredCENT do
 end
 
 function E.func_icon_settings_OnClick(button, frameData)
-	local type, id = ("#"):split(frameData.settingsType)
+	local dataType, id = ("#"):split(frameData.settingsType)
 
 	-- Получаем таблицу настроек для типа
-	local settingsTable = Octo_ToDo_DB_VisualUserSettings[type]
+	local settingsTable = Octo_ToDo_DB_VisualUserSettings[dataType]
 	if not settingsTable then return end
 
 	-- Определяем ключ (строковый или числовой)
@@ -182,12 +190,12 @@ function E.func_icon_settings_OnClick(button, frameData)
 	local newValue = not (settingsTable[key] or false)
 	settingsTable[key] = newValue
 
-	-- print("Настройка обновлена:", type, key, "=", newValue)
+	-- print("Настройка обновлена:", dataType, key, "=", newValue)
 
 	-- Обновляем текстуру
 	local texture = newValue and
-		"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen" or
-		"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
+	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen" or
+	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
 	button.icon_settings_texture:SetTexture(texture)
 end
 
@@ -200,10 +208,10 @@ function EventFrame:Octo_Frame_initLEFT(frame, node)
 		frame.icon_1:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
 	if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled and frameData.settingsType then
-		local type, id = ("#"):split(frameData.settingsType)
+		local dataType, id = ("#"):split(frameData.settingsType)
 		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
 
-		if Octo_ToDo_DB_VisualUserSettings[type][id] or Octo_ToDo_DB_VisualUserSettings[type][tonumber(id)] then
+		if Octo_ToDo_DB_VisualUserSettings[dataType][id] or Octo_ToDo_DB_VisualUserSettings[dataType][tonumber(id)] then
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
 		else
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
@@ -217,7 +225,7 @@ function EventFrame:Octo_Frame_initLEFT(frame, node)
 	end
 
 	frame.settings_button:SetScript("OnClick", function(self)
-		E.func_icon_settings_OnClick(self, frameData)
+			E.func_icon_settings_OnClick(self, frameData)
 	end)
 
 	-- Обновление размеров колонки, если они были изменены
@@ -236,6 +244,17 @@ function EventFrame:Octo_Frame_initLEFT(frame, node)
 	else
 		frame.textureLEFT:Hide()
 	end
+
+	frame:SetScript("OnEnter", function()
+			if frameData.settingsType then
+				frame.tooltip = E.func_KeyTooltip_LEFT(frameData.settingsType)
+			else
+				frame.tooltip = nil
+			end
+			E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
+	end)
+
+
 end
 -- Функция инициализации данных для центральной колонки
 function EventFrame:Octo_Frame_initCENT(frame, node)
@@ -290,8 +309,8 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 			secondFrame.curCharTextureBG:Hide()
 		end
 		secondFrame:SetScript("OnEnter", function()
-				if frameData.tooltipKey and frameData.GUID[i] then
-					secondFrame.tooltip = E.func_KeyTooltip(frameData.GUID[i], frameData.tooltipKey)
+				if frameData.settingsType and frameData.GUID[i] then
+					secondFrame.tooltip = E.func_KeyTooltip_RIGHT(frameData.GUID[i], frameData.settingsType)
 				else
 					secondFrame.tooltip = nil
 				end
@@ -440,7 +459,7 @@ function EventFrame:Octo_Create_MainFrame()
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
 			-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
-			HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r  ")
+			HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r ")
 	end)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
@@ -517,32 +536,12 @@ local function calculateColumnWidthsRIGHT(node, totalLines)
 	end
 	return columnWidthsRIGHT
 end
-----------------------------------------------------------------
--- Функция для объединения таблиц отрисовки
-----------------------------------------------------------------
-function E.func_Concat_Otrisovka()
-	for k, func in next, (E.newOTRISOVKA) do
-		func()
-	end
-	local tbl_1 = {}
-	for _, func in ipairs(E.newOTRISOVKA2) do
-		local tbl_2 = func()
-		if tbl_2 then
-			for _, func2 in ipairs(tbl_2) do
-				tinsert(tbl_1, func2)
-			end
-		end
-	end
-	for dropdownOrder, value in next,(E.OctoTables_Vibor) do
-		if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
-			E.func_Otrisivka_Currencies(tbl_1, dropdownOrder)
-			E.func_Otrisivka_Items(tbl_1, dropdownOrder)
-			E.func_Otrisivka_UniversalQuests(tbl_1, dropdownOrder)
-			E.func_Otrisovka_Reputations(tbl_1, dropdownOrder)
-		end
-	end
-	return tbl_1
-end
+
+
+
+
+
+
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	-- EventFrame.COLUMN_SIZES_LEFT = EventFrame.COLUMN_SIZES_LEFT or {}
@@ -562,58 +561,151 @@ function EventFrame:CreateDataProvider()
 		end
 	end
 	local totalColumns = #tbl
-	-- Обработка данных для каждой строки
-	for _, func in ipairs(E.func_Concat_Otrisovka()) do
-		totalLines = totalLines + 1
-		local zxc = {
-			iconLEFT = {},
-			textLEFT = {},
-			colorLEFT = {},
-			textCENT = {},
-			colorCENT = {},
-			myType = {},
-			tooltipKey = {},
-			GUID = {},
-			isReputation = {},
-			FIRSTrep = {},
-			SECONDrep = {},
-			settingsType = {},
-		}
-		-- Заполнение данных для каждого персонажа
-		for CharIndex, CharInfo in ipairs(tbl) do
-			local _, _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
-			zxc.textCENT[CharIndex] = textCENT
-			zxc.colorCENT[CharIndex] = colorCENT
-			zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
-			zxc.FIRSTrep[CharIndex] = FIRSTrep or 0
-			zxc.SECONDrep[CharIndex] = SECONDrep or 0
-		end
-		-- Заполнение данных для левой колонки (берется из первого персонажа)
-		local firstChar = tbl[1]
-		if firstChar then
-			local iconLEFT, textLEFT, colorLEFT, _, settingsType, _, myType, tooltipKey, isReputation = func(firstChar)
-			zxc.iconLEFT = iconLEFT
-			zxc.textLEFT = textLEFT or "NONE"
-			zxc.colorLEFT = colorLEFT or E.Blue_Color
-			zxc.myType = myType or {}
-			zxc.tooltipKey = tooltipKey
-			zxc.isReputation = isReputation or false
-			zxc.settingsType = settingsType
-		end
-		-- Установка дополнительных параметров
-		zxc.currentCharacterIndex = currentCharacterIndex
-		zxc.totalColumns = totalColumns
-		-- Вставка данных в провайдер
-		local node = DataProvider:Insert(zxc)
-		-- Расчет ширины колонок
-		for j, w in ipairs(calculateColumnWidthsLEFT(node, totalLines)) do
-			COLUMN_SIZES_LEFT[j] = math_max(w, COLUMN_SIZES_LEFT[j] or HeaderFrameLEFT.text:GetWidth() or 0)
-		end
-		local rightWidths = calculateColumnWidthsRIGHT(node, totalLines)
-		for i, w in ipairs(rightWidths) do
-			COLUMN_SIZES_RIGHT[i] = math_max(w, COLUMN_SIZES_RIGHT[i] or MIN_LINE_WIDTH_CENT)
+	local firstChar = tbl[1]
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- Определяем порядок обработки типов данных
+	local typeOrder_Constant = {
+		"Currencies", -- 1. Валюта
+		"Items", -- 2. Итемы
+		"Additionally", -- 3. Адишинал
+		"UniversalQuests",-- 4. Универсал
+		"Reputations", -- 5. Репа
+	}
+	----------------------------------------------------------------
+	for dropdownOrder in next,(E.OctoTables_Vibor) do
+		if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
+			-- Обрабатываем типы данных в нужном порядке
+			for _, dataType in ipairs(typeOrder_Constant) do
+			-- for dataType in next,(E.OctoTables_DataOtrisovka[dropdownOrder]) do
+
+				for i, id in next,(E.OctoTables_DataOtrisovka[dropdownOrder][dataType]) do
+					local questKey
+					if dataType == "UniversalQuests" then
+						-- id это data для universal
+						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
+					end
+
+					if dataType ~= "UniversalQuests" and E.func_ShouldShow(id, dataType) or E.func_ShouldShow(questKey, dataType) then
+						totalLines = totalLines + 1
+						local zxc = {
+							textLEFT = {},
+							colorLEFT = {},
+							iconLEFT = {},
+							settingsType = {},
+							tooltipKey = {},
+							isReputation = {},
+
+							textCENT = {},
+							colorCENT = {},
+							FIRSTrep = {},
+							SECONDrep = {},
+
+							GUID = {},
+						}
+						-- Заполнение данных для левой колонки (берется из первого персонажа)
+						if firstChar then
+							local textLEFT,	colorLEFT,	iconLEFT,	settingsType,	tooltipKey,	isReputation = E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, firstChar, dataType, id)
+							zxc.iconLEFT = iconLEFT
+							zxc.textLEFT = textLEFT or "NONE"
+							zxc.colorLEFT = colorLEFT or E.Blue_Color
+							zxc.settingsType = settingsType
+							-- zxc.tooltipKey = tooltipKey
+							zxc.isReputation = isReputation or false
+						end
+						-- Заполнение данных для каждого персонажа
+						for CharIndex, CharInfo in ipairs(tbl) do
+							-- local _, _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
+							local textCENT,	colorCENT,	FIRSTrep,	SECONDrep = E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
+							zxc.textCENT[CharIndex] = textCENT
+							zxc.colorCENT[CharIndex] = colorCENT
+							zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
+							zxc.FIRSTrep[CharIndex] = FIRSTrep or 0
+							zxc.SECONDrep[CharIndex] = SECONDrep or 0
+
+						end
+						-- Установка дополнительных параметров
+						zxc.currentCharacterIndex = currentCharacterIndex
+						zxc.totalColumns = totalColumns
+						-- Вставка данных в провайдер
+						local node = DataProvider:Insert(zxc)
+						-- Расчет ширины колонок
+						for j, w in ipairs(calculateColumnWidthsLEFT(node, totalLines)) do
+							COLUMN_SIZES_LEFT[j] = math_max(w, COLUMN_SIZES_LEFT[j] or HeaderFrameLEFT.text:GetWidth() or 0)
+						end
+						local rightWidths = calculateColumnWidthsRIGHT(node, totalLines)
+						for i, w in ipairs(rightWidths) do
+							COLUMN_SIZES_RIGHT[i] = math_max(w, COLUMN_SIZES_RIGHT[i] or MIN_LINE_WIDTH_CENT)
+						end
+
+
+					end
+				end
+
+
+			end
+
+
 		end
 	end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- Обработка данных для каждой строки
+	-- for _, func in ipairs(E.func_Concat_Otrisovka(firstChar)) do
+	-- totalLines = totalLines + 1
+	-- local zxc = {
+	-- iconLEFT = {},
+	-- textLEFT = {},
+	-- colorLEFT = {},
+	-- textCENT = {},
+	-- colorCENT = {},
+	-- tooltipKey = {},
+	-- GUID = {},
+	-- isReputation = {},
+	-- FIRSTrep = {},
+	-- SECONDrep = {},
+	-- settingsType = {},
+	-- }
+	-- -- Заполнение данных для каждого персонажа
+	-- for CharIndex, CharInfo in ipairs(tbl) do
+	-- local _, _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
+	-- zxc.textCENT[CharIndex] = textCENT
+	-- zxc.colorCENT[CharIndex] = colorCENT
+	-- zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
+	-- zxc.FIRSTrep[CharIndex] = FIRSTrep or 0
+	-- zxc.SECONDrep[CharIndex] = SECONDrep or 0
+	-- end
+	-- -- Заполнение данных для левой колонки (берется из первого персонажа)
+	-- if firstChar then
+	-- local iconLEFT, textLEFT, colorLEFT, _, settingsType, _, tooltipKey, isReputation = func(firstChar)
+	-- zxc.iconLEFT = iconLEFT
+	-- zxc.textLEFT = textLEFT or "NONE"
+	-- zxc.colorLEFT = colorLEFT or E.Blue_Color
+	-- zxc.tooltipKey = tooltipKey
+	-- zxc.isReputation = isReputation or false
+	-- zxc.settingsType = settingsType
+	-- end
+	-- -- Установка дополнительных параметров
+	-- zxc.currentCharacterIndex = currentCharacterIndex
+	-- zxc.totalColumns = totalColumns
+	-- -- Вставка данных в провайдер
+	-- local node = DataProvider:Insert(zxc)
+	-- -- Расчет ширины колонок
+	-- for j, w in ipairs(calculateColumnWidthsLEFT(node, totalLines)) do
+	-- COLUMN_SIZES_LEFT[j] = math_max(w, COLUMN_SIZES_LEFT[j] or HeaderFrameLEFT.text:GetWidth() or 0)
+	-- end
+	-- local rightWidths = calculateColumnWidthsRIGHT(node, totalLines)
+	-- for i, w in ipairs(rightWidths) do
+	-- COLUMN_SIZES_RIGHT[i] = math_max(w, COLUMN_SIZES_RIGHT[i] or MIN_LINE_WIDTH_CENT)
+	-- end
+	-- end
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+
+
+
 	-- Сохранение рассчитанных размеров колонок
 	EventFrame.COLUMN_SIZES_LEFT = COLUMN_SIZES_LEFT
 	EventFrame.COLUMN_SIZES_RIGHT = COLUMN_SIZES_RIGHT
@@ -707,8 +799,8 @@ function EventFrame:CreateDataProvider()
 	end
 	-- Ресет скроллбара
 	-- C_Timer.After(0, function()
-	--     EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
-	--     Octo_MainFrame_ToDo.ScrollBoxCENT:ScrollToElementDataIndex(1)
+	-- EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
+	-- Octo_MainFrame_ToDo.ScrollBoxCENT:ScrollToElementDataIndex(1)
 	-- end)
 end
 -- Функция переключения видимости главного фрейма

@@ -15,7 +15,7 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- local tblSpells = {}
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
 		-- for _, currencyID in ipairs(v.Currencies) do
-		-- 	local currencyName =  E.func_currencyName(currencyID) -- "AllCurrencies"
+		-- local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
 		-- end
 		if v and v.Items then
 			for _, itemID in ipairs(v.Items) do
@@ -83,7 +83,7 @@ function EventFrame:func_CreateDataCacheAtStart()
 	local promise = LibThingsLoad:QuestsByKey(tblQuests)
 	promise:AddItemsByKey(tblItems)
 	-- promise:Then(function()
-	--     print ("THEN")
+	-- print ("THEN")
 	-- end)
 	promise:ThenForAllWithCached(function(promise, id, type)
 			if type == "quest" then
@@ -93,13 +93,13 @@ function EventFrame:func_CreateDataCacheAtStart()
 				local qw = C_Item.GetItemQualityByID(id)
 			end
 			-- if Octo_MainFrame_ToDo:IsShown() then
-			--     E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
+			-- E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
 			-- end
 	end)
 	-- promise:FailWithChecked(function(promise, id, type)
-	--     if type == "quest" then
-	--         print (id)
-	--     end
+	-- if type == "quest" then
+	-- print (id)
+	-- end
 	-- end)
 	----------------------------------------------------------------
 end
@@ -629,16 +629,16 @@ end
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	-- PlaterDB = {
-	-- 	["profileKeys"] = {
-	-- 		["Октоп - Broxigar"] = "OctoUI",
-	-- 		["Октовр - Raszageth"] = "OctoUI",
-	-- 	},
-	-- 	["profiles"] = {
-	-- 		["OctoUI"] = {
-	-- 			["extra_icon_use_blizzard_border_color"] = false,
-	-- 			["aura_sort"] = true,
-	-- 		},
-	-- 	},
+	-- ["profileKeys"] = {
+	-- ["Октоп - Broxigar"] = "OctoUI",
+	-- ["Октовр - Raszageth"] = "OctoUI",
+	-- },
+	-- ["profiles"] = {
+	-- ["OctoUI"] = {
+	-- ["extra_icon_use_blizzard_border_color"] = false,
+	-- ["aura_sort"] = true,
+	-- },
+	-- },
 	-- }
 
 	Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
@@ -650,17 +650,12 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	Octo_ToDo_DB_VisualUserSettings.Additionally = Octo_ToDo_DB_VisualUserSettings.Additionally or {}
 	Octo_ToDo_DB_VisualUserSettings.Other = Octo_ToDo_DB_VisualUserSettings.Other or {}
 
-
-
-	for k, func in next, (E.newOTRISOVKA) do
-		func()
-	end
-
 	wipe(E.ALL_Currencies)
 	wipe(E.ALL_Items)
 	wipe(E.ALL_Reputations)
 	wipe(E.ALL_UniversalQuests)
 	wipe(E.ALL_Additionally)
+
 
 	for dropdownOrder, value in next,(E.OctoTables_Vibor) do
 		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[dropdownOrder].Currencies)
@@ -669,70 +664,113 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests)
 		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[dropdownOrder].Additionally)
 	end
-		----------------------------------------------------------------
-		for i, id in next,(E.ALL_Currencies) do
-			if type(id) == "number" then
-				if Octo_ToDo_DB_VisualUserSettings.Currencies[id] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Currencies[id] = true
-				end
-			elseif type(id) == "table" then
-				for _, id_new in ipairs(id) do
-					if Octo_ToDo_DB_VisualUserSettings.Currencies[id_new] == nil then
-						Octo_ToDo_DB_VisualUserSettings.Currencies[id_new] = true
-					end
+
+
+	-- E.func_TableConcat(E.ALL_Currencies, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllCurrencies
+	E.func_TableConcat(E.ALL_Items, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllItems
+	for reputationID in next,(E.OctoTable_ReputationsDB) do
+		tinsert(E.ALL_Reputations, reputationID)
+	end
+
+	-- E.func_TableConcat(E.ALL_UniversalQuests, E.ALL_Items)
+	-- E.func_TableConcat(E.ALL_Additionally, E.ALL_Items)
+	-- ----------------------------------------------------------------
+	for i, id in next,(E.ALL_Currencies) do
+		if type(id) == "number" or type(id) == "string" then
+			if Octo_ToDo_DB_VisualUserSettings.Currencies[id] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Currencies[id] = true
+			end
+		elseif type(id) == "table" then
+			for _, id_new in ipairs(id) do
+				if Octo_ToDo_DB_VisualUserSettings.Currencies[id_new] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Currencies[id_new] = true
 				end
 			end
 		end
-		----------------------------------------------------------------
-		for i, id in next,(E.ALL_Items) do
-			if type(id) == "number" then
-				if Octo_ToDo_DB_VisualUserSettings.Items[id] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Items[id] = true
-				end
-			elseif type(id) == "table" then
-				for _, id_new in ipairs(id) do
-					if Octo_ToDo_DB_VisualUserSettings.Items[id_new] == nil then
-						Octo_ToDo_DB_VisualUserSettings.Items[id_new] = true
-					end
+	end
+	----------------------------------------------------------------
+	for i, id in next,(E.ALL_Items) do
+		if type(id) == "number" or type(id) == "string" then
+			if Octo_ToDo_DB_VisualUserSettings.Items[id] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Items[id] = true
+			end
+		elseif type(id) == "table" then
+			for _, id_new in ipairs(id) do
+				if Octo_ToDo_DB_VisualUserSettings.Items[id_new] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Items[id_new] = true
 				end
 			end
 		end
-		----------------------------------------------------------------
-		for i, id in next,(E.ALL_Reputations) do
-			if type(id) == "number" then
-				if Octo_ToDo_DB_VisualUserSettings.Reputations[id] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Reputations[id] = true
-				end
-			elseif type(id) == "table" then
-				for _, id_new in ipairs(id) do
-					if Octo_ToDo_DB_VisualUserSettings.Reputations[id_new] == nil then
-						Octo_ToDo_DB_VisualUserSettings.Reputations[id_new] = true
-					end
+	end
+	----------------------------------------------------------------
+	for i, id in next,(E.ALL_Reputations) do
+		if type(id) == "number" or type(id) == "string" then
+			if Octo_ToDo_DB_VisualUserSettings.Reputations[id] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Reputations[id] = true
+			end
+		elseif type(id) == "table" then
+			for _, id_new in ipairs(id) do
+				if Octo_ToDo_DB_VisualUserSettings.Reputations[id_new] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Reputations[id_new] = true
 				end
 			end
 		end
-		----------------------------------------------------------------
-		for i, data in next,(E.ALL_UniversalQuests) do
-			local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-			if Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] == nil then
-				Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] = true
+	end
+	----------------------------------------------------------------
+	for i, data in next,(E.ALL_UniversalQuests) do
+		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+		if Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] == nil then
+			Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] = true
+		end
+	end
+	----------------------------------------------------------------
+	for i, id in next,(E.ALL_Additionally) do
+		if type(id) == "number" or type(id) == "string" then
+			if Octo_ToDo_DB_VisualUserSettings.Additionally[id] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Additionally[id] = true
+			end
+		elseif type(id) == "table" then
+			for _, id_new in ipairs(id) do
+				if Octo_ToDo_DB_VisualUserSettings.Additionally[id_new] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Additionally[id_new] = true
+				end
 			end
 		end
-		----------------------------------------------------------------
-		for i, id in next,(E.ALL_Additionally) do
-			if type(id) == "number" then
-				if Octo_ToDo_DB_VisualUserSettings.Additionally[id] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Additionally[id] = true
-				end
-			elseif type(id) == "table" then
-				for _, id_new in ipairs(id) do
-					if Octo_ToDo_DB_VisualUserSettings.Additionally[id_new] == nil then
-						Octo_ToDo_DB_VisualUserSettings.Additionally[id_new] = true
-					end
-				end
-			end
-		end
-		----------------------------------------------------------------
+	end
+	----------------------------------------------------------------
+
+	-- Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
+	-- Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = false
+	-- local function createWTFinfo(id, dataType)
+	-- 	if not id or not dataType then return end
+	-- 	Octo_ToDo_DB_VisualUserSettings[dataType] = Octo_ToDo_DB_VisualUserSettings[dataType] or {}
+	-- 	if Octo_ToDo_DB_VisualUserSettings[dataType][id] == nil then
+	-- 		Octo_ToDo_DB_VisualUserSettings[dataType][id] = true
+	-- 	end
+	-- end
+
+
+	-- for dropdownOrder in next,(E.OctoTables_Vibor) do
+	-- 	for dataType, v in next,(E.OctoTables_DataOtrisovka[dropdownOrder]) do
+	-- 		for i, id in next,(E.OctoTables_DataOtrisovka[dropdownOrder][dataType]) do
+	-- 			local questKey
+	-- 			if dataType == "UniversalQuests" then
+	-- 				-- id это data для universal
+	-- 				questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
+	-- 			end
+
+	-- 			if dataType ~= "UniversalQuests" then
+	-- 				createWTFinfo(id)
+	-- 			else
+	-- 				createWTFinfo(questKey)
+	-- 			end
+
+	-- 		end
+	-- 	end
+	-- end
+
+
+
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
@@ -757,10 +795,10 @@ function EventFrame:PLAYER_LOGIN()
 	self:Octo_ToDo_DB_VisualUserSettings() --Настройка отображения игроков
 	-- Обновляем кэш
 	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
-		EventFrame:func_CreateDataCacheAtStart()
-		Octo_Cache_DB.lastBuildNumber = E.buildNumber
-		Octo_Cache_DB.lastFaction = E.curFaction
-		Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
+	EventFrame:func_CreateDataCacheAtStart()
+	Octo_Cache_DB.lastBuildNumber = E.buildNumber
+	Octo_Cache_DB.lastFaction = E.curFaction
+	Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
 	-- end
 	self:ScheduleNextReset()
 	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)

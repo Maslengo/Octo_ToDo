@@ -255,7 +255,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 			end
 	end)
 	-- Минимальные размеры фрейма (нельзя сделать меньше)
-	local MIN_WIDTH = 400  -- Минимальная ширина
+	local MIN_WIDTH = 400 -- Минимальная ширина
 	local MIN_HEIGHT = 300 -- Минимальная высота
 	-- Переменная для отслеживания, изменяем ли мы размер
 	local isResizing = false
@@ -459,21 +459,21 @@ function EventFrame:func_itemslistSort24(msg)
 	-- :FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	-- local count = 0
 	-- promise1:Then(function()
-	-- 		sort(list1, E.func_Reverse_order)
-	-- 		for _, id1 in next, (list1) do
-	-- 			count = count + 1
-	-- 			if count < 24 then
-	-- 				str = str..id1..", "
-	-- 			else
-	-- 				count = 0
-	-- 				str = str..id1..", |n"
-	-- 			end
-	-- 		end
-	-- 		for _, id2 in next, (list2) do
-	-- 			str = str..id2..", -- UNKNOWN|n"
-	-- 		end
-	-- 		editBox:SetText(str)
-	-- 		editFrame:Show()
+	-- sort(list1, E.func_Reverse_order)
+	-- for _, id1 in next, (list1) do
+	-- count = count + 1
+	-- if count < 24 then
+	-- str = str..id1..", "
+	-- else
+	-- count = 0
+	-- str = str..id1..", |n"
+	-- end
+	-- end
+	-- for _, id2 in next, (list2) do
+	-- str = str..id2..", -- UNKNOWN|n"
+	-- end
+	-- editBox:SetText(str)
+	-- editFrame:Show()
 	-- end)
 	----------------------------------------------------------------
 	-------------------------- СРЕДНЕЕ 80ms ------------------------
@@ -482,13 +482,13 @@ function EventFrame:func_itemslistSort24(msg)
 	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_Reverse_order)
 	-- local vivod, count = "", 0
 	-- for _, itemID in ipairs(GLOBAL_TABLE_ITEMS) do
-	-- 	count = count + 1
-	-- 	if count < 24 then
-	-- 		vivod = vivod .. itemID..", "
-	-- 	else
-	-- 		count = 0
-	-- 		vivod = vivod .. itemID..",|n"
-	-- 	end
+	-- count = count + 1
+	-- if count < 24 then
+	-- vivod = vivod .. itemID..", "
+	-- else
+	-- count = 0
+	-- vivod = vivod .. itemID..",|n"
+	-- end
 	-- end
 	-- editBox:SetText(vivod)
 	-- editFrame:Show()

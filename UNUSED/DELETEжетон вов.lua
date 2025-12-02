@@ -8,5 +8,5 @@ if point then
 	-- print (first, second)
 	-- OctoTooltip:SetPoint(first, frame, second)
 	-- else
-	--     OctoTooltip:SetOwner(frame, "ANCHOR_CURSOR_RIGHT")
+	-- OctoTooltip:SetOwner(frame, "ANCHOR_CURSOR_RIGHT")
 end

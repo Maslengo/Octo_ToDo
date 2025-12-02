@@ -8,7 +8,7 @@ end
 local function updateGlobal(db)
 	-- IF < v95.6 GLOBAL
 	-- if compareVersion(95.6, db.DBVersion) then
-	-- 	db.DBVersion = currentVersion
+	-- db.DBVersion = currentVersion
 	-- end
 end
 local function updateChar(CharInfo)

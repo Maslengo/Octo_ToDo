@@ -126,7 +126,7 @@ local function Constructor()
 		label = label,
 		image = image,
 		frame = frame,
-		type  = Type
+		type = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

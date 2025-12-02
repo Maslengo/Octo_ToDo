@@ -215,7 +215,7 @@ function EventFrame:Octo_Create_MainFrame_Achievements()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_Achievements.ScrollBox, Octo_MainFrame_Achievements.ScrollBar) -- ОТКЛЮЧАЕТ СКРОЛЛЫ КОГДА НЕНУЖНЫ
 end
 -- function EventFrame:Update()
--- 	Octo_MainFrame_Achievements.view:SetDataProvider(EventFrame.DataProvider, ScrollBoxConstants.RetainScrollPosition)
+-- Octo_MainFrame_Achievements.view:SetDataProvider(EventFrame.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 -- end
 function EventFrame:CreateDataProvider()
 	if Octo_MainFrame_Achievements then

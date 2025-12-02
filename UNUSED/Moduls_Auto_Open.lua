@@ -33,12 +33,12 @@ local function OpenableScan()
 			if containerInfo and not containerInfo.isLocked and autoOpenItems[containerInfo.itemID] then
 				local itemLink = select(2, GetItemInfo(containerInfo.itemID))
 				-- if itemLink then
-				-- 	C_Timer.After(1, function()
-				-- 			if not InCombatLockdown() then
-				-- 				UseContainerItem(bag, slot)
-				-- 				DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ")..E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
-				-- 			end
-				-- 	end)
+				-- C_Timer.After(1, function()
+				-- if not InCombatLockdown() then
+				-- UseContainerItem(bag, slot)
+				-- DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("Auto Open Item ")..E.func_texturefromIcon(containerInfo.iconFileID)..itemLink)
+				-- end
+				-- end)
 				-- end
 			end
 		end

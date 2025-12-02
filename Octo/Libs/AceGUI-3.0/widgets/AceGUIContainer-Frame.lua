@@ -84,7 +84,7 @@ local methods = {
 		self:SetStatusText()
 		self:ApplyStatus()
 		self:Show()
-        self:EnableResize(true)
+ self:EnableResize(true)
 	end,
 
 	["OnRelease"] = function(self)
@@ -168,7 +168,7 @@ local FrameBackdrop = {
 	insets = { left = 8, right = 8, top = 8, bottom = 8 }
 }
 
-local PaneBackdrop  = {
+local PaneBackdrop = {
 	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true, tileSize = 16, edgeSize = 16,
@@ -297,15 +297,15 @@ local function Constructor()
 
 	local widget = {
 		localstatus = {},
-		titletext   = titletext,
-		statustext  = statustext,
-		titlebg     = titlebg,
-		sizer_se    = sizer_se,
-		sizer_s     = sizer_s,
-		sizer_e     = sizer_e,
-		content     = content,
-		frame       = frame,
-		type        = Type
+		titletext = titletext,
+		statustext = statustext,
+		titlebg = titlebg,
+		sizer_se = sizer_se,
+		sizer_s = sizer_s,
+		sizer_e = sizer_e,
+		content = content,
+		frame = frame,
+		type = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

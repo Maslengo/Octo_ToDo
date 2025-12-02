@@ -123,15 +123,15 @@ end
 function EventFrame:Octo_Frame_init(frame, node)
 	-- Получаем данные из узла и кэшируем часто используемые переменные
 	local frameData = node:GetData()
-	local lineFrames = frame.lineFrames  -- Кэшируем для быстрого доступа
-	local numData = #frameData           -- Количество элементов в данных
-	local numLines = #lineFrames         -- Количество доступных lineFrames
-	local columnSizes = EventFrame.COLUMN_SIZES  -- Размеры колонок (если есть)
+	local lineFrames = frame.lineFrames -- Кэшируем для быстрого доступа
+	local numData = #frameData -- Количество элементов в данных
+	local numLines = #lineFrames -- Количество доступных lineFrames
+	local columnSizes = EventFrame.COLUMN_SIZES -- Размеры колонок (если есть)
 	-- Обрабатываем данные и обновляем соответствующие lineFrames
 	for i = 1, numData do
 		local currentText = frameData[i]
 		if currentText then
-			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
+			lineFrames[i].text:SetText(currentText) -- Устанавливаем текст
 		end
 		-- Если заданы размеры колонок, применяем их
 		if columnSizes and columnSizes[i] and lineFrames and lineFrames[i] then
@@ -140,7 +140,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		-- Определяем выравнивание текста (по умолчанию CENTER)
 		local justify = "CENTER"
 		if numData > 1 then
-			if i == 1 then          -- Первый элемент выравниваем по ЛЕВОМУ краю
+			if i == 1 then -- Первый элемент выравниваем по ЛЕВОМУ краю
 				justify = "LEFT"
 			elseif i == numData then -- Последний элемент — по ПРАВОМУ
 				justify = "RIGHT"
@@ -277,19 +277,19 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 					end
 				end
 				-- if OctoTable_itemID_ItemsDelete[itemID] then -- Проверяем предметы для удаления
-				-- 	if not UsableTBL[itemID] then
-				-- 		UsableTBL[itemID] = {
-				-- 			count = func_GetItemCount(itemID, false, false, false, false),
-				-- 			quality = quality,
-				-- 			usable = false
-				-- 		}
-				-- 	end
+				-- if not UsableTBL[itemID] then
+				-- UsableTBL[itemID] = {
+				-- count = func_GetItemCount(itemID, false, false, false, false),
+				-- quality = quality,
+				-- usable = false
+				-- }
+				-- end
 				-- end
 				----------------------------------------------------------------
 				-- UsableTBL[itemID] = {
-				-- 	count = func_GetItemCount(itemID, false, false, false, false),
-				-- 	quality = quality or 0,
-				-- 	usable = false
+				-- count = func_GetItemCount(itemID, false, false, false, false),
+				-- quality = quality or 0,
+				-- usable = false
 				-- }
 				----------------------------------------------------------------
 			end
@@ -335,7 +335,7 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	end
 	local columns = 3
 	EventFrame.COLUMN_SIZES = COLUMN_SIZES
-	local total_width = INDENT_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) + LINE_HEIGHT-- ОТСТУП  -- (иконка)
+	local total_width = INDENT_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) + LINE_HEIGHT-- ОТСТУП -- (иконка)
 	if EventFrame.COLUMN_SIZES[1] then
 		for i = 1, columns do
 			total_width = total_width + EventFrame.COLUMN_SIZES[i]

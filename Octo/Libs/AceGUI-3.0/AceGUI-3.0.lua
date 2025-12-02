@@ -539,7 +539,7 @@ end
 
 
 ------------------
--- Widget API   --
+-- Widget API --
 ------------------
 
 --- Registers a widget Constructor, this function returns a new instance of the Widget
@@ -789,7 +789,7 @@ AceGUI:RegisterLayout("Flow",
 			end
 		end
 
-		--anchor the last row, if its full height needs a special case since  its height has just been changed by the anchor
+		--anchor the last row, if its full height needs a special case since its height has just been changed by the anchor
 		if isfullheight then
 			rowstart:SetPoint("TOPLEFT", content, "TOPLEFT", 0, -height)
 		elseif rowstart then
@@ -812,8 +812,8 @@ local GetCellAlign = function (dir, tableObj, colObj, cellObj, cell, child)
 	if type(fn) == "string" then
 		fn = fn:lower()
 		fn = dir == "V" and (fn:sub(1, 3) == "top" and "start" or fn:sub(1, 6) == "bottom" and "end" or fn:sub(1, 6) == "center" and "middle")
-		  or dir == "H" and (fn:sub(-4) == "left" and "start" or fn:sub(-5) == "right" and "end" or fn:sub(-6) == "center" and "middle")
-		  or fn
+		 or dir == "H" and (fn:sub(-4) == "left" and "start" or fn:sub(-5) == "right" and "end" or fn:sub(-6) == "center" and "middle")
+		 or fn
 		val = (fn == "start" or fn == "fill") and 0 or fn == "end" and cell - child or (cell - child) / 2
 	elseif type(fn) == "function" then
 		val = fn(child or 0, cell, dir)

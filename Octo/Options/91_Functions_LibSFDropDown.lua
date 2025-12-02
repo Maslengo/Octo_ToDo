@@ -20,9 +20,9 @@ end)
 -- Общие функции
 ----------------------------------------------------------------
 -- function E.func_reloadMenu(DropDown, level, value)
---     DropDown:ddCloseMenus(level)
---     local menu = LibSFDropDown:GetMenu(level)
---     DropDown:ddToggle(level, value, menu.anchorFrame)
+-- DropDown:ddCloseMenus(level)
+-- local menu = LibSFDropDown:GetMenu(level)
+-- DropDown:ddToggle(level, value, menu.anchorFrame)
 -- end
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2

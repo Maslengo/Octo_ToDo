@@ -53,7 +53,7 @@ function E.Timers.Legion_Remix_Invasion()
 		["EU"] = 1762434000, -- EU: Nov 6, 2025, 12:00 PM (user-confirmed correct)
 		["CN"] = 1762434000+741600,
 	}
-	local interval = (14 * 3600) + (30 * 60)  -- 18h 30m = 66600 seconds
+	local interval = (14 * 3600) + (30 * 60) -- 18h 30m = 66600 seconds
 	local duration = 21600
 	local timerText = CreateTimer(TIMER[E.regionName], interval, duration)
 	local str = L["Legion Invasion"]
@@ -125,7 +125,7 @@ function E.Timers.SL_Maw_Assault()
 	return CreateTimer(3780, 7200, 900)
 end
 -- Shadowlands Maw: Tormentors of Torghast
-function E.Timers.SL_Maw_TormentorsofTorghast() --  12.05, 14.05 и так далее это по московскому времени если по серверному времени то по нечётным получается.
+function E.Timers.SL_Maw_TormentorsofTorghast() -- 12.05, 14.05 и так далее это по московскому времени если по серверному времени то по нечётным получается.
 	local TIMER = {
 		US = 1754917310,
 		EU = 1754917310, -- HZ

@@ -103,7 +103,7 @@ local function Unpack(step,...)
 
 		-- lowercase and stripped like realm names on character names
 		local localeFemaleStripped = strip(localized[2] or localized[1],true);
-		local localeMaleStripped   = strip(localized[1],true);
+		local localeMaleStripped = strip(localized[1],true);
 
 		-- is locale name gender neutral
 		local isNeutral = localeMaleStripped==localeFemaleStripped;

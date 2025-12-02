@@ -21,18 +21,18 @@ E.Octo_ProfessionsskillLine_Other = {
 }
 E.OctoTable_Portals = {
 	-- {
-	--     {id = 187898, curType = "item", level = 20,},
-	--     {id = 187869, curType = "item", level = 20,},
-	--     {id = 187875, curType = "item", level = 20,},
-	--     {id = 187895, curType = "item", level = 20,},
-	--     {id = 187897, curType = "item", level = 20,},
-	--     {id = 187896, curType = "item", level = 20,},
-	--     {id = 187899, curType = "item", level = 20,},
-	--     {id = 187900, curType = "item", level = 20,},
-	--     {id = 150743, curType = "item", level = 20, faction = "Alliance",},-- ALLY
-	--     {id = 150744, curType = "item", level = 20, faction = "Horde",},-- HORDE
-	--     {id = 150746, curType = "item", level = 20, faction = "Alliance",},-- ALLY
-	--     {id = 150745, curType = "item", level = 20, faction = "Horde",},-- HORDE
+	-- {id = 187898, curType = "item", level = 20,},
+	-- {id = 187869, curType = "item", level = 20,},
+	-- {id = 187875, curType = "item", level = 20,},
+	-- {id = 187895, curType = "item", level = 20,},
+	-- {id = 187897, curType = "item", level = 20,},
+	-- {id = 187896, curType = "item", level = 20,},
+	-- {id = 187899, curType = "item", level = 20,},
+	-- {id = 187900, curType = "item", level = 20,},
+	-- {id = 150743, curType = "item", level = 20, faction = "Alliance",},-- ALLY
+	-- {id = 150744, curType = "item", level = 20, faction = "Horde",},-- HORDE
+	-- {id = 150746, curType = "item", level = 20, faction = "Alliance",},-- ALLY
+	-- {id = 150745, curType = "item", level = 20, faction = "Horde",},-- HORDE
 	-- },
 	-- OTHER
 	{
@@ -238,15 +238,15 @@ E.OctoTable_Portals = {
 	},
 	-- TWW S1
 	-- {
-	--     {id = 464256, faction = "Horde",},-- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Horde)
-	--     {id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
-	--     354464, -- Mists
-	--     354462, -- Necrotic Wake
-	--     445269, -- Stonevault
-	--     445416, -- City of Threads
-	--     445417, -- Ara Ara
-	--     445414, -- The Dawnbreaker
-	--     445424, -- Grim Batol
+	-- {id = 464256, faction = "Horde",},-- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Horde)
+	-- {id = 445418, faction = "Alliance",}, -- name = "SOB", expansion = "battle for azeroth", mapID = {353}}, -- Siege of Boralus (Alliance)
+	-- 354464, -- Mists
+	-- 354462, -- Necrotic Wake
+	-- 445269, -- Stonevault
+	-- 445416, -- City of Threads
+	-- 445417, -- Ara Ara
+	-- 445414, -- The Dawnbreaker
+	-- 445424, -- Grim Batol
 	-- },
 	-- TWW S2
 	{

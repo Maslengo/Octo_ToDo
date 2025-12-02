@@ -759,7 +759,7 @@ do
 	end
 	-- ЛАГУЧАЯ ХУЙНЯ
 	-- for itemID, _ in next, (E.OctoTable_itemID_ItemsUsable) do
-	-- 	table.insert(E.OctoTable_itemID_ALL, itemID)
+	-- table.insert(E.OctoTable_itemID_ALL, itemID)
 	-- end
 	for _, value in ipairs(E.OctoTable_itemID_MECHAGON) do
 		table.insert(E.OctoTable_itemID_Ignore_List, value)

@@ -89,9 +89,9 @@ local function Constructor()
 	text:SetJustifyV("MIDDLE")
 
 	local widget = {
-		text  = text,
+		text = text,
 		frame = frame,
-		type  = Type
+		type = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

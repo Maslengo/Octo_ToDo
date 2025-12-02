@@ -43,16 +43,16 @@ E.strategies = {}
 E.Third_Option = {}
 E.Timers = {}
 -- local dataMeta = {
--- 	__index = {
--- 		Currencies = {},
--- 		Items = {},
--- 		Reputations = {},
--- 		UniversalQuests = {},
--- 		Additionally = {},
--- 	}
+-- __index = {
+-- Currencies = {},
+-- Items = {},
+-- Reputations = {},
+-- UniversalQuests = {},
+-- Additionally = {},
+-- }
 -- }
 -- for i = 1, 15 do
--- 	E.OctoTables_DataOtrisovka[i] = setmetatable({}, dataMeta)
+-- E.OctoTables_DataOtrisovka[i] = setmetatable({}, dataMeta)
 -- end
 E.newOTRISOVKA = {}
 E.newOTRISOVKA2 = {}

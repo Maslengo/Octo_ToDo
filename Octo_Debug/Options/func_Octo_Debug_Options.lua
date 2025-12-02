@@ -35,7 +35,13 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = DELETE.." "..ALL,
 				desc = "Octo_ToDo_DB_Levels= {}|nOcto_ToDo_DB_Vars = {}",
 				func = function()
+					-- wipe(Octo_ToDo_DB_Levels)
+					-- wipe(Octo_ToDo_DB_Vars)
+					-- wipe(Octo_ToDo_DB_Other Octo_Cache_DB)
+					-- wipe(Octo_ToDo_DB_VisualUserSettings)
+
 					for _, tbl in ipairs(E.OctoTable_SavedVariables) do
+						print (tbl.name)
 						wipe(tbl)
 					end
 					return --ReloadUI()
@@ -557,15 +563,15 @@ function E.func_Octo_Debug_Options(savedVars)
 		},
 	}
 	-- for index = 10, 16 do
-	-- 	Option_FUNC.args.editorFontSize.values[index] = index
+	-- Option_FUNC.args.editorFontSize.values[index] = index
 	-- end
 	-- for index, v in ipairs({0, 2, 3, 4}) do
-	-- 	Option_FUNC.args.editorTabSpaces.values[index] = index
+	-- Option_FUNC.args.editorTabSpaces.values[index] = index
 	-- end
 	-- local countET = 0
 	-- for name in next, (E.editorThemes) do
-	-- 	countET = countET + 1
-	-- 	Option_FUNC.args.editorTheme.values[countET] = name
+	-- countET = countET + 1
+	-- Option_FUNC.args.editorTheme.values[countET] = name
 	-- end
 	-------------------------------------------------
 	-------------------------------------------------
@@ -580,16 +586,16 @@ function E.func_Octo_Debug_Options(savedVars)
 				local path = parent_path.."."..str_key
 				Option_FUNC.args[str_key..order] = {
 					type = "execute",
-					name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r"  -- Красный для последнего уровня
-					or "|cffFFF371"..str_key.."|r",  -- Жёлтый для остальных
+					name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r" -- Красный для последнего уровня
+					or "|cffFFF371"..str_key.."|r", -- Жёлтый для остальных
 					desc = path.." = {}",
 					order = order,
 					width = E.FULL_WIDTH/4,
-					func = (function(k)  -- Создаем новое замыкание для сохранения значения key
+					func = (function(k) -- Создаем новое замыкание для сохранения значения key
 						return function()
 							tbl[k] = nil
 						end
-					end)(key),  -- Передаем текущее значение key в замыкание
+					end)(key), -- Передаем текущее значение key в замыкание
 				}
 				add_args_recursive(value, path, current_depth + 1, max_depth)
 			end
@@ -607,8 +613,8 @@ function E.func_Octo_Debug_Options(savedVars)
 			local execute_order = GetOrder()
 			Option_FUNC.args[name..execute_order] = {
 				type = "execute",
-				name = max_depth and "|cff00BFFF"..name.."|r"  -- Голубой, если есть ограничение глубины
-				or "|cff4fff79"..name.."|r",  -- Зеленый, если рекурсия без лимита
+				name = max_depth and "|cff00BFFF"..name.."|r" -- Голубой, если есть ограничение глубины
+				or "|cff4fff79"..name.."|r", -- Зеленый, если рекурсия без лимита
 				desc = name.." = {}",
 				order = execute_order,
 				width = E.FULL_WIDTH,

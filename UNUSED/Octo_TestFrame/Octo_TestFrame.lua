@@ -8,21 +8,21 @@ E.func_InitFrame(Octo_MainFrame_TestFrame)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_TestFrame)
 -- Константы для настройки интерфейса
-local INDENT_TEST = 4                      		-- Отступ для текста
+local INDENT_TEST = 4 		-- Отступ для текста
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT		-- Высота одной строки
-local HEADER_HEIGHT = LINE_HEIGHT*2        		-- Высота заголовка
-local MIN_LINE_WIDTH_LEFT = 200            		-- Минимальная ширина левой колонки
-local MIN_LINE_WIDTH_CENT = 90             		-- Минимальная ширина центральной колонки
-local LINES_MAX = E.LINES_MAX                   -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.MonitorWidth*.8  		-- Максимальная ширина фрейма (80% экрана)
+local HEADER_HEIGHT = LINE_HEIGHT*2 		-- Высота заголовка
+local MIN_LINE_WIDTH_LEFT = 200 		-- Минимальная ширина левой колонки
+local MIN_LINE_WIDTH_CENT = 90 		-- Минимальная ширина центральной колонки
+local LINES_MAX = E.LINES_MAX -- Максимальное количество строк
+local MAX_FRAME_WIDTH = E.MonitorWidth*.8 		-- Максимальная ширина фрейма (80% экрана)
 local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
-EventFrame.COLUMNS_MAX = 113     		-- Максимальное количество колонок
+EventFrame.COLUMNS_MAX = 113 		-- Максимальное количество колонок
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
-local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1  -- Цвет границы (черный)
-local textR, textG, textB, textA = 1, 1, 1, 1                              -- Цвет текста (белый)
-local classR, classG, classB = GetClassColor(E.classFilename)               -- Цвет класса игрока
-local LEFT_TEXTURE_ALPHA = 0.1                                              -- Прозрачность текстуры левой колонки
+local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
+local textR, textG, textB, textA = 1, 1, 1, 1 -- Цвет текста (белый)
+local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
+local LEFT_TEXTURE_ALPHA = 0.1 -- Прозрачность текстуры левой колонки
 local charR, charG, charB = 1, 1, 1
 -- Локальные ссылки на часто используемые функции для оптимизации
 local math_min = math.min
@@ -36,11 +36,11 @@ local func_OnAcquiredLEFT do
 		if type(ID) == "table" then
 			-- Обработка нескольких ID
 			for _, tblID in ipairs(ID) do
-				E.func_TableConcat(tooltipOCTO, E.func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
+				E.func_TableConcat(tooltipOCTO, E.func_KeyTooltip_LEFT(typeQ, tblID, iANIMA, kCovenant))
 			end
 		else
 			-- Обработка одиночного ID
-			tooltipOCTO = E.func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+			tooltipOCTO = E.func_KeyTooltip_LEFT(typeQ, ID, iANIMA, kCovenant)
 		end
 		frame.tooltip = tooltipOCTO
 		E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
@@ -49,8 +49,8 @@ local func_OnAcquiredLEFT do
 	function func_OnAcquiredLEFT(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-		local JustifyV = "MIDDLE"  -- Вертикальное выравнивание
-		local JustifyH = "LEFT"     -- Горизонтальное выравнивание
+		local JustifyV = "MIDDLE" -- Вертикальное выравнивание
+		local JustifyH = "LEFT" -- Горизонтальное выравнивание
 		-- Настройки фрейма
 		frame:SetPropagateMouseClicks(true)
 		frame:SetPropagateMouseMotion(true)
@@ -202,9 +202,9 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 		end
 		-- Установка тултипа для колонки, если он есть
 		-- if frameData.tooltipCENT and frameData.tooltipCENT[i] then
-		-- 	secondFrame.tooltip = frameData.tooltipCENT[i]
+		-- secondFrame.tooltip = frameData.tooltipCENT[i]
 		-- else
-		-- 	secondFrame.tooltip = nil
+		-- secondFrame.tooltip = nil
 		-- end
 		secondFrame:SetScript("OnEnter", function()
 			if frameData.tooltipKey and frameData.GUID[i] then
@@ -357,7 +357,7 @@ function EventFrame:Octo_Create_MainFrame()
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
 		-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
-		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r  ")
+		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r ")
 	end)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
@@ -621,8 +621,8 @@ function EventFrame:CreateDataProvider()
 	end
 	-- Ресет скроллбара
 	-- C_Timer.After(0, function()
-	-- 	EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
-	-- 	Octo_MainFrame_TestFrame.ScrollBoxCENT:ScrollToElementDataIndex(1)
+	-- EventFrame.HorizontalScrollBar:SetScrollPercentage(0)
+	-- Octo_MainFrame_TestFrame.ScrollBoxCENT:ScrollToElementDataIndex(1)
 	-- end)
 end
 -- Функция переключения видимости главного фрейма

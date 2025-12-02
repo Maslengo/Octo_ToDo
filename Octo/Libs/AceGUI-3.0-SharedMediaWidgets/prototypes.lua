@@ -3,7 +3,7 @@ local DataVersion = 9004
 local AGSMW = LibStub:NewLibrary("AceGUISharedMediaWidgets-1.0", DataVersion)
 
 if not AGSMW then
-  return	-- already loaded and no upgrade necessary
+ return	-- already loaded and no upgrade necessary
 end
 
 local AceGUI = LibStub("AceGUI-3.0")

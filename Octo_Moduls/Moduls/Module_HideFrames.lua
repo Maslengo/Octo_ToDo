@@ -15,16 +15,16 @@ function E.func_Config_Hide_CheckListText()
 	end
 end
 -- function E.func_Config_Hide_SubscriptionInterstitialFrame()
--- 	local frame = SubscriptionInterstitialFrame
--- 	if frame and not E[frame] then
--- 		E[frame] = true
--- 		if frame:IsShown() then frame:Hide()
--- 		else frame:HookScript("OnShow", function(self, ...)
--- 				frame:UnregisterAllEvents()
--- 				frame:Hide()
--- 			end)
--- 		end
--- 	end
+-- local frame = SubscriptionInterstitialFrame
+-- if frame and not E[frame] then
+-- E[frame] = true
+-- if frame:IsShown() then frame:Hide()
+-- else frame:HookScript("OnShow", function(self, ...)
+-- frame:UnregisterAllEvents()
+-- frame:Hide()
+-- end)
+-- end
+-- end
 -- end
 function E.func_Config_Hide_ActionStatusText()
 	local frame = ActionStatus.Text
@@ -190,13 +190,13 @@ function E.func_Config_Hide_PTRIssueReporterAlertFrame()
 		end)
 	end
 	-- if frame and not E[frame] then
-	-- 	E[frame] = true
-	-- 	if frame:IsShown() then frame:Hide()
-	-- 	else frame:HookScript("OnShow", function(self, ...)
-	-- 			frame:UnregisterAllEvents()
-	-- 			frame:Hide()
-	-- 		end)
-	-- 	end
+	-- E[frame] = true
+	-- if frame:IsShown() then frame:Hide()
+	-- else frame:HookScript("OnShow", function(self, ...)
+	-- frame:UnregisterAllEvents()
+	-- frame:Hide()
+	-- end)
+	-- end
 	-- end
 end
 function E.func_Config_Hide_Bug()

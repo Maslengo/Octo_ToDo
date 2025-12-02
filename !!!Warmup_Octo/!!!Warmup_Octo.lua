@@ -99,7 +99,7 @@ end)
 collectgarbage("stop")
 collectgarbage("collect")
 local initmem = collectgarbage("count")
-local memstack = {initmem}  -- Восстановлен стек памяти
+local memstack = {initmem} -- Восстановлен стек памяти
 local longesttime, biggestmem, totalmem, totalgarbage, mostgarbage = 0, 0, 0, 0, 0
 local totaltime = 0
 local eventcounts = {}
@@ -142,7 +142,7 @@ local function LoadAddOnWrapper(name)
 	collectgarbage("collect")
 	local currentMem = collectgarbage("count")
 	table.insert(memstack, currentMem)
-	table.insert(memstack, currentMem)  -- Дважды для совместимости
+	table.insert(memstack, currentMem) -- Дважды для совместимости
 	StartTimer()
 	return orig_LoadAddOn(name)
 end
@@ -278,8 +278,8 @@ function Warmup:VARIABLES_LOADED()
 	AddOutput(" ")
 	AddOutput(Blue_Color.."Все аддоны|r", totaltime, totalMemory, totalgarbage) -- Addon Loadup
 	AddOutput(Orange_Color.."Самый долгий:|r ".. (longestaddon or "N/A"), longesttime) -- Longest addon
-	AddOutput(Orange_Color.."            Самый большой:|r ".. (biggestaddon or "N/A"), nil, biggestmem) -- Biggest addon
-	AddOutput(Orange_Color.."            Самый мусорный:|r ".. (mostgarbageaddon or "N/A"), nil, mostgarbage) -- Most Garbage
+	AddOutput(Orange_Color.." Самый большой:|r ".. (biggestaddon or "N/A"), nil, biggestmem) -- Biggest addon
+	AddOutput(Orange_Color.." Самый мусорный:|r ".. (mostgarbageaddon or "N/A"), nil, mostgarbage) -- Most Garbage
 	AddOutput(" ")
 
 	-- Настройка команд

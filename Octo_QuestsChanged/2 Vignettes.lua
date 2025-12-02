@@ -16,7 +16,7 @@ local function VignettePosition(vignetteGUID)
 		return mapID, position:GetXY()
 	end
 end
---  Добавление новой виньетки в базу
+-- Добавление новой виньетки в базу
 local function AddVignettesToDB(vignetteInfo)
 	local GUID = vignetteInfo.vignetteGUID
 	local atlasName = vignetteInfo.atlasName

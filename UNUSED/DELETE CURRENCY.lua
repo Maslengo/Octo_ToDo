@@ -1,4 +1,4 @@
-function()  
+function() 
 	local vivod = ""
 	local rosterCurrencyData = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(3309)
 	if rosterCurrencyData then

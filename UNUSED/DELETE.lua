@@ -35,7 +35,7 @@ L["Hide: UIWidgetTopCenterContainerFrame"] = true
 L["Hide: WeeklyRewardExpirationWarningDialog"] = true
 L["Hide: ZoneTextFrame"] = true
 CheckListText "EventFrame:Config_Hide_CheckListText()"
-SubscriptionInterstitialFrame "EventFrame:Config_Hide_SubscriptionInterstitialFrame()"  -- НАДО ПОФИКСИТЬ(в другом файле работает)
+SubscriptionInterstitialFrame "EventFrame:Config_Hide_SubscriptionInterstitialFrame()" -- НАДО ПОФИКСИТЬ(в другом файле работает)
 ActionStatus.Text "EventFrame:Config_Hide_ActionStatusText()"
 SecondaryStatusTrackingBarContainer "EventFrame:Config_Hide_SecondaryStatusTrackingBarContainer()" -- РЕПА??????
 MainStatusTrackingBarContainer "EventFrame:Config_Hide_MainStatusTrackingBarContainer()"

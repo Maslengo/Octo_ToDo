@@ -61,7 +61,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 1971,
 	},
 	{
-		color =  E.Legion_Color, --E.func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b)
+		color = E.Legion_Color, --E.func_rgb2hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b)
 		name = "Legion",
 		nameBlizzard = EXPANSION_NAME6, -- UNUSED
 		nameVeryShort = "Legion",

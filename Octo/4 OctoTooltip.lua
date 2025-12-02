@@ -91,16 +91,16 @@ end
 function EventFrame:Octo_Frame_init(frame, node)
 	-- Получаем данные из узла и кэшируем часто используемые переменные
 	local frameData = node:GetData()
-	local lineFrames = frame.lineFrames  -- Кэшируем для быстрого доступа
-	-- local numData = #frameData           -- Количество элементов в данных
-	local numData = EventFrame.columns or 1           -- Количество элементов в данных
-	local numLines = #lineFrames         -- Количество доступных lineFrames
-	local columnSizes = EventFrame.COLUMN_SIZES  -- Размеры колонок (если есть)
+	local lineFrames = frame.lineFrames -- Кэшируем для быстрого доступа
+	-- local numData = #frameData -- Количество элементов в данных
+	local numData = EventFrame.columns or 1 -- Количество элементов в данных
+	local numLines = #lineFrames -- Количество доступных lineFrames
+	local columnSizes = EventFrame.COLUMN_SIZES -- Размеры колонок (если есть)
 	-- Обрабатываем данные и обновляем соответствующие lineFrames
 	for i = 1, numData do
 		local currentText = frameData[i] or ""
 		if currentText then
-			lineFrames[i].text:SetText(currentText)  -- Устанавливаем текст
+			lineFrames[i].text:SetText(currentText) -- Устанавливаем текст
 		end
 		-- Если заданы размеры колонок, применяем их
 		if columnSizes then
@@ -109,7 +109,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		-- Определяем выравнивание текста (по умолчанию CENTER)
 		local justify = "CENTER"
 		if numData > 1 then
-			if i == 1 then          -- Первый элемент выравниваем по ЛЕВОМУ краю
+			if i == 1 then -- Первый элемент выравниваем по ЛЕВОМУ краю
 				justify = "LEFT"
 			elseif i == numData then -- Последний элемент — по ПРАВОМУ
 				justify = "RIGHT"
@@ -269,7 +269,7 @@ function EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 			end
 		end
 		if newColumnsNumber > 0 then
-		-- if #zxc > 0 then
+			-- if #zxc > 0 then
 			local node = DataProvider:Insert(zxc)
 			-- columns = #zxc
 			columns = newColumnsNumber

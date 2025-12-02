@@ -7,34 +7,33 @@ E.OctoTables_DataOtrisovka[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
 E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (REMIX)|r"
-local function localfunc()
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
-		3292, -- E.func_IsRemix()
-		3268, -- E.func_IsRemix()
-		3252, -- E.func_IsRemix()
-	}
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
-		254267,
-	}
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
-	}
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
-	}
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
-	}
-end
+----------------------------------------------------------------
+E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	3292,3268,3252,
+}
+----------------------------------------------------------------
+E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	254267,
+}
+----------------------------------------------------------------
+E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+
+}
+----------------------------------------------------------------
+E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+
+}
+----------------------------------------------------------------
+E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	"LegionRemixResearch",
+}
 ----------------------------------------------------------------
 local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
 	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
 		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, {}, nil,  false, nil, nil
+				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, nil, false, nil, nil
 				tooltipKey = "LegionRemixResearch"
 				if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
 					local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
@@ -50,7 +49,7 @@ local function localfunc2()
 				colorLEFT = E.OctoTable_Expansions[7].color
 				settingsType = "Other#".."LegionRemixResearch"
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, myType, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep
 				----------------------------------------------------------------
 		end)
 	end
@@ -59,8 +58,3 @@ local function localfunc2()
 	----------------------------------------------------------------
 	return OctoTable_Otrisovka_textCENT
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-tinsert(E.newOTRISOVKA, localfunc)
-tinsert(E.newOTRISOVKA2, localfunc2)

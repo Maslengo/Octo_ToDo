@@ -36,7 +36,7 @@ function E.Collect_All_PlayerInfo()
 	collectPlayerData.buildDate = E.buildDate
 	collectPlayerData.interfaceVersion = E.interfaceVersion
 	collectPlayerData.currentTier = E.currentTier
-	collectPlayerData.LuaVersion =  _VERSION
+	collectPlayerData.LuaVersion = _VERSION
 	if E.func_IsRemix() then
 		collectPlayerData.PlayerOnRemixServer = true
 	else

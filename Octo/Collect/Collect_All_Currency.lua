@@ -9,9 +9,11 @@ function E.Collect_All_Currency()
 	-- local startTime = debugprofilestop()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
-	if not Octo_Cache_DB and not Octo_Cache_DB.AllCurrencies then return end
 	local currencyCache = {}
-	for CurrencyID in next, (Octo_Cache_DB.AllCurrencies) do
+	-- local tbl = Octo_Cache_DB.AllCurrencies
+	local tbl = E.ALL_Currencies
+	for _, CurrencyID in ipairs(tbl) do
+	-- for CurrencyID = 1, 4000 do
 		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID)
 		local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)
 		if not data then

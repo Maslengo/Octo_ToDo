@@ -107,7 +107,7 @@ function EventFrame:PLAYER_LOGIN()
 	InitializeKnownQuests()
 end
 -- function EventFrame:PLAYER_ENTERING_WORLD()
---     InitializeKnownQuests
+-- InitializeKnownQuests
 -- end
 function EventFrame:QUEST_LOG_UPDATE()
 	self:func_CheckQuests()

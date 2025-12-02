@@ -165,10 +165,10 @@ function EventFrame:Octo_Frame_initLEFT(frame, node)
 			-- Обрабатываем таблицу ID или одиночный ID
 			if type(ID) == "table" then
 				for _, tblID in ipairs(ID) do
-					E:func_TableConcat(tooltipOCTO, E:func_tooltipCurrencyAllPlayers(typeQ, tblID, iANIMA, kCovenant))
+					E:func_TableConcat(tooltipOCTO, E:func_KeyTooltip_LEFT(typeQ, tblID, iANIMA, kCovenant))
 				end
 			else
-				tooltipOCTO = E:func_tooltipCurrencyAllPlayers(typeQ, ID, iANIMA, kCovenant)
+				tooltipOCTO = E:func_KeyTooltip_LEFT(typeQ, ID, iANIMA, kCovenant)
 			end
 			frame.tooltip = tooltipOCTO
 			E:func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
@@ -444,9 +444,9 @@ function E:func_TODO_CreateDataProvider()
 							zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
 							-- zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_Expansions[index].icon, 18, 32)..E:func_reputationName(v.id)
 							-- if repInfo then
-							-- 	zxc.iconLEFT = repInfo.icon
+							-- zxc.iconLEFT = repInfo.icon
 							-- else
-							-- 	zxc.iconLEFT = E.Icon_Empty
+							-- zxc.iconLEFT = E.Icon_Empty
 							-- end
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod

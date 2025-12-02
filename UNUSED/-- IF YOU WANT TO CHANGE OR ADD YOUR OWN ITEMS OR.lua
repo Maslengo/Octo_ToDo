@@ -1049,7 +1049,7 @@ aura_env.special.ReservoirAnima = function(...)
 		end
 	end
 	trackable.displayText = trackable.displayText or {}
-	trackable.displayText.extra = depositAmount_original > 0 and "(+"..depositAmount..")"  or ""
+	trackable.displayText.extra = depositAmount_original > 0 and "(+"..depositAmount..")" or ""
 	trackable.amount_extra = depositAmount_original
 	return trackable
 end
@@ -1092,7 +1092,7 @@ aura_env.special.CatalogedResearch = function(...)
 		end
 	end
 	trackable.displayText = trackable.displayText or {}
-	trackable.displayText.extra = deliverAmount_original > 0 and "(+".. deliverAmount ..")"  or ""
+	trackable.displayText.extra = deliverAmount_original > 0 and "(+".. deliverAmount ..")" or ""
 	trackable.amount_extra = deliverAmount_original
 	return trackable
 end
@@ -1327,7 +1327,7 @@ aura_env.SetActiveMaps = function(trackable)
 		for uiMapID in pairs(trackable.parentMapIDs) do
 			local recurse = nil
 			if type(uiMapID) == "string" and uiMapID:sub(1,1) == "r" then
-				recurse  = true
+				recurse = true
 				uiMapID = tonumber(uiMapID:sub(2))
 			end
 			local childs = C_Map.GetMapChildrenInfo(uiMapID, nil, recurse)
@@ -1411,7 +1411,7 @@ aura_env.showOrHideTrackable = function(trackable, UnitStatus)
 			for uiMapID in pairs(trackable.parentMapIDs) do
 				local recurse = nil
 				if type(uiMapID) == "string" and uiMapID:sub(1,1) == "r" then
-					recurse  = true
+					recurse = true
 					uiMapID = tonumber(uiMapID:sub(2))
 				end
 				childMapTable[uiMapID] = true --adds the parent itself
@@ -1607,7 +1607,7 @@ aura_env.checkForStateUpdates = function(trackable, state)
 		trackable.show
 		and trackable.currentAmount
 		and state
-		and ((  --currentAmount changed
+		and (( --currentAmount changed
 				state.amount
 				and state.amount ~= trackable.currentAmount
 			)
