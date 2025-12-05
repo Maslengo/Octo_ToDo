@@ -119,7 +119,7 @@ local func_OnAcquired do
 			frame.icon_secondSlot:SetPoint("TOPLEFT", LINE_HEIGHT+1, -1)
 			frame.icon_secondSlot:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
 			frame.icon_secondSlot:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-			frame.icon_secondSlot:SetTexture(E.Icon_Empty)
+			frame.icon_secondSlot:SetTexture(E.ICON_EMPTY)
 			------------------------------------------------
 			frame.icon_third = frame:CreateTexture(nil, "BACKGROUND")
 			frame.icon_third:SetPoint("TOPLEFT", LINE_HEIGHT+LINE_HEIGHT+1, -1)
@@ -335,7 +335,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		if tbl[data.index] then
 			UpdateExpandOrCollapseButtonState(frame.icon_firstSlot, node:IsCollapsed(), node, name)
 		else
-			frame.icon_firstSlot:SetTexture(E.Icon_Empty)
+			frame.icon_firstSlot:SetTexture(E.ICON_EMPTY)
 		end
 	else
 		frame.first:Hide()
@@ -345,7 +345,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		frame.icon_third:SetTexture(iconTexture)
 	else
 		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+4, 0)
-		frame.icon_third:SetTexture(E.Icon_Empty)
+		frame.icon_third:SetTexture(E.ICON_EMPTY)
 	end
 	frame.third.textLEFT:SetText(textLEFT)
 	frame.third.textRIGHT:SetText(textRIGHT)

@@ -14,8 +14,8 @@ local HEADER_HEIGHT = LINE_HEIGHT*2 		-- Высота заголовка
 local MIN_LINE_WIDTH_LEFT = 200 		-- Минимальная ширина левой колонки
 local MIN_LINE_WIDTH_CENT = 90 		-- Минимальная ширина центральной колонки
 local LINES_MAX = E.LINES_MAX -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.MonitorWidth*.8 		-- Максимальная ширина фрейма (80% экрана)
-local MAX_FRAME_HEIGHT = E.MonitorHeight*.6 	-- Максимальная высота фрейма (60% экрана)
+local MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.8 		-- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_HEIGHT = E.PHYSICAL_SCREEN_HEIGHT*.6 	-- Максимальная высота фрейма (60% экрана)
 EventFrame.COLUMNS_MAX = 113 		-- Максимальное количество колонок
 -- Цветовые настройки
 local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
@@ -62,7 +62,7 @@ local func_OnAcquiredLEFT do
 		frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 		frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
 		frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-		frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
+		frameFULL.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND)
 		frameFULL:SetPoint("LEFT", frame)
 		frameFULL:SetPoint("TOP", frame)
 		frameFULL:SetPoint("BOTTOM", frame)
@@ -114,7 +114,7 @@ local func_OnAcquiredCENT do
 					f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 					f.curCharTextureBG:SetAllPoints()
 					f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-					f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
+					f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.ALPHA_BACKGROUND)
 					f.curCharTextureBG:Hide()
 					-- Текстура для фона репутации
 					f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
@@ -223,7 +223,7 @@ end
 -- Функция создания главного тестового фрейма
 function EventFrame:Octo_Create_MainFrame()
 	-- Настройка позиции и обработчика показа фрейма
-	-- Octo_MainFrame_TestFrame:SetPoint("TOP", 0, -E.MonitorWidth*.05)
+	-- Octo_MainFrame_TestFrame:SetPoint("TOP", 0, -E.PHYSICAL_SCREEN_WIDTH*.05)
 	Octo_MainFrame_TestFrame:SetPoint("CENTER")
 	Octo_MainFrame_TestFrame:SetScript("OnShow", function()
 		EventFrame:CreateDataProvider()
@@ -356,8 +356,8 @@ function EventFrame:Octo_Create_MainFrame()
 	HeaderFrameLEFT.text:SetTextColor(textR, textG, textB, textA)
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLEFT:SetScript("OnShow", function()
-		-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.Icon_Faction).."Weekly Reset: "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
-		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.Faction_Color..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r ")
+		-- HeaderFrameLEFT.text:SetText(E.func_texturefromIcon(E.ICON_FACTION).."Weekly Reset: "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
+		HeaderFrameLEFT.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r ")
 	end)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
@@ -591,15 +591,15 @@ function EventFrame:CreateDataProvider()
 		HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1)
 		-- Устанавливаем цвет фона в зависимости от фракции
 		if CharInfo.PlayerData.Faction == "Horde" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.Horde_Color)
+			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_HORDE)
 		elseif CharInfo.PlayerData.Faction == "Alliance" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.Alliance_Color)
+			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_ALLIANCE)
 		elseif CharInfo.PlayerData.Faction == "Neutral" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.Neutral_Color)
+			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_NEUTRAL)
 		end
 		-- -- Установка цвета фона в зависимости от фракции
-		-- local charR, charG, charB = E.func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.Horde_Color or E.Alliance_Color)
-		HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
+		-- local charR, charG, charB = E.func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.COLOR_HORDE or E.COLOR_ALLIANCE)
+		HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.ALPHA_BACKGROUND)
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
 			HeaderFrameRIGHT.tooltip = E.func_Tooltip_Chars(CharInfo)
@@ -644,7 +644,7 @@ local MyEventsTable = {
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:Octo_Create_MainFrame()
-	E.func_Create_DDframe_ToDo(Octo_MainFrame_TestFrame, E.Faction_Color, function() EventFrame:CreateDataProvider() end)
+	E.func_Create_DDframe_ToDo(Octo_MainFrame_TestFrame, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	Octo_TestFrame_DB_Vars = Octo_TestFrame_DB_Vars or {}
 	E.func_CreateMinimapButton(GlobalAddonName, "TestFrame", Octo_TestFrame_DB_Vars, Octo_MainFrame_TestFrame, nil, "Octo_MainFrame_TestFrame")
 end

@@ -17,6 +17,20 @@ function E.Collect_All_ItemsInBag()
 	local GetContainerNumSlots = C_Container.GetContainerNumSlots
 	local GetContainerNumFreeSlots = C_Container.GetContainerNumFreeSlots
 	local GetContainerItemInfo = C_Container.GetContainerItemInfo
+	local GetItemInfo = C_Item.GetItemInfo
+
+	local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
+	local OctoTable_itemID_Ignore_List = E.OctoTable_itemID_Ignore_List
+	local OctoTable_itemID_ItemsDelete = E.OctoTable_itemID_ItemsDelete
+
+
+	local itemType1 = AUCTION_CATEGORY_HOUSING
+	local itemType2 = BINDING_HEADER_HOUSING_SYSTEM
+	local itemSubType1 = HOUSING_ITEM_TOAST_TYPE_DECOR
+	local itemSubType2 = CATALOG_SHOP_TYPE_DECOR
+	local itemSubType3 = MOUNTS
+
+
 	local researchItemsLookup = {}
 	for _, tbl in ipairs(E.OctoTable_itemID_Cataloged_Research) do
 		researchItemsLookup[tbl.itemiD] = tbl.count
@@ -36,8 +50,25 @@ function E.Collect_All_ItemsInBag()
 					local itemID = containerInfo.itemID
 					local quality = containerInfo.quality
 					local hyperlink = containerInfo.hyperlink
-					local name = E.func_itemName(itemID)
+					-- local name = E.func_itemName(itemID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
 					collectMASLENGO.ItemsALL.Bags[itemID] = E.func_GetItemCount(itemID, true, true, true, false)
+					----------------------------------------------------------------
+					if not OctoTable_itemID_ItemsUsable[itemID] then
+
+						local _, _, _, _, _, itemType, itemSubType = GetItemInfo(itemID)
+						-- ДЕКОР
+						if itemType == itemType1 or itemType == itemType2 or itemSubType == itemSubType1 or itemSubType == itemSubType2 then
+							OctoTable_itemID_ItemsUsable[itemID] = 1
+						-- МАУНТЫ
+						elseif itemSubType == itemSubType3 then
+							OctoTable_itemID_ItemsUsable[itemID] = 1
+						-- ИГРУШКИ (не работает)
+						-- elseif itemType == TOY or itemSubType == TOY then
+						-- 	OctoTable_itemID_ItemsUsable[itemID] = 1
+						end
+					end
+					----------------------------------------------------------------
+
 					if hasKeystone and not keystoneFound and hyperlink then
 						if hyperlink:find("keystone:180653") or hyperlink:find("keystone:138019") or hyperlink:find("keystone:158923") or hyperlink:find("keystone:151086") then
 							local _, _, _, dungeonSTR, lvl = strsplit(":", hyperlink)

@@ -6,7 +6,7 @@ local expansionID = 7
 E.OctoTables_DataOtrisovka[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (REMIX)|r"
+E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (Remix)|r"
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
 	3292,3268,3252,

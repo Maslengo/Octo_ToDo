@@ -126,7 +126,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					value = CharInfo.PlayerData.CurrentRegionName
 				end
 			end
-			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+			self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
 			-- Обработка разных уровней меню
 			if type(value) == "string" then
 				-- Меню серверов
@@ -157,7 +157,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					info.value = v
 					tinsert(list, info)
 				end
-				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+				self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
 			elseif type(value) == "table" then
 				-- Меню персонажей
 				local players_list = {}
@@ -204,7 +204,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						tinsert(list, info)
 					end
 				end
-				self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+				self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
 			end
 			-- Добавляем общие кнопки в меню
 			if level == 1 then
@@ -262,9 +262,9 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					end
 					-- Только текущая фракция
 					if E.curFaction == "Horde" then
-						info.text = E.func_texturefromIcon(E.Icon_Horde)..L["Only Horde"]
+						info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
 					else
-						info.text = E.func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"]
+						info.text = E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"]
 					end
 					info.checked = Octo_ToDo_DB_Vars.OnlyCurrentFaction
 					info.func = function(_, _, _, checked)
@@ -431,7 +431,7 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 					tinsert(list, info)
 				end
 			end
-			self:ddAddButton({list = list, listMaxSize = E.listMaxSize}, level)
+			self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
 			if level == 1 then
 				self:ddAddSeparator(level)
 				local info = {}

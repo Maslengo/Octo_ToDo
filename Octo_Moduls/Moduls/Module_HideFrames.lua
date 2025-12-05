@@ -443,14 +443,6 @@ function EventFrame:PLAYER_REGEN_DISABLED()
 end
 function EventFrame:PLAYER_STARTED_MOVING()
 	self:START_HF_functions()
-	-- local size1, size2 = GetPhysicalScreenSize()
-	-- local scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
-	-- print (E.Red_Color.."UIParent:|r", UIParent:GetSize())
-	-- print (E.Blue_Color.."WorldFrame:|r", WorldFrame:GetSize())
-	-- print (E.Green_Color.."GetPhysicalScreenSize:|r", size1, size2)
-	-- print (scale, E.scale)
-	-- /script WorldFrame:ClearAllPoints(); WorldFrame:SetWidth(1920); WorldFrame:SetHeight(1080); WorldFrame:SetPoint("CENTER", 0, 0);
-	-- /script UIParent:ClearAllPoints(); UIParent:SetWidth(1920); UIParent:SetHeight(1080); UIParent:SetPoint("CENTER", 0, 0);
 end
 function EventFrame:TALKINGHEAD_REQUESTED()
 	self:START_HF_functions()

@@ -1473,7 +1473,7 @@ local function localfunc2()
 					textCENT = CharInfo.PlayerData.CurrentKey
 				end
 				----------------------------------------------------------------
-				textLEFT = E.WOW_Epic_Color..L["Mythic Keystone"].."|r"
+				textLEFT = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
 				iconLEFT = 4352494
 				colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
 				settingsType = "Other#".."TWW_CurrentKey"

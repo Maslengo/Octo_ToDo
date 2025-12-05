@@ -14,6 +14,28 @@ if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
+local function ResetScrollBar()
+	local scrollBar = OctoTooltip.ScrollBar
+	if scrollBar and scrollBar.Track and scrollBar.Track.Thumb then
+		-- scrollBar:Hide()
+		-- scrollBar.Back:Hide()
+		-- scrollBar.Forward:Hide()
+		-- scrollBar.Track:Hide()
+		-- scrollBar.Track.Thumb:Hide()
+		print ("ResetScrollBar")
+		-- scrollBar:SetButtonState("NORMAL") -- нет метода
+		scrollBar.Back:SetButtonState("NORMAL")
+		scrollBar.Forward:SetButtonState("NORMAL")
+		scrollBar.Track:SetButtonState("NORMAL")
+		scrollBar.Track.Thumb:SetButtonState("NORMAL")
+		if scrollBar.Back then
+			scrollBar.Back:SetButtonState("NORMAL")
+		end
+		if scrollBar.Forward then
+			scrollBar.Forward:SetButtonState("NORMAL")
+		end
+	end
+end
 local function func_OnHide(frame)
 	frame.highlightFrame:Hide()
 end
@@ -32,8 +54,8 @@ local func_OnAcquired do
 			highlightFrame:SetPropagateMouseMotion(true)
 			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
 			highlightFrame:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
-			highlightFrame.HighlightTexture = highlightFrame:GetHighlightTexture()
-			highlightFrame.HighlightTexture:SetAlpha(.2)
+			highlightFrame.TEXTURE_HIGHLIGHT = highlightFrame:GetHighlightTexture()
+			highlightFrame.TEXTURE_HIGHLIGHT:SetAlpha(.2)
 			highlightFrame:SetPoint("LEFT", frame)
 			highlightFrame:SetPoint("TOP", frame)
 			highlightFrame:SetPoint("BOTTOM", frame)
@@ -44,7 +66,7 @@ local func_OnAcquired do
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
+			textureFULL:SetVertexColor(classR, classG, classB, E.ALPHA_BACKGROUND)
 			frame.textureFULL = textureFULL
 			----------------
 			-- Создаем метатаблицу для дочерних фреймов
@@ -165,6 +187,7 @@ local function TooltipOnShow()
 			scrollBar:Hide()
 		end
 	end
+	-- ResetScrollBar()
 end
 function EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetPropagateMouseClicks(false)

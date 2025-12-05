@@ -10,4 +10,5 @@
 	<Script file="Database\Quests.lua"/>
 	<Script file="Database\Spells.lua"/>
 	<Script file="Database\Timers.lua"/>
+	<Script file="Database\Mounts.lua"/>
 </Ui>

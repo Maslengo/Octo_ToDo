@@ -295,7 +295,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			OnlyCurrentFaction = {
 				type = "toggle",
-				name = E.curFaction == "Horde" and E.func_texturefromIcon(E.Icon_Horde)..L["Only Horde"] or E.func_texturefromIcon(E.Icon_Alliance)..L["Only Alliance"],
+				name = E.curFaction == "Horde" and E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"] or E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"],
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.OnlyCurrentFaction

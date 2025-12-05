@@ -192,7 +192,7 @@ local function replaceZeroWithNil(tbl, smth)
 		for k, value in pairs(tbl) do
 			-- Специальный случай для любых числовых значений
 			if value and smth == "anynumber" and type(value) == "number" then
-				print(k, E.WOW_WoWToken_Color..tostring(value).."|r")
+				print(k, E.COLOR_WOW_TOKEN..tostring(value).."|r")
 				tbl[k] = nil
 			else
 				replaceZeroWithNil(value, smth)

@@ -29,7 +29,7 @@ function E.Timers.Legion_Invasion()
 		["CN"] = 1547575200+741600,
 	}
 	local interval, duration = 66600, 21600
-	local timerText = CreateTimer(TIMER[E.regionName], interval, duration)
+	local timerText = CreateTimer(TIMER[E.CURRENT_REGION_NAME], interval, duration)
 	local str = L["Legion Invasion"]
 	for uiMapID, areaPoiID in pairs(maps) do
 		local seconds = C_AreaPoiInfo.GetAreaPOISecondsLeft(areaPoiID)
@@ -55,7 +55,7 @@ function E.Timers.Legion_Remix_Invasion()
 	}
 	local interval = (14 * 3600) + (30 * 60) -- 18h 30m = 66600 seconds
 	local duration = 21600
-	local timerText = CreateTimer(TIMER[E.regionName], interval, duration)
+	local timerText = CreateTimer(TIMER[E.CURRENT_REGION_NAME], interval, duration)
 	local str = L["Legion Invasion"]
 	for uiMapID, areaPoiID in pairs(maps) do
 		local seconds = C_AreaPoiInfo.GetAreaPOISecondsLeft(areaPoiID)
@@ -82,7 +82,7 @@ function E.Timers.BfA_Invasion()
 		["CN"] = 1546743600, -- 2019-01-06 11:00 UTC+8
 	}
 	local interval, duration = 68400, 25200
-	local timerText = CreateTimer(TIMER[E.regionName], interval, duration)
+	local timerText = CreateTimer(TIMER[E.CURRENT_REGION_NAME], interval, duration)
 	local str = L["Faction Assault"]
 	for uiMapID, areaPoiID in pairs(maps) do
 		local seconds = C_AreaPoiInfo.GetAreaPOISecondsLeft(areaPoiID)
@@ -131,7 +131,7 @@ function E.Timers.SL_Maw_TormentorsofTorghast() -- 12.05, 14.05 и так дал
 		EU = 1754917310, -- HZ
 		CN = 1754917310, -- HZ
 	}
-	return CreateTimer(TIMER[E.regionName], 7200, 900)
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 7200, 900)
 end
 -- Daily Reset
 function E.Timers.Daily_Reset()

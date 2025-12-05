@@ -20,6 +20,7 @@ E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
@@ -220,6 +221,7 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 			{83274},
 			{83365},
 			{83363},
+			{92647}, -- SL
 			-- {72727},
 			-- {72726},
 			-- {72725},
@@ -337,6 +339,7 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+
 }
 ----------------------------------------------------------------
 local function localfunc2()
@@ -382,7 +385,7 @@ local function localfunc2()
 		-- 1583 EU classic
 		-- 1508 US classic
 		-- 1458 Бурные потоки
-		-- local TimewalkHolidayTBL = {1583, 1265, 1063, 652, 622, 1508, 1667}
+		-- local TimewalkHolidayTBL = {1705, 1583, 1265, 1063, 652, 622, 1508, 1667}
 		-- for _, HolidayID in ipairs(TimewalkHolidayTBL) do
 		-- if E.ActiveHoliday[HolidayID] then
 		local joinable, timewalkDungeonName = E.func_joinableDung()
@@ -424,7 +427,7 @@ local function localfunc2()
 						textCENT = CharInfo.MASLENGO.LFGInstance[286].donetoday
 					end
 					----------------------------------------------------------------
-					textLEFT = E.func_texturefromIcon(E.func_GetItemIconByID(23247))..E.func_texturefromIcon(E.Icon_LFG) .. E.func_LFGdungName(286)
+					textLEFT = E.func_texturefromIcon(E.func_GetItemIconByID(23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_LFGdungName(286)
 					colorLEFT = E.Holiday_Color
 					----------------------------------------------------------------
 					return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep

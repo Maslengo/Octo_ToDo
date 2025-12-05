@@ -69,7 +69,7 @@ local func_OnAcquired do
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
-			textureFULL:SetVertexColor(1, 1, 1, .1) -- E.backgroundColorAOverlay
+			textureFULL:SetVertexColor(1, 1, 1, .1) -- E.ALPHA_BACKGROUND
 			frame.textureFULL = textureFULL
 			------------------------------------------------
 			------------------------------------------------
@@ -233,14 +233,14 @@ function EventFrame:Octo_Frame_init(frame, node)
 		if E.func_IsAccountQuest(frameData.id) or E.func_IsQuestFlaggedCompletedOnAccount(frameData.id) then
 			frame.icon_2:SetAtlas("warbands-icon")
 		else
-			frame.icon_2:SetTexture(E.Icon_Empty)
+			frame.icon_2:SetTexture(E.ICON_EMPTY)
 		end
 		frame.third.text:SetText(E.func_questName(frameData.id))
 	elseif frameData.type == "QC_Vignettes" then
 		if frameData.atlas then
 			frame.icon_2:SetAtlas(frameData.atlas)
 		else
-			frame.icon_2:SetAtlas(E.Icon_Empty)
+			frame.icon_2:SetAtlas(E.ICON_EMPTY)
 		end
 		frame.third.text:SetText(frameData.name)
 	end

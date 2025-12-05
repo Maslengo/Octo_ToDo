@@ -154,10 +154,10 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Создаем основной фрейм
 	local frame = CreateFrame("BUTTON", frameName, parent, "DialogBoxFrame")
 	-- E.func_InitFrame(frame)
-	-- local width = E.MonitorWidth/3
-	-- local height = E.MonitorHeight/1.5
-	local width = E.MonitorWidth/2
-	local height = E.MonitorHeight/2
+	-- local width = E.PHYSICAL_SCREEN_WIDTH/3
+	-- local height = E.PHYSICAL_SCREEN_HEIGHT/1.5
+	local width = E.PHYSICAL_SCREEN_WIDTH/2
+	local height = E.PHYSICAL_SCREEN_HEIGHT/2
 	frame:SetSize(width, height)
 	frame:SetResizable(true)
 	frame:SetDontSavePosition(true)

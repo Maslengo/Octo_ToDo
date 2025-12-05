@@ -62,7 +62,7 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
 	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- Текстура выделения
 	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-	frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay) -- Прозрачность выделения
+	frameFULL.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND) -- Прозрачность выделения
 	frameFULL:SetPoint("LEFT", frame)
 	frameFULL:SetPoint("TOP", frame)
 	frameFULL:SetPoint("BOTTOM", frame)
@@ -113,7 +113,7 @@ local func_OnAcquiredCENT do
 						f.curCharTextureBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
 						f.curCharTextureBG:SetAllPoints()
 						f.curCharTextureBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
-						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.backgroundColorAOverlay)
+						f.curCharTextureBG:SetVertexColor(classR, classG, classB, E.ALPHA_BACKGROUND)
 						f.curCharTextureBG:Hide()
 						-- Текстура репутации
 						f.ReputTextureAndBG = f:CreateTexture(nil, "BACKGROUND", nil, -2)
@@ -446,7 +446,7 @@ function E:func_TODO_CreateDataProvider()
 							-- if repInfo then
 							-- zxc.iconLEFT = repInfo.icon
 							-- else
-							-- zxc.iconLEFT = E.Icon_Empty
+							-- zxc.iconLEFT = E.ICON_EMPTY
 							-- end
 							zxc.colorLEFT = E.OctoTable_Expansions[index].color
 							zxc.textCENT[CharIndex] = vivod
@@ -493,13 +493,13 @@ function E:func_TODO_CreateDataProvider()
 			curCharFrame:SetHitRectInsets(1, 1, 1, 1)
 			-- Устанавливаем цвет фона в зависимости от фракции
 			if CharInfo.PlayerData.Faction == "Horde" then
-				charR, charG, charB = E:func_hex2rgbNUMBER(E.Horde_Color)
+				charR, charG, charB = E:func_hex2rgbNUMBER(E.COLOR_HORDE)
 			elseif CharInfo.PlayerData.Faction == "Alliance" then
-				charR, charG, charB = E:func_hex2rgbNUMBER(E.Alliance_Color)
+				charR, charG, charB = E:func_hex2rgbNUMBER(E.COLOR_ALLIANCE)
 			elseif CharInfo.PlayerData.Faction == "Neutral" then
-				charR, charG, charB = E:func_hex2rgbNUMBER(E.Neutral_Color)
+				charR, charG, charB = E:func_hex2rgbNUMBER(E.COLOR_NEUTRAL)
 			end
-			curCharFrame.charTexture:SetVertexColor(charR, charG, charB, E.backgroundColorAOverlay)
+			curCharFrame.charTexture:SetVertexColor(charR, charG, charB, E.ALPHA_BACKGROUND)
 			-- Обработчики событий для фрейма персонажа
 			curCharFrame:SetScript("OnEnter", function(self)
 					curCharFrame.tooltip = E:func_Tooltip_Chars(CharInfo)
@@ -525,7 +525,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	-- Рассчитываем максимальное количество персонажей
-	local maxNum = math.floor((E.MonitorWidth - LINE_WIDTH_LEFT) / LINE_WIDTH_RIGHT) - 1
+	local maxNum = math.floor((E.PHYSICAL_SCREEN_WIDTH - LINE_WIDTH_LEFT) / LINE_WIDTH_RIGHT) - 1
 end
 -- Обработчик события входа игрока
 function EventFrame:PLAYER_LOGIN()

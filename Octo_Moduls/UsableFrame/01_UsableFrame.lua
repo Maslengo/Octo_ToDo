@@ -20,7 +20,7 @@ local LINE_HEIGHT = 32
 local LINE_WIDTH = 256
 local LINES_MAX = 20
 local INDENT_BETWEEN_LINES = LINE_HEIGHT
-local LINES_TOTAL = math.floor(math.floor(E.MonitorHeight/LINE_HEIGHT)*.7)
+local LINES_TOTAL = math.floor(math.floor(E.PHYSICAL_SCREEN_HEIGHT/LINE_HEIGHT)*.7)
 if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
@@ -60,7 +60,7 @@ local func_OnAcquired do
 			if 1 ~= 1 then
 				frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- "auctionhouse-ui-row-highlight"
 				frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-				frameFULL.HighlightTexture:SetAlpha(E.backgroundColorAOverlay)
+				frameFULL.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND)
 			end
 			frameFULL:SetPoint("LEFT", frame)
 			frameFULL:SetPoint("TOP", frame)

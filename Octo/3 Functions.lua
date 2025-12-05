@@ -113,7 +113,10 @@ local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByI
 local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
 local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
 -- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
-local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
+local GetMountIDs = C_MountJournal.GetMountIDs
+local GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
+local GetMountFromItem = C_MountJournal.GetMountFromItem
 local classR, classG, classB = GetClassColor(E.classFilename)
 function E.func_IsClassic() return E.interfaceVersion > 10000 and E.interfaceVersion < 20000 end
 function E.func_IsBC() return E.interfaceVersion > 20000 and E.interfaceVersion < 30000 end
@@ -143,12 +146,12 @@ function E.func_texturefromIcon(icon, iconWidth, iconHeight, isAtlas)
 	if isAtlas then
 		return E.func_vignetteIcon(icon, iconWidth, iconHeight)
 	else
-		return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
+		return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
 	end
 end
 function E.func_texturefromIconEVENT(icon, iconSize)
 	iconSize = iconSize or 16
-	return "|T"..(icon or E.Icon_QuestionMark)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
+	return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
 end
 function E.func_GetItemIconByID(itemID)
 	return GetItemIconByID(itemID)
@@ -192,7 +195,7 @@ function E.func_GetSpellIcon(spellID)
 end
 function E.func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
-	return info and info.iconFileID or E.Icon_Empty
+	return info and info.iconFileID or E.ICON_EMPTY
 end
 local function GetOrCreateCache(category)
 	Octo_Cache_DB = Octo_Cache_DB or {}
@@ -218,11 +221,11 @@ local function func_itemName_CACHE(id)
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
-function E.func_itemName(id, newQuality)
+function E.func_itemName(id, forcedQuality)
 	if not id then return end
 	local quality = GetItemQualityByID(id) or 0
-	if newQuality then
-		quality = newQuality
+	if forcedQuality then
+		quality = forcedQuality
 	end
 	-- local icon = E.func_texturefromIcon(E.func_GetItemIconByID(id)) or ""
 	local colorHex = ITEM_QUALITY_COLORS[quality].hex
@@ -245,9 +248,9 @@ local function func_currencyName_CACHE(id)
 	end
 	local WarbandIcon = ""
 	if IsAccountTransferableCurrency(id) then
-		WarbandIcon = E.Icon_AccountTransferable
+		WarbandIcon = E.ICON_ACCOUNT_TRANSFERABLE
 	elseif IsAccountWideCurrency(id) then
-		WarbandIcon = E.Icon_AccountWide
+		WarbandIcon = E.ICON_ACCOUNT_WIDE
 	end
 	local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
 	local name = info.name
@@ -349,7 +352,7 @@ local function func_reputationName_CACHE(id)
 	if name and name ~= "" then
 		local isAccountWide = IsAccountWideReputation(id) or false
 		if isAccountWide == true then
-			name = E.Icon_AccountWide..name
+			name = E.ICON_ACCOUNT_WIDE..name
 		end
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
@@ -366,12 +369,15 @@ function E.func_reputationName(id)
 	local side = "-"
 	if E.OctoTable_ReputationsDB[id] then
 		side = E.OctoTable_ReputationsDB[id].side
+		if E.OctoTable_ReputationsDB[id].icon2 ~= "" then
+			sideIcon = E.func_texturefromIcon(E.OctoTable_ReputationsDB[id].icon2)
+		end
 	end
 	if side == "Alliance" then
-		sideIcon = E.func_texturefromIcon(E.Icon_Alliance)..sideIcon
+		sideIcon = E.func_texturefromIcon(E.ICON_ALLIANCE)..sideIcon
 		sideIcon = E.Blue_Color..sideIcon.."|r"
 	elseif side == "Horde" then
-		sideIcon = E.func_texturefromIcon(E.Icon_Horde)..sideIcon
+		sideIcon = E.func_texturefromIcon(E.ICON_HORDE)..sideIcon
 		sideIcon = E.Red_Color..sideIcon.."|r"
 	end
 	return sideIcon..func_reputationName_CACHE(id)..E.debugInfo(id)
@@ -448,24 +454,24 @@ local function func_mountName_CACHE(id)
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
 	return vivod
 end
-function E.func_mountName(id)
-	if not id then return end
-	local cachedName = func_mountName_CACHE(id)
-	return cachedName..E.debugInfo(id)
+function E.func_mountName(mountID)
+	if not mountID then return end
+	local cachedName = func_mountName_CACHE(mountID)
+	return cachedName..E.debugInfo(mountID)
 end
-function E.func_mountIcon(id)
-	if not id then return end
-	return select(3, GetMountInfoByID(id))
+function E.func_mountIcon(mountID)
+	if not mountID then return end
+	return select(3, GetMountInfoByID(mountID))
 end
-function E.func_mountIsCollected(id)
-	if not id then return end
-	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
+function E.func_mountIsCollected(mountID)
+	if not mountID then return end
+	local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
 	return isCollected
 end
-function E.func_mountIsCollectedColor(id)
-	if not id then return end
-	local isCollected = select(11, C_MountJournal.GetMountInfoByID(id))
-	return isCollected and E.Green_Color or E.Red_Color
+function E.func_mountIsCollectedColor(mountID)
+	if not mountID then return end
+	local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+	return isCollected and E.White_Color or E.Red_Color
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1637,7 +1643,7 @@ function E.func_Otrisovka_RIGHT_Items(dropdownOrder, CharInfo, dataType, id)
 	----------------------------------------------------------------
 	local textCENT, colorCENT, FIRSTrep, SECONDrep = "", nil, nil, nil
 	----------------------------------------------------------------
-	colorLEFT = E.TheBurningCrusade_Color or expansionData.color
+	colorLEFT = E.COLOR_THEBURNINGCRUSADE or expansionData.color
 	textCENT = E.func_textCENT_Items(CharInfo, id)
 	----------------------------------------------------------------
 	return textCENT, colorCENT, FIRSTrep, SECONDrep
@@ -1757,7 +1763,12 @@ function E.func_Otrisovka_LEFT_Additionally(dropdownOrder, CharInfo, dataType, i
 	----------------------------------------------------------------
 	local textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation = "", nil, nil, dataType.."#"..id, nil, false
 	----------------------------------------------------------------
-	if id == "LegionRemixResearch" then
+	if id == "CovenantRenown" then
+		textLEFT = "CovenantRenown"
+	elseif id == "CovenantAnima" then
+		textLEFT = "CovenantAnima"
+
+	elseif id == "LegionRemixResearch" then
 		textLEFT = L["Infinite Research"]
 	elseif id == "ListOfQuests" then
 		tooltipKey = "Other_ListOfQuests"
@@ -1796,7 +1807,30 @@ function E.func_Otrisovka_RIGHT_Additionally(dropdownOrder, CharInfo, dataType, 
 	----------------------------------------------------------------
 	local textCENT, colorCENT, FIRSTrep, SECONDrep = "", nil, nil, nil
 	----------------------------------------------------------------
-	if id == "LegionRemixResearch" then
+	if id == "CovenantRenown" then
+		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+				local color = E.OctoTable_Covenant[curCovID].color
+				colorCENT = color
+				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][1] then
+					textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][1].."|r"
+				end
+			end
+		end
+	elseif id == "CovenantAnima" then
+		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+				local color = E.OctoTable_Covenant[curCovID].color
+				colorCENT = color
+				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
+					textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
+				end
+			end
+		end
+
+	elseif id == "LegionRemixResearch" then
 		if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
 			local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
 			local barMax = CharInfo.MASLENGO.LegionRemixData.barMax
@@ -2104,7 +2138,7 @@ end
 function E.func_GetRealmName()
 	local result = GetRealmName()
 	if E.func_IsRemix() then
-		result = result .. " (REMIX)"
+		result = result .. " (Remix)"
 	end
 	return result
 end
@@ -2118,7 +2152,7 @@ E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\Ch
 E.TEXTURE_HIGHLIGHT_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
 E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
-E.HighlightTexture = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
+E.TEXTURE_HIGHLIGHT = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
@@ -2182,11 +2216,11 @@ E.IsTrialAccount = IsTrialAccount()
 E.IsVeteranTrialAccount = IsVeteranTrialAccount()
 E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
-E.regionID = GetCurrentRegion()
-E.regionName = GetCurrentRegionName()
+E.CURRENT_REGION_ID = GetCurrentRegion()
+E.CURRENT_REGION_NAME = GetCurrentRegionName()
 E.CurrentRegionName = E.func_GetCurrentRegionName()
-if E.regionName == "" then
-	E.regionName = "US"
+if E.CURRENT_REGION_NAME == "" then
+	E.CURRENT_REGION_NAME = "US"
 end
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
@@ -2196,26 +2230,11 @@ E.baseWowheadAzEsUrl = "%swowhead.com/azerite-essence/%s%s"
 E.baseWowheadTradingPostActivityUrl = "%swowhead.com/trading-post-activity/%s%s"
 E.baseArmoryUrl = "worldofwarcraft.blizzard.com/%s/character/%s/%s"
 E.baseRaiderIoUrl = "raider.io/characters/%s/%s/%s"
-E.curExpansionMaxLevel = 70
-E.scale = WorldFrame:GetWidth()/GetPhysicalScreenSize()/UIParent:GetScale()
-E.MonitorWidth, E.MonitorHeight = GetPhysicalScreenSize()
-E.Color_Quest_r = .3
-E.Color_Quest_g = .1
-E.Color_Quest_b = 0
-E.Color_Currency_r = 0
-E.Color_Currency_g = 0
-E.Color_Currency_b = .3
-E.Color_Crest_r = 0
-E.Color_Crest_g = .3
-E.Color_Crest_b = .3
-E.Color_Item_r = 0
-E.Color_Item_g = .3
-E.Color_Item_b = 0
-E.Color_Reputation_r = .3
-E.Color_Reputation_g = .3
-E.Color_Reputation_b = 0
-E.MainFrame_Position = -157
-E.AnimationDuration = .2
+E.PHYSICAL_SCREEN_WIDTH, E.PHYSICAL_SCREEN_HEIGHT = GetPhysicalScreenSize()
+
+
+E.POSITION_MAIN_FRAME = -157
+E.ANIMATION_DURATION = .2
 E.isElvUI = select(4, C_AddOns.GetAddOnInfo("ElvUI"))
 E.isRCLootCouncil = select(4, C_AddOns.GetAddOnInfo("RCLootCouncil"))
 E.isWeakAuras = select(4, C_AddOns.GetAddOnInfo("WeakAuras"))
@@ -2224,35 +2243,33 @@ E.isPlater = select(4, C_AddOns.GetAddOnInfo("Plater"))
 E.isOmniCD = select(4, C_AddOns.GetAddOnInfo("OmniCD"))
 E.isOmniCC = select(4, C_AddOns.GetAddOnInfo("OmniCC"))
 E.isParrot = select(4, C_AddOns.GetAddOnInfo("Parrot"))
-E.backgroundColorAOverlay = .2
-E.slider_scale = .8
-E.multiplier = 2 - E.slider_scale
-E.WorldofWarcraft_Color = "|cffD6AB7D"
-E.TheBurningCrusade_Color = "|cffE43E5A"
-E.WrathoftheLichKing_Color = "|cff3FC7EB"
-E.Cataclysm_Color = "|cffFF7C0A"
-E.MistsofPandaria_Color = "|cff00EF88"
-E.WarlordsofDraenor_Color = "|cffF48CBA"
-E.Legion_Color = "|cffAAD372"
+E.ALPHA_BACKGROUND = .2
+E.COLOR_WORLDOFWARCRAFT = "|cffD6AB7D"
+E.COLOR_THEBURNINGCRUSADE = "|cffE43E5A"
+E.COLOR_WRATHOFTHELICHKING = "|cff3FC7EB"
+E.COLOR_CATACLYSM = "|cffFF7C0A"
+E.COLOR_MISTSOFPANDARIA = "|cff00EF88"
+E.COLOR_WARLORDSOFDRAENOR = "|cffF48CBA"
+E.COLOR_LEGION = "|cffAAD372"
 E.BattleforAzeroth_Color = "|cffFFF468"
 E.Shadowlands_Color = "|cff9798FE"
 E.Dragonflight_Color = "|cff53B39F"
 E.TheWarWithin_Color = "|cff90CCDD"
 E.Midnight_Color = "|cff7B69FF"
 E.TheLastTitan_Color = "|cffF4C263"
-E.WOW_Poor_Color = "|cff9D9D9D"
-E.WOW_Common_Color = "|cffFFFFFF"
-E.WOW_Uncommon_Color = "|cff1EFF00"
-E.WOW_Rare_Color = "|cff0070DD"
-E.WOW_Epic_Color = "|cffA335EE"
-E.WOW_Legendary_Color = "|cffFF8000"
-E.WOW_Artifact_Color = "|cffD9CC80"
-E.WOW_Heirloom_Color = "|cff00CCFF"
-E.WOW_WoWToken_Color = "|cff00CCFF"
-E.Kyrian_Color = "|cff6FA8DC"
-E.Necrolord_Color = "|cff93C47D"
-E.NightFae_Color = "|cffB4A7D6"
-E.Venthyr_Color = "|cffEA9999"
+E.COLOR_WOW_POOR = "|cff9D9D9D"
+E.COLOR_WOW_COMMON = "|cffFFFFFF"
+E.COLOR_WOW_UNCOMMON = "|cff1EFF00"
+E.COLOR_WOW_RARE = "|cff0070DD"
+E.COLOR_WOW_EPIC = "|cffA335EE"
+E.COLOR_WOW_LEGENDARY = "|cffFF8000"
+E.COLOR_WOW_ARTIFACT = "|cffD9CC80"
+E.COLOR_WOW_HEIRLOOM = "|cff00CCFF"
+E.COLOR_WOW_TOKEN = "|cff00CCFF"
+E.COLOR_KYRIAN = "|cff6FA8DC"
+E.COLOR_NECROLORD = "|cff93C47D"
+E.COLOR_NIGHTFAE = "|cffB4A7D6"
+E.COLOR_VENTHYR = "|cffEA9999"
 E.Black_Color = "|cff000000"
 E.DarkGray_Color = "|cff252525"
 E.Gray_Color = "|cff757575"
@@ -2283,52 +2300,52 @@ E.Debug_Color = E.classColorHexCurrent
 E.Function_Color = "|cff87CDEB"
 E.curFaction = UnitFactionGroup("PLAYER")
 E.oppositeFaction = E.curFaction == "Alliance" and "Horde" or "Alliance"
-E.Icon_Alliance = 255140
-E.Icon_Horde = 255142
-E.Icon_Kyrian = 3641395
-E.Icon_Necrolord = 3641396
-E.Icon_NightFae = 3641394
-E.Icon_Venthyr = 3641397
+E.ICON_ALLIANCE = 255140
+E.ICON_HORDE = 255142
+E.ICON_KYRIAN = 3641395
+E.ICON_NECROLORD = 3752259 -- 3641396
+E.ICON_NIGHTFAE = 3752258 -- 3641394
+E.ICON_VENTHYR = 3257751 -- 3641397
 E.Icon_WorldBoss = 3528312
 E.Icon_Rares = 135903
 E.Icon_Money = 133784
-E.Horde_Color = "|cffC41E3A"
-E.Alliance_Color = "|cff0070DD"
-E.Neutral_Color = E.Class_Monk_Color
+E.COLOR_HORDE = "|cffC41E3A"
+E.COLOR_ALLIANCE = "|cff0070DD"
+E.COLOR_NEUTRAL = E.Class_Monk_Color
 if E.curFaction == "Horde" then
-	E.Icon_Faction = 2565244
-	E.Faction_Color = E.Horde_Color
+	E.ICON_FACTION = 2565244
+	E.COLOR_FACTION = E.COLOR_HORDE
 elseif E.curFaction == "Alliance" then
-	E.Icon_Faction = 2565243
-	E.Faction_Color = E.Alliance_Color
+	E.ICON_FACTION = 2565243
+	E.COLOR_FACTION = E.COLOR_ALLIANCE
 else
-	E.Icon_Faction = 775462
-	E.Faction_Color = E.Class_Monk_Color
+	E.ICON_FACTION = 775462
+	E.COLOR_FACTION = E.Class_Monk_Color
 end
-E.Kyrian_r_Color = 0.44
-E.Kyrian_g_Color = 0.66
-E.Kyrian_b_Color = 0.86
-E.Necrolord_r_Color = 0.58
-E.Necrolord_g_Color = 0.77
-E.Necrolord_b_Color = 0.49
-E.NightFae_r_Color = 0.56
-E.NightFae_g_Color = 0.49
-E.NightFae_b_Color = 0.76
-E.Venthyr_r_Color = 0.88
-E.Venthyr_g_Color = 0.40
-E.Venthyr_b_Color = 0.40
+E.COLOR_KYRIAN_R = 0.44
+E.COLOR_KYRIAN_G = 0.66
+E.COLOR_KYRIAN_B = 0.86
+E.COLOR_NECROLORD_R = 0.58
+E.COLOR_NECROLORD_G = 0.77
+E.COLOR_NECROLORD_B = 0.49
+E.COLOR_NIGHTFAE_R = 0.56
+E.COLOR_NIGHTFAE_G = 0.49
+E.COLOR_NIGHTFAE_B = 0.76
+E.COLOR_VENTHYR_R = 0.88
+E.COLOR_VENTHYR_G = 0.40
+E.COLOR_VENTHYR_B = 0.40
 E.RIFT = E.Purple_Color.." (RIFT)|r"
 E.DONE = E.Green_Color..DONE.."|r"
 E.NONE = E.Gray_Color..NONE.."|r"
 E.TRUE = E.Green_Color.."true|r"
 E.FALSE = E.Red_Color.."false|r"
 E.NIL = E.Red_Color.."nil|r"
-E.Icon_AccountWide = CreateAtlasMarkup("warbands-icon", 16, 16)
-E.Icon_AccountTransferable = CreateAtlasMarkup("warbands-icon", 16, 16)
-E.Icon_Warbands = E.Blue_Color.."(A)".."|r"
-E.Icon_QuestionMark = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
-E.Icon_Empty = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Util_Icons\\Icon_Empty"
-E.Icon_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
+E.ICON_ACCOUNT_WIDE = CreateAtlasMarkup("warbands-icon", 16, 16)
+E.ICON_ACCOUNT_TRANSFERABLE = CreateAtlasMarkup("warbands-icon", 16, 16)
+E.ICON_WARBANDS = E.Blue_Color.."(A)".."|r"
+E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
+E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Util_Icons\\ICON_EMPTY"
+E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
 E.OctoTable_Prefixes = {
 	"Русский",
 	"Deutsch",
@@ -2338,43 +2355,44 @@ E.OctoTable_Prefixes = {
 	"Italiano",
 	"Português Brasileiro",
 	"Korean",
-	"Chinese"
+	"Chinese",
 }
+
 E.OctoTable_Covenant = {
 	[1] = {
 		name = GetCovenantData(1).name,
-		icon = 3641395,
-		color = "|cff6FA8DC",
-		r = 0.44,
-		g = 0.66,
-		b = 0.86,
+		icon = E.ICON_KYRIAN,
+		color = E.COLOR_KYRIAN,
+		r = E.COLOR_KYRIAN_R,
+		g = E.COLOR_KYRIAN_G,
+		b = E.COLOR_KYRIAN_B,
 	},
 	[2] = {
 		name = GetCovenantData(2).name,
-		icon = 3641397,
-		color = "|cffEA9999",
-		r = 0.88,
-		g = 0.40,
-		b = 0.40,
+		icon = E.ICON_VENTHYR,
+		color = E.COLOR_VENTHYR,
+		r = E.COLOR_VENTHYR_R,
+		g = E.COLOR_VENTHYR_G,
+		b = E.COLOR_VENTHYR_B,
 	},
 	[3] = {
 		name = GetCovenantData(3).name,
-		icon = 3641394,
-		color = "|cffB4A7D6",
-		r = 0.56,
-		g = 0.49,
-		b = 0.76,
+		icon = E.ICON_NIGHTFAE,
+		color = E.COLOR_NIGHTFAE,
+		r = E.COLOR_NIGHTFAE_R,
+		g = E.COLOR_NIGHTFAE_G,
+		b = E.COLOR_NIGHTFAE_B,
 	},
 	[4] = {
 		name = GetCovenantData(4).name,
-		icon = 3641396,
-		color = "|cff93C47D",
-		r = 0.58,
-		g = 0.77,
-		b = 0.49,
+		icon = E.ICON_NECROLORD,
+		color = E.COLOR_NECROLORD,
+		r = E.COLOR_NECROLORD_R,
+		g = E.COLOR_NECROLORD_G,
+		b = E.COLOR_NECROLORD_B,
 	},
 }
-E.listMaxSize = 30
+E.LIST_MAX_SIZE = 30
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.."DebugInfo|r: "
 E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
 function E.func_pizda(mountID)
@@ -2642,11 +2660,116 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 -- UniversalQuests#
 -- Additionally#
 
+	-- if dataType == "Currencies" then
+	-- 	for currencyID, dataTBL in next,(E.OctoTable_ALL_Mounts) do
+	-- 		if id == currencyID then
+	-- 			for mountID, price in next,(dataTBL) do
+	-- 				local mountIconNumber = E.func_mountIcon(mountID)
+	-- 				local mountIcon = E.func_texturefromIcon(mountIconNumber)
+	-- 				local mountName = E.func_mountName(mountID)
+	-- 				local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+	-- 				local color = isCollected and E.White_Color or E.Red_Color
+	-- 				local mountLeftText = mountIcon ..color .. mountName .. "|r"
+	-- 				tooltip[#tooltip+1] = {mountLeftText, E.func_CompactNumberFormat(price)..E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))}
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
+
+	if id == "CovenantRenown" then
+	elseif id == "CovenantAnima" then
+
+		for covenant = 1, 4 do
+				tooltip[#tooltip+1] = {E.OctoTable_Covenant[covenant].name, CharInfo.MASLENGO.CovenantAndAnima[covenant][1] or 0}
+
+
+
+			-- if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+			-- 	local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			-- 	if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+			-- 		local color = E.OctoTable_Covenant[curCovID].color
+			-- 		colorCENT = color
+			-- 		if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
+			-- 			textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
+			-- 		end
+			-- 	end
+			-- end
+		end
+
+
+	elseif id == "LegionRemixResearch" then
+				for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
+					if CharInfo.MASLENGO.ListOfQuests[questID] then
+						tooltip[#tooltip+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
+					end
+				end
+	elseif dataType == "Currencies" then
+		for currencyID, dataTBL in pairs(E.OctoTable_ALL_Mounts) do
+			if id == tonumber(currencyID) then
+				-- Создаем таблицу для сортировки
+				local mounts = {}
+
+				for mountID, price in pairs(dataTBL) do
+					local mountIconNumber = E.func_mountIcon(mountID)
+					local mountIcon = E.func_texturefromIcon(mountIconNumber)
+					local mountName = E.func_mountName(mountID)
+					local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+					local color = isCollected and E.White_Color or E.Red_Color
+					local mountLeftText = mountIcon .. color .. mountName .. "|r"
+
+					table.insert(mounts, {
+						id = mountID,
+						price = price,
+						name = mountName,
+						leftText = mountLeftText,
+						collected = isCollected
+					})
+				end
+
+				-- Сортировка: собранные сверху, потом цена, потом имя
+				table.sort(mounts, function(a, b)
+					-- 1. Собранные маунты сверху
+					-- if a.collected ~= b.collected then
+					-- 	return b.collected
+					-- end
+
+					-- 2. По цене (дорогие сверху)
+					-- if a.price ~= b.price then
+					-- 	return a.price > b.price
+					-- end
+
+					-- 2. По имени
+					if a.name ~= b.name then
+						return a.name < b.name
+					end
+
+					-- 4. По id
+					return a.id < b.id
+				end)
+
+				-- Добавляем в tooltip
+				for _, mount in ipairs(mounts) do
+					tooltip[#tooltip + 1] = {
+						mount.leftText,
+						" ",
+						E.func_CompactNumberFormat(mount.price) ..
+						E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))
+					}
+				end
+			end
+		end
 
 
 
 
-	if dataType == "Currencies" and id == 824 then
+
+
+
+
+
+
+
+	elseif dataType == "Currencies" and id == 824 then
 		local GARRISON_RESOURCE_ID = 824
 		local RESOURCE_GENERATION_INTERVAL = 600 -- 10 minutes in seconds
 		local RESOURCES_PER_INTERVAL = 1
@@ -2673,9 +2796,18 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 		end
 		----------------------------------------------------------------
 
-
-
-
+	-- elseif dataType == "Currencies" and id == 1166 then
+	-- 	for i, v in ipairs(E.func_Mounts_1166()) do
+	-- 		local mountID = v.mountID
+	-- 		local source = v.source
+	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
+	-- 	end
+	-- elseif dataType == "Currencies" and id == 3252 then
+	-- 	for i, v in ipairs(E.func_Mounts_3252()) do
+	-- 		local mountID = v.mountID
+	-- 		local source = v.source
+	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
+	-- 	end
 
 	elseif settingsType == "BfA_mechagonItems" then
 		tooltip = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
@@ -2867,14 +2999,18 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 		-- textCENT = E.Gray_Color..DUNGEONS.."|r"
 		-- end
 		----------------------------------------------------------------
-	elseif settingsType:find(E.UNIVERSAL) then
+	-- elseif settingsType:find(E.UNIVERSAL) then
+	elseif dataType == "UniversalQuests" then
+
+
 		for _, data in next,(E.ALL_UniversalQuests) do
 			if not data.quests then
 				break -- Пропускаем записи без квестов
 			end
 			local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 			local showTooltip = data.showTooltip or false
-			if showTooltip and settingsType == questKey then
+			-- id eto questKey
+			if showTooltip and id == questKey then
 				-- Подсчет общего числа квестов
 				local totalQuest = 0
 				local forcedMaxQuest = data.forcedMaxQuest
@@ -3006,46 +3142,10 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 			end
 		end
 		----------------------------------------------------------------
-	elseif settingsType == "Timewalk_Mounts" then
-		tooltip[#tooltip+1] = {E.func_pizda(2473), E.func_ExpansionVivod(1)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(778), E.func_ExpansionVivod(2)} -- Eclipse Dragonhawk (TBC Timewalking)
-		tooltip[#tooltip+1] = {E.func_pizda(2225), E.func_ExpansionVivod(2)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(552), E.func_ExpansionVivod(3)}
-		tooltip[#tooltip+1] = {E.func_pizda(2317), E.func_ExpansionVivod(3)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(2473), E.func_ExpansionVivod(4)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(2474), E.func_ExpansionVivod(5)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(1242), E.func_ExpansionVivod(6)}
-		tooltip[#tooltip+1] = {E.func_pizda(1243), E.func_ExpansionVivod(6)}
-		tooltip[#tooltip+1] = {E.func_pizda(2470), E.func_ExpansionVivod(6)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(1521), E.func_ExpansionVivod(7)}
-		tooltip[#tooltip+1] = {E.func_pizda(2471), E.func_ExpansionVivod(7)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(781), E.func_ExpansionVivod(8)} -- Infinite Timereaver (Timewalking boss drop)
-		tooltip[#tooltip+1] = {E.func_pizda(2586), E.func_ExpansionVivod(8)}
-		tooltip[#tooltip+1] = {E.func_pizda(2587), E.func_ExpansionVivod(8)}
-		-- tooltip[#tooltip+1] = {nil}
-		tooltip[#tooltip+1] = {E.func_pizda(293), E.func_ExpansionVivod(11)}
-		tooltip[#tooltip+1] = {E.func_pizda(1798), E.func_ExpansionVivod(11)}
-		tooltip[#tooltip+1] = {E.func_pizda(2224), E.func_ExpansionVivod(11)}
-		tooltip[#tooltip+1] = {E.func_pizda(2321), "ALL"}
-		tooltip[#tooltip+1] = {E.func_pizda(1737), "ALL"}
 		----------------------------------------------------------------
 
 
 
-
-	elseif settingsType == "LegionRemixResearch" then
-		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
-			if CharInfo.MASLENGO.ListOfQuests[questID] then
-				tooltip[#tooltip+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
-			end
-		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		--elseif settingsType == "ЙЦУЙЦУ" then

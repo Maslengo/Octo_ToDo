@@ -11,6 +11,7 @@ local C_Container = _G.C_Container
 local C_Item = _G.C_Item
 local InCombatLockdown = _G.InCombatLockdown
 local UnitIsDead = _G.UnitIsDead
+local UnitHasVehicleUI = _G.UnitHasVehicleUI
 local select = _G.select
 local ipairs = _G.ipairs
 local table = _G.table
@@ -59,7 +60,8 @@ end
 function EventFrame:OpenableScan()
 	if E.func_SpamBlock("OpenableScan") then return end
 	if _G.MerchantFrame and _G.MerchantFrame:IsShown() then return end
-	if InCombatLockdown() or UnitIsDead("player") then
+	if InCombatLockdown() or UnitIsDead("PLAYER") or UnitHasVehicleUI("PLAYER") then
+		-- print ("PAUSE 1")
 		openableScanQueued = true
 		return
 	end
@@ -103,7 +105,8 @@ function EventFrame:OpenableScan()
 			end
 			return
 		end
-		if InCombatLockdown() or UnitIsDead("player") then
+		if InCombatLockdown() or UnitIsDead("PLAYER") or UnitHasVehicleUI("PLAYER") then
+			-- print ("PAUSE 2")
 			openableScanQueued = true
 			return
 		end

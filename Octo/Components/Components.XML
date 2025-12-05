@@ -13,6 +13,7 @@
 	<Script file="Components\12_WrathoftheLichKing.lua"/>
 	<Script file="Components\13_TheBurningCrusade.lua"/>
 	<Script file="Components\14_WorldofWarcraft.lua"/>
+	<Script file="Components\15_Mounts.lua"/>
 
 	<Script file="Components\97_PVP.lua"/>
 	<Script file="Components\98_Holidays.lua"/>

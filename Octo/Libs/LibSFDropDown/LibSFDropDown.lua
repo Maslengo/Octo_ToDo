@@ -40,7 +40,7 @@ end
 
 if oldminor < 12 then
 	lib._v.dropDownMenuButtonHeight = 20
-	lib._v.dropDownSearchListMaxSize = 20
+	lib._v.dropDownSearchLIST_MAX_SIZE = 20
 end
 
 if oldminor < 19 then
@@ -135,7 +135,7 @@ info.OnLoad = [function(customFrame)] -- Function called when the custom frame i
 info.search = [function(searchString, infoText, infoRightText, btnInfo, highlightColorCode, defaultFunc)] -- Optional custom search function, must return true/false, textHighlighted/nil, rightTextHighlighted/nil
 info.highlightColor = [nil, hex color] -- A color for highlighted found text, default ffd200
 info.hideSearch = [nil, true] -- Remove SearchBox if info.list displays as scroll menu
-info.listMaxSize = [number] -- Number of max size info.list, after a scroll frame is added
+info.LIST_MAX_SIZE = [number] -- Number of max size info.list, after a scroll frame is added
 info.list = [table] -- The table of info buttons, if there are more than 20 (default) buttons, a scroll frame is added. Available attributes in table "dropDownOptions".
 ]]
 v.dropDownOptions = {
@@ -1018,7 +1018,7 @@ function DropDownMenuSearchMixin:init(menu, info)
 	local menuButtonHeight = v.DROPDOWNBUTTON.ddMenuButtonHeight or v.dropDownMenuButtonHeight
 	self.view:SetElementExtent(menuButtonHeight)
 
-	local height = menuButtonHeight * (info.listMaxSize or v.dropDownSearchListMaxSize)
+	local height = menuButtonHeight * (info.LIST_MAX_SIZE or v.dropDownSearchLIST_MAX_SIZE)
 	self.scrollBox:SetHeight(height)
 
 	if info.hideSearch then
@@ -1732,7 +1732,7 @@ function DropDownButtonMixin:ddAddButton(info, level)
 	local menu = dropDownMenusList[level]
 
 	if info.list then
-		if #info.list > (info.listMaxSize or v.dropDownSearchListMaxSize) then
+		if #info.list > (info.LIST_MAX_SIZE or v.dropDownSearchLIST_MAX_SIZE) then
 			local searchFrame = GetDropDownSearchFrame()
 			local width, height = searchFrame:init(menu, info)
 

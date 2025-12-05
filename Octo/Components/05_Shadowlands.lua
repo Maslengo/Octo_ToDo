@@ -72,25 +72,25 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 			-- Maldraxxus
 			{nil, addText = {mapID = 1536},},
 			{61720, forcedText = {npcID = 157309}, addText = {mount = 1410},},
-			{58783, forcedText = {npcID = 162586}, addText = {mount = 1366, Icon = E.Icon_Necrolord},},
+			{58783, forcedText = {npcID = 162586}, addText = {mount = 1366, Icon = E.ICON_NECROLORD},},
 			{58851, forcedText = {npcID = 162690}, addText = {mount = 1373},},
-			{58872, forcedText = {npcID = 162741}, addText = {mount = 1411, Icon = E.Icon_Necrolord},},
+			{58872, forcedText = {npcID = 162741}, addText = {mount = 1411, Icon = E.ICON_NECROLORD},},
 			{58889, forcedText = {npcID = 162819}, addText = {mount = 1372},},
-			{58784, forcedText = {npcID = 168147}, addText = {mount = 1370, Icon = E.Icon_Necrolord},},
+			{58784, forcedText = {npcID = 168147}, addText = {mount = 1370, Icon = E.ICON_NECROLORD},},
 			{nil},
 			-- Ardenweald
 			{nil, addText = {mapID = 1565},},
 			{59145, forcedText = {npcID = 164107}, addText = {mount = 1362},},
 			{59157, forcedText = {npcID = 164112}, addText = {mount = 1415},},
 			{60306, forcedText = {npcID = 168135}, addText = {mount = 1306},},
-			{61632, forcedText = {npcID = 168647}, addText = {mount = 1393, Icon = E.Icon_NightFae},},
+			{61632, forcedText = {npcID = 168647}, addText = {mount = 1393, Icon = E.ICON_NIGHTFAE},},
 			{nil},
 			-- Revendreth
 			{nil, addText = {mapID = 1525},},
 			{58259, forcedText = {npcID = 160821}, addText = {mount = 1391},},
-			{59612, forcedText = {npcID = 165290}, addText = {mount = 1310, Icon = E.Icon_Venthyr},},
+			{59612, forcedText = {npcID = 165290}, addText = {mount = 1310, Icon = E.ICON_VENTHYR},},
 			{59869, forcedText = {npcID = 166521}, addText = {mount = 1379},},
-			{59900, forcedText = {npcID = 166679}, addText = {mount = 1298, Icon = E.Icon_Venthyr},},
+			{59900, forcedText = {npcID = 166679}, addText = {mount = 1298, Icon = E.ICON_VENTHYR},},
 			{62046, forcedText = {npcID = 173499}, addText = {mount = 1391},},
 			-- {62050, forcedText = {npcID = 173468}, addText = {mount = 1414},}, -- WEEKLY
 		},
@@ -119,16 +119,17 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	{
+		sorted = false,
 		showTooltip = true,
 		textleft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
 		name_save = "anima1k",
 		reset = "Weekly",
 		desc = dropdownOrder,
 		quests = {
-			{61982, addText = {Icon = E.Icon_Kyrian}},
-			{61983, addText = {Icon = E.Icon_Necrolord}},
-			{61984, addText = {Icon = E.Icon_NightFae}},
-			{61981, addText = {Icon = E.Icon_Venthyr}},
+			{61982, addText = {Icon = E.ICON_KYRIAN}},
+			{61983, addText = {Icon = E.ICON_NECROLORD}},
+			{61984, addText = {Icon = E.ICON_NIGHTFAE}},
+			{61981, addText = {Icon = E.ICON_VENTHYR}},
 		},
 		-- forcedMaxQuest = 4,
 	},
@@ -140,10 +141,10 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		reset = "Weekly",
 		desc = dropdownOrder,
 		quests = {
-			{60425, addText = {Icon = E.Icon_Kyrian}},
-			{60429, addText = {Icon = E.Icon_Necrolord}},
-			{60419, addText = {Icon = E.Icon_NightFae}},
-			{60432, addText = {Icon = E.Icon_Venthyr}},
+			{60425, addText = {Icon = E.ICON_KYRIAN}},
+			{60429, addText = {Icon = E.ICON_NECROLORD}},
+			{60419, addText = {Icon = E.ICON_NIGHTFAE}},
+			{60432, addText = {Icon = E.ICON_VENTHYR}},
 		},
 		-- forcedMaxQuest = 1,
 	},
@@ -155,10 +156,10 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		reset = "Weekly",
 		desc = dropdownOrder,
 		quests = {
-			{63824, addText = {Icon = E.Icon_Kyrian}},
-			{63543, addText = {Icon = E.Icon_Necrolord}},
-			{63823, addText = {Icon = E.Icon_NightFae}},
-			{63822, addText = {Icon = E.Icon_Venthyr}},
+			{63824, addText = {Icon = E.ICON_KYRIAN}},
+			{63543, addText = {Icon = E.ICON_NECROLORD}},
+			{63823, addText = {Icon = E.ICON_NIGHTFAE}},
+			{63822, addText = {Icon = E.ICON_VENTHYR}},
 		},
 		forcedMaxQuest = 1,
 	},
@@ -308,10 +309,10 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		reset = "Weekly",
 		desc = dropdownOrder,
 		quests = {
-			{64552, addText = {Icon = E.Icon_Kyrian},}, -- ker
-			{64551, addText = {Icon = E.Icon_Necrolord},}, -- necr
-			{64549, addText = {Icon = E.Icon_NightFae},}, -- fae
-			{64553, addText = {Icon = E.Icon_Venthyr},}, -- vent
+			{64552, addText = {Icon = E.ICON_KYRIAN},}, -- ker
+			{64551, addText = {Icon = E.ICON_NECROLORD},}, -- necr
+			{64549, addText = {Icon = E.ICON_NIGHTFAE},}, -- fae
+			{64553, addText = {Icon = E.ICON_VENTHYR},}, -- vent
 		},
 		forcedMaxQuest = 4,
 	},
@@ -334,10 +335,10 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 			{64285, forcedText = {npcID = 179913},},
 			{64291, forcedText = {npcID = 179931},},
 			-- {64292, forcedText = {npcID = 179912}, addText = {mount = 1511},}, -- ONCE
-			{64313, forcedText = {npcID = 179985}, addText = {mount = 803, Icon = E.Icon_Venthyr},}, -- VENTHYR
-			{64320, forcedText = {npcID = 180014}, addText = {mount = 1487, Icon = E.Icon_NightFae},}, -- NIGHT FAE
-			{64338, forcedText = {npcID = 180032}, addText = {mount = 1493, Icon = E.Icon_Kyrian},}, -- KYRIAN
-			{64349, forcedText = {npcID = 180042}, addText = {mount = 1449, Icon = E.Icon_Necrolord},}, -- NECROLORD
+			{64313, forcedText = {npcID = 179985}, addText = {mount = 803, Icon = E.ICON_VENTHYR},}, -- VENTHYR
+			{64320, forcedText = {npcID = 180014}, addText = {mount = 1487, Icon = E.ICON_NIGHTFAE},}, -- NIGHT FAE
+			{64338, forcedText = {npcID = 180032}, addText = {mount = 1493, Icon = E.ICON_KYRIAN},}, -- KYRIAN
+			{64349, forcedText = {npcID = 180042}, addText = {mount = 1449, Icon = E.ICON_NECROLORD},}, -- NECROLORD
 			{64428, forcedText = {npcID = 179108},},
 			{64439, forcedText = {npcID = 180246},},
 			{64440, forcedText = {npcID = 179914}, addText = {notes = E.RIFT}},
@@ -630,108 +631,131 @@ E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 		},
 		forcedMaxQuest = 1,
 	},
-	-- {
-	-- showTooltip = true,
-	-- textleft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
-	-- name_save = "ZMPUZZLECACHES",
-	-- reset = "Daily",
-	-- desc = dropdownOrder,
-	-- quests = {
-	-- {65094},
-	-- {65323},
-	-- {65318},
-	-- {65322},
-	-- {65317},
-	-- {65093},
-	-- {65321},
-	-- {65092},
-	-- {65316},
-	-- {65412},
-	-- {65315},
-	-- {65091},
-	-- {65320},
-	-- {64972},
-	-- {65314},
-	-- {65319},
-	-- },
-	-- forcedMaxQuest = 50,
-	-- },
-	-- {
-	-- showTooltip = true,
-	-- textleft = E.func_mapName(1970)..": ".."ZMConcordance",
-	-- name_save = "ZMConcordance",
-	-- reset = "Once",
-	-- desc = dropdownOrder,
-	-- quests = {
-	-- {65179},
-	-- {65213},
-	-- {65216},
-	-- {65210},
-	-- {65180},
-	-- {65214},
-	-- {65211},
-	-- {65217},
-	-- {64940},
-	-- {65212},
-	-- {65209},
-	-- {65215},
-	-- },
-	-- forcedMaxQuest = 12,
-	-- },
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- {
-	-- showTooltip = true,
-	-- textleft = E.func_questName(62858),
-	-- name_save = "ReturnLostSouls",
-	-- reset = "Weekly",
-	-- desc = dropdownOrder,
-	-- quests = {
-	-- 62858,
-	-- 62859,
-	-- 62860,
-	-- 62861,
-	-- 62862,
-	-- 62863,
-	-- 62864,
-	-- 62865,
-	-- 62866,
-	-- 62867,
-	-- 62868,
-	-- 62869,
-	-- },
-	-- forcedMaxQuest = 1,
-	-- },
-	-- {
-	-- showTooltip = true,
-	-- textleft = "TradingFavors",
-	-- name_save = "TradingFavors",
-	-- reset = "Weekly",
-	-- desc = dropdownOrder,
-	-- quests = {
-	-- 60242,
-	-- 60243,
-	-- 60244,
-	-- 60245,
-	-- 60246,
-	-- 60247,
-	-- 60248,
-	-- 60249,
-	-- 60250,
-	-- 60251,
-	-- 60252,
-	-- 60253,
-	-- 60254,
-	-- 60255,
-	-- 60256,
-	-- 60257,
-	-- },
-	-- forcedMaxQuest = 2,
-	-- },
+	{
+		sorted = false,
+		showTooltip = true,
+		textleft = E.func_mapName(1670)..": ".."Trading Favors",
+		name_save = "Trading Favors",
+		reset = "Weekly",
+		desc = dropdownOrder,
+		quests = {
+			{60242},
+			{60243},
+			{60244},
+			{60245},
+			{60246},
+			{60247},
+			{60248},
+			{60249},
+		},
+		forcedMaxQuest = 1,
+	},
+
+	{
+		sorted = false,
+		showTooltip = true,
+		textleft = E.func_mapName(1670)..": ".."A Valuable Find",
+		name_save = "A Valuable Find",
+		reset = "Weekly",
+		desc = dropdownOrder,
+		quests = {
+			{60250},
+			{60251},
+			{60252},
+			{60253},
+			{60254},
+			{60255},
+			{60256},
+			{60257},
+		},
+		forcedMaxQuest = 1,
+	},
+
+
+
+
+
+
+
+
+	{
+		showTooltip = true,
+		textleft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
+		name_save = "ZMPUZZLECACHES",
+		reset = "Daily",
+		desc = dropdownOrder,
+		quests = {
+			{65094},
+			{65323},
+			{65318},
+			{65322},
+			{65317},
+			{65093},
+			{65321},
+			{65092},
+			{65316},
+			{65412},
+			{65315},
+			{65091},
+			{65320},
+			{64972},
+			{65314},
+			{65319},
+		},
+		forcedMaxQuest = 50,
+	},
+	{
+		showTooltip = true,
+		textleft = E.func_mapName(1970)..": ".."ZMConcordance",
+		name_save = "ZMConcordance",
+		reset = "Once",
+		desc = dropdownOrder,
+		quests = {
+			{65179},
+			{65213},
+			{65216},
+			{65210},
+			{65180},
+			{65214},
+			{65211},
+			{65217},
+			{64940},
+			{65212},
+			{65209},
+			{65215},
+		},
+		forcedMaxQuest = 12,
+	},
+	--------------------------------------------------------------
+	--------------------------------------------------------------
+	--------------------------------------------------------------
+	{
+		showTooltip = false,
+		textleft = E.func_questName(62858),
+		name_save = "Return Lost Souls",
+		reset = "Weekly",
+		desc = dropdownOrder,
+		quests = {
+			{62858},
+			{62859},
+			{62860},
+			{62861},
+			{62862},
+			{62863},
+			{62864},
+			{62865},
+			{62866},
+			{62867},
+			{62868},
+			{62869},
+		},
+		forcedMaxQuest = 1,
+	},
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	"CovenantRenown",
+	"CovenantAnima",
 }
 ----------------------------------------------------------------
 local function localfunc2()

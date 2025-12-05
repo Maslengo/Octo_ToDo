@@ -28,8 +28,8 @@ E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 	1883, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
 	1828, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
 	1948, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
-	1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
 	1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
+	1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
 	2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
 	2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
 	2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
@@ -53,6 +53,28 @@ E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 }
 ----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+
+
+
+	-- {
+	-- 	sorted = false,
+	-- 	showTooltip = true,
+	-- 	textleft = "bounty_Legion_TEST",
+	-- 	name_save = "bounty_Legion_TEST",
+	-- 	reset = "Daily",
+	-- 	desc = dropdownOrder,
+	-- 	quests = {
+	-- 		{43179},
+	-- 		{42422},
+	-- 		{48639},
+	-- 	},
+	-- 	-- forcedMaxQuest = 1,
+	-- },
+
+
+
+
+
 	{
 		sorted = false,
 		showTooltip = true,
