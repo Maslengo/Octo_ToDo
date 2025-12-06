@@ -3045,14 +3045,6 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 						table_insert(questsToShow, questData)
 					end
 				end
-				-- Сортировка (если не отключена)
-				-- if data.sorted ~= false then
-				-- table_sort(questsToShow, function(a, b)
-				-- local nameA = a.forcedText and a.forcedText.npcID and E.func_npcName(a.forcedText.npcID) or E.func_questName(a[1]) or a.forcedText.text or ""
-				-- local nameB = b.forcedText and b.forcedText.npcID and E.func_npcName(b.forcedText.npcID) or E.func_questName(b[1]) or b.forcedText.text or ""
-				-- return nameA < nameB
-				-- end)
-				-- end
 				if data.sorted ~= false then
 					table_sort(questsToShow, function(a, b)
 							local function getName(entry)
@@ -3401,7 +3393,19 @@ function E.func_SpamBlock(key, needCheckCombat)
 	return false -- Всё нормально, можно выполнять
 end
 ----------------------------------------------------------------
+function E.func_LoadComponents(start)
+	for i, func in ipairs(E.Components) do
+		func(start)
+	end
+end
 ----------------------------------------------------------------
+function E.func_ResetOtrisovkaTables(dropdownOrder)
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {}
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {}
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {}
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {}
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {}
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

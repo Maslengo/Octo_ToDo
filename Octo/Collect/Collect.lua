@@ -49,7 +49,6 @@ local MyEventsTable = {
 	"CURRENCY_DISPLAY_UPDATE",
 	"CURRENCY_TRANSFER_LOG_UPDATE",
 	"ENCOUNTER_END",
-	"COVENANT_CALLINGS_UPDATED",
 	-- "GARRISON_BUILDING_ACTIVATED",
 	-- "GARRISON_BUILDING_ERROR",
 	-- "GARRISON_BUILDING_LIST_UPDATE",
@@ -99,11 +98,6 @@ local MyEventsTable = {
 	"UPDATE_PENDING_MAIL",
 	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
-	-- "QUEST_REMOVED",
-	-- "PLAYER_INSIDE_QUEST_BLOB_STATE_CHANGED",
-	-- "QUEST_WATCH_UPDATE",
-	-- "QUEST_ACCEPTED",
-	-- "QUEST_DATA_LOAD_RESULT",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -111,6 +105,7 @@ function EventFrame:PLAYER_LOGIN()
 		RequestTimePlayed()
 		RequestRaidInfo()
 		E.func_Collect_All()
+		E.Collect_All_Mounts()
 		E.func_Update("PLAYER_LOGIN")
 	end)
 end
@@ -292,32 +287,3 @@ function EventFrame:PLAYER_UPDATE_RESTING()
 	E.Collect_All_PlayerInfo()
 	E.func_Update("PLAYER_UPDATE_RESTING")
 end
--- function EventFrame:QUEST_REMOVED(...)
--- 	local questID = ...
--- 	local questName = E.func_questName(questID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
--- 	-- print ("QUEST_REMOVED", questID, E.func_questName(questID))
--- 	E.func_Update("QUEST_REMOVED")
--- end
--- function EventFrame:PLAYER_INSIDE_QUEST_BLOB_STATE_CHANGED(...)
--- 	local questID = ...
--- 	local questName = E.func_questName(questID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
--- 	-- print ("PLAYER_INSIDE_QUEST_BLOB_STATE_CHANGED", questID, E.func_questName(questID))
--- 	E.func_Update("PLAYER_INSIDE_QUEST_BLOB_STATE_CHANGED")
--- end
--- function EventFrame:QUEST_WATCH_UPDATE(...)
--- 	local questID = ...
--- 	local questName = E.func_questName(questID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
--- 	-- print ("QUEST_WATCH_UPDATE", questID, E.func_questName(questID))
--- 	E.func_Update("QUEST_WATCH_UPDATE")
--- end
--- function EventFrame:QUEST_ACCEPTED(...)
--- 	local questID = ...
--- 	local questName = E.func_questName(questID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
--- 	-- print ("QUEST_ACCEPTED", questID, E.func_questName(questID))
--- 	E.func_Update("QUEST_ACCEPTED")
--- end
--- function EventFrame:QUEST_DATA_LOAD_RESULT(...)
--- 	local questID = ...
--- 	local questName = E.func_questName(questID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
--- 	E.func_Update("QUEST_DATA_LOAD_RESULT")
--- end

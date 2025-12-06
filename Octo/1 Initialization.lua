@@ -57,3 +57,6 @@ E.Timers = {}
 E.newOTRISOVKA = {}
 E.newOTRISOVKA2 = {}
 E.OctoTable_ALL_Mounts = {}
+
+
+E.Components = {}

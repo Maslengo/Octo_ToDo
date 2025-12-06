@@ -7,27 +7,35 @@ E.OctoTables_DataOtrisovka[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
 E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (Remix)|r"
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
-	3292,3268,3252,
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
-	254267,
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+local function tempFunction(start)
+	E.func_ResetOtrisovkaTables(dropdownOrder)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+		3292,3268,3252,
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+		254267,
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
 
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
 
-}
-----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
-	"LegionRemixResearch",
-}
-----------------------------------------------------------------
+	}
+	----------------------------------------------------------------
+	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+		"LegionRemixResearch",
+	}
+	----------------------------------------------------------------
+end
+
+table.insert(E.Components, tempFunction)
+
+
 local function localfunc2()
 	local OctoTable_Otrisovka_textCENT = {}
 	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then

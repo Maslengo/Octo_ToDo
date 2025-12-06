@@ -13,6 +13,8 @@ function EventFrame:func_CreateDataCacheAtStart()
 	local tblQuests = {}
 	local tblItems = {}
 	-- local tblSpells = {}
+
+	E.func_LoadComponents(true)
 	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
 		-- for _, currencyID in ipairs(v.Currencies) do
 		-- local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
@@ -31,8 +33,8 @@ function EventFrame:func_CreateDataCacheAtStart()
 		local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
 	end
 	----------------------------------------------------------------
-	for _, id in ipairs(E.ALL_Reputations) do
-		local reputation = E.func_reputationName(id) -- "AllReputations"
+	for _, ID in ipairs(E.ALL_Reputations) do
+		local reputation = E.func_reputationName(ID) -- "AllReputations"
 	end
 	E.Collect_All_Reputations()
 	----------------------------------------------------------------
@@ -85,20 +87,20 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- promise:Then(function()
 	-- print ("THEN")
 	-- end)
-	promise:ThenForAllWithCached(function(promise, id, type)
+	promise:ThenForAllWithCached(function(promise, ID, type)
 			if type == "quest" then
-				local quest = E.func_questName(id) -- "AllQuests"
+				local quest = E.func_questName(ID) -- "AllQuests"
 			elseif type == "item" then
-				local item = E.func_itemName(id)
-				local qw = C_Item.GetItemQualityByID(id)
+				local item = E.func_itemName(ID)
+				local qw = C_Item.GetItemQualityByID(ID)
 			end
 			-- if Octo_MainFrame_ToDo:IsShown() then
 			-- E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
 			-- end
 	end)
-	-- promise:FailWithChecked(function(promise, id, type)
+	-- promise:FailWithChecked(function(promise, ID, type)
 	-- if type == "quest" then
-	-- print (id)
+	-- print (ID)
 	-- end
 	-- end)
 	----------------------------------------------------------------
@@ -402,8 +404,8 @@ function EventFrame:Octo_ToDo_DB_Levels()
 			end
 		end
 		-- Инициализируем данные репутации
-		for _, id in ipairs(E.ALL_Reputations) do
-			MASLENGO.Reputation[id] = MASLENGO.Reputation[id] or "0#0###"
+		for _, ID in ipairs(E.ALL_Reputations) do
+			MASLENGO.Reputation[ID] = MASLENGO.Reputation[ID] or "0#0###"
 		end
 		-- Инициализируем данные LFG инстансов
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
@@ -628,18 +630,6 @@ end
 
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_VisualUserSettings()
-	-- PlaterDB = {
-	-- ["profileKeys"] = {
-	-- ["Октоп - Broxigar"] = "OctoUI",
-	-- ["Октовр - Raszageth"] = "OctoUI",
-	-- },
-	-- ["profiles"] = {
-	-- ["OctoUI"] = {
-	-- ["extra_icon_use_blizzard_border_color"] = false,
-	-- ["aura_sort"] = true,
-	-- },
-	-- },
-	-- }
 
 	Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
 	Octo_ToDo_DB_VisualUserSettings.Items = Octo_ToDo_DB_VisualUserSettings.Items or {}
@@ -656,7 +646,7 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	wipe(E.ALL_UniversalQuests)
 	wipe(E.ALL_Additionally)
 
-
+	E.func_LoadComponents(true)
 	for dropdownOrder, value in next,(E.OctoTables_Vibor) do
 		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[dropdownOrder].Currencies)
 		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[dropdownOrder].Items)
@@ -664,8 +654,6 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests)
 		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[dropdownOrder].Additionally)
 	end
-
-
 	-- E.func_TableConcat(E.ALL_Currencies, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllCurrencies
 	E.func_TableConcat(E.ALL_Items, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllItems
 	for reputationID in next,(E.OctoTable_ReputationsDB) do
@@ -675,102 +663,69 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	-- E.func_TableConcat(E.ALL_UniversalQuests, E.ALL_Items)
 	-- E.func_TableConcat(E.ALL_Additionally, E.ALL_Items)
 	-- ----------------------------------------------------------------
-	for i, id in next,(E.ALL_Currencies) do
-		if type(id) == "number" or type(id) == "string" then
-			if Octo_ToDo_DB_VisualUserSettings.Currencies[id] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Currencies[id] = true
-			end
-		elseif type(id) == "table" then
-			for _, id_new in ipairs(id) do
-				if Octo_ToDo_DB_VisualUserSettings.Currencies[id_new] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Currencies[id_new] = true
+	for _, ID in next,(E.ALL_Currencies) do
+		if type(ID) == "table" then
+			for _, subID in ipairs(ID) do
+				if Octo_ToDo_DB_VisualUserSettings.Currencies[subID] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Currencies[subID] = true
 				end
+			end
+		else
+			if Octo_ToDo_DB_VisualUserSettings.Currencies[ID] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Currencies[ID] = true
 			end
 		end
 	end
 	----------------------------------------------------------------
-	for i, id in next,(E.ALL_Items) do
-		if type(id) == "number" or type(id) == "string" then
-			if Octo_ToDo_DB_VisualUserSettings.Items[id] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Items[id] = true
-			end
-		elseif type(id) == "table" then
-			for _, id_new in ipairs(id) do
-				if Octo_ToDo_DB_VisualUserSettings.Items[id_new] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Items[id_new] = true
+	for _, ID in next,(E.ALL_Items) do
+		if type(ID) == "table" then
+			for _, subID in ipairs(ID) do
+				if Octo_ToDo_DB_VisualUserSettings.Items[subID] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Items[subID] = true
 				end
+			end
+		else
+			if Octo_ToDo_DB_VisualUserSettings.Items[ID] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Items[ID] = true
 			end
 		end
 	end
 	----------------------------------------------------------------
-	for i, id in next,(E.ALL_Reputations) do
-		if type(id) == "number" or type(id) == "string" then
-			if Octo_ToDo_DB_VisualUserSettings.Reputations[id] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Reputations[id] = true
-			end
-		elseif type(id) == "table" then
-			for _, id_new in ipairs(id) do
-				if Octo_ToDo_DB_VisualUserSettings.Reputations[id_new] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Reputations[id_new] = true
+	for _, ID in next,(E.ALL_Reputations) do
+		if type(ID) == "table" then
+			for _, subID in ipairs(ID) do
+				if Octo_ToDo_DB_VisualUserSettings.Reputations[subID] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Reputations[subID] = true
 				end
+			end
+		else
+			if Octo_ToDo_DB_VisualUserSettings.Reputations[ID] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Reputations[ID] = true
 			end
 		end
 	end
 	----------------------------------------------------------------
-	for i, data in next,(E.ALL_UniversalQuests) do
+	for _, data in next,(E.ALL_UniversalQuests) do
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 		if Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] == nil then
 			Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] = true
 		end
 	end
 	----------------------------------------------------------------
-	for i, id in next,(E.ALL_Additionally) do
-		if type(id) == "number" or type(id) == "string" then
-			if Octo_ToDo_DB_VisualUserSettings.Additionally[id] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Additionally[id] = true
-			end
-		elseif type(id) == "table" then
-			for _, id_new in ipairs(id) do
-				if Octo_ToDo_DB_VisualUserSettings.Additionally[id_new] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Additionally[id_new] = true
+	for _, ID in next,(E.ALL_Additionally) do
+		if type(ID) == "table" then
+			for _, subID in ipairs(ID) do
+				if Octo_ToDo_DB_VisualUserSettings.Additionally[subID] == nil then
+					Octo_ToDo_DB_VisualUserSettings.Additionally[subID] = true
 				end
+			end
+		else
+			if Octo_ToDo_DB_VisualUserSettings.Additionally[ID] == nil then
+				Octo_ToDo_DB_VisualUserSettings.Additionally[ID] = true
 			end
 		end
 	end
 	----------------------------------------------------------------
-
-	-- Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
-	-- Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = false
-	-- local function createWTFinfo(id, dataType)
-	-- 	if not id or not dataType then return end
-	-- 	Octo_ToDo_DB_VisualUserSettings[dataType] = Octo_ToDo_DB_VisualUserSettings[dataType] or {}
-	-- 	if Octo_ToDo_DB_VisualUserSettings[dataType][id] == nil then
-	-- 		Octo_ToDo_DB_VisualUserSettings[dataType][id] = true
-	-- 	end
-	-- end
-
-
-	-- for dropdownOrder in next,(E.OctoTables_Vibor) do
-	-- 	for dataType, v in next,(E.OctoTables_DataOtrisovka[dropdownOrder]) do
-	-- 		for i, id in next,(E.OctoTables_DataOtrisovka[dropdownOrder][dataType]) do
-	-- 			local questKey
-	-- 			if dataType == "UniversalQuests" then
-	-- 				-- id это data для universal
-	-- 				questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
-	-- 			end
-
-	-- 			if dataType ~= "UniversalQuests" then
-	-- 				createWTFinfo(id)
-	-- 			else
-	-- 				createWTFinfo(questKey)
-	-- 			end
-
-	-- 		end
-	-- 	end
-	-- end
-
-
-
 end
 ----------------------------------------------------------------
 local MyEventsTable = {

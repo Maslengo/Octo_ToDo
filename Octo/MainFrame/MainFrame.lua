@@ -29,6 +29,8 @@ local charR, charG, charB = 1, 1, 1
 -- Локальные ссылки на часто используемые функции для оптимизации
 local math_min = math.min
 local math_max = math.max
+local UIFrameFadeIn = UIFrameFadeIn
+local UIFrameFadeOut = UIFrameFadeOut
 local func_OnAcquiredLEFT do
 	-- local function func_OnEnter(frame)
 	-- 	local frameData = frame:GetData()
@@ -432,13 +434,15 @@ function EventFrame:Octo_Create_MainFrame()
 	-- Обработчики перемещения фрейма
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+		        UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 				Octo_MainFrame_ToDo:StartMoving()
 			end
 	end)
 	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:SetAlpha(1)
+				-- Octo_MainFrame_ToDo:SetAlpha(1)
+				UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
 				Octo_MainFrame_ToDo:StopMovingOrSizing()
 				-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
 			end
@@ -537,15 +541,15 @@ local function calculateColumnWidthsRIGHT(node, totalLines)
 	return columnWidthsRIGHT
 end
 
-
-
-
-
-
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	-- EventFrame.COLUMN_SIZES_LEFT = EventFrame.COLUMN_SIZES_LEFT or {}
 	-- EventFrame.COLUMN_SIZES_RIGHT = EventFrame.COLUMN_SIZES_RIGHT or {}
+	for dropdownOrder in next,(E.OctoTables_Vibor) do
+		E.func_ResetOtrisovkaTables(dropdownOrder)
+	end
+	E.func_LoadComponents()
+	-- E.ebanieMounti(15)
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local COLUMN_SIZES_LEFT = {}
@@ -818,6 +822,8 @@ end
 local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
+	"PLAYER_STARTED_MOVING",
+	"PLAYER_STOPPED_MOVING",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -829,4 +835,17 @@ function EventFrame:PLAYER_LOGIN()
 end
 function EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_ToDo:Hide()
+end
+
+function EventFrame:PLAYER_STARTED_MOVING()
+    if Octo_MainFrame_ToDo:IsShown() then
+        -- local Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA = Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA
+        UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+    end
+end
+
+function EventFrame:PLAYER_STOPPED_MOVING()
+    if Octo_MainFrame_ToDo:IsShown() then
+        UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
+    end
 end

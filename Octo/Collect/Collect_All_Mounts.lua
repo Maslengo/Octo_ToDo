@@ -3,6 +3,8 @@ function E.Collect_All_Mounts()
 	if E.func_SpamBlock("Collect_All_Mounts") then return end
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
+
+
 	local GetMountIDs =  C_MountJournal.GetMountIDs
 	local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
@@ -33,4 +35,45 @@ function E.Collect_All_Mounts()
 			E.OctoTable_ALL_Mounts[3252][v.mountID] = v.price
 		end
 	end
+
+
+
+
+	local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
+
+	-- Создаем временную таблицу для хранения данных перед сортировкой
+	local tempTable = {}
+
+	-- Собираем данные
+	for currencyID, v in next, (E.OctoTable_ALL_Mounts) do
+		local info = GetCurrencyInfo(currencyID)
+		if info then
+			local quality = info.quality or 0
+			local name = info.name or ""
+			tinsert(tempTable, {
+					currencyID = tonumber(currencyID),
+					quality = quality,
+					name = name
+			})
+		end
+	end
+
+	-- Сортируем таблицу: сначала по quality (по убыванию), затем по name (по возрастанию)
+	table.sort(tempTable, function(a, b)
+			if a.quality ~= b.quality then
+				return a.quality > b.quality  -- Сначала сортируем по quality (высшее качество первым)
+			else
+				return a.name < b.name  -- При одинаковом quality сортируем по имени в алфавитном порядке
+			end
+	end)
+
+	function E.ebanieMounti(dropdownOrder)
+		-- Вставляем отсортированные данные
+		for _, data in ipairs(tempTable) do
+			tinsert(E.OctoTables_DataOtrisovka[dropdownOrder].Currencies, data.currencyID)
+		end
+	end
+
 end
+
+-- /run fpde(E.OctoTables_DataOtrisovka[15])
