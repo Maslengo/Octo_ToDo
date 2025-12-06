@@ -1,13 +1,6 @@
--- local GlobalAddonName, ns = ...
--- E = _G.OctoEngine
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
--- Создание главного фрейма для тестового интерфейса
-local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
-Octo_MainFrame_ToDo:Hide()
-E.func_InitFrame(Octo_MainFrame_ToDo)
--- Создание фрейма для заголовка левой колонки
-local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
+
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
 local INDENT_TEST = 4 -- Отступ для текста
@@ -31,26 +24,28 @@ local math_min = math.min
 local math_max = math.max
 local UIFrameFadeIn = UIFrameFadeIn
 local UIFrameFadeOut = UIFrameFadeOut
+
+
+
+
+-- Создание главного фрейма для тестового интерфейса
+local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
+Octo_MainFrame_ToDo:Hide()
+E.func_InitFrame(Octo_MainFrame_ToDo)
+-- Создаем отдельный фрейм для фона
+local Octo_MainFrame_ToDo_Background = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "BackdropTemplate")
+Octo_MainFrame_ToDo_Background:SetAllPoints()
+Octo_MainFrame_ToDo_Background:SetFrameLevel(Octo_MainFrame_ToDo:GetFrameLevel() - 1) -- Ниже основного фрейма
+Octo_MainFrame_ToDo_Background:SetBackdrop(E.menuBackdrop)
+Octo_MainFrame_ToDo_Background:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
+Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+-- Создание фрейма для заголовка левой колонки
+local HeaderFrameLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
+
+
+
+
 local func_OnAcquiredLEFT do
-	-- local function func_OnEnter(frame)
-	-- 	local frameData = frame:GetData()
-	-- 	-- Получение данных для тултипа
-	-- 	if frameData.myType then
-	-- 		local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
-	-- 	end
-	-- 	local tooltipOCTO = {}
-	-- 	if type(ID) == "table" then
-	-- 		-- Обработка нескольких ID
-	-- 		for _, tblID in ipairs(ID) do
-	-- 			E.func_TableConcat(tooltipOCTO, E.func_KeyTooltip_LEFT(typeQ, tblID, iANIMA, kCovenant))
-	-- 		end
-	-- 	else
-	-- 		-- Обработка одиночного ID
-	-- 		tooltipOCTO = E.func_KeyTooltip_LEFT(typeQ, ID, iANIMA, kCovenant)
-	-- 	end
-	-- 	frame.tooltip = tooltipOCTO
-	-- 	E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
-	-- end
 	-- Функция инициализации элементов левой колонки
 	function func_OnAcquiredLEFT(owner, frame, node, new)
 		if not new then return end
@@ -333,6 +328,7 @@ function EventFrame:Octo_Create_MainFrame()
 			RequestRaidInfo()
 			E.func_Collect_All()
 			EventFrame:CreateDataProvider()
+			E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "OnShow")
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
 	local NumPlayers = math_min(E.func_NumPlayers(), EventFrame.COLUMNS_MAX)
@@ -425,9 +421,10 @@ function EventFrame:Octo_Create_MainFrame()
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewCENT)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT)
 	-- Настройка фона и границы главного фрейма
-	Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
-	Octo_MainFrame_ToDo:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
-	Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+	Octo_MainFrame_ToDo:SetBackdrop(nil)
+	-- Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
+	-- Octo_MainFrame_ToDo:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
+	-- Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 	-- Настройка взаимодействия с фреймом
 	Octo_MainFrame_ToDo:EnableMouse(true)
 	Octo_MainFrame_ToDo:SetMovable(true)
@@ -435,14 +432,14 @@ function EventFrame:Octo_Create_MainFrame()
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
 				-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
-		        UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
 				Octo_MainFrame_ToDo:StartMoving()
 			end
 	end)
 	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
 				-- Octo_MainFrame_ToDo:SetAlpha(1)
-				UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
+				-- UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
 				Octo_MainFrame_ToDo:StopMovingOrSizing()
 				-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
 			end
@@ -581,8 +578,7 @@ function EventFrame:CreateDataProvider()
 		if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
 			-- Обрабатываем типы данных в нужном порядке
 			for _, dataType in ipairs(typeOrder_Constant) do
-			-- for dataType in next,(E.OctoTables_DataOtrisovka[dropdownOrder]) do
-
+				-- for dataType in next,(E.OctoTables_DataOtrisovka[dropdownOrder]) do
 				for i, id in next,(E.OctoTables_DataOtrisovka[dropdownOrder][dataType]) do
 					local questKey
 					if dataType == "UniversalQuests" then
@@ -609,7 +605,7 @@ function EventFrame:CreateDataProvider()
 						}
 						-- Заполнение данных для левой колонки (берется из первого персонажа)
 						if firstChar then
-							local textLEFT,	colorLEFT,	iconLEFT,	settingsType,	tooltipKey,	isReputation = E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, firstChar, dataType, id)
+							local textLEFT,    colorLEFT,    iconLEFT,    settingsType,    tooltipKey,    isReputation = E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, firstChar, dataType, id)
 							zxc.iconLEFT = iconLEFT
 							zxc.textLEFT = textLEFT or "NONE"
 							zxc.colorLEFT = colorLEFT or E.Blue_Color
@@ -620,7 +616,8 @@ function EventFrame:CreateDataProvider()
 						-- Заполнение данных для каждого персонажа
 						for CharIndex, CharInfo in ipairs(tbl) do
 							-- local _, _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
-							local textCENT,	colorCENT,	FIRSTrep,	SECONDrep = E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
+							local textCENT,    colorCENT,    FIRSTrep,    SECONDrep = E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
+
 							zxc.textCENT[CharIndex] = textCENT
 							zxc.colorCENT[CharIndex] = colorCENT
 							zxc.GUID[CharIndex] = CharInfo.PlayerData.GUID
@@ -837,15 +834,14 @@ function EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_ToDo:Hide()
 end
 
+
+
+
+-- Обновляем обработчики событий
 function EventFrame:PLAYER_STARTED_MOVING()
-    if Octo_MainFrame_ToDo:IsShown() then
-        -- local Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA = Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA
-        UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
-    end
+	E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "PLAYER_STARTED_MOVING")
 end
 
 function EventFrame:PLAYER_STOPPED_MOVING()
-    if Octo_MainFrame_ToDo:IsShown() then
-        UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
-    end
+	E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "PLAYER_STOPPED_MOVING")
 end

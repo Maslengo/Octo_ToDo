@@ -284,7 +284,11 @@
 		"GameTooltip_SetTitle",
 		"MinimalScrollBarStepperScriptsMixin",
 		"MinimalScrollBarThumbScriptsMixin",
-		"CONTRIBUTION_REWARD_TOOLTIP_TITLE"
+		"CONTRIBUTION_REWARD_TOOLTIP_TITLE",
+		"PROFESSIONS_TRACKER_HEADER_PROFESSION",
+		"PVP_OPTIONS",
+		"ALWAYS",
+		"AlertFrame"
 	],
 	"Lua.type.weakUnionCheck": true,
 	"lua.targetVersion": "5.1"

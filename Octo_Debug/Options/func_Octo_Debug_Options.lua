@@ -1,5 +1,6 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
 function E.func_Octo_Debug_Options(savedVars)
@@ -8,7 +9,7 @@ function E.func_Octo_Debug_Options(savedVars)
 		index = index + 1
 		return index
 	end
-	local Option_FUNC = {
+	local Options = {
 		type = "group",
 		childGroups = "tab",
 		name = E.func_AddonNameForOptionsFunc(GlobalAddonName), -- BINDING_HEADER_DEBUG
@@ -563,15 +564,15 @@ function E.func_Octo_Debug_Options(savedVars)
 		},
 	}
 	-- for index = 10, 16 do
-	-- Option_FUNC.args.editorFontSize.values[index] = index
+	-- Options.args.editorFontSize.values[index] = index
 	-- end
 	-- for index, v in ipairs({0, 2, 3, 4}) do
-	-- Option_FUNC.args.editorTabSpaces.values[index] = index
+	-- Options.args.editorTabSpaces.values[index] = index
 	-- end
 	-- local countET = 0
 	-- for name in next, (E.editorThemes) do
 	-- countET = countET + 1
-	-- Option_FUNC.args.editorTheme.values[countET] = name
+	-- Options.args.editorTheme.values[countET] = name
 	-- end
 	-------------------------------------------------
 	-------------------------------------------------
@@ -584,7 +585,7 @@ function E.func_Octo_Debug_Options(savedVars)
 				local order = GetOrder()
 				local str_key = tostring(key)
 				local path = parent_path.."."..str_key
-				Option_FUNC.args[str_key..order] = {
+				Options.args[str_key..order] = {
 					type = "execute",
 					name = (max_depth and current_depth == max_depth) and "|cffff0000"..str_key.."|r" -- Красный для последнего уровня
 					or "|cffFFF371"..str_key.."|r", -- Жёлтый для остальных
@@ -605,13 +606,13 @@ function E.func_Octo_Debug_Options(savedVars)
 	local function add_args(tbl, name, max_depth)
 		if tbl then
 			local header_order = GetOrder()
-			Option_FUNC.args[name..header_order] = {
+			Options.args[name..header_order] = {
 				type = "header",
 				name = "",
 				order = header_order,
 			}
 			local execute_order = GetOrder()
-			Option_FUNC.args[name..execute_order] = {
+			Options.args[name..execute_order] = {
 				type = "execute",
 				name = max_depth and "|cff00BFFF"..name.."|r" -- Голубой, если есть ограничение глубины
 				or "|cff4fff79"..name.."|r", -- Зеленый, если рекурсия без лимита
@@ -643,5 +644,5 @@ function E.func_Octo_Debug_Options(savedVars)
 	-------------------------------------------------
 	-------------------------------------------------
 	-------------------------------------------------
-	return Option_FUNC
+	return Options
 end

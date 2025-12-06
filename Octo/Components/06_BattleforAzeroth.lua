@@ -1,8 +1,12 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
+local enable = true
+if not enable then return end
+----------------------------------------------------------------
 local dropdownOrder = 6
 local expansionID = 8
+----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
@@ -269,116 +273,44 @@ local function tempFunction(start)
 			},
 			-- forcedMaxQuest = 25,
 		},
-		{
-			sorted = false,
-			showTooltip = true,
-			textleft = "Mechagon: "..E.func_questName(54088),
-			name_save = "TheMechagonianThreat",
-			reset = "Once",
-			desc = dropdownOrder,
-			quests = {
-				-- Только для Альянса
-				{54088, faction = "Alliance"},
-				{55040, faction = "Alliance"},
-				{54945, faction = "Alliance"},
-				{54087, faction = "Alliance"},
-				{54946, faction = "Alliance"},
-				{54947, faction = "Alliance"},
-				{54992, faction = "Alliance"},
-				{55645, faction = "Alliance"},
-				-- Только для Орды
-				{55646, faction = "Horde"},
-				{55647, faction = "Horde"},
-				{55648, faction = "Horde"},
-				{55630, faction = "Horde"},
-				{55632, faction = "Horde"},
-				{55649, faction = "Horde"},
-				{55650, faction = "Horde"},
-				{55651, faction = "Horde"},
-				{55652, faction = "Horde"},
-				{55685, faction = "Horde"},
-				-- Общие квесты
-				{55730},
-				{55731},
-				{55995},
-				{55734},
-				{55096},
-				{55736},
-				-- {55609}, -- Операция мехагон
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			textleft = "Mechagon: Dailies",
-			name_save = "MechagonDAILYQUESTS",
-			reset = "Daily",
-			desc = dropdownOrder,
-			quests = {
-				-- {56765, faction = "Horde",}, Ржавоболтский запрос: полосатый окунь
-				-- {56761, faction = "Alliance",},
-				-- {56362, faction = "Horde",}, Ржавоболтский запрос: морской лен
-				-- {55378},
-				-- {56747},
-				-- {56752},
-				-- {56361},
-				-- {56758},
-				-- {55074},
-				-- {55382},
-				-- {56749},
-				-- {55379},
-				-- {55381},
-				-- {55383},
-				-- {55380},
-				-- {56762},
-				-- {56759},
-				-- {56753},
-				-- {56750},
-				-- {56751},
-				-- {56363},
-				-- {56757},
-				-- {56364},
-				-- {56760},
-				-- {56754},
-				-- {56763},
-				-- {56755},
-				{56621},
-				{56184}, -- DOUBLE
-				{56405}, -- DOUBLE
-				{55658}, -- DOUBLE
-				{54090}, -- DOUBLE
-				{56334},
-				{56326},
-				{55528}, -- DOUBLE
-				{56355}, -- DOUBLE
-				{56306}, -- DOUBLE
-				{56301}, -- DOUBLE
-				-- {56328}, ONCE
-				{56419},
-				-- {55743}, -- надо ли?
-				{55213},
-				{56746},
-				{56532},
-				{56557},
-				{57327},
-				{56083},
-				{55994},
-				{56559},
-				{55880},
-				{56573},
-				{55849},
-				{56434},
-				{57326},
-				{56380},
-				{56327},
-				{56373},
-				{55695},
-				{56082},
-				{54082},
-				{55742},
-			},
-			forcedMaxQuest = 11, -- ПОФИКСИТь
-		},
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	textleft = "Mechagon: "..E.func_questName(54088),
+		-- 	name_save = "TheMechagonianThreat",
+		-- 	reset = "Once",
+		-- 	desc = dropdownOrder,
+		-- 	quests = {
+		-- 		-- Только для Альянса
+		-- 		{54088, faction = "Alliance"},
+		-- 		{55040, faction = "Alliance"},
+		-- 		{54945, faction = "Alliance"},
+		-- 		{54087, faction = "Alliance"},
+		-- 		{54946, faction = "Alliance"},
+		-- 		{54947, faction = "Alliance"},
+		-- 		{54992, faction = "Alliance"},
+		-- 		{55645, faction = "Alliance"},
+		-- 		-- Только для Орды
+		-- 		{55646, faction = "Horde"},
+		-- 		{55647, faction = "Horde"},
+		-- 		{55648, faction = "Horde"},
+		-- 		{55630, faction = "Horde"},
+		-- 		{55632, faction = "Horde"},
+		-- 		{55649, faction = "Horde"},
+		-- 		{55650, faction = "Horde"},
+		-- 		{55651, faction = "Horde"},
+		-- 		{55652, faction = "Horde"},
+		-- 		{55685, faction = "Horde"},
+		-- 		-- Общие квесты
+		-- 		{55730},
+		-- 		{55731},
+		-- 		{55995},
+		-- 		{55734},
+		-- 		{55096},
+		-- 		{55736},
+		-- 		-- {55609}, -- Операция мехагон
+		-- 	},
+		-- },
 		{
 			sorted = true,
 			showTooltip = true,
@@ -387,7 +319,9 @@ local function tempFunction(start)
 			reset = "Daily",
 			desc = dropdownOrder,
 			quests = {
-				{55512, forcedText = {npcID = 151934},}, -- RARE ELITE 154342 -- MOUNT
+
+
+				{55512, forcedText = {npcID = 151934}, addText = {mount = 1229},}, -- RARE ELITE 154342 -- MOUNT
 				{55539, forcedText = {npcID = 151308},},
 				{55857, forcedText = {npcID = 153200},},
 				{55537, forcedText = {npcID = 152001},},
@@ -412,7 +346,7 @@ local function tempFunction(start)
 				{55856, forcedText = {npcID = 152764},},
 				{55405, forcedText = {npcID = 151702},},
 				{55368, forcedText = {npcID = 150575},},
-				{55811, forcedText = {npcID = 152182},}, -- MOUNT
+				{55811, forcedText = {npcID = 152182}, addText = {mount = 1248},}, -- MOUNT
 				{56737, forcedText = {npcID = 155583},},
 				{55545, forcedText = {npcID = 150937},},
 				{55810, forcedText = {npcID = 153000},},
@@ -423,7 +357,7 @@ local function tempFunction(start)
 				{55364, forcedText = {npcID = 151623},}, -- 151625
 				{55538, forcedText = {npcID = 151940},},
 				{55546, forcedText = {npcID = 150394},}, -- 154968
-				{56298, forcedText = {npcID = 152290},}, -- MOUNT NEW???? https://wago.io/G7SoF6Zix
+				{56298, forcedText = {npcID = 152290}, addText = {mount = 1257},}, -- MOUNT NEW???? https://wago.io/G7SoF6Zix
 			},
 			-- forcedMaxQuest = 36+1,
 		},

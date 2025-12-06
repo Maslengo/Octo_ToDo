@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 function E.Collect_All_Quests()
+
 	if E.func_SpamBlock("Collect_All_Quests") then return end
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO

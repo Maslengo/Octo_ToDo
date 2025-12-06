@@ -4,6 +4,21 @@ local EventFrame = CreateFrame("FRAME")
 local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemplate")
 OctoTooltip:Hide()
 ----------------------------------------------------------------
+local OctoTooltip_Background = CreateFrame("FRAME", nil, OctoTooltip, "BackdropTemplate")
+OctoTooltip_Background:SetAllPoints()
+OctoTooltip_Background:SetFrameLevel(OctoTooltip:GetFrameLevel() - 1) -- Ниже основного фрейма
+OctoTooltip_Background:SetBackdrop(E.menuBackdrop)
+OctoTooltip_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
+OctoTooltip_Background:SetBackdropBorderColor(0, 0, 0, 1)
+
+local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
+local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
+
+
+
+
+
+
 local INDENT_TEST = 4
 local INDENT_SCROLL = 20
 local TOOLTIP_LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
@@ -14,35 +29,21 @@ if LINES_MAX > LINES_TOTAL then
 	LINES_MAX = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
-local function ResetScrollBar()
-	local scrollBar = OctoTooltip.ScrollBar
-	if scrollBar and scrollBar.Track and scrollBar.Track.Thumb then
-		-- scrollBar:Hide()
-		-- scrollBar.Back:Hide()
-		-- scrollBar.Forward:Hide()
-		-- scrollBar.Track:Hide()
-		-- scrollBar.Track.Thumb:Hide()
-		print ("ResetScrollBar")
-		-- scrollBar:SetButtonState("NORMAL") -- нет метода
-		scrollBar.Back:SetButtonState("NORMAL")
-		scrollBar.Forward:SetButtonState("NORMAL")
-		scrollBar.Track:SetButtonState("NORMAL")
-		scrollBar.Track.Thumb:SetButtonState("NORMAL")
-		if scrollBar.Back then
-			scrollBar.Back:SetButtonState("NORMAL")
-		end
-		if scrollBar.Forward then
-			scrollBar.Forward:SetButtonState("NORMAL")
-		end
-	end
-end
-local function func_OnHide(frame)
-	frame.highlightFrame:Hide()
-end
-local function func_OnShow(frame)
-	frame.highlightFrame:Show()
-end
+
+
+
+
+
+
+
+
 local func_OnAcquired do
+	local function func_OnHide(frame)
+		frame.highlightFrame:Hide()
+	end
+	local function func_OnShow(frame)
+		frame.highlightFrame:Show()
+	end
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
 			frame:SetPropagateMouseClicks(false)
@@ -187,7 +188,7 @@ local function TooltipOnShow()
 			scrollBar:Hide()
 		end
 	end
-	-- ResetScrollBar()
+	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "OnShow")
 end
 function EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetPropagateMouseClicks(false)
@@ -200,10 +201,14 @@ function EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetSize(1, TOOLTIP_LINE_HEIGHT*1)
 	OctoTooltip:SetClampedToScreen(true)
 	OctoTooltip:SetFrameStrata("TOOLTIP")
-	OctoTooltip:SetBackdrop(E.menuBackdrop)
-	OctoTooltip:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
-	-- OctoTooltip:SetBackdropBorderColor(classR, classG, classB, 1)
-	OctoTooltip:SetBackdropBorderColor(0, 0, 0, 1)
+	-- OctoTooltip:SetBackdrop(E.menuBackdrop)
+	-- OctoTooltip:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA) -- E.backgroundColorA
+	-- -- OctoTooltip:SetBackdropBorderColor(classR, classG, classB, 1)
+	-- OctoTooltip:SetBackdropBorderColor(0, 0, 0, 1)
+	OctoTooltip:SetBackdrop(nil)
+
+
+
 	OctoTooltip.ScrollBox = CreateFrame("FRAME", nil, OctoTooltip, "WowScrollBoxList")
 	OctoTooltip.ScrollBox:SetAllPoints()
 	OctoTooltip.ScrollBox:SetPropagateMouseClicks(false)
@@ -345,10 +350,29 @@ function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft) -- ПОФИКСИ
 end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
+	"PLAYER_REGEN_DISABLED",
+	"PLAYER_STARTED_MOVING",
+	"PLAYER_STOPPED_MOVING",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")
 	self.VARIABLES_LOADED = nil
 	self:Create_OctoTooltip()
+end
+
+
+
+
+function EventFrame:PLAYER_REGEN_DISABLED()
+	OctoTooltip:Hide()
+end
+
+-- Обновляем обработчики событий
+function EventFrame:PLAYER_STARTED_MOVING()
+	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "PLAYER_STARTED_MOVING")
+end
+
+function EventFrame:PLAYER_STOPPED_MOVING()
+	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "PLAYER_STOPPED_MOVING")
 end

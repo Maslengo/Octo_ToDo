@@ -22,11 +22,13 @@ if L then
 	L["Universal (k/M/B/T)"] = true
 	L["Localized format"] = true
 	L["Full with separators"] = true
+	L["Full"] = true
 	L["Number Format"] = true
 	L["Min. Level"] = true
 	L["Max. Level"] = true
 	L["Clamped To Screen"] = true
 	L["Alpha On Drag"] = true
+	L["Alpha On Move"] = true
 	L["Wrath of the Jailer"] = true
 	L["Removing duplicate: "] = true
 	L["Keeping current: "] = true
@@ -287,11 +289,13 @@ if L then
 	L["Universal (k/M/B/T)"] = "Универсальный (k/M/B/T)"
 	L["Localized format"] = "Локальный формат"
 	L["Full with separators"] = "Полный с разделителями"
+	L["Full"] = "Полный"
 	L["Number Format"] = "Формат чисел"
 	L["Min. Level"] = "Мин. уровень"
 	L["Max. Level"] = "Макс. уровень"
 	L["Clamped To Screen"] = "Закреплён на экране"
 	L["Alpha On Drag"] = "Альфа при перетаскивании"
+	L["Alpha On Move"] = "Альфа при передвижении"
 	L["Wrath of the Jailer"] = "Гнев Тюремщика"
 	L["Removing duplicate: "] = "Удаляем дубликат: "
 	L["Keeping current: "] = "Оставляем текущего: "

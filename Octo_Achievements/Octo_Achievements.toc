@@ -1,8 +1,8 @@
-## Interface: 110207, 110205
+## Interface: 120000, 110207
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - Achievements
 ## Author: Octo
 ## Version: v1.00(11.2.7)(18.07.2025)
-## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Achievements
+## IconTexture: Interface\AddOns\Octo\Media\IconTexture\Achievements.tga
 ## Dependencies: Octo
 ## SavedVariables: Octo_Achievements_DB
 WTF.lua

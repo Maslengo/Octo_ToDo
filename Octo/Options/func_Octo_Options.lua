@@ -24,7 +24,7 @@ function E.func_Octo_Options(savedVars)
 		index = index + 1
 		return index
 	end
-	local generalOptions = {
+	local Options = {
 		type = "group",
 		childGroups = "tree",
 		name = E.func_AddonNameForOptionsFunc(GlobalAddonName),
@@ -160,7 +160,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			Config_AlphaOnDrag = {
 				type = "range",
-				name = L["Alpha On Drag"],
+				name = L["Alpha On Move"], -- L["Alpha On Drag"],
 				desc = "",
 				min = 0.1,
 				max = 1,
@@ -456,15 +456,16 @@ function E.func_Octo_Options(savedVars)
 	}
 	-------------------------------------------------
 	for index, name in ipairs(E.OctoTable_Prefixes) do
-		generalOptions.args.Config_prefix.values[index] = name
+		Options.args.Config_prefix.values[index] = name
 	end
 	local table_numberFormatMode = {
 		L["Universal (k/M/B/T)"],
 		L["Localized format"],
 		L["Full with separators"],
+		L["Full"],
 	}
 	for index, name in ipairs(table_numberFormatMode) do
-		generalOptions.args.Config_numberFormatMode.values[index] = name
+		Options.args.Config_numberFormatMode.values[index] = name
 	end
 	local table_FontFlags = {
 		"", -- (пустая строка) стандартный шрифт с антиалиасингом.
@@ -475,8 +476,8 @@ function E.func_Octo_Options(savedVars)
 		"MONOCHROME, THICKOUTLINE", -- пиксельный шрифт с толстой обводкой.
 	}
 	for index, name in ipairs(table_FontFlags) do
-		generalOptions.args.Config_FontFlags.values[name] = name
+		Options.args.Config_FontFlags.values[name] = name
 	end
 	-------------------------------------------------
-	return generalOptions
+	return Options
 end

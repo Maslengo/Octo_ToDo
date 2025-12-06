@@ -1,8 +1,12 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
+local enable = true
+if not enable then return end
+----------------------------------------------------------------
 local dropdownOrder = 7
 local expansionID = 7
+----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
@@ -60,18 +64,18 @@ local function tempFunction(start)
 
 
 		-- {
-		--     sorted = false,
-		--     showTooltip = true,
-		--     textleft = "bounty_Legion_TEST",
-		--     name_save = "bounty_Legion_TEST",
-		--     reset = "Daily",
-		--     desc = dropdownOrder,
-		--     quests = {
-		--         {43179},
-		--         {42422},
-		--         {48639},
-		--     },
-		--     -- forcedMaxQuest = 1,
+		-- sorted = false,
+		-- showTooltip = true,
+		-- textleft = "bounty_Legion_TEST",
+		-- name_save = "bounty_Legion_TEST",
+		-- reset = "Daily",
+		-- desc = dropdownOrder,
+		-- quests = {
+		-- {43179},
+		-- {42422},
+		-- {48639},
+		-- },
+		-- -- forcedMaxQuest = 1,
 		-- },
 
 

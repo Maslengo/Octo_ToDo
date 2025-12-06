@@ -71,7 +71,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 2274, -- (2817 REMIX)
 	},
 	{
-		color = E.BattleforAzeroth_Color, --E.func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b)
+		color = E.COLOR_BATTLEFORAZEROTH, --E.func_rgb2hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b)
 		name = "Battle for Azeroth",
 		nameBlizzard = EXPANSION_NAME7, -- UNUSED
 		nameVeryShort = "BfA",
@@ -81,7 +81,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 2874,
 	},
 	{
-		color = E.Shadowlands_Color, --E.func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b)
+		color = E.COLOR_SHADOWLANDS, --E.func_rgb2hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b)
 		name = "Shadowlands",
 		nameBlizzard = EXPANSION_NAME8, -- UNUSED
 		nameVeryShort = "SL",
@@ -91,7 +91,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	},
 	{
-		color = E.Dragonflight_Color, --E.func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b)
+		color = E.COLOR_DRAGONFLIGHT, --E.func_rgb2hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b)
 		name = "Dragonflight",
 		nameBlizzard = EXPANSION_NAME9, -- UNUSED
 		nameVeryShort = "DF",
@@ -101,7 +101,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	},
 	{
-		color = E.TheWarWithin_Color, --E.func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b)
+		color = E.COLOR_THEWARWITHIN, --E.func_rgb2hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b)
 		name = "The War Within",
 		nameBlizzard = EXPANSION_NAME10, -- UNUSED
 		nameVeryShort = "TWW",
@@ -111,7 +111,7 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 2634,
 	},
 	{
-		color = E.Midnight_Color, --E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
+		color = E.COLOR_MIDNIGHT, --E.func_rgb2hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
 		name = "Midnight",
 		nameBlizzard = EXPANSION_NAME11, -- UNUSED
 		nameVeryShort = "MN",
@@ -120,7 +120,7 @@ E.OctoTable_Expansions = {
 		timewalkDungeonID = 2634,
 	},
 	{
-		color = E.TheLastTitan_Color, --E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
+		color = E.COLOR_THELASTTITAN, --E.func_rgb2hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
 		name = "The Last Titan",
 		nameBlizzard = EXPANSION_NAME12, -- UNUSED
 		nameVeryShort = "TLT",

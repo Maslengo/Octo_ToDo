@@ -1,7 +1,12 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
+local enable = true
+if not enable then return end
+----------------------------------------------------------------
 local dropdownOrder = 98
+-- local expansionID =
+----------------------------------------------------------------
 E.OctoTables_DataOtrisovka[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder] = {}
 E.OctoTables_Vibor[dropdownOrder].icon = E.ICON_EMPTY

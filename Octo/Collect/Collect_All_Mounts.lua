@@ -5,15 +5,18 @@ function E.Collect_All_Mounts()
 	if not collectPlayerData then return end
 
 
-	local GetMountIDs =  C_MountJournal.GetMountIDs
+	local GetMountIDs = C_MountJournal.GetMountIDs
 	local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
 	for _, mountID in ipairs(GetMountIDs()) do
 		local _, _, source = GetMountInfoExtraByID(mountID)
+		-- if mountID == 635 then
+		-- 	fpde(source)
+		-- end
 		local currencyLink = source:match("(|Hcurrency:%d+|h|T[^|]+|t|h)")
 		-- local price = source:match("Цена: |r(%d+)")
 		-- local currencyID = source:match("Hcurrency:(%d+)")
-		local price, currencyID = source:match("([%d %.]+)|Hcurrency:(%d+)")
+		local price, currencyID = source:match("([%d %.,]+)|Hcurrency:(%d+)")
 		if price and currencyID then
 			if type(price) == "string" then
 				price = price:gsub("[%s%.]", "")
@@ -61,9 +64,9 @@ function E.Collect_All_Mounts()
 	-- Сортируем таблицу: сначала по quality (по убыванию), затем по name (по возрастанию)
 	table.sort(tempTable, function(a, b)
 			if a.quality ~= b.quality then
-				return a.quality > b.quality  -- Сначала сортируем по quality (высшее качество первым)
+				return a.quality > b.quality -- Сначала сортируем по quality (высшее качество первым)
 			else
-				return a.name < b.name  -- При одинаковом quality сортируем по имени в алфавитном порядке
+				return a.name < b.name -- При одинаковом quality сортируем по имени в алфавитном порядке
 			end
 	end)
 

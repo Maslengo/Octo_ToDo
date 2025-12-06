@@ -98,6 +98,7 @@ local MyEventsTable = {
 	"UPDATE_PENDING_MAIL",
 	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
+	"QUEST_DATA_LOAD_RESULT",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -286,4 +287,9 @@ end
 function EventFrame:PLAYER_UPDATE_RESTING()
 	E.Collect_All_PlayerInfo()
 	E.func_Update("PLAYER_UPDATE_RESTING")
+end
+
+function EventFrame:QUEST_DATA_LOAD_RESULT(...)
+	local questID = ...
+	E.func_questName(questID)
 end

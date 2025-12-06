@@ -10,7 +10,7 @@ function E.func_Octo_QuestsChanged_Options(savedVars)
 		index = index + 1
 		return index
 	end
-	local QuestsChanged = {
+	local Options = {
 		type = "group",
 		childGroups = "tab",
 		name = E.func_AddonNameForOptionsFunc(GlobalAddonName), -- BINDING_HEADER_DEBUG
@@ -56,5 +56,5 @@ function E.func_Octo_QuestsChanged_Options(savedVars)
 	-------------------------------------------------
 	-------------------------------------------------
 	-------------------------------------------------
-	return QuestsChanged
+	return Options
 end

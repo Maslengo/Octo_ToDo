@@ -760,4 +760,5 @@ function EventFrame:PLAYER_LOGIN()
 	if GameMenuFrame and Octo_ToDo_DB_Vars.Config_GameMenuFrame then
 		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.Config_GameMenuFrame)
 	end
+	E.Cache_All_EventNames_Year()
 end

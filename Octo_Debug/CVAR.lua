@@ -157,7 +157,7 @@ function E.func_LoadCVars()
 	}
 	-- Register and set all CVars
 	C_CVar.RegisterCVar("addonProfilerEnabled", 0)
-	for cvar, value in next, (cvars) do
+	for cvar, value in next,(cvars) do
 		C_CVar.SetCVar(cvar, value)
 	end
 	-- print (C_Container.GetSortBagsRightToLeft())

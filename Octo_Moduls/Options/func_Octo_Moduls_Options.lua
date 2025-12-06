@@ -1,6 +1,5 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
-local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
@@ -10,7 +9,7 @@ function E.func_Octo_Moduls_Options(savedVars)
 		index = index + 1
 		return index
 	end
-	local Moduls = {
+	local Options = {
 		type = "group",
 		childGroups = "tab",
 		name = E.func_AddonNameForOptionsFunc(GlobalAddonName), -- BINDING_HEADER_DEBUG
@@ -782,5 +781,5 @@ function E.func_Octo_Moduls_Options(savedVars)
 	-------------------------------------------------
 	-------------------------------------------------
 	-------------------------------------------------
-	return Moduls
+	return Options
 end

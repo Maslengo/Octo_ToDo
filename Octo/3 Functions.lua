@@ -26,7 +26,7 @@ local UnitFactionGroup = UnitFactionGroup
 local UnitFullName = UnitFullName
 local UnitGUID = UnitGUID
 local UnitSex = UnitSex
-local GetClassColor = GetClassColor
+local GetClassColor = GetClassColor or C_ClassColor.GetClassColor
 local GetRealmName = GetRealmName
 local GetCurrentRegion = GetCurrentRegion
 local GetCurrentRegionName = GetCurrentRegionName
@@ -111,7 +111,6 @@ local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
 local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
 local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
 local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
-local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
 -- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
 local GetMountIDs = C_MountJournal.GetMountIDs
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
@@ -132,8 +131,11 @@ function E.func_IsTWW() return E.interfaceVersion > 110000 and E.interfaceVersio
 function E.func_IsMidnight() return E.interfaceVersion > 120000 and E.interfaceVersion < 130000 end
 function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersion < 140000 end
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
-function E.func_IsPTR() return GetCurrentRegion() >= 72 end
-function E.func_IsRemix() return GetPlayerAuraBySpellID(1213439) end -- PlayerIsTimerunning()
+function E.func_IsPTR() return GetCurrentRegion() >= 72 end -- 90 BETA midnight
+function E.func_IsRemix()
+	return PlayerIsTimerunning()
+	-- return GetPlayerAuraBySpellID(1213439)
+end
 function E.func_vignetteIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
@@ -383,7 +385,9 @@ function E.func_reputationName(id)
 	return sideIcon..func_reputationName_CACHE(id)..E.debugInfo(id)
 end
 function E.func_reputaionIcon(id)
-	return E.OctoTable_ReputationsDB[id].icon
+	if E.OctoTable_ReputationsDB[id] then
+		return E.OctoTable_ReputationsDB[id].icon
+	end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -494,6 +498,9 @@ local function func_mapName_CACHE(id)
 end
 function E.func_mapName(id)
 	if not id then return end
+	-- if C_Map.GetBestMapForUnit("player") == id then
+	-- 	return E.COLOR_NECROLORD..">>"..func_mapName_CACHE(id).."<<|r"
+	-- end
 	local cachedName = func_mapName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
@@ -539,9 +546,6 @@ function E.Cache_All_EventNames_Year()
 			end
 		end
 	end
-end
-do
-	C_Timer.After(1, E.Cache_All_EventNames_Year)
 end
 local function func_EventName_CACHE(id)
 	-- E.Cache_All_EventNames_Year()
@@ -633,10 +637,10 @@ function E.func_getMapFullNameInfo(mapID)
 	return mapInfo
 end
 function E.func_GetCurrentLocation()
-	local curRealZone = GetRealZoneText()
+	local curRealZone = GetRealZoneText() -- C_Map.GetBestMapForUnit("player") ПОФИКСИТЬ (УСТАРЕЛО?)
 	local curSubZone = GetSubZoneText()
-	local FIRSTtext = curRealZone ~= "" and curRealZone or GetZoneText()
-	local SECONDtext = curSubZone ~= "" and curSubZone or GetMinimapZoneText()
+	local FIRSTtext = curRealZone ~= "" and curRealZone or GetZoneText() -- C_Map.GetMapInfo() ПОФИКСИТЬ (УСТАРЕЛО?)
+	local SECONDtext = curSubZone ~= "" and curSubZone or GetMinimapZoneText() -- C_Map.GetMapInfo() ПОФИКСИТЬ (УСТАРЕЛО?)
 	local uiMapID = MapUtil.GetDisplayableMapForPlayer()
 	if uiMapID ~= 0 then
 		local mapInfo = E.func_getMapFullNameInfo(uiMapID)
@@ -799,6 +803,9 @@ local function FormatWithSeparators(num)
 end
 function E.func_CompactNumberFormat(num)
 	num = num or 0
+	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 4 then
+		return num
+	end
 	-- Полный формат с разделителями
 	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 3 then
 		return FormatWithSeparators(math_floor(num + 0.5))
@@ -1269,7 +1276,7 @@ function E.func_fixdate(date)
 end
 function E.func_IsAvailable(id, curType)
 	if id and curType then
-		if curType == "spell" and IsSpellKnown(id) then
+		if curType == "spell" and IsSpellKnown(id) then -- ПОФИКСИТЬ (Устаревшие API в Retail 11.2.7 C_Spell.IsSpellKnown(id))
 			return true
 		elseif curType == "item" and GetItemCount(id, false, false, false) > 0 then
 			return true
@@ -1500,10 +1507,6 @@ function E.func_FactionIconID(faction)
 		return 775462
 	end
 end
-
-
-
-
 function E.func_ShouldShow(id, qwe)
 	local shouldShow = false
 	if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled then
@@ -1525,48 +1528,34 @@ function E.func_ShouldShow(id, qwe)
 	end
 	return shouldShow
 end
-
-
-
-
 function E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
 	local funcNames = {
 		"func_Otrisovka_LEFT_" .. dataType,
 	}
-
 	for _, funcName in ipairs(funcNames) do
 		if E[funcName] --[[and dataType ~= "UniversalQuests"]] then
 			return E[funcName](dropdownOrder, CharInfo, dataType, id)
 		end
 	end
-
 	-- Если функция не найдена, возвращаем значения по умолчанию
-	-- 		textLEFT,	colorLEFT,	iconLEFT,	settingsType,	tooltipKey,	isReputation
-	return	"",			nil,		nil,		nil,			nil,		false
+	--         textLEFT,    colorLEFT,    iconLEFT,    settingsType,    tooltipKey,    isReputation
+	return    "",            nil,        nil,        nil,            nil,        false
 end
-
-
-
 function E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
 	local funcNames = {
 		"func_Otrisovka_RIGHT_" .. dataType,
 	}
-
 	for _, funcName in ipairs(funcNames) do
 		if E[funcName] --[[and dataType ~= "UniversalQuests"]] then
 			return E[funcName](dropdownOrder, CharInfo, dataType, id)
 		end
 	end
-
 	-- Если функция не найдена, возвращаем значения по умолчанию
-	-- 		textCENT,	colorCENT,	FIRSTrep,	SECONDrep
-	return	"",			nil,		nil,		nil
+	--         textCENT,    colorCENT,    FIRSTrep,    SECONDrep
+	return    "",            nil,        nil,        nil
 end
-
-
-
 function E.func_Otrisovka_LEFT_Currencies(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
@@ -1579,14 +1568,12 @@ function E.func_Otrisovka_LEFT_Currencies(dropdownOrder, CharInfo, dataType, id)
 	-- tooltipKey =
 	if id == 824 then
 		tooltipKey = "WoD_824"
-
 	end
 	-- isReputation =
 	----------------------------------------------------------------
 	return textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation
-	----------------------------------------------------------------
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-
 function E.func_Otrisovka_RIGHT_Currencies(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
@@ -1617,12 +1604,8 @@ function E.func_Otrisovka_RIGHT_Currencies(dropdownOrder, CharInfo, dataType, id
 	end
 	----------------------------------------------------------------
 	return textCENT, colorCENT, FIRSTrep, SECONDrep
-	----------------------------------------------------------------
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-
-
-
-
 function E.func_Otrisovka_LEFT_Items(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
@@ -1636,7 +1619,7 @@ function E.func_Otrisovka_LEFT_Items(dropdownOrder, CharInfo, dataType, id)
 	-- isReputation =
 	----------------------------------------------------------------
 	return textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation
-	----------------------------------------------------------------
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_RIGHT_Items(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
@@ -1647,14 +1630,8 @@ function E.func_Otrisovka_RIGHT_Items(dropdownOrder, CharInfo, dataType, id)
 	textCENT = E.func_textCENT_Items(CharInfo, id)
 	----------------------------------------------------------------
 	return textCENT, colorCENT, FIRSTrep, SECONDrep
-	----------------------------------------------------------------
-
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-
-
-
-
-
 function E.func_Otrisovka_LEFT_UniversalQuests(dropdownOrder, CharInfo, dataType, data)
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
@@ -1670,9 +1647,8 @@ function E.func_Otrisovka_LEFT_UniversalQuests(dropdownOrder, CharInfo, dataType
 	-- isReputation =
 	----------------------------------------------------------------
 	return textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation
-	----------------------------------------------------------------
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-
 -- function E.func_Otrisovka_RIGHT_UniversalQuests(tbl, DESCRIPT)
 function E.func_Otrisovka_RIGHT_UniversalQuests(dropdownOrder, CharInfo, dataType, data)
 	----------------------------------------------------------------
@@ -1681,8 +1657,7 @@ function E.func_Otrisovka_RIGHT_UniversalQuests(dropdownOrder, CharInfo, dataTyp
 		local textCENT, colorCENT, FIRSTrep, SECONDrep = "", nil, nil, nil
 		----------------------------------------------------------------
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-	----------------------------------------------------------------
-
+		----------------------------------------------------------------
 		local showTooltip = data.showTooltip or false
 		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] then
 			local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].textCENT
@@ -1717,16 +1692,9 @@ function E.func_Otrisovka_RIGHT_UniversalQuests(dropdownOrder, CharInfo, dataTyp
 		----------------------------------------------------------------
 		return textCENT, colorCENT, FIRSTrep, SECONDrep
 		----------------------------------------------------------------
-	end
+	end -- func_Otrisovka_LEFT_Dispatcher
 end
-
-
-
-
-
-
-
-function E.func_Otrisovka_LEFT_Reputations(dropdownOrder, CharInfo, dataType, id)
+function E.func_Otrisovka_LEFT_Reputations(dropdownOrder, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
 	local textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation = "", nil, nil, nil, nil, false
@@ -1740,24 +1708,37 @@ function E.func_Otrisovka_LEFT_Reputations(dropdownOrder, CharInfo, dataType, id
 	----------------------------------------------------------------
 	return textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation
 	----------------------------------------------------------------
-
 end
-
-
-function E.func_Otrisovka_RIGHT_Reputations(dropdownOrder, CharInfo, dataType, id)
+function E.func_Otrisovka_RIGHT_Reputations(dropdownOrder, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
 	local textCENT, colorCENT, FIRSTrep, SECONDrep = "", nil, nil, nil
 	----------------------------------------------------------------
-	textCENT = E.func_textCENT_Reputation(CharInfo, id)
+	if CharInfo.MASLENGO.Reputation[id] and type(CharInfo.MASLENGO.Reputation[id]) == "string" then
+		local FIRST, SECOND, vivod, colorC, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
+		FIRSTrep = tonumber(FIRST)
+		SECONDrep = tonumber(SECOND)
+		colorCENT = colorC
 
-	local FIRSTrep, SECONDrep, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
+		local isParagonRewardEnableLEFT = ""
+		local isParagonRewardEnableRIGHT = ""
+		textCENT = E.func_CompactNumberFormat(FIRSTrep).."/"..E.func_CompactNumberFormat(SECONDrep)
+		if textCENT == "1/1" then
+			textCENT = E.DONE
+		elseif textCENT == "0/0" then
+			textCENT = ""
+		end
+		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+				textCENT = E.Purple_Color.."> "..textCENT.." <".."|r"
+			end
+		end
+		-- print (id, textCENT, colorCENT, FIRSTrep, SECONDrep)
+	end
 	----------------------------------------------------------------
 	return textCENT, colorCENT, FIRSTrep, SECONDrep
 	----------------------------------------------------------------
 end
-
-
 function E.func_Otrisovka_LEFT_Additionally(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
@@ -1767,7 +1748,6 @@ function E.func_Otrisovka_LEFT_Additionally(dropdownOrder, CharInfo, dataType, i
 		textLEFT = "CovenantRenown"
 	elseif id == "CovenantAnima" then
 		textLEFT = "CovenantAnima"
-
 	elseif id == "LegionRemixResearch" then
 		textLEFT = L["Infinite Research"]
 	elseif id == "ListOfQuests" then
@@ -1798,10 +1778,8 @@ function E.func_Otrisovka_LEFT_Additionally(dropdownOrder, CharInfo, dataType, i
 	end
 	----------------------------------------------------------------
 	return textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation
-	----------------------------------------------------------------
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-
-
 function E.func_Otrisovka_RIGHT_Additionally(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
 	----------------------------------------------------------------
@@ -1829,7 +1807,11 @@ function E.func_Otrisovka_RIGHT_Additionally(dropdownOrder, CharInfo, dataType, 
 				end
 			end
 		end
-
+		if CharInfo.PlayerData.Possible_Anima then
+			textCENT = textCENT..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
+		else
+			textCENT = textCENT.."HYI"
+		end
 	elseif id == "LegionRemixResearch" then
 		if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
 			local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
@@ -1943,14 +1925,8 @@ function E.func_Otrisovka_RIGHT_Additionally(dropdownOrder, CharInfo, dataType, 
 	end
 	----------------------------------------------------------------
 	return textCENT, colorCENT, FIRSTrep, SECONDrep
-	----------------------------------------------------------------
+	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-
-
-
-
-
-
 function E.getSettings(type, id)
 	-- Проверяем, существует ли таблица настроек для этого типа
 	if not Octo_ToDo_DB_VisualUserSettings then
@@ -1970,23 +1946,6 @@ function E.getSettings(type, id)
 	return settingsTable[key] or false
 end
 
-
-
-
-function E.func_textCENT_Reputation(CharInfo, reputationID)
-	if not reputationID then return "" end
-	local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[reputationID])
-	local isParagonRewardEnableLEFT = ""
-	local isParagonRewardEnableRIGHT = ""
-	-- local textVIVOD = colorCENT..FIRST.."/"..SECOND.."|r"
-	local textVIVOD = FIRST.."/"..SECOND
-	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
-		if reputationID == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
-			textVIVOD = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
-		end
-	end
-	return textVIVOD
-end
 function E.func_textCENT_Items(CharInfo, itemID, showIcon)
 	if not itemID then return "" end
 	showIcon = showIcon or false
@@ -2137,11 +2096,17 @@ function E.debugInfo(id)
 end
 function E.func_GetRealmName()
 	local result = GetRealmName()
-	if E.func_IsRemix() then
-		result = result .. " (Remix)"
-	end
+	-- if E.func_IsRemix() then
+	-- 	result = result .. " (Remix)"
+	-- end
 	return result
 end
+function E.func_GetSubRealmName()
+	if E.func_IsRemix() then
+		return "Remix"
+	end
+end
+
 -- E.curServer = E.func_GetRealmName()
 E.SPAM_TIME = 2
 E.UNIVERSAL = "UNIVERSAL_"
@@ -2231,8 +2196,6 @@ E.baseWowheadTradingPostActivityUrl = "%swowhead.com/trading-post-activity/%s%s"
 E.baseArmoryUrl = "worldofwarcraft.blizzard.com/%s/character/%s/%s"
 E.baseRaiderIoUrl = "raider.io/characters/%s/%s/%s"
 E.PHYSICAL_SCREEN_WIDTH, E.PHYSICAL_SCREEN_HEIGHT = GetPhysicalScreenSize()
-
-
 E.POSITION_MAIN_FRAME = -157
 E.ANIMATION_DURATION = .2
 E.isElvUI = select(4, C_AddOns.GetAddOnInfo("ElvUI"))
@@ -2251,12 +2214,12 @@ E.COLOR_CATACLYSM = "|cffFF7C0A"
 E.COLOR_MISTSOFPANDARIA = "|cff00EF88"
 E.COLOR_WARLORDSOFDRAENOR = "|cffF48CBA"
 E.COLOR_LEGION = "|cffAAD372"
-E.BattleforAzeroth_Color = "|cffFFF468"
-E.Shadowlands_Color = "|cff9798FE"
-E.Dragonflight_Color = "|cff53B39F"
-E.TheWarWithin_Color = "|cff90CCDD"
-E.Midnight_Color = "|cff7B69FF"
-E.TheLastTitan_Color = "|cffF4C263"
+E.COLOR_BATTLEFORAZEROTH = "|cffFFF468"
+E.COLOR_SHADOWLANDS = "|cff9798FE"
+E.COLOR_DRAGONFLIGHT = "|cff53B39F"
+E.COLOR_THEWARWITHIN = "|cff90CCDD"
+E.COLOR_MIDNIGHT = "|cff7B69FF"
+E.COLOR_THELASTTITAN = "|cffF4C263"
 E.COLOR_WOW_POOR = "|cff9D9D9D"
 E.COLOR_WOW_COMMON = "|cffFFFFFF"
 E.COLOR_WOW_UNCOMMON = "|cff1EFF00"
@@ -2357,7 +2320,6 @@ E.OctoTable_Prefixes = {
 	"Korean",
 	"Chinese",
 }
-
 E.OctoTable_Covenant = {
 	[1] = {
 		name = GetCovenantData(1).name,
@@ -2401,13 +2363,6 @@ function E.func_pizda(mountID)
 	local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
 	return mountName
 end
-
-
-
-
-
-
--- function E.func_KeyTooltip_LEFT(myType, id, iANIMA, kCovenant)
 function E.func_KeyTooltip_LEFT(settingsType)
 	if not settingsType then return end
 	local tooltip = {}
@@ -2450,6 +2405,14 @@ function E.func_KeyTooltip_LEFT(settingsType)
 	end
 	local minItemLevel, maxItemLevel, minMoney, maxMoney, minOnline, maxOnline = 0, 0, 0, 0, 0, 0
 	local itemLevelsMinMax, MoneysMinMax, OnlineMinMax = {}, {}, {}
+
+
+
+
+
+
+
+
 	if dataType == "AllItems" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -2466,7 +2429,7 @@ function E.func_KeyTooltip_LEFT(settingsType)
 		end
 		minMoney = math_min(unpack(MoneysMinMax))
 		maxMoney = math_max(unpack(MoneysMinMax))
-	-- elseif dataType == "WasOnline" then
+		-- elseif dataType == "WasOnline" then
 	elseif id == "WasOnline" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -2476,12 +2439,41 @@ function E.func_KeyTooltip_LEFT(settingsType)
 		minOnline = math_min(unpack(OnlineMinMax))
 		maxOnline = math_max(unpack(OnlineMinMax))
 	end
+
+	-- print (dataType, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local specIcon, color, Name
 			local RIGHT1 = ""
 			local RIGHT2 = ""
 			local curServer, curPers = "", ""
+
+
+
+			if id == "CovenantRenown" then
+
+			elseif id == "CovenantAnima" then
+
+				local totalPossible = 0
+				local totalAnima = 0
+				for covenant = 1, 4 do
+					if CharInfo.MASLENGO.CovenantAndAnima[covenant][2] then
+						total = total + CharInfo.MASLENGO.CovenantAndAnima[covenant][2]
+						totalAnima = totalAnima + CharInfo.MASLENGO.CovenantAndAnima[covenant][2]
+					end
+				end
+				if CharInfo.PlayerData.Possible_Anima then
+					totalPossible = totalPossible + CharInfo.PlayerData.Possible_Anima
+				end
+				if totalPossible ~= 0 then
+					RIGHT1 = RIGHT1..E.Blue_Color.." +"..totalPossible.."|r"
+				end
+				RIGHTforSORT = totalPossible + totalAnima
+			end
+
+
+
+
 			if settingsType == "Additionally#Professions" then
 				local charProf = CharInfo.MASLENGO.professions
 				for i = 1, 2 do
@@ -2502,9 +2494,9 @@ function E.func_KeyTooltip_LEFT(settingsType)
 					end
 				end
 			elseif settingsType == "Additionally#ItemLevel" and CharInfo.PlayerData.avgItemLevel then
-				local hexcolorItemLevel = "|cff000000"
+				local hexcolorItemLevel = E.Green_Color
 				local result = ""
-				if minItemLevel then
+				if minItemLevel and minItemLevel ~= maxItemLevel then
 					local done = CharInfo.PlayerData.avgItemLevelEquipped - minItemLevel
 					local totalIlevels = maxItemLevel - minItemLevel
 					local red = min(255, (1 - done / totalIlevels) * 510)
@@ -2524,8 +2516,8 @@ function E.func_KeyTooltip_LEFT(settingsType)
 				RIGHTforSORT = CharInfo.PlayerData.avgItemLevelEquipped
 				total = total + CharInfo.PlayerData.avgItemLevelEquipped
 			elseif settingsType == "Additionally#Money" and CharInfo.PlayerData.Money then
-				local hexcolorMoney = "|cff000000"
-				if minMoney then
+				local hexcolorMoney = E.Green_Color
+				if minMoney and minMoney ~= maxMoney then
 					local done = CharInfo.PlayerData.Money - minMoney
 					local totalMoney = maxMoney - minMoney
 					local red = min(255, (1 - done / totalMoney) * 510)
@@ -2535,10 +2527,10 @@ function E.func_KeyTooltip_LEFT(settingsType)
 				RIGHT1 = hexcolorMoney..E.func_MoneyString(CharInfo.PlayerData.Money).."|r"
 				RIGHTforSORT = CharInfo.PlayerData.Money
 				total = total + CharInfo.PlayerData.Money
-			-- elseif dataType == "WasOnline" and CharInfo.PlayerData.realTotalTime then
+				-- elseif dataType == "WasOnline" and CharInfo.PlayerData.realTotalTime then
 			elseif settingsType == "Additionally#WasOnline" and CharInfo.PlayerData.realTotalTime then
-				local hexcolorOnline = "|cff000000"
-				if minOnline then
+				local hexcolorOnline = E.Green_Color
+				if minOnline and minOnline ~= maxOnline then
 					local done = CharInfo.PlayerData.realTotalTime - minOnline
 					local totalOnline = maxOnline - minOnline
 					local red = min(255, (1 - done / totalOnline) * 510)
@@ -2624,24 +2616,6 @@ function E.func_KeyTooltip_LEFT(settingsType)
 	end
 	return tooltip
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 	if not GUID or not settingsType then return end
 	local tooltip = {}
@@ -2653,62 +2627,65 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-
--- Currencies#824
--- Items#
--- Reputations#
--- UniversalQuests#
--- Additionally#
-
+	-- Currencies#824
+	-- Items#
+	-- Reputations#
+	-- UniversalQuests#
+	-- Additionally#
 	-- if dataType == "Currencies" then
-	-- 	for currencyID, dataTBL in next,(E.OctoTable_ALL_Mounts) do
-	-- 		if id == currencyID then
-	-- 			for mountID, price in next,(dataTBL) do
-	-- 				local mountIconNumber = E.func_mountIcon(mountID)
-	-- 				local mountIcon = E.func_texturefromIcon(mountIconNumber)
-	-- 				local mountName = E.func_mountName(mountID)
-	-- 				local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
-	-- 				local color = isCollected and E.White_Color or E.Red_Color
-	-- 				local mountLeftText = mountIcon ..color .. mountName .. "|r"
-	-- 				tooltip[#tooltip+1] = {mountLeftText, E.func_CompactNumberFormat(price)..E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))}
-	-- 			end
-	-- 		end
-	-- 	end
+	--     for currencyID, dataTBL in next,(E.OctoTable_ALL_Mounts) do
+	--         if id == currencyID then
+	--             for mountID, price in next,(dataTBL) do
+	--                 local mountIconNumber = E.func_mountIcon(mountID)
+	--                 local mountIcon = E.func_texturefromIcon(mountIconNumber)
+	--                 local mountName = E.func_mountName(mountID)
+	--                 local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+	--                 local color = isCollected and E.White_Color or E.Red_Color
+	--                 local mountLeftText = mountIcon ..color .. mountName .. "|r"
+	--                 tooltip[#tooltip+1] = {mountLeftText, E.func_CompactNumberFormat(price)..E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))}
+	--             end
+	--         end
+	--     end
 	-- end
-
 	if id == "CovenantRenown" then
-	elseif id == "CovenantAnima" then
-
 		for covenant = 1, 4 do
-				tooltip[#tooltip+1] = {E.OctoTable_Covenant[covenant].name, CharInfo.MASLENGO.CovenantAndAnima[covenant][1] or 0}
-
-
-
+			tooltip[#tooltip+1] = {E.OctoTable_Covenant[covenant].name, CharInfo.MASLENGO.CovenantAndAnima[covenant][1] or " "}
 			-- if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			-- 	local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			-- 	if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-			-- 		local color = E.OctoTable_Covenant[curCovID].color
-			-- 		colorCENT = color
-			-- 		if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
-			-- 			textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
-			-- 		end
-			-- 	end
+			--     local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			--     if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+			--         local color = E.OctoTable_Covenant[curCovID].color
+			--         colorCENT = color
+			--         if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
+			--             textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
+			--         end
+			--     end
 			-- end
 		end
-
-
+	elseif id == "CovenantAnima" then
+		for covenant = 1, 4 do
+			tooltip[#tooltip+1] = {E.OctoTable_Covenant[covenant].name, CharInfo.MASLENGO.CovenantAndAnima[covenant][2] or " "}
+			-- if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+			--     local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			--     if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+			--         local color = E.OctoTable_Covenant[curCovID].color
+			--         colorCENT = color
+			--         if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
+			--             textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
+			--         end
+			--     end
+			-- end
+		end
 	elseif id == "LegionRemixResearch" then
-				for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
-					if CharInfo.MASLENGO.ListOfQuests[questID] then
-						tooltip[#tooltip+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
-					end
-				end
+		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
+			if CharInfo.MASLENGO.ListOfQuests[questID] then
+				tooltip[#tooltip+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
+			end
+		end
 	elseif dataType == "Currencies" then
 		for currencyID, dataTBL in pairs(E.OctoTable_ALL_Mounts) do
 			if id == tonumber(currencyID) then
 				-- Создаем таблицу для сортировки
 				local mounts = {}
-
 				for mountID, price in pairs(dataTBL) do
 					local mountIconNumber = E.func_mountIcon(mountID)
 					local mountIcon = E.func_texturefromIcon(mountIconNumber)
@@ -2716,37 +2693,31 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 					local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
 					local color = isCollected and E.White_Color or E.Red_Color
 					local mountLeftText = mountIcon .. color .. mountName .. "|r"
-
 					table.insert(mounts, {
-						id = mountID,
-						price = price,
-						name = mountName,
-						leftText = mountLeftText,
-						collected = isCollected
+							id = mountID,
+							price = price,
+							name = mountName,
+							leftText = mountLeftText,
+							collected = isCollected
 					})
 				end
-
 				-- Сортировка: собранные сверху, потом цена, потом имя
 				table.sort(mounts, function(a, b)
-					-- 1. Собранные маунты сверху
-					-- if a.collected ~= b.collected then
-					-- 	return b.collected
-					-- end
-
-					-- 2. По цене (дорогие сверху)
-					-- if a.price ~= b.price then
-					-- 	return a.price > b.price
-					-- end
-
-					-- 2. По имени
-					if a.name ~= b.name then
-						return a.name < b.name
-					end
-
-					-- 4. По id
-					return a.id < b.id
+						-- 1. Собранные маунты сверху
+						-- if a.collected ~= b.collected then
+						--     return b.collected
+						-- end
+						-- 2. По цене (дорогие сверху)
+						-- if a.price ~= b.price then
+						--     return a.price > b.price
+						-- end
+						-- 2. По имени
+						if a.name ~= b.name then
+							return a.name < b.name
+						end
+						-- 4. По id
+						return a.id < b.id
 				end)
-
 				-- Добавляем в tooltip
 				for _, mount in ipairs(mounts) do
 					tooltip[#tooltip + 1] = {
@@ -2758,17 +2729,6 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 				end
 			end
 		end
-
-
-
-
-
-
-
-
-
-
-
 	elseif dataType == "Currencies" and id == 824 then
 		local GARRISON_RESOURCE_ID = 824
 		local RESOURCE_GENERATION_INTERVAL = 600 -- 10 minutes in seconds
@@ -2795,53 +2755,52 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 			tooltip[#tooltip+1] = {"Was earned: ", E.func_SecondsToClock(GetServerTime()-(CharInfo.MASLENGO.GARRISON.lastCacheTime or time()))}
 		end
 		----------------------------------------------------------------
-
-	-- elseif dataType == "Currencies" and id == 1166 then
-	-- 	for i, v in ipairs(E.func_Mounts_1166()) do
-	-- 		local mountID = v.mountID
-	-- 		local source = v.source
-	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
-	-- 	end
-	-- elseif dataType == "Currencies" and id == 3252 then
-	-- 	for i, v in ipairs(E.func_Mounts_3252()) do
-	-- 		local mountID = v.mountID
-	-- 		local source = v.source
-	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
-	-- 	end
-
+		-- elseif dataType == "Currencies" and id == 1166 then
+		--     for i, v in ipairs(E.func_Mounts_1166()) do
+		--         local mountID = v.mountID
+		--         local source = v.source
+		--         tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
+		--     end
+		-- elseif dataType == "Currencies" and id == 3252 then
+		--     for i, v in ipairs(E.func_Mounts_3252()) do
+		--         local mountID = v.mountID
+		--         local source = v.source
+		--         tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
+		--     end
 	elseif settingsType == "BfA_mechagonItems" then
 		tooltip = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
 		----------------------------------------------------------------
 	elseif dataType == "Reputations" then
-		local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
-		local firstTEXT = E.func_texturefromIcon(E.func_reputaionIcon(id))..E.func_reputationName(id)
-		local secondTEXT = colorCENT..FIRST.."/"..SECOND.."|r"
-		local thirdTEXT = standing
-		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
-			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
-				isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
+		if CharInfo.MASLENGO.Reputation[id] and type(CharInfo.MASLENGO.Reputation[id]) == "string" then
+			local FIRST, SECOND, vivod, colorCENT, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
+			local firstTEXT = E.func_texturefromIcon(E.func_reputaionIcon(id))..E.func_reputationName(id)
+			local secondTEXT = FIRST.."/"..SECOND
+
+			if secondTEXT == "1/1" then
+				secondTEXT = E.DONE
 			end
-		end
-		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
-			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
-				-- isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
-				secondTEXT = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
+			local thirdTEXT = colorCENT..standing.."|r"
+			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+				if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+					isParagonRewardEnable = E.Purple_Color..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
+				end
 			end
+			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+				if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+					secondTEXT = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
+				end
+			end
+			if secondTEXT ~= "0/0" then
+				tooltip[#tooltip+1] = {firstTEXT}
+				tooltip[#tooltip+1] = {secondTEXT, thirdTEXT}
+			end
+		-- else
+		-- 	fpde(CharInfo.MASLENGO.Reputation[id])
 		end
-		tooltip[#tooltip+1] = {firstTEXT}
-		tooltip[#tooltip+1] = {secondTEXT, thirdTEXT}
-
-
-
-
-
-
-
 	elseif settingsType == "Additionally#AllItems" then
 		tooltip = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_ALL, false)
 		----------------------------------------------------------------
 	elseif settingsType == "Additionally#Professions" then
-
 		local charProf = CharInfo.MASLENGO.professions
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
@@ -2999,10 +2958,8 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 		-- textCENT = E.Gray_Color..DUNGEONS.."|r"
 		-- end
 		----------------------------------------------------------------
-	-- elseif settingsType:find(E.UNIVERSAL) then
+		-- elseif settingsType:find(E.UNIVERSAL) then
 	elseif dataType == "UniversalQuests" then
-
-
 		for _, data in next,(E.ALL_UniversalQuests) do
 			if not data.quests then
 				break -- Пропускаем записи без квестов
@@ -3135,9 +3092,6 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-
-
-
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		--elseif settingsType == "ЙЦУЙЦУ" then
@@ -3145,7 +3099,6 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 		--elseif settingsType == "ЙЦУЙЦУ" then
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -3340,57 +3293,55 @@ function E.func_GetSavedVars(addonName)
 end
 ----------------------------------------------------------------
 -- local function safecall(f, ...)
--- local ok, err = pcall(f, ...)
--- if not ok then
--- print("Ошибка в отложенной функции:", err)
--- end
+-- 	local ok, err = pcall(f, ...)
+-- 	if not ok then
+-- 		print("Ошибка в отложенной функции:", err)
+-- 	end
 -- end
 -- function E.func_SpamBlock(key, isCombat, callback)
--- E._spamLocks = E._spamLocks or {}
--- E._spamCombatQueue = E._spamCombatQueue or {}
--- if isCombat and InCombatLockdown() then
--- -- если уже есть отложенный вызов — не ставим второй раз
--- if not E._spamCombatQueue[key] and type(callback) == "function" then
--- E._spamCombatQueue[key] = callback
--- -- один раз подписываемся на событие выхода из боя
--- if not E._spamCombatFrame then
--- E._spamCombatFrame = CreateFrame("Frame")
--- E._spamCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
--- E._spamCombatFrame:SetScript("OnEvent", function()
--- for k, func in pairs(E._spamCombatQueue) do
--- safecall(func) -- безопасный вызов, чтобы не крашнуло
--- E._spamCombatQueue[k] = nil
--- end
--- end)
--- end
--- end
--- return true -- Заблокировано
--- end
--- if E._spamLocks[key] then
--- return true -- Всё ещё в задержке
--- end
--- E._spamLocks[key] = true
--- C_Timer.After(E.SPAM_TIME or 0.5, function()
--- E._spamLocks[key] = nil
--- end)
--- return false -- Всё нормально, можно выполнять
+-- 	E._spamLocks = E._spamLocks or {}
+-- 	E._spamCombatQueue = E._spamCombatQueue or {}
+-- 	if isCombat and InCombatLockdown() then
+-- 		-- если уже есть отложенный вызов — не ставим второй раз
+-- 		if not E._spamCombatQueue[key] and type(callback) == "function" then
+-- 			E._spamCombatQueue[key] = callback
+-- 			-- один раз подписываемся на событие выхода из боя
+-- 			if not E._spamCombatFrame then
+-- 				E._spamCombatFrame = CreateFrame("Frame")
+-- 				E._spamCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+-- 				E._spamCombatFrame:SetScript("OnEvent", function()
+-- 						for k, func in pairs(E._spamCombatQueue) do
+-- 							safecall(func) -- безопасный вызов, чтобы не крашнуло
+-- 							E._spamCombatQueue[k] = nil
+-- 						end
+-- 				end)
+-- 			end
+-- 		end
+-- 		return true -- Заблокировано
+-- 	end
+-- 	if E._spamLocks[key] then
+-- 		return true -- Всё ещё в задержке
+-- 	end
+-- 	E._spamLocks[key] = true
+-- 	C_Timer.After(E.SPAM_TIME or 0.5, function()
+-- 			E._spamLocks[key] = nil
+-- 	end)
+-- 	return false -- Всё нормально, можно выполнять
 -- end
 ----------------------------------------------------------------
 function E.func_SpamBlock(key, needCheckCombat)
 	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
-		return false
+		return true -- Заблокировано
 	end
 	E._spamLocks = E._spamLocks or {}
 	if E._spamLocks[key] then
-		-- print (E.Red_Color..key.."|r")
-		return true -- Заблокировано, прерываем
+		return true -- Заблокировано
 	end
 	E._spamLocks[key] = true
 	C_Timer.After(E.SPAM_TIME or 0.5, function()
 			E._spamLocks[key] = nil
 	end)
-	-- print (E.Green_Color..key.."|r")
-	return false -- Всё нормально, можно выполнять
+	return false -- Всё норм
 end
 ----------------------------------------------------------------
 function E.func_LoadComponents(start)
@@ -3406,6 +3357,73 @@ function E.func_ResetOtrisovkaTables(dropdownOrder)
 	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {}
 	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {}
 end
+----------------------------------------------------------------
+function E.func_SmoothBackgroundAlphaChange(frame_main, frame_Background, event)
+	if InCombatLockdown() or not frame_main or not frame_Background or not event then return end
+	if frame_main:IsShown() then
+		local targetAlpha = Octo_ToDo_DB_Vars.Config_AlphaOnDrag
+		if targetAlpha == 1 then return end
+		local duration = 0.3
+		local currentAlpha = frame_Background:GetAlpha()
+		if event == "PLAYER_STOPPED_MOVING" then
+			targetAlpha = 1
+			duration = 0.1
+		elseif event == "OnShow" then
+			targetAlpha = 1
+			duration = 0.5
+		end
+		if currentAlpha == targetAlpha then return end
+		if not frame_Background.alphaAnim then
+			frame_Background.alphaAnim = frame_Background:CreateAnimationGroup()
+			frame_Background.alphaAnim.animation = frame_Background.alphaAnim:CreateAnimation("Alpha")
+			frame_Background.alphaAnim.animation:SetDuration(duration)
+			frame_Background.alphaAnim:SetScript("OnFinished", function(self)
+					frame_Background:SetAlpha(self.targetAlpha)
+			end)
+		end
+		-- print ("currentAlpha:", E.Blue_Color..currentAlpha.."|r", "targetAlpha:", E.Blue_Color..targetAlpha.."|r", "duration:", E.Blue_Color..duration.."|r")
+		if math.abs(currentAlpha - targetAlpha) < 0.01 then
+			return
+		end
+		frame_Background.alphaAnim.animation:SetFromAlpha(currentAlpha)
+		frame_Background.alphaAnim.animation:SetToAlpha(targetAlpha)
+		frame_Background.alphaAnim.targetAlpha = targetAlpha
+		if frame_Background.alphaAnim:IsPlaying() then
+			frame_Background.alphaAnim:Stop()
+		end
+		frame_Background.alphaAnim:Play()
+	end
+end
+----------------------------------------------------------------
+function E.func_GetMountIDFromItemID(itemID)
+	return GetMountFromItem(itemID)
+end
+----------------------------------------------------------------
+function E.SafeCall(func, ...)
+	local success, result = pcall(func, ...)
+	if not success then
+		-- Логирование ошибки
+		return nil
+	end
+	return result
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

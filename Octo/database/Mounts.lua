@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-function E.func_Mounts_1166()  --Timewalk
+function E.func_Mounts_1166() --Timewalk
 	local tbl = {
 		{itemID = 129923, price = 5000, mountID = 778, source = E.func_ExpansionVivod(2),}, -- Eclipse Dragonhawk (TBC Timewalking)
 		{itemID = 224399, price = 5000, mountID = 2225, source = E.func_ExpansionVivod(2),},
@@ -28,7 +28,7 @@ function E.func_Mounts_1166()  --Timewalk
 	}
 	return tbl
 end
-function E.func_Mounts_3252()  --Bronze
+function E.func_Mounts_3252() --Bronze
 local tbl = {
 
 		-- {itemID = 253024, price = 20000, mountID = ЙЦУ, source = E.func_ExpansionVivod(7),}, -- DRUID FORM
