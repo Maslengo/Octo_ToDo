@@ -67,13 +67,25 @@ local function HasEnoughFreeBagSpace()
 	return freePercent >= freeSpaceThreshold
 end
 ----------------------------------------------------------------
+----------------------------------------------------------------
+-- Универсальная проверка условий перед действием
+local function CanProceed()
+	if not PlayerIsControllable() then
+		openableScanQueued = true
+		return false
+	end
+	if not HasEnoughFreeBagSpace() then
+		DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[AutoOpen]|r Bag space too low — stopping.")
+		needRescan = true
+		return false
+	end
+	return true
+end
+----------------------------------------------------------------
 function EventFrame:OpenableScan()
 	if E.func_SpamBlock("OpenableScan") then return end
 	if _G.MerchantFrame and _G.MerchantFrame:IsShown() then return end
-	if not PlayerIsControllable() then
-		openableScanQueued = true
-		return
-	end
+	if not CanProceed() then return end
 
 	local openList = {}
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
@@ -92,16 +104,10 @@ function EventFrame:OpenableScan()
 			end
 		end
 	end
-	-- Если предметов нет — ничего не делаем
-	if #openList == 0 then
-		return
-	end
-	-- Предметы есть, но места мало — сообщим и выходим
-	if not HasEnoughFreeBagSpace() then
-		DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[AutoOpen]|r Not enough bag space to auto-open containers.")
-		return
-	end
-	-- Функция последовательного открытия
+
+	if #openList == 0 then return end
+	if not CanProceed() then return end
+
 	local function OpenNext()
 		local entry = table.remove(openList, 1)
 		if not entry then
@@ -115,30 +121,28 @@ function EventFrame:OpenableScan()
 			end
 			return
 		end
-		if not PlayerIsControllable() then
-			openableScanQueued = true
-			return
-		end
-		if not HasEnoughFreeBagSpace() then
-			DEFAULT_CHAT_FRAME:AddMessage("|cffff0000[AutoOpen]|r Bag space too low — stopping.")
-			needRescan = true
-			openList = {}
-			return
-		end
+
+		if not CanProceed() then return end
+
 		local itemLink = select(2, GetItemInfo(entry.itemID))
 		if itemLink then
 			UseContainerItem(entry.bag, entry.slot)
-			DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(entry.icon, itemLink)) -- .." bag:"..entry.bag.." slot:"..entry.slot
-			return
-		end
-		if #openList > 0 then
+			DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(entry.icon, itemLink))
+		else
+			-- Если данные предмета ещё не прогружены, повторим попытку через задержку
+			table.insert(openList, entry)
 			C_Timer.After(openDelay, OpenNext)
 			return
 		end
+
+		if #openList > 0 then
+			C_Timer.After(openDelay, OpenNext)
+		end
 	end
-	-- Запуск первой итерации
+
 	OpenNext()
 end
+
 ----------------------------------------------------------------
 local function HandleBagUpdate()
 	if not EventFrame.savedVars.Config_Auto_OpenItems then return end
