@@ -16,6 +16,8 @@ local function tempFunction(start)
 	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		1822, -- Renown
+		1813, -- Reservoir Anima
 		2009, 1906, 1828, 1979, 1931,
 	}
 	----------------------------------------------------------------
@@ -23,23 +25,19 @@ local function tempFunction(start)
 	}
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
-		-- ["Shadowlands"] = {
-		2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
-		2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
+
+
 		2470, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
-		2462, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
 		2472, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
-		2407, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
-		2439, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
 		2478, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
-		2410, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
-		2465, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
 		2432, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
+
+
+		2407, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
+
+		2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
+		2439, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
 		2445, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
-		2469, --name = "Понимание фракталов", side = "-", category = "Темные Земли", }, --[faction=2469]
-		2463, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
-		----------------------------------------------------------------
 		2455, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
 		2458, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
 		2453, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
@@ -56,6 +54,13 @@ local function tempFunction(start)
 		2448, --name = "Миканикос", side = "-", category = "Пепельный двор", }, --[faction=2448]
 		2447, --name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", }, --[faction=2447]
 		2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
+
+		2465, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
+		2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
+		2463, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
+
+		2410, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
+		2462, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
 	}
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
@@ -323,17 +328,17 @@ local function tempFunction(start)
 			},
 			forcedMaxQuest = 4,
 		},
-		{
-			showTooltip = true,
-			TextLeft = E.func_mapName(1961)..": ".. E.func_questName(64522),
-			name_save = "KORTHIAStolenKorthianSupplies",
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{64522},
-			},
-			forcedMaxQuest = 1,
-		},
+		-- {
+		-- 	showTooltip = true,
+		-- 	TextLeft = E.func_mapName(1961)..": ".. E.func_questName(64522),
+		-- 	name_save = "KORTHIAStolenKorthianSupplies",
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{64522},
+		-- 	},
+		-- 	forcedMaxQuest = 1,
+		-- },
 		{
 			sorted = true,
 			showTooltip = true,
@@ -375,21 +380,68 @@ local function tempFunction(start)
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{63787},
-				{64103},
-				{63788},
-				{63793},
-				{64101},
-				{64089},
-				{64430},
+				{63793},--Задание брокеров: Энсидий Осквернитель
+				{63964},--Задание брокеров: Мрачный Коготь
+				{63794},--Задание брокеров: голодающее чудище
+				{63790},--Задание брокеров: лорд Аззорак
+				{63792},--Задание брокеров: Ноктюрнус Развоплотитель
+				{63963},--Задание брокеров: Железная Лапа
+				{63791},--Задание брокеров: Валдинар Окаянный
 
-				{63961},
 
+				{63789},--Неустанная борьба: Обитель ученых
+				{63788},--Неустанная борьба: Святилище наставлений
+				{63787},--Неустанная борьба: Площадка терзателей
+				{63785},--Неустанная борьба: Форум Искателей
+
+
+				{64103},--Проверенный трюк
+				{64101},--Соблюдение процедур
+				{64089},--Чаи и настои
+				{64430},--Пролитый чай
+
+
+				{64065},--Местные реагенты
+				{63989},--Скользим со стилем
+				{64016},--Скользим со стилем
+				{64017},--Скользим со стилем
+
+
+
+				{63936},--Поглощенная анима
+				{63784},--Золото не вопрос
 
 
 			},
-			forcedMaxQuest = 5, -- было 4
+			forcedMaxQuest = 4,
 		},
+
+
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = E.func_mapName(1961)..": ".. E.func_questName(63777),
+			name_save = "SealedSecrets",
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{63777},
+				{63954},
+				{63955},
+				{63956},
+				{63961},
+			},
+			forcedMaxQuest = 1,
+		},
+
+
+
+
+
+
+
+
+
 		{
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": ".. L["Purple Mobs"],

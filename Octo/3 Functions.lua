@@ -1601,6 +1601,31 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 				TextCenter = TextCenter .. color .. " +" .. earnedSinceLastCollect .. "|r"
 			end
 		end
+	elseif id == 1822 then
+		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+				local color = E.OctoTable_Covenant[curCovID].color
+				ColorCenter = color
+				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][1] then
+					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][1].."|r"
+				end
+			end
+		end
+	elseif id == 1813 then
+		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
+			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
+				local color = E.OctoTable_Covenant[curCovID].color
+				ColorCenter = color
+				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
+					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
+				end
+			end
+		end
+		if CharInfo.PlayerData.Possible_Anima then
+			TextCenter = TextCenter..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
+		end
 	end
 	----------------------------------------------------------------
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
@@ -1651,10 +1676,6 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 		IconLeft = E.ICON_ONCE
 	end
 	-- IconLeft =
-
-
-
-
 	SettingsType = dataType.."#"..questKey
 	-- TooltipKey =
 	-- IsReputation =
@@ -1732,7 +1753,6 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		FirstReputation = tonumber(FIRST)
 		SecondReputation = tonumber(SECOND)
 		ColorCenter = colorC
-
 		local isParagonRewardEnableLEFT = ""
 		local isParagonRewardEnableRIGHT = ""
 		TextCenter = E.func_CompactNumberFormat(FirstReputation).."/"..E.func_CompactNumberFormat(SecondReputation)
@@ -1757,13 +1777,14 @@ function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 	----------------------------------------------------------------
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, dataType.."#"..id, nil, false
 	----------------------------------------------------------------
-	if id == "CovenantRenown" then
-		TextLeft = E.func_currencyName(1822)
-		IconLeft = E.func_GetCurrencyIcon(1822)
-	elseif id == "CovenantAnima" then
-		TextLeft = E.func_currencyName(1813)
-		IconLeft = E.func_GetCurrencyIcon(1813)
-	elseif id == "LegionRemixResearch" then
+	-- if id == "CovenantRenown" then
+	-- 	TextLeft = E.func_currencyName(1822)
+	-- 	IconLeft = E.func_GetCurrencyIcon(1822)
+	-- elseif id == "CovenantAnima" then
+	-- 	TextLeft = E.func_currencyName(1813)
+	-- 	IconLeft = E.func_GetCurrencyIcon(1813)
+	-- else
+	if id == "LegionRemixResearch" then
 		TextLeft = L["Infinite Research"]
 	elseif id == "ListOfQuests" then
 		TooltipKey = "Other_ListOfQuests"
@@ -1958,7 +1979,6 @@ function E.getSettings(type, id)
 	-- Возвращаем значение, если оно существует, иначе false
 	return settingsTable[key] or false
 end
-
 function E.func_TextCenter_Items(CharInfo, itemID, showIcon)
 	if not itemID then return "" end
 	showIcon = showIcon or false
@@ -2119,7 +2139,6 @@ function E.func_GetSubRealmName()
 		return "Remix"
 	end
 end
-
 -- E.curServer = E.func_GetRealmName()
 E.SPAM_TIME = 2
 E.UNIVERSAL = "UNIVERSAL_"
@@ -2153,9 +2172,6 @@ E.Class_Druid_Color = C_ClassColor.GetClassColor("DRUID"):GenerateHexColorMarkup
 E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHexColorMarkup()
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup()
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
-
-
-
 -- /run fpde(_G.QUEST_TAG_ATLAS)
 -- E.QUEST_TAG_ATLAS = _G.QUEST_TAG_ATLAS or {
 -- [1] = "questlog-questtypeicon-group",
@@ -2447,14 +2463,6 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	end
 	local minItemLevel, maxItemLevel, minMoney, maxMoney, minOnline, maxOnline = 0, 0, 0, 0, 0, 0
 	local itemLevelsMinMax, MoneysMinMax, OnlineMinMax = {}, {}, {}
-
-
-
-
-
-
-
-
 	if dataType == "AllItems" then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -2483,9 +2491,7 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	elseif dataType == "UniversalQuests" then
 		local reset = id:match("_([^_]+)$")
 		tooltip[#tooltip+1] = {reset}
-
 	end
-
 	-- print (dataType, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -2493,13 +2499,8 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 			local RIGHT1 = ""
 			local RIGHT2 = ""
 			local curServer, curPers = "", ""
-
-
-
 			if id == "CovenantRenown" then
-
 			elseif id == "CovenantAnima" then
-
 				local totalPossible = 0
 				local totalAnima = 0
 				for covenant = 1, 4 do
@@ -2516,10 +2517,6 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 				end
 				RIGHTforSORT = totalPossible + totalAnima
 			end
-
-
-
-
 			if SettingsType == "Additionally#Professions" then
 				local charProf = CharInfo.MASLENGO.professions
 				for i = 1, 2 do
@@ -2673,27 +2670,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	-- Currencies#824
-	-- Items#
-	-- Reputations#
-	-- UniversalQuests#
-	-- Additionally#
-	-- if dataType == "Currencies" then
-	-- for currencyID, dataTBL in next,(E.OctoTable_ALL_Mounts) do
-	-- if id == currencyID then
-	-- for mountID, price in next,(dataTBL) do
-	-- local mountIconNumber = E.func_mountIcon(mountID)
-	-- local mountIcon = E.func_texturefromIcon(mountIconNumber)
-	-- local mountName = E.func_mountName(mountID)
-	-- local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
-	-- local color = isCollected and E.White_Color or E.Red_Color
-	-- local mountLeftText = mountIcon ..color .. mountName .. "|r"
-	-- tooltip[#tooltip+1] = {mountLeftText, E.func_CompactNumberFormat(price)..E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))}
-	-- end
-	-- end
-	-- end
-	-- end
-	if id == "CovenantRenown" then
+
+	if dataType == "Currencies" and id == 1822 then
 		local typeSL = 1
 		for covenant = 1, 4 do
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID or 0
@@ -2702,14 +2680,17 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local color = E.OctoTable_Covenant[covenant].color
 			local leftText = E.func_texturefromIcon(icon)..name
 			local rightText = CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] or 0
+			local centText = ""
 			if curCovID ~= covenant then
 				color = E.Gray_Color
 			end
 			leftText = color..leftText.."|r"
 			rightText = color..rightText.."|r"
-			tooltip[#tooltip+1] = {leftText, rightText}
+			tooltip[#tooltip+1] = {leftText, centText, rightText}
 		end
-	elseif id == "CovenantAnima" then
+	end
+
+	if dataType == "Currencies" and id == 1813 then
 		local typeSL = 2
 		for covenant = 1, 4 do
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID or 0
@@ -2718,23 +2699,70 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local color = E.OctoTable_Covenant[covenant].color
 			local leftText = E.func_texturefromIcon(icon)..name
 			local rightText = CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] or 0
+			local centText = ""
 			if curCovID ~= covenant then
 				color = E.Gray_Color
 			end
 			leftText = color..leftText.."|r"
 			rightText = color..rightText.."|r"
 			if CharInfo.PlayerData.Possible_Anima and curCovID == covenant then
-				rightText = rightText..E.Blue_Color.."+"..CharInfo.PlayerData.Possible_Anima.."|r"
+				centText = centText..E.Blue_Color.."+"..CharInfo.PlayerData.Possible_Anima.."|r"
 			end
-			tooltip[#tooltip+1] = {leftText, rightText}
+			tooltip[#tooltip+1] = {leftText, centText, rightText}
 		end
-	elseif id == "LegionRemixResearch" then
+		tooltip[#tooltip+1] = {" "}
+	end
+
+	if dataType == "Currencies" and id == 824 then
+		local GARRISON_RESOURCE_ID = 824
+		local RESOURCE_GENERATION_INTERVAL = 600 -- 10 minutes in seconds
+		local RESOURCES_PER_INTERVAL = 1
+		local MAX_CACHE_SIZE = 500
+		if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
+			local color = E.Gray_Color
+			local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
+			local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
+			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
+			local earnedSinceLastCollect = min(cacheSize, math_floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
+			local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
+			local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
+			if earnedSinceLastCollect > 0 then
+				if earnedSinceLastCollect >= 5 then
+					color = (earnedSinceLastCollect == cacheSize) and E.Purple_Color or E.Yellow_Color
+				end
+			end
+			tooltip[#tooltip+1] = {GARRISON_CACHE, color..earnedSinceLastCollect.."/"..cacheSize.."|r"}
+			tooltip[#tooltip+1] = {" ", " "} -- Empty separator
+			if earnedSinceLastCollect ~= cacheSize then
+				tooltip[#tooltip+1] = {"Time to full: ", E.func_SecondsToClock(timeUntilFull)}
+			end
+			tooltip[#tooltip+1] = {"Was earned: ", E.func_SecondsToClock(GetServerTime()-(CharInfo.MASLENGO.GARRISON.lastCacheTime or time()))}
+		end
+
+	end
+	----------------------------------------------------------------
+	-- if dataType == "Currencies" and id == 1166 then
+	-- 	for i, v in ipairs(E.func_Mounts_1166()) do
+	-- 		local mountID = v.mountID
+	-- 		local source = v.source
+	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
+	-- 	end
+	-- end
+	-- if dataType == "Currencies" and id == 3252 then
+	-- 	for i, v in ipairs(E.func_Mounts_3252()) do
+	-- 		local mountID = v.mountID
+	-- 		local source = v.source
+	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
+	-- 	end
+	-- end
+	if id == "LegionRemixResearch" then
 		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
 			if CharInfo.MASLENGO.ListOfQuests[questID] then
 				tooltip[#tooltip+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
 			end
 		end
-	elseif dataType == "Currencies" then
+	end
+	if dataType == "Currencies" then
 		for currencyID, dataTBL in pairs(E.OctoTable_ALL_Mounts) do
 			if id == tonumber(currencyID) then
 				-- Создаем таблицу для сортировки
@@ -2782,53 +2810,18 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				end
 			end
 		end
-	elseif dataType == "Currencies" and id == 824 then
-		local GARRISON_RESOURCE_ID = 824
-		local RESOURCE_GENERATION_INTERVAL = 600 -- 10 minutes in seconds
-		local RESOURCES_PER_INTERVAL = 1
-		local MAX_CACHE_SIZE = 500
-		if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
-			local color = E.Gray_Color
-			local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
-			local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
-			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
-			local earnedSinceLastCollect = min(cacheSize, math_floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
-			local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
-			local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
-			if earnedSinceLastCollect > 0 then
-				if earnedSinceLastCollect >= 5 then
-					color = (earnedSinceLastCollect == cacheSize) and E.Purple_Color or E.Yellow_Color
-				end
-			end
-			tooltip[#tooltip+1] = {GARRISON_CACHE, color..earnedSinceLastCollect.."/"..cacheSize.."|r"}
-			tooltip[#tooltip+1] = {" ", " "} -- Empty separator
-			if earnedSinceLastCollect ~= cacheSize then
-				tooltip[#tooltip+1] = {"Time to full: ", E.func_SecondsToClock(timeUntilFull)}
-			end
-			tooltip[#tooltip+1] = {"Was earned: ", E.func_SecondsToClock(GetServerTime()-(CharInfo.MASLENGO.GARRISON.lastCacheTime or time()))}
-		end
-		----------------------------------------------------------------
-		-- elseif dataType == "Currencies" and id == 1166 then
-		-- for i, v in ipairs(E.func_Mounts_1166()) do
-		-- local mountID = v.mountID
-		-- local source = v.source
-		-- tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
-		-- end
-		-- elseif dataType == "Currencies" and id == 3252 then
-		-- for i, v in ipairs(E.func_Mounts_3252()) do
-		-- local mountID = v.mountID
-		-- local source = v.source
-		-- tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
-		-- end
-	elseif SettingsType == "BfA_mechagonItems" then
+	end
+
+
+	if SettingsType == "BfA_mechagonItems" then
 		tooltip = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
+	end
 		----------------------------------------------------------------
-	elseif dataType == "Reputations" then
+	if dataType == "Reputations" then
 		if CharInfo.MASLENGO.Reputation[id] and type(CharInfo.MASLENGO.Reputation[id]) == "string" then
 			local FIRST, SECOND, vivod, ColorCenter, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
 			local firstTEXT = E.func_texturefromIcon(E.func_reputaionIcon(id))..E.func_reputationName(id)
 			local secondTEXT = FIRST.."/"..SECOND
-
 			if secondTEXT == "1/1" then
 				secondTEXT = E.DONE
 			end
@@ -2850,10 +2843,13 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		-- else
 		-- 	fpde(CharInfo.MASLENGO.Reputation[id])
 		end
-	elseif SettingsType == "Additionally#AllItems" then
+	end
+
+	if SettingsType == "Additionally#AllItems" then
 		tooltip = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_ALL, false)
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "Additionally#Professions" then
+	if SettingsType == "Additionally#Professions" then
 		local charProf = CharInfo.MASLENGO.professions
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
@@ -2880,15 +2876,17 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				end
 			end
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "Additionally#ItemLevel" then
+	if SettingsType == "Additionally#ItemLevel" then
 		if CharInfo.PlayerData.avgItemLevelEquipped and CharInfo.PlayerData.avgItemLevel then
 			if CharInfo.PlayerData.avgItemLevelPvp and CharInfo.PlayerData.avgItemLevelPvp > CharInfo.PlayerData.avgItemLevel then
 				tooltip[#tooltip+1] = {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, CharInfo.PlayerData.avgItemLevelPvp)}
 			end
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "Additionally#Money" then
+	if SettingsType == "Additionally#Money" then
 		if CharInfo.PlayerData.Money then
 			local function addMoneyDiff(label, oldValue)
 				if not oldValue then return end
@@ -2903,8 +2901,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			addMoneyDiff("DAILY", CharInfo.PlayerData.MoneyOnDaily)
 			addMoneyDiff("WEEKLY", CharInfo.PlayerData.MoneyOnWeekly)
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "Additionally#WasOnline" then
+	if SettingsType == "Additionally#WasOnline" then
 		local color = "|cffFFFFFF"
 		if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
 			if CharInfo.PlayerData.GUID == E.curGUID then
@@ -2922,8 +2921,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				tooltip[#tooltip+1] = {color..CharInfo.PlayerData.loginHour.."|r", ""}
 			end
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "TWW_GreatVault" then
+	if SettingsType == "TWW_GreatVault" then
 		local Enum_Activities_table = {}
 		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
 			Enum_Activities_table[#Enum_Activities_table+1] = i
@@ -2941,8 +2941,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				end
 			end
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "TWW_CurrentKey" then
+	if SettingsType == "TWW_CurrentKey" then
 		if CharInfo.PlayerData.CurrentKeyName then
 			tooltip[#tooltip+1] = {CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName, ""}
 		end
@@ -2951,8 +2952,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			tooltip[#tooltip+1] = {"Weekly Best:", CharInfo.PlayerData.RIO_weeklyBest}
 			tooltip[#tooltip+1] = {"RIO Score:", CharInfo.PlayerData.RIO_Score}
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "Additionally#ListOfQuests" then
+	if SettingsType == "Additionally#ListOfQuests" then
 		if CharInfo.PlayerData.numQuests then
 			local questIDs = {}
 			for questID in next, CharInfo.MASLENGO.ListOfQuests do
@@ -2964,8 +2966,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				tooltip[i] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
 			end
 		end
+	end
 		----------------------------------------------------------------
-	elseif SettingsType == "Additionally#LFGInstance" then
+	if SettingsType == "Additionally#LFGInstance" then
 		local combinedTooltip = {}
 		for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
 			for difficultyID, w in next, (v) do
@@ -3012,7 +3015,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		-- end
 		----------------------------------------------------------------
 		-- elseif SettingsType:find(E.UNIVERSAL) then
-	elseif dataType == "UniversalQuests" then
+	end
+	if dataType == "UniversalQuests" then
 		for _, data in next,(E.ALL_UniversalQuests) do
 			if not data.quests then
 				break -- Пропускаем записи без квестов
@@ -3167,7 +3171,6 @@ function E.func_TextCenter_Chars_nickname(CharInfo)
 	end
 	return namePart..levelPart
 end
-
 function E.func_TextCenter_Chars_server(CharInfo)
 	local serverPart = ""
 	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and E.curServerShort ~= CharInfo.PlayerData.curServer then
