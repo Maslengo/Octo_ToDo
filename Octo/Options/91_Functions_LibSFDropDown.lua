@@ -67,8 +67,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 		Octo_ToDo_DB_Levels[menuButton.value].PlayerData.isShownPLAYER = checked
 		providerfunc()
-		frame.ScrollBoxCENT:ScrollToOffset(0)
-		frame.barPanelScroll:SetHorizontalScroll(0)
+		frame.ScrollBoxCenter:ScrollToOffset(0)
+		frame.horizontalScrollFrame:SetHorizontalScroll(0)
 	end
 	local function func_remove_GUID(menuButton, arg1)
 		local guid = menuButton.value

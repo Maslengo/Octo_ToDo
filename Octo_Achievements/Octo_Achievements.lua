@@ -8,10 +8,10 @@ E.func_InitFrame(Octo_MainFrame_Achievements)
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
 local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
-local LINES_MAX = E.LINES_MAX
+local MAX_DISPLAY_LINES = E.MAX_DISPLAY_LINES
 local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
-if LINES_MAX > MainFrameTotalLines then
-	LINES_MAX = MainFrameTotalLines
+if MAX_DISPLAY_LINES > MainFrameTotalLines then
+	MAX_DISPLAY_LINES = MainFrameTotalLines
 end
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
@@ -68,17 +68,17 @@ local func_OnAcquired do
 			frame:SetPropagateMouseMotion(true)
 			------------------------------------------------
 			-- Full texture background
-			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_Achievements)
-			frameFULL:SetPropagateMouseClicks(true)
-			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-			frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
-			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-			frameFULL.HighlightTexture:SetAlpha(.2)
-			frameFULL:SetPoint("LEFT", frame)
-			frameFULL:SetPoint("TOP", frame)
-			frameFULL:SetPoint("BOTTOM", frame)
-			frameFULL:SetPoint("RIGHT")
+			local Highlight = CreateFrame("Button", nil, Octo_MainFrame_Achievements)
+			Highlight:SetPropagateMouseClicks(true)
+			Highlight:SetPropagateMouseMotion(true)
+			Highlight:SetFrameLevel(frame:GetFrameLevel()+2)
+			Highlight:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
+			Highlight.HighlightTexture = Highlight:GetHighlightTexture()
+			Highlight.HighlightTexture:SetAlpha(.2)
+			Highlight:SetPoint("LEFT", frame)
+			Highlight:SetPoint("TOP", frame)
+			Highlight:SetPoint("BOTTOM", frame)
+			Highlight:SetPoint("RIGHT")
 			------------------------------------------------
 			------------------------------------------------
 			frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
@@ -92,12 +92,12 @@ local func_OnAcquired do
 			frame.texture_2:SetTexture(E.TEXTURE_LEFT_PATH)
 			frame.texture_2:SetVertexColor(1, 1, 1, .1)
 			------------------------------------------------
-			frame.textLEFT = frame:CreateFontString()
-			frame.textLEFT:SetFontObject(OctoFont11)
-			frame.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+2, 0)
-			frame.textLEFT:SetJustifyV("MIDDLE")
-			frame.textLEFT:SetJustifyH("LEFT")
-			frame.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.TextLeft = frame:CreateFontString()
+			frame.TextLeft:SetFontObject(OctoFont11)
+			frame.TextLeft:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+2, 0)
+			frame.TextLeft:SetJustifyV("MIDDLE")
+			frame.TextLeft:SetJustifyH("LEFT")
+			frame.TextLeft:SetTextColor(1, 1, 1, 1)
 			------------------------------------------------
 			frame.textRIGHT = frame:CreateFontString()
 			frame.textRIGHT:SetFontObject(OctoFont11)
@@ -118,15 +118,15 @@ local function CreateAchievementTooltip(achievementID)
 	local _, _, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
 	local color = completed and E.Green_Color or E.Red_Color
 	-- Build header line
-	local textLEFT = E.func_texturefromIcon(icon)..E.func_achievementName(achievementID)
+	local TextLeft = E.func_texturefromIcon(icon)..E.func_achievementName(achievementID)
 	if E.DebugIDs then
-		textLEFT = textLEFT..E.Gray_Color.." id:"..achievementID.."|r"
+		TextLeft = TextLeft..E.Gray_Color.." id:"..achievementID.."|r"
 	end
 	if points and points ~= 0 then
-		textLEFT = textLEFT.." "..color..points.."|r"
+		TextLeft = TextLeft.." "..color..points.."|r"
 	end
 	local textRIGHT = day and (day.."/"..month.."/20"..year) or ""
-	table_insert(tooltipData, {textLEFT, textRIGHT})
+	table_insert(tooltipData, {TextLeft, textRIGHT})
 	-- Add description if exists
 	if description and description ~= "" then
 		table_insert(tooltipData, {" ", " "})
@@ -158,7 +158,7 @@ end
 function EventFrame:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	frame.icon_1:SetTexture(data.icon)
-	frame.textLEFT:SetText(data.textLEFT)
+	frame.TextLeft:SetText(data.TextLeft)
 	frame.textRIGHT:SetText(data.textRIGHT or "NIL?")
 	frame.tooltip = CreateAchievementTooltip(data.AchievementID)
 	if IsTracking(2, data.AchievementID) then
@@ -176,7 +176,7 @@ function EventFrame:Octo_Create_MainFrame_Achievements()
 		RequestRaidInfo()
 	end)
 	-- Octo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
-	Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*LINES_MAX)
+	Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*MAX_DISPLAY_LINES)
 	Octo_MainFrame_Achievements:SetDontSavePosition(true)
 	Octo_MainFrame_Achievements:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_Achievements:SetFrameStrata("HIGH")
@@ -230,13 +230,13 @@ function EventFrame:CreateDataProvider()
 						if completedAchi == false or (completedAchi == Octo_Achievements_DB.Config_AchievementShowCompleted) then
 							local color = E.Red_Color
 							if completedAchi then color = E.Green_Color end
-							local textLEFT = E.func_achievementName(AchievementID)
+							local TextLeft = E.func_achievementName(AchievementID)
 							if points and points ~= 0 then
-								textLEFT = textLEFT .. " " .. color..points.."|r"
+								TextLeft = TextLeft .. " " .. color..points.."|r"
 							end
 							count = count + 1
 							EventFrame.DataProvider:Insert({
-									textLEFT = textLEFT,
+									TextLeft = TextLeft,
 									textRIGHT = E.func_achievementvivod(AchievementID),
 									AchievementID = AchievementID,
 									icon = icon,
@@ -246,8 +246,8 @@ function EventFrame:CreateDataProvider()
 				end
 			end
 		end
-		if count > LINES_MAX then
-			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*LINES_MAX)
+		if count > MAX_DISPLAY_LINES then
+			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*MAX_DISPLAY_LINES)
 		elseif count == 0 then
 			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*1)
 		else

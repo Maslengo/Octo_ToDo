@@ -10,10 +10,10 @@ E.func_InitFrame(Octo_MainFrame_QuestsChanged)
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
 local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
-local LINES_MAX = E.LINES_MAX
+local MAX_DISPLAY_LINES = E.MAX_DISPLAY_LINES
 local MainFrameTotalLines = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT))*.7)
-if LINES_MAX > MainFrameTotalLines then
-	LINES_MAX = MainFrameTotalLines
+if MAX_DISPLAY_LINES > MainFrameTotalLines then
+	MAX_DISPLAY_LINES = MainFrameTotalLines
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
@@ -34,10 +34,10 @@ EventFrame.total_width = EventFrame.total_width or 500
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 local function func_OnHideFirst(frame)
-	frame.frameFULL:Hide()
+	frame.Highlight:Hide()
 end
 local function func_OnShowFirst(frame)
-	frame.frameFULL:Show()
+	frame.Highlight:Show()
 end
 -- СОЗДАЕТ ФРЕЙМЫ / РЕГИОНЫ(текстуры, шрифты) / ЧИЛДЫ
 local func_OnAcquired do
@@ -52,20 +52,20 @@ local func_OnAcquired do
 			------------------------------------------------
 			------------------------------------------------
 			-- Full texture background
-			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_QuestsChanged)
-			frameFULL:SetPropagateMouseClicks(true)
-			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2) -- ВСЕГДА НА ВЕРХНЕМ СЛОЕ
-			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
-			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-			frameFULL.HighlightTexture:SetAlpha(.2)
-			frameFULL:SetPoint("LEFT", frame)
-			frameFULL:SetPoint("TOP", frame)
-			frameFULL:SetPoint("BOTTOM", frame)
-			frameFULL:SetPoint("RIGHT")
-			frame.frameFULL = frameFULL
+			local Highlight = CreateFrame("Button", nil, Octo_MainFrame_QuestsChanged)
+			Highlight:SetPropagateMouseClicks(true)
+			Highlight:SetPropagateMouseMotion(true)
+			Highlight:SetFrameLevel(frame:GetFrameLevel()+2) -- ВСЕГДА НА ВЕРХНЕМ СЛОЕ
+			Highlight:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+			Highlight.HighlightTexture = Highlight:GetHighlightTexture()
+			Highlight.HighlightTexture:SetAlpha(.2)
+			Highlight:SetPoint("LEFT", frame)
+			Highlight:SetPoint("TOP", frame)
+			Highlight:SetPoint("BOTTOM", frame)
+			Highlight:SetPoint("RIGHT")
+			frame.Highlight = Highlight
 			------------------------------------------------
-			local textureFULL = frameFULL:CreateTexture(nil, "BACKGROUND", nil, -3)
+			local textureFULL = Highlight:CreateTexture(nil, "BACKGROUND", nil, -3)
 			textureFULL:Hide()
 			textureFULL:SetAllPoints()
 			textureFULL:SetTexture(E.TEXTURE_LEFT_PATH)
@@ -287,7 +287,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 end
 function EventFrame:Octo_Create_MainFrame_QuestsChanged()
 	Octo_MainFrame_QuestsChanged:SetPoint("CENTER", 0, 0)
-	Octo_MainFrame_QuestsChanged:SetSize(EventFrame.total_width, LINE_HEIGHT*LINES_MAX)
+	Octo_MainFrame_QuestsChanged:SetSize(EventFrame.total_width, LINE_HEIGHT*MAX_DISPLAY_LINES)
 	Octo_MainFrame_QuestsChanged:SetDontSavePosition(true)
 	Octo_MainFrame_QuestsChanged:SetClampedToScreen(true)
 	Octo_MainFrame_QuestsChanged:SetFrameStrata("HIGH")
@@ -384,8 +384,8 @@ function EventFrame:func_QuestsChanged_CreateMyDataProvider()
 	DataProvider:Sort()
 	-- SetDataProvider триггерит создания фреймов
 	Octo_MainFrame_QuestsChanged.view:SetDataProvider(E.DataProvider_QuestsChanged, ScrollBoxConstants.RetainScrollPosition)
-	if count > LINES_MAX then
-		Octo_MainFrame_QuestsChanged:SetSize(EventFrame.total_width, LINE_HEIGHT*LINES_MAX)
+	if count > MAX_DISPLAY_LINES then
+		Octo_MainFrame_QuestsChanged:SetSize(EventFrame.total_width, LINE_HEIGHT*MAX_DISPLAY_LINES)
 	elseif count == 0 then
 		Octo_MainFrame_QuestsChanged:SetSize(EventFrame.total_width, LINE_HEIGHT*1)
 	else

@@ -4,21 +4,21 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local dropdownOrder = 13
+local categoryKey = 13
 local expansionID = 2
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_DataOtrisovka[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(dropdownOrder)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	E.func_ResetOtrisovkaTables(categoryKey)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 		23572,
 		30183,
 		32428,
@@ -30,7 +30,7 @@ local function tempFunction(start)
 		24579, -- ALLIANCE
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		1038, --name = "Огри'ла", side = "-", category = "The Burning Crusade", }, --[faction=1038]
 		1015, --name = "Крылья Пустоты", side = "-", category = "The Burning Crusade", }, --[faction=1015]
 		1012, --name = "Пеплоусты-служители", side = "-", category = "The Burning Crusade", }, --[faction=1012]
@@ -58,10 +58,10 @@ local function tempFunction(start)
 		978, --name = "Куренай", side = "-", category = "The Burning Crusade", }, --[faction=978] -- АЛЬЯНС
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 end
 

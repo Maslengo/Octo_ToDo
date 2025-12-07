@@ -70,10 +70,10 @@ function E.Collect_All_Mounts()
 			end
 	end)
 
-	function E.ebanieMounti(dropdownOrder)
+	function E.ebanieMounti(categoryKey)
 		-- Вставляем отсортированные данные
 		for _, data in ipairs(tempTable) do
-			tinsert(E.OctoTables_DataOtrisovka[dropdownOrder].Currencies, data.currencyID)
+			tinsert(E.OctoTables_DataOtrisovka[categoryKey].Currencies, data.currencyID)
 		end
 	end
 

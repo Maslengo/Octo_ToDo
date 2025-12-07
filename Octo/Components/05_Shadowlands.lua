@@ -4,26 +4,26 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local dropdownOrder = 5
+local categoryKey = 5
 local expansionID = 9
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_DataOtrisovka[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(dropdownOrder)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	E.func_ResetOtrisovkaTables(categoryKey)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		2009, 1906, 1828, 1979, 1931,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[dropdownOrder].icon, name = E.OctoTable_Expansions[dropdownOrder].color..E.OctoTable_Expansions[dropdownOrder].name.."|r",},
+	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Shadowlands"] = {
 		2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
 		2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
@@ -58,14 +58,14 @@ local function tempFunction(start)
 		2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = OTHER..": Rares",
+			TextLeft = OTHER..": Rares",
 			name_save = "OtherRares",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				-- Bastion
 				{nil, addText = {mapID = 1533},},
@@ -106,10 +106,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = L["World Boss"],
+			TextLeft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{61813, forcedText = {npcID = 167524}, addText = {mapID = 1533},}, -- "Валинор" <Свет эпох> Бастион
 				{61816, forcedText = {npcID = 167525}, addText = {mapID = 1536},}, -- Мортанис Малдраксус (2).
@@ -128,10 +128,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
+			TextLeft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
 			name_save = "anima1k",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{61982, addText = {Icon = E.ICON_KYRIAN}},
 				{61981, addText = {Icon = E.ICON_VENTHYR}},
@@ -143,10 +143,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = L["Troubles at Home"], -- E.func_questName(61981),
+			TextLeft = L["Troubles at Home"], -- E.func_questName(61981),
 			name_save = "Troubles at Home",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{60425, addText = {Icon = E.ICON_KYRIAN}},
 				{60432, addText = {Icon = E.ICON_VENTHYR}},
@@ -158,10 +158,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["Covenant Assault"],
+			TextLeft = E.func_mapName(1543)..": "..L["Covenant Assault"],
 			name_save = "MAWassault",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63824, addText = {Icon = E.ICON_KYRIAN}},
 				{63822, addText = {Icon = E.ICON_VENTHYR}},
@@ -172,10 +172,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["The Hunt"],
+			TextLeft = E.func_mapName(1543)..": "..L["The Hunt"],
 			name_save = "MAWhunt",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63180, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Hunt: Shadehounds"]},},
 				{63194, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Hunt: Winged Soul Eaters"]},},
@@ -186,10 +186,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["Wrath of the Jailer"],
+			TextLeft = E.func_mapName(1543)..": "..L["Wrath of the Jailer"],
 			name_save = "MAWwrathofthejailer",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63414, addText = {IconVignette = "VignetteEventElite"}, forcedText = {text = L["Wrath of the Jailer"]},},
 			},
@@ -197,10 +197,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["Event: Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast(),
+			TextLeft = E.func_mapName(1543)..": "..L["Event: Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast(),
 			name_save = "MAWtormentor",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63854, addText = {IconVignette = "Tormentors-Boss",}, forcedText = {text = L["Event: Tormentors of Torghast"]},},
 			},
@@ -208,10 +208,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["Helsworn Chest"],
+			TextLeft = E.func_mapName(1543)..": "..L["Helsworn Chest"],
 			name_save = "MAWHelswornChest",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64256, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Helsworn Chest"]},}, -- Maw chest in Desmotaeron
 			},
@@ -219,10 +219,10 @@ local function tempFunction(start)
 		},
 		{ -- ПОФИКСИТЬ доступно только во время найт фей ассаулта
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["Stolen Anima Vessel"]..E.RIFT,
+			TextLeft = E.func_mapName(1543)..": "..L["Stolen Anima Vessel"]..E.RIFT,
 			name_save = "MAWStolenAnimaVesselRIFT",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64265, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Stolen Anima Vessel"]},},
 				{64269, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Stolen Anima Vessel"]},},
@@ -232,10 +232,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": "..L["Daily quests"],--E.func_currencyName(1880),
+			TextLeft = E.func_mapName(1543)..": "..L["Daily quests"],--E.func_currencyName(1880),
 			name_save = "MAWdailyQuests",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{60646},
 				{60762},
@@ -253,10 +253,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1543)..": ".."Rares",
+			TextLeft = E.func_mapName(1543)..": ".."Rares",
 			name_save = "MAWRares",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{57469, forcedText = {npcID = 157833}},
 				{57482, forcedText = {npcID = 157964}},
@@ -288,10 +288,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": "..E.func_questName(63949), --"Weekly",
+			TextLeft = E.func_mapName(1961)..": "..E.func_questName(63949), --"Weekly",
 			name_save = "KORTHIAweekly",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63949},
 			},
@@ -299,10 +299,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": "..E.func_questName(65266),
+			TextLeft = E.func_mapName(1961)..": "..E.func_questName(65266),
 			name_save = "KORTHIAlostresearch",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{65266},
 			},
@@ -311,10 +311,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": "..E.func_questName(64552), --"anima table mission",
+			TextLeft = E.func_mapName(1961)..": "..E.func_questName(64552), --"anima table mission",
 			name_save = "KORTHIAanimatablemission",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64552, addText = {Icon = E.ICON_KYRIAN},}, -- ker
 				{64553, addText = {Icon = E.ICON_VENTHYR},}, -- vent
@@ -325,10 +325,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".. E.func_questName(64522),
+			TextLeft = E.func_mapName(1961)..": ".. E.func_questName(64522),
 			name_save = "KORTHIAStolenKorthianSupplies",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64522},
 			},
@@ -337,10 +337,10 @@ local function tempFunction(start)
 		{
 			sorted = true,
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".."Rares",
+			TextLeft = E.func_mapName(1961)..": ".."Rares",
 			name_save = "KORTHIARares",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63830, forcedText = {npcID = 177903},},
 				{64233, forcedText = {npcID = 179684}, addText = {mount = 1506},},
@@ -370,10 +370,10 @@ local function tempFunction(start)
 		{
 			sorted = true,
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".. L["Daily quests"],
+			TextLeft = E.func_mapName(1961)..": ".. L["Daily quests"],
 			name_save = "KORTHIADailyQuest",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{63787},
 				{64103},
@@ -392,10 +392,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".. L["Purple Mobs"],
+			TextLeft = E.func_mapName(1961)..": ".. L["Purple Mobs"],
 			name_save = "KORTHIAPurpleMobs",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64341},
 				{64342},
@@ -417,10 +417,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".. L["Relic Gorgers"],
+			TextLeft = E.func_mapName(1961)..": ".. L["Relic Gorgers"],
 			name_save = "KORTHIARelicGorgers",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64433},
 				{64434},
@@ -432,10 +432,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".. AREA_LOOTING_UNLOCKED, -- L["Mushrooms"]
+			TextLeft = E.func_mapName(1961)..": ".. AREA_LOOTING_UNLOCKED, -- L["Mushrooms"]
 			name_save = "KORTHIACollectionMushrooms",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64351, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 1"},},
 				{64354, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 2"},},
@@ -477,10 +477,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(1961)..": ".."Items",
+			TextLeft = E.func_mapName(1961)..": ".."Items",
 			name_save = "KORTHIAitems",
 			reset = "Once",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
 				{64307, forcedText = {itemID = 187145}}, -- Treatise: Recognizing StygiaanditsUses
@@ -497,10 +497,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1970)..": "..E.func_questName(66042),
+			TextLeft = E.func_mapName(1970)..": "..E.func_questName(66042),
 			name_save = "ZMpatternswithinpatterns",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{66042},
 			},
@@ -508,10 +508,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_mapName(1970)..": ".."Rares",
+			TextLeft = E.func_mapName(1970)..": ".."Rares",
 			name_save = "ZMRares",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{65557, forcedText = {npcID = 178229}},
 				{65547, forcedText = {npcID = 178508}},
@@ -550,10 +550,10 @@ local function tempFunction(start)
 		},
 		-- {
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1970)..": ".."WorldQuests",
+		-- 	TextLeft = E.func_mapName(1970)..": ".."WorldQuests",
 		-- 	name_save = "ZMWorldQuests",
 		-- 	reset = "Daily",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{64960},
 		-- 		{64974},
@@ -590,10 +590,10 @@ local function tempFunction(start)
 		-- },
 		-- {
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1970)..": "..AREA_LOOTING_UNLOCKED, -- AREA_LOOTING_UNLOCKED "Treasures"
+		-- 	TextLeft = E.func_mapName(1970)..": "..AREA_LOOTING_UNLOCKED, -- AREA_LOOTING_UNLOCKED "Treasures"
 		-- 	name_save = "ZMtreasures",
 		-- 	reset = "Once",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{65520},
 		-- 		{65573},
@@ -626,10 +626,10 @@ local function tempFunction(start)
 		-- },
 		-- {
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1970)..": "..L["Undulating Foliage"],
+		-- 	TextLeft = E.func_mapName(1970)..": "..L["Undulating Foliage"],
 		-- 	name_save = "ZMUndulatingFoliage",
 		-- 	reset = "Once",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{65572, forcedText = {text = L["Undulating Foliage"]},},
 		-- 	},
@@ -637,10 +637,10 @@ local function tempFunction(start)
 		-- },
 		-- {
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1970)..": "..L["Prying Eye Discovery"],
+		-- 	TextLeft = E.func_mapName(1970)..": "..L["Prying Eye Discovery"],
 		-- 	name_save = "ZMPryingEyeDiscovery",
 		-- 	reset = "Daily",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{65184, forcedText = {text = L["Prying Eye Discovery"]},},
 		-- 		{65501, forcedText = {text = L["Prying Eye Discovery"]},},
@@ -658,10 +658,10 @@ local function tempFunction(start)
 
 		-- {
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
+		-- 	TextLeft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
 		-- 	name_save = "ZMPUZZLECACHES",
 		-- 	reset = "Daily",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{65094},
 		-- 		{65323},
@@ -684,10 +684,10 @@ local function tempFunction(start)
 		-- },
 		-- {
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1970)..": ".."ZMConcordance",
+		-- 	TextLeft = E.func_mapName(1970)..": ".."ZMConcordance",
 		-- 	name_save = "ZMConcordance",
 		-- 	reset = "Once",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{65179},
 		-- 		{65213},
@@ -711,10 +711,10 @@ local function tempFunction(start)
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
-		-- 	textleft = E.func_mapName(1670)..": "..DUNGEONS,
+		-- 	TextLeft = E.func_mapName(1670)..": "..DUNGEONS,
 		-- 	name_save = "DUNGEONS",
 		-- 	reset = "Weekly",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{60242},
 		-- 		{60243},
@@ -743,10 +743,10 @@ local function tempFunction(start)
 		--------------------------------------------------------------
 		-- {
 		-- 	showTooltip = false,
-		-- 	textleft = E.func_questName(62858),
+		-- 	TextLeft = E.func_questName(62858),
 		-- 	name_save = "Return Lost Souls",
 		-- 	reset = "Weekly",
-		-- 	desc = dropdownOrder,
+		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		{62858},
 		-- 		{62859},
@@ -765,7 +765,7 @@ local function tempFunction(start)
 		-- },
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
 		"CovenantRenown",
 		"CovenantAnima",
 	}
@@ -775,46 +775,46 @@ end
 table.insert(E.Components, tempFunction)
 ----------------------------------------------------------------
 local function localfunc2()
-	local OctoTable_Otrisovka_textCENT = {}
+	local OctoTable_Otrisovka_TextCenter = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
+	if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
 		for kCovenant = 1, 2 do
 			for iANIMA = 1, 4 do
-				table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+				table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 						----------------------------------------------------------------
-						local iconLEFT, textLEFT, colorLEFT, textCENT, tooltipCENT, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", {}, nil, {}, nil, false, nil, nil
+						local IconLeft, TextLeft, ColorLeft, TextCenter, tooltipCENT, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", {}, nil, {}, nil, false, nil, nil
 						----------------------------------------------------------------
 						local color = E.OctoTable_Covenant[iANIMA].color
 						-- отриосвка всего по центру
 						if CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
-							textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant].."|r"
+							TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant].."|r"
 						end
 						if kCovenant == 1 then
-							-- iconLEFT = E.OctoTable_Covenant[iANIMA].icon
+							-- IconLeft = E.OctoTable_Covenant[iANIMA].icon
 							myType = {"Currency_Covenant_Renown", 1813, iANIMA, kCovenant}
 						elseif kCovenant == 2 then
-							-- iconLEFT = E.func_GetCurrencyIcon(1813)
+							-- IconLeft = E.func_GetCurrencyIcon(1813)
 							myType = {"Currency_Covenant_Anima", 1813, iANIMA, kCovenant}
 							if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 								if CharInfo.PlayerData.Possible_Anima then
-									textCENT = textCENT..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
+									TextCenter = TextCenter..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
 								end
 							end
 						end
 						if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-							colorCENT = color
+							ColorCenter = color
 						else
-							colorCENT = nil
+							ColorCenter = nil
 						end
 						----------------------------------------------------------------
 						vivodLeft = color..E.OctoTable_Covenant[iANIMA].name.."|r"
 						----------------------------------------------------------------
-						textLEFT = vivodLeft
-						colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
+						TextLeft = vivodLeft
+						ColorLeft = E.OctoTable_Expansions[categoryKey].color
 						----------------------------------------------------------------
-						return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep
+						return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 						----------------------------------------------------------------
 				end)
 			end
@@ -823,6 +823,6 @@ local function localfunc2()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	return OctoTable_Otrisovka_textCENT
+	return OctoTable_Otrisovka_TextCenter
 end
 

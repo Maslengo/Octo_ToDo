@@ -14,15 +14,15 @@ local GetContainerItemInfo = C_Container.GetContainerItemInfo
 local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
 ----------------------------------------------------------------
-local INDENT_TEST = 4
+local INDENT_TEXT = 4
 local INDEND_SCROLL = 20
 local LINE_HEIGHT = 32
 local LINE_WIDTH = 256
-local LINES_MAX = 20
+local MAX_DISPLAY_LINES = 20
 local INDENT_BETWEEN_LINES = LINE_HEIGHT
 local LINES_TOTAL = math.floor(math.floor(E.PHYSICAL_SCREEN_HEIGHT/LINE_HEIGHT)*.7)
-if LINES_MAX > LINES_TOTAL then
-	LINES_MAX = LINES_TOTAL
+if MAX_DISPLAY_LINES > LINES_TOTAL then
+	MAX_DISPLAY_LINES = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
@@ -53,20 +53,20 @@ local func_OnAcquired do
 			frame:SetHitRectInsets(1, 1, 1, 1)
 			----------------
 			-- Создание полноразмерного фрейма для подсветки
-			local frameFULL = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
-			frameFULL:SetPropagateMouseClicks(true)
-			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-			if 1 ~= 1 then
-				frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- "auctionhouse-ui-row-highlight"
-				frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-				frameFULL.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND)
+			local Highlight = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
+			Highlight:SetPropagateMouseClicks(true)
+			Highlight:SetPropagateMouseMotion(true)
+			Highlight:SetFrameLevel(frame:GetFrameLevel()+2)
+			if E.ENABLE_HIGHLIGHT_ANIMATION then
+				Highlight:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- "auctionhouse-ui-row-highlight"
+				Highlight.HighlightTexture = Highlight:GetHighlightTexture()
+				Highlight.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND)
 			end
-			frameFULL:SetPoint("LEFT", frame)
-			frameFULL:SetPoint("TOP", frame)
-			frameFULL:SetPoint("BOTTOM", frame)
-			frameFULL:SetPoint("RIGHT")
-			frame.frameFULL = frameFULL
+			Highlight:SetPoint("LEFT", frame)
+			Highlight:SetPoint("TOP", frame)
+			Highlight:SetPoint("BOTTOM", frame)
+			Highlight:SetPoint("RIGHT")
+			frame.Highlight = Highlight
 			------------------------------------------------
 			frame.icon_1 = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 			frame.icon_1:SetPoint("TOPLEFT", 1, -1)
@@ -85,7 +85,7 @@ local func_OnAcquired do
 							-- f:SetSize(LINE_WIDTH, LINE_HEIGHT)
 							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 							if key == 1 then
-								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEST, 0) -- ОТСТУП
+								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEXT, 0) -- ОТСТУП
 							else
 								local prevKey = key - 1
 								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
@@ -95,10 +95,10 @@ local func_OnAcquired do
 							f.text = f:CreateFontString()
 							f.text:SetFontObject(OctoFont11)
 							-- f.text:SetAllPoints()
-							f.text:SetPoint("LEFT", LINE_HEIGHT+INDENT_TEST+0, 0)
+							f.text:SetPoint("LEFT", LINE_HEIGHT+INDENT_TEXT+0, 0)
 							f.text:SetWordWrap(false)
 							f.text:SetJustifyV("MIDDLE") -- TOP, MIDDLE, BOTTOM
-							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
+							f.text:SetJustifyH("CENTER") -- LEFT, Center, RIGHT
 							f.text:SetTextColor(1, 1, 1, 1)
 							-- Обработчики событий
 							-- f:SetScript("OnHide", f.Hide)
@@ -109,10 +109,10 @@ local func_OnAcquired do
 			})
 			-- Обработчики событий показа/скрытия фрейма
 			frame:SetScript("OnHide", function()
-					frame.frameFULL:Hide()
+					frame.Highlight:Hide()
 			end)
 			frame:SetScript("OnShow", function()
-					frame.frameFULL:Show()
+					frame.Highlight:Show()
 			end)
 			-- Обработчик наведения курсора для отображения тултипа
 			frame:SetScript("OnEnter", func_OnEnter)
@@ -137,7 +137,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		if columnSizes and columnSizes[i] and lineFrames and lineFrames[i] then
 			lineFrames[i]:SetWidth(columnSizes[i])
 		end
-		-- Определяем выравнивание текста (по умолчанию CENTER)
+		-- Определяем выравнивание текста (по умолчанию Center)
 		local justify = "CENTER"
 		if numData > 1 then
 			if i == 1 then -- Первый элемент выравниваем по ЛЕВОМУ краю
@@ -335,20 +335,20 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	end
 	local columns = 3
 	EventFrame.COLUMN_SIZES = COLUMN_SIZES
-	local total_width = INDENT_TEST*2 + (INDENT_BETWEEN_LINES*(columns-1)) + LINE_HEIGHT-- ОТСТУП -- (иконка)
+	local total_width = INDENT_TEXT*2 + (INDENT_BETWEEN_LINES*(columns-1)) + LINE_HEIGHT-- ОТСТУП -- (иконка)
 	if EventFrame.COLUMN_SIZES[1] then
 		for i = 1, columns do
 			total_width = total_width + EventFrame.COLUMN_SIZES[i]
 		end
 	end
-	local shouldShowScrollBar = LINES_MAX < lines
+	local shouldShowScrollBar = MAX_DISPLAY_LINES < lines
 	EventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
 		total_width = total_width + INDEND_SCROLL
 	end
 	ItemsUsable.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	if lines > LINES_MAX then
-		ItemsUsable:SetSize(total_width, LINE_HEIGHT*LINES_MAX)
+	if lines > MAX_DISPLAY_LINES then
+		ItemsUsable:SetSize(total_width, LINE_HEIGHT*MAX_DISPLAY_LINES)
 	elseif lines == 0 then
 		ItemsUsable:SetSize(total_width, LINE_HEIGHT*1)
 	else

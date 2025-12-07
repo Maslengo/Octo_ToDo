@@ -4,18 +4,18 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local dropdownOrder = 3
+local categoryKey = 3
 local expansionID = 11
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_DataOtrisovka[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(dropdownOrder)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	E.func_ResetOtrisovkaTables(categoryKey)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		-- 3056, 2815,
 		-- season 3
 		3356, 3290, 3288, 3286, 3284, 3141, 3028, 3008, 2803,
@@ -33,11 +33,11 @@ local function tempFunction(start)
 		-- 2167, -- Catalyst Charges (Season 1)
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
-		-- header = {icon = E.OctoTable_Expansions[dropdownOrder].icon, name = E.OctoTable_Expansions[dropdownOrder].color..E.OctoTable_Expansions[dropdownOrder].name.."|r",},
+	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["The War Within"] = {
 		-- { id = 2688,},
 		-- { id = 2653,},
@@ -99,14 +99,14 @@ local function tempFunction(start)
 		2669, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = L["World Boss"],
+			TextLeft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
 				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
@@ -121,10 +121,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2371)..": ".."Rares",
+			TextLeft = E.func_mapName(2371)..": ".."Rares",
 			name_save = "Rares2371",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
 				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
@@ -163,10 +163,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2255)..": ".."Rares",
+			TextLeft = E.func_mapName(2255)..": ".."Rares",
 			name_save = "Rares2255",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{81695, forcedText = {npcID = 216031}, },
 				{78905, forcedText = {npcID = 214151}, },
@@ -185,10 +185,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2215)..": ".."Rares",
+			TextLeft = E.func_mapName(2215)..": ".."Rares",
 			name_save = "Rares2215",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{81763, forcedText = {npcID = 207802}, },
 				{82558, forcedText = {npcID = 206514}, },
@@ -208,10 +208,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2248)..": ".."Rares",
+			TextLeft = E.func_mapName(2248)..": ".."Rares",
 			name_save = "Rares2248",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82196, forcedText = {npcID = 219281}, },
 				{81893, forcedText = {npcID = 219264}, },
@@ -231,10 +231,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2214)..": ".."Rares",
+			TextLeft = E.func_mapName(2214)..": ".."Rares",
 			name_save = "Rares2214",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{81674, forcedText = {npcID = 220265}, },
 				{80557, forcedText = {npcID = 220274}, },
@@ -254,10 +254,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2369)..": ".."Rares",
+			TextLeft = E.func_mapName(2369)..": ".."Rares",
 			name_save = "Rares2369",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{85672, forcedText = {npcID = 229982}, },
 				{85669, forcedText = {npcID = 228201}, },
@@ -275,10 +275,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2346)..": ".."Rares",
+			TextLeft = E.func_mapName(2346)..": ".."Rares",
 			name_save = "Rares2346",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{84917, forcedText = {npcID = 230931}, },
 				{84918, forcedText = {npcID = 230934}, },
@@ -312,10 +312,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2248)..": ".."Treasures",
+			TextLeft = E.func_mapName(2248)..": ".."Treasures",
 			name_save = "Treasures2248",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82715},
 				{82714},
@@ -342,10 +342,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2369)..": ".."Treasures",
+			TextLeft = E.func_mapName(2369)..": ".."Treasures",
 			name_save = "Treasures2369",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{87446},
 				{86764},
@@ -370,10 +370,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2346)..": ".."Treasures",
+			TextLeft = E.func_mapName(2346)..": ".."Treasures",
 			name_save = "Treasures2346",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{85683},
 				{85698},
@@ -396,10 +396,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2214)..": ".."Treasures",
+			TextLeft = E.func_mapName(2214)..": ".."Treasures",
 			name_save = "Treasures2214",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82230},
 				{82239},
@@ -420,10 +420,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2255)..": ".."Treasures",
+			TextLeft = E.func_mapName(2255)..": ".."Treasures",
 			name_save = "Treasures2255",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82520},
 				{82718},
@@ -444,10 +444,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2215)..": ".."Treasures",
+			TextLeft = E.func_mapName(2215)..": ".."Treasures",
 			name_save = "Treasures2215",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{83298},
 				{83263},
@@ -473,10 +473,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = E.func_mapName(2346)..": ".."Treasure",
+			TextLeft = E.func_mapName(2346)..": ".."Treasure",
 			name_save = "Treasure2346",
 			reset = "Once", -- "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{85683},
 				{85698},
@@ -532,10 +532,10 @@ local function tempFunction(start)
 		----------------------------------------------------------------------------
 		{
 			showTooltip = true,
-			textleft = E.func_questName(84370),
+			TextLeft = E.func_questName(84370),
 			name_save = "TheKeytoSuccess",
 			reset = "Daily", -- "Once", ???
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{84370},
 			},
@@ -543,10 +543,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_questName(82449),
+			TextLeft = E.func_questName(82449),
 			name_save = "TheCalloftheWorldsoul",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 			quests = {
 				-- 87424,
@@ -642,10 +642,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "Archives",
+			TextLeft = "Archives",
 			name_save = "Archives",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82678},
 				{82679},
@@ -654,10 +654,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "Delves",
+			TextLeft = "Delves",
 			name_save = "Delves",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82708},
 				{82707},
@@ -696,10 +696,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
+			TextLeft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240),
 			name_save = "TheTheaterTroupe",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{83240},
 			},
@@ -707,10 +707,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_questName(76586),
+			TextLeft = E.func_questName(76586),
 			name_save = "SpreadingtheLight",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{76586},
 			},
@@ -718,10 +718,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_questName(83333),
+			TextLeft = E.func_questName(83333),
 			name_save = "GearingUpforTrouble",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{83333},
 			},
@@ -729,10 +729,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "SpecialAssignments",
+			TextLeft = "SpecialAssignments",
 			name_save = "SpecialAssignments",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82355},
 				{81649},
@@ -747,10 +747,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_questName(82946),
+			TextLeft = E.func_questName(82946),
 			name_save = "RollinDownintheDeeps",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{82946},
 			},
@@ -758,10 +758,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "BiergothDungeonQuest",
+			TextLeft = "BiergothDungeonQuest",
 			name_save = "BiergothDungeonQuest",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{83432},
 				{83436},
@@ -777,10 +777,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "TWWProfessionWeeklies",
+			TextLeft = "TWWProfessionWeeklies",
 			name_save = "TWWProfessionWeeklies",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{84127},
 				{84128},
@@ -812,10 +812,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "TWWAlgariTreatise",
+			TextLeft = "TWWAlgariTreatise",
 			name_save = "TWWAlgariTreatise",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{83725},
 				{83726},
@@ -833,10 +833,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "AnniversaryRestoredCofferKey",
+			TextLeft = "AnniversaryRestoredCofferKey",
 			name_save = "AnniversaryRestoredCofferKey",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{86202},
 			},
@@ -844,10 +844,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "SirenIsleWeekly",
+			TextLeft = "SirenIsleWeekly",
 			name_save = "SirenIsleWeekly",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{84852},
 				{84680},
@@ -871,10 +871,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "MajorKeyflames",
+			TextLeft = "MajorKeyflames",
 			name_save = "MajorKeyflames",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{79471},
 				{79470},
@@ -889,10 +889,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "MinorKeyflames",
+			TextLeft = "MinorKeyflames",
 			name_save = "MinorKeyflames",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{81632},
 				-- 81574,
@@ -935,10 +935,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = L["Delver's Call"],
+			TextLeft = L["Delver's Call"],
 			name_save = "DelversCall",
 			reset = "Once",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
 				{85648},
@@ -965,10 +965,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-weekly-cache",
+			TextLeft = "tww-weekly-cache",
 			name_save = "tww-weekly-cache",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{84736},
 				{84737},
@@ -979,10 +979,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-lesser-keyflame",
+			TextLeft = "tww-lesser-keyflame",
 			name_save = "tww-lesser-keyflame",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{76169}, -- Glow in the Dark
 				{76394}, -- Shadows of Flavor
@@ -1006,10 +1006,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-brawl-weekly",
+			TextLeft = "tww-brawl-weekly",
 			name_save = "tww-brawl-weekly",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{47148},
 			},
@@ -1017,10 +1017,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-pvp-weekly",
+			TextLeft = "tww-pvp-weekly",
 			name_save = "tww-pvp-weekly",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{80184}, -- Preserving in Battle
 				{80185}, -- Preserving Solo
@@ -1033,10 +1033,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-pvp-world",
+			TextLeft = "tww-pvp-world",
 			name_save = "tww-pvp-world",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{81793}, -- Sparks of War: Isle of Dorn
 				{81794}, -- Sparks of War: The Ringing Deeps
@@ -1048,10 +1048,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-the-severed-threads",
+			TextLeft = "tww-the-severed-threads",
 			name_save = "tww-the-severed-threads",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{80670}, -- Eyes of the Weaver
 				{80671}, -- Blade of the General
@@ -1061,10 +1061,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-the-call-of-the-worldsoul",
+			TextLeft = "tww-the-call-of-the-worldsoul",
 			name_save = "tww-the-call-of-the-worldsoul",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82482}, -- Worldsoul: Snuffling
@@ -1113,10 +1113,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-archives",
+			TextLeft = "tww-archives",
 			name_save = "tww-archives",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82679}, -- Archives: Seeking History
@@ -1126,10 +1126,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-delves",
+			TextLeft = "tww-delves",
 			name_save = "tww-delves",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82708}, -- Delves: Nerubian Menace
@@ -1145,10 +1145,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-the-theater-trope",
+			TextLeft = "tww-the-theater-trope",
 			name_save = "tww-the-theater-trope",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{83240},
 			},
@@ -1156,10 +1156,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-spreading-the-light",
+			TextLeft = "tww-spreading-the-light",
 			name_save = "tww-spreading-the-light",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{76586},
 			},
@@ -1167,10 +1167,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-gearing-up-for-trouble",
+			TextLeft = "tww-gearing-up-for-trouble",
 			name_save = "tww-gearing-up-for-trouble",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{83333},
 			},
@@ -1178,10 +1178,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-special-assignments",
+			TextLeft = "tww-special-assignments",
 			name_save = "tww-special-assignments",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{82355}, -- Special Assignment: Cinderbee Surge (Completing)
 				{81647}, -- Special Assignment: Titanic Resurgence (Completing)
@@ -1200,10 +1200,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-rollin-down-in-the-deeps",
+			TextLeft = "tww-rollin-down-in-the-deeps",
 			name_save = "tww-rollin-down-in-the-deeps",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{82946},
 			},
@@ -1211,10 +1211,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-biergoth-dungeon-quest",
+			TextLeft = "tww-biergoth-dungeon-quest",
 			name_save = "tww-biergoth-dungeon-quest",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{83432}, -- The Rookery
 				{83436}, -- Cinderbrew Meadery
@@ -1230,10 +1230,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-the-key-to-success",
+			TextLeft = "tww-the-key-to-success",
 			name_save = "tww-the-key-to-success",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{84370},
 			},
@@ -1241,10 +1241,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-services-requested",
+			TextLeft = "tww-services-requested",
 			name_save = "tww-services-requested",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{84127}, -- Blacksmithing Services Requested
 				{84128}, -- Engineering Services Requested
@@ -1276,10 +1276,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-algari-treatise",
+			TextLeft = "tww-algari-treatise",
 			name_save = "tww-algari-treatise",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{83725}, -- Algari Treatise on Alchemy
 				{83726}, -- Algari Treatise on Blacksmithing
@@ -1297,10 +1297,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-anniversary-restored-coffer-key",
+			TextLeft = "tww-anniversary-restored-coffer-key",
 			name_save = "tww-anniversary-restored-coffer-key",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{86202},
 			},
@@ -1308,10 +1308,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-siren-isle-weekly",
+			TextLeft = "tww-siren-isle-weekly",
 			name_save = "tww-siren-isle-weekly",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				-- Vrykul invasion
 				{84852}, -- Legacy of the Vrykul
@@ -1338,10 +1338,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-free-chett-list",
+			TextLeft = "tww-free-chett-list",
 			name_save = "tww-free-chett-list",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{87296},
 			},
@@ -1349,10 +1349,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-chett-list",
+			TextLeft = "tww-chett-list",
 			name_save = "tww-chett-list",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{86915}, -- Side with a Cartel
 				{86917}, -- Ship Right
@@ -1372,10 +1372,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-delvers-bounty",
+			TextLeft = "tww-delvers-bounty",
 			name_save = "tww-delvers-bounty",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{86371},
 			},
@@ -1383,10 +1383,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-nightfall-scenario",
+			TextLeft = "tww-nightfall-scenario",
 			name_save = "tww-nightfall-scenario",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{91173},
 			},
@@ -1394,10 +1394,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-nightfall-daily",
+			TextLeft = "tww-nightfall-daily",
 			name_save = "tww-nightfall-daily",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{87475}, -- Sureki Incursion: Hold the Wall
 				{87477}, -- Sureki Incursion: Southern Swarm
@@ -1411,10 +1411,10 @@ local function tempFunction(start)
 		----------------------------------------------------------------
 		{
 			showTooltip = true,
-			textleft = "tww-karesh-warrants",
+			TextLeft = "tww-karesh-warrants",
 			name_save = "tww-karesh-warrants",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{90122}, -- Eliminate Xy'vox the Twisted
 				{90123}, -- Eliminate Hollowbane
@@ -1427,10 +1427,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = "tww-weekly-cache_S3",
+			TextLeft = "tww-weekly-cache_S3",
 			name_save = "tww-weekly-cache_S3",
 			reset = "Weekly",
-			desc = dropdownOrder, -- STORYLINE
+			desc = categoryKey, -- STORYLINE
 			quests = {
 				{91175},
 				{91176},
@@ -1441,7 +1441,7 @@ local function tempFunction(start)
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 	----------------------------------------------------------------
 end
@@ -1450,52 +1450,52 @@ table.insert(E.Components, tempFunction)
 
 
 local function localfunc2()
-	local OctoTable_Otrisovka_textCENT = {}
+	local OctoTable_Otrisovka_TextCenter = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
-		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+	if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
+		table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, nil, false, nil, nil
+				local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 				----------------------------------------------------------------
-				tooltipKey = "TWW_GreatVault"
+				TooltipKey = "TWW_GreatVault"
 				if CharInfo.PlayerData.HasAvailableRewards then
-					textCENT = E.Blue_Color..">"..REWARD.."<|r"
+					TextCenter = E.Blue_Color..">"..REWARD.."<|r"
 				end
-				textLEFT = E.Blue_Color..RATED_PVP_WEEKLY_VAULT.."|r"-- DELVES_GREAT_VAULT_LABEL
-				-- iconLEFT = "greatVault-whole-normal")
-				-- iconLEFT = E.func_vignetteIcon("greatVault-whole-normal") -- ПОФИКСИТЬ
-				colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
+				TextLeft = E.Blue_Color..RATED_PVP_WEEKLY_VAULT.."|r"-- DELVES_GREAT_VAULT_LABEL
+				-- IconLeft = "greatVault-whole-normal")
+				-- IconLeft = E.func_vignetteIcon("greatVault-whole-normal") -- ПОФИКСИТЬ
+				ColorLeft = E.OctoTable_Expansions[categoryKey].color
 				-- CreateAtlasMarkup("greatVault-whole-normal", 20, 20)..
 				-- greatVault-handles-dis
 				-- greatVault-centerPlate-dis
 				-- greatVault-whole-normal
-				settingsType = "Other#".."TWW_GreatVault"
+				SettingsType = "Other#".."TWW_GreatVault"
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 				----------------------------------------------------------------
 		end)
-		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+		table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, nil, false, nil, nil
+				local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 				----------------------------------------------------------------
-				tooltipKey = "TWW_CurrentKey"
+				TooltipKey = "TWW_CurrentKey"
 				if CharInfo.PlayerData.CurrentKey then
-					textCENT = CharInfo.PlayerData.CurrentKey
+					TextCenter = CharInfo.PlayerData.CurrentKey
 				end
 				----------------------------------------------------------------
-				textLEFT = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
-				iconLEFT = 4352494
-				colorLEFT = E.OctoTable_Expansions[dropdownOrder].color
-				settingsType = "Other#".."TWW_CurrentKey"
+				TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
+				IconLeft = 4352494
+				ColorLeft = E.OctoTable_Expansions[categoryKey].color
+				SettingsType = "Other#".."TWW_CurrentKey"
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 				----------------------------------------------------------------
 		end)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	return OctoTable_Otrisovka_textCENT
+	return OctoTable_Otrisovka_TextCenter
 end

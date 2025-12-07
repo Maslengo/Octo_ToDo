@@ -19,14 +19,14 @@ local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Ц�
 
 
 
-local INDENT_TEST = 4
+local INDENT_TEXT = 4
 local INDENT_SCROLL = 20
 local TOOLTIP_LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local TOOLTIP_LINE_WIDTH = 256
-local LINES_MAX = 24
+local MAX_DISPLAY_LINES = 24
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)
-if LINES_MAX > LINES_TOTAL then
-	LINES_MAX = LINES_TOTAL
+if MAX_DISPLAY_LINES > LINES_TOTAL then
+	MAX_DISPLAY_LINES = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
 
@@ -82,7 +82,7 @@ local func_OnAcquired do
 							-- f:SetSize(TOOLTIP_LINE_WIDTH, TOOLTIP_LINE_HEIGHT)
 							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 							if key == 1 then
-								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEST+1, 0) -- ОТСТУП
+								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEXT+1, 0) -- ОТСТУП
 							else
 								local prevKey = key - 1
 								local prevFrame = rawget(self, prevKey) or self[prevKey] -- Получаем предыдущий фрейм
@@ -95,7 +95,7 @@ local func_OnAcquired do
 							f.text:SetAllPoints()
 							f.text:SetWordWrap(false)
 							f.text:SetJustifyV("MIDDLE") -- TOP, MIDDLE, BOTTOM
-							f.text:SetJustifyH("CENTER") -- LEFT, CENTER, RIGHT
+							f.text:SetJustifyH("CENTER") -- LEFT, Center, RIGHT
 							f.text:SetTextColor(1, 1, 1, 1)
 							-- Обработчики событий
 							-- f:SetScript("OnEnter", function() E.func_OctoTooltip_OnEnter(f) end)
@@ -129,7 +129,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		if columnSizes then
 			lineFrames[i]:SetWidth(columnSizes[i])
 		end
-		-- Определяем выравнивание текста (по умолчанию CENTER)
+		-- Определяем выравнивание текста (по умолчанию Center)
 		local justify = "CENTER"
 		if numData > 1 then
 			if i == 1 then -- Первый элемент выравниваем по ЛЕВОМУ краю
@@ -308,19 +308,19 @@ function EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 	end
 	EventFrame.COLUMN_SIZES = COLUMN_SIZES
 	EventFrame.columns = columns
-	local total_width = INDENT_TEST*2 -- ОТСТУП
+	local total_width = INDENT_TEXT*2 -- ОТСТУП
 	for i = 1, columns do
 		total_width = total_width + EventFrame.COLUMN_SIZES[i]
 	end
 	-- lines = #tbl
-	local shouldShowScrollBar = LINES_MAX < lines
+	local shouldShowScrollBar = MAX_DISPLAY_LINES < lines
 	EventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
 		total_width = total_width + INDENT_SCROLL
 	end
 	OctoTooltip.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	if lines > LINES_MAX then
-		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*LINES_MAX)
+	if lines > MAX_DISPLAY_LINES then
+		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*MAX_DISPLAY_LINES)
 	elseif lines == 0 then
 		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*1)
 	else

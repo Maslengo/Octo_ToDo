@@ -29,14 +29,14 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 						count = count + 1
 					end
 					if (totalQUEST == 1 or forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
-						questDataTable.textCENT = status
+						questDataTable.TextCenter = status
 						hasSingleQuestOutput = true
 					end
 				end
 			end
 		end
 		if not hasSingleQuestOutput and count ~= 0 then
-			questDataTable.textCENT = count
+			questDataTable.TextCenter = count
 		end
 		if next(questDataTable) ~= nil then
 			tempUniversalQuest[questKey] = questDataTable

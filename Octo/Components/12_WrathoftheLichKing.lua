@@ -4,28 +4,28 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local dropdownOrder = 12
+local categoryKey = 12
 local expansionID = 3
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_DataOtrisovka[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(dropdownOrder)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	E.func_ResetOtrisovkaTables(categoryKey)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		241, -- Champion's Seal
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 		45087,
 		47556,
 		49908,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		1156, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
 		1119, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
 		1106, --name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", }, --[faction=1106]
@@ -53,13 +53,13 @@ local function tempFunction(start)
 		1050, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			showTooltip = true,
-			textleft = E.func_questName(24748),
+			TextLeft = E.func_questName(24748),
 			name_save = "Shadowmourne",
 			reset = "Once",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{24545},
 				{24743},
@@ -75,7 +75,7 @@ local function tempFunction(start)
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 	----------------------------------------------------------------
 end

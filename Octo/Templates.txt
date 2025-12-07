@@ -1,4 +1,4 @@
-local f = CreateFrame("EventFrame", "OctoWowTrimHorizontalScrollBar", UIParent, "HorizontalScrollBarTemplate")
+local f = CreateFrame("EventFrame", "OctoWowTrimhorizontalScrollBar", UIParent, "horizontalScrollBarTemplate")
 Mixin(f, WowTrimScrollBarMixin)
 f:SetSize(560, 8)
 f.minThumbExtent = 23

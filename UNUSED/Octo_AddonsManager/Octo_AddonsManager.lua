@@ -94,17 +94,17 @@ local func_OnAcquired do
 			------------------------------------------------
 			------------------------------------------------
 			-- Full texture background
-			local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_AddonsManager)
-			frameFULL:SetPropagateMouseClicks(true)
-			frameFULL:SetPropagateMouseMotion(true)
-			frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-			frameFULL:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
-			frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-			frameFULL.HighlightTexture:SetAlpha(.2)
-			frameFULL:SetPoint("LEFT", frame)
-			frameFULL:SetPoint("TOP", frame)
-			frameFULL:SetPoint("BOTTOM", frame)
-			frameFULL:SetPoint("RIGHT")
+			local Highlight = CreateFrame("Button", nil, Octo_MainFrame_AddonsManager)
+			Highlight:SetPropagateMouseClicks(true)
+			Highlight:SetPropagateMouseMotion(true)
+			Highlight:SetFrameLevel(frame:GetFrameLevel()+2)
+			Highlight:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
+			Highlight.HighlightTexture = Highlight:GetHighlightTexture()
+			Highlight.HighlightTexture:SetAlpha(.2)
+			Highlight:SetPoint("LEFT", frame)
+			Highlight:SetPoint("TOP", frame)
+			Highlight:SetPoint("BOTTOM", frame)
+			Highlight:SetPoint("RIGHT")
 			------------------------------------------------
 			frame.first = CreateFrame("BUTTON", nil, frame)
 			frame.first:SetPropagateMouseClicks(false)
@@ -132,12 +132,12 @@ local func_OnAcquired do
 			-- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 			frame.third:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", 0, 0) -- frame.third:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0)
 			frame.third:SetScript("OnEnter", func_OnEnter)
-			frame.third.textLEFT = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-			frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+LINE_HEIGHT+2, 0)
-			frame.third.textLEFT:SetFontObject(OctoFont11)
-			frame.third.textLEFT:SetJustifyV("MIDDLE")
-			frame.third.textLEFT:SetJustifyH("LEFT")
-			frame.third.textLEFT:SetTextColor(1, 1, 1, 1)
+			frame.third.TextLeft = frame.third:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+			frame.third.TextLeft:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+LINE_HEIGHT+2, 0)
+			frame.third.TextLeft:SetFontObject(OctoFont11)
+			frame.third.TextLeft:SetJustifyV("MIDDLE")
+			frame.third.TextLeft:SetJustifyH("LEFT")
+			frame.third.TextLeft:SetTextColor(1, 1, 1, 1)
 			-- frame.third:RegisterForClicks("LeftButtonUp", "RightButtonUp", "MiddleButton")
 			frame.third:RegisterForClicks("AnyUp")
 			frame.third:SetScript("OnClick", OnClick_third)
@@ -189,23 +189,23 @@ function EventFrame:CollectAddonInfo(index)
 		if not iconTexture and not iconAtlas and Octo_AddonsManager_DB.config.showIconsQuestionMark then
 			iconTexture = [[Interface\ICONS\INV_Misc_QuestionMark]]
 		end
-		local textLEFT = name
+		local TextLeft = name
 		if Octo_AddonsManager_DB.config.fullName and title then
-			textLEFT = title
+			TextLeft = title
 		end
 		if Octo_AddonsManager_DB.config.showVersion and Version ~= "" and Version ~= 0 then
-			textLEFT = textLEFT..E.Gray_Color.." ("..Version..")|r"
+			TextLeft = TextLeft..E.Gray_Color.." ("..Version..")|r"
 		end
 		if Octo_AddonsManager_DB.config.showIndex then
-			textLEFT = E.Debug_Color..index.."|r "..textLEFT
+			TextLeft = E.Debug_Color..index.."|r "..TextLeft
 		end
 		-- if iconTexture then
-		-- textLEFT = CreateSimpleTextureMarkup(iconTexture, 20, 20) .. " " .. textLEFT
+		-- TextLeft = CreateSimpleTextureMarkup(iconTexture, 20, 20) .. " " .. TextLeft
 		-- elseif iconAtlas then
-		-- textLEFT = CreateAtlasMarkup(iconAtlas, 20, 20) .. " " .. textLEFT
+		-- TextLeft = CreateAtlasMarkup(iconAtlas, 20, 20) .. " " .. TextLeft
 		-- end
 		-- if ADDON_ACTIONS_BLOCKED[name] or (AddOnPerformance and AddOnPerformance:AddOnHasPerformanceWarning(name)) then
-		-- textLEFT = textLEFT .. CreateSimpleTextureMarkup([[Interface\DialogFrame\DialogIcon-AlertNew-16]], 16, 16)
+		-- TextLeft = TextLeft .. CreateSimpleTextureMarkup([[Interface\DialogFrame\DialogIcon-AlertNew-16]], 16, 16)
 		-- end
 		local Parent_Color = E.classColorHexCurrent
 		local Child_Color = E.classColorHexCurrent
@@ -295,10 +295,10 @@ function EventFrame:CollectAddonInfo(index)
 			resonTEXT = ""
 		end
 		if Octo_AddonsManager_DB.lock.addons[name] then
-			textLEFT = CreateSimpleTextureMarkup([[Interface\AddOns\Octo\Media\AddonsManager\lock]], LINE_HEIGHT, LINE_HEIGHT)..textLEFT
+			TextLeft = CreateSimpleTextureMarkup([[Interface\AddOns\Octo\Media\AddonsManager\lock]], LINE_HEIGHT, LINE_HEIGHT)..TextLeft
 		end
 		textRIGHT = colorAddon.. resonTEXT .."|r"
-		return firsticonTexture, iconTexture, colorAddon..textLEFT.."|r", textRIGHT, tooltipthird, colorAddon
+		return firsticonTexture, iconTexture, colorAddon..TextLeft.."|r", textRIGHT, tooltipthird, colorAddon
 	end
 end
 ----------------------------------------------------------------
@@ -324,7 +324,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 	local name = E.func_GetAddonName(index)
 	local firsticonTexture = select(1, EventFrame:CollectAddonInfo(data.index))
 	local iconTexture = select(2, EventFrame:CollectAddonInfo(data.index))
-	local textLEFT = select(3, EventFrame:CollectAddonInfo(data.index))
+	local TextLeft = select(3, EventFrame:CollectAddonInfo(data.index))
 	local textRIGHT = select(4, EventFrame:CollectAddonInfo(data.index))
 	local tooltipthird = select(5, EventFrame:CollectAddonInfo(data.index))
 	-- local colorAddon = select(6, EventFrame:CollectAddonInfo(data.index))
@@ -341,13 +341,13 @@ function EventFrame:Octo_Frame_init(frame, node)
 		frame.first:Hide()
 	end
 	if Octo_AddonsManager_DB.config.showIcons then
-		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+LINE_HEIGHT+4, 0)
+		frame.third.TextLeft:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+LINE_HEIGHT+4, 0)
 		frame.icon_third:SetTexture(iconTexture)
 	else
-		frame.third.textLEFT:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+4, 0)
+		frame.third.TextLeft:SetPoint("LEFT", frame, "LEFT", LINE_HEIGHT+LINE_HEIGHT+4, 0)
 		frame.icon_third:SetTexture(E.ICON_EMPTY)
 	end
-	frame.third.textLEFT:SetText(textLEFT)
+	frame.third.TextLeft:SetText(TextLeft)
 	frame.third.textRIGHT:SetText(textRIGHT)
 	frame.third.tooltip = tooltipthird
 	-- E.func_SetBackdrop(frame.first, nil, 0, 0)

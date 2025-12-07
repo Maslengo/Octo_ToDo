@@ -10,7 +10,7 @@ local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local HEADER_HEIGHT = LINE_HEIGHT*2
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT -- Ширина левой панели
 local LINE_WIDTH_RIGHT = E.GLOBAL_LINE_WIDTH_RIGHT
-local LINES_MAX = E.LINES_MAX
+local MAX_DISPLAY_LINES = E.MAX_DISPLAY_LINES
 -- Автоматический расчет максимального количества строк
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / LINE_HEIGHT)*.7))
 local COLUMNS_MAX = 10 -- Максимальное количество отображаемых персонажей
@@ -41,13 +41,13 @@ local math_max = math.max
 ----------------------------------------------------------------
 -- Обработчики скрытия/показа для полного фрейма
 local function func_OnHideLEFT(frame)
-	frame.frameFULL:Hide()
+	frame.Highlight:Hide()
 end
 local function func_OnShowLEFT(frame)
-	frame.frameFULL:Show()
+	frame.Highlight:Show()
 end
 -- Функция инициализации левой панели
-local func_OnAcquiredLEFT = function(owner, frame, data, new)
+local func_OnAcquiredLeft = function(owner, frame, data, new)
 	if not new then return end
 	local JustifyV = "MIDDLE" -- Вертикальное выравнивание
 	local JustifyH = "LEFT" -- Горизонтальное выравнивание
@@ -56,34 +56,34 @@ local func_OnAcquiredLEFT = function(owner, frame, data, new)
 	frame:SetPropagateMouseMotion(true) -- Разрешаем передачу движения мыши
 	frame:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 	-- Создаем фоновую текстуру для всего элемента
-	local frameFULL = CreateFrame("Button", nil, Octo_MainFrame_ToDo)
-	frameFULL:SetPropagateMouseClicks(true)
-	frameFULL:SetPropagateMouseMotion(true)
-	frameFULL:SetFrameLevel(frame:GetFrameLevel()+2)
-	frameFULL:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- Текстура выделения
-	frameFULL.HighlightTexture = frameFULL:GetHighlightTexture()
-	frameFULL.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND) -- Прозрачность выделения
-	frameFULL:SetPoint("LEFT", frame)
-	frameFULL:SetPoint("TOP", frame)
-	frameFULL:SetPoint("BOTTOM", frame)
-	frameFULL:SetPoint("RIGHT")
-	frame.frameFULL = frameFULL
+	local Highlight = CreateFrame("Button", nil, Octo_MainFrame_ToDo)
+	Highlight:SetPropagateMouseClicks(true)
+	Highlight:SetPropagateMouseMotion(true)
+	Highlight:SetFrameLevel(frame:GetFrameLevel()+2)
+	Highlight:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD") -- Текстура выделения
+	Highlight.HighlightTexture = Highlight:GetHighlightTexture()
+	Highlight.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND) -- Прозрачность выделения
+	Highlight:SetPoint("LEFT", frame)
+	Highlight:SetPoint("TOP", frame)
+	Highlight:SetPoint("BOTTOM", frame)
+	Highlight:SetPoint("RIGHT")
+	frame.Highlight = Highlight
 	-- Текст слева
-	local textLeft = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-	textLeft:SetPoint("LEFT", 0, 0)
-	textLeft:SetWidth(LINE_WIDTH_LEFT - 2)
-	textLeft:SetFontObject(OctoFont11) -- Используем наш шрифт
-	textLeft:SetWordWrap(false) -- Запрещаем перенос слов
-	textLeft:SetJustifyV(JustifyV)
-	textLeft:SetJustifyH(JustifyH)
-	textLeft:SetTextColor(textR, textG, textB, textA) -- Белый цвет текста
-	frame.textLEFT = textLeft
+	local TextLeft = frame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+	TextLeft:SetPoint("LEFT", 0, 0)
+	TextLeft:SetWidth(LINE_WIDTH_LEFT - 2)
+	TextLeft:SetFontObject(OctoFont11) -- Используем наш шрифт
+	TextLeft:SetWordWrap(false) -- Запрещаем перенос слов
+	TextLeft:SetJustifyV(JustifyV)
+	TextLeft:SetJustifyH(JustifyH)
+	TextLeft:SetTextColor(textR, textG, textB, textA) -- Белый цвет текста
+	frame.TextLeft = TextLeft
 	-- Текстура для левой панели
-	local textureLEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
-	textureLEFT:Hide()
-	textureLEFT:SetAllPoints()
-	textureLEFT:SetTexture(E.TEXTURE_LEFT_PATH)
-	frame.textureLEFT = textureLEFT
+	local TextureLeft = frame:CreateTexture(nil, "BACKGROUND", nil, -3)
+	TextureLeft:Hide()
+	TextureLeft:SetAllPoints()
+	TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
+	frame.TextureLeft = TextureLeft
 	local frameData = data.parent.dataProvider.linearized
 	frame:SetScript("OnHide", func_OnHideLEFT)
 	frame:SetScript("OnShow", func_OnShowLEFT)
@@ -121,13 +121,13 @@ local func_OnAcquiredCENT do
 						f.ReputTextureAndBG:SetHeight(LINE_HEIGHT)
 						f.ReputTextureAndBG:SetTexture(E.TEXTURE_CENTRAL_PATH)
 						-- Текст в центре
-						f.textCENT = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
-						f.textCENT:SetAllPoints()
-						f.textCENT:SetFontObject(OctoFont11)
-						f.textCENT:SetWordWrap(false)
-						f.textCENT:SetJustifyV("MIDDLE")
-						f.textCENT:SetJustifyH("CENTER")
-						f.textCENT:SetTextColor(textR, textG, textB, textA)
+						f.TextCenter = f:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
+						f.TextCenter:SetAllPoints()
+						f.TextCenter:SetFontObject(OctoFont11)
+						f.TextCenter:SetWordWrap(false)
+						f.TextCenter:SetJustifyV("MIDDLE")
+						f.TextCenter:SetJustifyH("CENTER")
+						f.TextCenter:SetTextColor(textR, textG, textB, textA)
 						-- Обработчики событий
 						f:SetScript("OnEnter", function() E:func_OctoTooltip_OnEnter(f) end)
 						f:SetScript("OnHide", f.Hide)
@@ -143,19 +143,19 @@ local func_OnAcquiredCENT do
 	end
 end
 -- Функция обновления левой панели
-function EventFrame:Octo_Frame_initLEFT(frame, node)
+function EventFrame:func_initLEFT(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
 	-- Устанавливаем текст и иконку
-	frame.textLEFT:SetText(frameData.textLEFT)
+	frame.TextLeft:SetText(frameData.TextLeft)
 	-- Устанавливаем цвет фона если задан
-	if frameData.colorLEFT then
-		local r, g, b = E:func_hex2rgbNUMBER(frameData.colorLEFT)
-		frame.textureLEFT:SetVertexColor(r, g, b, LEFT_TEXTURE_ALPHA)
-		frame.textureLEFT:Show()
+	if frameData.ColorLeft then
+		local r, g, b = E:func_hex2rgbNUMBER(frameData.ColorLeft)
+		frame.TextureLeft:SetVertexColor(r, g, b, LEFT_TEXTURE_ALPHA)
+		frame.TextureLeft:Show()
 	else
-		frame.textureLEFT:Hide()
+		frame.TextureLeft:Hide()
 	end
 	-- Получаем тип данных
 	local typeQ, ID, iANIMA, kCovenant = frameData.myType[1], frameData.myType[2], frameData.myType[3], frameData.myType[4]
@@ -184,7 +184,7 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 		if current then
 			current:Show()
 			current.curCharTextureBG:Show()
-			current.textCENT:SetText("")
+			current.TextCenter:SetText("")
 			current.ReputTextureAndBG:Hide()
 		end
 	end
@@ -192,15 +192,15 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 	for i = 1, #data.zxc.FIRST do
 		local secondFrame = frame.second[i]
 		local frameData = data.zxc
-		if frameData.textCENT[i] then
-			local textCENT = frameData.textCENT[i]
+		if frameData.TextCenter[i] then
+			local TextCenter = frameData.TextCenter[i]
 			local FIRST = frameData.FIRST[i]
 			local SECOND = frameData.SECOND[i]
 			secondFrame.ReputTextureAndBG:Hide()
 			-- Устанавливаем цвет если задан
-			if frameData.colorCENT[i] then
-				local r1, g1, b1 = E:func_hex2rgbNUMBER(frameData.colorCENT[i])
-				if not frameData.isReputations then
+			if frameData.ColorCenter[i] then
+				local r1, g1, b1 = E:func_hex2rgbNUMBER(frameData.ColorCenter[i])
+				if not frameData.IsReputations then
 					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_RIGHT)
 					secondFrame.ReputTextureAndBG:Show()
 					secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
@@ -208,9 +208,9 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 					secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
 				end
 			end
-			secondFrame.textCENT:SetText(textCENT)
+			secondFrame.TextCenter:SetText(TextCenter)
 			-- Особый случай для репутации
-			if frameData.isReputations and FIRST ~= 0 then
+			if frameData.IsReputations and FIRST ~= 0 then
 				if FIRST == SECOND then
 					secondFrame.ReputTextureAndBG:SetWidth(LINE_WIDTH_RIGHT)
 					secondFrame.ReputTextureAndBG:Show()
@@ -220,7 +220,7 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 				end
 			end
 		else
-			secondFrame.textCENT:SetText("")
+			secondFrame.TextCenter:SetText("")
 			secondFrame.ReputTextureAndBG:SetVertexColor(0, 0, 0, 0)
 		end
 		secondFrame:Show()
@@ -237,15 +237,15 @@ function EventFrame:Octo_Create_MainFrame_ToDo()
 			RequestRaidInfo() -- Запрашиваем информацию о рейде
 	end)
 	-- Рассчитываем размеры фрейма
-	local NumPlayers = math_min(E:func_NumPlayers(), COLUMNS_MAX)
-	Octo_MainFrame_ToDo:SetSize(LINE_WIDTH_LEFT + LINE_WIDTH_RIGHT * NumPlayers, LINE_HEIGHT * LINES_MAX)
+	local numPlayers = math_min(E:func_numPlayers(), COLUMNS_MAX)
+	Octo_MainFrame_ToDo:SetSize(LINE_WIDTH_LEFT + LINE_WIDTH_RIGHT * numPlayers, LINE_HEIGHT * MAX_DISPLAY_LINES)
 	-- Настройки поведения фрейма
 	Octo_MainFrame_ToDo:SetDontSavePosition(Octo_ToDo_DB_Vars.Config_DontSavePosition)
 	Octo_MainFrame_ToDo:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame_ToDo:SetFrameStrata("HIGH")
 	-- Создаем скролл-фрейм
-	local barPanelScroll = CreateFrame("ScrollFrame", nil, Octo_MainFrame_ToDo)
-	Octo_MainFrame_ToDo.barPanelScroll = barPanelScroll
+	local horizontalScrollFrame = CreateFrame("ScrollFrame", nil, Octo_MainFrame_ToDo)
+	Octo_MainFrame_ToDo.horizontalScrollFrame = horizontalScrollFrame
 	-- Функции для обработки скроллинга
 	local function OnHorizontalScroll(self, offset)
 		local scrollRange = self:GetHorizontalScrollRange()
@@ -257,37 +257,37 @@ function EventFrame:Octo_Create_MainFrame_ToDo()
 		self.hBar:SetVisibleExtentPercentage(width > 0 and width / (xrange + width) or 0)
 		self.hBar:SetPanExtentPercentage(xrange > 0 and 30 / xrange or 0)
 	end
-	barPanelScroll:SetScript("OnHorizontalScroll", OnHorizontalScroll)
-	barPanelScroll:SetScript("OnScrollRangeChanged", OnScrollRangeChanged)
+	horizontalScrollFrame:SetScript("OnHorizontalScroll", OnHorizontalScroll)
+	horizontalScrollFrame:SetScript("OnScrollRangeChanged", OnScrollRangeChanged)
 	-- Создаем горизонтальную полосу прокрутки
-	local HorizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "OctoWowTrimHorizontalScrollBar")
-	HorizontalScrollBar.Backplate = HorizontalScrollBar:GetRegions()
-	HorizontalScrollBar.Backplate:Hide()
+	local horizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "OctoWowTrimhorizontalScrollBar")
+	horizontalScrollBar.Backplate = horizontalScrollBar:GetRegions()
+	horizontalScrollBar.Backplate:Hide()
 	-- Настраиваем регионы полосы прокрутки
 	local regions = {
-		HorizontalScrollBar.Back.Texture,
-		HorizontalScrollBar.Forward.Texture,
-		HorizontalScrollBar.Track.Middle,
-		HorizontalScrollBar.Track.Begin,
-		HorizontalScrollBar.Track.End,
-		HorizontalScrollBar.Track.Thumb.Middle,
-		HorizontalScrollBar.Track.Thumb.Begin,
-		HorizontalScrollBar.Track.Thumb.End
+		horizontalScrollBar.Back.Texture,
+		horizontalScrollBar.Forward.Texture,
+		horizontalScrollBar.Track.Middle,
+		horizontalScrollBar.Track.Begin,
+		horizontalScrollBar.Track.End,
+		horizontalScrollBar.Track.Thumb.Middle,
+		horizontalScrollBar.Track.Thumb.Begin,
+		horizontalScrollBar.Track.Thumb.End
 	}
 	for _, region in ipairs(regions) do
 		region:SetTexCoord(0, 0, 1, 0, 0, 1, 1, 1)
 	end
-	barPanelScroll.hBar = HorizontalScrollBar
-	HorizontalScrollBar:SetPoint("TOPLEFT", barPanelScroll, "BOTTOMLEFT", 0, -6)
-	HorizontalScrollBar:SetPoint("TOPRIGHT", barPanelScroll, "BOTTOMRIGHT")
-	HorizontalScrollBar:RegisterCallback(HorizontalScrollBar.Event.OnScroll, function(_, scrollPercentage)
-			barPanelScroll:SetHorizontalScroll(scrollPercentage * barPanelScroll:GetHorizontalScrollRange())
+	horizontalScrollFrame.hBar = horizontalScrollBar
+	horizontalScrollBar:SetPoint("TOPLEFT", horizontalScrollFrame, "BOTTOMLEFT", 0, -6)
+	horizontalScrollBar:SetPoint("TOPRIGHT", horizontalScrollFrame, "BOTTOMRIGHT")
+	horizontalScrollBar:RegisterCallback(horizontalScrollBar.Event.OnScroll, function(_, scrollPercentage)
+			horizontalScrollFrame:SetHorizontalScroll(scrollPercentage * horizontalScrollFrame:GetHorizontalScrollRange())
 	end)
-	HorizontalScrollBar:SetHideIfUnscrollable(true)
+	horizontalScrollBar:SetHideIfUnscrollable(true)
 	-- Создаем дочерний фрейм для содержимого
-	local childCENT = CreateFrame("FRAME")
-	Octo_MainFrame_ToDo.childCENT = childCENT
-	barPanelScroll:SetScrollChild(childCENT)
+	local scrollContentFrame = CreateFrame("FRAME")
+	Octo_MainFrame_ToDo.scrollContentFrame = scrollContentFrame
+	horizontalScrollFrame:SetScrollChild(scrollContentFrame)
 	-- Настраиваем ScrollBox для левой панели
 	Octo_MainFrame_ToDo.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "WowScrollBoxList")
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(LINE_WIDTH_LEFT)
@@ -295,30 +295,30 @@ function EventFrame:Octo_Create_MainFrame_ToDo()
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPropagateMouseClicks(true)
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
-	barPanelScroll:SetPoint("TOPLEFT", Octo_MainFrame_ToDo.ScrollBoxLEFT, "TOPRIGHT", 0, HEADER_HEIGHT)
-	barPanelScroll:SetPoint("BOTTOMRIGHT")
-	Octo_MainFrame_ToDo.viewLEFT = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.viewLEFT:SetElementExtent(LINE_HEIGHT)
-	Octo_MainFrame_ToDo.viewLEFT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initLEFT(...) end)
-	Octo_MainFrame_ToDo.viewLEFT:RegisterCallback(Octo_MainFrame_ToDo.viewLEFT.Event.OnAcquiredFrame, func_OnAcquiredLEFT, Octo_MainFrame_ToDo)
+	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame_ToDo.ScrollBoxLEFT, "TOPRIGHT", 0, HEADER_HEIGHT)
+	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
+	Octo_MainFrame_ToDo.ViewLeft = CreateScrollBoxListTreeListView(0)
+	Octo_MainFrame_ToDo.ViewLeft:SetElementExtent(LINE_HEIGHT)
+	Octo_MainFrame_ToDo.ViewLeft:SetElementInitializer("BUTTON", function(...) self:func_initLEFT(...) end)
+	Octo_MainFrame_ToDo.ViewLeft:RegisterCallback(Octo_MainFrame_ToDo.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame_ToDo)
 	-- Настраиваем ScrollBox для центральной панели
-	Octo_MainFrame_ToDo.ScrollBoxCENT = CreateFrame("FRAME", nil, childCENT, "WowScrollBoxList")
-	Octo_MainFrame_ToDo.ScrollBoxCENT:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
-	Octo_MainFrame_ToDo.ScrollBoxCENT:SetPoint("BOTTOMRIGHT")
-	Octo_MainFrame_ToDo.ScrollBoxCENT:SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBoxCENT:GetScrollTarget():SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBarCENT = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "MinimalScrollBar")
-	Octo_MainFrame_ToDo.ScrollBarCENT:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "TOPRIGHT", 6, 0)
-	Octo_MainFrame_ToDo.ScrollBarCENT:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 6, 0)
-	Octo_MainFrame_ToDo.viewCENT = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.viewCENT:SetElementExtent(LINE_HEIGHT)
-	Octo_MainFrame_ToDo.viewCENT:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initCENT(...) end)
-	Octo_MainFrame_ToDo.viewCENT:RegisterCallback(Octo_MainFrame_ToDo.viewCENT.Event.OnAcquiredFrame, func_OnAcquiredCENT, Octo_MainFrame_ToDo)
+	Octo_MainFrame_ToDo.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList")
+	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
+	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("BOTTOMRIGHT")
+	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPropagateMouseClicks(true)
+	Octo_MainFrame_ToDo.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
+	Octo_MainFrame_ToDo.ScrollBarCenter = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "MinimalScrollBar")
+	Octo_MainFrame_ToDo.ScrollBarCenter:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "TOPRIGHT", 6, 0)
+	Octo_MainFrame_ToDo.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 6, 0)
+	Octo_MainFrame_ToDo.ViewCenter = CreateScrollBoxListTreeListView(0)
+	Octo_MainFrame_ToDo.ViewCenter:SetElementExtent(LINE_HEIGHT)
+	Octo_MainFrame_ToDo.ViewCenter:SetElementInitializer("BUTTON", function(...) self:Octo_Frame_initCENT(...) end)
+	Octo_MainFrame_ToDo.ViewCenter:RegisterCallback(Octo_MainFrame_ToDo.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCENT, Octo_MainFrame_ToDo)
 	-- Инициализируем скроллбоксы с полосами прокрутки
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewLEFT)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCENT)
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT, Octo_MainFrame_ToDo.viewCENT)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCENT, Octo_MainFrame_ToDo.ScrollBarCENT)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCenter, Octo_MainFrame_ToDo.ViewLeft)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCenter)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCenter, Octo_MainFrame_ToDo.ScrollBarCenter, Octo_MainFrame_ToDo.ViewCenter)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCenter, Octo_MainFrame_ToDo.ScrollBarCenter)
 	-- Настраиваем внешний вид основного фрейма
 	Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
 	Octo_MainFrame_ToDo:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
@@ -357,14 +357,14 @@ function EventFrame:Octo_Create_MainFrame_ToDo()
 		self.charTexture:SetAllPoints()
 		self.charTexture:SetTexture(E.TEXTURE_CHAR_PATH)
 	end
-	Octo_MainFrame_ToDo.pool = CreateFramePool("FRAME", childCENT, nil, resetFunc, false, initFunc)
+	Octo_MainFrame_ToDo.pool = CreateFramePool("FRAME", scrollContentFrame, nil, resetFunc, false, initFunc)
 end
 ----------------------------------------------------------------
 -- Функция создания провайдера данных для отображения
 ----------------------------------------------------------------
 function E:func_TODO_CreateDataProvider()
 	E:func_Collect_All_Table() -- Собираем все данные
-	local NumPlayers = math_min(E:func_NumPlayers(), COLUMNS_MAX)
+	local numPlayers = math_min(E:func_numPlayers(), COLUMNS_MAX)
 	local DataProvider = CreateTreeDataProvider()
 	local numlines = 0
 	-- Находим индекс текущего персонажа
@@ -382,16 +382,16 @@ function E:func_TODO_CreateDataProvider()
 		totalPers = totalPers
 	}
 	-- Вспомогательная функция для создания таблицы zxc
-	local function CreateZxcTable(isReputations)
+	local function CreateZxcTable(IsReputations)
 		return {
 			FIRST = {},
 			SECOND = {},
-			textLEFT = {},
-			colorLEFT = {},
-			textCENT = {},
+			TextLeft = {},
+			ColorLeft = {},
+			TextCenter = {},
 			tooltipRIGHT = {},
-			colorCENT = {},
-			isReputations = isReputations or false,
+			ColorCenter = {},
+			IsReputations = IsReputations or false,
 			myType = {},
 		}
 	end
@@ -404,17 +404,17 @@ function E:func_TODO_CreateDataProvider()
 			for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
 				zxc.FIRST[CharIndex] = 0
 				zxc.SECOND[CharIndex] = 0
-				local _, _, textCENT, tooltipRIGHT, colorCENT = func(CharInfo)
-				zxc.textCENT[CharIndex] = textCENT
+				local _, _, TextCenter, tooltipRIGHT, ColorCenter = func(CharInfo)
+				zxc.TextCenter[CharIndex] = TextCenter
 				zxc.tooltipRIGHT[CharIndex] = tooltipRIGHT or {}
-				zxc.colorCENT[CharIndex] = colorCENT
+				zxc.ColorCenter[CharIndex] = ColorCenter
 			end
 			-- Получаем данные для левой панели от первого персонажа
 			local firstChar = sortedPlayersTBL[1]
 			if firstChar then
-				local textLEFT, colorLEFT, _, _, _, myType = func(firstChar)
-				zxc.textLEFT = textLEFT
-				zxc.colorLEFT = colorLEFT
+				local TextLeft, ColorLeft, _, _, _, myType = func(firstChar)
+				zxc.TextLeft = TextLeft
+				zxc.ColorLeft = ColorLeft
 				zxc.myType = myType or {}
 			end
 			DataProvider:Insert({
@@ -438,20 +438,20 @@ function E:func_TODO_CreateDataProvider()
 						numlines = numlines + 1
 						local zxc = CreateZxcTable(true)
 						for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
-							local FIRST, SECOND, vivod, colorCENT = ("#"):split(CharInfo.MASLENGO.Reputation[v.id])
+							local FIRST, SECOND, vivod, ColorCenter = ("#"):split(CharInfo.MASLENGO.Reputation[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
-							zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
-							-- zxc.textLEFT = E:func_texturefromIcon(E.OctoTable_Expansions[index].icon, 18, 32)..E:func_reputationName(v.id)
+							zxc.TextLeft = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
+							-- zxc.TextLeft = E:func_texturefromIcon(E.OctoTable_Expansions[index].icon, 18, 32)..E:func_reputationName(v.id)
 							-- if repInfo then
-							-- zxc.iconLEFT = repInfo.icon
+							-- zxc.IconLeft = repInfo.icon
 							-- else
-							-- zxc.iconLEFT = E.ICON_EMPTY
+							-- zxc.IconLeft = E.ICON_EMPTY
 							-- end
-							zxc.colorLEFT = E.OctoTable_Expansions[index].color
-							zxc.textCENT[CharIndex] = vivod
+							zxc.ColorLeft = E.OctoTable_Expansions[index].color
+							zxc.TextCenter[CharIndex] = vivod
 							zxc.tooltipRIGHT[CharIndex] = {}
-							zxc.colorCENT[CharIndex] = colorCENT
+							zxc.ColorCenter[CharIndex] = ColorCenter
 							zxc.myType = {}
 						end
 						DataProvider:Insert({
@@ -465,21 +465,21 @@ function E:func_TODO_CreateDataProvider()
 		end
 	end
 	-- Корректируем количество строк
-	LINES_MAX = math_max(1, math_min(numlines, LINES_TOTAL or numlines))
+	MAX_DISPLAY_LINES = math_max(1, math_min(numlines, LINES_TOTAL or numlines))
 	if Octo_MainFrame_ToDo then
 		-- Устанавливаем провайдер данных (это запустит создание фреймов)
-		Octo_MainFrame_ToDo.viewCENT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-		Octo_MainFrame_ToDo.viewLEFT:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		Octo_MainFrame_ToDo.ViewCenter:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+		Octo_MainFrame_ToDo.ViewLeft:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 		-- Обновляем размеры фрейма
-		local width = LINE_WIDTH_LEFT + LINE_WIDTH_RIGHT * NumPlayers
-		local height = LINE_HEIGHT * LINES_MAX + HEADER_HEIGHT
+		local width = LINE_WIDTH_LEFT + LINE_WIDTH_RIGHT * numPlayers
+		local height = LINE_HEIGHT * MAX_DISPLAY_LINES + HEADER_HEIGHT
 		Octo_MainFrame_ToDo:SetSize(width, height)
-		Octo_MainFrame_ToDo.childCENT:SetSize(LINE_WIDTH_RIGHT * E:func_NumPlayers(), height)
+		Octo_MainFrame_ToDo.scrollContentFrame:SetSize(LINE_WIDTH_RIGHT * E:func_numPlayers(), height)
 		-- Обновляем фреймы персонажей
 		Octo_MainFrame_ToDo.pool:ReleaseAll()
 		for count, CharInfo in ipairs(sortedPlayersTBL) do
 			local curCharFrame = Octo_MainFrame_ToDo.pool:Acquire()
-			curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.childCENT, "TOPLEFT", LINE_WIDTH_RIGHT * (count - 1), -HEADER_HEIGHT)
+			curCharFrame:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", LINE_WIDTH_RIGHT * (count - 1), -HEADER_HEIGHT)
 			curCharFrame.text = curCharFrame:CreateFontString(nil, "ARTWORK", "GameFontNormalSmall")
 			curCharFrame.text:SetAllPoints()
 			-- curCharFrame.text:SetFontObject(OctoFont11)
@@ -487,7 +487,7 @@ function E:func_TODO_CreateDataProvider()
 			curCharFrame.text:SetJustifyV("MIDDLE")
 			curCharFrame.text:SetJustifyH("CENTER")
 			curCharFrame.text:SetMaxLines(3)
-			curCharFrame.text:SetText(E:func_textCENT_Chars(CharInfo))
+			curCharFrame.text:SetText(E:func_TextCenter_Chars(CharInfo))
 			curCharFrame:SetPropagateMouseClicks(true)
 			curCharFrame:SetPropagateMouseMotion(true)
 			curCharFrame:SetHitRectInsets(1, 1, 1, 1)

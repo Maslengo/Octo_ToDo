@@ -1,5 +1,5 @@
 <Ui>
-	<EventFrame name="OctoWowTrimHorizontalScrollBar" inherits="HorizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
+	<EventFrame name="OctoWowTrimhorizontalScrollBar" inherits="horizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
 		<Size x="560" y="8"/>
 		<KeyValues>
 			<KeyValue key="minThumbExtent" value="23" type="number"/>
@@ -145,7 +145,7 @@
 		</Scripts>
 	</EventFrame>
 	<EditBox name="OCTOEditBoxTemplate" inherits="InputBoxScriptTemplate,BackdropTemplate" multiLine="false" autoFocus="false" virtual="true">
-		<FontString inherits="GameFontHighlightSmall" justifyH="CENTER"/>
+		<FontString inherits="GameFontHighlightSmall" justifyH="Center"/>
 		<Scripts>
 			<OnLoad>
 				self:SetBackdrop(E.menuBackdrop)
@@ -182,19 +182,19 @@
 				self.highlightLeave.alpha:SetTarget(self.highlight)
 			</OnLoad>
 			<OnEnter>
-				if 1 == 1 then
+				if not E.ENABLE_HIGHLIGHT_ANIMATION then
 					self.highlightLeave:Stop()
 					self.highlight:SetAlpha(.3)
 				end
 			</OnEnter>
 			<OnLeave>
-				if 1 == 1 then
+				if not E.ENABLE_HIGHLIGHT_ANIMATION then
 					self.highlightLeave:Restart()
 					GameTooltip:Hide()
 				end
 			</OnLeave>
 			<OnShow>
-				if 1 == 1 then
+				if not E.ENABLE_HIGHLIGHT_ANIMATION then
 					self.highlight:SetAlpha(0)
 				end
 			</OnShow>

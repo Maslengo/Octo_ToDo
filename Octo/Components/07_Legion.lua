@@ -4,18 +4,18 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local dropdownOrder = 7
+local categoryKey = 7
 local expansionID = 7
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_DataOtrisovka[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
 local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(dropdownOrder)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	E.func_ResetOtrisovkaTables(categoryKey)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		1508,
 		1342,
 		1220,
@@ -27,10 +27,10 @@ local function tempFunction(start)
 		1273, -- (1273 MONETKA)
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		1900, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
 		1883, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
 		1828, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
@@ -59,17 +59,17 @@ local function tempFunction(start)
 		1975, --name = "Кудесник Маргосс", side = "-", category = "Legion", }, --[faction=1975]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 
 
 
 		-- {
 		-- sorted = false,
 		-- showTooltip = true,
-		-- textleft = "bounty_Legion_TEST",
+		-- TextLeft = "bounty_Legion_TEST",
 		-- name_save = "bounty_Legion_TEST",
 		-- reset = "Daily",
-		-- desc = dropdownOrder,
+		-- desc = categoryKey,
 		-- quests = {
 		-- {43179},
 		-- {42422},
@@ -85,10 +85,10 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			textleft = L["World Boss"],
+			TextLeft = L["World Boss"],
 			name_save = "WorldBoss",
 			reset = "Weekly",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{43193, forcedText = {npcID = 109331}, addText = {mapID = 630},}, -- Каламир 109331 Азсуна (4).
 				{43192, forcedText = {npcID = 108829}, addText = {mapID = 630},}, -- Левантия 108829 Азсуна (2).
@@ -115,10 +115,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.func_questName(43533),
+			TextLeft = E.func_questName(43533),
 			name_save = "BalanceofPower",
 			reset = "Once",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			MainquestID = 43533,
 			quests = {
 				{43496},
@@ -161,10 +161,10 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			textleft = E.Timers.Legion_Remix_Invasion(),
+			TextLeft = E.Timers.Legion_Remix_Invasion(),
 			name_save = "InvasionQuests",
 			reset = "Daily",
-			desc = dropdownOrder,
+			desc = categoryKey,
 			quests = {
 				{45838},
 				{45812},
@@ -175,10 +175,10 @@ local function tempFunction(start)
 		},
 		-- {
 		-- showTooltip = true,
-		-- textleft = E.func_questName(92855),
+		-- TextLeft = E.func_questName(92855),
 		-- name_save = "MakeHasteNotWaste",
 		-- reset = "Daily",
-		-- desc = dropdownOrder,
+		-- desc = categoryKey,
 		-- quests = {
 		-- {92855},
 		-- },
@@ -186,7 +186,7 @@ local function tempFunction(start)
 		-- },
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 end
 

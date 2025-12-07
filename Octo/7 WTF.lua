@@ -647,12 +647,12 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	wipe(E.ALL_Additionally)
 
 	E.func_LoadComponents(true)
-	for dropdownOrder, value in next,(E.OctoTables_Vibor) do
-		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[dropdownOrder].Currencies)
-		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[dropdownOrder].Items)
-		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[dropdownOrder].Reputations)
-		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests)
-		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[dropdownOrder].Additionally)
+	for categoryKey, value in next,(E.OctoTables_Vibor) do
+		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[categoryKey].Currencies)
+		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[categoryKey].Items)
+		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[categoryKey].Reputations)
+		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests)
+		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[categoryKey].Additionally)
 	end
 	-- E.func_TableConcat(E.ALL_Currencies, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllCurrencies
 	E.func_TableConcat(E.ALL_Items, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllItems

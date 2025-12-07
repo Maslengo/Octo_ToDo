@@ -4,34 +4,34 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local dropdownOrder = 8
+local categoryKey = 8
 local expansionID = 7
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder] = {}
-E.OctoTables_Vibor[dropdownOrder].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[dropdownOrder].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (Remix)|r"
+E.OctoTables_DataOtrisovka[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey] = {}
+E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name.." (Remix)|r"
 local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(dropdownOrder)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then return end
+	E.func_ResetOtrisovkaTables(categoryKey)
+	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Currencies = {
+	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		3292,3268,3252,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Items = {
+	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 		254267,
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Reputations = {
+	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
 
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].UniversalQuests = {
+	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[dropdownOrder].Additionally = {
+	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
 		"LegionRemixResearch",
 	}
 	----------------------------------------------------------------
@@ -41,32 +41,32 @@ table.insert(E.Components, tempFunction)
 
 
 local function localfunc2()
-	local OctoTable_Otrisovka_textCENT = {}
-	if Octo_ToDo_DB_Vars.ExpansionToShow[dropdownOrder] then
-		table.insert(OctoTable_Otrisovka_textCENT, function(CharInfo)
+	local OctoTable_Otrisovka_TextCenter = {}
+	if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
+		table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 				----------------------------------------------------------------
-				local iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep = nil, "", nil, "", nil, nil, nil, false, nil, nil
-				tooltipKey = "LegionRemixResearch"
+				local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
+				TooltipKey = "LegionRemixResearch"
 				if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
 					local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
 					local barMax = CharInfo.MASLENGO.LegionRemixData.barMax
-					local new_textCENT = barValue.."/"..barMax
+					local new_TextCenter = barValue.."/"..barMax
 					if CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests then
-						new_textCENT = barValue..E.Blue_Color.."("..CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests..")|r" .."/"..barMax
+						new_TextCenter = barValue..E.Blue_Color.."("..CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests..")|r" .."/"..barMax
 					end
-					textCENT = new_textCENT
+					TextCenter = new_TextCenter
 				end
 				----------------------------------------------------------------
-				textLEFT = L["Infinite Research"]
-				colorLEFT = E.OctoTable_Expansions[7].color
-				settingsType = "Other#".."LegionRemixResearch"
+				TextLeft = L["Infinite Research"]
+				ColorLeft = E.OctoTable_Expansions[7].color
+				SettingsType = "Other#".."LegionRemixResearch"
 				----------------------------------------------------------------
-				return iconLEFT, textLEFT, colorLEFT, textCENT, settingsType, colorCENT, tooltipKey, isReputation, FIRSTrep, SECONDrep
+				return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 				----------------------------------------------------------------
 		end)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	return OctoTable_Otrisovka_textCENT
+	return OctoTable_Otrisovka_TextCenter
 end
