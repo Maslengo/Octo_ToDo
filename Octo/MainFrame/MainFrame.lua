@@ -201,6 +201,7 @@ function EventFrame:Octo_Frame_initLEFT(frame, node)
 	local frameData = node:GetData()
 	if frameData.iconLEFT then
 		frame.icon_1:SetTexture(frameData.iconLEFT)
+		frame.icon_1:SetAtlas(frameData.iconLEFT, false)
 	else
 		frame.icon_1:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
@@ -605,7 +606,7 @@ function EventFrame:CreateDataProvider()
 						}
 						-- Заполнение данных для левой колонки (берется из первого персонажа)
 						if firstChar then
-							local textLEFT,    colorLEFT,    iconLEFT,    settingsType,    tooltipKey,    isReputation = E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, firstChar, dataType, id)
+							local textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation = E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, firstChar, dataType, id)
 							zxc.iconLEFT = iconLEFT
 							zxc.textLEFT = textLEFT or "NONE"
 							zxc.colorLEFT = colorLEFT or E.Blue_Color
@@ -616,7 +617,7 @@ function EventFrame:CreateDataProvider()
 						-- Заполнение данных для каждого персонажа
 						for CharIndex, CharInfo in ipairs(tbl) do
 							-- local _, _, _, textCENT, _, colorCENT, _, _, _, FIRSTrep, SECONDrep = func(CharInfo)
-							local textCENT,    colorCENT,    FIRSTrep,    SECONDrep = E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
+							local textCENT, colorCENT, FIRSTrep, SECONDrep = E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
 
 							zxc.textCENT[CharIndex] = textCENT
 							zxc.colorCENT[CharIndex] = colorCENT

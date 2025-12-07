@@ -498,9 +498,9 @@ local function func_mapName_CACHE(id)
 end
 function E.func_mapName(id)
 	if not id then return end
-	-- if C_Map.GetBestMapForUnit("player") == id then
-	-- 	return E.COLOR_NECROLORD..">>"..func_mapName_CACHE(id).."<<|r"
-	-- end
+	if C_Map.GetBestMapForUnit("player") == id then
+		return E.COLOR_NECROLORD..">>"..func_mapName_CACHE(id).."<<|r"
+	end
 	local cachedName = func_mapName_CACHE(id)
 	return cachedName..E.debugInfo(id)
 end
@@ -1539,8 +1539,8 @@ function E.func_Otrisovka_LEFT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
 		end
 	end
 	-- Если функция не найдена, возвращаем значения по умолчанию
-	--         textLEFT,    colorLEFT,    iconLEFT,    settingsType,    tooltipKey,    isReputation
-	return    "",            nil,        nil,        nil,            nil,        false
+	-- textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation
+	return "", nil, nil, nil, nil, false
 end
 function E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
@@ -1553,8 +1553,8 @@ function E.func_Otrisovka_RIGHT_Dispatcher(dropdownOrder, CharInfo, dataType, id
 		end
 	end
 	-- Если функция не найдена, возвращаем значения по умолчанию
-	--         textCENT,    colorCENT,    FIRSTrep,    SECONDrep
-	return    "",            nil,        nil,        nil
+	-- textCENT, colorCENT, FIRSTrep, SECONDrep
+	return "", nil, nil, nil
 end
 function E.func_Otrisovka_LEFT_Currencies(dropdownOrder, CharInfo, dataType, id)
 	if not dropdownOrder then return end
@@ -1638,10 +1638,23 @@ function E.func_Otrisovka_LEFT_UniversalQuests(dropdownOrder, CharInfo, dataType
 	local textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation = "", nil, nil, nil, nil, false
 	----------------------------------------------------------------
 	local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+	local reset = data.reset -- questKey:match("_([^_]+)$")
 	----------------------------------------------------------------
-	textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
+	-- textLEFT = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.textleft)
+	textLEFT = data.textleft
 	-- colorLEFT =
+	if reset == "Daily" then
+		iconLEFT = E.ICON_DAILY --E.func_vignetteIcon("greatVault-whole-normal")
+	elseif reset == "Weekly" then
+		iconLEFT = E.ICON_WEEKLY
+	elseif reset == "Once" then
+		iconLEFT = E.ICON_ONCE
+	end
 	-- iconLEFT =
+
+
+
+
 	settingsType = dataType.."#"..questKey
 	-- tooltipKey =
 	-- isReputation =
@@ -1745,9 +1758,11 @@ function E.func_Otrisovka_LEFT_Additionally(dropdownOrder, CharInfo, dataType, i
 	local textLEFT, colorLEFT, iconLEFT, settingsType, tooltipKey, isReputation = "", nil, nil, dataType.."#"..id, nil, false
 	----------------------------------------------------------------
 	if id == "CovenantRenown" then
-		textLEFT = "CovenantRenown"
+		textLEFT = E.func_currencyName(1822)
+		iconLEFT = E.func_GetCurrencyIcon(1822)
 	elseif id == "CovenantAnima" then
-		textLEFT = "CovenantAnima"
+		textLEFT = E.func_currencyName(1813)
+		iconLEFT = E.func_GetCurrencyIcon(1813)
 	elseif id == "LegionRemixResearch" then
 		textLEFT = L["Infinite Research"]
 	elseif id == "ListOfQuests" then
@@ -1809,8 +1824,6 @@ function E.func_Otrisovka_RIGHT_Additionally(dropdownOrder, CharInfo, dataType, 
 		end
 		if CharInfo.PlayerData.Possible_Anima then
 			textCENT = textCENT..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
-		else
-			textCENT = textCENT.."HYI"
 		end
 	elseif id == "LegionRemixResearch" then
 		if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
@@ -2140,6 +2153,34 @@ E.Class_Druid_Color = C_ClassColor.GetClassColor("DRUID"):GenerateHexColorMarkup
 E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHexColorMarkup()
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup()
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
+
+
+
+-- /run fpde(_G.QUEST_TAG_ATLAS)
+-- E.QUEST_TAG_ATLAS = _G.QUEST_TAG_ATLAS or {
+-- [1] = "questlog-questtypeicon-group",
+-- ["COMPLETED_LEGENDARY"] = "questlog-questtypeicon-legendaryturnin",
+-- [89] = "questlog-questtypeicon-raid",
+-- [62] = "questlog-questtypeicon-raid",
+-- [288] = "questlog-questtypeicon-delves",
+-- [41] = "questlog-questtypeicon-pvp",
+-- [88] = "questlog-questtypeicon-raid",
+-- ["WEEKLY"] = "questlog-questtypeicon-weekly",
+-- ["EXPIRING_SOON"] = "questlog-questtypeicon-clockorange",
+-- [85] = "questlog-questtypeicon-heroic",
+-- ["EXPIRING"] = "questlog-questtypeicon-clockyellow",
+-- ["DAILY"] = "questlog-questtypeicon-daily",
+-- [98] = "questlog-questtypeicon-scenario",
+-- ["ALLIANCE"] = "questlog-questtypeicon-alliance",
+-- ["FAILED"] = "questlog-questtypeicon-questfailed",
+-- ["HORDE"] = "questlog-questtypeicon-horde",
+-- ["STORY"] = "questlog-questtypeicon-story",
+-- [81] = "questlog-questtypeicon-dungeon",
+-- ["COMPLETED"] = "questlog-questtypeicon-quest",
+-- },
+E.ICON_ONCE = "questlog-questtypeicon-quest"
+E.ICON_DAILY = "questlog-questtypeicon-daily"
+E.ICON_WEEKLY = "questlog-questtypeicon-weekly"
 E.FULL_WIDTH = 3.60
 E.backgroundColorR = .08
 E.backgroundColorG = .08
@@ -2438,6 +2479,10 @@ function E.func_KeyTooltip_LEFT(settingsType)
 		end
 		minOnline = math_min(unpack(OnlineMinMax))
 		maxOnline = math_max(unpack(OnlineMinMax))
+	elseif dataType == "UniversalQuests" then
+		local reset = id:match("_([^_]+)$")
+		tooltip[#tooltip+1] = {reset}
+
 	end
 
 	-- print (dataType, id)
@@ -2633,47 +2678,54 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 	-- UniversalQuests#
 	-- Additionally#
 	-- if dataType == "Currencies" then
-	--     for currencyID, dataTBL in next,(E.OctoTable_ALL_Mounts) do
-	--         if id == currencyID then
-	--             for mountID, price in next,(dataTBL) do
-	--                 local mountIconNumber = E.func_mountIcon(mountID)
-	--                 local mountIcon = E.func_texturefromIcon(mountIconNumber)
-	--                 local mountName = E.func_mountName(mountID)
-	--                 local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
-	--                 local color = isCollected and E.White_Color or E.Red_Color
-	--                 local mountLeftText = mountIcon ..color .. mountName .. "|r"
-	--                 tooltip[#tooltip+1] = {mountLeftText, E.func_CompactNumberFormat(price)..E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))}
-	--             end
-	--         end
-	--     end
+	-- for currencyID, dataTBL in next,(E.OctoTable_ALL_Mounts) do
+	-- if id == currencyID then
+	-- for mountID, price in next,(dataTBL) do
+	-- local mountIconNumber = E.func_mountIcon(mountID)
+	-- local mountIcon = E.func_texturefromIcon(mountIconNumber)
+	-- local mountName = E.func_mountName(mountID)
+	-- local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+	-- local color = isCollected and E.White_Color or E.Red_Color
+	-- local mountLeftText = mountIcon ..color .. mountName .. "|r"
+	-- tooltip[#tooltip+1] = {mountLeftText, E.func_CompactNumberFormat(price)..E.func_texturefromIcon(E.func_GetCurrencyIcon(currencyID))}
+	-- end
+	-- end
+	-- end
 	-- end
 	if id == "CovenantRenown" then
+		local typeSL = 1
 		for covenant = 1, 4 do
-			tooltip[#tooltip+1] = {E.OctoTable_Covenant[covenant].name, CharInfo.MASLENGO.CovenantAndAnima[covenant][1] or " "}
-			-- if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			--     local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			--     if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-			--         local color = E.OctoTable_Covenant[curCovID].color
-			--         colorCENT = color
-			--         if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
-			--             textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
-			--         end
-			--     end
-			-- end
+			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID or 0
+			local icon = E.OctoTable_Covenant[covenant].icon
+			local name = E.OctoTable_Covenant[covenant].name
+			local color = E.OctoTable_Covenant[covenant].color
+			local leftText = E.func_texturefromIcon(icon)..name
+			local rightText = CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] or 0
+			if curCovID ~= covenant then
+				color = E.Gray_Color
+			end
+			leftText = color..leftText.."|r"
+			rightText = color..rightText.."|r"
+			tooltip[#tooltip+1] = {leftText, rightText}
 		end
 	elseif id == "CovenantAnima" then
+		local typeSL = 2
 		for covenant = 1, 4 do
-			tooltip[#tooltip+1] = {E.OctoTable_Covenant[covenant].name, CharInfo.MASLENGO.CovenantAndAnima[covenant][2] or " "}
-			-- if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			--     local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			--     if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-			--         local color = E.OctoTable_Covenant[curCovID].color
-			--         colorCENT = color
-			--         if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
-			--             textCENT = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
-			--         end
-			--     end
-			-- end
+			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID or 0
+			local icon = E.OctoTable_Covenant[covenant].icon
+			local name = E.OctoTable_Covenant[covenant].name
+			local color = E.OctoTable_Covenant[covenant].color
+			local leftText = E.func_texturefromIcon(icon)..name
+			local rightText = CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] or 0
+			if curCovID ~= covenant then
+				color = E.Gray_Color
+			end
+			leftText = color..leftText.."|r"
+			rightText = color..rightText.."|r"
+			if CharInfo.PlayerData.Possible_Anima and curCovID == covenant then
+				rightText = rightText..E.Blue_Color.."+"..CharInfo.PlayerData.Possible_Anima.."|r"
+			end
+			tooltip[#tooltip+1] = {leftText, rightText}
 		end
 	elseif id == "LegionRemixResearch" then
 		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
@@ -2705,11 +2757,11 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 				table.sort(mounts, function(a, b)
 						-- 1. Собранные маунты сверху
 						-- if a.collected ~= b.collected then
-						--     return b.collected
+						-- return b.collected
 						-- end
 						-- 2. По цене (дорогие сверху)
 						-- if a.price ~= b.price then
-						--     return a.price > b.price
+						-- return a.price > b.price
 						-- end
 						-- 2. По имени
 						if a.name ~= b.name then
@@ -2756,17 +2808,17 @@ function E.func_KeyTooltip_RIGHT(GUID, settingsType)
 		end
 		----------------------------------------------------------------
 		-- elseif dataType == "Currencies" and id == 1166 then
-		--     for i, v in ipairs(E.func_Mounts_1166()) do
-		--         local mountID = v.mountID
-		--         local source = v.source
-		--         tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
-		--     end
+		-- for i, v in ipairs(E.func_Mounts_1166()) do
+		-- local mountID = v.mountID
+		-- local source = v.source
+		-- tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
+		-- end
 		-- elseif dataType == "Currencies" and id == 3252 then
-		--     for i, v in ipairs(E.func_Mounts_3252()) do
-		--         local mountID = v.mountID
-		--         local source = v.source
-		--         tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
-		--     end
+		-- for i, v in ipairs(E.func_Mounts_3252()) do
+		-- local mountID = v.mountID
+		-- local source = v.source
+		-- tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
+		-- end
 	elseif settingsType == "BfA_mechagonItems" then
 		tooltip = E.func_tooltipCENT_ITEMS(CharInfo, E.OctoTable_itemID_MECHAGON, true)
 		----------------------------------------------------------------

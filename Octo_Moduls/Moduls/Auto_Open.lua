@@ -32,9 +32,19 @@ local autoOpenItems = {}
 local needRescan = false
 local rescanScheduled = false
 local openableScanQueued = false
+local unit = "PLAYER"
 -- Инициализация списка предметов для автоматического открытия
 for _, id in ipairs(E.OctoTable_itemID_AutoOpen) do
 	autoOpenItems[id] = true
+end
+----------------------------------------------------------------
+local function PlayerIsControllable()
+	if InCombatLockdown() then return false, "combat" end
+	if UnitIsDead(unit) then return false, "dead" end
+	if UnitOnTaxi(unit) then return false, "taxi" end
+	if UnitHasVehicleUI(unit) then return false, "vehicle" end
+	if not UnitPlayerControlled(unit) then return false, "control" end
+	return true
 end
 ----------------------------------------------------------------
 local function HasEnoughFreeBagSpace()
@@ -60,11 +70,11 @@ end
 function EventFrame:OpenableScan()
 	if E.func_SpamBlock("OpenableScan") then return end
 	if _G.MerchantFrame and _G.MerchantFrame:IsShown() then return end
-	if InCombatLockdown() or UnitIsDead("PLAYER") or UnitHasVehicleUI("PLAYER") then
-		-- print ("PAUSE 1")
+	if not PlayerIsControllable() then
 		openableScanQueued = true
 		return
 	end
+
 	local openList = {}
 	for bag = BACKPACK_CONTAINER, NUM_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
@@ -105,8 +115,7 @@ function EventFrame:OpenableScan()
 			end
 			return
 		end
-		if InCombatLockdown() or UnitIsDead("PLAYER") or UnitHasVehicleUI("PLAYER") then
-			-- print ("PAUSE 2")
+		if not PlayerIsControllable() then
 			openableScanQueued = true
 			return
 		end

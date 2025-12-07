@@ -26,7 +26,6 @@ EventFrame[funcName] = function(self)
 		Config_Hide_EventToastManagerFrame = true, -- Скрыть тосты событий
 		Config_Hide_MainStatusTrackingBarContainer = true, -- Скрыть главную полосу отслеживания
 		Config_Hide_MajorFactionsRenownToast = true, -- Скрыть тост репутации фракций
-		Config_Hide_OrderHallCommandBar = true, -- Скрыть панель команд
 		Config_Hide_PrivateRaidBossEmoteFrameAnchor = true, -- Скрыть якорь эмоций
 		Config_Hide_PTRReporter = true, -- Скрыть PTR репортер
 		Config_Hide_PTRIssueReporter = true, -- Скрыть репортер проблем

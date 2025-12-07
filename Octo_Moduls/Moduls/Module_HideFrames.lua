@@ -295,36 +295,6 @@ function E.func_Config_Hide_SubZoneTextString()
 		end
 	end
 end
-function E.func_Config_Hide_OrderHallCommandBar()
-	if not E.OrderHallCommandBar then
-		E.OrderHallCommandBar = true
-		local function HandleCommandBar()
-			_G.OrderHallCommandBar:UnregisterAllEvents()
-			_G.OrderHallCommandBar:SetScript("OnShow", _G.OrderHallCommandBar.Hide)
-			_G.OrderHallCommandBar:Hide()
-			UIParent:UnregisterEvent("UNIT_AURA")
-		end
-		if _G.OrderHallCommandBar then
-			HandleCommandBar()
-		elseif E.func_IsRetail() then
-			local frame = CreateFrame("Frame")
-			frame:RegisterEvent("ADDON_LOADED")
-			frame:SetScript("OnEvent", function(Frame, event, addon)
-				if event == "ADDON_LOADED" and addon == "Blizzard_OrderHallUI" then
-					if InCombatLockdown() then
-						Frame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					else
-						HandleCommandBar()
-					end
-					Frame:UnregisterEvent(event)
-				elseif event == "PLAYER_REGEN_ENABLED" then
-					HandleCommandBar()
-					Frame:UnregisterEvent(event)
-				end
-			end)
-		end
-	end
-end
 function E.func_Config_Hide_ErrorMessages()
 	if not E.ErrorMessages then
 		E.ErrorMessages = true
@@ -427,7 +397,6 @@ function EventFrame:START_HF_functions()
 	if EventFrame.savedVars.Config_Hide_PVPArenaTextString then E.func_Config_Hide_PVPArenaTextString() end
 	if EventFrame.savedVars.Config_Hide_ZoneTextString then E.func_Config_Hide_ZoneTextString() end
 	if EventFrame.savedVars.Config_Hide_SubZoneTextString then E.func_Config_Hide_SubZoneTextString() end
-	if EventFrame.savedVars.Config_Hide_OrderHallCommandBar then E.func_Config_Hide_OrderHallCommandBar() end
 	if EventFrame.savedVars.Config_Hide_ErrorMessages then E.func_Config_Hide_ErrorMessages() end
 	if EventFrame.savedVars.Config_Hide_TalkingHeadFrame then E.func_Config_Hide_TalkingHeadFrame() end
 	if EventFrame.savedVars.Config_Hide_EventToastManagerFrame then E.func_Config_Hide_EventToastManagerFrame() end

@@ -625,21 +625,6 @@ function E.func_Octo_Moduls_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_Hide_OrderHallCommandBar = {
-				type = "toggle",
-				name = L["Hide: OrderHallCommandBar"],
-				desc = "",
-				get = function()
-					return savedVars.Config_Hide_OrderHallCommandBar
-				end,
-				set = function(_, value)
-					savedVars.Config_Hide_OrderHallCommandBar = value
-					E.func_Config_Hide_OrderHallCommandBar()
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			Config_Hide_ErrorMessages = {
 				type = "toggle",
 				name = L["Hide: ErrorMessages"],

@@ -71,7 +71,6 @@ if L then
 	L["Hide: PVPArenaTextString"] = true
 	L["Hide: ZoneTextString"] = true
 	L["Hide: SubZoneTextString"] = true
-	L["Hide: OrderHallCommandBar"] = true
 	L["Hide: ErrorMessages"] = true
 	L["Hide: TalkingHeadFrame"] = true
 	L["Hide: EventToastManagerFrame"] = true
@@ -337,7 +336,6 @@ if L then
 	L["Hide: PVPArenaTextString"] = HIDE..": PVPArenaTextString"
 	L["Hide: ZoneTextString"] = HIDE..": ZoneTextString"
 	L["Hide: SubZoneTextString"] = HIDE..": SubZoneTextString"
-	L["Hide: OrderHallCommandBar"] = HIDE..": OrderHallCommandBar"
 	L["Hide: ErrorMessages"] = HIDE..": ErrorMessages"
 	L["Hide: TalkingHeadFrame"] = HIDE..": TalkingHeadFrame"
 	L["Hide: EventToastManagerFrame"] = HIDE..": EventToastManagerFrame"
