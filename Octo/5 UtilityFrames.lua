@@ -18,16 +18,6 @@ local utilityFrames = {
 	buttons = {},
 	framerate = nil
 }
---[[
-	Creates a utility button with specified properties
-	@param name - Unique identifier for the button
-	@param frame - Parent frame
-	@param xOffset - X offset position
-	@param texture - Button texture path
-	@param func_onEnter - Function to call on mouse enter (tooltip)
-	@param func_onClick - Function to call on click
-	@return The created button
-]]
 local function CreateUtilButton(name, frame, texture, func_onEnter, func_onClick)
 	-- Reuse existing button if available
 	local button = utilityFrames.buttons[name]
@@ -61,13 +51,7 @@ end
 local utilityButtonsOrder = {
 	"CloseButton",
 	"OptionsButton",
-	"AbandonButton",
-	"EventsButton",
 }
---[[
-	Attaches utility frames to a target frame
-	@param targetFrame - The frame to attach utility buttons to
-]]
 local function AttachUtilityFrames(targetFrame)
 	local prevButton = nil
 	for i, buttonName in ipairs(utilityButtonsOrder) do
@@ -92,10 +76,6 @@ local function AttachUtilityFrames(targetFrame)
 		utilityFrames.framerate:Show()
 	end
 end
---[[
-	Creates the close button
-	@param frame - Parent frame
-]]
 function EventFrame:Octo_CloseButton(frame)
 	local button = CreateUtilButton(
 		"CloseButton",
@@ -112,11 +92,6 @@ function EventFrame:Octo_CloseButton(frame)
 		self.tooltip = nil
 	end)
 end
---[[
-	Creates the options button
-	@param frame - Parent frame
-	@param addonIconTexture - Texture path for the button icon
-]]
 function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
 	local function func_onEnter()
 		return {{E.classColorHexCurrent..OPTIONS.."|r"}}
@@ -140,185 +115,10 @@ function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
 		func_onClick
 	)
 end
---[[
-	Creates the abandon quest button
-	@param frame - Parent frame
-]]
-function EventFrame:Octo_AbandonButton(frame)
-	local function func_onEnter()
-		local tooltip = {}
-		local numQuests = E.func_CurrentNumQuests()
-		if numQuests > 0 then
-			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..numQuests..")"}
-			tooltip[#tooltip+1] = {" ", " "}
-			local list = {}
-			for i = 1, GetNumQuestLogEntries() do
-				local info = GetInfo(i)
-				if info and info.questID ~= 0 and not info.isHeader and not info.isHidden then
-					table.insert(list, info.questID)
-				end
-			end
-			table.sort(list, E.func_Reverse_order)
-			for _, questID in ipairs(list) do
-				tooltip[#tooltip+1] = {E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
-			end
-		else
-			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["No quests"].."|r"}
-		end
-		return tooltip
-	end
-	local function f_AbandonQuests()
-		local numQuests = E.func_CurrentNumQuests()
-		for i = 1, GetNumQuestLogEntries() do
-			if numQuests ~= 0 then
-				local info = GetInfo(i)
-				if info and not info.isHeader and not info.isHidden then
-					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
-					SetSelectedQuest(info.questID)
-					SetAbandonQuest()
-					AbandonQuest()
-				end
-			end
-		end
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
-	end
-	-- Create confirmation dialog
-	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
-		text = E.classColorHexCurrent..L["Abandon All Quests"].."?|r",
-		button1 = YES,
-		button2 = NO,
-		hideOnEscape = 1,
-		whileDead = 1,
-		OnAccept = function() C_Timer.After(E.SPAM_TIME, f_AbandonQuests) end,
-	}
-	local function func_onClick()
-		if E.func_CurrentNumQuests() > 0 then
-			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
-		end
-	end
-	CreateUtilButton(
-		"AbandonButton",
-		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow72.tga",
-		func_onEnter,
-		func_onClick
-	)
-end
---[[
-	Creates the events button
-	@param frame - Parent frame
-]]
-function EventFrame:Octo_EventsButton(frame)
-	local function func_onEnter()
-		wipe(E.Holiday)
-		E.Collect_All_Holiday()
-		local tooltip = {}
-		local curdatetable = date("*t")
-		local curdate = FormatShortDate(curdatetable.day, curdatetable.month, curdatetable.year)
-		tooltip[#tooltip+1] = {E.classColorHexCurrent..L["Current Date"].."|r", E.classColorHexCurrent..curdate.."|r"}
-		local sorted = {}
-		for k in pairs(E.Holiday) do
-			table.insert(sorted, k)
-		end
-		table.sort(sorted, function(a, b)
-			return E.Holiday[a].priority < E.Holiday[b].priority
-		end)
-		for _, eventKey in ipairs(sorted) do
-			local v = E.Holiday[eventKey]
-			local titleText = E.func_texturefromIconEVENT(v.iconTexture)
-			local timeText = v.startTime.." - "..v.endTime
-			-- local name = v.title
-			local name = E.func_EventName(v.eventID)
-			if v.Active then
-				titleText = titleText..E.White_Color..name.."|r"..E.Green_Color.." ("..v.ENDS..")|r"
-				timeText = E.White_Color..timeText.."|r"
-			else
-				titleText = titleText..E.Gray_Color..name.."|r"
-				timeText = E.Gray_Color..timeText.."|r"
-			end
-			if E.DebugIDs then
-				titleText = titleText..E.Gray_Color.." id:"..v.eventID.."|r"
-			end
-			tooltip[#tooltip+1] = {titleText, timeText}
-		end
-		return tooltip
-	end
-	local function func_onClick()
-		local parent = self:GetParent()
-		if parent then
-			parent:Hide()
-		end
-		if fpde then fpde(E.Holiday) end
-	end
-	CreateUtilButton(
-		"EventsButton",
-		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Arrow6.tga",
-		func_onEnter,
-		func_onClick
-	)
-end
---[[
-	Creates the framerate display frame
-	@param frame - Parent frame
-]]
-function EventFrame:Octo_FramerateFrame(frame)
-	if not utilityFrames.framerate then
-		local Octo_FramerateFrame = CreateFrame("Frame", nil, UIParent)
-		Octo_FramerateFrame:Hide()
-		Octo_FramerateFrame:SetSize(WIDTH*4, HEIGHT)
-		Octo_FramerateFrame:SetFrameStrata("HIGH")
-		Octo_FramerateFrame.text = Octo_FramerateFrame:CreateFontString()
-		Octo_FramerateFrame.text:SetFontObject(OctoFont11)
-		Octo_FramerateFrame.text:SetAllPoints()
-		Octo_FramerateFrame.text:SetJustifyH("RIGHT")
-		Octo_FramerateFrame.ticker = nil
-		Octo_FramerateFrame.isTickerActive = false
-		local function UpdateFPS()
-			-- local FPS = math.floor(GetFramerate() * 10) / 10
-			local FPS = math.floor(GetFramerate())
-			if FPS >= 144 then
-				Octo_FramerateFrame.text:SetTextColor(0, 1, 1, 1)
-			elseif FPS >= 60 then
-				Octo_FramerateFrame.text:SetTextColor(0.31, 1, 0.47, 1)
-			else
-				Octo_FramerateFrame.text:SetTextColor(1, 0, 0, 1)
-			end
-			Octo_FramerateFrame.text:SetText(FPS)
-		end
-		local function StartTicker()
-			if not Octo_FramerateFrame.isTickerActive then
-				Octo_FramerateFrame.ticker = C_Timer.NewTicker(.4, UpdateFPS)
-				Octo_FramerateFrame.isTickerActive = true
-			end
-		end
-		local function StopTicker()
-			if Octo_FramerateFrame.isTickerActive and Octo_FramerateFrame.ticker then
-				Octo_FramerateFrame.ticker:Cancel()
-				Octo_FramerateFrame.ticker = nil
-				Octo_FramerateFrame.isTickerActive = false
-			end
-		end
-		Octo_FramerateFrame:SetScript("OnShow", StartTicker)
-		Octo_FramerateFrame:SetScript("OnHide", StopTicker)
-		if Octo_FramerateFrame:IsShown() then
-			StartTicker()
-		end
-		utilityFrames.framerate = Octo_FramerateFrame
-	end
-end
---[[
-	Creates all utility buttons for a frame
-	@param frame - Target frame to attach buttons to
-	@param addonIconTexture - Texture path for options button
-]]
 function E.func_CreateUtilsButton(frame, addonIconTexture)
 	if not utilityFrames.initialized then
 		EventFrame:Octo_CloseButton(frame)
 		EventFrame:Octo_OptionsButton(frame, addonIconTexture)
-		EventFrame:Octo_AbandonButton(frame)
-		EventFrame:Octo_EventsButton(frame)
-		EventFrame:Octo_FramerateFrame(frame)
 		utilityFrames.initialized = true
 	end
 	frame:HookScript("OnShow", function()

@@ -5,7 +5,6 @@ local EventFrame = CreateFrame("FRAME")
 local EventFrame = CreateFrame("Frame")
 local Octo_MainFrame_PosFrame = CreateFrame("Frame", "Octo_MainFrame_PosFrame", WorldMapFrame, "BackdropTemplate") -- WorldMapFrame
 Octo_MainFrame_PosFrame:Hide()
-local LibCustomGlow = LibStub("LibCustomGlow-1.0")
 function EventFrame:CreatePosFrame()
 	local vars = EventFrame.savedVars.PosFrame
 	if not vars.Shown then return end
@@ -21,7 +20,6 @@ function EventFrame:CreatePosFrame()
 	-- Drag handlers
 	Octo_MainFrame_PosFrame:SetScript("OnDragStart", function()
 			Octo_MainFrame_PosFrame:StartMoving()
-			LibCustomGlow.ButtonGlow_Start(Octo_MainFrame_PosFrame, {.31, 1, .47, 1}, .1)
 	end)
 	Octo_MainFrame_PosFrame:SetScript("OnDragStop", function()
 			Octo_MainFrame_PosFrame:StopMovingOrSizing()
@@ -30,7 +28,6 @@ function EventFrame:CreatePosFrame()
 			vars.relativePoint = relativePoint
 			vars.xOfs = E.func_CompactNumberRound(xOfs)
 			vars.yOfs = E.func_CompactNumberRound(yOfs)
-			LibCustomGlow.ButtonGlow_Stop(Octo_MainFrame_PosFrame)
 	end)
 	-- Create text elements
 	local function CreateTextElement(offset, r, g, b)

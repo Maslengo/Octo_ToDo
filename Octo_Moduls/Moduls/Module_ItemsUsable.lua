@@ -4,7 +4,6 @@
 -- ----------------------------------------------------------------
 -- local enable = true
 -- if not enable then return end
--- local LibCustomGlow = LibStub("LibCustomGlow-1.0")-- Подключаем библиотеку для свечения кнопок
 -- -- Создаем кнопки для использования и удаления предметов
 -- local Clickable_ItemsUsable = CreateFrame("Button", "Clickable_ItemsUsable", UIParent, "SecureActionButtonTemplate, BackDropTemplate")
 -- local Clickable_ItemsDelete = CreateFrame("Button", "Clickable_ItemsDelete", UIParent, "SecureActionButtonTemplate, BackDropTemplate")
@@ -175,10 +174,8 @@
 -- Clickable_ItemsUsable:SetAttribute("type", "macro")
 -- -- Добавляем свечение при наведении
 -- Clickable_ItemsUsable:HookScript("OnEnter", function()
--- LibCustomGlow.AutoCastGlow_Start(Clickable_ItemsUsable, {.31, 1, .47, 1}, 4, 0.125, 1, nil, nil, 1)
 -- end)
 -- Clickable_ItemsUsable:HookScript("OnLeave", function()
--- LibCustomGlow.AutoCastGlow_Stop(Clickable_ItemsUsable)
 -- end)
 -- Clickable_ItemsUsable:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 -- Clickable_ItemsUsable:SetAttribute("type", "macro")
@@ -186,10 +183,8 @@
 -- self:CreateCommonButtonSettings(Clickable_ItemsDelete, -128, {1, 0, 0, 1})
 -- -- Добавляем красное свечение при наведении
 -- Clickable_ItemsDelete:HookScript("OnEnter", function()
--- LibCustomGlow.AutoCastGlow_Start(Clickable_ItemsDelete, {1, 0, 0, 1}, 4, 0.125, 1, nil, 1)
 -- end)
 -- Clickable_ItemsDelete:HookScript("OnLeave", function()
--- LibCustomGlow.AutoCastGlow_Stop(Clickable_ItemsDelete)
 -- end)
 -- end
 -- -- Обработчик изменения содержимого сумок

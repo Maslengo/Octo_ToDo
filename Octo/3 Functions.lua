@@ -48,9 +48,10 @@ local WorldFrame = WorldFrame
 local DEFAULT_CHAT_FRAME = DEFAULT_CHAT_FRAME
 local ITEM_QUALITY_COLORS = ITEM_QUALITY_COLORS
 local RAID_CLASS_COLORS = RAID_CLASS_COLORS
-local QUEST_WATCH_QUEST_READY = QUEST_WATCH_QUEST_READY or "Complete"
-local FAILED = FAILED or "Failed"
-local UNKNOWN = UNKNOWN or "Unknown"
+local QUEST_WATCH_QUEST_READY = QUEST_WATCH_QUEST_READY
+local FAILED = FAILED
+local UNKNOWN = UNKNOWN
+local RETRIEVING_DATA = RETRIEVING_DATA
 local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
 local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
 local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
@@ -190,7 +191,7 @@ function E.func_LFGdungName(dID)
 			return name
 		end
 	end
-	return UNKNOWN
+	return RETRIEVING_DATA
 end
 function E.func_GetSpellIcon(spellID)
 	return GetSpellTexture(spellID)
@@ -220,7 +221,7 @@ local function func_itemName_CACHE(id)
 			print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_itemName(id, forcedQuality)
@@ -263,7 +264,7 @@ local function func_currencyName_CACHE(id)
 			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_currencyName(id)
@@ -301,7 +302,7 @@ local function func_npcName_CACHE(id)
 			print (E.Lime_Color.."NPC".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_npcName(id)
@@ -329,7 +330,7 @@ local function func_questName_CACHE(id)
 			print (E.Lime_Color..QUESTS_LABEL.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_questName(id)
@@ -366,7 +367,7 @@ local function func_reputationName_CACHE(id)
 			print (E.Lime_Color..REPUTATION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_reputationName(id)
@@ -409,7 +410,7 @@ local function func_spellName_CACHE(id)
 			print (E.Lime_Color..SPELLS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_spellName(id)
@@ -434,7 +435,7 @@ local function func_achievementName_CACHE(id)
 			print (E.Lime_Color..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_achievementName(id)
@@ -459,7 +460,7 @@ local function func_mountName_CACHE(id)
 			print (E.Lime_Color..MOUNTS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_mountName(mountID)
@@ -497,7 +498,7 @@ local function func_mapName_CACHE(id)
 			print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_mapName(id)
@@ -509,9 +510,7 @@ function E.func_mapName(id)
 	return cachedName..E.debugInfo(id)
 end
 function E.func_GetMapNameFromID(id)
-	if not id then
-		return UNKNOWN
-	end
+	if not id then return end
 	local info = GetMapInfo(id)
 	if not info then
 		return UNKNOWN
@@ -570,7 +569,6 @@ local function func_EventName_CACHE(id)
 		end
 	end
 	if not name or name == "" then
-		-- print (id, E.Red_Color..UNKNOWN.."|r")
 		return E.Red_Color..UNKNOWN.."|r"
 	end
 	Cache[id] = Cache[id] or {}
@@ -578,7 +576,7 @@ local function func_EventName_CACHE(id)
 	if Octo_Debug_DB and Octo_Debug_DB.DebugCache then
 		print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_EventName(id)
@@ -602,7 +600,7 @@ local function func_ProfessionName_CACHE(id)
 			print (E.Lime_Color..PROFESSIONS_TRACKER_HEADER_PROFESSION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..UNKNOWN.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
 	return vivod
 end
 function E.func_ProfessionName(id)
@@ -2099,6 +2097,10 @@ function E.func_joinableDung()
 	return joinable, result, timewalkDungeonName:match("%((.-)%)")
 end
 function E.debugInfo(id)
+
+
+
+
 	local result = E.DebugIDs and (E.Gray_Color.." id:"..id.."|r") or ""
 	return result
 end
