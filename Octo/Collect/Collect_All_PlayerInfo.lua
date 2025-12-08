@@ -9,7 +9,6 @@ function E.Collect_All_PlayerInfo()
 	collectPlayerData.curServerShort = E.curServerShort
 	collectPlayerData.Name = E.curCharName
 	collectPlayerData.curServer = E.func_GetRealmName()
-	-- collectPlayerData.subServer = E.func_GetSubRealmName()
 	collectPlayerData.className = E.className
 	collectPlayerData.classFilename = E.classFilename
 	collectPlayerData.classId = E.classId

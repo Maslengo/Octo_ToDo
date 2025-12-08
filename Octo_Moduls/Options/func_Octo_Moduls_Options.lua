@@ -327,7 +327,7 @@ function E.func_Octo_Moduls_Options(savedVars)
 			-------------------------------------------------
 			Config_Hide_MainStatusTrackingBarContainer = {
 				type = "toggle",
-				name = L["Hide: MainStatusTrackingBarContainer"],
+				name = "Полоска опыта", -- L["Hide: MainStatusTrackingBarContainer"],
 				desc = "",
 				get = function()
 					return savedVars.Config_Hide_MainStatusTrackingBarContainer

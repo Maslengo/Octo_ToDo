@@ -144,8 +144,8 @@ function E.func_Octo_Options(savedVars)
 				type = "range",
 				name = "Высота одной строки",
 				desc = "",
-				min = 15,
-				max = 30,
+				min = 10,
+				max = 50,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT

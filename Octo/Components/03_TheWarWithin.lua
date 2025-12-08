@@ -10,7 +10,7 @@ local expansionID = 11
 E.OctoTables_DataOtrisovka[categoryKey] = {}
 E.OctoTables_Vibor[categoryKey] = {}
 E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 local function tempFunction(start)
 	E.func_ResetOtrisovkaTables(categoryKey)
 	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end

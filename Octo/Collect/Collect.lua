@@ -189,8 +189,12 @@ function EventFrame:AZERITE_ITEM_EXPERIENCE_CHANGED()
 	E.Collect_All_BfA_Cloaklvl()
 	E.func_Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
 end
-function EventFrame:COVENANT_CHOSEN()
+function EventFrame:COVENANT_CHOSEN(...)
+	local id = ...
 	E.Collect_All_Covenant()
+	C_Timer.After(1, function()
+		E.Collect_All_Covenant_FAST(id)
+	end)
 	E.func_Update("COVENANT_CHOSEN")
 end
 function EventFrame:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()

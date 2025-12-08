@@ -37,6 +37,18 @@ local ignoreNPCID = {
 }
 -- IGNORE 120914
 local gossipOptionIDs = {
+	[51970] = true, -- KYRIAN
+	[53984] = true, -- KYRIAN
+
+	[51951] = true, -- FAE
+	[53922] = true, -- FAE
+
+	[52694] = true, -- VENT
+	[53870] = true, -- VENT
+
+	[51959] = true, -- NECR
+	[54449] = true, -- NECR
+
 	[51187] = true, -- (Задание)
 	[53363] = true,
 	[122416] = true, -- wowhead.com/ptr-2/ru/quest=82216
@@ -73,16 +85,28 @@ local ignoreICONS = {
 	[136458] = true, -- BIND NEW HOME
 	[132057] = true, -- FLY
 }
+
+
+local nonSecretSubZoneText = {
+	["Анклав"] = true,
+}
+
+
+local mapIDs_table = {
+	[1670] = true,
+}
 ----------------------------------------------------------------
 function EventFrame:func_Config_Auto_Gossip()
-	local guid = UnitGUID("TARGET")
-	-- if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
-	if guid then
-		targetNPCID = tonumber(guid:match("-(%d+)-%x+$"), 10)
-		if ignoreNPCID[targetNPCID] then return end
-	end
+	-- local guid = UnitGUID("TARGET")
+	-- -- if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
+	-- if guid then
+	-- 	targetNPCID = tonumber(guid:match("-(%d+)-%x+$"), 10)
+	-- 	if ignoreNPCID[targetNPCID] then return end
+	-- end
 	local info = C_GossipInfo.GetOptions()
 	local numOptions = #info
+	local SubZoneText = GetSubZoneText()
+	local mapID = MapUtil.GetDisplayableMapForPlayer()
 	-- for i = 1, math.min(numOptions, 4) do
 	for i = 1, numOptions do
 		local option = info[i]
@@ -90,6 +114,7 @@ function EventFrame:func_Config_Auto_Gossip()
 		local name = option.name
 		local icon = option.icon
 		local flags = option.flags
+		local unitname = UnitName("TARGET")
 		if Octo_Debug_DB and Octo_Debug_DB.DebugGossip then
 			print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
 		end
@@ -98,7 +123,17 @@ function EventFrame:func_Config_Auto_Gossip()
 				-- print ("break")
 				break
 			end
+
+			-- if nonSecretSubZoneText[SubZoneText] then
+
+
 			if gossipOptionIDs[option.gossipOptionID] or flags == 1 or string.find(option.name:gsub("|", ""), "0000FF") then
+				C_GossipInfo.SelectOption(option.gossipOptionID)
+				StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
+				DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(i, option.icon, option.name))
+				break
+			elseif mapIDs_table[mapID] then
+				-- print (unitname, option.gossipOptionID)
 				C_GossipInfo.SelectOption(option.gossipOptionID)
 				StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
 				DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(i, option.icon, option.name))

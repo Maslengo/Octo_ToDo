@@ -11,28 +11,16 @@ OctoTooltip_Background:SetBackdrop(E.menuBackdrop)
 OctoTooltip_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 OctoTooltip_Background:SetBackdropBorderColor(0, 0, 0, 1)
 
-local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
-
-
-
-
-
 
 local INDENT_TEXT = 4
 local INDENT_SCROLL = 20
-local TOOLTIP_LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
-local TOOLTIP_LINE_WIDTH = 256
 local MAX_DISPLAY_LINES = 24
-local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / TOOLTIP_LINE_HEIGHT))*.7)
+local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / E.GLOBAL_LINE_HEIGHT))*.7)
 if MAX_DISPLAY_LINES > LINES_TOTAL then
 	MAX_DISPLAY_LINES = LINES_TOTAL
 end
 local classR, classG, classB = GetClassColor(E.classFilename)
-
-
-
-
 
 
 
@@ -46,12 +34,12 @@ local func_OnAcquired do
 	end
 	function func_OnAcquired(owner, frame, data, new)
 		if new then
-			frame:SetPropagateMouseClicks(false)
+			frame:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 			frame:SetPropagateMouseMotion(true)
 			frame:SetHitRectInsets(1, 1, 1, 1)
 			----------------
 			local highlightFrame = CreateFrame("Button", nil, OctoTooltip, "OctoHighlightAnimationTemplate")
-			highlightFrame:SetPropagateMouseClicks(false)
+			highlightFrame:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 			highlightFrame:SetPropagateMouseMotion(true)
 			highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
 			highlightFrame:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
@@ -76,10 +64,9 @@ local func_OnAcquired do
 						if key then
 							-- Создаем новый фрейм для каждого элемента
 							local f = CreateFrame("BUTTON", "frame"..key, frame)
-							f:SetPropagateMouseClicks(false)
+							f:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 							f:SetPropagateMouseMotion(true)
-							f:SetHeight(TOOLTIP_LINE_HEIGHT)
-							-- f:SetSize(TOOLTIP_LINE_WIDTH, TOOLTIP_LINE_HEIGHT)
+							f:SetHeight(E.GLOBAL_LINE_HEIGHT)
 							-- f:SetHitRectInsets(1, 1, 1, 1) -- Коррекция области нажатия
 							if key == 1 then
 								f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEXT+1, 0) -- ОТСТУП
@@ -191,14 +178,14 @@ local function TooltipOnShow()
 	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "OnShow")
 end
 function EventFrame:Create_OctoTooltip()
-	OctoTooltip:SetPropagateMouseClicks(false)
+	OctoTooltip:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 	OctoTooltip:SetPropagateMouseMotion(false)
 	OctoTooltip:SetHitRectInsets(-1, -1, -1, -1) -- Коррекция области нажатия (-4 увеличение)
 	OctoTooltip:SetScript("OnEnter", TooltipOnEnter)
 	OctoTooltip:SetScript("OnLeave", TooltipOnLeave)
 	OctoTooltip:SetScript("OnShow", TooltipOnShow)
 	OctoTooltip:SetPoint("CENTER")
-	OctoTooltip:SetSize(1, TOOLTIP_LINE_HEIGHT*1)
+	OctoTooltip:SetSize(1, E.GLOBAL_LINE_HEIGHT*1)
 	OctoTooltip:SetClampedToScreen(true)
 	OctoTooltip:SetFrameStrata("TOOLTIP")
 	-- OctoTooltip:SetBackdrop(E.menuBackdrop)
@@ -211,8 +198,8 @@ function EventFrame:Create_OctoTooltip()
 
 	OctoTooltip.ScrollBox = CreateFrame("FRAME", nil, OctoTooltip, "WowScrollBoxList")
 	OctoTooltip.ScrollBox:SetAllPoints()
-	OctoTooltip.ScrollBox:SetPropagateMouseClicks(false)
-	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(false)
+	OctoTooltip.ScrollBox:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
+	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 	OctoTooltip.ScrollBox:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBox:Layout()
@@ -224,10 +211,10 @@ function EventFrame:Create_OctoTooltip()
 	OctoTooltip.ScrollBar.Forward:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Track:SetPropagateMouseMotion(true)
 	OctoTooltip.ScrollBar.Track.Thumb:SetPropagateMouseMotion(true)
-	-- OctoTooltip:SetPropagateMouseClicks(false)
+	-- OctoTooltip:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 	-- OctoTooltip:SetPropagateMouseMotion(false)
 	OctoTooltip.view = CreateScrollBoxListTreeListView()
-	OctoTooltip.view:SetElementExtent(TOOLTIP_LINE_HEIGHT)
+	OctoTooltip.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
 	OctoTooltip.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
@@ -320,11 +307,11 @@ function EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
 	end
 	OctoTooltip.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	if lines > MAX_DISPLAY_LINES then
-		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*MAX_DISPLAY_LINES)
+		OctoTooltip:SetSize(total_width, E.GLOBAL_LINE_HEIGHT*MAX_DISPLAY_LINES)
 	elseif lines == 0 then
-		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*1)
+		OctoTooltip:SetSize(total_width, E.GLOBAL_LINE_HEIGHT*1)
 	else
-		OctoTooltip:SetSize(total_width, TOOLTIP_LINE_HEIGHT*lines)
+		OctoTooltip:SetSize(total_width, E.GLOBAL_LINE_HEIGHT*lines)
 	end
 end
 function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft) -- ПОФИКСИТЬ (3им аргументом сделать point) либо повешать на объект 1395 hidingbar

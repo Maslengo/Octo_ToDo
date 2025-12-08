@@ -1,11 +1,13 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
+local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
+Octo_MainFrame_ToDo:Hide()
+E.func_InitFrame(Octo_MainFrame_ToDo)
+----------------------------------------------------------------
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
 local INDENT_TEXT = 4 -- Отступ для текста
-local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT -- Высота одной строки
-local HEADER_HEIGHT = LINE_HEIGHT*2 -- Высота заголовка
-local HEADER_TEXT_OFFSET = HEADER_HEIGHT / 5
 local MIN_COLUMN_WIDTH_LEFT = 200 -- Минимальная ширина левой колонки
 local MIN_COLUMN_WIDTH_Center = 90 -- Минимальная ширина центральной колонки
 local MAX_DISPLAY_LINES = E.MAX_DISPLAY_LINES -- Максимальное количество строк
@@ -13,7 +15,6 @@ local MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.8 -- Максимальная �
 local MAX_FRAME_HEIGHT = E.PHYSICAL_SCREEN_HEIGHT*.6 -- Максимальная высота фрейма (60% экрана)
 EventFrame.MAX_COLUMN_COUNT = 113 -- Максимальное количество колонок
 -- Цветовые настройки
-local backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
 local textR, textG, textB, textA = 1, 1, 1, 1 -- Цвет текста (белый)
 local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
@@ -25,16 +26,12 @@ local math_max = math.max
 local math_ceil= math.ceil
 local UIFrameFadeIn = UIFrameFadeIn
 local UIFrameFadeOut = UIFrameFadeOut
--- Создание главного фрейма для тестового интерфейса
-local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
-Octo_MainFrame_ToDo:Hide()
-E.func_InitFrame(Octo_MainFrame_ToDo)
 -- Создаем отдельный фрейм для фона
 local Octo_MainFrame_ToDo_Background = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "BackdropTemplate")
 Octo_MainFrame_ToDo_Background:SetAllPoints()
 Octo_MainFrame_ToDo_Background:SetFrameLevel(Octo_MainFrame_ToDo:GetFrameLevel() - 1) -- Ниже основного фрейма
 Octo_MainFrame_ToDo_Background:SetBackdrop(E.menuBackdrop)
-Octo_MainFrame_ToDo_Background:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
+Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
@@ -42,7 +39,7 @@ local func_OnAcquiredLeft do
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
 		frame.TextLeft:SetFontObject(OctoFont11)
-		frame.TextLeft:SetPoint("LEFT", LINE_HEIGHT+INDENT_TEXT+0, 0)
+		frame.TextLeft:SetPoint("LEFT", E.GLOBAL_LINE_HEIGHT+INDENT_TEXT+0, 0)
 		frame.TextLeft:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
 		frame.TextLeft:SetWordWrap(false)
 		frame.TextLeft:SetJustifyV("MIDDLE")-- Вертикальное выравнивание
@@ -58,20 +55,20 @@ local func_OnAcquiredLeft do
 	local function Create_CategoryIcon(frame)
 		frame.CategoryIcon = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		frame.CategoryIcon:SetPoint("TOPLEFT", 1, -1)
-		frame.CategoryIcon:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
+		frame.CategoryIcon:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
 		frame.CategoryIcon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
 	end
 	local function Create_SettingsButton(frame)
 		frame.SettingsButton = CreateFrame("BUTTON", nil, frame)
 		local texture = frame.SettingsButton:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("TOPLEFT", 1, -1)
-		texture:SetSize(LINE_HEIGHT-2, LINE_HEIGHT-2)
+		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
 		texture:SetTexCoord(.10, .90, .10, .90)
 		-- Сохраняем текстуру в кнопке и во фрейме
 		frame.SettingsButton.ToggleIconTexture = texture
 		frame.ToggleIconTexture = texture
 		-- Настраиваем КНОПКУ (SettingsButton), а не текстуру!
-		frame.SettingsButton:SetSize(LINE_HEIGHT, LINE_HEIGHT)
+		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 		frame.SettingsButton:SetPoint("TOPLEFT", 1, -1)
 		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
 		frame.SettingsButton:EnableMouse(true)
@@ -124,7 +121,7 @@ local func_OnAcquiredCenter do
 	local function Create_ReputationBackground(columnFrame)
 		columnFrame.ReputationBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -2)
 		columnFrame.ReputationBackground:SetPoint("LEFT")
-		columnFrame.ReputationBackground:SetHeight(LINE_HEIGHT)
+		columnFrame.ReputationBackground:SetHeight(E.GLOBAL_LINE_HEIGHT)
 		columnFrame.ReputationBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
 	end
 	local function Create_TextCenter(columnFrame)
@@ -139,7 +136,7 @@ local func_OnAcquiredCenter do
 	local function AdditionalSettings(columnFrame, frame)
 		columnFrame:SetPropagateMouseClicks(true)
 		columnFrame:SetPropagateMouseMotion(true)
-		columnFrame:SetHeight(LINE_HEIGHT)
+		columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
 		columnFrame:SetHitRectInsets(1, 1, 1, 1)
 		columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
 	end
@@ -212,7 +209,7 @@ function EventFrame:func_InitLEFT(frame, node)
 		frame.SettingsButton:Hide()
 	end
 	frame.SettingsButton:SetScript("OnClick", function(self)
-			E.func_SettingsButton_OnClick(self, frameData)
+			func_SettingsButton_OnClick(self, frameData)
 	end)
 	-- Обновление размеров колонки, если они были изменены
 	if EventFrame.columnWidthsLeft and EventFrame.columnWidthsLeft[1] then
@@ -305,6 +302,14 @@ function EventFrame:func_InitCenter(frame, node)
 		frame.columnFrames[i]:Hide()
 	end
 end
+
+
+function E.UPDATE_MAINFRAME()
+	if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
+		EventFrame:CreateDataProvider()
+	end
+end
+
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
 	-- Настройка позиции и обработчика показа фрейма
@@ -318,7 +323,7 @@ function EventFrame:func_CreateMainFrame()
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
 	local numPlayers = math_min(E.func_numPlayers(), EventFrame.MAX_COLUMN_COUNT)
-	Octo_MainFrame_ToDo:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, LINE_HEIGHT * MAX_DISPLAY_LINES)
+	Octo_MainFrame_ToDo:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
 	-- Настройки фрейма
 	Octo_MainFrame_ToDo:SetDontSavePosition(true)
 	Octo_MainFrame_ToDo:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
@@ -374,21 +379,21 @@ function EventFrame:func_CreateMainFrame()
 	-- Создание ScrollBox для левой колонки
 	Octo_MainFrame_ToDo.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "WowScrollBoxList")
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
+	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPropagateMouseClicks(true)
 	Octo_MainFrame_ToDo.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
 	-- Настройка позиции панели прокрутки
-	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame_ToDo.ScrollBoxLEFT, "TOPRIGHT", 0, HEADER_HEIGHT)
+	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame_ToDo.ScrollBoxLEFT, "TOPRIGHT", 0, E.HEADER_HEIGHT)
 	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
 	-- Создание и настройка представления для левой колонки
 	Octo_MainFrame_ToDo.ViewLeft = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.ViewLeft:SetElementExtent(LINE_HEIGHT)
+	Octo_MainFrame_ToDo.ViewLeft:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
 	Octo_MainFrame_ToDo.ViewLeft:SetElementInitializer("BUTTON", function(...) self:func_InitLEFT(...) end)
 	Octo_MainFrame_ToDo.ViewLeft:RegisterCallback(Octo_MainFrame_ToDo.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame_ToDo)
 	-- Создание ScrollBox для центральной колонки
 	Octo_MainFrame_ToDo.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList")
-	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -HEADER_HEIGHT)
+	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("BOTTOMRIGHT")
 	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPropagateMouseClicks(true)
 	Octo_MainFrame_ToDo.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
@@ -398,7 +403,7 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame_ToDo.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 6, 0)
 	-- Создание и настройка представления для центральной колонки
 	Octo_MainFrame_ToDo.ViewCenter = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.ViewCenter:SetElementExtent(LINE_HEIGHT)
+	Octo_MainFrame_ToDo.ViewCenter:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
 	Octo_MainFrame_ToDo.ViewCenter:SetElementInitializer("BUTTON", function(...) self:func_InitCenter(...) end)
 	Octo_MainFrame_ToDo.ViewCenter:RegisterCallback(Octo_MainFrame_ToDo.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCenter, Octo_MainFrame_ToDo)
 	-- Инициализация ScrollBox с полосами прокрутки
@@ -409,7 +414,7 @@ function EventFrame:func_CreateMainFrame()
 	-- Настройка фона и границы главного фрейма
 	Octo_MainFrame_ToDo:SetBackdrop(nil)
 	-- Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
-	-- Octo_MainFrame_ToDo:SetBackdropColor(backgroundColorR, backgroundColorG, backgroundColorB, backgroundColorA)
+	-- Octo_MainFrame_ToDo:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 	-- Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 	-- Настройка взаимодействия с фреймом
 	Octo_MainFrame_ToDo:EnableMouse(true)
@@ -435,7 +440,7 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame_ToDo:SetScript("OnClick", Octo_MainFrame_ToDo.Hide)
 	-- Настройка заголовка левой колонки
 	HeaderFrameLeft:SetPoint("TOPLEFT")
-	HeaderFrameLeft:SetSize(MIN_COLUMN_WIDTH_LEFT, HEADER_HEIGHT)
+	HeaderFrameLeft:SetSize(MIN_COLUMN_WIDTH_LEFT, E.HEADER_HEIGHT)
 	HeaderFrameLeft.Text = HeaderFrameLeft:CreateFontString()
 	HeaderFrameLeft.Text:SetFontObject(OctoFont11)
 	HeaderFrameLeft.Text:SetPoint("LEFT", INDENT_TEXT, 0)
@@ -454,7 +459,7 @@ function EventFrame:func_CreateMainFrame()
 	end
 	-- Функция инициализации фреймов в пуле
 	local function InitializePoolFrame(self)
-		self:SetSize(MIN_COLUMN_WIDTH_Center, HEADER_HEIGHT)
+		self:SetSize(MIN_COLUMN_WIDTH_Center, E.HEADER_HEIGHT)
 		self.Nickname = self:CreateFontString()
 		self.Nickname:SetFontObject(OctoFont11)
 		self.Server = self:CreateFontString()
@@ -489,7 +494,7 @@ local function func_calculateColumnWidthsLEFT(node)
 	-- Расчет ширины на основе текста
 	local columnWidthsLEFT = {}
 	framesLEFT[1].TextLeft:SetText(frameData.TextLeft)
-	columnWidthsLEFT[1] = math_ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + LINE_HEIGHT -- (иконка)
+	columnWidthsLEFT[1] = math_ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT -- (иконка)
 	return columnWidthsLEFT
 end
 -- Функция расчета ширины колонок для правой части
@@ -569,10 +574,10 @@ function EventFrame:CreateDataProvider()
 	----------------------------------------------------------------
 	-- Определяем порядок обработки типов данных
 	local dataDisplayOrder = {
-		"Additionally", -- 3. Адишинал
-		"UniversalQuests",-- 4. Универсал
 		"Currencies", -- 1. Валюта
 		"Items", -- 2. Итемы
+		"Additionally", -- 3. Адишинал
+		"UniversalQuests",-- 4. Универсал
 		"Reputations", -- 5. Репа
 	}
 	----------------------------------------------------------------
@@ -669,7 +674,7 @@ function EventFrame:CreateDataProvider()
 		totalRightWidth_scrollContentFrame = totalRightWidth_scrollContentFrame + columnWidthsCenter[i]
 	end
 	-- Расчет количества строк
-	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / LINE_HEIGHT)
+	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
 	MAX_DISPLAY_LINES = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
 	-- Установка размеров фрейма
 	local width = MIN_COLUMN_WIDTH_LEFT
@@ -679,7 +684,7 @@ function EventFrame:CreateDataProvider()
 	if width%2 == 1 then
 		width = width + 1
 	end
-	local height = LINE_HEIGHT * MAX_DISPLAY_LINES + HEADER_HEIGHT
+	local height = E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES + E.HEADER_HEIGHT
 	Octo_MainFrame_ToDo:SetSize(width, height)
 	Octo_MainFrame_ToDo.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
 	-- Освобождение всех фреймов из пула
@@ -690,12 +695,12 @@ function EventFrame:CreateDataProvider()
 		local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
 		local columnWidth = columnWidthsCenter[count] or MIN_COLUMN_WIDTH_Center
 		-- Установка позиции и размера заголовка
-		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", accumulatedWidth, -HEADER_HEIGHT)
-		HeaderFrameCenter:SetSize(columnWidth, HEADER_HEIGHT)
+		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
+		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
 		-- Настройка текста заголовка
 		-- HeaderFrameCenter.Nickname:SetAllPoints()
-		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, HEADER_TEXT_OFFSET)
+		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
 		if Octo_ToDo_DB_Vars.ShowOnlyCurrentServer then
 			HeaderFrameCenter.Nickname:SetPoint("CENTER")
 		end
@@ -704,7 +709,7 @@ function EventFrame:CreateDataProvider()
 		HeaderFrameCenter.Nickname:SetJustifyH("CENTER")
 		HeaderFrameCenter.Nickname:SetText(E.func_TextCenter_Chars_nickname(CharInfo))
 		-- HeaderFrameCenter.Server:SetAllPoints()
-		HeaderFrameCenter.Server:SetPoint("CENTER", 0, -HEADER_TEXT_OFFSET)
+		HeaderFrameCenter.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
 		HeaderFrameCenter.Server:SetWordWrap(false)
 		HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
 		HeaderFrameCenter.Server:SetJustifyH("CENTER")

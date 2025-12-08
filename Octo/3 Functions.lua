@@ -306,8 +306,12 @@ local function func_npcName_CACHE(id)
 end
 function E.func_npcName(id)
 	if not id then return end
-	local cachedName = func_npcName_CACHE(id)
-	return cachedName..E.debugInfo(id)
+	if E.func_IsPTR() and E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id] then
+		return E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] or UNKNOWN
+	else
+		local cachedName = func_npcName_CACHE(id)
+		return cachedName..E.debugInfo(id)
+	end
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -855,6 +859,7 @@ function E.func_MoneyString(number)
 		return E.func_CompactNumberFormat(number).."|r".."|TInterface\\MoneyFrame\\UI-CopperIcon:12:12|t"
 	end
 end
+
 function E.func_CompactNumberRound(number)
 	local number = number or 0
 	if number == 0 then
@@ -1602,24 +1607,26 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			end
 		end
 	elseif id == 1822 then
+		local typeSL = 1 -- Renown
 		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
 			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
 				local color = E.OctoTable_Covenant[curCovID].color
 				ColorCenter = color
-				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][1] then
-					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][1].."|r"
+				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL] then
+					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL].."|r"
 				end
 			end
 		end
 	elseif id == 1813 then
+		local typeSL = 2 -- Anima
 		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
 			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
 				local color = E.OctoTable_Covenant[curCovID].color
 				ColorCenter = color
-				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
-					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
+				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL] then
+					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL].."|r"
 				end
 			end
 		end
@@ -1777,38 +1784,31 @@ function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 	----------------------------------------------------------------
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, dataType.."#"..id, nil, false
 	----------------------------------------------------------------
-	-- if id == "CovenantRenown" then
-	-- 	TextLeft = E.func_currencyName(1822)
-	-- 	IconLeft = E.func_GetCurrencyIcon(1822)
-	-- elseif id == "CovenantAnima" then
-	-- 	TextLeft = E.func_currencyName(1813)
-	-- 	IconLeft = E.func_GetCurrencyIcon(1813)
-	-- else
 	if id == "LegionRemixResearch" then
 		TextLeft = L["Infinite Research"]
 	elseif id == "ListOfQuests" then
-		TooltipKey = "Other_ListOfQuests"
+		-- TooltipKey = "Other_ListOfQuests"
 		TextLeft = QUESTS_LABEL
 	elseif id == "LFGInstance" then
-		TooltipKey = "Other_LFGInstance"
+		-- TooltipKey = "Other_LFGInstance"
 		TextLeft = DUNGEONS
 	elseif id == "AllItems" then
-		TooltipKey = "Other_AllItems"
+		-- TooltipKey = "Other_AllItems"
 		TextLeft = ITEMS
 	elseif id == "Professions" then
-		TooltipKey = "Other_Professions"
+		-- TooltipKey = "Other_Professions"
 		TextLeft = PROFESSIONS_BUTTON
 		-- myType = {"professions"}
 	elseif id == "ItemLevel" then
-		TooltipKey = "Other_ItemLevel"
+		-- TooltipKey = "Other_ItemLevel"
 		TextLeft = STAT_AVERAGE_ITEM_LEVEL
 		-- myType = {"ItemLevel"}
 	elseif id == "Money" then
-		TooltipKey = "Other_Money"
+		-- TooltipKey = "Other_Money"
 		TextLeft = BONUS_ROLL_REWARD_MONEY
 		-- myType = {"Money"}
 	elseif id == "WasOnline" then
-		TooltipKey = "Other_WasOnline"
+		-- TooltipKey = "Other_WasOnline"
 		TextLeft = L["Was online"]
 		-- myType = {"Online"}
 	end
@@ -1821,32 +1821,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	----------------------------------------------------------------
-	if id == "CovenantRenown" then
-		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-				local color = E.OctoTable_Covenant[curCovID].color
-				ColorCenter = color
-				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][1] then
-					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][1].."|r"
-				end
-			end
-		end
-	elseif id == "CovenantAnima" then
-		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-				local color = E.OctoTable_Covenant[curCovID].color
-				ColorCenter = color
-				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][2] then
-					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][2].."|r"
-				end
-			end
-		end
-		if CharInfo.PlayerData.Possible_Anima then
-			TextCenter = TextCenter..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
-		end
-	elseif id == "LegionRemixResearch" then
+	if id == "LegionRemixResearch" then
 		if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
 			local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
 			local barMax = CharInfo.MASLENGO.LegionRemixData.barMax
@@ -2129,15 +2104,10 @@ function E.debugInfo(id)
 end
 function E.func_GetRealmName()
 	local result = GetRealmName()
-	-- if E.func_IsRemix() then
-	-- 	result = result .. " (Remix)"
-	-- end
-	return result
-end
-function E.func_GetSubRealmName()
 	if E.func_IsRemix() then
-		return "Remix"
+		result = result .. " (Remix)"
 	end
+	return result
 end
 -- E.curServer = E.func_GetRealmName()
 E.SPAM_TIME = 2
@@ -2214,6 +2184,11 @@ E.menuBackdrop = {
 E.MAX_DISPLAY_LINES = 30
 E.ddMenuButtonHeight = 16
 E.GLOBAL_LINE_HEIGHT = 20
+E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2 -- Высота заголовка
+E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
+
+
+
 E.GLOBAL_LINE_WIDTH_LEFT = 200
 E.GLOBAL_LINE_WIDTH_RIGHT = 90
 E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
@@ -2421,6 +2396,266 @@ function E.func_pizda(mountID)
 	local mountName = mountIcon..E.func_mountIsCollectedColor(mountID)..E.func_mountName(mountID).."|r"
 	return mountName
 end
+
+
+
+
+
+-- local function GetGradientHex(value, minValue, maxValue)
+-- 	if not minValue or minValue == maxValue then
+-- 		return E.Green_Color
+-- 	end
+
+-- 	local done = value - minValue
+-- 	local total = maxValue - minValue
+
+-- 	local red = math.min(255, (1 - done / total) * 510)
+-- 	local green = math.min(255, (done / total) * 510)
+
+-- 	return string.format("|cff%02x%02x00", red, green)
+-- end
+
+
+local function GetGradientHex(value, minValue, maxValue)
+	if not value or not minValue or not maxValue or minValue >= maxValue then
+		return "|cff00ff00"
+	end
+
+	local p = (value - minValue) / (maxValue - minValue)
+	if p < 0 then p = 0 end
+	if p > 1 then p = 1 end
+
+	local r, g
+	if p < 0.5 then
+		r = 255
+		g = math.floor(p * 2 * 255)
+	else
+		g = 255
+		r = math.floor((1 - (p - 0.5) * 2) * 255)
+	end
+
+	return string.format("|cff%02x%02x00", r, g)
+end
+
+
+function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
+	-- typeSL: 1 = Renown, 2 = Anima
+
+	local tooltip = {}
+	local isRenown = (typeSL == 1)
+
+	local func_texturefromIcon = E.func_texturefromIcon
+	local Gray_Color = E.Gray_Color
+	local currentRealm = E.func_GetRealmName()
+
+	--------------------------------------------------------
+	-- Заголовок
+	--------------------------------------------------------
+	if isRenown then
+		tooltip[1] = {
+			"",
+			func_texturefromIcon(E.ICON_KYRIAN),
+			func_texturefromIcon(E.ICON_VENTHYR),
+			func_texturefromIcon(E.ICON_NIGHTFAE),
+			func_texturefromIcon(E.ICON_NECROLORD),
+			""
+		}
+	end
+
+	--------------------------------------------------------
+	-- 1. Сбор данных
+	--------------------------------------------------------
+	local characterData = {}
+	local grandTotal = 0
+	local totalPossible = 0
+
+	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+		local covData = CharInfo.MASLENGO.CovenantAndAnima
+		local curCovID = covData and covData.curCovID
+		if curCovID then
+			local pd = CharInfo.PlayerData
+
+			local values = {}
+			local charTotal = 0
+			local activeValue = 0
+
+			for covenant = 1, 4 do
+				local v = covData[covenant] and covData[covenant][typeSL] or 0
+				values[covenant] = v
+				charTotal = charTotal + v
+				if covenant == curCovID then
+					activeValue = v
+				end
+			end
+
+			-- Фильтр пустоты
+			local hasData
+			if isRenown then
+				hasData = activeValue > 0
+			else
+				hasData = charTotal > 0 or (pd.Possible_Anima or 0) > 0
+			end
+
+			if hasData then
+				if not isRenown then
+					grandTotal = grandTotal + charTotal
+					totalPossible = totalPossible + (pd.Possible_Anima or 0)
+				end
+
+				local isVisible = visiblePlayers[GUID]
+				local colorPlayer = isVisible and pd.classColorHex or Gray_Color
+				local colorServer = isVisible and "|cffFFFFFF" or Gray_Color
+				local curPers = pd.GUID == E.curGUID and E.Green_Color .. "*|r" or ""
+				local curServer = pd.curServer ~= currentRealm and "-" .. pd.curServer or ""
+
+				local leftText =
+					func_texturefromIcon(pd.specIcon) ..
+					colorPlayer .. pd.Name .. curPers ..
+					colorServer .. curServer .. "|r"
+
+				local row = { leftText }
+
+				for covenant = 1, 4 do
+					local v = values[covenant]
+					if v > 0 then
+						local c = covenant == curCovID
+							and E.OctoTable_Covenant[covenant].color
+							or Gray_Color
+						row[covenant + 1] = c .. E.func_CompactNumberFormat(v) .. "|r"
+					else
+						row[covenant + 1] = "-"
+					end
+				end
+
+				local totalAnimaText
+				local sortValue
+				local Possible_Anima
+
+				if isRenown then
+					sortValue = activeValue
+				else
+					sortValue = charTotal -- + (pd.Possible_Anima or 0)
+					if charTotal ~= 0 then
+						totalAnimaText = E.func_CompactNumberFormat(charTotal)
+					else
+						totalAnimaText = "-"
+					end
+
+					if pd.Possible_Anima and pd.Possible_Anima > 0 then
+						Possible_Anima = E.Blue_Color .. " +" .. E.func_CompactNumberFormat(pd.Possible_Anima) .. "|r"
+					end
+				end
+
+				table.insert(characterData, {
+					row = row,
+					name = pd.Name,
+					sortValue = sortValue,
+					charValue = isRenown and activeValue or charTotal,
+					Possible_Anima = Possible_Anima or " ",
+					totalAnimaText = totalAnimaText,
+				})
+			end
+		end
+	end
+
+	--------------------------------------------------------
+	-- 2. Сортировка
+	--------------------------------------------------------
+	table.sort(characterData, function(a, b)
+		if a.sortValue ~= b.sortValue then
+			return a.sortValue > b.sortValue
+		end
+		return a.name < b.name
+	end)
+
+	--------------------------------------------------------
+	-- 3. Градиент (только для Anima)
+	--------------------------------------------------------
+	local minValue, maxValue
+	if not isRenown then
+		minValue, maxValue = math.huge, 0
+		for _, d in ipairs(characterData) do
+			local v = d.charValue
+			if v < minValue then minValue = v end
+			if v > maxValue then maxValue = v end
+		end
+		if minValue == math.huge then
+			minValue, maxValue = nil, nil
+		end
+	end
+
+	--------------------------------------------------------
+	-- 4. Вывод персонажей
+	--------------------------------------------------------
+	for _, d in ipairs(characterData) do
+		if not isRenown then
+			local color = GetGradientHex(d.charValue, minValue, maxValue)
+			d.row[6] = d.Possible_Anima
+			d.row[7] = color .. d.totalAnimaText .. "|r"
+		end
+		table.insert(tooltip, d.row)
+	end
+
+	--------------------------------------------------------
+	-- 5. Итоги сверху
+	--------------------------------------------------------
+	if #characterData > 0 and not isRenown then
+
+		-- if totalPossible > 0 then
+		-- 	table.insert(tooltip, 1, {
+		-- 		"",
+		-- 		func_texturefromIcon(E.ICON_KYRIAN),
+		-- 		func_texturefromIcon(E.ICON_VENTHYR),
+		-- 		func_texturefromIcon(E.ICON_NIGHTFAE),
+		-- 		func_texturefromIcon(E.ICON_NECROLORD),
+		-- 		"",
+		-- 		TOTAL..": "..E.func_CompactNumberFormat(grandTotal) ..E.Blue_Color.." +"..E.func_CompactNumberFormat(totalPossible).."|r"
+		-- 	})
+		-- else
+			table.insert(tooltip, 1, {
+				"",
+				func_texturefromIcon(E.ICON_KYRIAN),
+				func_texturefromIcon(E.ICON_VENTHYR),
+				func_texturefromIcon(E.ICON_NIGHTFAE),
+				func_texturefromIcon(E.ICON_NECROLORD),
+				"",
+				TOTAL..": "..E.func_CompactNumberFormat(grandTotal)
+			})
+		-- end
+
+
+
+
+
+		-- table.insert(tooltip, 2, {
+		-- 	E.Green_Color .. "TOTAL (covenants)|r",
+		-- 	"", "", "", "",
+		-- 	E.Green_Color .. grandTotal .. "|r"
+		-- })
+
+		-- if totalPossible > 0 then
+		-- 	table.insert(tooltip, 3, {
+		-- 		E.Blue_Color .. "TOTAL (possible)|r",
+		-- 		"", "", "", "",
+		-- 		E.Blue_Color .. totalPossible .. "|r"
+		-- 	})
+
+		-- 	table.insert(tooltip, 4, {
+		-- 		E.Yellow_Color .. "GRAND TOTAL|r",
+		-- 		"", "", "", "",
+		-- 		E.Yellow_Color .. (grandTotal + totalPossible) .. "|r"
+		-- 	})
+		-- end
+	end
+
+	return tooltip
+end
+
+
+
+
+
+
 function E.func_KeyTooltip_LEFT(SettingsType)
 	if not SettingsType then return end
 	local tooltip = {}
@@ -2430,28 +2665,6 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
 		id = tonumber(id)
 	end
-	local qwe = {
-		["Reputations"] = {
-		},
-		["Additionally"] = {
-			"ListOfQuests",
-			"Money",
-			"AllItems",
-			"LegionRemixResearch",
-			"Professions",
-			"LFGInstance",
-			"WasOnline",
-			"ItemLevel",
-		},
-		["Currencies"] = {
-		},
-		["SettingsEnabled"] = {
-		},
-		["Items"] = {
-		},
-		["UniversalQuests"] = {
-		},
-	}
 	----------------------------------------------------------------
 	local total = 0
 	local sorted = {}
@@ -2492,6 +2705,24 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		local reset = id:match("_([^_]+)$")
 		tooltip[#tooltip+1] = {reset}
 	end
+
+
+
+
+
+	if dataType == "Currencies" and id == 1822 then
+		-- Для ренома (typeSL = 1)
+		tooltip = E.func_CovenantCurrencyTooltip(1822, visiblePlayers, 1)
+	end
+
+	if dataType == "Currencies" and id == 1813 then
+		-- Для анимы (typeSL = 2)
+		tooltip = E.func_CovenantCurrencyTooltip(1813, visiblePlayers, 2)
+	end
+
+
+
+
 	-- print (dataType, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -2499,24 +2730,42 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 			local RIGHT1 = ""
 			local RIGHT2 = ""
 			local curServer, curPers = "", ""
-			if id == "CovenantRenown" then
-			elseif id == "CovenantAnima" then
-				local totalPossible = 0
-				local totalAnima = 0
-				for covenant = 1, 4 do
-					if CharInfo.MASLENGO.CovenantAndAnima[covenant][2] then
-						total = total + CharInfo.MASLENGO.CovenantAndAnima[covenant][2]
-						totalAnima = totalAnima + CharInfo.MASLENGO.CovenantAndAnima[covenant][2]
-					end
-				end
-				if CharInfo.PlayerData.Possible_Anima then
-					totalPossible = totalPossible + CharInfo.PlayerData.Possible_Anima
-				end
-				if totalPossible ~= 0 then
-					RIGHT1 = RIGHT1..E.Blue_Color.." +"..totalPossible.."|r"
-				end
-				RIGHTforSORT = totalPossible + totalAnima
+
+			specIcon = E.func_texturefromIcon(CharInfo.PlayerData.specIcon)
+			local colorPlayer = visiblePlayers[GUID] and CharInfo.PlayerData.classColorHex or E.Gray_Color
+			local colorServer = visiblePlayers[GUID] and "|cffFFFFFF" or E.Gray_Color
+			Name = CharInfo.PlayerData.Name
+			if CharInfo.PlayerData.GUID == E.curGUID then
+				curPers = E.Green_Color.."*|r"
 			end
+			if CharInfo.PlayerData.curServer ~= E.func_GetRealmName() then
+				curServer = "-"..CharInfo.PlayerData.curServer
+			end
+
+			-- if dataType == "Currencies" and id == 1822 then
+			-- 	local typeSL = 1 -- Renown
+			-- 	local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			-- 	if curCovID then
+			-- 		local totalRenownPerChar = 0
+			-- 		local currentCovenantColor = E.OctoTable_Covenant[curCovID].color
+			-- 		for covenant = 1, 4 do
+			-- 			local covenantColor = E.OctoTable_Covenant[covenant].color
+			-- 			if CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] then
+			-- 				total = total + CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL]
+			-- 				RIGHT1 = RIGHT1 .. covenantColor..CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] .. "|r "
+			-- 			end
+			-- 		end
+			-- 	end
+			-- end
+
+
+
+
+
+
+
+
+
 			if SettingsType == "Additionally#Professions" then
 				local charProf = CharInfo.MASLENGO.professions
 				for i = 1, 2 do
@@ -2583,7 +2832,7 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 				RIGHT1 = hexcolorOnline..E.func_SecondsToClock(CharInfo.PlayerData.realTotalTime).."|r"
 				RIGHTforSORT = CharInfo.PlayerData.realTotalTime
 				total = total + CharInfo.PlayerData.realTotalTime
-			elseif dataType == "Currencies" and CharInfo.MASLENGO.Currency[id] and E.func_TextCenter_Currency(CharInfo, id) ~= "" then
+			elseif dataType == "Currencies" and id ~= 1813 and id ~= 1822 and CharInfo.MASLENGO.Currency[id] and E.func_TextCenter_Currency(CharInfo, id) ~= "" then
 				RIGHT1 = E.func_TextCenter_Currency(CharInfo, id)
 				RIGHTforSORT = CharInfo.MASLENGO.Currency[id].quantity or 0
 				total = total + (CharInfo.MASLENGO.Currency[id].quantity or 0)
@@ -2591,10 +2840,6 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 				total = total + CharInfo.MASLENGO.ItemsInBag[id]
 				RIGHT1 = CharInfo.MASLENGO.ItemsInBag[id]
 				RIGHTforSORT = CharInfo.MASLENGO.ItemsInBag[id]
-			elseif (dataType == "Currency_Covenant_Anima" or dataType == "Currency_Covenant_Renown") and CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
-				total = total + CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
-				RIGHT1 = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
-				RIGHTforSORT = CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant]
 			end
 			if RIGHT1 ~= "" then
 				specIcon = E.func_texturefromIcon(CharInfo.PlayerData.specIcon)
@@ -2645,13 +2890,11 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		elseif SettingsType == "Additionally#WasOnline" then
 			tooltip[#tooltip+1] = {"", E.func_SecondsToClock(total)}
 		elseif dataType == "Currencies" then
-			tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..E.func_currencyName(id), TOTAL..": "..E.func_CompactNumberFormat(total)}
+			-- tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..E.func_currencyName(id), TOTAL..": "..E.func_CompactNumberFormat(total)}
+			tooltip[#tooltip+1] = {"", TOTAL..": "..E.func_CompactNumberFormat(total)}
 		elseif dataType == "Items" then
-			tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(id))..E.func_itemName(id), TOTAL..": "..E.func_CompactNumberFormat(total)}
-		elseif dataType == "Currency_Covenant_Anima" then
-			tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetCurrencyIcon(id)).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", E.func_CompactNumberFormat(total)}
-		elseif dataType == "Currency_Covenant_Renown" then
-			tooltip[#tooltip+1] = {E.func_texturefromIcon(E.OctoTable_Covenant[iANIMA].icon).." "..E.OctoTable_Covenant[iANIMA].color..E.OctoTable_Covenant[iANIMA].name.."|r", E.func_CompactNumberFormat(total)}
+			-- tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetItemIconByID(id))..E.func_itemName(id), TOTAL..": "..E.func_CompactNumberFormat(total)}
+			tooltip[#tooltip+1] = {"", TOTAL..": "..E.func_CompactNumberFormat(total)}
 		end
 		for _, v in ipairs(sorted) do
 			tooltip[#tooltip+1] = {v[1]..v[2]..v[3]..v[4].."|r"..v[5]..v[6].."|r", v[7]..v[8]}
@@ -2672,7 +2915,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	----------------------------------------------------------------
 
 	if dataType == "Currencies" and id == 1822 then
-		local typeSL = 1
+		local typeSL = 1 -- Renown
 		for covenant = 1, 4 do
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID or 0
 			local icon = E.OctoTable_Covenant[covenant].icon
@@ -2691,7 +2934,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 
 	if dataType == "Currencies" and id == 1813 then
-		local typeSL = 2
+		local typeSL = 2 -- Anima
 		for covenant = 1, 4 do
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID or 0
 			local icon = E.OctoTable_Covenant[covenant].icon
@@ -2710,7 +2953,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			tooltip[#tooltip+1] = {leftText, centText, rightText}
 		end
-		tooltip[#tooltip+1] = {" "}
+
+		E.func_tooltipSpacer(tooltip)
 	end
 
 	if dataType == "Currencies" and id == 824 then
@@ -3211,7 +3455,8 @@ function E.func_Tooltip_Chars(CharInfo)
 	-- Chromie time info
 	if CharInfo.PlayerData.Chromie_name and CharInfo.PlayerData.Chromie_name ~= "" then
 		tooltip_Chars[#tooltip_Chars+1] = {" ", " "}
-		tooltip_Chars[#tooltip_Chars+1] = {L["Chromie"]..": "..E.Green_Color..CharInfo.PlayerData.Chromie_name.."|r"}
+		-- tooltip_Chars[#tooltip_Chars+1] = {E.func_texturefromIcon("ChromieMap", nil, nil, true)..L["Chromie"]..": "..E.Green_Color..CharInfo.PlayerData.Chromie_name.."|r"}
+		tooltip_Chars[#tooltip_Chars+1] = {E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_npcName(167032)..": "..E.Green_Color..CharInfo.PlayerData.Chromie_name.."|r"}
 	end
 	-- Location info
 	if CharInfo.PlayerData.BindLocation then
@@ -3468,6 +3713,13 @@ function E.SafeCall(func, ...)
 	return result
 end
 ----------------------------------------------------------------
+function E.func_tooltipSpacer(tooltip)
+	if not tooltip then return end
+	if #tooltip > 0 then
+		tooltip[#tooltip+1] = {" "}
+	end
+	return
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

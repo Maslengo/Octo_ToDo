@@ -10,7 +10,7 @@ local expansionID = 9
 E.OctoTables_DataOtrisovka[categoryKey] = {}
 E.OctoTables_Vibor[categoryKey] = {}
 E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].name
+E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 local function tempFunction(start)
 	E.func_ResetOtrisovkaTables(categoryKey)
 	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
@@ -67,6 +67,25 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
+			TextLeft = L["World Boss"],
+			name_save = "WorldBoss",
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{61813, forcedText = {npcID = 167524}, addText = {mapID = 1533},}, -- "Валинор" <Свет эпох> Бастион
+				{61816, forcedText = {npcID = 167525}, addText = {mapID = 1536},}, -- Мортанис Малдраксус (2).
+				{61815, forcedText = {npcID = 167527}, addText = {mapID = 1565},}, -- Ораномонос Вечноветвящаяся Арденвельд (3).
+				{61814, forcedText = {npcID = 167526}, addText = {mapID = 1525},}, -- Нургаш Жижерожденный Ревендрет (3).
+				{nil},
+				{65143, forcedText = {npcID = 182466}, addText = {mapID = 1970},}, -- Антрос <Хранитель Предшественников> Зерет Мортис (2).
+				{nil},
+				{64531, forcedText = {npcID = 178958}, addText = {mapID = 1543},}, -- Мор'гет <Мучитель проклятых> Утроба .
+			},
+			forcedMaxQuest = 3,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
 			TextLeft = OTHER..": Rares",
 			name_save = "OtherRares",
 			reset = "Daily",
@@ -108,58 +127,39 @@ local function tempFunction(start)
 			},
 			-- forcedMaxQuest = 25,
 		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = L["World Boss"],
-			name_save = "WorldBoss",
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{61813, forcedText = {npcID = 167524}, addText = {mapID = 1533},}, -- "Валинор" <Свет эпох> Бастион
-				{61816, forcedText = {npcID = 167525}, addText = {mapID = 1536},}, -- Мортанис Малдраксус (2).
-				{61815, forcedText = {npcID = 167527}, addText = {mapID = 1565},}, -- Ораномонос Вечноветвящаяся Арденвельд (3).
-				{61814, forcedText = {npcID = 167526}, addText = {mapID = 1525},}, -- Нургаш Жижерожденный Ревендрет (3).
-				{nil},
-				{65143, forcedText = {npcID = 182466}, addText = {mapID = 1970},}, -- Антрос <Хранитель Предшественников> Зерет Мортис (2).
-				{nil},
-				{64531, forcedText = {npcID = 178958}, addText = {mapID = 1543},}, -- Мор'гет <Мучитель проклятых> Утроба .
-			},
-			forcedMaxQuest = 3,
-		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
-			name_save = "anima1k",
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{61982, addText = {Icon = E.ICON_KYRIAN}},
-				{61981, addText = {Icon = E.ICON_VENTHYR}},
-				{61984, addText = {Icon = E.ICON_NIGHTFAE}},
-				{61983, addText = {Icon = E.ICON_NECROLORD}},
-			},
-			-- forcedMaxQuest = 4,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = L["Troubles at Home"], -- E.func_questName(61981),
-			name_save = "Troubles at Home",
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{60425, addText = {Icon = E.ICON_KYRIAN}},
-				{60432, addText = {Icon = E.ICON_VENTHYR}},
-				{60419, addText = {Icon = E.ICON_NIGHTFAE}},
-				{60429, addText = {Icon = E.ICON_NECROLORD}},
-			},
-			-- forcedMaxQuest = 1,
-		},
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981),
+		-- 	name_save = "anima1k",
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{61982, addText = {Icon = E.ICON_KYRIAN}},
+		-- 		{61981, addText = {Icon = E.ICON_VENTHYR}},
+		-- 		{61984, addText = {Icon = E.ICON_NIGHTFAE}},
+		-- 		{61983, addText = {Icon = E.ICON_NECROLORD}},
+		-- 	},
+		-- 	-- forcedMaxQuest = 4,
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = L["Troubles at Home"], -- E.func_questName(61981),
+		-- 	name_save = "Troubles at Home",
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{60425, addText = {Icon = E.ICON_KYRIAN}},
+		-- 		{60432, addText = {Icon = E.ICON_VENTHYR}},
+		-- 		{60419, addText = {Icon = E.ICON_NIGHTFAE}},
+		-- 		{60429, addText = {Icon = E.ICON_NECROLORD}},
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
 		{
 			sorted = false,
 			showTooltip = true,
@@ -235,27 +235,27 @@ local function tempFunction(start)
 			},
 			forcedMaxQuest = 3,
 		},
-		{
-			showTooltip = true,
-			TextLeft = E.func_mapName(1543)..": "..L["Daily quests"],--E.func_currencyName(1880),
-			name_save = "MAWdailyQuests",
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{60646},
-				{60762},
-				{60775},
-				{61075},
-				{61079},
-				{61088},
-				{61103},
-				{61104},
-				{61765},
-				{62214},
-				{62234},
-			},
-			forcedMaxQuest = 3,
-		},
+		-- {
+		-- 	showTooltip = true,
+		-- 	TextLeft = E.func_mapName(1543)..": "..L["Daily quests"],--E.func_currencyName(1880),
+		-- 	name_save = "MAWdailyQuests",
+		-- 	reset = "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{60646},
+		-- 		{60762},
+		-- 		{60775},
+		-- 		{61075},
+		-- 		{61079},
+		-- 		{61088},
+		-- 		{61103},
+		-- 		{61104},
+		-- 		{61765},
+		-- 		{62214},
+		-- 		{62234},
+		-- 	},
+		-- 	forcedMaxQuest = 3,
+		-- },
 		{
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": ".."Rares",
@@ -372,49 +372,49 @@ local function tempFunction(start)
 			},
 			forcedMaxQuest = 23,
 		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = E.func_mapName(1961)..": ".. L["Daily quests"],
-			name_save = "KORTHIADailyQuest",
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{63793},--Задание брокеров: Энсидий Осквернитель
-				{63964},--Задание брокеров: Мрачный Коготь
-				{63794},--Задание брокеров: голодающее чудище
-				{63790},--Задание брокеров: лорд Аззорак
-				{63792},--Задание брокеров: Ноктюрнус Развоплотитель
-				{63963},--Задание брокеров: Железная Лапа
-				{63791},--Задание брокеров: Валдинар Окаянный
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = E.func_mapName(1961)..": ".. L["Daily quests"],
+		-- 	name_save = "KORTHIADailyQuest",
+		-- 	reset = "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{63793},--Задание брокеров: Энсидий Осквернитель
+		-- 		{63964},--Задание брокеров: Мрачный Коготь
+		-- 		{63794},--Задание брокеров: голодающее чудище
+		-- 		{63790},--Задание брокеров: лорд Аззорак
+		-- 		{63792},--Задание брокеров: Ноктюрнус Развоплотитель
+		-- 		{63963},--Задание брокеров: Железная Лапа
+		-- 		{63791},--Задание брокеров: Валдинар Окаянный
 
 
-				{63789},--Неустанная борьба: Обитель ученых
-				{63788},--Неустанная борьба: Святилище наставлений
-				{63787},--Неустанная борьба: Площадка терзателей
-				{63785},--Неустанная борьба: Форум Искателей
+		-- 		{63789},--Неустанная борьба: Обитель ученых
+		-- 		{63788},--Неустанная борьба: Святилище наставлений
+		-- 		{63787},--Неустанная борьба: Площадка терзателей
+		-- 		{63785},--Неустанная борьба: Форум Искателей
 
 
-				{64103},--Проверенный трюк
-				{64101},--Соблюдение процедур
-				{64089},--Чаи и настои
-				{64430},--Пролитый чай
+		-- 		{64103},--Проверенный трюк
+		-- 		{64101},--Соблюдение процедур
+		-- 		{64089},--Чаи и настои
+		-- 		{64430},--Пролитый чай
 
 
-				{64065},--Местные реагенты
-				{63989},--Скользим со стилем
-				{64016},--Скользим со стилем
-				{64017},--Скользим со стилем
+		-- 		{64065},--Местные реагенты
+		-- 		{63989},--Скользим со стилем
+		-- 		{64016},--Скользим со стилем
+		-- 		{64017},--Скользим со стилем
 
 
 
-				{63936},--Поглощенная анима
-				{63784},--Золото не вопрос
+		-- 		{63936},--Поглощенная анима
+		-- 		{63784},--Золото не вопрос
 
 
-			},
-			forcedMaxQuest = 4,
-		},
+		-- 	},
+		-- 	forcedMaxQuest = 4,
+		-- },
 
 
 		{
@@ -526,27 +526,27 @@ local function tempFunction(start)
 			},
 			-- forcedMaxQuest = 5,
 		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = E.func_mapName(1961)..": ".."Items",
-			name_save = "KORTHIAitems",
-			reset = "Once",
-			desc = categoryKey,
-			quests = {
-				{64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
-				{64307, forcedText = {itemID = 187145}}, -- Treatise: Recognizing StygiaanditsUses
-				{64828, forcedText = {itemID = 187706}}, -- Treatise: Bonds of Stygiain Mortals
-				{64027, forcedText = {itemID = 186722}}, -- Treatise: The Study of Animaand Harnessing Every Drop
-				{64366, forcedText = {itemID = 186721}}, -- Treatise: Relics Aboundinthe Shadowlands
-				-- {64339, forcedText = {itemID = 186714}}, -- 100(2) Research Report: All-Seeing Crystal
-				-- {64348, forcedText = {itemID = 186716}}, -- 1000(5) Research Report: Ancient Shrines
-				{64300, forcedText = {itemID = 186717}}, -- 4000(6) Research Report: Adaptive Alloys
-				{64303, forcedText = {itemID = 187138}}, -- 8000(6) Research Report: First Alloys
-				{64367, forcedText = {itemID = 187136}}, -- 2500(6) Research Report Relic Examination Techniques
-			},
-			-- forcedMaxQuest = 1,
-		},
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = E.func_mapName(1961)..": ".."Items",
+		-- 	name_save = "KORTHIAitems",
+		-- 	reset = "Once",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
+		-- 		{64307, forcedText = {itemID = 187145}}, -- Treatise: Recognizing StygiaanditsUses
+		-- 		{64828, forcedText = {itemID = 187706}}, -- Treatise: Bonds of Stygiain Mortals
+		-- 		{64027, forcedText = {itemID = 186722}}, -- Treatise: The Study of Animaand Harnessing Every Drop
+		-- 		{64366, forcedText = {itemID = 186721}}, -- Treatise: Relics Aboundinthe Shadowlands
+		-- 		-- {64339, forcedText = {itemID = 186714}}, -- 100(2) Research Report: All-Seeing Crystal
+		-- 		-- {64348, forcedText = {itemID = 186716}}, -- 1000(5) Research Report: Ancient Shrines
+		-- 		{64300, forcedText = {itemID = 186717}}, -- 4000(6) Research Report: Adaptive Alloys
+		-- 		{64303, forcedText = {itemID = 187138}}, -- 8000(6) Research Report: First Alloys
+		-- 		{64367, forcedText = {itemID = 187136}}, -- 2500(6) Research Report Relic Examination Techniques
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
 		{
 			showTooltip = true,
 			TextLeft = E.func_mapName(1970)..": "..E.func_questName(66042),
@@ -818,63 +818,8 @@ local function tempFunction(start)
 	}
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		"CovenantRenown",
-		"CovenantAnima",
 	}
 	----------------------------------------------------------------
 end
 
 table.insert(E.Components, tempFunction)
-----------------------------------------------------------------
-local function localfunc2()
-	local OctoTable_Otrisovka_TextCenter = {}
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
-		for kCovenant = 1, 2 do
-			for iANIMA = 1, 4 do
-				table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-						----------------------------------------------------------------
-						local IconLeft, TextLeft, ColorLeft, TextCenter, tooltipCENT, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", {}, nil, {}, nil, false, nil, nil
-						----------------------------------------------------------------
-						local color = E.OctoTable_Covenant[iANIMA].color
-						-- отриосвка всего по центру
-						if CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant] then
-							TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[iANIMA][kCovenant].."|r"
-						end
-						if kCovenant == 1 then
-							-- IconLeft = E.OctoTable_Covenant[iANIMA].icon
-							myType = {"Currency_Covenant_Renown", 1813, iANIMA, kCovenant}
-						elseif kCovenant == 2 then
-							-- IconLeft = E.func_GetCurrencyIcon(1813)
-							myType = {"Currency_Covenant_Anima", 1813, iANIMA, kCovenant}
-							if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-								if CharInfo.PlayerData.Possible_Anima then
-									TextCenter = TextCenter..E.Blue_Color.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
-								end
-							end
-						end
-						if iANIMA == CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-							ColorCenter = color
-						else
-							ColorCenter = nil
-						end
-						----------------------------------------------------------------
-						vivodLeft = color..E.OctoTable_Covenant[iANIMA].name.."|r"
-						----------------------------------------------------------------
-						TextLeft = vivodLeft
-						ColorLeft = E.OctoTable_Expansions[categoryKey].color
-						----------------------------------------------------------------
-						return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
-						----------------------------------------------------------------
-				end)
-			end
-		end
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	return OctoTable_Otrisovka_TextCenter
-end
-

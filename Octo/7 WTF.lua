@@ -44,19 +44,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 	for _, questID in ipairs(E.OctoTable_QuestID_Paragon) do
 		tblQuests[questID] = true
 	end
-	for _, data in next,(E.ALL_UniversalQuests) do
-		if not data.quests then
-			break -- Пропускаем записи без квестов
-		end
-		for _, questData in ipairs(data.quests) do
-			if questData[1] then
-				tblQuests[questData[1]] = true
-				if questData.forcedText and questData.forcedText.npcID then
-					local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
-				end
-			end
-		end
-	end
 	for i = 1, C_QuestLog.GetNumQuestLogEntries() do
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
@@ -103,6 +90,41 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- print (ID)
 	-- end
 	-- end)
+
+
+
+
+
+
+
+	-- for _, data in next,(E.ALL_UniversalQuests) do
+	-- 	if not data.quests then
+	-- 		break -- Пропускаем записи без квестов
+	-- 	end
+	-- 	for _, questData in ipairs(data.quests) do
+	-- 		if questData[1] then
+	-- 			tblQuests[questData[1]] = true
+	-- 			if questData.forcedText and questData.forcedText.npcID then
+	-- 				local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
+
+	-- local localTable = {}
+	-- for i = 1, 6 do
+	-- 	if i ~= 6 then
+	-- 		C_Timer.After(i, function()
+	-- 			for _, npcID in ipairs(E.OctoTable_NPC) do
+	-- 				localTable[npcID] = E.func_npcName(npcID)
+	-- 			end
+	-- 		end)
+	-- 	elseif i == 6 then
+	-- 		C_Timer.After(i, function()
+	-- 			fpde(localTable)
+	-- 		end)
+	-- 	end
+	-- end
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -458,9 +480,9 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[11] = true})
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = 11
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = "OUTLINE"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_Other()
@@ -727,6 +749,22 @@ function EventFrame:Octo_ToDo_DB_VisualUserSettings()
 	end
 	----------------------------------------------------------------
 end
+
+
+local function func_UpdateGlobals()
+	if Octo_ToDo_DB_Vars then
+		if Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT then
+			E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
+			E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2 -- Высота заголовка
+			E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
+		end
+		if Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle then
+			E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+		end
+
+	end
+end
+
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
@@ -742,9 +780,11 @@ function EventFrame:ADDON_LOADED(addonName)
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	E.func_CheckAll()
+	func_UpdateGlobals()
 end
 function EventFrame:VARIABLES_LOADED()
 	E.func_CheckAll()
+
 end
 function EventFrame:PLAYER_LOGIN()
 	self:Octo_ToDo_DB_VisualUserSettings() --Настройка отображения игроков
