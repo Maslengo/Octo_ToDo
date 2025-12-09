@@ -39,7 +39,6 @@ OctoEngine = E -- в других аддонах
 
 
 
-
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}

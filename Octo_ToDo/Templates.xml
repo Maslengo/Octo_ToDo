@@ -182,6 +182,7 @@
 				self.highlightLeave.alpha:SetTarget(self.highlight)
 			</OnLoad>
 			<OnEnter>
+				<!-- local qwe, E = ... -->
 				<!-- if not E.ENABLE_HIGHLIGHT_ANIMATION then -->
 					self.highlightLeave:Stop()
 					self.highlight:SetAlpha(.3)

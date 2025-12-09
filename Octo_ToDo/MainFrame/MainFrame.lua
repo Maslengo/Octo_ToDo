@@ -421,7 +421,7 @@ end
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
 	-- Настройка позиции и обработчика показа фрейма
-	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.PHYSICAL_SCREEN_WIDTH*.12)
+	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.PHYSICAL_SCREEN_WIDTH*.1)
 	-- Octo_MainFrame_ToDo:SetPoint("CENTER")
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
 			RequestRaidInfo()

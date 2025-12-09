@@ -24,8 +24,9 @@ local function tempFunction(start)
 		1155,
 		1149,
 		1416,
-		1273, -- (1273 MONETKA)
+		1273,
 	}
+
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 	}

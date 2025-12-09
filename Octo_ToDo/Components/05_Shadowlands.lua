@@ -18,20 +18,21 @@ local function tempFunction(start)
 	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		1822, -- Renown
 		1813, -- Reservoir Anima
-		2009, 1906, 1828, 1979, 1931,
+		2009,
+		1906,
+		1828,
+		1979,
+		1931,
 	}
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
-
-
 		2470, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
 		2472, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
 		2478, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
 		2432, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
-
 
 		2407, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
 

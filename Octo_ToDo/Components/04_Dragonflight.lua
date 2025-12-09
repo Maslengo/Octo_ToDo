@@ -21,7 +21,17 @@ local function tempFunction(start)
 		2003,
 		2245,
 		2594,
-		-- (УСТАРЕЛО АСПЕКТЫ 2812, 2809, 2807, 2806)
+
+		2812, -- (УСТАРЕЛО АСПЕКТЫ )
+		2809, -- (УСТАРЕЛО АСПЕКТЫ )
+		2807, -- (УСТАРЕЛО АСПЕКТЫ )
+		2806, -- (УСТАРЕЛО АСПЕКТЫ )
+		-- Dragonflight
+		-- https://warcraft.wiki.gg/wiki/Catalyst
+		2912, -- Renascent Awakening ()
+		2796, -- Renascent Dream (Season 3)
+		2533, -- Renascent Shadowflame (Season 2)
+		2167, -- Catalyst Charges (Season 1)
 	}
 	----------------------------------------------------------------
 	E.OctoTables_DataOtrisovka[categoryKey].Items = {

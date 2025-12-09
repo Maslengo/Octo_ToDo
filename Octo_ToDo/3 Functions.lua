@@ -2696,7 +2696,7 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 					prof[i].Icon = E.func_ProfessionIcon(cmP[i].skillLine)
 					prof[i].Text = E.func_CompactNumberFormat(cmP[i].skillLevel).."/"..E.func_CompactNumberFormat(cmP[i].maxSkillLevel)
 					if cmP[i].skillModifier then
-						prof[i].Text = E.func_CompactNumberFormat(cmP[i].skillLevel).."|cff00FF00+"..E.func_CompactNumberFormat(cmP[i].skillModifier).."|r".."/"..E.func_CompactNumberFormat(cmP[i].maxSkillLevel)
+						prof[i].Text = E.func_CompactNumberFormat(cmP[i].skillLevel)..E.Green_Color.."+"..E.func_CompactNumberFormat(cmP[i].skillModifier).."|r".."/"..E.func_CompactNumberFormat(cmP[i].maxSkillLevel)
 					end
 				end
 			end
@@ -3338,7 +3338,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local leftText = E.func_ProfessionIcon(charProf[i].skillLine).." "..E.func_ProfessionName(charProf[i].skillLine)
 				local rightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
 				if charProf[i].skillModifier then
-					rightText = charProf[i].skillLevel.."|cff00FF00+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
+					rightText = charProf[i].skillLevel..E.Green_Color.."+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
 				end
 				tooltip[#tooltip+1] = {leftText, rightText}
 				if charProf[i].child then
@@ -3979,9 +3979,7 @@ function E.func_GetMinMaxValue(tbl, data)
 
 	return minValue, maxValue
 end
-
 ----------------------------------------------------------------
-
 -- function E.func_GetGradientHex(value, minValue, maxValue)
 -- 	-- текущее, мин, макс
 -- 	if not value or not minValue or not maxValue or minValue >= maxValue then
@@ -4035,6 +4033,19 @@ function E.func_GetGradientHex(value, minValue, maxValue, minHex, midHex, maxHex
 
 	return string.format("|cff%02x%02x%02x", r, g, b)
 end
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------
