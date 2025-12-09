@@ -1,0 +1,42 @@
+
+	<Binding
+		name = "Quick Link (wowhead.com)"
+		category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+		RunWowheadQuickLink()
+	</Binding>
+	<Binding
+		name = "Quick Link (raider.io)"
+		category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+		RunAlternativeQuickLink()
+	</Binding>
+
+
+
+E.baseWowheadAzEsUrl = "%swowhead.com/azerite-essence/%s%s"
+E.baseWowheadTradingPostActivityUrl = "%swowhead.com/trading-post-activity/%s%s"
+E.baseArmoryUrl = "worldofwarcraft.blizzard.com/%s/character/%s/%s"
+E.baseRaiderIoUrl = "raider.io/characters/%s/%s/%s"
+
+
+
+			["Config_prefix"] = {
+				type = "select",
+				name = "wowhead",
+				values = {},
+				desc = "",
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_prefix
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_prefix = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+
+	for index, name in ipairs(E.OctoTable_Prefixes) do
+		Options.args.Config_prefix.values[index] = name
+	end
+
+
+		Config_prefix = 1, -- Префикс

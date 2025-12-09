@@ -12,8 +12,6 @@
 	<Script file="Moduls\Module_HideFrames.lua"/>
 	<Script file="Moduls\Module_ItemsUsable.lua"/>
 	<Script file="Moduls\Module_ReadyCheck.lua"/>
-	<Script file="Moduls\Octo_WowheadQuickLink.lua"/>
-	<Script file="Moduls\Octo_WowheadQuickLinkStrategies.lua"/>
 	<Script file="Moduls\PosFrame.lua"/>
 	<Script file="Moduls\SellFrame.lua"/>
 	<Script file="Moduls\SpeedFrame.lua"/>

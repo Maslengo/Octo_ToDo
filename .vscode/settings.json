@@ -288,7 +288,21 @@
 		"PROFESSIONS_TRACKER_HEADER_PROFESSION",
 		"PVP_OPTIONS",
 		"ALWAYS",
-		"AlertFrame"
+		"AlertFrame",
+		"RETRIEVING_DATA",
+		"QUEST_TAG_ATLAS",
+		"QuestUtil",
+		"TokenFramePopup",
+		"CharacterFrame",
+		"CURRENCY_TRANSFER_DISABLED_NO_VALID_SOURCES",
+		"TokenFrame",
+		"BaseScrollBoxEvents",
+		"CurrencyTransferMenu",
+		"CURRENCY_TRANSFER_DISABLED_UNMET_REQUIREMENTS",
+		"CurrencyTransferLog",
+		"CURRENCY_TRANSFER_DISABLED_MAX_QUANTITY",
+		"CURRENCY_TRANSFER_IN_PROGRESS",
+		"ERR_CURRENCY_TRANSFER_DISABLED"
 	],
 	"Lua.type.weakUnionCheck": true,
 	"lua.targetVersion": "5.1"

@@ -27,7 +27,7 @@ function EventFrame:Octo_EventsButton(frame)
 				titleText = titleText..E.Gray_Color..name.."|r"
 				timeText = E.Gray_Color..timeText.."|r"
 			end
-			if E.DebugIDs then
+			if E.Config_DebugID_ALL then
 				titleText = titleText..E.Gray_Color.." id:"..v.eventID.."|r"
 			end
 			tooltip[#tooltip+1] = {titleText, timeText}
@@ -39,7 +39,7 @@ function EventFrame:Octo_EventsButton(frame)
 		if parent then
 			parent:Hide()
 		end
-		if fpde then fpde(E.Holiday) end
+		if opde then opde(E.Holiday) end
 	end
 	CreateUtilButton(
 		"EventsButton",

@@ -33,7 +33,7 @@ local func_OnAcquired do
 		-- Получение данных для тултипа
 		local tooltipOCTO = {}
 		local tooltipInfo = C_TooltipInfo.GetItemByID(itemID)
-		-- fpde(tooltipInfo.lines)
+		-- opde(tooltipInfo.lines)
 		for i, v in next,(tooltipInfo.lines) do
 			local r, g, b = v.leftColor.r, v.leftColor.g, v.leftColor.b
 			local colorHEX = E.func_rgb2hex(r, g, b)

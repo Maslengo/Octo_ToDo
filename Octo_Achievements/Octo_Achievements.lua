@@ -119,7 +119,7 @@ local function CreateAchievementTooltip(achievementID)
 	local color = completed and E.Green_Color or E.Red_Color
 	-- Build header line
 	local TextLeft = E.func_texturefromIcon(icon)..E.func_achievementName(achievementID)
-	if E.DebugIDs then
+	if E.Config_DebugID_ALL then
 		TextLeft = TextLeft..E.Gray_Color.." id:"..achievementID.."|r"
 	end
 	if points and points ~= 0 then
