@@ -1,9 +1,0 @@
-<Ui>
-	<Script file="Octo_Debug\CVAR.lua"/>
-	<Script file="Octo_Debug\Octo_Debug_CreateEditBox.lua"/>
-	<Script file="Octo_Debug\Octo_Debug_LoadOctoUIforAddons.lua"/>
-
-
-	<Script file="Octo_Debug\Options\func_Octo_Debug_Options.lua"/>
-	<Script file="Octo_Debug\Options\Init.lua"/>
-</Ui>

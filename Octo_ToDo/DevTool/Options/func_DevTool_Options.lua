@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 -------------------------------------------------------------------------
-function E.func_Octo_Debug_Options(savedVars)
+function E.func_DevTool_Options(savedVars)
 	local index = 0
 	local function GetOrder()
 		index = index + 1
@@ -291,10 +291,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "CVar",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.CVar
+					return Octo_DevTool_DB.CVar
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.CVar = value
+					Octo_DevTool_DB.CVar = value
 				end,
 				width = E.FULL_WIDTH/2,
 				order = GetOrder(),
@@ -311,10 +311,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = E.Blue_Color.."Config_DebugID_ALL|r",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_ALL
+					return Octo_DevTool_DB.Config_DebugID_ALL
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_ALL = value
+					Octo_DevTool_DB.Config_DebugID_ALL = value
 					E.Config_DebugID_ALL = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -326,10 +326,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Items",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Items
+					return Octo_DevTool_DB.Config_DebugID_Items
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Items = value
+					Octo_DevTool_DB.Config_DebugID_Items = value
 					E.Config_DebugID_Items = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -341,10 +341,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Currencies",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Currencies
+					return Octo_DevTool_DB.Config_DebugID_Currencies
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Currencies = value
+					Octo_DevTool_DB.Config_DebugID_Currencies = value
 					E.Config_DebugID_Currencies = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -356,10 +356,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_NPCs",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_NPCs
+					return Octo_DevTool_DB.Config_DebugID_NPCs
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_NPCs = value
+					Octo_DevTool_DB.Config_DebugID_NPCs = value
 					E.Config_DebugID_NPCs = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -371,10 +371,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Quests",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Quests
+					return Octo_DevTool_DB.Config_DebugID_Quests
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Quests = value
+					Octo_DevTool_DB.Config_DebugID_Quests = value
 					E.Config_DebugID_Quests = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -386,10 +386,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Reputations",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Reputations
+					return Octo_DevTool_DB.Config_DebugID_Reputations
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Reputations = value
+					Octo_DevTool_DB.Config_DebugID_Reputations = value
 					E.Config_DebugID_Reputations = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -401,10 +401,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Spells",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Spells
+					return Octo_DevTool_DB.Config_DebugID_Spells
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Spells = value
+					Octo_DevTool_DB.Config_DebugID_Spells = value
 					E.Config_DebugID_Spells = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -416,10 +416,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Achievements",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Achievements
+					return Octo_DevTool_DB.Config_DebugID_Achievements
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Achievements = value
+					Octo_DevTool_DB.Config_DebugID_Achievements = value
 					E.Config_DebugID_Achievements = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -431,10 +431,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Mounts",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Mounts
+					return Octo_DevTool_DB.Config_DebugID_Mounts
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Mounts = value
+					Octo_DevTool_DB.Config_DebugID_Mounts = value
 					E.Config_DebugID_Mounts = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -446,10 +446,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Maps",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Maps
+					return Octo_DevTool_DB.Config_DebugID_Maps
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Maps = value
+					Octo_DevTool_DB.Config_DebugID_Maps = value
 					E.Config_DebugID_Maps = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -461,10 +461,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Events",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Events
+					return Octo_DevTool_DB.Config_DebugID_Events
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Events = value
+					Octo_DevTool_DB.Config_DebugID_Events = value
 					E.Config_DebugID_Events = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -476,10 +476,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_Professions",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_Professions
+					return Octo_DevTool_DB.Config_DebugID_Professions
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_Professions = value
+					Octo_DevTool_DB.Config_DebugID_Professions = value
 					E.Config_DebugID_Professions = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -491,10 +491,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_instanceID",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_instanceID
+					return Octo_DevTool_DB.Config_DebugID_instanceID
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_instanceID = value
+					Octo_DevTool_DB.Config_DebugID_instanceID = value
 					E.Config_DebugID_instanceID = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -506,10 +506,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "Config_DebugID_worldBossID",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.Config_DebugID_worldBossID
+					return Octo_DevTool_DB.Config_DebugID_worldBossID
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.Config_DebugID_worldBossID = value
+					Octo_DevTool_DB.Config_DebugID_worldBossID = value
 					E.Config_DebugID_worldBossID = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -528,10 +528,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugCharacterInfo",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugCharacterInfo
+					return Octo_DevTool_DB.DebugCharacterInfo
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugCharacterInfo = value
+					Octo_DevTool_DB.DebugCharacterInfo = value
 					E.DebugCharacterInfo = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -543,10 +543,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugEvent",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugEvent
+					return Octo_DevTool_DB.DebugEvent
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugEvent = value
+					Octo_DevTool_DB.DebugEvent = value
 					E.DebugEvent = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -558,10 +558,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugFunction",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugFunction
+					return Octo_DevTool_DB.DebugFunction
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugFunction = value
+					Octo_DevTool_DB.DebugFunction = value
 					E.DebugFunction = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -573,10 +573,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugButton",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugButton
+					return Octo_DevTool_DB.DebugButton
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugButton = value
+					Octo_DevTool_DB.DebugButton = value
 					E.DebugButton = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -588,10 +588,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugGossip",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugGossip
+					return Octo_DevTool_DB.DebugGossip
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugGossip = value
+					Octo_DevTool_DB.DebugGossip = value
 					E.DebugGossip = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -603,10 +603,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugCache",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugCache
+					return Octo_DevTool_DB.DebugCache
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugCache = value
+					Octo_DevTool_DB.DebugCache = value
 					E.DebugCache = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -618,10 +618,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugQC_Vignettes",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugQC_Vignettes
+					return Octo_DevTool_DB.DebugQC_Vignettes
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugQC_Vignettes = value
+					Octo_DevTool_DB.DebugQC_Vignettes = value
 					E.DebugQC_Vignettes = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -633,10 +633,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugQC_Quests",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugQC_Quests
+					return Octo_DevTool_DB.DebugQC_Quests
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugQC_Quests = value
+					Octo_DevTool_DB.DebugQC_Quests = value
 					E.DebugQC_Quests = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -648,10 +648,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				name = "DebugUniversal",
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.DebugUniversal
+					return Octo_DevTool_DB.DebugUniversal
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.DebugUniversal = value
+					Octo_DevTool_DB.DebugUniversal = value
 					E.DebugUniversal = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -676,10 +676,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				end)(),
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.editorFontSize
+					return Octo_DevTool_DB.editorFontSize
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.editorFontSize = value
+					Octo_DevTool_DB.editorFontSize = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -697,10 +697,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				end)(),
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.editorTabSpaces
+					return Octo_DevTool_DB.editorTabSpaces
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.editorTabSpaces = value
+					Octo_DevTool_DB.editorTabSpaces = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -722,10 +722,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				end)(),
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.editorTheme
+					return Octo_DevTool_DB.editorTheme
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.editorTheme = value
+					Octo_DevTool_DB.editorTheme = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -748,10 +748,10 @@ function E.func_Octo_Debug_Options(savedVars)
 				end)(),
 				desc = "",
 				get = function()
-					return Octo_Debug_DB.SPAM_TIME
+					return Octo_DevTool_DB.SPAM_TIME
 				end,
 				set = function(_, value)
-					Octo_Debug_DB.SPAM_TIME = value
+					Octo_DevTool_DB.SPAM_TIME = value
 					E.SPAM_TIME = value
 				end,
 				width = E.FULL_WIDTH/4,
@@ -835,7 +835,7 @@ function E.func_Octo_Debug_Options(savedVars)
 	add_args(Octo_ToDo_DB_Vars, "Octo_ToDo_DB_Vars")
 	add_args(Octo_ToDo_DB_Other, "Octo_ToDo_DB_Other")
 	add_args(Octo_Cache_DB, "Octo_Cache_DB", 1)
-	add_args(Octo_Debug_DB, "Octo_Debug_DB")
+	add_args(Octo_DevTool_DB, "Octo_DevTool_DB")
 	add_args(Octo_Minecraft_DB, "Octo_Minecraft_DB")
 	if Octo_Moduls_DB then
 		add_args(Octo_Moduls_DB, "Octo_Moduls_DB")

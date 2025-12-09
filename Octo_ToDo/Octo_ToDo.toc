@@ -1,14 +1,12 @@
 ## Interface: 120000, 110207
+## Version: v104.6(12.0.0)(09.12.2025)
+
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 ## Author: Octo
-<<<<<<< HEAD
-## Version: v104.5(12.0.0)(09.12.2025)
-=======
-## Version: v104.5(11.2.7)(09.12.2025)
->>>>>>> origin/main
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\IconTexture\ToDo.tga
+
 ## SavedVariables: Octo_ToDo_DB_Levels, Octo_ToDo_DB_Vars, Octo_ToDo_DB_Other, Octo_Cache_DB, Octo_ToDo_DB_VisualUserSettings
-## SavedVariables: Octo_Debug_DB
+## SavedVariables: Octo_DevTool_DB
 ## SavedVariables: Octo_profileKeys
 
 Libs\Libs.xml
@@ -29,4 +27,4 @@ Collect\Collect.xml
 MainFrame\MainFrame.xml
 Options\Options.xml
 
-Octo_Debug\Octo_Debug.xml
+DevTool\DevTool.xml

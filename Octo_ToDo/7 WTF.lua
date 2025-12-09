@@ -510,8 +510,8 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
-function EventFrame:Octo_Debug_DB()
-	Octo_Debug_DB = Octo_Debug_DB or {}
+function EventFrame:Octo_DevTool_DB()
+	Octo_DevTool_DB = Octo_DevTool_DB or {}
 	-- EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 	----------------------------------------------------------------
 	local defaultOptions = {
@@ -548,33 +548,33 @@ function EventFrame:Octo_Debug_DB()
 		editorTheme = "Twilight", -- for name in next, E.editorThemes do
 	}
 	for k, v in next, (defaultOptions) do
-		E.func_InitField(Octo_Debug_DB, k, v)
-		E[k] = Octo_Debug_DB[k] -- Копируем в глобальную таблицу
+		E.func_InitField(Octo_DevTool_DB, k, v)
+		E[k] = Octo_DevTool_DB[k] -- Копируем в глобальную таблицу
 	end
 
-	E.func_InitField(Octo_Debug_DB, "lastFaction", UNKNOWN)
-	E.func_InitField(Octo_Debug_DB, "lastLocaleLang", UNKNOWN)
+	E.func_InitField(Octo_DevTool_DB, "lastFaction", UNKNOWN)
+	E.func_InitField(Octo_DevTool_DB, "lastLocaleLang", UNKNOWN)
 	-- Инициализация подтаблиц
-	E.func_InitSubTable(Octo_Debug_DB, "AllItems")
-	E.func_InitSubTable(Octo_Debug_DB, "AllCurrencies")
-	E.func_InitSubTable(Octo_Debug_DB, "AllNPCs")
-	E.func_InitSubTable(Octo_Debug_DB, "AllQuests")
-	E.func_InitSubTable(Octo_Debug_DB, "AllReputations")
-	E.func_InitSubTable(Octo_Debug_DB, "AllSpells")
-	E.func_InitSubTable(Octo_Debug_DB, "AllAchievements")
-	E.func_InitSubTable(Octo_Debug_DB, "AllVignettes")
-	E.func_InitSubTable(Octo_Debug_DB, "AllEvents")
-	E.func_InitSubTable(Octo_Debug_DB, "AllProfessions")
-	E.func_InitSubTable(Octo_Debug_DB, "watchedMovies")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllItems")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllCurrencies")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllNPCs")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllQuests")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllReputations")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllSpells")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllAchievements")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllVignettes")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllEvents")
+	E.func_InitSubTable(Octo_DevTool_DB, "AllProfessions")
+	E.func_InitSubTable(Octo_DevTool_DB, "watchedMovies")
 	----------------------------------------------------------------
-	if Octo_Debug_DB.profileKeys and type(Octo_Debug_DB.profileKeys) ~= "table" then
-		Octo_Debug_DB.profileKeys = {}
+	if Octo_DevTool_DB.profileKeys and type(Octo_DevTool_DB.profileKeys) ~= "table" then
+		Octo_DevTool_DB.profileKeys = {}
 	end
-	Octo_Debug_DB.profileKeys = Octo_Debug_DB.profileKeys or {}
+	Octo_DevTool_DB.profileKeys = Octo_DevTool_DB.profileKeys or {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local currentKey = CharInfo.PlayerData.Name.." - "..CharInfo.PlayerData.curServer
-			Octo_Debug_DB.profileKeys[currentKey] = "OctoUI"
+			Octo_DevTool_DB.profileKeys[currentKey] = "OctoUI"
 		end
 	end
 	----------------------------------------------------------------
@@ -711,7 +711,7 @@ function E.func_CheckAll()
 	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
 	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
 	EventFrame:Octo_ToDo_DB_Other() -- Другие данные
-	EventFrame:Octo_Debug_DB()
+	EventFrame:Octo_DevTool_DB()
 	EventFrame:Octo_profileKeys()
 	-- Применяем старые изменения
 	E.func_setOldChanges()
@@ -857,18 +857,18 @@ local function func_UpdateGlobals()
 			E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 		end
 	end
-	if Octo_Debug_DB then
-		E.DebugButton = Octo_Debug_DB.DebugButton
-		E.DebugEvent = Octo_Debug_DB.DebugEvent
-		E.DebugFunction = Octo_Debug_DB.DebugFunction
-		E.Config_DebugID_ALL = Octo_Debug_DB.Config_DebugID_ALL
-		E.DebugCharacterInfo = Octo_Debug_DB.DebugCharacterInfo
-		E.DebugGossip = Octo_Debug_DB.DebugGossip
-		E.DebugCache = Octo_Debug_DB.DebugCache
-		E.DebugQC_Vignettes = Octo_Debug_DB.DebugQC_Vignettes
-		E.DebugQC_Quests = Octo_Debug_DB.DebugQC_Quests
-		E.DebugUniversal = Octo_Debug_DB.DebugUniversal
-		E.SPAM_TIME = Octo_Debug_DB.SPAM_TIME
+	if Octo_DevTool_DB then
+		E.DebugButton = Octo_DevTool_DB.DebugButton
+		E.DebugEvent = Octo_DevTool_DB.DebugEvent
+		E.DebugFunction = Octo_DevTool_DB.DebugFunction
+		E.Config_DebugID_ALL = Octo_DevTool_DB.Config_DebugID_ALL
+		E.DebugCharacterInfo = Octo_DevTool_DB.DebugCharacterInfo
+		E.DebugGossip = Octo_DevTool_DB.DebugGossip
+		E.DebugCache = Octo_DevTool_DB.DebugCache
+		E.DebugQC_Vignettes = Octo_DevTool_DB.DebugQC_Vignettes
+		E.DebugQC_Quests = Octo_DevTool_DB.DebugQC_Quests
+		E.DebugUniversal = Octo_DevTool_DB.DebugUniversal
+		E.SPAM_TIME = Octo_DevTool_DB.SPAM_TIME
 	end
 end
 
@@ -908,7 +908,7 @@ function EventFrame:VARIABLES_LOADED()
 	-- 			SetCVar("secretUnitComparisonForced", "1")
 	-- 	end)
 	-- end
-	if Octo_Debug_DB and Octo_Debug_DB.CVar then
+	if Octo_DevTool_DB and Octo_DevTool_DB.CVar then
 		E.func_LoadCVars()
 	end
 	E.func_CheckAll()

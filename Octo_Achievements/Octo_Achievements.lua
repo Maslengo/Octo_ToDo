@@ -1,5 +1,6 @@
 local GlobalAddonName, ns = ...
 E = _G.OctoEngine
+
 local EventFrame = CreateFrame("FRAME")
 local Octo_MainFrame_Achievements = CreateFrame("BUTTON", "Octo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 Octo_MainFrame_Achievements:Hide()

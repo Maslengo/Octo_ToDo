@@ -27,7 +27,7 @@ local function AddVignettesToDB(vignetteInfo)
 	if mapID and locationsFind then
 		local vignetteKey = atlasName..name..mapID..E.curCharName
 		if not EventFrame.savedVars.QC_Vignettes[vignetteKey] then
-			if Octo_Debug_DB.DebugQC_Vignettes then
+			if Octo_DevTool_DB.DebugQC_Vignettes then
 				print (atlasName, E.Gray_Color.."id:"..vignetteID.."|r", E.func_texturefromIcon(atlasName, nil, nil, true), name)
 			end
 			local vignettes = {

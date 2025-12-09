@@ -363,7 +363,7 @@ local function Toggle_ItemsUsable()
 end
 function EventFrame:CreateTestButton1()
 	TestButton1:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
-	TestButton1:SetPoint("TOPLEFT", 128, -128)
+	TestButton1:SetPoint("TOPLEFT", 64, -64)
 	TestButton1:SetSize(128, 32)
 	TestButton1:SetText("Toggle_ItemsUsable")
 	TestButton1:EnableMouse(true)

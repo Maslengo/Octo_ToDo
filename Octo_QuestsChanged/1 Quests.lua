@@ -49,7 +49,7 @@ end
 -- Добавление нового квеста в базу
 local function AddQuestToDB(questID)
 	local mapID, x, y = GetPlayerMapData()
-	if Octo_Debug_DB.Config_QC_Quests then
+	if Octo_DevTool_DB.Config_QC_Quests then
 		print (E.func_questName(questID), E.Gray_Color.."id:"..questID.."|r")
 	end
 	local quest = {

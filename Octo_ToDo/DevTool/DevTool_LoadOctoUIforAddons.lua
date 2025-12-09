@@ -7,7 +7,7 @@ function EventFrame:LoadOctoUIforAddons()
 	-- end
 	if ElvDB then
 		for name, v in next, (ElvDB.profileKeys) do
-			Octo_Debug_DB.profileKeys[name] = "OctoUI"
+			Octo_DevTool_DB.profileKeys[name] = "OctoUI"
 		end
 	end
 	local AddonsAndDB = {
@@ -35,7 +35,7 @@ function EventFrame:LoadOctoUIforAddons()
 	for _, v in ipairs(AddonsAndDB) do
 		if v.database then
 			v.database.profileKeys = v.database.profileKeys or {}
-			for name, OctoUI in next, Octo_Debug_DB.profileKeys do
+			for name, OctoUI in next, Octo_DevTool_DB.profileKeys do
 				if v.database == VMRT then
 					local nameWithoutSpace = name:gsub(" ", "")
 					VMRT.ProfileKeys[nameWithoutSpace] = v.profileName

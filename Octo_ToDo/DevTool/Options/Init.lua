@@ -2,10 +2,10 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function EventFrame:func_InitOptions()
-	if not E.func_Octo_Debug_Options then return end
+	if not E.func_DevTool_Options then return end
 	local name = BINDING_HEADER_DEBUG -- E.func_AddonNameForOptionsInit(GlobalAddonName).." - Debug"
 	local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
-	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(name, E.func_Octo_Debug_Options(EventFrame.savedVars))
+	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(name, E.func_DevTool_Options(EventFrame.savedVars))
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions(name, name, parent)
 end
 ----------------------------------------------------------------
