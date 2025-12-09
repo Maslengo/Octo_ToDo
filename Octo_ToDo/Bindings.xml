@@ -1,0 +1,7 @@
+<Bindings>
+	<Binding
+		name = "ReloadUI"
+		category = "|cffd177ffO|r|cffc480fbc|r|cffb787f6t|r|cffa98ef2o|r |cff9a94edT|r|cff8a9ae9o|r|cff789fe5D|r|cff63a4e0o|r">
+		ReloadUI()
+	</Binding>
+</Bindings>

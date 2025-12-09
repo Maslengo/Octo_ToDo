@@ -250,7 +250,7 @@ function EventFrame:Octo_Create_MainFrame()
 		self.hBar:SetVisibleExtentPercentage(width > 0 and width / (xrange + width) or 0)
 		self.hBar:SetPanExtentPercentage(xrange > 0 and 30 / xrange or 0)
 	end
-	-- fpde(self:GetHorizontalScrollRange())
+	-- opde(self:GetHorizontalScrollRange())
 	horizontalScrollFrame:SetScript("OnHorizontalScroll", OnHorizontalScroll)
 	horizontalScrollFrame:SetScript("OnScrollRangeChanged", OnScrollRangeChanged)
 	-- Создание и настройка горизонтальной полосы прокрутки
