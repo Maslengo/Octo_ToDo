@@ -894,8 +894,8 @@ local MyEventsTable = {
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
-	AlertFrame:ClearAllPoints()
-	AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
+	-- AlertFrame:ClearAllPoints()
+	-- AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
 	EventFrame:func_CreateMainFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
