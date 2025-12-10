@@ -222,7 +222,7 @@ function E.func_Octo_Options(savedVars)
 				name = L["Min. Level"],
 				desc = "",
 				min = 1,
-				max = 80,
+				max = 90,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_LevelToShow
@@ -239,7 +239,7 @@ function E.func_Octo_Options(savedVars)
 				name = L["Max. Level"],
 				desc = "",
 				min = 1,
-				max = 80*2,
+				max = 90*2,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_LevelToShowMAX

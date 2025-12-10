@@ -1822,7 +1822,6 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	----------------------------------------------------------------
 	if id == "GreatVault" then
-		TextCenter = "GreatVault"
 		if CharInfo.PlayerData.HasAvailableRewards then
 			TextCenter = E.Blue_Color..">"..REWARD.."<|r"
 		end
