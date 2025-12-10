@@ -402,7 +402,7 @@ function EventFrame:func_InitCenter(frame, node)
 				else
 					columnFrames.tooltip = nil
 				end
-				E.func_OctoTooltip_OnEnter(columnFrames) -- , {"LEFT", "RIGHT"} -- если перс будет справа и тултип со скроллом, то будет габелла
+				E.func_OctoTooltip_OnEnter(columnFrames) --, {"LEFT", "RIGHT"}) -- если перс будет справа и тултип со скроллом, то будет габелла
 		end)
 		columnFrames:Show()
 	end

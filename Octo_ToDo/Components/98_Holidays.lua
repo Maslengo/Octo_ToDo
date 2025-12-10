@@ -6,9 +6,19 @@ if not enable then return end
 ----------------------------------------------------------------
 local categoryKey = 98
 -- local expansionID =
+
+
+local function func_TIMEDUNGNAMEPLUSICON()
+	local joinable, timewalkDungeonName = E.func_joinableDung()
+	if joinable then
+		return timewalkDungeonName
+	end
+	return ""
+end
+
+
 ----------------------------------------------------------------
 local function tempFunction()
-	local joinable, timewalkDungeonName = E.func_joinableDung()
 	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
@@ -205,24 +215,24 @@ local function tempFunction()
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-		{
-			TextLeft = RAIDS..(joinable and timewalkDungeonName or ""), --.. " ("..E.func_EventName(1583)..")",
-			showTooltip = true,
-			name_save = "Raid",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey, -- "HolidaysTimewalk",
-			quests = {
-				{57637},
-				{50316},
-				{47523},
-				{82817},
-			},
-			forcedMaxQuest = 1,
-		},
+		-- {
+		-- 	TextLeft = RAIDS..func_TIMEDUNGNAMEPLUSICON(), --.. " ("..E.func_EventName(1583)..")",
+		-- 	showTooltip = true,
+		-- 	name_save = "Raid",
+		-- 	defS = false,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey, -- "HolidaysTimewalk",
+		-- 	quests = {
+		-- 		{57637},
+		-- 		{50316},
+		-- 		{47523},
+		-- 		{82817},
+		-- 	},
+		-- 	forcedMaxQuest = 1,
+		-- },
 		{
 			sorted = false,
-			TextLeft = DUNGEONS..(joinable and timewalkDungeonName or ""), --.. " ("..E.func_EventName(1583)..")",
+			TextLeft = DUNGEONS..func_TIMEDUNGNAMEPLUSICON(), --.. " ("..E.func_EventName(1583)..")",
 			showTooltip = true,
 			name_save = "Dungeons",
 			defS = true,

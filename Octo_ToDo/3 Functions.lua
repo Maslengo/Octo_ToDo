@@ -2139,6 +2139,7 @@ function E.func_joinableDung()
 			joinable = true
 			result = E.func_ExpansionVivod(expID)
 			timewalkDungeonName = GetLFGDungeonInfo(v.timewalkDungeonID)
+			-- break
 		end
 	end
 	return joinable, result, timewalkDungeonName:match("%((.-)%)")
@@ -2554,6 +2555,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 			end
 		end
 	end
+	if #characterData > 1 then
 	--------------------------------------------------------
 	-- 2. Сортировка
 	--------------------------------------------------------
@@ -2584,7 +2586,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 	--------------------------------------------------------
 	-- 5. Итоги сверху
 	--------------------------------------------------------
-	if #characterData > 0 then
+
 		local header = {
 			"",
 			E.func_texturefromIcon(E.ICON_KYRIAN),
@@ -2643,32 +2645,33 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 			end
 		end
 	end
-	--------------------------------------------------------
-	-- 2. Сортировка
-	--------------------------------------------------------
-	table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
-			end
-			return a.name < b.name
-	end)
-	--------------------------------------------------------
-	-- 3. Градиент
-	--------------------------------------------------------
-	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-	--------------------------------------------------------
-	-- 4. Вывод персонажей
-	--------------------------------------------------------
-	for _, d in ipairs(characterData) do
-		local color = E.func_GetGradientHex(d.sortValue, minValue, maxValue)
-		d.row[2] = color..d.row2Text.."|r"
-		d.row[3] = color..d.row3Text.."|r"
-		table.insert(tooltip, d.row)
-	end
-	--------------------------------------------------------
-	-- 5. Итоги сверху
-	--------------------------------------------------------
 	if #characterData > 1 then
+		--------------------------------------------------------
+		-- 2. Сортировка
+		--------------------------------------------------------
+		table.sort(characterData, function(a, b)
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
+		end)
+		--------------------------------------------------------
+		-- 3. Градиент
+		--------------------------------------------------------
+		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+		--------------------------------------------------------
+		-- 4. Вывод персонажей
+		--------------------------------------------------------
+		for _, d in ipairs(characterData) do
+			local color = E.func_GetGradientHex(d.sortValue, minValue, maxValue)
+			d.row[2] = color..d.row2Text.."|r"
+			d.row[3] = color..d.row3Text.."|r"
+			table.insert(tooltip, d.row)
+		end
+		--------------------------------------------------------
+		-- 5. Итоги сверху
+		--------------------------------------------------------
+
 		local header = {
 			"",
 			"avg"..": "..E.func_CompactNumberFormat(avgILVL/#characterData),
@@ -2807,35 +2810,37 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	--------------------------------------------------------
 	-- 2. Сортировка
 	--------------------------------------------------------
-	table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
-			end
-			return a.name < b.name
-	end)
-	--------------------------------------------------------
-	-- 3. Градиент
-	--------------------------------------------------------
-	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-	--------------------------------------------------------
-	-- 4. Вывод персонажей
-	--------------------------------------------------------
-	for _, d in ipairs(characterData) do
-		local color = E.func_GetGradientHex(d.sortValue, minValue, maxValue)
-		d.row[2] = color..d.row2Text.."|r"
-		table.insert(tooltip, d.row)
+	if #characterData > 1 then
+		table.sort(characterData, function(a, b)
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
+		end)
+		--------------------------------------------------------
+		-- 3. Градиент
+		--------------------------------------------------------
+		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+		--------------------------------------------------------
+		-- 4. Вывод персонажей
+		--------------------------------------------------------
+		for _, d in ipairs(characterData) do
+			local color = E.func_GetGradientHex(d.sortValue, minValue, maxValue)
+			d.row[2] = color..d.row2Text.."|r"
+			table.insert(tooltip, d.row)
+		end
+		--------------------------------------------------------
+		-- 5. Итоги сверху
+		--------------------------------------------------------
+		if #characterData > 1 then
+			local header = {
+				"",
+				TOTAL..": "..E.func_CompactNumberFormat(total),
+			}
+			table.insert(tooltip, 1, header)
+		end
+		--------------------------------------------------------
 	end
-	--------------------------------------------------------
-	-- 5. Итоги сверху
-	--------------------------------------------------------
-	if #characterData > 0 then
-		local header = {
-			"",
-			TOTAL..": "..E.func_CompactNumberFormat(total),
-		}
-		table.insert(tooltip, 1, header)
-	end
-	--------------------------------------------------------
 	return tooltip
 end
 -- CharInfo.PlayerData.Money
