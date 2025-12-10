@@ -1,6 +1,4 @@
 local GlobalAddonName, E = ...
--- 2032,
--- 3292,
 local function setOrNil(tbl, key, val)
 	tbl[key] = (val and val ~= 0) and val or nil
 end
@@ -11,8 +9,7 @@ function E.Collect_All_Currency()
 	if not collectMASLENGO then return end
 	local currencyCache = {}
 	-- local tbl = Octo_Cache_DB.AllCurrencies
-	local tbl = E.ALL_Currencies
-	for _, CurrencyID in ipairs(tbl) do
+	for CurrencyID in next,(E.ALL_Currencies) do
 	-- for CurrencyID = 1, 4000 do
 		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(CurrencyID)
 		local data = C_CurrencyInfo.GetCurrencyInfo(CurrencyID)

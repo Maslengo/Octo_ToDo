@@ -14,24 +14,10 @@ function EventFrame:func_CreateDataCacheAtStart()
 	local tblQuests = {}
 	local tblItems = {}
 	-- local tblSpells = {}
-
-	-- E.func_LoadComponents(true)
-	-- for _, v in ipairs(E.OctoTables_DataOtrisovka) do
-	-- -- for _, currencyID in ipairs(v.Currencies) do
-	-- -- local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
-	-- -- end
-	-- if v and v.Items then
-	-- for _, itemID in ipairs(v.Items) do
-	-- if type(itemID) == "number" then
-	-- tblItems[itemID] = true
-	-- -- local item = E.func_itemName(itemID) -- "AllItems"
-	-- end
-	-- end
-	-- end
-	-- end
 	----------------------------------------------------------------
-	for currencyID = 42, 4000 do -- 42, 3372
-		local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
+	-- for currencyID = 42, 4000 do -- 42, 3372
+	for currencyID in next,(E.ALL_Currencies) do
+		local currencyName = E.func_currencyName(currencyID)
 	end
 	----------------------------------------------------------------
 	for _, ID in ipairs(E.ALL_Reputations) do
@@ -91,41 +77,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- print (ID)
 	-- end
 	-- end)
-
-
-
-
-
-
-
-	-- for _, data in next,(E.ALL_UniversalQuests) do
-	-- if not data.quests then
-	-- break -- Пропускаем записи без квестов
-	-- end
-	-- for _, questData in ipairs(data.quests) do
-	-- if questData[1] then
-	-- tblQuests[questData[1]] = true
-	-- if questData.forcedText and questData.forcedText.npcID then
-	-- local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
-	-- end
-	-- end
-	-- end
-	-- end
-
-	-- local localTable = {}
-	-- for i = 1, 6 do
-	-- if i ~= 6 then
-	-- C_Timer.After(i, function()
-	-- for _, npcID in ipairs(E.OctoTable_NPC) do
-	-- localTable[npcID] = E.func_npcName(npcID)
-	-- end
-	-- end)
-	-- elseif i == 6 then
-	-- C_Timer.After(i, function()
-	-- opde(localTable)
-	-- end)
-	-- end
-	-- end
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -476,7 +427,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Настройки функций аддона
 	local featureDefaults = {
 		Config_ADDON_HEIGHT = 20,
-		Config_AlphaOnDrag = 0.8, -- Альфа при перетаскивании
+		Config_AlphaOnDrag = 0.7, -- Альфа при перетаскивании
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
 		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
@@ -486,7 +437,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		Currencies = true, -- Квесты
 		Config_Texture = "Blizzard Raid Bar",
 		OnlyCurrentFaction = false, -- Только текущая фракция
-		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
+		ShowOnlyCurrentRegion = true, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер
 		-- SettingsEnabled = false,
 		-- TalentTreeTweaks = true, -- Настройки дерева талантов
@@ -510,7 +461,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[3] = true})
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffN|r|cffb682f7a|r|cff9a8ef0o|r|cff7f99e8w|r|cff63A4E0h|r" --"|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
@@ -672,8 +623,9 @@ function EventFrame:Octo_profileKeys()
 				for i, z in next,(w) do
 					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z.id)
 
-					defaultProfile[dataType][z.id] = z.defS -- nil
-					if dataType == "Currencies"		then tinsert(E.ALL_Currencies, z.id)	end	-- /run opde(E.ALL_Currencies)
+					defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
+					-- defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
+					if dataType == "Currencies"		then E.ALL_Currencies[z.id] = true		end	-- /run opde(E.ALL_Currencies)
 					if dataType == "Items"			then tinsert(E.ALL_Items, z.id)			end	-- /run opde(E.ALL_Items)
 					if dataType == "Reputations"	then tinsert(E.ALL_Reputations, z.id)	end	-- /run opde(E.ALL_Reputations)
 					if dataType == "Additionally"	then tinsert(E.ALL_Additionally, z.id)	end	-- /run opde(E.ALL_Additionally)
@@ -684,8 +636,8 @@ function EventFrame:Octo_profileKeys()
 					tinsert(E.ALL_UniversalQuests, z)
 
 					local questKey = E.UNIVERSAL..z.desc.."_"..z.name_save.."_"..z.reset
-					defaultProfile[dataType][questKey] = z.defS -- nil
-					-- if dataType == "UniversalQuests" then tinsert(E.ALL_UniversalQuests, z) end
+					defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or z.defS -- nil
+					-- defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or z.defS -- nil
 				end
 			end
 		end
@@ -698,7 +650,6 @@ function EventFrame:Octo_profileKeys()
 	for reputationID in next,(E.OctoTable_ReputationsDB) do
 		tinsert(E.ALL_Reputations, reputationID)
 	end
-	-- wipe(E.ALL_Currencies)
 	-- wipe(E.ALL_Items)
 	-- wipe(E.ALL_Reputations)
 	-- wipe(E.ALL_UniversalQuests)
@@ -921,16 +872,16 @@ function EventFrame:VARIABLES_LOADED()
 	E.func_CheckAll()
 end
 function EventFrame:PLAYER_LOGOUT()
-	if E.func_IsPTR() then
-		SetCVar("addonChatRestrictionsForced", "0")
-		SetCVar("secretAurasForced", "0")
-		SetCVar("secretCooldownsForced", "0")
-		SetCVar("secretUnitIdentityForced", "0")
-		SetCVar("secretSpellcastsForced", "0")
-		SetCVar("secretUnitPowerForced", "0")
-		SetCVar("secretUnitPowerMaxForced", "0")
-		SetCVar("secretUnitComparisonForced", "0")
-	end
+	-- if E.func_IsPTR() then
+	-- 	SetCVar("addonChatRestrictionsForced", "0")
+	-- 	SetCVar("secretAurasForced", "0")
+	-- 	SetCVar("secretCooldownsForced", "0")
+	-- 	SetCVar("secretUnitIdentityForced", "0")
+	-- 	SetCVar("secretSpellcastsForced", "0")
+	-- 	SetCVar("secretUnitPowerForced", "0")
+	-- 	SetCVar("secretUnitPowerMaxForced", "0")
+	-- 	SetCVar("secretUnitComparisonForced", "0")
+	-- end
 
 end
 function EventFrame:PLAYER_LOGIN()

@@ -10,13 +10,16 @@ function E.Collect_All_Mounts()
 	for _, mountID in ipairs(GetMountIDs()) do
 		local _, _, source = GetMountInfoExtraByID(mountID)
 		local price, currencyID = source:match("([%d %.,]+)|Hcurrency:(%d+)")
+		local curName = E.func_currencyName(currencyID)
+		local mouName = E.func_mountName(mountID)
 		if price and currencyID then
 			if type(price) == "string" then
 				price = price:gsub("[%s%.]", "")
 				price = tonumber(price)
 			end
 			currencyID = tonumber(currencyID)
-			tinsert(E.ALL_Currencies, currencyID)
+			E.ALL_Currencies[currencyID] = true
+			E.OctoTable_CurrencyMountForFuncCurName[currencyID] = true
 			E.OctoTable_ALL_Mounts[currencyID] = E.OctoTable_ALL_Mounts[currencyID] or {}
 			E.OctoTable_ALL_Mounts[currencyID][mountID] = price
 		end
@@ -31,44 +34,4 @@ function E.Collect_All_Mounts()
 			E.OctoTable_ALL_Mounts[3252][v.mountID] = v.price
 		end
 	end
-
-
-	local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
-
-	-- Создаем временную таблицу для хранения данных перед сортировкой
-	local tempTable = {}
-
-	-- Собираем данные
-	for currencyID in next,(E.OctoTable_ALL_Mounts) do
-		E.OctoTable_CurrencyMountForFuncCurName[currencyID] = true
-		local info = GetCurrencyInfo(currencyID)
-		if info then
-			local quality = info.quality or 0
-			local name = info.name or ""
-			tinsert(tempTable, {
-					currencyID = tonumber(currencyID),
-					quality = quality,
-					name = name
-			})
-		end
-	end
-
-	-- Сортируем таблицу: сначала по quality (по убыванию), затем по name (по возрастанию)
-	table.sort(tempTable, function(a, b)
-			if a.quality ~= b.quality then
-				return a.quality > b.quality -- Сначала сортируем по quality (высшее качество первым)
-			else
-				return a.name < b.name -- При одинаковом quality сортируем по имени в алфавитном порядке
-			end
-	end)
-
-	function E.ebanieMounti(categoryKey)
-		-- Вставляем отсортированные данные
-		for _, data in ipairs(tempTable) do
-			tinsert(E.OctoTables_DataOtrisovka[categoryKey].Currencies, {id = data.currencyID, defS = true})
-		end
-	end
-
 end
-
--- /run opde(E.OctoTables_DataOtrisovka[15])

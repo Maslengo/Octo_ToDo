@@ -23,11 +23,10 @@ function E.func_Mounts_1166() --Timewalk
 		{itemID = 232624, price = 5000, mountID = 2321, source = E.Gray_Color..ALWAYS.."|r",},
 		{itemID = 205208, price = 5000, mountID = 1737, source = E.Gray_Color..ALWAYS.."|r",},
 		{itemID = 238739, price = 5000, mountID = 2518, source = E.Gray_Color..ALWAYS.."|r",},
-
-
 	}
 	return tbl
 end
+
 function E.func_Mounts_3252() --Bronze
 local tbl = {
 

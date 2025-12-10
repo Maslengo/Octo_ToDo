@@ -29,6 +29,10 @@ local function tempFunction()
 		{id = 3292, defS = false,}, -- REMIX
 		{id = 3268, defS = false,}, -- REMIX
 		{id = 3252, defS = false,}, -- REMIX
+		-- {id = 3293, defS = false,}, -- REMIX PANDA?
+		-- {id = 3251, defS = false,}, -- REMIX PANDA?
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {

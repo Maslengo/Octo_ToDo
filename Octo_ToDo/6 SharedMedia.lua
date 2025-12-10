@@ -316,6 +316,7 @@ do
 		"MagistralTT Bold",
 		"Monsterrat Black",
 		"Montserrat Bold",
+		"Naowh",
 		"Octo (dooztr_0)",
 		"Octo (naowh)",
 		"Octo (Octo main)",
