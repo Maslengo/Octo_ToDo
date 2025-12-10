@@ -17,7 +17,7 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		-- {id = 3139, defS = true,}, -- Награбленное
-		{id = 2032, defS = true,}, -- Торг Жетон
+		{id = 2032, defS = false,}, -- Торг Жетон
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -30,10 +30,10 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		{id = "ListOfQuests", defS = true,},
-		{id = "LFGInstance", defS = true,},
-		{id = "AllItems", defS = true,},
-		{id = "Professions", defS = true,},
+		{id = "ListOfQuests", defS = false,},
+		{id = "LFGInstance", defS = false,},
+		{id = "AllItems", defS = false,},
+		{id = "Professions", defS = false,},
 		{id = "ItemLevel", defS = true,},
 		{id = "Money", defS = true,},
 		{id = "WasOnline", defS = true,},

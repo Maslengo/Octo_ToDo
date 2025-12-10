@@ -54,7 +54,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
-				name = "Настройки фреймов аддона",
+				name = FONT_SIZE,
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -110,19 +110,25 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_Texture = {
-				name = "Texture",
-				type = "select",
-				dialogControl = "LSM30_Statusbar",
-				values = LibSharedMedia:HashTable("statusbar"),
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_Texture
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_Texture = value
+			-- Config_Texture = {
+			-- 	name = "Texture",
+			-- 	type = "select",
+			-- 	dialogControl = "LSM30_Statusbar",
+			-- 	values = LibSharedMedia:HashTable("statusbar"),
+			-- 	get = function()
+			-- 		return Octo_ToDo_DB_Vars.Config_Texture
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		Octo_ToDo_DB_Vars.Config_Texture = value
 					
-				end,
-				width = E.FULL_WIDTH/4,
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = GetOrder(),
+			-- },
+			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "",
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -288,124 +294,6 @@ function E.func_Octo_Options(savedVars)
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.OnlyCurrentFaction = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			["Header"..GetOrder()] = {
-				type = "header",
-				name = "",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			QUESTS_LABEL = {
-				type = "toggle",
-				name = QUESTS_LABEL,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Quests
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Quests = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			CALENDAR_FILTER_HOLIDAYS = {
-				type = "toggle",
-				name = CALENDAR_FILTER_HOLIDAYS,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Holidays
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Holidays = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			DUNGEONS = {
-				type = "toggle",
-				name = DUNGEONS,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Dungeons
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Dungeons = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			ITEMS = {
-				type = "toggle",
-				name = ITEMS,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Items
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Items = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			TRADE_SKILLS = {
-				type = "toggle",
-				name = TRADE_SKILLS,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Professions
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Professions = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			BONUS_ROLL_REWARD_MONEY = {
-				type = "toggle",
-				name = BONUS_ROLL_REWARD_MONEY,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Gold
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Gold = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			STAT_AVERAGE_ITEM_LEVEL = {
-				type = "toggle",
-				name = STAT_AVERAGE_ITEM_LEVEL,
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.ItemLevel
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.ItemLevel = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Config_WasOnline = {
-				type = "toggle",
-				name = L["Was online"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_WasOnline
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_WasOnline = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),

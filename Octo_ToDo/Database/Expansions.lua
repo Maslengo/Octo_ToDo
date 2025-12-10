@@ -115,7 +115,8 @@ E.OctoTable_Expansions = {
 		name = "Midnight",
 		nameBlizzard = EXPANSION_NAME11 or "Midnight", -- UNUSED
 		nameVeryShort = "MN",
-		icon = 132123,
+		icon = 7455547, --[[Interface\EncounterJournal\UI-EJ-BOSS-Default]] -- 7455547,
+		iconOLD = 132123,
 		id = 12,
 		timewalkDungeonID = 2634,
 	},
@@ -124,8 +125,9 @@ E.OctoTable_Expansions = {
 		name = "The Last Titan",
 		nameBlizzard = EXPANSION_NAME12 or "The Last Titan", -- UNUSED
 		nameVeryShort = "TLT",
-		icon = 4622478,
+		icon = [[Interface\EncounterJournal\UI-EJ-BOSS-Default]],
 		id = 13,
+		iconOLD = 4622478,
 		timewalkDungeonID = 2634,
 	},
 }
