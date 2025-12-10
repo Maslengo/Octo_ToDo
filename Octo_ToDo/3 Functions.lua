@@ -246,12 +246,14 @@ end
 local function func_currencyName_CACHE(id)
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		return Cache[id][E.curLocaleLang]
+		local hasMount = E.OctoTable_CurrencyMountForFuncCurName[id] or false
+		return Cache[id][E.curLocaleLang]..(hasMount and E.Lime_Color.."*|r" or "")
 	end
 	local info = GetCurrencyInfo(id)
 	if not info then
 		return E.Red_Color..UNKNOWN.."|r"
 	end
+
 	local WarbandIcon = ""
 	if IsAccountTransferableCurrency(id) then
 		WarbandIcon = E.ICON_ACCOUNT_TRANSFERABLE
@@ -1258,7 +1260,7 @@ function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
-						Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = false
+						Octo_profileKeys.SettingsEnabled = false
 						if func then func() end
 						if frame then
 							frame:SetShown(not frame:IsShown())
@@ -1535,27 +1537,6 @@ function E.func_FactionIconID(faction)
 		return 775462
 	end
 end
-function E.func_ShouldShow(id, qwe)
-	local shouldShow = false
-	if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled then
-		-- Режим настройки включен - показываем все валюты
-		shouldShow = true
-	else
-		-- Режим настройки выключен - проверяем настройки валют
-		local currenciesSettings = Octo_ToDo_DB_VisualUserSettings[qwe]
-		if currenciesSettings then
-			-- Проверяем числовой ключ
-			if currenciesSettings[id] then
-				shouldShow = true
-			end
-			-- Проверяем строковый ключ
-			if currenciesSettings[tostring(id)] then
-				shouldShow = true
-			end
-		end
-	end
-	return shouldShow
-end
 function E.func_Otrisovka_LEFT_Dispatcher(categoryKey, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
 	local funcNames = {
@@ -1699,7 +1680,7 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	TextLeft = data.TextLeft
 	-- ColorLeft =
 	if reset == "Daily" then
-		IconLeft = E.ICON_DAILY --E.func_vignetteIcon("greatVault-whole-normal")
+		IconLeft = E.ICON_DAILY
 	elseif reset == "Weekly" then
 		IconLeft = E.ICON_WEEKLY
 	elseif reset == "Once" then
@@ -1812,30 +1793,35 @@ function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 	if id == "LegionRemixResearch" then
 		TextLeft = L["Infinite Research"]
 	elseif id == "ListOfQuests" then
-		-- TooltipKey = "Other_ListOfQuests"
+
 		TextLeft = QUESTS_LABEL
 	elseif id == "LFGInstance" then
-		-- TooltipKey = "Other_LFGInstance"
+
 		TextLeft = DUNGEONS
 	elseif id == "AllItems" then
-		-- TooltipKey = "Other_AllItems"
+
 		TextLeft = ITEMS
 	elseif id == "Professions" then
-		-- TooltipKey = "Other_Professions"
+
 		TextLeft = PROFESSIONS_BUTTON
-		-- myType = {"professions"}
+
 	elseif id == "ItemLevel" then
-		-- TooltipKey = "Other_ItemLevel"
+
 		TextLeft = STAT_AVERAGE_ITEM_LEVEL
-		-- myType = {"ItemLevel"}
+
 	elseif id == "Money" then
-		-- TooltipKey = "Other_Money"
+
 		TextLeft = BONUS_ROLL_REWARD_MONEY
-		-- myType = {"Money"}
+
 	elseif id == "WasOnline" then
-		-- TooltipKey = "Other_WasOnline"
+
 		TextLeft = L["Was online"]
-		-- myType = {"Online"}
+	elseif id == "GreatVault" then
+		TextLeft = RATED_PVP_WEEKLY_VAULT
+		IconLeft = "greatVault-whole-normal"
+	elseif id == "CurrentKey" then
+		TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
+		IconLeft = 4352494
 	end
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
@@ -1846,6 +1832,19 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	----------------------------------------------------------------
+
+	if id == "GreatVault" then
+		TextCenter = "GreatVault"
+		if CharInfo.PlayerData.HasAvailableRewards then
+			TextCenter = E.Blue_Color..">"..REWARD.."<|r"
+		end
+	end
+	if id == "CurrentKey" then
+		TextCenter = "CurrentKey"
+		-- if CharInfo.PlayerData.CurrentKey then
+		-- 	TextCenter = CharInfo.PlayerData.CurrentKey
+		-- end
+	end
 	if id == "LegionRemixResearch" then
 		if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
 			local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
@@ -1855,11 +1854,13 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				TextCenter = barValue..E.Blue_Color.."("..CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests..")|r".."/"..barMax
 			end
 		end
-	elseif id == "ListOfQuests" then
+	end
+	if id == "ListOfQuests" then
 		if CharInfo.PlayerData.numQuests then
 			TextCenter = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept.."|r"
 		end
-	elseif id == "LFGInstance" then
+	end
+	if id == "LFGInstance" then
 		local count = 0
 		for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
 			if v then
@@ -1886,7 +1887,8 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 			TextCenter = count
 			-- TextCenter = E.Gray_Color..DUNGEONS.."|r"
 		end
-	elseif id == "AllItems" then
+	end
+	if id == "AllItems" then
 		local count = 0
 		for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
 			if CharInfo.MASLENGO.ItemsInBag[itemID] then
@@ -1897,7 +1899,8 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		if count ~= 0 then
 			TextCenter = E.Gray_Color..ITEMS.."|r"
 		end
-	elseif id == "Professions" then
+	end
+	if id == "Professions" then
 		local charProf = CharInfo.MASLENGO.professions
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
@@ -1906,7 +1909,8 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				end
 			end
 		end
-	elseif id == "ItemLevel" then
+	end
+	if id == "ItemLevel" then
 		----------------------------------------------------------------
 		local color = E.Red_Color
 		local ItemLevelGreen = 625
@@ -1930,8 +1934,9 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				TextCenter = TextCenter..E.Green_Color.."+|r"
 			end
 		end
+	end
 		----------------------------------------------------------------
-	elseif id == "Money" then
+	if id == "Money" then
 		if CharInfo.PlayerData.Money then
 			TextCenter = E.func_MoneyString(CharInfo.PlayerData.Money)
 			if CharInfo.PlayerData.MoneyOnLogin then
@@ -1942,7 +1947,8 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				end
 			end
 		end
-	elseif id == "WasOnline" then
+	end
+	if id == "WasOnline" then
 		local color = E.White_Color
 		if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
 			if CharInfo.PlayerData.GUID == E.curGUID then
@@ -1961,24 +1967,53 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-function E.getSettings(type, id)
-	-- Проверяем, существует ли таблица настроек для этого типа
-	if not Octo_ToDo_DB_VisualUserSettings then
-		return false
+-- function E.getSettings(type, id)
+-- 	-- Проверяем, существует ли таблица настроек для этого типа
+-- 	if not Octo_profileKeys then
+-- 		return false
+-- 	end
+-- 	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][type]
+-- 	if not settingsTable then
+-- 		return false
+-- 	end
+-- 	-- Определяем ключ (строковый или числовой)
+-- 	local key = id
+-- 	local numID = tonumber(id)
+-- 	if numID and settingsTable[numID] ~= nil then
+-- 		key = numID
+-- 	end
+-- 	-- Возвращаем значение, если оно существует, иначе false
+-- 	return settingsTable[key] or false
+-- end
+
+function E.func_ShouldShow(id, dataType)
+	local shouldShow = false
+	if Octo_profileKeys.SettingsEnabled then
+		-- Режим настройки включен - показываем все валюты
+		shouldShow = true
+	else
+		-- Режим настройки выключен - проверяем настройки валют
+		local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType] -- dataType
+
+
+
+		if settingsTable then
+			-- Проверяем числовой ключ
+			if settingsTable[id] then
+				shouldShow = true
+			end
+			-- Проверяем строковый ключ
+			if settingsTable[tostring(id)] then
+				shouldShow = true
+			end
+		end
 	end
-	local settingsTable = Octo_ToDo_DB_VisualUserSettings[type]
-	if not settingsTable then
-		return false
-	end
-	-- Определяем ключ (строковый или числовой)
-	local key = id
-	local numID = tonumber(id)
-	if numID and settingsTable[numID] ~= nil then
-		key = numID
-	end
-	-- Возвращаем значение, если оно существует, иначе false
-	return settingsTable[key] or false
+	return shouldShow
 end
+
+
+
+
 function E.func_TextCenter_Items(CharInfo, itemID, showIcon)
 	if not itemID then return "" end
 	showIcon = showIcon or false
@@ -2749,16 +2784,16 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 	-- 5. Итоги сверху
 	--------------------------------------------------------
 	-- if #characterData > 1 then
-	-- 	local header = {
-	-- 		"1",
-	-- 		"2",
-	-- 		"3",
-	-- 		"4",
-	-- 		"5",
-	-- 		"6",
-	-- 		"7",
-	-- 	}
-	-- 	table.insert(tooltip, 1, header)
+	-- local header = {
+	-- "1",
+	-- "2",
+	-- "3",
+	-- "4",
+	-- "5",
+	-- "6",
+	-- "7",
+	-- }
+	-- table.insert(tooltip, 1, header)
 	-- end
 	--------------------------------------------------------
 	return tooltip
@@ -3079,19 +3114,19 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 				curServer = "-"..CharInfo.PlayerData.curServer
 			end
 			-- if dataType == "Currencies" and id == 1822 then
-			-- 	local typeSL = 1 -- Renown
-			-- 	local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			-- 	if curCovID then
-			-- 		local totalRenownPerChar = 0
-			-- 		local currentCovenantColor = E.OctoTable_Covenant[curCovID].color
-			-- 		for covenant = 1, 4 do
-			-- 			local covenantColor = E.OctoTable_Covenant[covenant].color
-			-- 			if CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] then
-			-- 				total = total + CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL]
-			-- 				RIGHT1 = RIGHT1..covenantColor..CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL].."|r "
-			-- 			end
-			-- 		end
-			-- 	end
+			-- local typeSL = 1 -- Renown
+			-- local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
+			-- if curCovID then
+			-- local totalRenownPerChar = 0
+			-- local currentCovenantColor = E.OctoTable_Covenant[curCovID].color
+			-- for covenant = 1, 4 do
+			-- local covenantColor = E.OctoTable_Covenant[covenant].color
+			-- if CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL] then
+			-- total = total + CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL]
+			-- RIGHT1 = RIGHT1..covenantColor..CharInfo.MASLENGO.CovenantAndAnima[covenant][typeSL].."|r "
+			-- end
+			-- end
+			-- end
 			-- end
 
 			if dataType == "Items" and CharInfo.MASLENGO.ItemsInBag[id] then
@@ -3227,19 +3262,51 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	----------------------------------------------------------------
 	-- if dataType == "Currencies" and id == 1166 then
-	-- 	for i, v in ipairs(E.func_Mounts_1166()) do
-	-- 		local mountID = v.mountID
-	-- 		local source = v.source
-	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
-	-- 	end
+	-- for i, v in ipairs(E.func_Mounts_1166()) do
+	-- local mountID = v.mountID
+	-- local source = v.source
+	-- tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
+	-- end
 	-- end
 	-- if dataType == "Currencies" and id == 3252 then
-	-- 	for i, v in ipairs(E.func_Mounts_3252()) do
-	-- 		local mountID = v.mountID
-	-- 		local source = v.source
-	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
-	-- 	end
+	-- for i, v in ipairs(E.func_Mounts_3252()) do
+	-- local mountID = v.mountID
+	-- local source = v.source
+	-- tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
 	-- end
+	-- end
+
+	if id == "GreatVault" then
+		local Enum_Activities_table = {}
+		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+			Enum_Activities_table[#Enum_Activities_table+1] = i
+		end
+		table_sort(Enum_Activities_table)
+		for j = 1, #Enum_Activities_table do
+			local i = Enum_Activities_table[j]
+			if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
+				if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
+					if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
+						tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING}
+					elseif CharInfo.MASLENGO.GreatVault[i].progress then
+						tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
+					end
+				end
+			end
+		end
+	end
+
+	if id == "CurrentKey" then
+		if CharInfo.PlayerData.CurrentKeyName then
+			tooltip[#tooltip+1] = {CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName, ""}
+		end
+		if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
+			tooltip[#tooltip+1] = {" ", " "}
+			tooltip[#tooltip+1] = {"Weekly Best:", CharInfo.PlayerData.RIO_weeklyBest}
+			tooltip[#tooltip+1] = {"RIO Score:", CharInfo.PlayerData.RIO_Score}
+		end
+	end
+
 	if id == "LegionRemixResearch" then
 		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
 			if CharInfo.MASLENGO.ListOfQuests[questID] then
@@ -3324,7 +3391,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				tooltip[#tooltip+1] = {secondTEXT, thirdTEXT}
 			end
 		-- else
-		-- 	opde(CharInfo.MASLENGO.Reputation[id])
+		-- opde(CharInfo.MASLENGO.Reputation[id])
 		end
 	end
 	if SettingsType == "Additionally#AllItems" then
@@ -3404,37 +3471,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
-		----------------------------------------------------------------
-	if SettingsType == "TWW_GreatVault" then
-		local Enum_Activities_table = {}
-		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-			Enum_Activities_table[#Enum_Activities_table+1] = i
-		end
-		table_sort(Enum_Activities_table)
-		for j = 1, #Enum_Activities_table do
-			local i = Enum_Activities_table[j]
-			if CharInfo.MASLENGO.GreatVault[i] and CharInfo.MASLENGO.GreatVault[i].type ~= "" then
-				if CharInfo.MASLENGO.GreatVault[i].progress and CharInfo.MASLENGO.GreatVault[i].threshold then
-					if CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING then
-						tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold.." "..CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING}
-					elseif CharInfo.MASLENGO.GreatVault[i].progress then
-						tooltip[#tooltip+1] = {CharInfo.MASLENGO.GreatVault[i].type, CharInfo.MASLENGO.GreatVault[i].progress.."/"..CharInfo.MASLENGO.GreatVault[i].threshold}
-					end
-				end
-			end
-		end
-	end
-		----------------------------------------------------------------
-	if SettingsType == "TWW_CurrentKey" then
-		if CharInfo.PlayerData.CurrentKeyName then
-			tooltip[#tooltip+1] = {CharInfo.PlayerData.CurrentKeyLevel.." "..CharInfo.PlayerData.CurrentKeyName, ""}
-		end
-		if CharInfo.PlayerData.RIO_Score and CharInfo.PlayerData.RIO_weeklyBest then
-			tooltip[#tooltip+1] = {" ", " "}
-			tooltip[#tooltip+1] = {"Weekly Best:", CharInfo.PlayerData.RIO_weeklyBest}
-			tooltip[#tooltip+1] = {"RIO Score:", CharInfo.PlayerData.RIO_Score}
-		end
-	end
+
 		----------------------------------------------------------------
 	if SettingsType == "Additionally#ListOfQuests" then
 		if CharInfo.PlayerData.numQuests then
@@ -3836,40 +3873,40 @@ function E.func_GetSavedVars(addonName)
 end
 ----------------------------------------------------------------
 -- local function safecall(f,...)
--- 	local ok, err = pcall(f,...)
--- 	if not ok then
--- 		print("Ошибка в отложенной функции:", err)
--- 	end
+-- local ok, err = pcall(f,...)
+-- if not ok then
+-- print("Ошибка в отложенной функции:", err)
+-- end
 -- end
 -- function E.func_SpamBlock(key, isCombat, callback)
--- 	E._spamLocks = E._spamLocks or {}
--- 	E._spamCombatQueue = E._spamCombatQueue or {}
--- 	if isCombat and InCombatLockdown() then
--- 		-- если уже есть отложенный вызов — не ставим второй раз
--- 		if not E._spamCombatQueue[key] and type(callback) == "function" then
--- 			E._spamCombatQueue[key] = callback
--- 			-- один раз подписываемся на событие выхода из боя
--- 			if not E._spamCombatFrame then
--- 				E._spamCombatFrame = CreateFrame("Frame")
--- 				E._spamCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
--- 				E._spamCombatFrame:SetScript("OnEvent", function()
--- 						for k, func in pairs(E._spamCombatQueue) do
--- 							safecall(func) -- безопасный вызов, чтобы не крашнуло
--- 							E._spamCombatQueue[k] = nil
--- 						end
--- 				end)
--- 			end
--- 		end
--- 		return true -- Заблокировано
--- 	end
--- 	if E._spamLocks[key] then
--- 		return true -- Всё ещё в задержке
--- 	end
--- 	E._spamLocks[key] = true
--- 	C_Timer.After(E.SPAM_TIME or 0.5, function()
--- 			E._spamLocks[key] = nil
--- 	end)
--- 	return false -- Всё нормально, можно выполнять
+-- E._spamLocks = E._spamLocks or {}
+-- E._spamCombatQueue = E._spamCombatQueue or {}
+-- if isCombat and InCombatLockdown() then
+-- -- если уже есть отложенный вызов — не ставим второй раз
+-- if not E._spamCombatQueue[key] and type(callback) == "function" then
+-- E._spamCombatQueue[key] = callback
+-- -- один раз подписываемся на событие выхода из боя
+-- if not E._spamCombatFrame then
+-- E._spamCombatFrame = CreateFrame("Frame")
+-- E._spamCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
+-- E._spamCombatFrame:SetScript("OnEvent", function()
+-- for k, func in pairs(E._spamCombatQueue) do
+-- safecall(func) -- безопасный вызов, чтобы не крашнуло
+-- E._spamCombatQueue[k] = nil
+-- end
+-- end)
+-- end
+-- end
+-- return true -- Заблокировано
+-- end
+-- if E._spamLocks[key] then
+-- return true -- Всё ещё в задержке
+-- end
+-- E._spamLocks[key] = true
+-- C_Timer.After(E.SPAM_TIME or 0.5, function()
+-- E._spamLocks[key] = nil
+-- end)
+-- return false -- Всё нормально, можно выполнять
 -- end
 ----------------------------------------------------------------
 function E.func_SpamBlock(key, needCheckCombat)
@@ -3887,10 +3924,8 @@ function E.func_SpamBlock(key, needCheckCombat)
 	return false -- Всё норм
 end
 ----------------------------------------------------------------
-function E.func_LoadComponents(start)
-	for i, func in ipairs(E.Components) do
-		func(start)
-	end
+function E.func_LoadComponents()
+
 end
 ----------------------------------------------------------------
 function E.func_ResetOtrisovkaTables(categoryKey)
@@ -3981,22 +4016,22 @@ function E.func_GetMinMaxValue(tbl, data)
 end
 ----------------------------------------------------------------
 -- function E.func_GetGradientHex(value, minValue, maxValue)
--- 	-- текущее, мин, макс
--- 	if not value or not minValue or not maxValue or minValue >= maxValue then
--- 		return "|cff00ff00"
--- 	end
--- 	local p = (value - minValue) / (maxValue - minValue)
--- 	if p < 0 then p = 0 end
--- 	if p > 1 then p = 1 end
--- 	local r, g
--- 	if p < 0.5 then
--- 		r = 255
--- 		g = math.floor(p * 2 * 255)
--- 	else
--- 		g = 255
--- 		r = math.floor((1 - (p - 0.5) * 2) * 255)
--- 	end
--- 	return string.format("|cff%02x%02x00", r, g)
+-- -- текущее, мин, макс
+-- if not value or not minValue or not maxValue or minValue >= maxValue then
+-- return "|cff00ff00"
+-- end
+-- local p = (value - minValue) / (maxValue - minValue)
+-- if p < 0 then p = 0 end
+-- if p > 1 then p = 1 end
+-- local r, g
+-- if p < 0.5 then
+-- r = 255
+-- g = math.floor(p * 2 * 255)
+-- else
+-- g = 255
+-- r = math.floor((1 - (p - 0.5) * 2) * 255)
+-- end
+-- return string.format("|cff%02x%02x00", r, g)
 -- end
 ----------------------------------------------------------------
 function E.func_GetGradientHex(value, minValue, maxValue, minHex, midHex, maxHex)
@@ -4034,8 +4069,73 @@ function E.func_GetGradientHex(value, minValue, maxValue, minHex, midHex, maxHex
 	return string.format("|cff%02x%02x%02x", r, g, b)
 end
 ----------------------------------------------------------------
+function E.func_prune(tbl)
+	for k, v in pairs(tbl) do
+		if type(v) == "table" then
+			prune(v)
+			if not next(v) then tbl[k] = nil end
+		elseif v == 0 or v == "" then
+			tbl[k] = nil
+		end
+	end
+end
 ----------------------------------------------------------------
+function E.func_Cleanup(t)
+	for k, v in pairs(t) do
+		if type(v) == "table" then
+			Cleanup(v)
+			if next(v) == nil then
+				t[k] = nil
+			end
+		elseif v == 0 or v == "" then
+			t[k] = nil
+		end
+	end
+end
 ----------------------------------------------------------------
+function E.func_DeepClean(t, rules)
+ if type(t) ~= "table" then return false end
+
+ for k, v in pairs(t) do
+ local remove = false
+
+ if type(v) == "table" then
+ local empty = E.func_DeepClean(v, rules)
+ if empty then
+ remove = true
+ end
+ else
+ if rules.zero and v == 0 then remove = true end
+ if rules.emptyString and v == "" then remove = true end
+ if rules.falseValue and v == false then remove = true end
+
+ if rules.values then
+ for _, bad in ipairs(rules.values) do
+ if v == bad then
+ remove = true
+ break
+ end
+ end
+ end
+
+ if rules.strings and type(v) == "string" then
+ for _, pattern in ipairs(rules.strings) do
+ if v:find(pattern) then
+ remove = true
+ break
+ end
+ end
+ end
+ end
+
+ if remove then
+ t[k] = nil
+ end
+ end
+
+ return next(t) == nil
+end
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

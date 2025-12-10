@@ -48,7 +48,6 @@ E.ALL_Additionally = {}
 E.First_Option = {}
 E.Second_Option = {}
 E.ActiveHoliday = {}
-E.altStrategies = {}
 E.Fourth_Option = {}
 E.Holiday = {}
 E.KeyStoneTBL = {}
@@ -76,24 +75,8 @@ E.OctoTable_SavedVariables = {}
 E.OctoTables_DataOtrisovka = {}
 E.Octo_ProfessionsskillLine = {}
 E.Octo_ProfessionsskillLine_Other = {}
-E.strategies = {}
 E.Third_Option = {}
 E.Timers = {}
--- local dataMeta = {
--- __index = {
--- Currencies = {},
--- Items = {},
--- Reputations = {},
--- UniversalQuests = {},
--- Additionally = {},
--- }
--- }
--- for i = 1, 15 do
--- E.OctoTables_DataOtrisovka[i] = setmetatable({}, dataMeta)
--- end
-E.newOTRISOVKA = {}
-E.newOTRISOVKA2 = {}
 E.OctoTable_ALL_Mounts = {}
-
-
 E.Components = {}
+E.OctoTable_CurrencyMountForFuncCurName = {}

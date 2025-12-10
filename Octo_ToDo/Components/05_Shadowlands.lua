@@ -7,69 +7,114 @@ if not enable then return end
 local categoryKey = 5
 local expansionID = 9
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		1822, -- Renown
-		1813, -- Reservoir Anima
-		2009,
-		1906,
-		1828,
-		1979,
-		1931,
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 1822, defS = true,}, -- Renown
+		{id = 1813, defS = true,}, -- Reservoir Anima
+		{id = 2009, defS = true,},
+		{id = 1906, defS = true,},
+		{id = 1828, defS = true,},
+		{id = 1979, defS = true,},
+		{id = 1931, defS = true,},
+
+
+		{id = 1816, defS = true,},
+		{id = 1885, defS = true,},
+		{id = 1767, defS = true,},
+		{id = 1820, defS = false,},
+		{id = 1904, defS = false,},
+		{id = 1819, defS = false,},
+		{id = 1754, defS = false,},
+		{id = 1977, defS = false,},
+
+
+
+
+
+		-- {id = 1861, defS = true,},
+		-- {id = 1860, defS = true,},
+		-- {id = 1873, defS = true,},
+		-- {id = 1862, defS = true,},
+		-- {id = 1802, defS = true,},
+		-- {id = 1829, defS = true,},
+		-- {id = 1866, defS = true,},
+		-- {id = 1831, defS = true,},
+		-- {id = 1830, defS = true,},
+		-- {id = 1859, defS = true,},
+		-- {id = 1867, defS = true,},
+		-- {id = 1743, defS = true,},
+		-- {id = 1864, defS = true,},
+		-- {id = 1863, defS = true,},
+		-- {id = 1811, defS = true,},
+		-- {id = 1832, defS = true,},
+		-- {id = 1872, defS = true,},
+		-- {id = 1871, defS = true,},
+		-- {id = 1812, defS = true,},
+		-- {id = 1870, defS = true,},
+		-- {id = 1869, defS = true,},
+		-- {id = 1865, defS = true,},
+		-- {id = 1874, defS = true,},
+		-- {id = 1868, defS = true,},
+
+
+
+
+
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
+	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		2470, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
-		2472, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
-		2478, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
-		2432, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		{id = 2470, defS = true,}, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
+		{id = 2472, defS = true,}, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
+		{id = 2478, defS = true,}, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
+		{id = 2432, defS = true,}, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
 
-		2407, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
+		{id = 2407, defS = true,}, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
 
-		2413, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
-		2439, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
-		2445, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
-		2455, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
-		2458, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
-		2453, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
-		2460, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
-		2461, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
-		2459, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
-		2457, --name = "Великий мастер Воул", side = "-", category = "Пепельный двор", }, --[faction=2457]
-		2456, --name = "Дроман Алиот", side = "-", category = "Пепельный двор", }, --[faction=2456]
-		2454, --name = "Чуфа", side = "-", category = "Пепельный двор", }, --[faction=2454]
-		2452, --name = "Полемарх Адрест", side = "-", category = "Пепельный двор", }, --[faction=2452]
-		2451, --name = "Капитан-егерь Корейн", side = "-", category = "Пепельный двор", }, --[faction=2451]
-		2450, --name = "Александрос Могрейн", side = "-", category = "Пепельный двор", }, --[faction=2450]
-		2449, --name = "Графиня", side = "-", category = "Пепельный двор", }, --[faction=2449]
-		2448, --name = "Миканикос", side = "-", category = "Пепельный двор", }, --[faction=2448]
-		2447, --name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", }, --[faction=2447]
-		2446, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
+		{id = 2413, defS = true,}, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
+		{id = 2439, defS = true,}, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
+		{id = 2445, defS = true,}, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
+		{id = 2455, defS = true,}, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
+		{id = 2458, defS = true,}, --name = "Клейя и Пелагий", side = "-", category = "Пепельный двор", }, --[faction=2458]
+		{id = 2453, defS = true,}, --name = "Рендл и Дуборыл", side = "-", category = "Пепельный двор", }, --[faction=2453]
+		{id = 2460, defS = true,}, --name = "Камнелоб", side = "-", category = "Пепельный двор", }, --[faction=2460]
+		{id = 2461, defS = true,}, --name = "Изобретатель чумы Марилет", side = "-", category = "Пепельный двор", }, --[faction=2461]
+		{id = 2459, defS = true,}, --name = "Сика", side = "-", category = "Пепельный двор", }, --[faction=2459]
+		{id = 2457, defS = true,}, --name = "Великий мастер Воул", side = "-", category = "Пепельный двор", }, --[faction=2457]
+		{id = 2456, defS = true,}, --name = "Дроман Алиот", side = "-", category = "Пепельный двор", }, --[faction=2456]
+		{id = 2454, defS = true,}, --name = "Чуфа", side = "-", category = "Пепельный двор", }, --[faction=2454]
+		{id = 2452, defS = true,}, --name = "Полемарх Адрест", side = "-", category = "Пепельный двор", }, --[faction=2452]
+		{id = 2451, defS = true,}, --name = "Капитан-егерь Корейн", side = "-", category = "Пепельный двор", }, --[faction=2451]
+		{id = 2450, defS = true,}, --name = "Александрос Могрейн", side = "-", category = "Пепельный двор", }, --[faction=2450]
+		{id = 2449, defS = true,}, --name = "Графиня", side = "-", category = "Пепельный двор", }, --[faction=2449]
+		{id = 2448, defS = true,}, --name = "Миканикос", side = "-", category = "Пепельный двор", }, --[faction=2448]
+		{id = 2447, defS = true,}, --name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", }, --[faction=2447]
+		{id = 2446, defS = true,}, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
 
-		2465, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
-		2464, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
-		2463, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
+		{id = 2465, defS = true,}, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
+		{id = 2464, defS = true,}, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
+		{id = 2463, defS = true,}, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
 
-		2410, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
-		2462, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
+		{id = 2410, defS = true,}, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
+		{id = 2462, defS = true,}, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = L["World Boss"],
 			name_save = "WorldBoss",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -89,6 +134,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = OTHER..": Rares",
 			name_save = "OtherRares",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -136,6 +182,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_questName(61981, false),
 		-- 	name_save = "anima1k",
+		-- defS = true,
 		-- 	reset = "Weekly",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -151,6 +198,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = L["Troubles at Home"], -- E.func_questName(61981, false),
 		-- 	name_save = "Troubles at Home",
+		-- defS = true,
 		-- 	reset = "Weekly",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -166,6 +214,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": "..L["Covenant Assault"],
 			name_save = "MAWassault",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -180,6 +229,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": "..L["The Hunt"],
 			name_save = "MAWhunt",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -194,6 +244,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": "..L["Wrath of the Jailer"],
 			name_save = "MAWwrathofthejailer",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -205,6 +256,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": "..L["Event: Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast(),
 			name_save = "MAWtormentor",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -216,6 +268,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": "..L["Helsworn Chest"],
 			name_save = "MAWHelswornChest",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -227,6 +280,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": "..L["Stolen Anima Vessel"]..E.RIFT,
 			name_save = "MAWStolenAnimaVesselRIFT",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -240,6 +294,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1543)..": "..L["Daily quests"],--E.func_currencyName(1880),
 		-- 	name_save = "MAWdailyQuests",
+		-- defS = true,
 		-- 	reset = "Daily",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -261,6 +316,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1543)..": ".."Rares",
 			name_save = "MAWRares",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -296,6 +352,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": "..E.func_questName(63949, false), --"Weekly",
 			name_save = "KORTHIAweekly",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -307,6 +364,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": "..E.func_questName(65266, false),
 			name_save = "KORTHIAlostresearch",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -319,6 +377,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": "..E.func_questName(64552, false), --"anima table mission",
 			name_save = "KORTHIAanimatablemission",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -333,6 +392,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1961)..": ".. E.func_questName(64522, false),
 		-- 	name_save = "KORTHIAStolenKorthianSupplies",
+		-- defS = true,
 		-- 	reset = "Weekly",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -345,6 +405,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": ".."Rares",
 			name_save = "KORTHIARares",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -378,6 +439,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1961)..": ".. L["Daily quests"],
 		-- 	name_save = "KORTHIADailyQuest",
+		-- defS = true,
 		-- 	reset = "Daily",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -423,6 +485,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": ".. E.func_questName(63777, false),
 			name_save = "SealedSecrets",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -447,6 +510,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": ".. L["Purple Mobs"],
 			name_save = "KORTHIAPurpleMobs",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -472,6 +536,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": ".. L["Relic Gorgers"],
 			name_save = "KORTHIARelicGorgers",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -487,6 +552,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1961)..": ".. AREA_LOOTING_UNLOCKED, -- L["Mushrooms"]
 			name_save = "KORTHIACollectionMushrooms",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -532,6 +598,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1961)..": ".."Items",
 		-- 	name_save = "KORTHIAitems",
+		-- defS = true,
 		-- 	reset = "Once",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -552,6 +619,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1970)..": "..E.func_questName(66042, false),
 			name_save = "ZMpatternswithinpatterns",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -563,6 +631,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_mapName(1970)..": ".."Rares",
 			name_save = "ZMRares",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -605,6 +674,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1970)..": ".."WorldQuests",
 		-- 	name_save = "ZMWorldQuests",
+		-- defS = true,
 		-- 	reset = "Daily",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -645,6 +715,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1970)..": "..AREA_LOOTING_UNLOCKED, -- AREA_LOOTING_UNLOCKED "Treasures"
 		-- 	name_save = "ZMtreasures",
+		-- defS = true,
 		-- 	reset = "Once",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -681,6 +752,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1970)..": "..L["Undulating Foliage"],
 		-- 	name_save = "ZMUndulatingFoliage",
+		-- defS = true,
 		-- 	reset = "Once",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -692,6 +764,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1970)..": "..L["Prying Eye Discovery"],
 		-- 	name_save = "ZMPryingEyeDiscovery",
+		-- defS = true,
 		-- 	reset = "Daily",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -713,6 +786,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1970)..": ".."ZMPUZZLECACHES",
 		-- 	name_save = "ZMPUZZLECACHES",
+		-- defS = true,
 		-- 	reset = "Daily",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -739,6 +813,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1970)..": ".."ZMConcordance",
 		-- 	name_save = "ZMConcordance",
+		-- defS = true,
 		-- 	reset = "Once",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -766,6 +841,7 @@ local function tempFunction(start)
 		-- 	showTooltip = true,
 		-- 	TextLeft = E.func_mapName(1670)..": "..DUNGEONS,
 		-- 	name_save = "DUNGEONS",
+		-- defS = true,
 		-- 	reset = "Weekly",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -798,6 +874,7 @@ local function tempFunction(start)
 		-- 	showTooltip = false,
 		-- 	TextLeft = E.func_questName(62858, false),
 		-- 	name_save = "Return Lost Souls",
+		-- defS = true,
 		-- 	reset = "Weekly",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -818,9 +895,10 @@ local function tempFunction(start)
 		-- },
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)

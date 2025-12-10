@@ -38,7 +38,6 @@ function E.func_DevTool_Options(savedVars)
 					-- wipe(Octo_ToDo_DB_Levels)
 					-- wipe(Octo_ToDo_DB_Vars)
 					-- wipe(Octo_ToDo_DB_Other Octo_Cache_DB)
-					-- wipe(Octo_ToDo_DB_VisualUserSettings)
 
 					for _, tbl in ipairs(E.OctoTable_SavedVariables) do
 						print (tbl.name)
@@ -840,7 +839,7 @@ function E.func_DevTool_Options(savedVars)
 	if Octo_Moduls_DB then
 		add_args(Octo_Moduls_DB, "Octo_Moduls_DB")
 	end
-	add_args(Octo_ToDo_DB_VisualUserSettings, "Octo_ToDo_DB_VisualUserSettings")
+	add_args(Octo_profileKeys, "Octo_profileKeys", 1)
 	-- add_args(Octo_QuestsChanged_DB, "Octo_QuestsChanged_DB", 1)
 	-------------------------------------------------
 	-------------------------------------------------

@@ -369,7 +369,7 @@ E.OctoTable_ReputationsDB = {
 	[967] = {icon = E.ICON_QUESTION_MARK, icon2 = "", itemREP = "", name = "Аметистовое Око", side = "-", category = "The Burning Crusade", },
 	[942] = {icon = 135026, icon2 = "", itemREP = "", name = "Кенарийская экспедиция", side = "-", category = "The Burning Crusade", },
 	[933] = {icon = 135026, icon2 = "", itemREP = "", name = "Консорциум", side = "-", category = "The Burning Crusade", },
-	[922] = {icon = 135026, icon2 = "", itemREP = "", name = "Транквиллион", side = "-", category = "The Burning Crusade", },
+	[922] = {icon = 135026, icon2 = "", itemREP = "", name = "Транквиллион", side = "Horde", category = "The Burning Crusade", },
 		----------------------------------------------------------------
 	[936] = {icon = E.ICON_QUESTION_MARK, icon2 = "", itemREP = "", name = "Город Шаттрат", side = "-", category = "The Burning Crusade", },
 		----------------------------------------------------------------

@@ -6,7 +6,6 @@
 	<Script file="Components\05_Shadowlands.lua"/>
 	<Script file="Components\06_BattleforAzeroth.lua"/>
 	<Script file="Components\07_Legion.lua"/>
-	<Script file="Components\08_Legion_Remix.lua"/>
 	<Script file="Components\09_WarlordsofDraenor.lua"/>
 	<Script file="Components\10_MistsofPandaria.lua"/>
 	<Script file="Components\11_Cataclysm.lua"/>

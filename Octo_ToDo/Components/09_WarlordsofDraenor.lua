@@ -7,56 +7,57 @@ if not enable then return end
 local categoryKey = 9
 local expansionID = 6
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		824,
-		1101,
-		823,
-		1129, -- MONETKA
-		994, -- MONETKA
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 824, defS = true,},
+		{id = 1101, defS = true,},
+		{id = 823, defS = true,},
+		{id = 1129, defS = true,}, -- MONETKA
+		{id = 994, defS = true,}, -- MONETKA
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
+	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Warlords of Draenor"] = {
-		1850, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
-		1849, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
-		1711, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
-		1515, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
+		{id = 1850, defS = true,}, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
+		{id = 1849, defS = true,}, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
+		{id = 1711, defS = true,}, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
+		{id = 1515, defS = true,}, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
 		----------------------------------------------------------------
-		1708, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
-		1445, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
-		1848, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
+		{id = 1708, defS = false,}, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
+		{id = 1445, defS = false,}, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
+		{id = 1848, defS = false,}, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
 		----------------------------------------------------------------
-		1731, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
-		1710, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
-		1847, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
+		{id = 1731, defS = false,}, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
+		{id = 1710, defS = false,}, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
+		{id = 1847, defS = false,}, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
 		----------------------------------------------------------------
-		1741, --name = "Леорадж", side = "-", category = "Телохранители из казарм", }, --[faction=1741]
-		1740, --name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", }, --[faction=1740]
-		1739, --name = "Вивианна", side = "-", category = "Телохранители из казарм", }, --[faction=1739]
-		1738, --name = "Защитница Иллона", side = "-", category = "Телохранители из казарм", }, --[faction=1738]
-		1737, --name = "Жрец Когтя Ишааль", side = "-", category = "Телохранители из казарм", }, --[faction=1737]
-		1736, --name = "Тормок", side = "-", category = "Телохранители из казарм", }, --[faction=1736]
-		1733, --name = "Делвар Железный Кулак", side = "-", category = "Телохранители из казарм", }, --[faction=1733]
+		{id = 1741, defS = false,}, --name = "Леорадж", side = "-", category = "Телохранители из казарм", }, --[faction=1741]
+		{id = 1740, defS = false,}, --name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", }, --[faction=1740]
+		{id = 1739, defS = false,}, --name = "Вивианна", side = "-", category = "Телохранители из казарм", }, --[faction=1739]
+		{id = 1738, defS = false,}, --name = "Защитница Иллона", side = "-", category = "Телохранители из казарм", }, --[faction=1738]
+		{id = 1737, defS = false,}, --name = "Жрец Когтя Ишааль", side = "-", category = "Телохранители из казарм", }, --[faction=1737]
+		{id = 1736, defS = false,}, --name = "Тормок", side = "-", category = "Телохранители из казарм", }, --[faction=1736]
+		{id = 1733, defS = false,}, --name = "Делвар Железный Кулак", side = "-", category = "Телохранители из казарм", }, --[faction=1733]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = L["World Boss"],
 			name_save = "WorldBoss",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -72,6 +73,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = GARRISON_LOCATION_TOOLTIP,
 			name_save = "GarrisonLevel",
+			defS = true,
 			reset = "Once",
 			desc = categoryKey,
 			quests = {
@@ -86,8 +88,10 @@ local function tempFunction(start)
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
+	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)

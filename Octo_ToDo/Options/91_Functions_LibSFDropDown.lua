@@ -273,9 +273,9 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					self:ddAddButton(info, level)
 					-- SettingsEnabled
 					info.text = "SettingsEnabled"
-					info.checked = Octo_ToDo_DB_VisualUserSettings.SettingsEnabled
+					info.checked = Octo_profileKeys.SettingsEnabled
 					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = checked
+						Octo_profileKeys.SettingsEnabled = checked
 						providerfunc()
 					end
 					self:ddAddButton(info, level)

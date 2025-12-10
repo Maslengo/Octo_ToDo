@@ -7,37 +7,38 @@ if not enable then return end
 local categoryKey = 98
 -- local expansionID =
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
-E.OctoTables_Vibor[categoryKey].name = CALENDAR_FILTER_HOLIDAYS
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
+	OctoTables_Vibor[categoryKey].name = CALENDAR_FILTER_HOLIDAYS
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		1166, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_joinableDung())
-		3309, -- Hellstone Shard
-		2588, -- Riders of Azeroth Badge
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 1166, defS = true,}, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_joinableDung())
+		{id = 3309, defS = true,}, -- Hellstone Shard
+		{id = 2588, defS = true,}, -- Riders of Azeroth Badge
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
-		44791, -- Event: Noblegarden
-		45072, -- Event: Noblegarden
-		23247, -- Event: Midsummer Fire Festival
+	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 44791, defS = true,}, -- Event: Noblegarden
+		{id = 45072, defS = true,}, -- Event: Noblegarden
+		{id = 23247, defS = true,}, -- Event: Midsummer Fire Festival
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = E.func_questName(13503, false) .. " ("..E.func_EventName(181)..")",
 			name_save = "ATisketaTasketaNoblegardenBasket",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -49,6 +50,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(79575, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "WhattheDuck",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -60,6 +62,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(13479, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -71,6 +74,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(79576, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "AFowlConcoction",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -82,6 +86,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(79577, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "DuckTales",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -93,6 +98,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(79578, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -105,6 +111,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(79558, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "FeatheredFiend",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -116,6 +123,7 @@ local function tempFunction(start)
 			TextLeft = E.func_questName(79135, false) .. " ("..E.func_EventName(181)..")",
 			showTooltip = true,
 			name_save = "QuackingDown",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
@@ -131,6 +139,7 @@ local function tempFunction(start)
 			TextLeft = "Orgrimmar/Stormwind" .. " ("..E.func_EventName(201)..")",
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysChildrensWeek",
 			quests = {
@@ -156,6 +165,7 @@ local function tempFunction(start)
 			TextLeft = "Shattrath" .. " ("..E.func_EventName(201)..")",
 			showTooltip = true,
 			name_save = "Shattrath", --
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysChildrensWeek",
 			quests = {
@@ -183,6 +193,7 @@ local function tempFunction(start)
 			TextLeft = L["Daily quests"] .. " ("..E.func_EventName(181)..")", -- ПОФИКСИТЬ
 			showTooltip = true,
 			name_save = "orgrimmarStormwindDAILY", --
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysTheSpinnerofSummerTales",
 			quests = {
@@ -200,6 +211,7 @@ local function tempFunction(start)
 			TextLeft = RAIDS .. " ("..E.func_EventName(1583)..")",
 			showTooltip = true,
 			name_save = "Raid",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey, -- "HolidaysTimewalk",
 			quests = {
@@ -215,6 +227,7 @@ local function tempFunction(start)
 			TextLeft = DUNGEONS .. " ("..E.func_EventName(1583)..")",
 			showTooltip = true,
 			name_save = "Dungeons",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey, -- "HolidaysTimewalk",
 			quests = {
@@ -245,6 +258,7 @@ local function tempFunction(start)
 			TextLeft = "Profession Monthlies" .. " ("..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "ProfessionMonthlies",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -269,6 +283,7 @@ local function tempFunction(start)
 			TextLeft = "Monthly Quests" .. " ("..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "MonthlyQuests",
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -281,6 +296,7 @@ local function tempFunction(start)
 			TextLeft = "Acount-wide Dailies" .. " ("..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "AcountwideDailies",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -293,6 +309,7 @@ local function tempFunction(start)
 			TextLeft = "item turns ins" .. " ("..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "itemturnsins",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -312,6 +329,7 @@ local function tempFunction(start)
 			TextLeft = E.func_itemName(93724) .. " ("..E.func_EventName(479)..")",
 			showTooltip = true,
 			name_save = "DarkmoonFaire",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -331,6 +349,7 @@ local function tempFunction(start)
 			TextLeft = E.func_itemName(92441) .. " (Warlock)",
 			showTooltip = true,
 			name_save = "GreenFire",
+			defS = true,
 			reset = "Once",
 			desc = categoryKey, -- "Warlock",
 			quests = {
@@ -346,10 +365,11 @@ local function tempFunction(start)
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 
 	}
 	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)

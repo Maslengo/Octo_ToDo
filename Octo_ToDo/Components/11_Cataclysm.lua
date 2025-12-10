@@ -7,44 +7,50 @@ if not enable then return end
 local categoryKey = 11
 local expansionID = 4
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		391, -- Tol Barad Commendation
-		416, -- Mark of the World Tree
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+
+		{id = 361, defS = true,}, --
+		{id = 416, defS = true,}, -- Mark of the World Tree
+		{id = 614, defS = true,}, --
+		{id = 615, defS = true,}, --
+		-- {id = 391, defS = true,}, -- Tol Barad Commendation
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
-		52078,
-		69237,
-		71998,
+	OctoTables_DataOtrisovka[categoryKey].Items = {
+		-- {id = 52078, defS = true,},
+		-- {id = 69237, defS = true,},
+		-- {id = 71998, defS = true,},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		1204, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
-		1173, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
-		1171, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
-		1158, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
-		1135, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		{id = 1204, defS = true,}, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
+		{id = 1173, defS = true,}, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
+		{id = 1171, defS = true,}, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
+		{id = 1158, defS = true,}, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
+		{id = 1135, defS = true,}, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
 		----------------------------------------------------------------
-		1178, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
-		1172, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]
+		{id = 1178, defS = false,}, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
+		{id = 1172, defS = false,}, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]
 		----------------------------------------------------------------
-		1177, --name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, --[faction=1177]
-		1174, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
+		{id = 1177, defS = false,}, --name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, --[faction=1177]
+		{id = 1174, defS = false,}, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
+	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)

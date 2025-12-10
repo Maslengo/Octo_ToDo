@@ -7,60 +7,66 @@ if not enable then return end
 local categoryKey = 7
 local expansionID = 7
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		1508,
-		1342,
-		1220,
-		1226,
-		1533,
-		1155,
-		1149,
-		1416,
-		1273,
-	}
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 1508, defS = false,},
+		{id = 1342, defS = false,},
+		{id = 1220, defS = true,},
+		{id = 1226, defS = false,},
+		{id = 1533, defS = false,},
+		{id = 1155, defS = false,},
+		{id = 1149, defS = false,},
+		{id = 1416, defS = false,},
+		{id = 1273, defS = false,},
 
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 3292, defS = false,}, -- REMIX
+		{id = 3268, defS = false,}, -- REMIX
+		{id = 3252, defS = false,}, -- REMIX
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		1900, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
-		1883, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
-		1828, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
-		1948, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
-		1859, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
-		1894, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
-		2170, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
-		2165, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
-		2045, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
-		----------------------------------------------------------------
-		2018, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
-		----------------------------------------------------------------
-		2097, --name = "Илиссия Водная", side = "-", category = "Legion", }, --[faction=2097]
-		2099, --name = "Акуле Речной Рог", side = "-", category = "Legion", }, --[faction=2099]
-		2101, --name = "Ша'лет", side = "-", category = "Legion", }, --[faction=2101]
-		2100, --name = "Корбин", side = "-", category = "Legion", }, --[faction=2100]
-		2102, --name = "Бесс", side = "-", category = "Legion", }, --[faction=2102]
-		2098, --name = "Хранительница Рейна", side = "-", category = "Legion", }, --[faction=2098]
-		----------------------------------------------------------------
-		1919, --name = "Жажда магии Вальтруа", side = "-", category = "Помраченные", }, --[faction=1919]
-		1862, --name = "Жажда магии Окулета", side = "-", category = "Помраченные", }, --[faction=1862]
-		1860, --name = "Жажда магии Талисры", side = "-", category = "Помраченные", }, --[faction=1860]
-		----------------------------------------------------------------
-		2135, --name = "Хроми", side = "-", category = "Legion", }, --[faction=2135]
-		----------------------------------------------------------------
-		1975, --name = "Кудесник Маргосс", side = "-", category = "Legion", }, --[faction=1975]
+	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 124124, defS = false,}, -- Blood of Sargeras
+		{id = 254267, defS = false,}, -- REMIX
+		{id = 253224, defS = false,}, -- REMIX
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		{id = 1900, defS = true,}, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
+		{id = 1883, defS = true,}, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
+		{id = 1828, defS = true,}, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
+		{id = 1948, defS = true,}, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
+		{id = 1859, defS = true,}, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
+		{id = 1894, defS = true,}, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
+		{id = 2170, defS = true,}, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
+		{id = 2165, defS = true,}, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
+		{id = 2045, defS = true,}, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
+		----------------------------------------------------------------
+		{id = 2018, defS = false,}, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
+		----------------------------------------------------------------
+		{id = 2097, defS = false,}, --name = "Илиссия Водная", side = "-", category = "Legion", }, --[faction=2097]
+		{id = 2099, defS = false,}, --name = "Акуле Речной Рог", side = "-", category = "Legion", }, --[faction=2099]
+		{id = 2101, defS = false,}, --name = "Ша'лет", side = "-", category = "Legion", }, --[faction=2101]
+		{id = 2100, defS = false,}, --name = "Корбин", side = "-", category = "Legion", }, --[faction=2100]
+		{id = 2102, defS = false,}, --name = "Бесс", side = "-", category = "Legion", }, --[faction=2102]
+		{id = 2098, defS = false,}, --name = "Хранительница Рейна", side = "-", category = "Legion", }, --[faction=2098]
+		----------------------------------------------------------------
+		{id = 1919, defS = false,}, --name = "Жажда магии Вальтруа", side = "-", category = "Помраченные", }, --[faction=1919]
+		{id = 1862, defS = false,}, --name = "Жажда магии Окулета", side = "-", category = "Помраченные", }, --[faction=1862]
+		{id = 1860, defS = false,}, --name = "Жажда магии Талисры", side = "-", category = "Помраченные", }, --[faction=1860]
+		----------------------------------------------------------------
+		{id = 2135, defS = false,}, --name = "Хроми", side = "-", category = "Legion", }, --[faction=2135]
+		----------------------------------------------------------------
+		{id = 1975, defS = false,}, --name = "Кудесник Маргосс", side = "-", category = "Legion", }, --[faction=1975]
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 
 
 
@@ -68,6 +74,7 @@ local function tempFunction(start)
 		-- sorted = false,
 		-- showTooltip = true,
 		-- TextLeft = "bounty_Legion_TEST",
+		-- defS = true,
 		-- name_save = "bounty_Legion_TEST",
 		-- reset = "Daily",
 		-- desc = categoryKey,
@@ -87,6 +94,7 @@ local function tempFunction(start)
 			sorted = false,
 			showTooltip = true,
 			TextLeft = L["World Boss"],
+			defS = true,
 			name_save = "WorldBoss",
 			reset = "Weekly",
 			desc = categoryKey,
@@ -117,6 +125,7 @@ local function tempFunction(start)
 		{
 			showTooltip = true,
 			TextLeft = E.func_questName(43533, false),
+			defS = false,
 			name_save = "BalanceofPower",
 			reset = "Once",
 			desc = categoryKey,
@@ -163,6 +172,7 @@ local function tempFunction(start)
 		{
 			showTooltip = true,
 			TextLeft = E.Timers.Legion_Remix_Invasion(),
+			defS = true,
 			name_save = "InvasionQuests",
 			reset = "Daily",
 			desc = categoryKey,
@@ -177,6 +187,7 @@ local function tempFunction(start)
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = E.func_questName(92855, false),
+		-- defS = true,
 		-- name_save = "MakeHasteNotWaste",
 		-- reset = "Daily",
 		-- desc = categoryKey,
@@ -187,8 +198,13 @@ local function tempFunction(start)
 		-- },
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+		{id = "LegionRemixResearch", defS = false,},
 	}
+	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)
+-- 1642 US REMIX
+-- 1643 EU REMIX (ru)

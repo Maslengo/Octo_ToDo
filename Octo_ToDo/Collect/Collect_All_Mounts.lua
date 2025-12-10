@@ -40,6 +40,7 @@ function E.Collect_All_Mounts()
 
 	-- Собираем данные
 	for currencyID in next,(E.OctoTable_ALL_Mounts) do
+		E.OctoTable_CurrencyMountForFuncCurName[currencyID] = true
 		local info = GetCurrencyInfo(currencyID)
 		if info then
 			local quality = info.quality or 0
@@ -64,7 +65,7 @@ function E.Collect_All_Mounts()
 	function E.ebanieMounti(categoryKey)
 		-- Вставляем отсортированные данные
 		for _, data in ipairs(tempTable) do
-			tinsert(E.OctoTables_DataOtrisovka[categoryKey].Currencies, data.currencyID)
+			tinsert(E.OctoTables_DataOtrisovka[categoryKey].Currencies, {id = data.currencyID, defS = true})
 		end
 	end
 

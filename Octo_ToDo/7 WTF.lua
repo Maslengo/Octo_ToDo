@@ -15,20 +15,20 @@ function EventFrame:func_CreateDataCacheAtStart()
 	local tblItems = {}
 	-- local tblSpells = {}
 
-	E.func_LoadComponents(true)
-	for _, v in ipairs(E.OctoTables_DataOtrisovka) do
-		-- for _, currencyID in ipairs(v.Currencies) do
-		-- local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
-		-- end
-		if v and v.Items then
-			for _, itemID in ipairs(v.Items) do
-				if type(itemID) == "number" then
-					tblItems[itemID] = true
-					-- local item = E.func_itemName(itemID) -- "AllItems"
-				end
-			end
-		end
-	end
+	-- E.func_LoadComponents(true)
+	-- for _, v in ipairs(E.OctoTables_DataOtrisovka) do
+	-- -- for _, currencyID in ipairs(v.Currencies) do
+	-- -- local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
+	-- -- end
+	-- if v and v.Items then
+	-- for _, itemID in ipairs(v.Items) do
+	-- if type(itemID) == "number" then
+	-- tblItems[itemID] = true
+	-- -- local item = E.func_itemName(itemID) -- "AllItems"
+	-- end
+	-- end
+	-- end
+	-- end
 	----------------------------------------------------------------
 	for currencyID = 42, 4000 do -- 42, 3372
 		local currencyName = E.func_currencyName(currencyID) -- "AllCurrencies"
@@ -99,32 +99,32 @@ function EventFrame:func_CreateDataCacheAtStart()
 
 
 	-- for _, data in next,(E.ALL_UniversalQuests) do
-	-- 	if not data.quests then
-	-- 		break -- Пропускаем записи без квестов
-	-- 	end
-	-- 	for _, questData in ipairs(data.quests) do
-	-- 		if questData[1] then
-	-- 			tblQuests[questData[1]] = true
-	-- 			if questData.forcedText and questData.forcedText.npcID then
-	-- 				local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
-	-- 			end
-	-- 		end
-	-- 	end
+	-- if not data.quests then
+	-- break -- Пропускаем записи без квестов
+	-- end
+	-- for _, questData in ipairs(data.quests) do
+	-- if questData[1] then
+	-- tblQuests[questData[1]] = true
+	-- if questData.forcedText and questData.forcedText.npcID then
+	-- local npc = E.func_npcName(questData.forcedText.npcID) -- "AllNPCs"
+	-- end
+	-- end
+	-- end
 	-- end
 
 	-- local localTable = {}
 	-- for i = 1, 6 do
-	-- 	if i ~= 6 then
-	-- 		C_Timer.After(i, function()
-	-- 			for _, npcID in ipairs(E.OctoTable_NPC) do
-	-- 				localTable[npcID] = E.func_npcName(npcID)
-	-- 			end
-	-- 		end)
-	-- 	elseif i == 6 then
-	-- 		C_Timer.After(i, function()
-	-- 			opde(localTable)
-	-- 		end)
-	-- 	end
+	-- if i ~= 6 then
+	-- C_Timer.After(i, function()
+	-- for _, npcID in ipairs(E.OctoTable_NPC) do
+	-- localTable[npcID] = E.func_npcName(npcID)
+	-- end
+	-- end)
+	-- elseif i == 6 then
+	-- C_Timer.After(i, function()
+	-- opde(localTable)
+	-- end)
+	-- end
 	-- end
 	----------------------------------------------------------------
 end
@@ -294,6 +294,37 @@ function EventFrame:DatabaseClear()
 			end
 		end
 	end
+	local rules = {
+		zero = true, -- удалять значения == 0
+		emptyString = true, -- удалять ""
+		falseValue = false, -- удалять false (обычно не надо)
+
+		values = { -- точное совпадение
+			"Done",
+			"0/0",
+			0,
+		},
+
+		strings = { -- подстроки / паттерны
+			"|cff", -- цветовой мусор
+			"|r",
+			"#%d+/", -- если ты где-то оставил прогресс в строке
+		},
+
+		-- (необязательно, но полезно)
+		keepKeys = { -- НИКОГДА не удалять ключ
+			"PlayerData",
+			"CharInfo",
+		}
+	}
+
+	E.func_DeepClean(Octo_profileKeys, rules)
+	E.func_DeepClean(Octo_ToDo_DB_Levels, rules)
+	E.func_DeepClean(Octo_ToDo_DB_Vars, rules)
+	E.func_DeepClean(Octo_ToDo_DB_Other, rules)
+	E.func_DeepClean(Octo_Cache_DB, rules)
+	E.func_DeepClean(Octo_DevTool_DB, rules)
+
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -457,7 +488,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		OnlyCurrentFaction = false, -- Только текущая фракция
 		ShowOnlyCurrentRegion = false, -- Только текущий BattleTag
 		ShowOnlyCurrentServer = false, -- Только текущий сервер
-		SettingsEnabled = false,
+		-- SettingsEnabled = false,
 		-- TalentTreeTweaks = true, -- Настройки дерева талантов
 		-- TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
 		-- TalentTreeTweaks_Scale = 1, -- Масштаб дерева
@@ -517,20 +548,20 @@ function EventFrame:Octo_DevTool_DB()
 	local defaultOptions = {
 		Config_DebugID_ALL = false,
 
-		Config_DebugID_Items = false, 			--E.debugInfo_Items(id)
-		Config_DebugID_Currencies = false, 		--E.debugInfo_Currencies(id)
-		Config_DebugID_NPCs = false, 			--E.debugInfo_NPCs(id)
-		Config_DebugID_Quests = false, 			--E.debugInfo_Quests(id)
-		Config_DebugID_Reputations = false, 	--E.debugInfo_Reputations(id)
-		Config_DebugID_Spells = false, 			--E.debugInfo_Spells(id)
-		Config_DebugID_Achievements = false, 	--E.debugInfo_Achievements(id)
-		Config_DebugID_Mounts = false, 			--E.debugInfo_Mounts(mountID)
-		Config_DebugID_Maps = false, 			--E.debugInfo_Maps(id)
-		Config_DebugID_Events = false, 			--E.debugInfo_Events(id)
-		Config_DebugID_Professions = false, 	--E.debugInfo_Professions(id)
+		Config_DebugID_Items = false, --E.debugInfo_Items(id)
+		Config_DebugID_Currencies = false, --E.debugInfo_Currencies(id)
+		Config_DebugID_NPCs = false, --E.debugInfo_NPCs(id)
+		Config_DebugID_Quests = false, --E.debugInfo_Quests(id)
+		Config_DebugID_Reputations = false, --E.debugInfo_Reputations(id)
+		Config_DebugID_Spells = false, --E.debugInfo_Spells(id)
+		Config_DebugID_Achievements = false, --E.debugInfo_Achievements(id)
+		Config_DebugID_Mounts = false, --E.debugInfo_Mounts(mountID)
+		Config_DebugID_Maps = false, --E.debugInfo_Maps(id)
+		Config_DebugID_Events = false, --E.debugInfo_Events(id)
+		Config_DebugID_Professions = false, --E.debugInfo_Professions(id)
 
-		Config_DebugID_instanceID = false,		--E.debugInfo_instanceID(id) ПОФИКСИТЬ
-		Config_DebugID_worldBossID = false,		--E.debugInfo_worldBossID(id) ПОФИКСИТЬ
+		Config_DebugID_instanceID = false, --E.debugInfo_instanceID(id) ПОФИКСИТЬ
+		Config_DebugID_worldBossID = false, --E.debugInfo_worldBossID(id) ПОФИКСИТЬ
 
 		DebugCharacterInfo = false,
 		DebugEvent = false,
@@ -584,16 +615,26 @@ end
 
 ----------------------------------------------------------------
 function EventFrame:Octo_profileKeys()
+	----------------------------------------------------------------
+	--
+	----------------------------------------------------------------
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
 	E.func_InitField(db, "GlobalProfile", "Default")
+	E.CurrentProfile = "Default"
 	E.func_InitField(db, "useGlobalProfile", false) -- все персонажи игнорируют profileKeys
+	E.func_InitField(db, "SettingsEnabled", false) -- только для режима настройки
 	E.func_InitSubTable(db, "profileKeys")
 	E.func_InitSubTable(db, "profiles")
 	E.func_InitSubTable(db.profiles, "Default")
-
+	E.func_InitSubTable(db.profiles.Default, "Currencies")
+	E.func_InitSubTable(db.profiles.Default, "Items")
+	E.func_InitSubTable(db.profiles.Default, "Reputations")
+	E.func_InitSubTable(db.profiles.Default, "UniversalQuests")
+	E.func_InitSubTable(db.profiles.Default, "Additionally")
+	----------------------------------------------------------------
 	if not Octo_ToDo_DB_Levels then return end
-
+	----------------------------------------------------------------
 	for GUID, CharInfo in next,(Octo_ToDo_DB_Levels) do
 		local pd = CharInfo and CharInfo.PlayerData
 		if pd and pd.Name and pd.curServer then
@@ -601,6 +642,73 @@ function EventFrame:Octo_profileKeys()
 			db.profileKeys[key] = db.profileKeys[key] or "Default"
 		end
 	end
+	----------------------------------------------------------------
+	-- Развлетвление таблиц для оптимизации
+	----------------------------------------------------------------
+	-- local OctoTables_Vibor = {} -- func_LoadComponents
+	-- local OctoTables_DataOtrisovka = {}
+
+	local defaultProfile = Octo_profileKeys.profiles.Default
+	for _, func in next,(E.Components) do
+		local one, two = func()
+		for i, categoryKey in next,(one) do
+			E.OctoTables_Vibor[i] = E.OctoTables_Vibor[i] or categoryKey
+		end
+		for i, categoryKey in next,(two) do
+			E.OctoTables_DataOtrisovka[i] = E.OctoTables_DataOtrisovka[i] or categoryKey
+		end
+	end
+	-- opde(E.OctoTables_DataOtrisovka)
+	----------------------------------------------------------------
+	-- Заполнение дефолтных настроек
+	----------------------------------------------------------------
+	E.DataProvider_Otrisovka = {}
+
+	for categoryKey, v in next,(E.OctoTables_DataOtrisovka) do
+		for dataType, w in next,(v) do
+			E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
+			E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
+			if dataType ~= "UniversalQuests" then
+				for i, z in next,(w) do
+					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z.id)
+
+					defaultProfile[dataType][z.id] = z.defS -- nil
+					if dataType == "Currencies"		then tinsert(E.ALL_Currencies, z.id)	end	-- /run opde(E.ALL_Currencies)
+					if dataType == "Items"			then tinsert(E.ALL_Items, z.id)			end	-- /run opde(E.ALL_Items)
+					if dataType == "Reputations"	then tinsert(E.ALL_Reputations, z.id)	end	-- /run opde(E.ALL_Reputations)
+					if dataType == "Additionally"	then tinsert(E.ALL_Additionally, z.id)	end	-- /run opde(E.ALL_Additionally)
+				end
+			else
+				for _, z in next,(w) do
+					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z)
+					tinsert(E.ALL_UniversalQuests, z)
+
+					local questKey = E.UNIVERSAL..z.desc.."_"..z.name_save.."_"..z.reset
+					defaultProfile[dataType][questKey] = z.defS -- nil
+					-- if dataType == "UniversalQuests" then tinsert(E.ALL_UniversalQuests, z) end
+				end
+			end
+		end
+	end
+	-- opde(E.DataProvider_Otrisovka)
+	----------------------------------------------------------------
+	--
+	----------------------------------------------------------------
+	E.func_TableConcat(E.ALL_Items, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllItems
+	for reputationID in next,(E.OctoTable_ReputationsDB) do
+		tinsert(E.ALL_Reputations, reputationID)
+	end
+	-- wipe(E.ALL_Currencies)
+	-- wipe(E.ALL_Items)
+	-- wipe(E.ALL_Reputations)
+	-- wipe(E.ALL_UniversalQuests)
+	-- wipe(E.ALL_Additionally)
+	----------------------------------------------------------------
+	--
+	----------------------------------------------------------------
+	-- E.OctoTables_Vibor[categoryKey] = E.OctoTables_Vibor[categoryKey] or {}
+	-- opde(OctoTables_Vibor)
+	-- opde(OctoTables_DataOtrisovka)
 end
 ----------------------------------------------------------------
 function EventFrame:Daily_Reset()
@@ -712,7 +820,6 @@ function E.func_CheckAll()
 	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
 	EventFrame:Octo_ToDo_DB_Other() -- Другие данные
 	EventFrame:Octo_DevTool_DB()
-	EventFrame:Octo_profileKeys()
 	-- Применяем старые изменения
 	E.func_setOldChanges()
 	-- Очистка и сброс данных
@@ -741,107 +848,6 @@ function EventFrame:ScheduleNextReset()
 				EventFrame:ScheduleNextReset() -- Планируем следующий ресет
 		end)
 	end
-end
-
-
-----------------------------------------------------------------
-function EventFrame:Octo_ToDo_DB_VisualUserSettings()
-
-	Octo_ToDo_DB_VisualUserSettings = Octo_ToDo_DB_VisualUserSettings or {}
-	Octo_ToDo_DB_VisualUserSettings.Items = Octo_ToDo_DB_VisualUserSettings.Items or {}
-	Octo_ToDo_DB_VisualUserSettings.SettingsEnabled = false
-	Octo_ToDo_DB_VisualUserSettings.Currencies = Octo_ToDo_DB_VisualUserSettings.Currencies or {}
-	Octo_ToDo_DB_VisualUserSettings.Reputations = Octo_ToDo_DB_VisualUserSettings.Reputations or {}
-	Octo_ToDo_DB_VisualUserSettings.UniversalQuests = Octo_ToDo_DB_VisualUserSettings.UniversalQuests or {}
-	Octo_ToDo_DB_VisualUserSettings.Additionally = Octo_ToDo_DB_VisualUserSettings.Additionally or {}
-	Octo_ToDo_DB_VisualUserSettings.Other = Octo_ToDo_DB_VisualUserSettings.Other or {}
-
-	wipe(E.ALL_Currencies)
-	wipe(E.ALL_Items)
-	wipe(E.ALL_Reputations)
-	wipe(E.ALL_UniversalQuests)
-	wipe(E.ALL_Additionally)
-
-	E.func_LoadComponents(true)
-	for categoryKey, value in next,(E.OctoTables_Vibor) do
-		E.func_TableConcat(E.ALL_Currencies, E.OctoTables_DataOtrisovka[categoryKey].Currencies)
-		E.func_TableConcat(E.ALL_Items, E.OctoTables_DataOtrisovka[categoryKey].Items)
-		E.func_TableConcat(E.ALL_Reputations, E.OctoTables_DataOtrisovka[categoryKey].Reputations)
-		E.func_TableConcat(E.ALL_UniversalQuests, E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests)
-		E.func_TableConcat(E.ALL_Additionally, E.OctoTables_DataOtrisovka[categoryKey].Additionally)
-	end
-	-- E.func_TableConcat(E.ALL_Currencies, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllCurrencies
-	E.func_TableConcat(E.ALL_Items, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllItems
-	for reputationID in next,(E.OctoTable_ReputationsDB) do
-		tinsert(E.ALL_Reputations, reputationID)
-	end
-
-	-- E.func_TableConcat(E.ALL_UniversalQuests, E.ALL_Items)
-	-- E.func_TableConcat(E.ALL_Additionally, E.ALL_Items)
-	-- ----------------------------------------------------------------
-	for _, ID in next,(E.ALL_Currencies) do
-		if type(ID) == "table" then
-			for _, subID in ipairs(ID) do
-				if Octo_ToDo_DB_VisualUserSettings.Currencies[subID] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Currencies[subID] = true
-				end
-			end
-		else
-			if Octo_ToDo_DB_VisualUserSettings.Currencies[ID] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Currencies[ID] = true
-			end
-		end
-	end
-	----------------------------------------------------------------
-	for _, ID in next,(E.ALL_Items) do
-		if type(ID) == "table" then
-			for _, subID in ipairs(ID) do
-				if Octo_ToDo_DB_VisualUserSettings.Items[subID] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Items[subID] = true
-				end
-			end
-		else
-			if Octo_ToDo_DB_VisualUserSettings.Items[ID] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Items[ID] = true
-			end
-		end
-	end
-	----------------------------------------------------------------
-	for _, ID in next,(E.ALL_Reputations) do
-		if type(ID) == "table" then
-			for _, subID in ipairs(ID) do
-				if Octo_ToDo_DB_VisualUserSettings.Reputations[subID] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Reputations[subID] = true
-				end
-			end
-		else
-			if Octo_ToDo_DB_VisualUserSettings.Reputations[ID] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Reputations[ID] = true
-			end
-		end
-	end
-	----------------------------------------------------------------
-	for _, data in next,(E.ALL_UniversalQuests) do
-		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-		if Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] == nil then
-			Octo_ToDo_DB_VisualUserSettings.UniversalQuests[questKey] = true
-		end
-	end
-	----------------------------------------------------------------
-	for _, ID in next,(E.ALL_Additionally) do
-		if type(ID) == "table" then
-			for _, subID in ipairs(ID) do
-				if Octo_ToDo_DB_VisualUserSettings.Additionally[subID] == nil then
-					Octo_ToDo_DB_VisualUserSettings.Additionally[subID] = true
-				end
-			end
-		else
-			if Octo_ToDo_DB_VisualUserSettings.Additionally[ID] == nil then
-				Octo_ToDo_DB_VisualUserSettings.Additionally[ID] = true
-			end
-		end
-	end
-	----------------------------------------------------------------
 end
 
 
@@ -888,6 +894,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	E.func_CheckAll()
+	EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
 	func_UpdateGlobals()
 	----------------------------------------------------------------
@@ -896,17 +903,17 @@ function EventFrame:VARIABLES_LOADED()
 
 
 	-- if E.func_IsPTR() then
-	-- 	print ("SECRET ON")
-	-- 	C_Timer.After(0, function()
-	-- 			SetCVar("addonChatRestrictionsForced", "1")
-	-- 			SetCVar("secretAurasForced", "1")
-	-- 			SetCVar("secretCooldownsForced", "1")
-	-- 			SetCVar("secretUnitIdentityForced", "1")
-	-- 			SetCVar("secretSpellcastsForced", "1")
-	-- 			SetCVar("secretUnitPowerForced", "1")
-	-- 			SetCVar("secretUnitPowerMaxForced", "1")
-	-- 			SetCVar("secretUnitComparisonForced", "1")
-	-- 	end)
+	-- print ("SECRET ON")
+	-- C_Timer.After(0, function()
+	-- SetCVar("addonChatRestrictionsForced", "1")
+	-- SetCVar("secretAurasForced", "1")
+	-- SetCVar("secretCooldownsForced", "1")
+	-- SetCVar("secretUnitIdentityForced", "1")
+	-- SetCVar("secretSpellcastsForced", "1")
+	-- SetCVar("secretUnitPowerForced", "1")
+	-- SetCVar("secretUnitPowerMaxForced", "1")
+	-- SetCVar("secretUnitComparisonForced", "1")
+	-- end)
 	-- end
 	if Octo_DevTool_DB and Octo_DevTool_DB.CVar then
 		E.func_LoadCVars()
@@ -914,7 +921,7 @@ function EventFrame:VARIABLES_LOADED()
 	E.func_CheckAll()
 end
 function EventFrame:PLAYER_LOGOUT()
-	-- if E.func_IsPTR() then
+	if E.func_IsPTR() then
 		SetCVar("addonChatRestrictionsForced", "0")
 		SetCVar("secretAurasForced", "0")
 		SetCVar("secretCooldownsForced", "0")
@@ -923,10 +930,10 @@ function EventFrame:PLAYER_LOGOUT()
 		SetCVar("secretUnitPowerForced", "0")
 		SetCVar("secretUnitPowerMaxForced", "0")
 		SetCVar("secretUnitComparisonForced", "0")
-	-- end
+	end
+
 end
 function EventFrame:PLAYER_LOGIN()
-	self:Octo_ToDo_DB_VisualUserSettings() --Настройка отображения игроков
 	-- Обновляем кэш
 	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
 	EventFrame:func_CreateDataCacheAtStart()

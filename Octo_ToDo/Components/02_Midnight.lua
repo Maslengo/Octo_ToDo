@@ -7,66 +7,74 @@ if not enable then return end
 local categoryKey = 2
 local expansionID = 12
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		3316,
-		3379,
-		3377,
-		3376,
-		3392,
-		3265,
-		3394,
-		3262,
-		3258,
-		3260,
-		3400,
-		3261,
-		3352,
-		3385,
-		3266,
-		3257,
-		3349,
-		3373,
-		3264,
-		3263,
-		3259,
-		3256,
-	}
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
-	}
-	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		2770,
-		2764,
-		2710,
-		-- 2774, -- Slayer's Duellum (Paragon)
-		2704,
-		-- 2727, -- Silvermoon Court (Paragon)
-		2696,
-		-- 2726, -- Hara'ti (Paragon)
-		-- 2725, -- The Singularity (Paragon)
-		2742,
-		2699,
-		-- 2705, -- Amani Tribe (Paragon)
-		2700,
-		2744,
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 3316, defS = true,},
+		{id = 3379, defS = true,},
+		{id = 3377, defS = true,},
+		{id = 3376, defS = true,},
+		{id = 3392, defS = true,},
+		{id = 3265, defS = true,},
+		{id = 3394, defS = true,},
+		{id = 3400, defS = true,},
+		{id = 3352, defS = true,},
+		{id = 3385, defS = true,},
+		{id = 3373, defS = true,},
 
-		2714, 2712, 2711, 2713,
+
+		-- {id = 3262, defS = true,},
+		-- {id = 3258, defS = true,},
+		-- {id = 3260, defS = true,},
+		-- {id = 3261, defS = true,},
+		-- {id = 3266, defS = true,},
+		-- {id = 3257, defS = true,},
+		-- {id = 3264, defS = true,},
+		-- {id = 3263, defS = true,},
+		-- {id = 3259, defS = true,},
+		-- {id = 3256, defS = true,},
+
+		-- {id = 3349, defS = true,},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		{id = 2770, defS = true,},
+		{id = 2764, defS = true,},
+		{id = 2710, defS = true,},
+		-- {id = 2774, defS = true,}, -- Slayer's Duellum (Paragon)
+		{id = 2704, defS = true,},
+		-- {id = 2727, defS = true,}, -- Silvermoon Court (Paragon)
+		{id = 2696, defS = true,},
+		-- {id = 2726, defS = true,}, -- Hara'ti (Paragon)
+		-- {id = 2725, defS = true,}, -- The Singularity (Paragon)
+		{id = 2742, defS = true,},
+		{id = 2699, defS = true,},
+		-- {id = 2705, defS = true,}, -- Amani Tribe (Paragon)
+		{id = 2700, defS = true,},
+		{id = 2744, defS = true,},
+
+		{id = 2714, defS = true,},
+		{id = 2712, defS = true,},
+		{id = 2711, defS = true,},
+		{id = 2713, defS = true,},
 	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	}
+	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)

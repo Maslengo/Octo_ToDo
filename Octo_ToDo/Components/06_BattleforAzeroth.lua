@@ -7,73 +7,73 @@ if not enable then return end
 local categoryKey = 6
 local expansionID = 8
 ----------------------------------------------------------------
-E.OctoTables_DataOtrisovka[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey] = {}
-E.OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-E.OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
-local function tempFunction(start)
-	E.func_ResetOtrisovkaTables(categoryKey)
-	if not start and not Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then return end
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		1560,
-		1721,
-		1803,
-		1755,
-		1719,
-		1710,
-		1716,
-		1717,
-		1718,
-		1580,
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 1560, defS = true,},
+		{id = 1721, defS = true,},
+		{id = 1803, defS = true,},
+		{id = 1755, defS = true,},
+		{id = 1719, defS = true,},
+		{id = 1710, defS = true,},
+		{id = 1716, defS = true,},
+		{id = 1717, defS = true,},
+		{id = 1718, defS = true,},
+		{id = 1580, defS = true,},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Items = {
+	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Battle for Azeroth"] = {
-		2164, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
-		2415, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-		2391, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-		2163, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-		2417, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-		2427, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
-		2157, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
-		2373, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
-		2158, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
-		2103, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
-		2156, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
-		2233, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
-		2370, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
-		2390, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
-		2389, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
-		2388, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
-		2159, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
-		2160, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
-		2400, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
-		2162, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
-		2161, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
-		2395, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
-		2398, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
-		2397, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
-		2396, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
-		2376, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
-		2375, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
-		2377, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
+		{id = 2164, defS = true,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+		{id = 2415, defS = true,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+		{id = 2391, defS = true,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
+		{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
+		{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+		{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+		{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
+		{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
+		{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
+		{id = 2103, defS = false,}, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
+		{id = 2156, defS = false,}, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
+		{id = 2233, defS = false,}, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
+		{id = 2370, defS = false,}, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
+		{id = 2390, defS = false,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
+		{id = 2389, defS = false,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
+		{id = 2388, defS = false,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+		{id = 2159, defS = false,}, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
+		{id = 2160, defS = false,}, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
+		{id = 2400, defS = false,}, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
+		{id = 2162, defS = false,}, --name = "Орден Возрождения Шторма", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2162]
+		{id = 2161, defS = false,}, --name = "Орден Пылающих Углей", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2161]
+		{id = 2395, defS = false,}, --name = "Улей Медокрылов", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2395]
+		{id = 2398, defS = false,}, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
+		{id = 2397, defS = false,}, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
+		{id = 2396, defS = false,}, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
+		{id = 2376, defS = false,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
+		{id = 2375, defS = false,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
+		{id = 2377, defS = false,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = L["World Boss"],
 			name_save = "WorldBoss",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{nil},
 				{52196, addText = {mapID = 864}, }, -- Занесенные песком кости (Вол'дун)
 				{52169, addText = {mapID = 862}, }, -- Матриарх (Дикие земли)
 				{52181, addText = {mapID = 863}, }, -- Дым и тени (Назмир)
@@ -98,6 +98,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436), false),
 			name_save = "AzeriteForTheFaction",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -111,6 +112,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.Timers.BfA_Invasion(),
 			name_save = "InvasionQuests",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -134,6 +136,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
 			name_save = "AssaultTheBlackEmpire",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -150,6 +153,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = "miniVision",
 			name_save = "miniVision",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -166,6 +170,7 @@ local function tempFunction(start)
 			showTooltip = true,
 			TextLeft = "Warfront",
 			name_save = "Warfront",
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -183,8 +188,9 @@ local function tempFunction(start)
 		{
 			sorted = true,
 			showTooltip = true,
-			TextLeft = "Darkshore: Rares",
+			TextLeft = E.func_mapName(62)..": ".."Rares", -- Darkshore
 			name_save = "DarkshoreRares",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -276,8 +282,9 @@ local function tempFunction(start)
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
-		-- 	TextLeft = "Mechagon: "..E.func_questName(54088, false),
+		-- 	TextLeft = E.func_mapName(1462)..": "..E.func_questName(54088, false),
 		-- 	name_save = "TheMechagonianThreat",
+		-- defS = true,
 		-- 	reset = "Once",
 		-- 	desc = categoryKey,
 		-- 	quests = {
@@ -314,8 +321,9 @@ local function tempFunction(start)
 		{
 			sorted = true,
 			showTooltip = true,
-			TextLeft = "Mechagon: Rares",
+			TextLeft = E.func_mapName(1462)..": Rares",
 			name_save = "MechagonRares",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -363,8 +371,9 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			TextLeft = "Mechagon: Treasures",
+			TextLeft = E.func_mapName(1462)..": Treasures",
 			name_save = "MechagonTREASURE",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -385,6 +394,7 @@ local function tempFunction(start)
 		-- showTooltip = true,
 		-- TextLeft = "MechagonTREASURE_MISCELLANEOUS",
 		-- name_save = "MechagonTREASURE_MISCELLANEOUS",
+		-- defS = true,
 		-- reset = "Daily",
 		-- desc = categoryKey,
 		-- quests = {
@@ -398,6 +408,7 @@ local function tempFunction(start)
 		-- showTooltip = true,
 		-- TextLeft = "MechagonLOCKED_CHESTS1",
 		-- name_save = "MechagonLOCKED_CHESTS1",
+		-- defS = true,
 		-- reset = "Daily",
 		-- desc = categoryKey,
 		-- quests = {
@@ -409,6 +420,7 @@ local function tempFunction(start)
 		-- showTooltip = true,
 		-- TextLeft = "MechagonLOCKED_CHESTS2",
 		-- name_save = "MechagonLOCKED_CHESTS2",
+		-- defS = true,
 		-- reset = "Daily",
 		-- desc = categoryKey,
 		-- quests = {
@@ -421,6 +433,7 @@ local function tempFunction(start)
 		-- showTooltip = true,
 		-- TextLeft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
+		-- defS = true,
 		-- reset = "Once",
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
@@ -455,6 +468,7 @@ local function tempFunction(start)
 		-- showTooltip = true,
 		-- TextLeft = "UNLOCKING MECHAGON PART 2",
 		-- name_save = "UNLOCKING MECHAGON PART 2",
+		-- defS = true,
 		-- reset = "Once",
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
@@ -483,8 +497,9 @@ local function tempFunction(start)
 		-- },
 		{
 			showTooltip = true,
-			TextLeft = "Mechagon: Dailies Visitor Quests",
+			TextLeft = E.func_mapName(1462)..": Dailies Visitor Quests",
 			name_save = "DAILY_VISITOR_QUESTS",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -527,8 +542,9 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = "Mechagon: Daily WQ",
+			TextLeft = E.func_mapName(1462)..": Daily WQ",
 			name_save = "MechagonDAILYWQ",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -540,8 +556,9 @@ local function tempFunction(start)
 		},
 		{
 			showTooltip = true,
-			TextLeft = "Mechagon: Secret Fish",
+			TextLeft = E.func_mapName(1462)..": Secret Fish",
 			name_save = "MechagonSecretFish",
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -561,8 +578,9 @@ local function tempFunction(start)
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = "Mechagon: Making a Mount",
+			TextLeft = E.func_mapName(1462)..": Making a Mount",
 			name_save = "MechagonMakingAMount",
+			defS = true,
 			reset = "Once",
 			desc = categoryKey,
 			quests = {
@@ -583,9 +601,10 @@ local function tempFunction(start)
 		},
 	}
 	----------------------------------------------------------------
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 
 table.insert(E.Components, tempFunction)

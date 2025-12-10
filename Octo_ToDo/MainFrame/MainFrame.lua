@@ -221,7 +221,7 @@ end
 local function func_SettingsButton_OnClick(button, frameData)
 	local dataType, id = ("#"):split(frameData.SettingsType)
 	-- Получаем таблицу настроек для типа
-	local settingsTable = Octo_ToDo_DB_VisualUserSettings[dataType]
+	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
 	if not settingsTable then return end
 	-- Определяем ключ (строковый или числовой)
 	local key = id
@@ -247,10 +247,10 @@ function EventFrame:func_InitLEFT(frame, node)
 	else
 		frame.CategoryIcon:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
-	if Octo_ToDo_DB_VisualUserSettings.SettingsEnabled and frameData.SettingsType then
+	if Octo_profileKeys.SettingsEnabled and frameData.SettingsType then
 		local dataType, id = ("#"):split(frameData.SettingsType)
 		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
-		if Octo_ToDo_DB_VisualUserSettings[dataType][id] or Octo_ToDo_DB_VisualUserSettings[dataType][tonumber(id)] then
+		if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
 		else
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
@@ -657,11 +657,13 @@ end
 function EventFrame:CreateDataProvider()
 	-- EventFrame.columnWidthsLeft = EventFrame.columnWidthsLeft or {}
 	-- EventFrame.columnWidthsCenter = EventFrame.columnWidthsCenter or {}
-	for categoryKey in next,(E.OctoTables_Vibor) do
-		E.func_ResetOtrisovkaTables(categoryKey)
-	end
-	E.func_LoadComponents()
-	-- E.ebanieMounti(15)
+
+
+	-- for categoryKey in next,(E.OctoTables_Vibor) do
+	-- 	E.func_ResetOtrisovkaTables(categoryKey)
+	-- end
+	-- E.func_LoadComponents()
+
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
@@ -695,16 +697,26 @@ function EventFrame:CreateDataProvider()
 		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, E.func_TextCenter_Chars_nickname(CharInfo), E.func_TextCenter_Chars_server(CharInfo))
 	end
 	Octo_MainFrame_ToDo.pool:Release(HeaderFrameCenter)
+	-- opde(E.OctoTables_DataOtrisovka)
 	----------------------------------------------------------------
 	for categoryKey in next,(E.OctoTables_Vibor) do
 		if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
 			-- Обрабатываем типы данных в нужном порядке
 			for _, dataType in ipairs(dataDisplayOrder) do
 				-- for dataType in next,(E.OctoTables_DataOtrisovka[categoryKey]) do
-				for i, id in next,(E.OctoTables_DataOtrisovka[categoryKey][dataType]) do
+
+
+				-- for i, id in next,(E.OctoTables_DataOtrisovka[categoryKey][dataType]) do
+				for i, id in next,(E.DataProvider_Otrisovka[categoryKey][dataType]) do
+					-- print (i, id)
+
+
 					local questKey
 					if dataType == "UniversalQuests" then
 						-- id это data для universal
+						-- for k, v in next,(id) do
+						-- 	print (k, v.desc or 0)
+						-- end
 						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 					end
 					if dataType ~= "UniversalQuests" and E.func_ShouldShow(id, dataType) or E.func_ShouldShow(questKey, dataType) then
