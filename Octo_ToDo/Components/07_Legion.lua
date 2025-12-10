@@ -26,9 +26,9 @@ local function tempFunction()
 		{id = 1416, defS = false,},
 		{id = 1273, defS = false,},
 
-		{id = 3292, defS = false,}, -- REMIX
-		{id = 3268, defS = false,}, -- REMIX
-		{id = 3252, defS = false,}, -- REMIX
+		{id = 3292, defS = true,}, -- REMIX
+		{id = 3268, defS = true,}, -- REMIX
+		{id = 3252, defS = true,}, -- REMIX
 		-- {id = 3293, defS = false,}, -- REMIX PANDA?
 		-- {id = 3251, defS = false,}, -- REMIX PANDA?
 
@@ -37,8 +37,8 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 		{id = 124124, defS = false,}, -- Blood of Sargeras
-		{id = 254267, defS = false,}, -- REMIX
-		{id = 253224, defS = false,}, -- REMIX
+		{id = 254267, defS = true,}, -- REMIX
+		{id = 253224, defS = true,}, -- REMIX
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -48,9 +48,9 @@ local function tempFunction()
 		{id = 1948, defS = true,}, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
 		{id = 1859, defS = true,}, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
 		{id = 1894, defS = true,}, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
+		{id = 2045, defS = true,}, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
 		{id = 2170, defS = true,}, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
 		{id = 2165, defS = true,}, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
-		{id = 2045, defS = true,}, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
 		----------------------------------------------------------------
 		{id = 2018, defS = false,}, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
 		----------------------------------------------------------------
@@ -184,7 +184,7 @@ local function tempFunction()
 				{45838},
 				{45812},
 				{45840},
-				{45839},
+				{45839}, -- Атака на Штормхейм (ПОМЕНЯЛИ?)
 			},
 			forcedMaxQuest = 1,
 		},

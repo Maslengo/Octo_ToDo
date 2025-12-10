@@ -45,6 +45,7 @@ E.ALL_Items = {}
 E.ALL_Reputations = {}
 E.ALL_UniversalQuests = {}
 E.ALL_Additionally = {}
+E.ALL_Quests = {}
 E.First_Option = {}
 E.Second_Option = {}
 E.ActiveHoliday = {}

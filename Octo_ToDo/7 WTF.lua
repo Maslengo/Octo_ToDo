@@ -16,13 +16,31 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- local tblSpells = {}
 	----------------------------------------------------------------
 	-- for currencyID = 42, 4000 do -- 42, 3372
-	for currencyID in next,(E.ALL_Currencies) do
-		local currencyName = E.func_currencyName(currencyID)
+	for id in next,(E.ALL_Currencies) do
+		local name = E.func_currencyName(id)
+		-- print (E.Blue_Color.."curr".."|r", name)
 	end
 	----------------------------------------------------------------
-	for _, ID in ipairs(E.ALL_Reputations) do
-		local reputation = E.func_reputationName(ID) -- "AllReputations"
+	for id in next,(E.ALL_Items) do
+		local name = E.func_itemName(id)
+		-- print (E.Blue_Color.."item".."|r", name)
 	end
+	----------------------------------------------------------------
+	for id in next,(E.ALL_Reputations) do
+		local name = E.func_reputationName(id) -- "AllReputations"
+		-- print (E.Blue_Color.."repu".."|r", name)
+	end
+
+	for id in next,(E.ALL_Quests) do
+		local name = E.func_questName(id)
+		-- print (E.Blue_Color.."ques".."|r", name)
+	end
+
+	for _, id in next,(E.OctoTable_NPC) do
+		local name = E.func_npcName(id)
+		-- print (E.Blue_Color.."npc".."|r", name)
+	end
+
 	E.Collect_All_Reputations()
 	----------------------------------------------------------------
 	for _, questID in ipairs(E.OctoTable_QuestID) do
@@ -409,7 +427,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 			end
 		end
 		-- Инициализируем данные репутации
-		for _, ID in ipairs(E.ALL_Reputations) do
+		for ID in next,(E.ALL_Reputations) do
 			MASLENGO.Reputation[ID] = MASLENGO.Reputation[ID] or "0#0###"
 		end
 		-- Инициализируем данные LFG инстансов
@@ -626,18 +644,24 @@ function EventFrame:Octo_profileKeys()
 					defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
 					-- defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
 					if dataType == "Currencies"		then E.ALL_Currencies[z.id] = true		end	-- /run opde(E.ALL_Currencies)
-					if dataType == "Items"			then tinsert(E.ALL_Items, z.id)			end	-- /run opde(E.ALL_Items)
-					if dataType == "Reputations"	then tinsert(E.ALL_Reputations, z.id)	end	-- /run opde(E.ALL_Reputations)
-					if dataType == "Additionally"	then tinsert(E.ALL_Additionally, z.id)	end	-- /run opde(E.ALL_Additionally)
+					if dataType == "Items"			then E.ALL_Items[z.id] = true			end	-- /run opde(E.ALL_Items)
+					if dataType == "Reputations"	then E.ALL_Reputations[z.id] = true		end	-- /run opde(E.ALL_Reputations)
+					if dataType == "Additionally"	then E.ALL_Additionally[z.id] = true	end	-- /run opde(E.ALL_Additionally)
 				end
 			else
-				for _, z in next,(w) do
-					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z)
-					tinsert(E.ALL_UniversalQuests, z)
+				for _, data in next,(w) do
+					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], data)
+					tinsert(E.ALL_UniversalQuests, data)
 
-					local questKey = E.UNIVERSAL..z.desc.."_"..z.name_save.."_"..z.reset
-					defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or z.defS -- nil
-					-- defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or z.defS -- nil
+					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+					defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or data.defS -- nil
+					for _, questData in ipairs(data.quests) do
+						if type(questData[1]) == "number" then
+							local questID = questData[1]
+							E.ALL_Quests[questID] = true
+						end
+					end
+					-- defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or data.defS -- nil
 				end
 			end
 		end
@@ -646,14 +670,12 @@ function EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
 	--
 	----------------------------------------------------------------
-	E.func_TableConcat(E.ALL_Items, E.OctoTable_itemID_ALL) -- Octo_Cache_DB.AllItems
-	for reputationID in next,(E.OctoTable_ReputationsDB) do
-		tinsert(E.ALL_Reputations, reputationID)
+	for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
+		E.ALL_Items[itemID] = true
 	end
-	-- wipe(E.ALL_Items)
-	-- wipe(E.ALL_Reputations)
-	-- wipe(E.ALL_UniversalQuests)
-	-- wipe(E.ALL_Additionally)
+	for reputationID in next,(E.OctoTable_ReputationsDB) do
+		E.ALL_Reputations[reputationID] = true
+	end
 	----------------------------------------------------------------
 	--
 	----------------------------------------------------------------

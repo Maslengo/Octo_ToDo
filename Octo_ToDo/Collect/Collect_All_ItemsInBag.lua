@@ -105,8 +105,7 @@ function E.Collect_All_ItemsInBag()
 		collectMASLENGO.ItemsInBag = {}
 	end
 	-- local tbl = E.OctoTable_itemID_ALL
-	local tbl = E.ALL_Items
-	for _, itemID in ipairs(tbl) do
+	for itemID in next,(E.ALL_Items) do
 		local count = E.func_GetItemCount(itemID, true, true, true, false)
 		if count ~= 0 then
 			collectMASLENGO.ItemsInBag[itemID] = count

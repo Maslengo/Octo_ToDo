@@ -18,15 +18,16 @@ local utilityFrames = {
 	buttons = {},
 	framerate = nil
 }
-local function CreateUtilButton(name, frame, texture, func_onEnter, func_onClick)
+local function CreateUtilButton(name, frame, texture, size, func_onEnter, func_onClick)
 	-- Reuse existing button if available
 	local button = utilityFrames.buttons[name]
 	if not button then
 		button = CreateFrame("Button", E.MainAddonName..name, UIParent)
-		button:SetSize(WIDTH, HEIGHT)
+		button:SetSize(size, size)
 		if texture then
 			button.icon = button:CreateTexture(nil, "BACKGROUND")
 			button.icon:SetTexture(texture)
+			button.icon:SetAtlas(texture)
 			button.icon:SetAllPoints()
 		end
 		utilityFrames.buttons[name] = button
@@ -80,7 +81,8 @@ function EventFrame:Octo_CloseButton(frame)
 	local button = CreateUtilButton(
 		"CloseButton",
 		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga",
+		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga", -- "common-search-clearbutton",--
+		20,
 		function() return {{E.classColorHexCurrent..CLOSE.."|r"}} end,
 		nil
 	)
@@ -110,7 +112,8 @@ function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
 	CreateUtilButton(
 		"OptionsButton",
 		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..addonIconTexture,
+		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..addonIconTexture, -- "QuestLog-icon-setting",--
+		18,
 		func_onEnter,
 		func_onClick
 	)

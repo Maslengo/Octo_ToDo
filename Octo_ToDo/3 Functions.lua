@@ -1577,6 +1577,12 @@ function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	if id == 824 then
 		TooltipKey = "WoD_824"
 	end
+	if id == 1166 then
+		local joinable, timewalkDungeonName = E.func_joinableDung()
+		if joinable then
+			TextLeft = TextLeft..timewalkDungeonName
+		end
+	end
 	-- IsReputation =
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
@@ -1691,6 +1697,7 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	SettingsType = dataType.."#"..questKey
 	-- TooltipKey =
 	-- IsReputation =
+
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
@@ -3193,19 +3200,21 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	----------------------------------------------------------------
-	-- if dataType == "Currencies" and id == 1166 then
-	-- for i, v in ipairs(E.func_Mounts_1166()) do
-	-- local mountID = v.mountID
-	-- local source = v.source
-	-- tooltip[#tooltip+1] = {E.func_pizda(mountID), source}
-	-- end
-	-- end
+	if dataType == "Currencies" and id == 1166 then -- ТАЙМВОЛК КАРРЕНСИ ТУЛТИП
+		local icon = E.func_texturefromIcon(E.func_GetCurrencyIcon(1166))
+		for i, v in ipairs(E.func_Mounts_1166()) do
+			local mountID = v.mountID
+			local source = v.source
+			local price = v.price
+			tooltip[#tooltip+1] = {E.func_pizda(mountID), source, E.func_CompactNumberFormat(price)..icon}
+		end
+	end
 	-- if dataType == "Currencies" and id == 3252 then
-	-- for i, v in ipairs(E.func_Mounts_3252()) do
-	-- local mountID = v.mountID
-	-- local source = v.source
-	-- tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
-	-- end
+	-- 	for i, v in ipairs(E.func_Mounts_3252()) do
+	-- 		local mountID = v.mountID
+	-- 		local source = v.source
+	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
+	-- 	end
 	-- end
 	if id == "GreatVault" then
 		local Enum_Activities_table = {}
@@ -3245,7 +3254,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if dataType == "Currencies" then
 		for currencyID, dataTBL in pairs(E.OctoTable_ALL_Mounts) do
-			if id == tonumber(currencyID) then
+			if id == tonumber(currencyID) and id ~= 1166 then -- ТАЙМВОЛК КАРРЕНСИ ТУЛТИП
 				-- Создаем таблицу для сортировки
 				local mounts = {}
 				for mountID, price in pairs(dataTBL) do
