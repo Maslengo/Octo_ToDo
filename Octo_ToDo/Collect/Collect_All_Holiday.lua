@@ -62,7 +62,6 @@ local function generateEventKey(eventID, startTime)
 		startTime.year)
 end
 function E.Collect_All_Holiday()
-	-- if E.func_SpamBlock("Collect_All_Holiday") then return end
 	if not (GetHolidayInfo and E.ActiveHoliday and E.Holiday) then
 		return
 	end

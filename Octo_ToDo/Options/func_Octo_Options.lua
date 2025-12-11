@@ -150,7 +150,7 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_AlphaOnDrag = {
+			Config_AlphaOnTheMove = {
 				type = "range",
 				name = L["Alpha On Move"], -- L["Alpha On Drag"],
 				desc = "",
@@ -158,10 +158,10 @@ function E.func_Octo_Options(savedVars)
 				max = 1,
 				step = 0.1,
 				get = function()
-					return Octo_ToDo_DB_Vars.Config_AlphaOnDrag
+					return Octo_ToDo_DB_Vars.Config_AlphaOnTheMove
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_AlphaOnDrag = value
+					Octo_ToDo_DB_Vars.Config_AlphaOnTheMove = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -257,74 +257,11 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ShowOnlyCurrentServer = {
-				type = "toggle",
-				name = L["Only Current Server"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			ShowOnlyCurrentRegion = {
-				type = "toggle",
-				name = L["Only Current Region"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			OnlyCurrentFaction = {
-				type = "toggle",
-				name = E.curFaction == "Horde" and E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"] or E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"],
-				desc = "",
-				get = function()
-					return Octo_ToDo_DB_Vars.OnlyCurrentFaction
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.OnlyCurrentFaction = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
 				name = "",
 				order = GetOrder(),
 			},
-			-------------------------------------------------
-			Config_GameMenuFrame = {
-				type = "range",
-				name = "GameMenuFrame Scale",
-				desc = "",
-				min = 0.5,
-				max = 1.5,
-				step = .05,
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_GameMenuFrame
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_GameMenuFrame = value
-					if GameMenuFrame then
-						GameMenuFrame:SetScale(value)
-					end
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			-------------------------------------------------
 		},
 	}

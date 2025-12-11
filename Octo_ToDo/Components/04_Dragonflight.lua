@@ -8,10 +8,19 @@ local categoryKey = 4
 local expansionID = 10
 ----------------------------------------------------------------
 local function tempFunction()
-	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
+	-- wipe(OctoTables_Vibor)
+
+	local OctoTables_DataOtrisovka = {}
+	-- wipe(OctoTables_DataOtrisovka)
+
 	OctoTables_DataOtrisovka[categoryKey] = {}
+	-- wipe(OctoTables_DataOtrisovka[categoryKey])
+
+
 	OctoTables_Vibor[categoryKey] = {}
+	-- wipe(OctoTables_Vibor[categoryKey])
+
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
@@ -22,10 +31,10 @@ local function tempFunction()
 		{id = 2245, defS = true,},
 		{id = 2594, defS = true,},
 
-		{id = 2812, defS = true,}, -- (УСТАРЕЛО АСПЕКТЫ )
-		{id = 2809, defS = true,}, -- (УСТАРЕЛО АСПЕКТЫ )
-		{id = 2807, defS = true,}, -- (УСТАРЕЛО АСПЕКТЫ )
-		{id = 2806, defS = true,}, -- (УСТАРЕЛО АСПЕКТЫ )
+		-- {id = 2812, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
+		-- {id = 2809, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
+		-- {id = 2807, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
+		-- {id = 2806, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
 		-- Dragonflight
 		-- https://warcraft.wiki.gg/wiki/Catalyst
 		{id = 2912, defS = true,}, -- Renascent Awakening ()
@@ -53,18 +62,18 @@ local function tempFunction()
 		{id = 2503, defS = true,}, --name = "Кентавры Маруук", side = "-", category = "Dragonflight", }, --[faction=2503]
 		{id = 2510, defS = true,}, --name = "Союз Вальдраккена", side = "-", category = "Dragonflight", }, --[faction=2510]
 		----------------------------------------------------------------
-		{id = 2550, defS = true,}, --name = "Кобальтовая ассамблея", side = "-", category = "Союз Вальдраккена", }, --[faction=2550]
-		{id = 2544, defS = true,}, --name = "Консорциум ремесленников – филиал на Драконьих островах", side = "-", category = "Союз Вальдраккена", }, --[faction=2544]
-		{id = 2553, defS = true,}, --name = "Соридорми", side = "-", category = "Союз Вальдраккена", }, --[faction=2553]
-		{id = 2518, defS = true,}, --name = "Сабеллиан", side = "-", category = "Союз Вальдраккена", }, --[faction=2518]
-		{id = 2517, defS = true,}, --name = "Гневион", side = "-", category = "Союз Вальдраккена", }, --[faction=2517]
+		{id = 2550, defS = false,}, --name = "Кобальтовая ассамблея", side = "-", category = "Союз Вальдраккена", }, --[faction=2550]
+		{id = 2544, defS = false,}, --name = "Консорциум ремесленников – филиал на Драконьих островах", side = "-", category = "Союз Вальдраккена", }, --[faction=2544]
+		{id = 2553, defS = false,}, --name = "Соридорми", side = "-", category = "Союз Вальдраккена", }, --[faction=2553]
+		{id = 2518, defS = false,}, --name = "Сабеллиан", side = "-", category = "Союз Вальдраккена", }, --[faction=2518]
+		{id = 2517, defS = false,}, --name = "Гневион", side = "-", category = "Союз Вальдраккена", }, --[faction=2517]
 		----------------------------------------------------------------
-		{id = 2568, defS = true,}, --name = "Гонщик Мерцающего Огга", side = "-", category = "Dragonflight", }, --[faction=2568]
+		{id = 2568, defS = false,}, --name = "Гонщик Мерцающего Огга", side = "-", category = "Dragonflight", }, --[faction=2568]
 		----------------------------------------------------------------
-		{id = 2615, defS = true,}, --name = "Азеротские Архивы", side = "-", category = "Драконья экспедиция", }, --[faction=2615]
+		{id = 2615, defS = false,}, --name = "Азеротские Архивы", side = "-", category = "Драконья экспедиция", }, --[faction=2615]
 		----------------------------------------------------------------
-		{id = 2593, defS = true,}, --name = "Команда Бочконога", side = "-", category = "Другое", }, --[faction=2593]
-		{id = 2526, defS = true,}, --name = "Фурболги из клана Зимней Шкуры", side = "-", category = "Dragonflight", }, --[faction=2526]
+		{id = 2593, defS = false,}, --name = "Команда Бочконога", side = "-", category = "Другое", }, --[faction=2593]
+		{id = 2526, defS = false,}, --name = "Фурболги из клана Зимней Шкуры", side = "-", category = "Dragonflight", }, --[faction=2526]
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
@@ -90,7 +99,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2133)..": ".."Events",
+			TextLeft = function()
+				return E.func_mapName(2133)..": ".."Events"
+			end,
 			name_save = "ZaralekCavernEvents",
 			defS = true,
 			reset = "Daily",
@@ -119,7 +130,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2133)..": ".."Rares",
+			TextLeft = function()
+				return E.func_mapName(2133)..": ".."Rares"
+			end,
 			name_save = "ZaralekCavernRares",
 			defS = true,
 			reset = "Daily",
@@ -155,7 +168,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2133)..": "..E.func_questName(75665, false),
+			TextLeft = function()
+				return E.func_mapName(2133)..": "..E.func_questName(75665, false)
+			end,
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 			defS = true,
 			reset = "Weekly",
@@ -167,7 +182,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2133)..": "..L["Sniffenseeking"],
+			TextLeft = function()
+				return E.func_mapName(2133)..": "..L["Sniffenseeking"]
+			end,
 			name_save = "ZaralekCavernSniffenseeking",
 			defS = true,
 			reset = "Weekly",
@@ -195,7 +212,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2133)..": "..L["Sniffenseeking (items)"],
+			TextLeft = function()
+				return E.func_mapName(2133)..": "..L["Sniffenseeking (items)"]
+			end,
 			name_save = "ZaralekCavernSniffenseekingItems",
 			defS = true,
 			reset = "Weekly",
@@ -218,7 +237,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2133)..": "..E.func_questName(74906, false).." "..E.Timers.DF_ResearchersUnderFire(),
+			TextLeft = function()
+				return E.func_mapName(2133)..": "..E.func_questName(74906, false).." "..E.Timers.DF_ResearchersUnderFire()
+			end,
 			name_save = "ResearchersUnderFire",
 			defS = true,
 			reset = "Weekly",
@@ -233,7 +254,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2151)..": ".."Rares", -- Запретный край.
+			TextLeft = function()
+				return E.func_mapName(2151)..": ".."Rares" -- Запретный край.
+			end,
 			name_save = "TheForbiddenReachRares",
 			defS = true,
 			reset = "Daily",
@@ -269,7 +292,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.DF_CommunityFeast()..L["Community Feast"],
+			TextLeft = function()
+				return E.Timers.DF_CommunityFeast()..L["Community Feast"]
+			end,
 			name_save = "CommunityFeast",
 			defS = true,
 			reset = "Weekly",
@@ -281,7 +306,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"],
+			TextLeft = function()
+				return E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"]
+			end,
 			name_save = "DragonbaneKeep",
 			defS = true,
 			reset = "Weekly",
@@ -293,7 +320,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.DF_GrandHunts()..L["Grand Hunt"],
+			TextLeft = function()
+				return E.Timers.DF_GrandHunts()..L["Grand Hunt"]
+			end,
 			name_save = "TheGrandHunt",
 			defS = true,
 			reset = "Weekly",
@@ -305,7 +334,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.DF_PrimalStorms()..L["The Storm's Fury"],
+			TextLeft = function()
+				return E.Timers.DF_PrimalStorms()..L["The Storm's Fury"]
+			end,
 			name_save = "StormsFury",
 			defS = true,
 			reset = "Weekly",
@@ -317,7 +348,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(66133, false),
+			TextLeft = function()
+				return E.func_questName(66133, false)
+			end,
 			name_save = "KeysofLoyalty",
 			defS = true,
 			reset = "Weekly",
@@ -366,7 +399,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(70750, false),
+			TextLeft = function()
+				return E.func_questName(70750, false)
+			end,
 			name_save = "AidingtheAccord",
 			defS = true,
 			reset = "Weekly",
@@ -393,7 +428,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift(),
+			TextLeft = function()
+				return E.func_mapName(2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift()
+			end,
 			name_save = L["Time Rift"],
 			reset = "Weekly",
 			desc = categoryKey,
@@ -404,7 +441,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.DF_Dreamsurges()..E.func_questName(77414, false),
+			TextLeft = function()
+				return E.Timers.DF_Dreamsurges()..E.func_questName(77414, false)
+			end,
 			name_save = "DreamsurgeInvestigation",
 			defS = true,
 			reset = "Once",
@@ -416,7 +455,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(77251, false),
+			TextLeft = function()
+				return E.func_questName(77251, false)
+			end,
 			name_save = "ShapingtheDreamsurge",
 			defS = true,
 			reset = "Weekly",
@@ -428,7 +469,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(77236, false),
+			TextLeft = function()
+				return E.func_questName(77236, false)
+			end,
 			name_save = "WhenTimeNeedsMending",
 			defS = true,
 			reset = "Weekly",
@@ -468,7 +511,9 @@ local function tempFunction()
 		----------------------------------------------------------------
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(78444, false),
+			TextLeft = function()
+				return E.func_questName(78444, false)
+			end,
 			name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 			defS = true,
 			reset = "Weekly",
@@ -480,7 +525,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(78821, false),
+			TextLeft = function()
+				return E.func_questName(78821, false)
+			end,
 			name_save = "EmeraldDream_BloomingDreamseeds",
 			defS = true,
 			reset = "Weekly",
@@ -492,7 +539,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.DF_Flower()..E.func_questName(78319, false),
+			TextLeft = function()
+				return E.Timers.DF_Flower()..E.func_questName(78319, false)
+			end,
 			name_save = "EmeraldDream_TheSuperbloom",
 			defS = true,
 			reset = "Weekly",
@@ -572,7 +621,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(78381, false),
+			TextLeft = function()
+				return E.func_questName(78381, false)
+			end,
 			name_save = "EmeraldDream_DreamsUnified",
 			defS = true,
 			reset = "Once",
@@ -626,7 +677,6 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
-
 end
 
 table.insert(E.Components, tempFunction)

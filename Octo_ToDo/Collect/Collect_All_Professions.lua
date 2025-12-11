@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Professions()
-	if E.func_SpamBlock("Collect_All_Professions", false) then return end
+----------------------------------------------------------------
+local function Collect_All_Professions()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	local archaeology = {
@@ -121,4 +121,8 @@ function E.Collect_All_Professions()
 				end
 			end
 		end
+end
+----------------------------------------------------------------
+function E.Collect_All_Professions()
+	E.func_SpamBlock(Collect_All_Professions, false)
 end

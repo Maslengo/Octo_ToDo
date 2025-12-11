@@ -57,7 +57,9 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(24748, false),
+			TextLeft = function()
+				return E.func_questName(24748, false)
+			end,
 			name_save = "Shadowmourne",
 			defS = true,
 			reset = "Once",

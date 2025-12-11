@@ -232,7 +232,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Обработчики перемещения фрейма
 	frame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				frame:SetAlpha(Octo_DevTool_DB.Config_AlphaOnDrag or E.backgroundColorA)
+				frame:SetAlpha(Octo_DevTool_DB.Config_AlphaOnTheMove or E.backgroundColorA)
 				frame:StartMoving()
 			end
 	end)
@@ -261,7 +261,7 @@ local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	frame.resize:SetScript("OnDragStart", function(self)
 			isResizing = true
 			self:GetParent():StartSizing("BOTTOMRIGHT", true)
-			self:GetParent():SetAlpha(Octo_DevTool_DB.Config_AlphaOnDrag or E.backgroundColorA)
+			self:GetParent():SetAlpha(Octo_DevTool_DB.Config_AlphaOnTheMove or E.backgroundColorA)
 	end)
 	frame.resize:SetScript("OnDragStop", function(self)
 			isResizing = false
@@ -568,15 +568,15 @@ function EventFrame:func_currencieslist(msg)
 	local str2 = ""
 	local vivod = ""
 	local list = {}
-	for CurrencyID, cachedName in next, (Octo_Cache_DB.AllCurrencies) do
-		tinsert(list, CurrencyID)
+	for currencyID, cachedName in next, (Octo_Cache_DB.AllCurrencies) do
+		tinsert(list, currencyID)
 	end
 	sort(list, E.func_Reverse_order)
-	for _, CurrencyID in ipairs(list) do
-		if E.func_currencyName(CurrencyID) ~= (CurrencyID.. " (UNKNOWN)") then
-			str1 = str1..CurrencyID..", --" ..E.func_currencyName(CurrencyID).."|n"
+	for _, currencyID in ipairs(list) do
+		if E.func_currencyName(currencyID) ~= (currencyID.. " (UNKNOWN)") then
+			str1 = str1..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
 		else
-			str2 = str2..CurrencyID..", --" ..E.func_currencyName(CurrencyID).."|n"
+			str2 = str2..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
 		end
 	end
 	vivod = str1..str2

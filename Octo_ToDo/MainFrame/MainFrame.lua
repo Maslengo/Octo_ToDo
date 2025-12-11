@@ -5,13 +5,6 @@ local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParen
 Octo_MainFrame_ToDo:Hide()
 E.func_InitFrame(Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
--- local DISABLED_ERROR_MESSAGE = {
--- 	[Enum.AccountCurrencyTransferResult.MaxQuantity] = CURRENCY_TRANSFER_DISABLED_MAX_QUANTITY,
--- 	[Enum.AccountCurrencyTransferResult.NoValidSourceCharacter] = CURRENCY_TRANSFER_DISABLED_NO_VALID_SOURCES,
--- 	[Enum.AccountCurrencyTransferResult.CannotUseCurrency] = CURRENCY_TRANSFER_DISABLED_UNMET_REQUIREMENTS,
--- 	[Enum.AccountCurrencyTransferResult.TransactionInProgress] = CURRENCY_TRANSFER_IN_PROGRESS,
--- 	[Enum.AccountCurrencyTransferResult.CurrencyTransferDisabled] = ERR_CURRENCY_TRANSFER_DISABLED,
--- };
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
 local INDENT_TEXT = 4 -- Отступ для текста
@@ -43,45 +36,7 @@ Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 
-
-
--- Добавьте эту функцию куда-нибудь в вашем коде (например, в начале файла)
-local function OpenCurrencyTransferFrame(currencyID)
-	-- Проверяем, существует ли уже окно трансфера
-	if not CurrencyTransferMenu then
-		-- Загружаем Blizzard_CurrencyTransfer UI
-		LoadAddOn("Blizzard_CurrencyTransfer")
-	end
-
-	if CurrencyTransferMenu then
-		-- Инициализируем окно с нужной валютой
-		if CurrencyTransferMenu.SetCurrency then
-			CurrencyTransferMenu:SetCurrency(currencyID)
-		end
-
-		-- Показываем окно
-		ShowUIPanel(CurrencyTransferMenu)
-
-		-- Обновляем данные
-		if CurrencyTransferMenu.FullRefresh then
-			CurrencyTransferMenu:FullRefresh()
-		end
-	else
-		-- Fallback: пытаемся открыть через существующий интерфейс
-		if TokenFrame and TokenFrame:IsShown() then
-			TokenFramePopup_Show(currencyID)
-		end
-	end
-end
-
-
-
-
-
-
-
 local func_OnAcquiredLeft do
-
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
 		frame.TextLeft:SetFontObject(OctoFont11)
@@ -106,6 +61,8 @@ local func_OnAcquiredLeft do
 	end
 	local function Create_SettingsButton(frame)
 		frame.SettingsButton = CreateFrame("BUTTON", nil, frame)
+		frame.SettingsButton:SetPropagateMouseClicks(true)
+		frame.SettingsButton:SetPropagateMouseMotion(true)
 		local texture = frame.SettingsButton:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("TOPLEFT", 1, -1)
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
@@ -231,8 +188,6 @@ local function func_SettingsButton_OnClick(button, frameData)
 	-- Если запись существует, переключаем, иначе создаем с true
 	local newValue = not (settingsTable[key] or false)
 	settingsTable[key] = newValue
-	-- print("Настройка обновлена:", dataType, key, "=", newValue)
-	-- Обновляем текстуру
 	local texture = newValue and
 	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen" or
 	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
@@ -273,7 +228,15 @@ function EventFrame:func_InitLEFT(frame, node)
 		HeaderFrameLeft:SetWidth(newLeftWidth)
 	end
 	-- Установка текста и цвета для левой колонки
-	frame.TextLeft:SetText(frameData.TextLeft)
+
+
+
+	if type(frameData.TextLeft) == "function" then
+		frame.TextLeft:SetText(frameData.TextLeft()) -- ← Вызываем функцию!
+	else
+		frame.TextLeft:SetText(frameData.TextLeft) -- ← Просто строка
+	end
+	-- frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
 		local r, g, b = E.func_hex2rgbNUMBER(frameData.ColorLeft)
 		frame.TextureLeft:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
@@ -289,60 +252,6 @@ function EventFrame:func_InitLEFT(frame, node)
 			end
 			E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
 	end)
-
-
-
-	-- frame:RegisterForClicks("AnyUp", "AnyDown")
-	-- frame:SetAttribute("downbutton", "startup")
-	-- frame:SetAttribute("typerelease", "click")
-	-- frame:SetAttribute("type", "click")
-	-- frame:SetAttribute("pressAndHoldAction", true)
-	-- frame:SetAttribute("clickbutton", TokenFramePopup.CurrencyTransferToggleButton)
-	-- frame:SetScript("OnClick", function(self, button, down)
-	-- 	local dataType, id = ("#"):split(frameData.SettingsType)
-	-- 	id = tonumber(id)
-
-	-- 	if dataType == "Currencies" and id then
-	-- 		-- Проверяем, поддерживает ли валюта трансфер
-	-- 		local canTransfer = C_CurrencyInfo.CanTransferCurrency(id)
-
-	-- 		if canTransfer then
-	-- 			-- Открываем окно трансфера валюты
-	-- 			if CurrencyTransferMenu then
-	-- 				-- Устанавливаем валюту и показываем окно
-	-- 				CurrencyTransferMenu:SetCurrency(id)
-	-- 				ShowUIPanel(CurrencyTransferMenu)
-	-- 			else
-	-- 				-- Альтернативный способ через ToggleButton
-	-- 				if CurrencyTransferToggleButton_Show then
-	-- 					CurrencyTransferToggleButton_Show(id)
-	-- 				else
-	-- 					-- Создаем свою кнопку для открытия
-	-- 					OpenCurrencyTransferFrame(id)
-	-- 				end
-	-- 			end
-	-- 		else
-	-- 			-- Показываем сообщение, почему нельзя перевести
-	-- 			local _, failureReason = C_CurrencyInfo.CanTransferCurrency(id)
-	-- 			local errorMessage = DISABLED_ERROR_MESSAGE[failureReason] or CURRENCY_TRANSFER_DISABLED_UNMET_REQUIREMENTS
-	-- 			print("Невозможно перевести валюту:", errorMessage)
-	-- 		end
-	-- 	end
-	-- end)
-	-- local function TidyUp()
-	-- 	frame:SetScript("OnUpdate", nil)
-	-- end
-	-- frame:SetScript("OnLeave", TidyUp)
-	-- frame:SetScript("OnHide", TidyUp)
-
-	-- local handler = CreateFrame("Frame")
-	-- handler:RegisterEvent("MODIFIER_STATE_CHANGED")
-	-- handler:SetScript("OnEvent", function()
-	-- 	frame.clicked = false
-	-- end)
-
-
-
 end
 -- Функция инициализации данных для центральной колонки
 function EventFrame:func_InitCenter(frame, node)
@@ -412,12 +321,6 @@ function EventFrame:func_InitCenter(frame, node)
 end
 
 
-function E.UPDATE_MAINFRAME()
-	if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
-		EventFrame:CreateDataProvider()
-	end
-end
-
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
 	-- Настройка позиции и обработчика показа фрейма
@@ -426,7 +329,11 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
 			RequestRaidInfo()
 			E.func_Collect_All()
+
 			EventFrame:CreateDataProvider()
+			C_Timer.After(1, function()
+				E.func_UPDATE_MAINFRAME()
+			end)
 			E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "OnShow")
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
@@ -530,8 +437,8 @@ function EventFrame:func_CreateMainFrame()
 	-- Обработчики перемещения фрейма
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
-				-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
+				-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
 				Octo_MainFrame_ToDo:StartMoving()
 			end
 	end)
@@ -601,7 +508,13 @@ local function func_calculateColumnWidthsLEFT(node)
 	end
 	-- Расчет ширины на основе текста
 	local columnWidthsLEFT = {}
-	framesLEFT[1].TextLeft:SetText(frameData.TextLeft)
+	-- framesLEFT[1].TextLeft:SetText(frameData.TextLeft)
+
+	if type(frameData.TextLeft) == "function" then
+		framesLEFT[1].TextLeft:SetText(frameData.TextLeft()) -- ← Вызываем функцию!
+	else
+		framesLEFT[1].TextLeft:SetText(frameData.TextLeft) -- ← Просто строка
+	end
 	columnWidthsLEFT[1] = math_ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT -- (иконка)
 	return columnWidthsLEFT
 end
@@ -653,17 +566,22 @@ local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serv
 	end
 	return math_max(width1, width2)
 end
+
+
+
+
+local function func_UPDATE_MAINFRAME() -- providerfunc
+	if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and OctoTooltip and not OctoTooltip:IsShown() then
+		EventFrame:CreateDataProvider()
+	end
+end
+
+function E.func_UPDATE_MAINFRAME()
+	E.func_SpamBlock(func_UPDATE_MAINFRAME, true)
+end
+
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
-	-- EventFrame.columnWidthsLeft = EventFrame.columnWidthsLeft or {}
-	-- EventFrame.columnWidthsCenter = EventFrame.columnWidthsCenter or {}
-
-
-	-- for categoryKey in next,(E.OctoTables_Vibor) do
-	-- 	E.func_ResetOtrisovkaTables(categoryKey)
-	-- end
-	-- E.func_LoadComponents()
-
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
@@ -708,15 +626,8 @@ function EventFrame:CreateDataProvider()
 
 				-- for i, id in next,(E.OctoTables_DataOtrisovka[categoryKey][dataType]) do
 				for i, id in next,(E.DataProvider_Otrisovka[categoryKey][dataType]) do
-					-- print (i, id)
-
-
 					local questKey
 					if dataType == "UniversalQuests" then
-						-- id это data для universal
-						-- for k, v in next,(id) do
-						-- 	print (k, v.desc or 0)
-						-- end
 						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 					end
 					if dataType ~= "UniversalQuests" and E.func_ShouldShow(id, dataType) or E.func_ShouldShow(questKey, dataType) then

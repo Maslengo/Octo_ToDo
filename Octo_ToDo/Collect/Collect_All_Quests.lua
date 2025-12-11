@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Quests()
-	if E.func_SpamBlock("Collect_All_Quests") then return end
+----------------------------------------------------------------
+local function Collect_All_Quests()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectPlayerData or not collectMASLENGO then return end
@@ -33,4 +33,8 @@ function E.Collect_All_Quests()
 			collectMASLENGO.ListOfParagonQuests[questID] = true
 		end
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_Quests()
+	E.func_SpamBlock(Collect_All_Quests, true)
 end

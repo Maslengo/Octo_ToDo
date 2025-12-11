@@ -10,49 +10,37 @@ local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронн�
 ----------------------------------------------------------------
 function EventFrame:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
-	-- local tblCurrencies = {}
-	local tblQuests = {}
-	local tblItems = {}
-	-- local tblSpells = {}
+	local tblCurrencies = E.ALL_Currencies
+	-- local E.ALL_Quests = E.ALL_Quests
+	-- local E.ALL_Items = E.ALL_Items
+	local tblSpells = {}
 	----------------------------------------------------------------
-	-- for currencyID = 42, 4000 do -- 42, 3372
-	for id in next,(E.ALL_Currencies) do
+	E.func_TableConcat(E.ALL_Quests, E.OctoTable_QuestID_Paragon)
+	E.func_TableConcat(E.ALL_Quests, E.OctoTable_QuestID)
+	E.func_TableConcat(E.ALL_Quests, E.OctoTable_RemixInfinityResearch)
+	----------------------------------------------------------------
+	for id in next,(E.ALL_Currencies) do -- for id = 42, 4000 do -- 42, 3372
 		local name = E.func_currencyName(id)
-		-- print (E.Blue_Color.."curr".."|r", name)
 	end
-	----------------------------------------------------------------
-	for id in next,(E.ALL_Items) do
-		local name = E.func_itemName(id)
-		-- print (E.Blue_Color.."item".."|r", name)
-	end
-	----------------------------------------------------------------
+	-- for id in next,(E.ALL_Items) do
+	-- local name = E.func_itemName(id)
+	-- end
 	for id in next,(E.ALL_Reputations) do
 		local name = E.func_reputationName(id) -- "AllReputations"
-		-- print (E.Blue_Color.."repu".."|r", name)
 	end
-
-	for id in next,(E.ALL_Quests) do
-		local name = E.func_questName(id)
-		-- print (E.Blue_Color.."ques".."|r", name)
-	end
-
+	-- for id in next,(E.ALL_Quests) do
+	-- local name = E.func_questName(id)
+	-- end
 	for _, id in next,(E.OctoTable_NPC) do
 		local name = E.func_npcName(id)
-		-- print (E.Blue_Color.."npc".."|r", name)
 	end
-
-	E.Collect_All_Reputations()
 	----------------------------------------------------------------
-	for _, questID in ipairs(E.OctoTable_QuestID) do
-		tblQuests[questID] = true
-	end
-	for _, questID in ipairs(E.OctoTable_QuestID_Paragon) do
-		tblQuests[questID] = true
-	end
+	-- E.Collect_All_Reputations()
+	----------------------------------------------------------------
 	for i = 1, C_QuestLog.GetNumQuestLogEntries() do
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
-			tblQuests[info.questID] = true
+			E.ALL_Quests[info.questID] = true
 		end
 	end
 	for _, CharInfo in next, Octo_ToDo_DB_Levels do
@@ -61,21 +49,20 @@ function EventFrame:func_CreateDataCacheAtStart()
 			-- Квесты
 			local questList = MASLENGO.ListOfQuests
 			if questList then
-				for questID in next, questList do
-					tblQuests[questID] = true
-					-- totalQuests = totalQuests + 1
+				for questID in next,(questList) do
+					E.ALL_Quests[questID] = true
 				end
 			end
 			local ItemsInBag = MASLENGO.ItemsInBag
 			if ItemsInBag then
-				for itemID, itemCount in next, (MASLENGO.ItemsInBag) do
-					tblItems[itemID] = true
+				for itemID in next,(ItemsInBag) do
+					E.ALL_Items[itemID] = true
 				end
 			end
 		end
 	end
-	local promise = LibThingsLoad:QuestsByKey(tblQuests)
-	promise:AddItemsByKey(tblItems)
+	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
+	promise:AddItemsByKey(E.ALL_Items)
 	-- promise:Then(function()
 	-- print ("THEN")
 	-- end)
@@ -96,62 +83,6 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- end
 	-- end)
 	----------------------------------------------------------------
-end
-----------------------------------------------------------------
-function EventFrame:DatabaseTransfer()
-	local enable = false -- Флаг для включения/отключения переноса
-	if not enable then return end
-	-- Обрабатываем основную таблицу персонажей
-	if Octo_ToDo_DB_Levels then
-		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- Инициализируем таблицу данных игрока
-			-- GUID = GUID or {}
-			CharInfo.PlayerData = CharInfo.PlayerData or {}
-			-- Переносим простые поля в PlayerData
-			for k, value in pairs(CharInfo) do
-				if type(value) ~= "table" then
-					print(E.Red_Color..k.."|r", value)
-					CharInfo.PlayerData[k] = value
-					CharInfo[k] = nil -- Удаляем перенесенное значение
-				end
-			end
-			-- Обрабатываем валютные данные
-			if CharInfo.MASLENGO then
-				-- Переносим данные CurrencyID в новую структуру
-				if CharInfo.MASLENGO.CurrencyID then
-					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID) do
-						if type(value) == "number" then
-							CharInfo.MASLENGO.Currency[CurrencyID] =
-							CharInfo.MASLENGO.Currency[CurrencyID] or {}
-							CharInfo.MASLENGO.Currency[CurrencyID].quantity = value
-						end
-					end
-					CharInfo.MASLENGO.CurrencyID = nil -- Удаляем старую таблицу
-				end
-				-- Аналогично для других валютных таблиц
-				if CharInfo.MASLENGO.CurrencyID_Total then
-					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID_Total) do
-						if type(value) == "number" then
-							CharInfo.MASLENGO.Currency[CurrencyID] =
-							CharInfo.MASLENGO.Currency[CurrencyID] or {}
-							CharInfo.MASLENGO.Currency[CurrencyID].maxQuantity = value
-						end
-					end
-					CharInfo.MASLENGO.CurrencyID_Total = nil
-				end
-				if CharInfo.MASLENGO.CurrencyID_totalEarned then
-					for CurrencyID, value in next, (CharInfo.MASLENGO.CurrencyID_totalEarned) do
-						if type(value) == "number" then
-							CharInfo.MASLENGO.Currency[CurrencyID] =
-							CharInfo.MASLENGO.Currency[CurrencyID] or {}
-							CharInfo.MASLENGO.Currency[CurrencyID].totalEarned = value
-						end
-					end
-					CharInfo.MASLENGO.CurrencyID_totalEarned = nil
-				end
-			end
-		end
-	end
 end
 ----------------------------------------------------------------
 local function replaceZeroWithNil(tbl, smth)
@@ -267,33 +198,27 @@ function EventFrame:DatabaseClear()
 		zero = true, -- удалять значения == 0
 		emptyString = true, -- удалять ""
 		falseValue = false, -- удалять false (обычно не надо)
-
 		values = { -- точное совпадение
 			"Done",
 			"0/0",
 			0,
 		},
-
 		strings = { -- подстроки / паттерны
 			"|cff", -- цветовой мусор
 			"|r",
 			"#%d+/", -- если ты где-то оставил прогресс в строке
 		},
-
 		-- (необязательно, но полезно)
 		keepKeys = { -- НИКОГДА не удалять ключ
 			"PlayerData",
 			"CharInfo",
 		}
 	}
-
 	E.func_DeepClean(Octo_profileKeys, rules)
 	E.func_DeepClean(Octo_ToDo_DB_Levels, rules)
 	E.func_DeepClean(Octo_ToDo_DB_Vars, rules)
-	E.func_DeepClean(Octo_ToDo_DB_Other, rules)
 	E.func_DeepClean(Octo_Cache_DB, rules)
 	E.func_DeepClean(Octo_DevTool_DB, rules)
-
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -444,14 +369,14 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Настройки отладки
 	-- Настройки функций аддона
 	local featureDefaults = {
+		Config_SPAM_TIME = 3,
 		Config_ADDON_HEIGHT = 20,
-		Config_AlphaOnDrag = 0.7, -- Альфа при перетаскивании
+		Config_AlphaOnTheMove = 1, -- Альфа в движении
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
 		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
 		Config_LevelToShowMAX = 90, -- GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT), -- Макс. уровень
 		Config_numberFormatMode = 1, -- по умолчанию универсальный
-		Config_GameMenuFrame = 1,
 		Currencies = true, -- Квесты
 		Config_Texture = "Blizzard Raid Bar",
 		OnlyCurrentFaction = false, -- Только текущая фракция
@@ -476,19 +401,16 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontSize = 11
 	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontFlags = "OUTLINE"
 	-- Инициализируем таблицы настроек
-	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {[7] = true, [99] = true})
+	E.func_InitField(Octo_ToDo_DB_Vars, "ExpansionToShow", {
+			[7] = true, -- Legion
+			[98] = true,
+			[99] = true
+		})
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or  "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r" -- "|cffd177ffN|r|cffb682f7a|r|cff9a8ef0o|r|cff7f99e8w|r|cff63A4E0h|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r" -- "|cffd177ffN|r|cffb682f7a|r|cff9a8ef0o|r|cff7f99e8w|r|cff63A4E0h|r"
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
-end
-----------------------------------------------------------------
-function EventFrame:Octo_ToDo_DB_Other()
-	Octo_ToDo_DB_Other = Octo_ToDo_DB_Other or {}
-	-- Инициализация таблицы денег аккаунта
-	E.func_InitSubTable(Octo_ToDo_DB_Other, "AccountMoney")
-	E.func_InitField(Octo_ToDo_DB_Other.AccountMoney, E.CurrentRegionName, 0)
 end
 ----------------------------------------------------------------
 function EventFrame:Octo_Cache_DB()
@@ -516,7 +438,6 @@ function EventFrame:Octo_DevTool_DB()
 	----------------------------------------------------------------
 	local defaultOptions = {
 		Config_DebugID_ALL = false,
-
 		Config_DebugID_Items = false, --E.debugInfo_Items(id)
 		Config_DebugID_Currencies = false, --E.debugInfo_Currencies(id)
 		Config_DebugID_NPCs = false, --E.debugInfo_NPCs(id)
@@ -528,10 +449,8 @@ function EventFrame:Octo_DevTool_DB()
 		Config_DebugID_Maps = false, --E.debugInfo_Maps(id)
 		Config_DebugID_Events = false, --E.debugInfo_Events(id)
 		Config_DebugID_Professions = false, --E.debugInfo_Professions(id)
-
 		Config_DebugID_instanceID = false, --E.debugInfo_instanceID(id) ПОФИКСИТЬ
 		Config_DebugID_worldBossID = false, --E.debugInfo_worldBossID(id) ПОФИКСИТЬ
-
 		DebugCharacterInfo = false,
 		DebugEvent = false,
 		DebugFunction = false,
@@ -541,8 +460,6 @@ function EventFrame:Octo_DevTool_DB()
 		DebugQC_Vignettes = false,
 		DebugQC_Quests = false,
 		DebugUniversal = false,
-		CVar = false, -- CVar настройки
-		SPAM_TIME = 2,
 		editorFontSize = 12, -- for i = 10, 16 do
 		editorTabSpaces = 4, -- for _, v in ipairs({0, 2, 3, 4}) do
 		editorTheme = "Twilight", -- for name in next, E.editorThemes do
@@ -551,7 +468,6 @@ function EventFrame:Octo_DevTool_DB()
 		E.func_InitField(Octo_DevTool_DB, k, v)
 		E[k] = Octo_DevTool_DB[k] -- Копируем в глобальную таблицу
 	end
-
 	E.func_InitField(Octo_DevTool_DB, "lastFaction", UNKNOWN)
 	E.func_InitField(Octo_DevTool_DB, "lastLocaleLang", UNKNOWN)
 	-- Инициализация подтаблиц
@@ -579,9 +495,6 @@ function EventFrame:Octo_DevTool_DB()
 	end
 	----------------------------------------------------------------
 end
-
-
-
 ----------------------------------------------------------------
 function EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
@@ -614,16 +527,14 @@ function EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
 	-- Развлетвление таблиц для оптимизации
 	----------------------------------------------------------------
-	-- local OctoTables_Vibor = {} -- func_LoadComponents
 	-- local OctoTables_DataOtrisovka = {}
-
 	local defaultProfile = Octo_profileKeys.profiles.Default
 	for _, func in next,(E.Components) do
-		local one, two = func()
-		for i, categoryKey in next,(one) do
+		local OctoTables_Vibor, OctoTables_DataOtrisovka = func()
+		for i, categoryKey in next,(OctoTables_Vibor) do
 			E.OctoTables_Vibor[i] = E.OctoTables_Vibor[i] or categoryKey
 		end
-		for i, categoryKey in next,(two) do
+		for i, categoryKey in next,(OctoTables_DataOtrisovka) do
 			E.OctoTables_DataOtrisovka[i] = E.OctoTables_DataOtrisovka[i] or categoryKey
 		end
 	end
@@ -632,7 +543,6 @@ function EventFrame:Octo_profileKeys()
 	-- Заполнение дефолтных настроек
 	----------------------------------------------------------------
 	E.DataProvider_Otrisovka = {}
-
 	for categoryKey, v in next,(E.OctoTables_DataOtrisovka) do
 		for dataType, w in next,(v) do
 			E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
@@ -640,19 +550,17 @@ function EventFrame:Octo_profileKeys()
 			if dataType ~= "UniversalQuests" then
 				for i, z in next,(w) do
 					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z.id)
-
 					defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
 					-- defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
-					if dataType == "Currencies"		then E.ALL_Currencies[z.id] = true		end	-- /run opde(E.ALL_Currencies)
-					if dataType == "Items"			then E.ALL_Items[z.id] = true			end	-- /run opde(E.ALL_Items)
-					if dataType == "Reputations"	then E.ALL_Reputations[z.id] = true		end	-- /run opde(E.ALL_Reputations)
-					if dataType == "Additionally"	then E.ALL_Additionally[z.id] = true	end	-- /run opde(E.ALL_Additionally)
+					if dataType == "Currencies" then E.ALL_Currencies[z.id] = true end -- /run opde(E.ALL_Currencies)
+					if dataType == "Items" then E.ALL_Items[z.id] = true end -- /run opde(E.ALL_Items)
+					if dataType == "Reputations" then E.ALL_Reputations[z.id] = true end -- /run opde(E.ALL_Reputations)
+					if dataType == "Additionally" then E.ALL_Additionally[z.id] = true end -- /run opde(E.ALL_Additionally)
 				end
 			else
 				for _, data in next,(w) do
 					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], data)
 					tinsert(E.ALL_UniversalQuests, data)
-
 					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 					defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or data.defS -- nil
 					for _, questData in ipairs(data.quests) do
@@ -685,32 +593,37 @@ function EventFrame:Octo_profileKeys()
 end
 ----------------------------------------------------------------
 function EventFrame:Daily_Reset()
-	if E.func_IsRetail() then
-		local ServerTime = GetServerTime()
-		local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
-		-- Обрабатываем всех персонажей
-		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- Проверяем нужно ли выполнить сброс
-			if CharInfo.PlayerData.tmstp_Daily and CharInfo.PlayerData.tmstp_Daily < ServerTime then
-				-- Устанавливаем новую временную метку вне зависимости от региона
-				CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
-				CharInfo.PlayerData.needResetDaily = true
-				-- Сбрасываем ежедневные квесты
-				for _, data in next,(E.ALL_UniversalQuests) do
-					if data.reset == "Daily" then
-						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
-					end
+	local ServerTime = GetServerTime()
+	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
+	-- /dump E.func_SecondsToClock(C_DateAndTime.GetSecondsUntilDailyReset(), true)
+	-- Обрабатываем всех персонажей
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		-- Проверяем нужно ли выполнить сброс
+		if CharInfo.PlayerData.tmstp_Daily and CharInfo.PlayerData.tmstp_Daily < ServerTime then
+			-- Устанавливаем новую временную метку вне зависимости от региона
+			CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
+			CharInfo.PlayerData.needResetDaily = true
+			-- Сбрасываем ежедневные квесты
+			for _, data in next,(E.ALL_UniversalQuests) do
+				if data.reset == "Daily" then
+					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+					CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 				end
-				-- Очищаем данные LFG
-				wipe(CharInfo.MASLENGO.LFGInstance)
-				for _, v in ipairs (E.OctoTable_LFGDungeons) do
-					CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
-					CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
-				end
-				-- Сбрасываем деньги
-				if CharInfo.PlayerData.MoneyOnDaily and CharInfo.PlayerData.Money then
-					CharInfo.PlayerData.MoneyOnDaily = CharInfo.PlayerData.Money
+			end
+			-- Очищаем данные LFG
+			wipe(CharInfo.MASLENGO.LFGInstance)
+			for _, v in ipairs (E.OctoTable_LFGDungeons) do
+				CharInfo.MASLENGO.LFGInstance[v] = CharInfo.MASLENGO.LFGInstance[v] or {}
+				CharInfo.MASLENGO.LFGInstance[v].donetoday = nil
+			end
+			-- Сбрасываем деньги
+			if CharInfo.PlayerData.MoneyOnDaily and CharInfo.PlayerData.Money then
+				CharInfo.PlayerData.MoneyOnDaily = CharInfo.PlayerData.Money
+			end
+			-- Сбрасываем LegionRemixResearch
+			if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
+				if CharInfo.MASLENGO.LegionRemixData.barValue > 3 then
+					CharInfo.MASLENGO.LegionRemixData.barValue = CharInfo.MASLENGO.LegionRemixData.barValue - 3 -- либо 6, хз как затрекать (ПОФИКСИТЬ)
 				end
 			end
 		end
@@ -718,69 +631,64 @@ function EventFrame:Daily_Reset()
 end
 ----------------------------------------------------------------
 function EventFrame:Weekly_Reset()
-	if E.func_IsRetail() then
-		local ServerTime = GetServerTime()
-		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- Проверяем нужно ли выполнить сброс
-			if CharInfo.PlayerData.tmstp_Weekly and CharInfo.PlayerData.tmstp_Weekly < ServerTime then
-				-- Устанавливаем новую временную метку вне зависимости от региона
-				CharInfo.PlayerData.tmstp_Weekly = CharInfo.PlayerData.tmstp_Weekly + 86400*7
-				CharInfo.PlayerData.needResetWeekly = true
-				-- Проверяем есть ли награды в Великом Хранилище
-				for i = 1, #CharInfo.MASLENGO.GreatVault do
-					if CharInfo.MASLENGO.GreatVault[i] and
-					CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING and
-					CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
-						CharInfo.PlayerData.HasAvailableRewards = true
-						break
-					end
+	local ServerTime = GetServerTime()
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		-- Проверяем нужно ли выполнить сброс
+		if CharInfo.PlayerData.tmstp_Weekly and CharInfo.PlayerData.tmstp_Weekly < ServerTime then
+			-- Устанавливаем новую временную метку вне зависимости от региона
+			CharInfo.PlayerData.tmstp_Weekly = CharInfo.PlayerData.tmstp_Weekly + 86400*7
+			CharInfo.PlayerData.needResetWeekly = true
+			-- Проверяем есть ли награды в Великом Хранилище
+			for i = 1, #CharInfo.MASLENGO.GreatVault do
+				if CharInfo.MASLENGO.GreatVault[i] and
+				CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING and
+				CharInfo.MASLENGO.GreatVault[i].hyperlink_STRING ~= 0 then
+					CharInfo.PlayerData.HasAvailableRewards = true
+					break
 				end
-				-- Сбрасываем данные ключей
-				CharInfo.PlayerData.CurrentKey = nil
-				CharInfo.PlayerData.CurrentKeyName = nil
-				CharInfo.PlayerData.CurrentKeyLevel = nil
-				CharInfo.PlayerData.RIO_weeklyBest = nil
-				-- Очищаем временные данные
-				CharInfo.MASLENGO.journalInstance = {}
-				CharInfo.MASLENGO.SavedWorldBoss = {}
-				CharInfo.MASLENGO.GreatVault = {}
-				-- Сбрасываем еженедельные квесты
-				for _, data in next,(E.ALL_UniversalQuests) do
-					if data.reset == "Weekly" then
-						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
-					end
+			end
+			-- Сбрасываем данные ключей
+			CharInfo.PlayerData.CurrentKey = nil
+			CharInfo.PlayerData.CurrentKeyName = nil
+			CharInfo.PlayerData.CurrentKeyLevel = nil
+			CharInfo.PlayerData.RIO_weeklyBest = nil
+			-- Очищаем временные данные
+			CharInfo.MASLENGO.journalInstance = {}
+			CharInfo.MASLENGO.SavedWorldBoss = {}
+			CharInfo.MASLENGO.GreatVault = {}
+			-- Сбрасываем еженедельные квесты
+			for _, data in next,(E.ALL_UniversalQuests) do
+				if data.reset == "Weekly" then
+					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+					CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 				end
-				-- Сбрасываем деньги
-				if CharInfo.PlayerData.MoneyOnWeekly and CharInfo.PlayerData.Money then
-					CharInfo.PlayerData.MoneyOnWeekly = CharInfo.PlayerData.Money
-				end
+			end
+			-- Сбрасываем деньги
+			if CharInfo.PlayerData.MoneyOnWeekly and CharInfo.PlayerData.Money then
+				CharInfo.PlayerData.MoneyOnWeekly = CharInfo.PlayerData.Money
 			end
 		end
 	end
 end
 ----------------------------------------------------------------
 function EventFrame:Month_Reset()
-	if E.func_IsRetail() then
-		local tmstp_Month = E.func_tmstpDayReset(365/12)
-		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			-- Проверяем нужно ли выполнить сброс
-			if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
-				-- Устанавливаем новую временную метку
-				CharInfo.PlayerData.tmstp_Month = tmstp_Month
-				CharInfo.PlayerData.needResetMonth = true
-				-- Сбрасываем ежемесячные квесты
-				for _, data in next,(E.ALL_UniversalQuests) do
-					if data.reset == "Month" then
-						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-						CharInfo.MASLENGO.UniversalQuest[questKey] = nil
-					end
+	local tmstp_Month = E.func_tmstpDayReset(365/12)
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		-- Проверяем нужно ли выполнить сброс
+		if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
+			-- Устанавливаем новую временную метку
+			CharInfo.PlayerData.tmstp_Month = tmstp_Month
+			CharInfo.PlayerData.needResetMonth = true
+			-- Сбрасываем ежемесячные квесты
+			for _, data in next,(E.ALL_UniversalQuests) do
+				if data.reset == "Month" then
+					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+					CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 				end
 			end
 		end
 	end
 end
-
 ----------------------------------------------------------------
 function E.func_CheckAll()
 	-- Чистка персонажей при старте
@@ -788,10 +696,8 @@ function E.func_CheckAll()
 	-- EventFrame:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 	-- Инициализация всех компонентов
 	EventFrame:Octo_Cache_DB() -- Кэш данных
-	EventFrame:DatabaseTransfer() -- Перенос данных
 	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
 	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
-	EventFrame:Octo_ToDo_DB_Other() -- Другие данные
 	EventFrame:Octo_DevTool_DB()
 	-- Применяем старые изменения
 	E.func_setOldChanges()
@@ -822,9 +728,7 @@ function EventFrame:ScheduleNextReset()
 		end)
 	end
 end
-
-
-local function func_UpdateGlobals()
+function E.func_UpdateGlobals()
 	if Octo_ToDo_DB_Vars then
 		if Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT then
 			E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
@@ -835,6 +739,7 @@ local function func_UpdateGlobals()
 		if Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle then
 			E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
 		end
+		E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
 	end
 	if Octo_DevTool_DB then
 		E.DebugButton = Octo_DevTool_DB.DebugButton
@@ -847,10 +752,8 @@ local function func_UpdateGlobals()
 		E.DebugQC_Vignettes = Octo_DevTool_DB.DebugQC_Vignettes
 		E.DebugQC_Quests = Octo_DevTool_DB.DebugQC_Quests
 		E.DebugUniversal = Octo_DevTool_DB.DebugUniversal
-		E.SPAM_TIME = Octo_DevTool_DB.SPAM_TIME
 	end
 end
-
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
@@ -869,43 +772,13 @@ function EventFrame:ADDON_LOADED(addonName)
 	E.func_CheckAll()
 	EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
-	func_UpdateGlobals()
+	E.func_UpdateGlobals()
 	----------------------------------------------------------------
 end
 function EventFrame:VARIABLES_LOADED()
-
-
-	-- if E.func_IsPTR() then
-	-- print ("SECRET ON")
-	-- C_Timer.After(0, function()
-	-- SetCVar("addonChatRestrictionsForced", "1")
-	-- SetCVar("secretAurasForced", "1")
-	-- SetCVar("secretCooldownsForced", "1")
-	-- SetCVar("secretUnitIdentityForced", "1")
-	-- SetCVar("secretSpellcastsForced", "1")
-	-- SetCVar("secretUnitPowerForced", "1")
-	-- SetCVar("secretUnitPowerMaxForced", "1")
-	-- SetCVar("secretUnitComparisonForced", "1")
-	-- end)
-	-- end
-	if Octo_DevTool_DB and Octo_DevTool_DB.CVar then
-		E.func_LoadCVars()
-	end
 	E.func_CheckAll()
 end
-function EventFrame:PLAYER_LOGOUT()
-	-- if E.func_IsPTR() then
-	-- 	SetCVar("addonChatRestrictionsForced", "0")
-	-- 	SetCVar("secretAurasForced", "0")
-	-- 	SetCVar("secretCooldownsForced", "0")
-	-- 	SetCVar("secretUnitIdentityForced", "0")
-	-- 	SetCVar("secretSpellcastsForced", "0")
-	-- 	SetCVar("secretUnitPowerForced", "0")
-	-- 	SetCVar("secretUnitPowerMaxForced", "0")
-	-- 	SetCVar("secretUnitComparisonForced", "0")
-	-- end
 
-end
 function EventFrame:PLAYER_LOGIN()
 	-- Обновляем кэш
 	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
@@ -916,8 +789,6 @@ function EventFrame:PLAYER_LOGIN()
 	-- end
 	self:ScheduleNextReset()
 	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
-	if GameMenuFrame and Octo_ToDo_DB_Vars.Config_GameMenuFrame then
-		GameMenuFrame:SetScale(Octo_ToDo_DB_Vars.Config_GameMenuFrame)
-	end
+
 	E.Cache_All_EventNames_Year()
 end

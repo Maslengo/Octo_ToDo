@@ -224,7 +224,7 @@ local function func_itemName_CACHE(id)
 			print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_itemName(id, forcedQuality)
@@ -268,7 +268,7 @@ local function func_currencyName_CACHE(id)
 			print (E.Lime_Color..CURRENCY.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_currencyName(id)
@@ -306,7 +306,7 @@ local function func_npcName_CACHE(id)
 			print (E.Lime_Color.."NPC".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_npcName(id)
@@ -334,7 +334,7 @@ local function func_questName_CACHE(id)
 			print (E.Lime_Color..QUESTS_LABEL.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_questName(id, ShowIcon)
@@ -390,7 +390,7 @@ local function func_reputationName_CACHE(id)
 			print (E.Lime_Color..REPUTATION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_reputationName(id)
@@ -433,7 +433,7 @@ local function func_spellName_CACHE(id)
 			print (E.Lime_Color..SPELLS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_spellName(id)
@@ -458,7 +458,7 @@ local function func_achievementName_CACHE(id)
 			print (E.Lime_Color..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_achievementName(id)
@@ -483,7 +483,7 @@ local function func_mountName_CACHE(id)
 			print (E.Lime_Color..MOUNTS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_mountName(mountID)
@@ -521,14 +521,18 @@ local function func_mapName_CACHE(id)
 			print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
+
+
+
+
 function E.func_mapName(id)
 	if not id then return end
-	if C_Map.GetBestMapForUnit("player") == id then
-		return E.COLOR_NECROLORD..">>"..func_mapName_CACHE(id).."<<|r"
-	end
+	-- if C_Map.GetBestMapForUnit("player") == id then
+	-- 	return E.COLOR_NECROLORD..">>"..func_mapName_CACHE(id).."<<|r"
+	-- end
 	local cachedName = func_mapName_CACHE(id)
 	return cachedName..E.debugInfo_Maps(id)
 end
@@ -599,7 +603,7 @@ local function func_EventName_CACHE(id)
 	if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
 		print (E.Lime_Color.."MAPS".."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_EventName(id)
@@ -623,7 +627,7 @@ local function func_ProfessionName_CACHE(id)
 			print (E.Lime_Color..PROFESSIONS_TRACKER_HEADER_PROFESSION.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
 	end
-	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Lime_Color..RETRIEVING_DATA.."|r"
+	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
 function E.func_ProfessionName(id)
@@ -888,7 +892,7 @@ function E.func_CompactNumberRound(number)
 		return math_floor(number+.5)
 	end
 end
-function E.func_SecondsToClock(time, showSecond)
+function E.func_SecondsToClock(time)
 	local time = tonumber(time) or 0
 	if time <= 0 then
 		return ""
@@ -948,7 +952,7 @@ function E.func_CheckCompletedByQuestID(questID)
 	elseif IsQuestFlaggedCompleted(questID) then
 		result = E.DONE
 	elseif IsComplete(questID) then
-		result = QUEST_WATCH_QUEST_READY
+		result = E.Purple_Color..">"..QUEST_WATCH_QUEST_READY.."<|r"
 	elseif not E.func_IsOnQuest(questID) then
 		result = nil
 	else
@@ -1682,7 +1686,19 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	local reset = data.reset -- questKey:match("_([^_]+)$")
 	----------------------------------------------------------------
 	-- TextLeft = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.TextLeft)
-	TextLeft = data.TextLeft
+
+
+
+	local vivod
+	if type(data.TextLeft) == "function" then
+		vivod = data.TextLeft() -- ← Вызываем функцию!
+	else
+		vivod = data.TextLeft
+	end
+
+
+
+	TextLeft = vivod
 	-- ColorLeft =
 	if reset == "Daily" then
 		IconLeft = E.ICON_DAILY
@@ -1697,7 +1713,6 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	SettingsType = dataType.."#"..questKey
 	-- TooltipKey =
 	-- IsReputation =
-
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
@@ -1782,7 +1797,7 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		end
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
-				TextCenter = E.Purple_Color.."> "..TextCenter.." <".."|r"
+				TextCenter = E.Purple_Color..">"..TextCenter.."<".."|r"
 			end
 		end
 		-- print (id, TextCenter, ColorCenter, FirstReputation, SecondReputation)
@@ -1827,35 +1842,37 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	if not categoryKey then return end
 	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
 	----------------------------------------------------------------
 	if id == "GreatVault" then
-		if CharInfo.PlayerData.HasAvailableRewards then
+		if pd.HasAvailableRewards then
 			TextCenter = E.Blue_Color..">"..REWARD.."<|r"
 		end
 	end
 	if id == "CurrentKey" then -- ПОФИКСИТЬ
-		if CharInfo.PlayerData.CurrentKey then
-			TextCenter = CharInfo.PlayerData.CurrentKey
+		if pd.CurrentKey then
+			TextCenter = pd.CurrentKey
 		end
 	end
 	if id == "LegionRemixResearch" then
-		if CharInfo.MASLENGO.LegionRemixData and CharInfo.MASLENGO.LegionRemixData.barValue and CharInfo.MASLENGO.LegionRemixData.barMax then
-			local barValue = CharInfo.MASLENGO.LegionRemixData.barValue
-			local barMax = CharInfo.MASLENGO.LegionRemixData.barMax
+		if cm.LegionRemixData and cm.LegionRemixData.barValue and cm.LegionRemixData.barMax then
+			local barValue = cm.LegionRemixData.barValue
+			local barMax = cm.LegionRemixData.barMax
 			TextCenter = barValue.."/"..barMax
-			if CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests then
-				TextCenter = barValue..E.Blue_Color.."("..CharInfo.MASLENGO.LegionRemixData.TotalInfinityResearchQuests..")|r".."/"..barMax
+			if cm.LegionRemixData.TotalInfinityResearchQuests then
+				TextCenter = barValue..E.Blue_Color.."("..cm.LegionRemixData.TotalInfinityResearchQuests..")|r".."/"..barMax
 			end
 		end
 	end
 	if id == "ListOfQuests" then
-		if CharInfo.PlayerData.numQuests then
-			TextCenter = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.numQuests.."/"..CharInfo.PlayerData.maxNumQuestsCanAccept.."|r"
+		if pd.numQuests then
+			TextCenter = pd.classColorHex..pd.numQuests.."/"..pd.maxNumQuestsCanAccept.."|r"
 		end
 	end
 	if id == "LFGInstance" then
 		local count = 0
-		for instanceID, v in next, (CharInfo.MASLENGO.journalInstance) do
+		for instanceID, v in next, (cm.journalInstance) do
 			if v then
 				for difficultyID, w in next, (v) do
 					if w.vivod then
@@ -1864,14 +1881,14 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				end
 			end
 		end
-		for dungeonID, v in next, (CharInfo.MASLENGO.LFGInstance) do
+		for dungeonID, v in next, (cm.LFGInstance) do
 			if v then
-				if CharInfo.MASLENGO.LFGInstance[dungeonID].donetoday then
+				if cm.LFGInstance[dungeonID].donetoday then
 					count = count + 1
 				end
 			end
 		end
-		for worldBossID, v in next, (CharInfo.MASLENGO.SavedWorldBoss) do
+		for worldBossID, v in next, (cm.SavedWorldBoss) do
 			if v then
 				count = count + 1
 			end
@@ -1884,7 +1901,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	if id == "AllItems" then
 		local count = 0
 		for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
-			if CharInfo.MASLENGO.ItemsInBag[itemID] then
+			if cm.ItemsInBag[itemID] then
 				count = count + 1
 				break
 			end
@@ -1894,7 +1911,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		end
 	end
 	if id == "Professions" then
-		local charProf = CharInfo.MASLENGO.professions
+		local charProf = cm.professions
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
 				if i == 1 or i == 2 then
@@ -1905,54 +1922,43 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	end
 	if id == "ItemLevel" then
 		----------------------------------------------------------------
-		local color = E.Red_Color
-		local ItemLevelGreen = 625
-		local ItemLevelOrange = 610
-		local ItemLevelRed = 580
-		if CharInfo.PlayerData.avgItemLevelEquipped and CharInfo.PlayerData.avgItemLevel then
-			if CharInfo.PlayerData.avgItemLevelEquipped >= ItemLevelGreen then
-				color = E.Green_Color
-			elseif CharInfo.PlayerData.avgItemLevelEquipped >= ItemLevelOrange then
-				color = E.Yellow_Color
-			elseif CharInfo.PlayerData.avgItemLevelEquipped >= ItemLevelRed then
-				color = E.Orange_Color
+		if pd.avgItemLevelEquipped and pd.avgItemLevel then
+			-- TextCenter = color..pd.avgItemLevelEquipped
+			TextCenter = E.func_GetGradientHex(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
+			if pd.avgItemLevel > pd.avgItemLevelEquipped then
+				TextCenter = TextCenter.."/"..pd.avgItemLevel.."|r"
 			end
-		end
-		if CharInfo.PlayerData.avgItemLevelEquipped and CharInfo.PlayerData.avgItemLevel then
-			TextCenter = color..CharInfo.PlayerData.avgItemLevelEquipped
-			if CharInfo.PlayerData.avgItemLevel > CharInfo.PlayerData.avgItemLevelEquipped then
-				TextCenter = TextCenter.."/"..CharInfo.PlayerData.avgItemLevel.."|r"
-			end
-			if CharInfo.PlayerData.avgItemLevelPvp and CharInfo.PlayerData.avgItemLevelPvp > CharInfo.PlayerData.avgItemLevel then
+			if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
 				TextCenter = TextCenter..E.Green_Color.."+|r"
 			end
 		end
 	end
 	----------------------------------------------------------------
 	if id == "Money" then
-		if CharInfo.PlayerData.Money then
-			TextCenter = E.func_MoneyString(CharInfo.PlayerData.Money)
-			if CharInfo.PlayerData.MoneyOnLogin then
-				if CharInfo.PlayerData.Money < CharInfo.PlayerData.MoneyOnLogin then
-					TextCenter = TextCenter..E.Red_Color.."-|r"
-				elseif CharInfo.PlayerData.Money > CharInfo.PlayerData.MoneyOnLogin then
-					TextCenter = TextCenter..E.Green_Color.."+|r"
-				end
-			end
+		if pd.Money then
+			TextCenter = E.func_GetGradientHex(pd.Money, E.minValue_Money, E.maxValue_Money)..E.func_MoneyString(pd.Money)
+			-- TextCenter = E.func_MoneyString(pd.Money)
+			-- if pd.MoneyOnLogin then
+			-- 	if pd.Money < pd.MoneyOnLogin then
+			-- 		TextCenter = TextCenter..E.Red_Color.."-|r"
+			-- 	elseif pd.Money > pd.MoneyOnLogin then
+			-- 		TextCenter = TextCenter..E.Green_Color.."+|r"
+			-- 	end
+			-- end
 		end
 	end
 	if id == "WasOnline" then
 		local color = E.White_Color
-		if CharInfo.PlayerData.loginHour and CharInfo.PlayerData.loginDay then
-			if CharInfo.PlayerData.GUID == E.curGUID then
+		if pd.loginHour and pd.loginDay then
+			if pd.GUID == E.curGUID then
 				TextCenter = E.Green_Color..FRIENDS_LIST_ONLINE.."|r"
 			else
-				if CharInfo.PlayerData.needResetWeekly then
+				if pd.needResetWeekly then
 					color = E.Gray_Color
-				elseif CharInfo.PlayerData.needResetDaily then
+				elseif pd.needResetDaily then
 					color = E.Red_Color
 				end
-				TextCenter = color..E.func_FriendsFrame_GetLastOnline(CharInfo.PlayerData.time).."|r"
+				TextCenter = color..E.func_FriendsFrame_GetLastOnline(pd.time).."|r"
 			end
 		end
 	end
@@ -2179,7 +2185,6 @@ function E.func_GetRealmName()
 	return result
 end
 -- E.curServer = E.func_GetRealmName()
-E.SPAM_TIME = 2
 E.UNIVERSAL = "UNIVERSAL_"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
 E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"
@@ -2233,6 +2238,7 @@ E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMark
 -- [81] = "questlog-questtypeicon-dungeon",
 -- ["COMPLETED"] = "questlog-questtypeicon-quest",
 -- },
+E.SPAM_TIME = 3
 E.ICON_ONCE = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
 E.ICON_WEEKLY = "Crosshair_Wrapper_64"
@@ -2555,50 +2561,51 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 			end
 		end
 	end
-	if #characterData > 1 then
-	--------------------------------------------------------
-	-- 2. Сортировка
-	--------------------------------------------------------
-	table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
+	if #characterData > 0 then
+		--------------------------------------------------------
+		-- 2. Сортировка
+		--------------------------------------------------------
+		table.sort(characterData, function(a, b)
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
+		end)
+		--------------------------------------------------------
+		-- 3. Градиент (только для Anima)
+		--------------------------------------------------------
+		local minValue, maxValue
+		if not isRenown then
+			minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+		end
+		--------------------------------------------------------
+		-- 4. Вывод персонажей
+		--------------------------------------------------------
+		for _, d in ipairs(characterData) do
+			if not isRenown then
+				local color = E.func_GetGradientHex(d.sortValue, minValue, maxValue)
+				d.row[6] = d.Possible_Anima
+				d.row[7] = color..d.totalAnimaText.."|r"
 			end
-			return a.name < b.name
-	end)
-	--------------------------------------------------------
-	-- 3. Градиент (только для Anima)
-	--------------------------------------------------------
-	local minValue, maxValue
-	if not isRenown then
-		minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-	end
-	--------------------------------------------------------
-	-- 4. Вывод персонажей
-	--------------------------------------------------------
-	for _, d in ipairs(characterData) do
-		if not isRenown then
-			local color = E.func_GetGradientHex(d.sortValue, minValue, maxValue)
-			d.row[6] = d.Possible_Anima
-			d.row[7] = color..d.totalAnimaText.."|r"
+			table.insert(tooltip, d.row)
 		end
-		table.insert(tooltip, d.row)
-	end
-	--------------------------------------------------------
-	-- 5. Итоги сверху
-	--------------------------------------------------------
-
-		local header = {
-			"",
-			E.func_texturefromIcon(E.ICON_KYRIAN),
-			E.func_texturefromIcon(E.ICON_VENTHYR),
-			E.func_texturefromIcon(E.ICON_NIGHTFAE),
-			E.func_texturefromIcon(E.ICON_NECROLORD),
-			""
-		}
-		if not isRenown then
-			header[#header+1] = TOTAL..": "..E.func_CompactNumberFormat(grandTotal)
+		--------------------------------------------------------
+		-- 5. Итоги сверху
+		--------------------------------------------------------
+		if #characterData > 1 then
+			local header = {
+				"",
+				E.func_texturefromIcon(E.ICON_KYRIAN),
+				E.func_texturefromIcon(E.ICON_VENTHYR),
+				E.func_texturefromIcon(E.ICON_NIGHTFAE),
+				E.func_texturefromIcon(E.ICON_NECROLORD),
+				""
+			}
+			if not isRenown then
+				header[#header+1] = TOTAL..": "..E.func_CompactNumberFormat(grandTotal)
+			end
+			table.insert(tooltip, 1, header)
 		end
-		table.insert(tooltip, 1, header)
 	end
 	--------------------------------------------------------
 	return tooltip
@@ -2645,7 +2652,7 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 			end
 		end
 	end
-	if #characterData > 1 then
+	if #characterData > 0 then
 		--------------------------------------------------------
 		-- 2. Сортировка
 		--------------------------------------------------------
@@ -2671,13 +2678,14 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 		--------------------------------------------------------
 		-- 5. Итоги сверху
 		--------------------------------------------------------
-
-		local header = {
-			"",
-			"avg"..": "..E.func_CompactNumberFormat(avgILVL/#characterData),
-			"",
-		}
-		table.insert(tooltip, 1, header)
+		if #characterData > 1 then
+			local header = {
+				"",
+				"avg"..": "..E.func_CompactNumberFormat(avgILVL/#characterData),
+				"",
+			}
+			table.insert(tooltip, 1, header)
+		end
 	end
 	--------------------------------------------------------
 	return tooltip
@@ -2717,7 +2725,7 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 						sortValue = cmP[1].skillLine,
 						sortValue2 = cmP[1].skillLevel,
 						prof1Icon = prof[1].Icon,
-						prof1Text = prof[2].Text,
+						prof1Text = prof[1].Text,
 						prof2Icon = prof[2].Icon,
 						prof2Text = prof[2].Text,
 				})
@@ -2810,7 +2818,7 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	--------------------------------------------------------
 	-- 2. Сортировка
 	--------------------------------------------------------
-	if #characterData > 1 then
+	if #characterData > 0 then
 		table.sort(characterData, function(a, b)
 				if a.sortValue ~= b.sortValue then
 					return a.sortValue > b.sortValue
@@ -3215,11 +3223,11 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	-- if dataType == "Currencies" and id == 3252 then
-	-- 	for i, v in ipairs(E.func_Mounts_3252()) do
-	-- 		local mountID = v.mountID
-	-- 		local source = v.source
-	-- 		tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
-	-- 	end
+	-- for i, v in ipairs(E.func_Mounts_3252()) do
+	-- local mountID = v.mountID
+	-- local source = v.source
+	-- tooltip[#tooltip+1] = {E.func_pizda(mountID), E.func_texturefromIcon(E.func_GetCurrencyIcon(id))..v.price, source}
+	-- end
 	-- end
 	if id == "GreatVault" then
 		local Enum_Activities_table = {}
@@ -3251,7 +3259,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if id == "LegionRemixResearch" then
-		for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
+		for questID in next,(E.OctoTable_RemixInfinityResearch) do
 			if CharInfo.MASLENGO.ListOfQuests[questID] then
 				tooltip[#tooltip+1] = {E.func_questName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
 			end
@@ -3326,7 +3334,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 				if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
-					secondTEXT = E.Purple_Color.."> "..FIRST.."/"..SECOND.." <".."|r"
+					secondTEXT = E.Purple_Color..">"..FIRST.."/"..SECOND.."<".."|r"
 				end
 			end
 			if secondTEXT ~= "0/0" then
@@ -3508,7 +3516,15 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					tooltip[#tooltip+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 				end
 				if totalQuest > 1 then
-					local TextLeft = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..data.TextLeft)
+
+					local vivod
+					if type(data.TextLeft) == "function" then
+						vivod = data.TextLeft() -- ← Вызываем функцию!
+					else
+						vivod = data.TextLeft
+					end
+
+					local TextLeft = tostringall(func_OnceDailyWeeklyMonth_Format(data.reset).." "..vivod)
 					tooltip[#tooltip+1] = {" ", TOTAL..": "..totalQuest}
 					tooltip[#tooltip+1] = {" "}
 				end
@@ -3814,61 +3830,6 @@ function E.func_GetSavedVars(addonName)
 	return E.SavedVarsByAddon[addonName]
 end
 ----------------------------------------------------------------
--- local function safecall(f,...)
--- local ok, err = pcall(f,...)
--- if not ok then
--- print("Ошибка в отложенной функции:", err)
--- end
--- end
--- function E.func_SpamBlock(key, isCombat, callback)
--- E._spamLocks = E._spamLocks or {}
--- E._spamCombatQueue = E._spamCombatQueue or {}
--- if isCombat and InCombatLockdown() then
--- -- если уже есть отложенный вызов — не ставим второй раз
--- if not E._spamCombatQueue[key] and type(callback) == "function" then
--- E._spamCombatQueue[key] = callback
--- -- один раз подписываемся на событие выхода из боя
--- if not E._spamCombatFrame then
--- E._spamCombatFrame = CreateFrame("Frame")
--- E._spamCombatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
--- E._spamCombatFrame:SetScript("OnEvent", function()
--- for k, func in pairs(E._spamCombatQueue) do
--- safecall(func) -- безопасный вызов, чтобы не крашнуло
--- E._spamCombatQueue[k] = nil
--- end
--- end)
--- end
--- end
--- return true -- Заблокировано
--- end
--- if E._spamLocks[key] then
--- return true -- Всё ещё в задержке
--- end
--- E._spamLocks[key] = true
--- C_Timer.After(E.SPAM_TIME or 0.5, function()
--- E._spamLocks[key] = nil
--- end)
--- return false -- Всё нормально, можно выполнять
--- end
-----------------------------------------------------------------
-function E.func_SpamBlock(key, needCheckCombat)
-	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
-		return true -- Заблокировано
-	end
-	E._spamLocks = E._spamLocks or {}
-	if E._spamLocks[key] then
-		return true -- Заблокировано
-	end
-	E._spamLocks[key] = true
-	C_Timer.After(E.SPAM_TIME or 0.5, function()
-			E._spamLocks[key] = nil
-	end)
-	return false -- Всё норм
-end
-----------------------------------------------------------------
-function E.func_LoadComponents()
-end
-----------------------------------------------------------------
 function E.func_ResetOtrisovkaTables(categoryKey)
 	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {}
 	E.OctoTables_DataOtrisovka[categoryKey].Items = {}
@@ -3880,7 +3841,7 @@ end
 function E.func_SmoothBackgroundAlphaChange(frame_main, frame_Background, event)
 	if InCombatLockdown() or not frame_main or not frame_Background or not event then return end
 	if frame_main:IsShown() then
-		local targetAlpha = Octo_ToDo_DB_Vars.Config_AlphaOnDrag
+		local targetAlpha = Octo_ToDo_DB_Vars.Config_AlphaOnTheMove
 		if targetAlpha == 1 then return end
 		local duration = 0.3
 		local currentAlpha = frame_Background:GetAlpha()
@@ -3972,31 +3933,47 @@ end
 -- end
 ----------------------------------------------------------------
 function E.func_GetGradientHex(value, minValue, maxValue, minHex, midHex, maxHex)
+	local UseOnlyTwoColor = false -- (min and max)
+
 	-- дефолты на случай кривых рук
 	minHex = minHex or E.Red_Color
 	midHex = midHex or E.Yellow_Color
 	maxHex = maxHex or E.Green_Color
+
 	if not value or not minValue or not maxValue or minValue >= maxValue then
 		return maxHex
 	end
+
 	local p = (value - minValue) / (maxValue - minValue)
 	if p < 0 then p = 0 end
 	if p > 1 then p = 1 end
+
 	local r1, g1, b1
 	local r2, g2, b2
 	local t
-	if p < 0.5 then
+
+	if UseOnlyTwoColor then
+		-- Используем только начальный и конечный цвета
 		r1, g1, b1 = E.func_hex2rgb(minHex)
-		r2, g2, b2 = E.func_hex2rgb(midHex)
-		t = p * 2
-	else
-		r1, g1, b1 = E.func_hex2rgb(midHex)
 		r2, g2, b2 = E.func_hex2rgb(maxHex)
-		t = (p - 0.5) * 2
+		t = p -- используем полный диапазон от 0 до 1
+	else
+		-- Оригинальная логика с тремя цветами
+		if p < 0.5 then
+			r1, g1, b1 = E.func_hex2rgb(minHex)
+			r2, g2, b2 = E.func_hex2rgb(midHex)
+			t = p * 2
+		else
+			r1, g1, b1 = E.func_hex2rgb(midHex)
+			r2, g2, b2 = E.func_hex2rgb(maxHex)
+			t = (p - 0.5) * 2
+		end
 	end
+
 	local r = math.floor(Lerp(r1, r2, t))
 	local g = math.floor(Lerp(g1, g2, t))
 	local b = math.floor(Lerp(b1, b2, t))
+
 	return string.format("|cff%02x%02x%02x", r, g, b)
 end
 ----------------------------------------------------------------
@@ -4061,6 +4038,55 @@ function E.func_DeepClean(t, rules)
 	return next(t) == nil
 end
 ----------------------------------------------------------------
+function E.func_AfterCombat()
+	for key in next,(E._inCombats) do
+		if type(callback) == "function" then
+			callback()
+			E._inCombats[key] = nil
+		end
+	end
+end
+----------------------------------------------------------------
+function E.func_SpamBlock(...)
+	local key = (""):join(tostringall(...))
+	local func, needCheckCombat, id = ...
+	-- print (func, needCheckCombat, id)
+	if type(func) ~= "function" then return end
+	local SPAM_TIME = E.SPAM_TIME
+	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
+		-- print (E.Red_Color.."заблочена(комбат)|r", key)
+		E._inCombats[key] = true
+		return true -- заблочена и добавлена в выполнение после сброса комбата
+	end
+	local currentTime = GetTime()
+	-- когда было последнее выполнение
+	if E._spamLocks[key] then
+		local timeSinceLast = currentTime - E._spamLocks[key]
+		local timeToEnd = SPAM_TIME-timeSinceLast
+		if timeSinceLast < SPAM_TIME then
+			-- print (E.Purple_Color.."выполнится через:|r"..timeToEnd, key)
+			if not E._callAfterTimer[key] then
+				E._callAfterTimer[key] = true;
+				C_Timer.After(timeToEnd, function()
+						-- print (E.Gray_Color.."CHONIBYD|r", key)
+						E._callAfterTimer[key] = nil
+						E.func_SpamBlock(func, needCheckCombat)
+				end)
+			end
+			return true -- заблочена
+		end
+	end
+	E._spamLocks[key] = currentTime -- Обновляем время последнего выполнения
+	-- print (E.Green_Color.."ХОРОШ|r", key)
+	func() -- Выполняем функцию
+	E.func_UPDATE_MAINFRAME()
+	return false -- всё ок
+end
+
+----------------------------------------------------------------
+function E.func_setOrNil(tbl, key, val)
+	tbl[key] = (val and val ~= 0) and val or nil
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -4073,3 +4099,11 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+local MyEventsTable = {
+	"PLAYER_REGEN_ENABLED",
+}
+E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+----------------------------------------------------------------
+function EventFrame:PLAYER_REGEN_ENABLED()
+	E.func_AfterCombat()
+end

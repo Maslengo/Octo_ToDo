@@ -238,7 +238,27 @@ local function calculateColumnWidths(node)
 	end
 	return columnWidths
 end
-function EventFrame:func_OctoTooltip_CreateDataProvider(tbl)
+
+-- local function func_UPDATE_OCTOTOOLTIP(tbl)
+--     if E.OctoTooltip_GLOBAL_TABLE == nil then return end
+--     EventFrame:CreateDataProvider(tbl)
+-- end
+
+-- function E.func_UPDATE_OCTOTOOLTIP(tbl)
+--     if E.OctoTooltip_GLOBAL_TABLE == nil then return end
+
+--     -- Отменяем предыдущий запланированный таймер для тултипа
+--     if EventFrame.tooltipUpdateTimer then
+--         EventFrame.tooltipUpdateTimer:Cancel()
+--         EventFrame.tooltipUpdateTimer = nil
+--     end
+
+--     -- Выполняем СРАЗУ, без задержки спама
+--     func_UPDATE_OCTOTOOLTIP(tbl)
+-- end
+
+
+function EventFrame:CreateDataProvider(tbl)
 	-- opde(tbl)
 	local lines = 0
 	local columns = 0
@@ -321,17 +341,28 @@ function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft) -- ПОФИКСИ
 	else
 		EventFrame:func_SmartAnchorTo(frame)
 	end
-	EventFrame:func_OctoTooltip_CreateDataProvider(frame.tooltip)
-	OctoTooltip:Show()
+
+
+    E.OctoTooltip_GLOBAL_TABLE = frame.tooltip
+    EventFrame:CreateDataProvider(frame.tooltip)
+    OctoTooltip:Show()
+
+
+
+	C_Timer.After(0.001, function()
+		EventFrame:CreateDataProvider(frame.tooltip)
+	end)
 	if not frame.initScripts then
 		frame.initScripts = true
 		frame:SetScript("OnLeave", function()
 				if not EventFrame.shouldShowScrollBar or not OctoTooltip:IsMouseOver() then
 					OctoTooltip:Hide()
+					E.OctoTooltip_GLOBAL_TABLE = nil
 				end
 		end)
 		frame:SetScript("OnHide", function()
 				OctoTooltip:Hide()
+				E.OctoTooltip_GLOBAL_TABLE = nil
 		end)
 	end
 end

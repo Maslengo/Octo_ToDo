@@ -8,6 +8,7 @@ Octo_MainFrame_PosFrame:Hide()
 function EventFrame:CreatePosFrame()
 	local vars = EventFrame.savedVars.PosFrame
 	if not vars.Shown then return end
+	local Gray_Color = E.Gray_Color
 	Octo_MainFrame_PosFrame:Show()
 	Octo_MainFrame_PosFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 	Octo_MainFrame_PosFrame:SetSize(280, 32)
@@ -67,7 +68,7 @@ function EventFrame:CreatePosFrame()
 				end
 				local MapId = WorldMapFrame:GetMapID("current")
 				if MapId then
-					mapIdText:SetText("id: "..MapId)
+					mapIdText:SetText(E.func_mapName(MapId)..Gray_Color.."id: "..MapId.."|r")
 				end
 				-- Update cursor text
 				if cursorX and cursorY then

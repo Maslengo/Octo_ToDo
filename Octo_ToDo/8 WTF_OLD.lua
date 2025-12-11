@@ -16,8 +16,8 @@ local function updateChar(CharInfo)
 	-- if compareVersion(95.7, CharInfo.PlayerData.DBVersion) then
 	if compareVersion(96.7, Octo_ToDo_DB_Vars.DBVersion) then
 		-- wipe(CharInfo.MASLENGO.UniversalQuest)
-		if CharInfo.MASLENGO.CurrencyID then
-			CharInfo.MASLENGO.CurrencyID = nil
+		if CharInfo.MASLENGO.currencyID then
+			CharInfo.MASLENGO.currencyID = nil
 		end
 		if CharInfo.MASLENGO.CurrencyID_Total then
 			CharInfo.MASLENGO.CurrencyID_Total = nil

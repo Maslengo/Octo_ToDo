@@ -1,7 +1,11 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_WarMode()
-	if E.func_SpamBlock("Collect_All_WarMode", false) then return end
+----------------------------------------------------------------
+local function Collect_All_WarMode()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	collectPlayerData.WarMode = C_PvP.IsWarModeDesired() or nil
+end
+----------------------------------------------------------------
+function E.Collect_All_WarMode()
+	E.func_SpamBlock(Collect_All_WarMode, false)
 end

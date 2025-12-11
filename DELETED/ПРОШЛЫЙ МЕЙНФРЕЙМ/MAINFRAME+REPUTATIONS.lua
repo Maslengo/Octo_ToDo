@@ -328,7 +328,7 @@ function EventFrame:Octo_Create_MainFrame_ToDo()
 	-- Обработчики перемещения фрейма
 	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
 				Octo_MainFrame_ToDo:StartMoving()
 			end
 	end)

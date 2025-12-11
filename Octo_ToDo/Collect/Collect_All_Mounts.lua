@@ -1,9 +1,8 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Mounts()
-	if E.func_SpamBlock("Collect_All_Mounts") then return end
+----------------------------------------------------------------
+local function Collect_All_Mounts()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
-
 
 	local GetMountIDs = C_MountJournal.GetMountIDs
 	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
@@ -34,4 +33,8 @@ function E.Collect_All_Mounts()
 			E.OctoTable_ALL_Mounts[3252][v.mountID] = v.price
 		end
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_Mounts()
+	E.func_SpamBlock(Collect_All_Mounts, false)
 end

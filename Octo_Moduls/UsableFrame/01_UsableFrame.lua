@@ -371,7 +371,7 @@ function EventFrame:CreateTestButton1()
 	-- Обработчики перемещения фрейма
 	TestButton1:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				TestButton1:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
 				TestButton1:StartMoving()
 			end
 	end)

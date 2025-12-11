@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Chromie()
-	if E.func_SpamBlock("Collect_All_Chromie") then return end
+----------------------------------------------------------------
+local function Collect_All_Chromie()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local expansionOptions = C_ChromieTime.GetChromieTimeExpansionOptions()
@@ -32,4 +32,8 @@ function E.Collect_All_Chromie()
 		collectPlayerData.Chromie_UnitChromieTimeID = nil
 		collectPlayerData.Chromie_name = nil
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_Chromie()
+	E.func_SpamBlock(Collect_All_Chromie, true)
 end

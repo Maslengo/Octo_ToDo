@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_PlayerInfo()
-	if E.func_SpamBlock("Collect_All_PlayerInfo", false) then return end
+----------------------------------------------------------------
+local function Collect_All_PlayerInfo()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
@@ -77,5 +77,9 @@ function E.Collect_All_PlayerInfo()
 	else
 		collectPlayerData.IsVeteranTrialAccount = nil
 	end
-collectPlayerData.DBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)"))
+	collectPlayerData.DBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)"))
+end
+----------------------------------------------------------------
+function E.Collect_All_PlayerInfo()
+	E.func_SpamBlock(Collect_All_PlayerInfo, false)
 end

@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
-	if E.func_SpamBlock("Collect_CurrentKey_ITEM_CHANGED", false) then return end
+----------------------------------------------------------------
+local function Collect_CurrentKey_ITEM_CHANGED(arg2)
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local dungeonSTR = select(18, strsplit(":", arg2))
@@ -14,4 +14,8 @@ function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
 	else
 		collectPlayerData.CurrentKey = lvl.." "..KeyName
 	end
+end
+----------------------------------------------------------------
+function E.Collect_CurrentKey_ITEM_CHANGED(arg2)
+	E.func_SpamBlock(Collect_CurrentKey_ITEM_CHANGED(arg2), false, arg2)
 end

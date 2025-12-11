@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_GreatVault()
-	if E.func_SpamBlock("Collect_All_GreatVault") then return end
+----------------------------------------------------------------
+local function Collect_All_GreatVault()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectPlayerData or not collectMASLENGO then return end
@@ -64,4 +64,8 @@ function E.Collect_All_GreatVault()
 		end
 	end
 	collectPlayerData.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards() or nil
+end
+----------------------------------------------------------------
+function E.Collect_All_GreatVault()
+	E.func_SpamBlock(Collect_All_GreatVault, true)
 end

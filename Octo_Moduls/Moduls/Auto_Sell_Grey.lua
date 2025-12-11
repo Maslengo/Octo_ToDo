@@ -2,8 +2,7 @@ local GlobalAddonName, ns = ...
 E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
-function EventFrame:Auto_SellGrey()
-	if E.func_SpamBlock("Auto_SellGrey") then return end
+local function Auto_SellGrey()
 	if InCombatLockdown() or UnitIsDead("player") then return end
 	local totalPrice = 0
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
@@ -23,10 +22,14 @@ function EventFrame:Auto_SellGrey()
 		PickupMerchantItem(0) -- Закрываем окно продажи
 	end
 end
+----------------------------------------------------------------
+function EventFrame:Auto_SellGrey()
+	E.func_SpamBlock(Auto_SellGrey, true)
+end
+----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"MERCHANT_SHOW",
-	"MERCHANT_CLOSED",
 }
 E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
@@ -37,9 +40,6 @@ function EventFrame:ADDON_LOADED(addonName)
 end
 function EventFrame:MERCHANT_SHOW()
 	if not EventFrame.savedVars.Config_Auto_SellGrey then return end
-	self:Auto_SellGrey()
+	EventFrame:Auto_SellGrey()
 end
-function EventFrame:MERCHANT_CLOSED()
-	if not EventFrame.savedVars.Config_Auto_SellGrey then return end
-	-- self:Auto_SellGrey()
-end
+----------------------------------------------------------------

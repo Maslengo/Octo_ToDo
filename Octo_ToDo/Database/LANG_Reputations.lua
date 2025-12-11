@@ -1,0 +1,3 @@
+local GlobalAddonName, E = ...
+E.LANG_Reputations = {
+}

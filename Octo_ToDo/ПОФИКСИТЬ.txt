@@ -45,6 +45,14 @@ ToDo:
 	alertFrame перенести в модули
 	 !!!!!!!переделать импорт UniversalQuests для праздников, через tinser и func
 	сломаны Short Server если с (Remix) в дропдауне
+	!!!!!!! CVAR
+	!!!!!!! LoadProfiles("OctoUI")
+	названия фреймов в модулях
+	E.func_questName(31342)
+	EventFrame:func_OctoTooltip_CreateDataProvider(frame.tooltip) -- tooltip
+	EventFrame:CreateDataProvider() -- mainframe
+	-- for _, func in next,(E.Components) do -- mainframe (не обновляются E.func_mapName(2133)) если включены ID
+	# Добавлен локальный кэш иконок для предметов инвентаря.
 
 Сделано:
 	1. ширина фреймов по нику не учитывается

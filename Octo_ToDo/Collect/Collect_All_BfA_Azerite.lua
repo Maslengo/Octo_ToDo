@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_BfA_Azerite()
-	if E.func_SpamBlock("Collect_All_BfA_Azerite") then return end
+----------------------------------------------------------------
+local function Collect_All_BfA_Azerite()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
@@ -12,5 +12,9 @@ function E.Collect_All_BfA_Azerite()
 	collectPlayerData.azeriteEXP = ("%d%%, -%s"):format(
 		floor(xp / totalLevelXP * 100),
 		E.func_CompactNumberFormat(totalLevelXP - xp)
-	)
+		)
+end
+----------------------------------------------------------------
+function E.Collect_All_BfA_Azerite()
+	E.func_SpamBlock(Collect_All_BfA_Azerite, true)
 end

@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Mail()
-	if E.func_SpamBlock("Collect_All_Mail", false) then return end
+----------------------------------------------------------------
+local function Collect_All_Mail()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local hasMail = HasNewMail()
@@ -9,4 +9,8 @@ function E.Collect_All_Mail()
 	else
 		collectPlayerData.hasMail = nil
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_Mail()
+	E.func_SpamBlock(Collect_All_Mail, false)
 end

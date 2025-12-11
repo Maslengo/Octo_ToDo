@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_PlayerDurability()
-	if E.func_SpamBlock("Collect_All_PlayerDurability", false) then return end
+----------------------------------------------------------------
+local function Collect_All_PlayerDurability()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local totalDurability = 100
@@ -27,4 +27,8 @@ function E.Collect_All_PlayerDurability()
 		end
 	end
 	collectPlayerData.PlayerDurability = E.func_CompactNumberRound(totalDurability)
+end
+----------------------------------------------------------------
+function E.Collect_All_PlayerDurability()
+	E.func_SpamBlock(Collect_All_PlayerDurability, false)
 end

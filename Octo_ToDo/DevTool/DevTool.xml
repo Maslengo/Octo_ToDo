@@ -1,8 +1,5 @@
 <Ui>
-	<Script file="DevTool\DevTool_CVARs.lua"/>
 	<Script file="DevTool\DevTool_CreateEditBox.lua"/>
-	<Script file="DevTool\DevTool_LoadOctoUIforAddons.lua"/>
-
 
 	<Script file="DevTool\Options\func_DevTool_Options.lua"/>
 	<Script file="DevTool\Options\Init.lua"/>

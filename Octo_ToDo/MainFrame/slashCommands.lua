@@ -29,9 +29,9 @@ local slashCommands = {
 	EVENTTREEASCE = {
 		commands = {"/et"},
 		handler = function(msg)
-			UIParentLoadAddOn("Blizzard_EventTrace");
+			UIParentLoadAddOn("Blizzard_EventTrace")
 			if not EventTrace:ProcessChatCommand(msg) then
-				EventTrace:SetShown(not EventTrace:IsShown());
+				EventTrace:SetShown(not EventTrace:IsShown())
 			end
 		end
 	},

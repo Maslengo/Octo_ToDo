@@ -37,7 +37,6 @@ function E.func_DevTool_Options(savedVars)
 				func = function()
 					-- wipe(Octo_ToDo_DB_Levels)
 					-- wipe(Octo_ToDo_DB_Vars)
-					-- wipe(Octo_ToDo_DB_Other Octo_Cache_DB)
 
 					for _, tbl in ipairs(E.OctoTable_SavedVariables) do
 						print (tbl.name)
@@ -285,6 +284,24 @@ function E.func_DevTool_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+			Config_SPAM_TIME = {
+				type = "range",
+				name = "Config_SPAM_TIME",
+				desc = "",
+				min = 2,
+				max = 10,
+				step = 0.1,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_SPAM_TIME
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_SPAM_TIME = value
+					E.SPAM_TIME = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
 			CVar = {
 				type = "toggle",
 				name = "CVar",
@@ -310,10 +327,10 @@ function E.func_DevTool_Options(savedVars)
 				name = E.Blue_Color.."Config_DebugID_ALL|r",
 				desc = "",
 				get = function()
-					return Octo_DevTool_DB.Config_DebugID_ALL
+					return Octo_ToDo_DB_Vars.Config_DebugID_ALL
 				end,
 				set = function(_, value)
-					Octo_DevTool_DB.Config_DebugID_ALL = value
+					Octo_ToDo_DB_Vars.Config_DebugID_ALL = value
 					E.Config_DebugID_ALL = value
 				end,
 				width = E.FULL_WIDTH/2,
@@ -735,27 +752,6 @@ function E.func_DevTool_Options(savedVars)
 				name = "",
 				order = GetOrder(),
 			},
-			["SPAM_TIME"] = {
-				type = "select",
-				name = "SPAM_TIME",
-				values = (function()
-					local t = {}
-					for i = 1, 10 do
-						t[i] = i
-					end
-					return t
-				end)(),
-				desc = "",
-				get = function()
-					return Octo_DevTool_DB.SPAM_TIME
-				end,
-				set = function(_, value)
-					Octo_DevTool_DB.SPAM_TIME = value
-					E.SPAM_TIME = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
 			-------------------------------------------------
 			-------------------------------------------------
 			-------------------------------------------------
@@ -832,7 +828,6 @@ function E.func_DevTool_Options(savedVars)
 	-------------------------------------------------
 	add_args(Octo_ToDo_DB_Levels, "Octo_ToDo_DB_Levels", 0)
 	add_args(Octo_ToDo_DB_Vars, "Octo_ToDo_DB_Vars")
-	add_args(Octo_ToDo_DB_Other, "Octo_ToDo_DB_Other")
 	add_args(Octo_Cache_DB, "Octo_Cache_DB", 1)
 	add_args(Octo_DevTool_DB, "Octo_DevTool_DB")
 	add_args(Octo_Minecraft_DB, "Octo_Minecraft_DB")

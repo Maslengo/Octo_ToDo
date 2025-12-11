@@ -164,7 +164,13 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2371)..": ".."Rares",
+
+			TextLeft = function()
+				return E.func_mapName(2371)..": ".."Rares"
+			end,
+
+
+
 			name_save = "Rares2371",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -204,7 +210,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2255)..": ".."Rares", -- Azj-Kahet
+			TextLeft = function()
+				return E.func_mapName(2255)..": ".."Rares" -- Azj-Kahet
+			end,
 			name_save = "Rares2255",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -224,7 +232,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2215)..": ".."Rares", -- Hallowfall
+			TextLeft = function()
+				return E.func_mapName(2215)..": ".."Rares" -- Hallowfall
+			end,
 			name_save = "Rares2215",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -245,7 +255,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2248)..": ".."Rares", -- Isle of Dorn
+			TextLeft = function()
+				return E.func_mapName(2248)..": ".."Rares" -- Isle of Dorn
+			end,
 			name_save = "Rares2248",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -266,7 +278,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2214)..": ".."Rares", -- Ringing Deeps
+			TextLeft = function()
+				return E.func_mapName(2214)..": ".."Rares" -- Ringing Deeps
+			end,
 			name_save = "Rares2214",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -287,7 +301,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2369)..": ".."Rares", -- Siren Isle
+			TextLeft = function()
+				return E.func_mapName(2369)..": ".."Rares" -- Siren Isle
+			end,
 			name_save = "Rares2369",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -306,7 +322,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2346)..": ".."Rares", -- Undermine
+			TextLeft = function()
+				return E.func_mapName(2346)..": ".."Rares" -- Undermine
+			end,
 			name_save = "Rares2346",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -326,7 +344,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2248)..": ".."Treasures", -- isle_of_dorn
+			TextLeft = function()
+				return E.func_mapName(2248)..": ".."Treasures" -- isle_of_dorn
+			end,
 			name_save = "Treasures2248",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -350,7 +370,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2369)..": ".."Treasures",
+			TextLeft = function()
+				return E.func_mapName(2369)..": ".."Treasures"
+			end,
 			name_save = "Treasures2369",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -372,7 +394,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2346)..": ".."Treasures", -- undermine
+			TextLeft = function()
+				return E.func_mapName(2346)..": ".."Treasures" -- undermine
+			end,
 			name_save = "Treasures2346",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -395,7 +419,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2214)..": ".."Treasures", -- ringing_deeps (2214)
+			TextLeft = function()
+				return E.func_mapName(2214)..": ".."Treasures" -- ringing_deeps
+			end,
 			name_save = "Treasures2214",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -416,7 +442,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2255)..": ".."Treasures", -- azj_kahet (2255)
+			TextLeft = function()
+				return E.func_mapName(2255)..": ".."Treasures" -- azj_kahet
+			end,
 			name_save = "Treasures2255",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -437,7 +465,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2215)..": ".."Treasures", -- hallowfall (2215)
+			TextLeft = function()
+				return E.func_mapName(2215)..": ".."Treasures" -- hallowfall
+			end,
 			name_save = "Treasures2215",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -460,7 +490,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(2346)..": ".."Treasure", -- undermine (2346)
+			TextLeft = function()
+				return E.func_mapName(2346)..": ".."Treasures" -- undermine
+			end,
 			name_save = "Treasure2346",
 			defS = true,
 			reset = "Once", -- "Daily",
@@ -500,7 +532,9 @@ local function tempFunction()
 		----------------------------------------------------------------------------
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(84370, false),
+			TextLeft = function()
+				return E.func_questName(84370, false)
+			end,
 			name_save = "TheKeytoSuccess",
 			defS = true,
 			reset = "Daily", -- "Once", ???
@@ -512,7 +546,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(82449, false),
+			TextLeft = function()
+				return E.func_questName(82449, false)
+			end,
 			name_save = "TheCalloftheWorldsoul",
 			defS = true,
 			reset = "Weekly",
@@ -668,7 +704,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.TWW_BeledarCycle()..E.func_questName(83240, false),
+			TextLeft = function()
+				return E.Timers.TWW_BeledarCycle()..E.func_questName(83240, false)
+			end,
 			name_save = "TheTheaterTroupe",
 			defS = true,
 			reset = "Weekly",
@@ -680,7 +718,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(76586, false),
+			TextLeft = function()
+				return E.func_questName(76586, false)
+			end,
 			name_save = "SpreadingtheLight",
 			defS = true,
 			reset = "Weekly",
@@ -692,7 +732,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(83333, false),
+			TextLeft = function()
+				return E.func_questName(83333, false)
+			end,
 			name_save = "GearingUpforTrouble",
 			defS = true,
 			reset = "Weekly",
@@ -723,7 +765,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(82946, false),
+			TextLeft = function()
+				return E.func_questName(82946, false)
+			end,
 			name_save = "RollinDownintheDeeps",
 			defS = true,
 			reset = "Weekly",
@@ -1421,7 +1465,9 @@ local function tempFunction()
 		----------------------------------------------------------------
 		{
 			showTooltip = true,
-			TextLeft = "tww-karesh-warrants "..E.func_currencyName(3278),
+			TextLeft = function()
+				return "tww-karesh-warrants "..E.func_currencyName(3278)
+			end,
 			name_save = "tww-karesh-warrants",
 			defS = true,
 			reset = "Weekly",

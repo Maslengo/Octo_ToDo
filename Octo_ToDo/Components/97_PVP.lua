@@ -33,7 +33,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_questName(47148, false),
+			TextLeft = function()
+				return E.func_questName(47148, false)
+			end,
 			name_save = "SomethingDifferent",
 			defS = true,
 			reset = "Weekly",

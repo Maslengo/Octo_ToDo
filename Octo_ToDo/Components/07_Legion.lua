@@ -128,7 +128,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(43533, false),
+			TextLeft = function()
+				return E.func_questName(43533, false)
+			end,
 			defS = false,
 			name_save = "BalanceofPower",
 			reset = "Once",
@@ -175,7 +177,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.Legion_Remix_Invasion(),
+			TextLeft = function()
+				return E.Timers.Legion_Remix_Invasion()
+			end,
 			defS = true,
 			name_save = "InvasionQuests",
 			reset = "Daily",
@@ -190,7 +194,9 @@ local function tempFunction()
 		},
 		-- {
 		-- showTooltip = true,
-		-- TextLeft = E.func_questName(92855, false),
+			-- TextLeft = function()
+			-- 	return E.func_questName(92855, false)
+			-- end,
 		-- defS = true,
 		-- name_save = "MakeHasteNotWaste",
 		-- reset = "Daily",

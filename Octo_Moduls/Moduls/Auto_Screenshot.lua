@@ -19,8 +19,8 @@ tinsert(E.Modules, function()
 	local function TakeScreenshotWithMessage(event)
 		local message = EVENT_MESSAGES[event] or ""
 		local currentTime = date("%m/%d/%y %H:%M:%S")
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message).." "..E.Yellow_Color..currentTime.."|r")
-		C_Timer.After(E.SPAM_TIME, function()
+		C_Timer.After(1, function()
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message).." "..E.Yellow_Color..currentTime.."|r")
 			Screenshot()
 		end)
 	end

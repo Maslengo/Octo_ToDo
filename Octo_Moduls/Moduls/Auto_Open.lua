@@ -67,8 +67,7 @@ local function HasEnoughFreeBagSpace()
 	return freePercent >= freeSpaceThreshold
 end
 ----------------------------------------------------------------
-function EventFrame:OpenableScan()
-	if E.func_SpamBlock("OpenableScan") then return end
+local function OpenableScan()
 	if _G.MerchantFrame and _G.MerchantFrame:IsShown() then return end
 	if not PlayerIsControllable() then
 		openableScanQueued = true
@@ -138,6 +137,10 @@ function EventFrame:OpenableScan()
 	end
 	-- Запуск первой итерации
 	OpenNext()
+end
+----------------------------------------------------------------
+function EventFrame:OpenableScan()
+	E.func_SpamBlock(OpenableScan, true)
 end
 ----------------------------------------------------------------
 local function HandleBagUpdate()

@@ -92,7 +92,7 @@ function EventFrame:CreateOcto_MinecraftFrameFG()
 	Octo_MinecraftFrameFG:SetMovable(true)
 	Octo_MinecraftFrameFG:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MinecraftFrameFG:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnDrag or E.backgroundColorA)
+				Octo_MinecraftFrameFG:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
 				Octo_MinecraftFrameFG:StartMoving()
 			end
 	end)

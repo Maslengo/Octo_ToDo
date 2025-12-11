@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_LegionRemixData()
-	if E.func_SpamBlock("Collect_All_LegionRemixData", false) then return end
-	----------------------------------------------------------------
+----------------------------------------------------------------
+local function Collect_All_LegionRemixData()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collect then return end
 	----------------------------------------------------------------
@@ -15,11 +14,15 @@ function E.Collect_All_LegionRemixData()
 	end
 	----------------------------------------------------------------
 	local count = 0
-	for _, questID in next,(E.OctoTable_RemixInfinityResearch) do
+	for questID in next,(E.OctoTable_RemixInfinityResearch) do
 		if C_QuestLog.IsOnQuest(questID) then
 			count = count + 1
 		end
 	end
 	collect.LegionRemixData.TotalInfinityResearchQuests = count > 0 and count or nil
 	----------------------------------------------------------------
+end
+----------------------------------------------------------------
+function E.Collect_All_LegionRemixData()
+	E.func_SpamBlock(Collect_All_LegionRemixData, true)
 end

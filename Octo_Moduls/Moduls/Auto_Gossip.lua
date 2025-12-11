@@ -7,6 +7,73 @@ local function HELP_TEXT(i, icon, name)
 end
 ----------------------------------------------------------------
 local targetNPCID = nil
+----------------------------------------------------------------
+local First_Option_NPC = {
+	[244792] = true,
+	[226775] = true,
+	-- [110034] = true,
+	-- [110035] = true,
+	[210718] = true,
+	[207779] = true,
+	[168432] = true,
+	[149626] = true,
+	[167298] = true,
+	[167598] = true,
+	[168441] = true,
+	[171589] = true,
+	[171787] = true,
+	[171795] = true,
+	[171821] = true,
+	[184787] = true,
+	[184795] = true,
+	[184796] = true,
+	[185894] = true,
+	[187495] = true,
+	[188868] = true,
+	[189869] = true,
+	[189895] = true,
+	[192722] = true,
+	[193127] = true,
+	[194916] = true,
+	[198927] = true,
+	[199532] = true,
+	[200987] = true,
+	[204185] = true,
+	[36939] = true,
+	[37187] = true,
+	[38995] = true,
+	[4311] = true,
+	[78423] = true,
+	[78556] = true,
+	[78563] = true,
+	[80225] = true,
+	[86775] = true,
+	[91483] = true,
+	[180162] = true,
+	[161509] = true,
+	[203011] = true,
+	[200172] = true,
+	[200171] = true,
+	[200170] = true,
+	[199198] = true,
+	[56592] = true,
+	[188246] = true,
+	[206941] = true,
+}
+local Second_Option_NPC = {
+	[201398] = true,
+	[56591] = true,
+}
+local Third_Option_NPC = {
+	[56585] = true,
+	[191156] = true,
+	[188601] = true,
+}
+local Fourth_Option_NPC = {
+	[54959] = true,
+}
+
+
 local ignoreNPCID = {
 	[213837] = true,
 	[208831] = true,
@@ -97,12 +164,12 @@ local mapIDs_table = {
 }
 ----------------------------------------------------------------
 function EventFrame:func_Config_Auto_Gossip()
-	-- local guid = UnitGUID("TARGET")
-	-- -- if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
-	-- if guid then
-	-- 	targetNPCID = tonumber(guid:match("-(%d+)-%x+$"), 10)
-	-- 	if ignoreNPCID[targetNPCID] then return end
-	-- end
+	local guid = UnitGUID("TARGET")
+	if not guid or UnitGUID("TARGET"):match("%a+") == "Player" then return end
+	if guid then
+		targetNPCID = tonumber(guid:match("-(%d+)-%x+$"), 10)
+		if ignoreNPCID[targetNPCID] then return end
+	end
 	local info = C_GossipInfo.GetOptions()
 	local numOptions = #info
 	local SubZoneText = GetSubZoneText()
@@ -116,24 +183,20 @@ function EventFrame:func_Config_Auto_Gossip()
 		local flags = option.flags
 		local unitname = UnitName("TARGET")
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugGossip then
-			print (E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
+			DEFAULT_CHAT_FRAME:AddMessage(E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
 		end
+		-- print (option.gossipOptionID)
 		if option.gossipOptionID and not ignoreICONS[icon] and not gossipOptionIDsIGNORE[option.gossipOptionID] then
 			if string.find(option.name:gsub("|", ""), "FF0000") then
-				-- print ("break")
 				break
 			end
-
 			-- if nonSecretSubZoneText[SubZoneText] then
-
-
 			if gossipOptionIDs[option.gossipOptionID] or flags == 1 or string.find(option.name:gsub("|", ""), "0000FF") then
 				C_GossipInfo.SelectOption(option.gossipOptionID)
 				StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
 				DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(i, option.icon, option.name))
 				break
 			elseif mapIDs_table[mapID] then
-				-- print (unitname, option.gossipOptionID)
 				C_GossipInfo.SelectOption(option.gossipOptionID)
 				StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
 				DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(i, option.icon, option.name))
@@ -144,11 +207,10 @@ function EventFrame:func_Config_Auto_Gossip()
 					StaticPopup_OnClick(StaticPopup1Button1:GetParent(), 1)
 					DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(i, option.icon, option.name))
 				else
-					if option.gossipOptionID and
-					(E.First_Option[targetNPCID] or
-						E.Second_Option[targetNPCID] or
-						E.Third_Option[targetNPCID] or
-						E.Fourth_Option[targetNPCID]) then
+					if (First_Option_NPC[targetNPCID] or
+						Second_Option_NPC[targetNPCID] or
+						Third_Option_NPC[targetNPCID] or
+						Fourth_Option_NPC[targetNPCID]) then
 						C_GossipInfo.SelectOption(option.gossipOptionID)
 						StaticPopup_OnClick(StaticPopup1Button1:GetParent(), i)
 						DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT(i, option.icon, option.name))

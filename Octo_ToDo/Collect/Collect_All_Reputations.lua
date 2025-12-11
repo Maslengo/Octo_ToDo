@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Reputations()
-	if E.func_SpamBlock("Collect_All_Reputations") then return end
+----------------------------------------------------------------
+local function Collect_All_Reputations()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 
@@ -19,4 +19,8 @@ function E.Collect_All_Reputations()
 			end
 		end
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_Reputations()
+	E.func_SpamBlock(Collect_All_Reputations, true)
 end

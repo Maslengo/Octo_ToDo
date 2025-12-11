@@ -96,7 +96,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436), false),
+			TextLeft = function()
+				return E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436), false)
+			end,
 			name_save = "AzeriteForTheFaction",
 			defS = true,
 			reset = "Weekly",
@@ -110,7 +112,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.Timers.BfA_Invasion(),
+			TextLeft = function()
+				return E.Timers.BfA_Invasion()
+			end,
 			name_save = "InvasionQuests",
 			defS = true,
 			reset = "Daily",
@@ -134,7 +138,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.Timers.BfA_Assault().."AssaultTheBlackEmpire",
+			TextLeft = function()
+				return E.Timers.BfA_Assault().."AssaultTheBlackEmpire"
+			end,
 			name_save = "AssaultTheBlackEmpire",
 			defS = true,
 			reset = "Weekly",
@@ -188,7 +194,9 @@ local function tempFunction()
 		{
 			sorted = true,
 			showTooltip = true,
-			TextLeft = E.func_mapName(62)..": ".."Rares", -- Darkshore
+			TextLeft = function()
+				return E.func_mapName(62)..": ".."Rares"
+			end,
 			name_save = "DarkshoreRares",
 			defS = true,
 			reset = "Daily",
@@ -282,7 +290,9 @@ local function tempFunction()
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
-		-- 	TextLeft = E.func_mapName(1462)..": "..E.func_questName(54088, false),
+			-- TextLeft = function()
+			-- 	return E.func_mapName(1462)..": "..E.func_questName(54088, false)
+			-- end,
 		-- 	name_save = "TheMechagonianThreat",
 		-- defS = true,
 		-- 	reset = "Once",
@@ -321,7 +331,9 @@ local function tempFunction()
 		{
 			sorted = true,
 			showTooltip = true,
-			TextLeft = E.func_mapName(1462)..": Rares",
+			TextLeft = function()
+				return E.func_mapName(1462)..": Rares"
+			end,
 			name_save = "MechagonRares",
 			defS = true,
 			reset = "Daily",
@@ -371,7 +383,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(1462)..": Treasures",
+			TextLeft = function()
+				return E.func_mapName(1462)..": Treasures"
+			end,
 			name_save = "MechagonTREASURE",
 			defS = true,
 			reset = "Daily",
@@ -497,7 +511,9 @@ local function tempFunction()
 		-- },
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(1462)..": Dailies Visitor Quests",
+			TextLeft = function()
+				return E.func_mapName(1462)..": Dailies Visitor Quests"
+			end,
 			name_save = "DAILY_VISITOR_QUESTS",
 			defS = true,
 			reset = "Daily",
@@ -542,7 +558,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(1462)..": Daily WQ",
+			TextLeft = function()
+				return E.func_mapName(1462)..": Daily WQ"
+			end,
 			name_save = "MechagonDAILYWQ",
 			defS = true,
 			reset = "Daily",
@@ -556,7 +574,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_mapName(1462)..": Secret Fish",
+			TextLeft = function()
+				return E.func_mapName(1462)..": "..E.func_achievementName(13489)
+			end,
 			name_save = "MechagonSecretFish",
 			defS = true,
 			reset = "Daily",
@@ -578,7 +598,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = E.func_mapName(1462)..": Making a Mount",
+			TextLeft = function()
+				return E.func_mapName(1462)..": "..E.func_achievementName(13791)
+			end,
 			name_save = "MechagonMakingAMount",
 			defS = true,
 			reset = "Once",

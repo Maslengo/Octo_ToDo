@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_BfA_Cloaklvl()
-	if E.func_SpamBlock("Collect_All_BfA_Cloaklvl") then return end
+----------------------------------------------------------------
+local function Collect_All_BfA_Cloaklvl()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local hasItem = E.func_GetItemCount(169223, false, false, false, false)
@@ -29,4 +29,8 @@ function E.Collect_All_BfA_Cloaklvl()
 			end
 		end
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_BfA_Cloaklvl()
+	E.func_SpamBlock(Collect_All_BfA_Cloaklvl, true)
 end

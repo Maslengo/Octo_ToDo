@@ -1,44 +1,41 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local ENABLE_DEBUG_TIMER = false
-function E.func_Collect_All()
-	local start = debugprofilestop()
-	local color = E.Green_Color
-	if E.func_SpamBlock("func_Collect_All") then
-		color = E.Red_Color
-	else
-		E.Collect_All_BfA_Azerite()
-		E.Collect_All_BfA_Cloaklvl()
-		E.Collect_All_Chromie()
-		E.Collect_All_Covenant()
-		E.Collect_All_Currency()
-		E.Collect_All_Delves()
-		E.Collect_All_Garrison()
-		E.Collect_All_GreatVault()
-		E.Collect_All_Holiday()
-		E.Collect_All_ItemLevel()
-		E.Collect_All_ItemsInBag()
-		E.Collect_All_JournalInstance()
-		E.Collect_All_LegionRemixData()
-		E.Collect_All_Locations()
-		E.Collect_All_LoginTime()
-		E.Collect_All_Mail()
-		E.Collect_All_MoneyOnLogin()
-		E.Collect_All_MoneyUpdate()
-		E.Collect_All_PlayerDurability()
-		E.Collect_All_PlayerInfo()
-		E.Collect_All_PlayerLevel()
-		E.Collect_All_Professions()
-		E.Collect_All_Quests()
-		E.Collect_All_Reputations()
-		E.Collect_All_UNIVERSALQuestUpdate()
-		E.Collect_All_WarMode()
-	end
-	local elapsed = debugprofilestop() - start
-	if ENABLE_DEBUG_TIMER then
-		print(string.format("Время выполнения: %s%.3f|r сек", color, elapsed / 1000))
-	end
+local function func_Collect_All()
+	E.Collect_All_BfA_Azerite()
+	E.Collect_All_BfA_Cloaklvl()
+	E.Collect_All_Chromie()
+	E.Collect_All_Covenant()
+	E.Collect_All_Currency()
+	E.Collect_All_Delves()
+	E.Collect_All_Garrison()
+	E.Collect_All_GreatVault()
+	E.Collect_All_Holiday()
+	E.Collect_All_ItemLevel()
+	E.Collect_All_ItemsInBag()
+	E.Collect_All_JournalInstance()
+	E.Collect_All_LegionRemixData()
+	E.Collect_All_Locations()
+	E.Collect_All_LoginTime()
+	E.Collect_All_Mail()
+	E.Collect_All_MoneyOnLogin()
+	E.Collect_All_MoneyUpdate()
+	E.Collect_All_PlayerDurability()
+	E.Collect_All_PlayerInfo()
+	E.Collect_All_PlayerLevel()
+	E.Collect_All_Professions()
+	E.Collect_All_Quests()
+	E.Collect_All_Reputations()
+	E.Collect_All_UNIVERSALQuestUpdate()
+	E.Collect_All_WarMode()
 end
+----------------------------------------------------------------
+function E.func_Collect_All()
+	E.func_SpamBlock(func_Collect_All, false)
+end
+----------------------------------------------------------------
+
+
 local MyEventsTable = {
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
@@ -162,14 +159,22 @@ function EventFrame:ACCOUNT_MONEY()
 	E.Collect_All_MoneyUpdate()
 	E.func_Update("ACCOUNT_MONEY")
 end
-function EventFrame:CURRENCY_DISPLAY_UPDATE()
+function EventFrame:CURRENCY_DISPLAY_UPDATE(...)
+	local currencyID = ...
 	E.Collect_All_Currency()
 	E.Collect_All_Covenant()
+	if currencyID then
+		E.Collect_TARGET_Currency(currencyID)
+	end
 	E.func_Update("CURRENCY_DISPLAY_UPDATE")
 end
 function EventFrame:CURRENCY_TRANSFER_LOG_UPDATE()
 	E.Collect_All_Currency()
 	E.Collect_All_Covenant()
+	E.Collect_All_Currency_Account()
+	C_Timer.After(1, function()
+		E.Collect_All_Currency_Account()
+	end)
 	E.func_Update("CURRENCY_TRANSFER_LOG_UPDATE")
 end
 function EventFrame:PLAYER_EQUIPMENT_CHANGED()
@@ -188,13 +193,12 @@ function EventFrame:AZERITE_ITEM_EXPERIENCE_CHANGED()
 	E.Collect_All_BfA_Azerite()
 	E.Collect_All_BfA_Cloaklvl()
 	E.func_Update("AZERITE_ITEM_EXPERIENCE_CHANGED")
+
+	E.OBROBOTCHIT(Collect_All_BfA_Cloaklvl)
 end
 function EventFrame:COVENANT_CHOSEN(...)
 	local id = ...
 	E.Collect_All_Covenant()
-	C_Timer.After(1, function()
-		E.Collect_All_Covenant_FAST(id)
-	end)
 	E.func_Update("COVENANT_CHOSEN")
 end
 function EventFrame:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
@@ -272,8 +276,8 @@ function EventFrame:QUEST_REMOVED()
 	E.Collect_All_LegionRemixData()
 	E.func_Update("QUEST_REMOVED")
 end
-function EventFrame:SHOW_LOOT_TOAST(rt, rl, q, _4, _5, _6, source)
-	E.Collect_All_lastCacheTime(rt, rl, q, _4, _5, _6, source)
+function EventFrame:SHOW_LOOT_TOAST(...)
+	E.Collect_All_lastCacheTime(...)
 	E.func_Update("SHOW_LOOT_TOAST")
 end
 function EventFrame:BARBER_SHOP_APPEARANCE_APPLIED()

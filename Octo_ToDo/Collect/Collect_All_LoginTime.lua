@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_LoginTime()
-	if E.func_SpamBlock("Collect_All_LoginTime", false) then return end
+----------------------------------------------------------------
+local function Collect_All_LoginTime()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	collectPlayerData.loginDate = date("%d.%m.%Y %H:%M:%S")
@@ -12,4 +12,8 @@ function E.Collect_All_LoginTime()
 	collectPlayerData.time = time()
 	collectPlayerData.tmstp_Daily = C_DateAndTime.GetSecondsUntilDailyReset() + GetServerTime()
 	collectPlayerData.tmstp_Weekly = C_DateAndTime.GetSecondsUntilWeeklyReset() + GetServerTime()
+end
+----------------------------------------------------------------
+function E.Collect_All_LoginTime()
+	E.func_SpamBlock(Collect_All_LoginTime, true)
 end

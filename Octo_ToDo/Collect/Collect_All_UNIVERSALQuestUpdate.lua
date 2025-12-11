@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
-function E.Collect_All_UNIVERSALQuestUpdate()
-	if E.func_SpamBlock("Collect_All_UNIVERSALQuestUpdate") then return end
+----------------------------------------------------------------
+local function Collect_All_UNIVERSALQuestUpdate()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	local hasDataToSave = false
@@ -48,4 +47,8 @@ function E.Collect_All_UNIVERSALQuestUpdate()
 	elseif collectMASLENGO.UniversalQuest then
 		collectMASLENGO.UniversalQuest = nil
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_UNIVERSALQuestUpdate()
+	E.func_SpamBlock(Collect_All_UNIVERSALQuestUpdate, true)
 end

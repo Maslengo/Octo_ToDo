@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_JournalInstance()
-	if E.func_SpamBlock("Collect_All_JournalInstance") then return end
+----------------------------------------------------------------
+local function Collect_All_JournalInstance()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectPlayerData then return end
@@ -82,4 +82,8 @@ function E.Collect_All_JournalInstance()
 			end
 		end
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_JournalInstance()
+	E.func_SpamBlock(Collect_All_JournalInstance, true)
 end

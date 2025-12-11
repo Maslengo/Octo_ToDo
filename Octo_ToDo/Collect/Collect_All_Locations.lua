@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-function E.Collect_All_Locations()
-	if E.func_SpamBlock("Collect_All_Locations", false) then return end
+----------------------------------------------------------------
+local function Collect_All_Locations()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	collectPlayerData.curLocation = E.func_GetCurrentLocation()
@@ -8,4 +8,8 @@ function E.Collect_All_Locations()
 	if curBindLocation then
 		collectPlayerData.BindLocation = curBindLocation
 	end
+end
+----------------------------------------------------------------
+function E.Collect_All_Locations()
+	E.func_SpamBlock(Collect_All_Locations, true)
 end
