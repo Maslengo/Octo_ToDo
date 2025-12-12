@@ -19,15 +19,9 @@ end)
 ----------------------------------------------------------------
 -- Общие функции
 ----------------------------------------------------------------
--- function E.func_reloadMenu(DropDown, level, value)
--- DropDown:ddCloseMenus(level)
--- local menu = LibSFDropDown:GetMenu(level)
--- DropDown:ddToggle(level, value, menu.anchorFrame)
--- end
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2
 
 local function CreateBaseDropDown(frame, hex, providerfunc)
-	-- local DropDown = CreateFrame("Button", nil, frame, "SecureActionButtonTemplate, BackDropTemplate")
 	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 	DropDown:SetSize(LINE_WIDTH_LEFT, E.GLOBAL_LINE_HEIGHT)
 	E.func_SetBackdrop(DropDown)
@@ -58,17 +52,19 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 	return DropDown
 end
 ----------------------------------------------------------------
--- Меню ToDo
+-- Меню ToDo - Основное меню с подменю
 ----------------------------------------------------------------
 function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
-	-- Функции для обработки выбора в меню
+
+	-- Локальные функции для работы с персонажами
 	local function selectFunctionisShownPLAYER(menuButton, _, _, checked)
 		Octo_ToDo_DB_Levels[menuButton.value].PlayerData.isShownPLAYER = checked
 		providerfunc()
 		frame.ScrollBoxCenter:ScrollToOffset(0)
 		frame.horizontalScrollFrame:SetHorizontalScroll(0)
 	end
+
 	local function func_remove_GUID(menuButton, arg1)
 		local guid = menuButton.value
 		Octo_ToDo_DB_Levels[guid] = nil
@@ -79,367 +75,266 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 		C_Timer.After(1, providerfunc)
 	end
 
+	-- Функции для работы с регионами, серверами и персонажами
+	local function GetRegionsData()
+		local RegionList = {}
+		local Octo_Regions = {}
+		local countRegions = 0
 
-
-	local function func_remove_Profile(menuButton, arg1)
-		local profileName = menuButton.value
-
-		-- Проверяем, что это не профиль по умолчанию
-		if profileName == "Default" then
-			E.func_ShowMessage(L["Cannot delete the default profile"])
-			return
+		for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+			if CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName then
+				if not RegionList[CharInfo.PlayerData.CurrentRegionName] then
+					countRegions = countRegions + 1
+					Octo_Regions[countRegions] = CharInfo.PlayerData.CurrentRegionName
+				end
+				RegionList[CharInfo.PlayerData.CurrentRegionName] = true
+			end
 		end
 
-		-- Удаляем профиль
-		Octo_profileKeys.profiles[profileName] = nil
-
-		-- Если удаляем текущий профиль, переключаемся на Default
-		if Octo_profileKeys.CurrentProfile == profileName then
-			Octo_profileKeys.CurrentProfile = "Default"
+		if countRegions > 0 then
+			sort(Octo_Regions)
 		end
 
-		-- Обновляем интерфейс
-		C_Timer.After(1, providerfunc)
-
-		E.func_ShowMessage(L["Profile successfully deleted"])
+		return Octo_Regions, countRegions
 	end
 
-	local function func_rename_Profile(menuButton, arg1)
-		local profileName = menuButton.value
+	local function GetServersData(regionName)
+		local tbl_Servers = {}
 
-		-- Показываем диалог переименования
-		StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
-			text = "Введите новое название для профиля '"..profileName.."':",
-			button1 = RENAME_GUILD,
-			button2 = CANCEL,
-			hasEditBox = true,
-			editBoxWidth = 260,
-			maxLetters = 30,
-			OnAccept = function(dialog)
-				local newName = dialog.EditBox:GetText():trim()
-				if newName and newName ~= "" and newName ~= profileName then
-					-- Проверяем, не существует ли уже профиль с таким именем
-					if Octo_profileKeys.profiles[newName] then
-						E.func_ShowMessage(L["A profile with the same name exists"])
-						return
-					end
+		for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+			if CharInfo.PlayerData and CharInfo.PlayerData.curServer and
+			   (not regionName or CharInfo.PlayerData.CurrentRegionName == regionName) then
+				tbl_Servers[CharInfo.PlayerData.curServer] = tbl_Servers[CharInfo.PlayerData.curServer] or {}
+			end
+		end
 
-					-- Сохраняем данные профиля под новым именем
-					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
-					-- Удаляем старый профиль
-					Octo_profileKeys.profiles[profileName] = nil
+		local serverNames = {}
+		for serverName, _ in next, tbl_Servers do
+			tinsert(serverNames, serverName)
+		end
 
-					-- Обновляем текущий профиль, если переименовываем текущий
-					if Octo_profileKeys.CurrentProfile == profileName then
-						Octo_profileKeys.CurrentProfile = newName
-					end
+		if #serverNames > 0 then
+			sort(serverNames)
+		end
 
-					-- Закрываем меню
-					self:ddCloseMenus()
-
-					-- Обновляем интерфейс
-					providerfunc()
-
-					E.func_ShowMessage(L["Profile successfully renamed"])
-				end
-			end,
-			OnShow = function(dialog)
-				dialog.EditBox:SetText(profileName)
-				dialog.EditBox:SetFocus()
-				dialog.EditBox:HighlightText()
-			end,
-			EditBoxOnEnterPressed = function(editBox)
-				local dialog = editBox:GetParent()
-				local newName = editBox:GetText():trim()
-				if newName and newName ~= "" and newName ~= profileName then
-					if Octo_profileKeys.profiles[newName] then
-						E.func_ShowMessage(L["A profile with the same name exists"])
-						return
-					end
-
-					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
-					Octo_profileKeys.profiles[profileName] = nil
-
-					if Octo_profileKeys.CurrentProfile == profileName then
-						Octo_profileKeys.CurrentProfile = newName
-					end
-
-					dialog:Hide()
-					providerfunc()
-					E.func_ShowMessage(L["Profile successfully renamed"])
-				end
-			end,
-			timeout = 0,
-			whileDead = true,
-			hideOnEscape = true,
-			preferredIndex = 3,
-		}
-		StaticPopup_Show("OCTO_RENAME_PROFILE_INLINE")
+		return serverNames
 	end
 
+	local function GetCharactersData(serverName, regionName)
+		local characters = {}
 
+		for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+			if CharInfo.PlayerData and CharInfo.PlayerData.curServer == serverName and
+			   (not regionName or CharInfo.PlayerData.CurrentRegionName == regionName) then
+				tinsert(characters, {
+					GUID = GUID,
+					Name = CharInfo.PlayerData.Name,
+					classColorHex = CharInfo.PlayerData.classColorHex,
+					UnitLevel = CharInfo.PlayerData.UnitLevel,
+					avgItemLevel = CharInfo.PlayerData.avgItemLevel,
+					specIcon = CharInfo.PlayerData.specIcon,
+					isShownPLAYER = CharInfo.PlayerData.isShownPLAYER,
+					curServer = CharInfo.PlayerData.curServer
+				})
+			end
+		end
 
-	local function selectFunctionExpansion(menuButton, _, _, checked)
-		Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
-		providerfunc()
+		-- Сортируем персонажей
+		sort(characters, function(a, b)
+			return (a.curServer or 0) > (b.curServer or 0) or
+				   (a.curServer or 0) == (b.curServer or 0) and (a.UnitLevel or 0) > (b.UnitLevel or 0) or
+				   (a.UnitLevel or 0) == (b.UnitLevel or 0) and (a.avgItemLevel or 0) > (b.avgItemLevel or 0) or
+				   (a.avgItemLevel or 0) == (b.avgItemLevel or 0) and (b.Name or 0) > (a.Name or 0)
+		end)
+
+		return characters
 	end
-	local function selectFunctionProfiles(menuButton, _, _, checked)
-		Octo_profileKeys.CurrentProfile[menuButton.value] = checked or nil
-		providerfunc()
-	end
-	-- Функция инициализации меню
+
+	-- Функция инициализации основного меню
 	DropDown:ddSetInitFunc(function(self, level, value)
-			local info, list = {}, {}
+		if level == 1 then
+			-- Основное меню первого уровня
+			local info = {}
 			info.fontObject = OctoFont11
-			local countRegions = 0
-			if level == 1 then
-				-- Собираем список Region'ов
-				local RegionList = {}
-				local Octo_Regions = {}
-				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if CharInfo.PlayerData then
-						if not RegionList[CharInfo.PlayerData.CurrentRegionName] then
-							countRegions = countRegions + 1
-							Octo_Regions[countRegions] = CharInfo.PlayerData.CurrentRegionName
-						end
-						RegionList[CharInfo.PlayerData.CurrentRegionName] = true
-					end
-				end
-				sort(Octo_Regions)
-				-- Если Region'ов больше одного, создаем подменю
-				if countRegions > 1 then
-					for i, Regions in ipairs(Octo_Regions) do
-						local info = {}
-						info.fontObject = OctoFont11
-						info.hasArrow = true
-						info.hasArrowUp = true
-						info.keepShownOnClick = true
-						info.notCheckable = true
-						local vivod = Regions
-						if Regions == E.CurrentRegionName then
-							vivod = E.classColorHexCurrent..Regions.."|r"
-						elseif Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion then
-							vivod = E.Gray_Color..vivod.."|r"
-						end
-						info.text = vivod
-						info.value = Regions
-						tinsert(list, info)
-					end
-				else
-					local GUID, CharInfo = next(Octo_ToDo_DB_Levels)
-					value = CharInfo.PlayerData.CurrentRegionName
-				end
+
+			-- Меню персонажей с фильтрами
+			info.hasArrow = true
+			info.hasArrowUp = true
+			info.keepShownOnClick = true
+			info.notCheckable = true
+			info.text = CHARACTER
+			info.value = "characters"
+			self:ddAddButton(info, level)
+
+			-- Меню дополнений
+			info.text = EXPANSION_FILTER_TEXT
+			info.value = "expansions"
+			self:ddAddButton(info, level)
+
+			-- Меню профилей
+			info.text = L["Profiles"]
+			info.value = "profiles"
+			self:ddAddButton(info, level)
+
+			self:ddAddSeparator(level)
+
+			-- SettingsEnabled - обычная флажковая кнопка без подменю
+			local info = {}
+			info.fontObject = OctoFont11
+			info.hasArrow = nil  -- Без стрелки
+			info.hasArrowUp = nil
+			info.keepShownOnClick = true
+			info.notCheckable = false
+			info.isNotRadio = true  -- Важно: флажок, а не радиокнопка
+			info.text = L["Settings mode"] -- "SettingsEnabled"
+			info.checked = Octo_profileKeys.SettingsEnabled
+			info.func = function(_, _, _, checked)
+				Octo_profileKeys.SettingsEnabled = checked
+				providerfunc()
 			end
-			self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
-			-- Обработка разных уровней меню
-			if type(value) == "string" then
-				-- Меню серверов
-				local tbl_Players = {}
-				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					if CharInfo.PlayerData and (CharInfo.PlayerData.CurrentRegionName == value or not value) then
-						tbl_Players[CharInfo.PlayerData.curServer] = tbl_Players[CharInfo.PlayerData.curServer] or {}
-						tbl_Players[CharInfo.PlayerData.curServer][GUID] = tbl_Players[CharInfo.PlayerData.curServer][GUID] or {}
-						tbl_Players[CharInfo.PlayerData.curServer][GUID] = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"..(CharInfo.PlayerData.UnitLevel or 0)
-					end
-				end
-				for Server, v in next, (tbl_Players) do
-					local info = {}
-					info.fontObject = OctoFont11
-					info.hasArrow = true
-					info.hasArrowUp = true
-					info.keepShownOnClick = true
-					info.notCheckable = true
-					local vivod = Server
-					-- Подсвечиваем текущий сервер
-					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (value ~= E.CurrentRegionName or Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.func_GetRealmName())
-					or not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and Server ~= E.func_GetRealmName() then
-						vivod = E.Gray_Color..vivod.."|r"
-					elseif Server == E.func_GetRealmName() then
-						vivod = E.classColorHexCurrent..vivod.."|r"
-					end
-					info.text = vivod
-					info.value = v
-					tinsert(list, info)
-				end
-				self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
-			elseif type(value) == "table" then
-				-- Меню персонажей
-				local players_list = {}
-				for GUID, names in next, (value) do
-					tinsert(players_list, GUID)
-				end
-				-- Сортируем персонажей
-				sort(players_list, function(a, b)
-						if Octo_ToDo_DB_Levels[a] and Octo_ToDo_DB_Levels[b] then
-							local infoA = Octo_ToDo_DB_Levels[a].PlayerData
-							local infoB = Octo_ToDo_DB_Levels[b].PlayerData
-							if infoA and infoB then
-								return
-								(infoA.curServer or 0) > (infoB.curServer or 0) or
-								(infoA.curServer or 0) == (infoB.curServer or 0) and (infoA.UnitLevel or 0) > (infoB.UnitLevel or 0) or
-								(infoA.UnitLevel or 0) == (infoB.UnitLevel or 0) and (infoA.avgItemLevel or 0) > (infoB.avgItemLevel or 0) or
-								(infoA.avgItemLevel or 0) == (infoB.avgItemLevel or 0) and (infoB.Name or 0) > (infoA.Name or 0)
-							end
-						end
-				end)
-				-- Добавляем персонажей в меню
-				for _, GUID in next, (players_list) do
-					if Octo_ToDo_DB_Levels[GUID].PlayerData then
-						local info = {}
-						info.fontObject = OctoFont11
-						info.keepShownOnClick = true
-						info.isNotRadio = true
-						local vivod = Octo_ToDo_DB_Levels[GUID].PlayerData.classColorHex..Octo_ToDo_DB_Levels[GUID].PlayerData.Name.."|r"
-						if Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel ~= E.currentMaxLevel then
-							vivod = vivod.." "..E.Yellow_Color..(Octo_ToDo_DB_Levels[GUID].PlayerData.UnitLevel or 0).."|r"
-						end
-						if Octo_ToDo_DB_Levels[GUID].PlayerData.Name == E.curCharName then
-							vivod = vivod..E.Green_Color.."*|r"
-						end
-						info.text = vivod
-						info.value = GUID
-						info.func = selectFunctionisShownPLAYER
-						info.checked = Octo_ToDo_DB_Levels[GUID].PlayerData.isShownPLAYER
-						info.arg1 = {self, level, value}
-						info.remove = func_remove_GUID
-						info.removeDoNotHide = true
-						info.icon = Octo_ToDo_DB_Levels[GUID].PlayerData.specIcon
-						info.iconInfo = {tSizeX = 16, tSizeY = 16}
-						tinsert(list, info)
-					end
-				end
-				self:ddAddButton({list = list, LIST_MAX_SIZE = E.LIST_MAX_SIZE}, level)
-			end
-			-- Добавляем общие кнопки в меню
-			if level == 1 then
+			self:ddAddButton(info, level)
+
+		elseif level == 2 then
+			-- Подменю второго уровня
+			if value == "characters" then
+				-- Меню персонажей - сначала добавляем фильтры
+				local info = {}
+				info.fontObject = OctoFont11
+
 				-- Кнопки "Показать всех" и "Скрыть всех"
-				local function AddShowHideButtons()
-					local info = {}
-					info.fontObject = OctoFont11
-					info.keepShownOnClick = false
-					info.notCheckable = true
-					info.text = INTERACT_ICONS_SHOW_ALL
-					info.icon = false
-					info.hasArrow = nil
-					info.func = function(_, _, _, checked)
-						for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-							CharInfo.PlayerData.isShownPLAYER = true
-						end
-						providerfunc()
+				info.hasArrow = nil
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = INTERACT_ICONS_SHOW_ALL
+				info.func = function(_, _, _, checked)
+					for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+						CharInfo.PlayerData.isShownPLAYER = true
 					end
-					self:ddAddButton(info, level)
-					info.text = HIDE
-					info.func = function(_, _, _, checked)
-						for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-							CharInfo.PlayerData.isShownPLAYER = false
-						end
-						providerfunc()
-					end
-					self:ddAddButton(info, level)
-					self:ddAddSeparator(level)
+					providerfunc()
 				end
-				-- Кнопки фильтров
-				local function AddFilterButtons()
-					local info = {}
-					info.fontObject = OctoFont11
-					info.keepShownOnClick = true
-					info.notCheckable = false
-					info.isNotRadio = true
-					-- Только текущий сервер
-					info.text = L["Only Current Server"]
-					info.hasArrow = nil
-					info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+				self:ddAddButton(info, level)
+
+				info.text = HIDE
+				info.func = function(_, _, _, checked)
+					for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+						CharInfo.PlayerData.isShownPLAYER = false
+					end
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+
+				self:ddAddSeparator(level)
+
+				-- Фильтры
+				info.keepShownOnClick = true
+				info.notCheckable = false
+				info.isNotRadio = true
+
+				-- Только текущий сервер
+				info.text = L["Only Current Server"]
+				info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentServer
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = checked
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+
+				-- Только текущий регион
+				local regions, countRegions = GetRegionsData()
+				if countRegions > 1 then
+					info.text = L["Only Current Region"]
+					info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_Vars.ShowOnlyCurrentServer = checked
+						Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = checked
 						providerfunc()
 					end
 					self:ddAddButton(info, level)
-					-- Только текущий Region (если их несколько)
-					if countRegions > 1 then
-						info.text = L["Only Current Region"]
-						info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-						info.func = function(_, _, _, checked)
-							Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = checked
-							providerfunc()
-						end
+				end
+
+				-- Только текущая фракция
+				if E.curFaction == "Horde" then
+					info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
+				else
+					info.text = E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"]
+				end
+				info.checked = Octo_ToDo_DB_Vars.OnlyCurrentFaction
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.OnlyCurrentFaction = checked
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+
+				self:ddAddSeparator(level)
+
+				-- Теперь добавляем меню регионов
+				local info = {}
+				info.fontObject = OctoFont11
+				info.hasArrow = true
+				info.hasArrowUp = true
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.checked = nil  -- Важно: убрать checked для кнопок со стрелками
+
+				-- Получаем список регионов
+				local regions, countRegions = GetRegionsData()
+
+				if countRegions > 1 then
+					-- Если регионов несколько, показываем их
+					for _, regionName in ipairs(regions) do
+						info.text = regionName == E.CurrentRegionName and
+								   E.classColorHexCurrent..regionName.."|r" or regionName
+						info.value = regionName
 						self:ddAddButton(info, level)
 					end
-					-- Только текущая фракция
-					if E.curFaction == "Horde" then
-						info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
-					else
-						info.text = E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"]
+				elseif countRegions == 1 then
+					-- Если регион один, показываем сразу сервера этого региона
+					local regionName = regions[1]
+					local servers = GetServersData(regionName)
+
+					for _, serverName in ipairs(servers) do
+						local vivod = serverName
+						if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (regionName ~= E.CurrentRegionName or
+						   Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and serverName ~= E.func_GetRealmName()) or
+						   not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and
+						   serverName ~= E.func_GetRealmName() then
+							vivod = E.Gray_Color..vivod.."|r"
+						elseif serverName == E.func_GetRealmName() then
+							vivod = E.classColorHexCurrent..vivod.."|r"
+						end
+
+						info.text = vivod
+						info.value = {server = serverName, region = regionName}
+						self:ddAddButton(info, level)
 					end
-					info.checked = Octo_ToDo_DB_Vars.OnlyCurrentFaction
-					info.func = function(_, _, _, checked)
-						Octo_ToDo_DB_Vars.OnlyCurrentFaction = checked
-						providerfunc()
-					end
-					self:ddAddButton(info, level)
-					-- SettingsEnabled
-					info.text = "SettingsEnabled"
-					info.checked = Octo_profileKeys.SettingsEnabled
-					info.func = function(_, _, _, checked)
-						Octo_profileKeys.SettingsEnabled = checked
-						providerfunc()
-					end
-					self:ddAddButton(info, level)
-					self:ddAddSeparator(level)
 				end
-				AddShowHideButtons()
-				AddFilterButtons()
-				-- Меню фильтров по дополнениям
-				local info = {}
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = true
-				info.text = EXPANSION_FILTER_TEXT
-				info.value = EXPANSION_FILTER_TEXT
-				info.icon = false
-				info.hasArrow = true
-				info.hasArrowUp = true
-				self:ddAddButton(info, level)
-				-- Меню фильтров по дополнениям
-				local info = {}
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = true
-				info.text = L["Profiles"]
-				info.value = L["Profiles"]
-				info.icon = false
-				info.hasArrow = true
-				info.hasArrowUp = true
-				self:ddAddButton(info, level)
 
+			elseif value == "expansions" then
+				-- Меню дополнений (сохраненная логика)
+				local selectFunctionExpansion = function(menuButton, _, _, checked)
+					Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
+					providerfunc()
+				end
 
-
-
-
-			elseif value == EXPANSION_FILTER_TEXT then
-				-- Виджеты для кнопок
 				local info = {}
 				info.widgets = {{
-						icon = "interface/worldmap/worldmappartyicon",
-						OnClick = function(btn)
-							PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-							-- for expansionID = #E.OctoTable_Expansions, 1, -1 do
-							for expansionID, v in next,(E.OctoTables_Vibor) do
-								Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
-							end
-							Octo_ToDo_DB_Vars.ExpansionToShow[btn.value] = true
-							self:ddRefresh(level)
-							providerfunc()
-						end,
+					icon = "interface/worldmap/worldmappartyicon",
+					OnClick = function(btn)
+						PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+						for expansionID, v in next, E.OctoTables_Vibor do
+							Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
+						end
+						Octo_ToDo_DB_Vars.ExpansionToShow[btn.value] = true
+						self:ddRefresh(level)
+						providerfunc()
+					end,
 				}}
 				info.checked = function(btn)
 					return Octo_ToDo_DB_Vars.ExpansionToShow[btn.value]
 				end
 				info.func = selectFunctionExpansion
 				info.iconInfo = {tSizeX = E.ddMenuButtonHeight*2, tSizeY = E.ddMenuButtonHeight}
-				-- Добавляем кнопки для каждого дополнения (в обратном порядке)
-				for expansionID, v in next,(E.OctoTables_Vibor) do
-					-- for expansionID = #E.OctoTable_Expansions, 1, -1 do
-					-- local v = E.OctoTable_Expansions[expansionID]
+
+				for expansionID, v in next, E.OctoTables_Vibor do
 					info.isNotRadio = true
 					info.notCheckable = false
 					info.keepShownOnClick = true
@@ -448,30 +343,30 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					info.icon = v.icon
 					self:ddAddButton(info, level)
 				end
+
 				info.widgets = nil
 				info.iconInfo = nil
 				info.checked = nil
 				self:ddAddSeparator(level)
-				-- Кнопки "Показать все" и "Скрыть все" для дополнений
+
+				-- Кнопки "Показать все" и "Скрыть все"
 				local info = {}
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
 				info.notCheckable = true
 				info.text = INTERACT_ICONS_SHOW_ALL
-				info.icon = false
 				info.func = function(_, _, _, checked)
-					-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
-					for expansionID, v in next,(E.OctoTables_Vibor) do
+					for expansionID, v in next, E.OctoTables_Vibor do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
 					end
 					self:ddRefresh(level)
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
+
 				info.text = HIDE
 				info.func = function(_, _, _, checked)
-					-- for expansionID, v in ipairs(E.OctoTable_Expansions) do
-					for expansionID, v in next,(E.OctoTables_Vibor) do
+					for expansionID, v in next, E.OctoTables_Vibor do
 						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
 					end
 					self:ddRefresh(level)
@@ -479,84 +374,135 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				end
 				self:ddAddButton(info, level)
 
+			elseif value == "profiles" then
+				-- Меню профилей (сохраненная логика)
+				local func_remove_Profile = function(menuButton, arg1)
+					local profileName = menuButton.value
+					if profileName == "Default" then
+						E.func_ShowMessage(L["Cannot delete the default profile"])
+						return
+					end
 
+					Octo_profileKeys.profiles[profileName] = nil
+					if Octo_profileKeys.CurrentProfile == profileName then
+						Octo_profileKeys.CurrentProfile = "Default"
+					end
 
-				-- Кнопки фильтров для разных типов контента
-				local info = {}
-				info.fontObject = OctoFont11
-				info.keepShownOnClick = true
-				info.notCheckable = false
-				info.isNotRadio = true
+					C_Timer.After(1, providerfunc)
+					E.func_ShowMessage(L["Profile successfully deleted"])
+				end
 
-			elseif value == L["Profiles"] then
-				-- Получаем список профилей
+				local func_rename_Profile = function(menuButton, arg1)
+					local profileName = menuButton.value
+					StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
+						text = "Введите новое название для профиля '"..profileName.."':",
+						button1 = RENAME_GUILD,
+						button2 = CANCEL,
+						hasEditBox = true,
+						editBoxWidth = 260,
+						maxLetters = 30,
+						OnAccept = function(dialog)
+							local newName = dialog.EditBox:GetText():trim()
+							if newName and newName ~= "" and newName ~= profileName then
+								if Octo_profileKeys.profiles[newName] then
+									E.func_ShowMessage(L["A profile with the same name exists"])
+									return
+								end
+
+								Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
+								Octo_profileKeys.profiles[profileName] = nil
+
+								if Octo_profileKeys.CurrentProfile == profileName then
+									Octo_profileKeys.CurrentProfile = newName
+								end
+
+								self:ddCloseMenus()
+								providerfunc()
+								E.func_ShowMessage(L["Profile successfully renamed"])
+							end
+						end,
+						OnShow = function(dialog)
+							dialog.EditBox:SetText(profileName)
+							dialog.EditBox:SetFocus()
+							dialog.EditBox:HighlightText()
+						end,
+						EditBoxOnEnterPressed = function(editBox)
+							local dialog = editBox:GetParent()
+							local newName = editBox:GetText():trim()
+							if newName and newName ~= "" and newName ~= profileName then
+								if Octo_profileKeys.profiles[newName] then
+									E.func_ShowMessage(L["A profile with the same name exists"])
+									return
+								end
+
+								Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
+								Octo_profileKeys.profiles[profileName] = nil
+
+								if Octo_profileKeys.CurrentProfile == profileName then
+									Octo_profileKeys.CurrentProfile = newName
+								end
+
+								dialog:Hide()
+								providerfunc()
+								E.func_ShowMessage(L["Profile successfully renamed"])
+							end
+						end,
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show("OCTO_RENAME_PROFILE_INLINE")
+				end
+
 				local profiles = Octo_profileKeys.profiles
 				local profileNames = {}
 
-				-- Собираем названия профилей
 				for profileName, _ in next, profiles do
 					tinsert(profileNames, profileName)
 				end
 
-				-- Сортируем имена профилей
 				sort(profileNames)
 
-				-- Добавляем кнопки для каждого профиля как радиокнопки
 				for _, profileName in ipairs(profileNames) do
 					local info = {}
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = false
 					info.notCheckable = false
-					info.isNotRadio = false  -- Радиокнопки (только один выбран)
+					info.isNotRadio = true  -- Сделать флажками, а не радиокнопками
 					info.text = profileName
 					info.value = profileName
 					info.checked = Octo_profileKeys.CurrentProfile == profileName
 					info.func = function(menuButton, _, _, checked)
-						-- При выборе нового профиля
 						Octo_profileKeys.CurrentProfile = menuButton.value
-						-- Закрываем меню
-						-- self:ddCloseMenus()
-						-- Вызываем провайдер для обновления интерфейса
 						providerfunc()
 					end
 					info.arg1 = {self, level, value}
-					-- info.remove = func_remove_Profile
-
 
 					if profileName ~= "Default" then
 						info.remove = func_remove_Profile
 						info.removeDoNotHide = false
-					else
-						-- Для профиля Default убираем возможность удаления
-						info.remove = nil
 					end
 
 					if profileName ~= "Default" then
 						info.settings = func_rename_Profile
-						info.settingsDoNotHide = true  -- Чтобы меню не закрывалось
+						info.settingsDoNotHide = true
 					end
 
-
-
-					-- info.removeDoNotHide = false
 					self:ddAddButton(info, level)
 				end
 
-				-- Добавляем разделитель
 				self:ddAddSeparator(level)
 
-				-- Функция для создания нового профиля
+				-- Кнопки управления профилями
 				local function CreateNewProfile(profileName, copyFromCurrent)
 					if profileName and profileName:trim() ~= "" then
-						-- Проверяем, не существует ли уже профиль с таким именем
 						if profiles[profileName] then
 							E.func_ShowMessage(L["A profile with the same name exists"])
 							return false
 						end
 
-						-- Создаем новый профиль
 						if copyFromCurrent and Octo_profileKeys.CurrentProfile then
-							-- Копируем данные из текущего профиля
 							local currentProfileData = profiles[Octo_profileKeys.CurrentProfile]
 							if currentProfileData then
 								profiles[profileName] = E.func_DeepCopy(currentProfileData)
@@ -564,31 +510,23 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 								profiles[profileName] = {}
 							end
 						else
-							E.func_CreateNewProfile(profileName) -- СОЗДАТЬ ТУТ НОВЫЙ ПРОФИЛЬ(ИМЯ)
+							E.func_CreateNewProfile(profileName)
 						end
 
-						-- Устанавливаем новый профиль как текущий
 						Octo_profileKeys.CurrentProfile = profileName
-
-						-- Закрываем меню (если оно еще открыто)
 						self:ddCloseMenus()
-
-						-- Обновляем интерфейс
 						providerfunc()
-
 						E.func_ShowMessage(L["Profile successfully created"])
 						return true
 					end
 					return false
 				end
 
-				-- Функция показа диалога создания профиля
 				local function ShowCreateProfileDialog(copyFromCurrent)
-					-- Создаем диалоговое окно
 					StaticPopupDialogs["OCTO_CREATE_PROFILE"] = {
 						text = copyFromCurrent and L["Enter a name for the new profile|n(will be copied from the current one)"]
 						or L["Enter a name for the new profile"],
-						button1 = NEW, -- Создать
+						button1 = NEW,
 						button2 = CANCEL,
 						hasEditBox = true,
 						editBoxWidth = 260,
@@ -622,6 +560,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				-- Кнопка "Создать новый профиль"
 				local info = {}
 				info.fontObject = OctoFont11
+				info.hasArrow = nil
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.text = L["New profile"]
@@ -663,25 +602,17 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 						OnAccept = function(dialog)
 							local newName = dialog.EditBox:GetText():trim()
 							if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
-								-- Проверяем, не существует ли уже профиль с таким именем
 								if profiles[newName] then
 									E.func_ShowMessage(L["A profile with the same name exists"])
 									return
 								end
 
-								-- Сохраняем данные текущего профиля под новым именем
 								profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
-								-- Удаляем старый профиль
 								profiles[Octo_profileKeys.CurrentProfile] = nil
-								-- Устанавливаем новый профиль как текущий
 								Octo_profileKeys.CurrentProfile = newName
 
-								-- Закрываем меню
 								self:ddCloseMenus()
-
-								-- Обновляем интерфейс
 								providerfunc()
-
 								E.func_ShowMessage(L["Profile successfully renamed"])
 							end
 						end,
@@ -694,7 +625,6 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 							local dialog = editBox:GetParent()
 							local newName = editBox:GetText():trim()
 							if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
-								-- Проверяем, не существует ли уже профиль с таким именем
 								if profiles[newName] then
 									E.func_ShowMessage(L["A profile with the same name exists"])
 									return
@@ -727,23 +657,15 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
 				info.func = function()
 					if Octo_profileKeys.CurrentProfile ~= "Default" then
-						-- Запрос подтверждения
 						StaticPopupDialogs["OCTO_DELETE_PROFILE"] = {
 							text = L["Are you sure you want to delete the profile?"],
-							button1 = DELETE, -- Удалить
+							button1 = DELETE,
 							button2 = CANCEL,
 							OnAccept = function()
-								-- Удаляем текущий профиль
 								profiles[Octo_profileKeys.CurrentProfile] = nil
-								-- Переключаемся на профиль по умолчанию
 								Octo_profileKeys.CurrentProfile = "Default"
-
-								-- Закрываем меню
 								self:ddCloseMenus()
-
-								-- Обновляем интерфейс
 								providerfunc()
-
 								E.func_ShowMessage(L["Profile successfully deleted"])
 							end,
 							timeout = 0,
@@ -756,12 +678,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				end
 				self:ddAddButton(info, level)
 
-
-
-
-
-
-				-- Кнопка "Удалить текущий профиль"
+				-- Кнопка "Удалить Octo_profileKeys"
 				info = {}
 				info.fontObject = OctoFont11
 				info.keepShownOnClick = false
@@ -769,7 +686,6 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys"
 				info.func = function()
 					wipe(Octo_profileKeys)
-					-- Octo_profileKeys = nil
 					Octo_profileKeys = {}
 					Octo_profileKeys.CurrentProfile = "Default"
 					Octo_profileKeys.SettingsEnabled = false
@@ -778,19 +694,117 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					C_Timer.After(1, function()
 						providerfunc()
 					end)
-
 				end
 				self:ddAddButton(info, level)
-
-
-
-
-
-
-
-
 			end
 
+		elseif level == 3 then
+			-- Третий уровень может быть:
+			-- 1. Сервера региона (value == имя региона)
+			-- 2. Персонажи сервера (value == таблица {server=..., region=...})
+
+			if type(value) == "string" then
+				-- Третий уровень: сервера региона
+				local info = {}
+				info.fontObject = OctoFont11
+				info.hasArrow = true
+				info.hasArrowUp = true
+				info.keepShownOnClick = true
+				info.notCheckable = true
+
+				local servers = GetServersData(value)
+
+				for _, serverName in ipairs(servers) do
+					local vivod = serverName
+					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (value ~= E.CurrentRegionName or
+					   Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and serverName ~= E.func_GetRealmName()) or
+					   not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.ShowOnlyCurrentServer and
+					   serverName ~= E.func_GetRealmName() then
+						vivod = E.Gray_Color..vivod.."|r"
+					elseif serverName == E.func_GetRealmName() then
+						vivod = E.classColorHexCurrent..vivod.."|r"
+					end
+
+					info.text = vivod
+					info.value = {server = serverName, region = value}
+					self:ddAddButton(info, level)
+				end
+
+			elseif type(value) == "table" then
+				-- Это персонажи сервера (перешли с уровня 2 когда регион один)
+				local serverName = value.server
+				local regionName = value.region
+				local characters = GetCharactersData(serverName, regionName)
+
+				for _, char in ipairs(characters) do
+					local info = {}
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = true
+					info.isNotRadio = true
+
+					local vivod = char.classColorHex..char.Name.."|r"
+					if char.UnitLevel ~= E.currentMaxLevel then
+						vivod = vivod.." "..E.Yellow_Color..(char.UnitLevel or 0).."|r"
+					end
+					if char.Name == E.curCharName then
+						vivod = vivod..E.Green_Color.."*|r"
+					end
+
+					info.text = vivod
+					info.value = char.GUID
+					info.func = selectFunctionisShownPLAYER
+					info.checked = char.isShownPLAYER
+					info.arg1 = {self, level, value}
+
+					if char.GUID ~= E.curGUID then
+						info.remove = func_remove_GUID
+						info.removeDoNotHide = true
+					end
+
+					info.icon = char.specIcon
+					info.iconInfo = {tSizeX = 16, tSizeY = 16}
+					self:ddAddButton(info, level)
+				end
+			end
+
+		elseif level == 4 then
+			-- Четвертый уровень: персонажи сервера
+			if value and type(value) == "table" then
+				local serverName = value.server
+				local regionName = value.region
+				local characters = GetCharactersData(serverName, regionName)
+
+				for _, char in ipairs(characters) do
+					local info = {}
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = true
+					info.isNotRadio = true
+
+					local vivod = char.classColorHex..char.Name.."|r"
+					if char.UnitLevel ~= E.currentMaxLevel then
+						vivod = vivod.." "..E.Yellow_Color..(char.UnitLevel or 0).."|r"
+					end
+					if char.Name == E.curCharName then
+						vivod = vivod..E.Green_Color.."*|r"
+					end
+
+					info.text = vivod
+					info.value = char.GUID
+					info.func = selectFunctionisShownPLAYER
+					info.checked = char.isShownPLAYER
+					info.arg1 = {self, level, value}
+
+					if char.GUID ~= E.curGUID then
+						info.remove = func_remove_GUID
+						info.removeDoNotHide = true
+					end
+
+					info.icon = char.specIcon
+					info.iconInfo = {tSizeX = 16, tSizeY = 16}
+					self:ddAddButton(info, level)
+				end
+			end
+		end
 	end)
 end
 ----------------------------------------------------------------
@@ -874,7 +888,6 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.func = function(_, _, _, checked)
-					-- wipe(Octo_Achievements_DB.Config_Achievements.AchievementToShow)
 					Octo_Achievements_DB.Config_Achievements.AchievementToShow = {[92] = true}
 					providerfunc()
 				end
@@ -934,9 +947,8 @@ end
 function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
 	local editBox = frame.editFrame:GetEditBox()
-	-- Создаем weak-таблицу для хранения обработчиков (если нужно кэшировать)
-	local handlerCache = setmetatable({}, { __mode = "v" }) -- weak values
-	-- Выносим общие функции за пределы ddSetInitFunc, чтобы не создавать их каждый раз
+	local handlerCache = setmetatable({}, { __mode = "v" })
+
 	local function makeThemeHandler(themeName)
 		return function(btn)
 			Octo_DevTool_DB.editorTheme = themeName
@@ -946,6 +958,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 			DropDown:ddRefresh(1)
 		end
 	end
+
 	local function makeTabSizeHandler(tabSize)
 		return function(btn)
 			Octo_DevTool_DB.editorTabSpaces = tabSize
@@ -955,6 +968,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 			DropDown:ddRefresh(2)
 		end
 	end
+
 	local function makeFontSizeHandler(fontSize)
 		return function(btn)
 			Octo_DevTool_DB.editorFontSize = fontSize
@@ -962,11 +976,11 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 			DropDown:ddRefresh(2)
 		end
 	end
+
 	DropDown:ddSetInitFunc(function(dd, level, value)
 			local info = {}
 			info.keepShownOnClick = true
 			if level == 1 then
-				-- Обработчики тем
 				for name in next, E.editorThemes do
 					local cacheKey = "theme_"..name
 					if not handlerCache[cacheKey] then
@@ -990,7 +1004,6 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 				info.value = "font"
 				dd:ddAddButton(info, level)
 			elseif value == "tab" then
-				-- Обработчики размера табуляции
 				for _, v in ipairs({0, 2, 3, 4}) do
 					local cacheKey = "tab_"..v
 					if not handlerCache[cacheKey] then
@@ -1003,7 +1016,6 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					dd:ddAddButton(info, level)
 				end
 			elseif value == "font" then
-				-- Обработчики размера шрифта
 				for i = 10, 16 do
 					local cacheKey = "font_"..i
 					if not handlerCache[cacheKey] then
