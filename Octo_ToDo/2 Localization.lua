@@ -3,6 +3,26 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
+
+	-- PROFILES
+	L["Profile"] = true
+	L["Profiles"] = true
+	L["New profile"] = true
+	L["Create"] = true
+	L["Copy current"] = true
+	L["Export"] = true
+	L["Import"] = true
+	L["A profile with the same name exists"] = true
+	L["Profile successfully renamed"] = true
+	L["Profile successfully created"] = true
+	L["Profile successfully deleted"] = true
+	L["Enter a new name for the profile"] = true
+	L["Enter a name for the new profile"] = true
+	L["Enter a name for the new profile|n(will be copied from the current one)"] = true
+	L["Cannot delete the default profile"] = true
+	L["Delete current profile"] = true
+	L["Are you sure you want to delete the profile?"] = true
+
 	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = true
 	L["Stolen Anima Vessel"] = true
 	L["Riftbound Cache"] = true
@@ -269,6 +289,29 @@ end
 -- Russian localization
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
+
+
+
+	-- PROFILES
+	L["Profile"] = "Профиль"
+	L["Profiles"] = "Профили"
+	L["New profile"] = "Новый профиль"
+	L["Create"] = "Создать"
+	L["Copy current"] = "Копировать текущий"
+	L["Export"] = "Экспорт"
+	L["Import"] = "Импорт"
+	L["A profile with the same name exists"] = "Профиль с таким именем уже существует"
+	L["Profile successfully renamed"] = "Профиль успешно переименован"
+	L["Profile successfully created"] = "Профиль успешно создан"
+	L["Profile successfully deleted"] = "Профиль успешно удалён"
+	L["Enter a new name for the profile"] = "Введите новое название для профиля"
+	L["Enter a name for the new profile"] = "Введите название нового профиля"
+	L["Enter a name for the new profile|n(will be copied from the current one)"] = "Введите название нового профиля|n(будет скопирован из текущего)"
+	L["Cannot delete the default profile"] = "Нельзя удалить профиль по умолчанию"
+	L["Delete current profile"] = "Удалить текущий профиль"
+	L["Are you sure you want to delete the profile?"] = "Вы уверены, что хотите удалить профиль?"
+
+
 	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = "Разработка аддонов требует много времени и усилий. Если вам нравится пользоваться "..GlobalAddonName..", пожалуйста, поддержите его разработку, сделав пожертвование. Ваша поддержка помогает обеспечить дальнейшее улучшение и поддержку аддона. Спасибо за вашу щедрость!"
 	L["Stolen Anima Vessel"] = "Сосуд с украденной анимой"
 	L["Riftbound Cache"] = "Тайник Разлома"

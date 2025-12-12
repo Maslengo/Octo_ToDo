@@ -78,8 +78,113 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 		end
 		C_Timer.After(1, providerfunc)
 	end
+
+
+
+	local function func_remove_Profile(menuButton, arg1)
+		local profileName = menuButton.value
+
+		-- Проверяем, что это не профиль по умолчанию
+		if profileName == "Default" then
+			E.func_ShowMessage(L["Cannot delete the default profile"])
+			return
+		end
+
+		-- Удаляем профиль
+		Octo_profileKeys.profiles[profileName] = nil
+
+		-- Если удаляем текущий профиль, переключаемся на Default
+		if Octo_profileKeys.CurrentProfile == profileName then
+			Octo_profileKeys.CurrentProfile = "Default"
+		end
+
+		-- Обновляем интерфейс
+		C_Timer.After(1, providerfunc)
+
+		E.func_ShowMessage(L["Profile successfully deleted"])
+	end
+
+	local function func_rename_Profile(menuButton, arg1)
+		local profileName = menuButton.value
+
+		-- Показываем диалог переименования
+		StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
+			text = "Введите новое название для профиля '"..profileName.."':",
+			button1 = RENAME_GUILD,
+			button2 = CANCEL,
+			hasEditBox = true,
+			editBoxWidth = 260,
+			maxLetters = 30,
+			OnAccept = function(dialog)
+				local newName = dialog.EditBox:GetText():trim()
+				if newName and newName ~= "" and newName ~= profileName then
+					-- Проверяем, не существует ли уже профиль с таким именем
+					if Octo_profileKeys.profiles[newName] then
+						E.func_ShowMessage(L["A profile with the same name exists"])
+						return
+					end
+
+					-- Сохраняем данные профиля под новым именем
+					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
+					-- Удаляем старый профиль
+					Octo_profileKeys.profiles[profileName] = nil
+
+					-- Обновляем текущий профиль, если переименовываем текущий
+					if Octo_profileKeys.CurrentProfile == profileName then
+						Octo_profileKeys.CurrentProfile = newName
+					end
+
+					-- Закрываем меню
+					self:ddCloseMenus()
+
+					-- Обновляем интерфейс
+					providerfunc()
+
+					E.func_ShowMessage(L["Profile successfully renamed"])
+				end
+			end,
+			OnShow = function(dialog)
+				dialog.EditBox:SetText(profileName)
+				dialog.EditBox:SetFocus()
+				dialog.EditBox:HighlightText()
+			end,
+			EditBoxOnEnterPressed = function(editBox)
+				local dialog = editBox:GetParent()
+				local newName = editBox:GetText():trim()
+				if newName and newName ~= "" and newName ~= profileName then
+					if Octo_profileKeys.profiles[newName] then
+						E.func_ShowMessage(L["A profile with the same name exists"])
+						return
+					end
+
+					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
+					Octo_profileKeys.profiles[profileName] = nil
+
+					if Octo_profileKeys.CurrentProfile == profileName then
+						Octo_profileKeys.CurrentProfile = newName
+					end
+
+					dialog:Hide()
+					providerfunc()
+					E.func_ShowMessage(L["Profile successfully renamed"])
+				end
+			end,
+			timeout = 0,
+			whileDead = true,
+			hideOnEscape = true,
+			preferredIndex = 3,
+		}
+		StaticPopup_Show("OCTO_RENAME_PROFILE_INLINE")
+	end
+
+
+
 	local function selectFunctionExpansion(menuButton, _, _, checked)
 		Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
+		providerfunc()
+	end
+	local function selectFunctionProfiles(menuButton, _, _, checked)
+		Octo_profileKeys.CurrentProfile[menuButton.value] = checked or nil
 		providerfunc()
 	end
 	-- Функция инициализации меню
@@ -294,6 +399,22 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.hasArrow = true
 				info.hasArrowUp = true
 				self:ddAddButton(info, level)
+				-- Меню фильтров по дополнениям
+				local info = {}
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = true
+				info.notCheckable = true
+				info.text = L["Profiles"]
+				info.value = L["Profiles"]
+				info.icon = false
+				info.hasArrow = true
+				info.hasArrowUp = true
+				self:ddAddButton(info, level)
+
+
+
+
+
 			elseif value == EXPANSION_FILTER_TEXT then
 				-- Виджеты для кнопок
 				local info = {}
@@ -317,7 +438,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.iconInfo = {tSizeX = E.ddMenuButtonHeight*2, tSizeY = E.ddMenuButtonHeight}
 				-- Добавляем кнопки для каждого дополнения (в обратном порядке)
 				for expansionID, v in next,(E.OctoTables_Vibor) do
-				-- for expansionID = #E.OctoTable_Expansions, 1, -1 do
+					-- for expansionID = #E.OctoTable_Expansions, 1, -1 do
 					-- local v = E.OctoTable_Expansions[expansionID]
 					info.isNotRadio = true
 					info.notCheckable = false
@@ -366,7 +487,310 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.keepShownOnClick = true
 				info.notCheckable = false
 				info.isNotRadio = true
+
+			elseif value == L["Profiles"] then
+				-- Получаем список профилей
+				local profiles = Octo_profileKeys.profiles
+				local profileNames = {}
+
+				-- Собираем названия профилей
+				for profileName, _ in next, profiles do
+					tinsert(profileNames, profileName)
+				end
+
+				-- Сортируем имена профилей
+				sort(profileNames)
+
+				-- Добавляем кнопки для каждого профиля как радиокнопки
+				for _, profileName in ipairs(profileNames) do
+					local info = {}
+					info.fontObject = OctoFont11
+					info.keepShownOnClick = false
+					info.notCheckable = false
+					info.isNotRadio = false  -- Радиокнопки (только один выбран)
+					info.text = profileName
+					info.value = profileName
+					info.checked = Octo_profileKeys.CurrentProfile == profileName
+					info.func = function(menuButton, _, _, checked)
+						-- При выборе нового профиля
+						Octo_profileKeys.CurrentProfile = menuButton.value
+						-- Закрываем меню
+						-- self:ddCloseMenus()
+						-- Вызываем провайдер для обновления интерфейса
+						providerfunc()
+					end
+					info.arg1 = {self, level, value}
+					-- info.remove = func_remove_Profile
+
+
+					if profileName ~= "Default" then
+						info.remove = func_remove_Profile
+						info.removeDoNotHide = false
+					else
+						-- Для профиля Default убираем возможность удаления
+						info.remove = nil
+					end
+
+					if profileName ~= "Default" then
+						info.settings = func_rename_Profile
+						info.settingsDoNotHide = true  -- Чтобы меню не закрывалось
+					end
+
+
+
+					-- info.removeDoNotHide = false
+					self:ddAddButton(info, level)
+				end
+
+				-- Добавляем разделитель
+				self:ddAddSeparator(level)
+
+				-- Функция для создания нового профиля
+				local function CreateNewProfile(profileName, copyFromCurrent)
+					if profileName and profileName:trim() ~= "" then
+						-- Проверяем, не существует ли уже профиль с таким именем
+						if profiles[profileName] then
+							E.func_ShowMessage(L["A profile with the same name exists"])
+							return false
+						end
+
+						-- Создаем новый профиль
+						if copyFromCurrent and Octo_profileKeys.CurrentProfile then
+							-- Копируем данные из текущего профиля
+							local currentProfileData = profiles[Octo_profileKeys.CurrentProfile]
+							if currentProfileData then
+								profiles[profileName] = E.func_DeepCopy(currentProfileData)
+							else
+								profiles[profileName] = {}
+							end
+						else
+							E.func_CreateNewProfile(profileName) -- СОЗДАТЬ ТУТ НОВЫЙ ПРОФИЛЬ(ИМЯ)
+						end
+
+						-- Устанавливаем новый профиль как текущий
+						Octo_profileKeys.CurrentProfile = profileName
+
+						-- Закрываем меню (если оно еще открыто)
+						self:ddCloseMenus()
+
+						-- Обновляем интерфейс
+						providerfunc()
+
+						E.func_ShowMessage(L["Profile successfully created"])
+						return true
+					end
+					return false
+				end
+
+				-- Функция показа диалога создания профиля
+				local function ShowCreateProfileDialog(copyFromCurrent)
+					-- Создаем диалоговое окно
+					StaticPopupDialogs["OCTO_CREATE_PROFILE"] = {
+						text = copyFromCurrent and L["Enter a name for the new profile|n(will be copied from the current one)"]
+						or L["Enter a name for the new profile"],
+						button1 = NEW, -- Создать
+						button2 = CANCEL,
+						hasEditBox = true,
+						editBoxWidth = 260,
+						maxLetters = 30,
+						OnAccept = function(dialog)
+							local profileName = dialog.EditBox:GetText():trim()
+							CreateNewProfile(profileName, copyFromCurrent)
+						end,
+						OnShow = function(dialog)
+							dialog.EditBox:SetText("")
+							dialog.EditBox:SetFocus()
+						end,
+						EditBoxOnEnterPressed = function(editBox)
+							local dialog = editBox:GetParent()
+							local profileName = editBox:GetText():trim()
+							if CreateNewProfile(profileName, copyFromCurrent) then
+								dialog:Hide()
+							end
+						end,
+						EditBoxOnEscapePressed = function(editBox)
+							editBox:GetParent():Hide()
+						end,
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show("OCTO_CREATE_PROFILE")
+				end
+
+				-- Кнопка "Создать новый профиль"
+				local info = {}
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = L["New profile"]
+				info.func = function()
+					ShowCreateProfileDialog(false)
+				end
+				self:ddAddButton(info, level)
+
+				-- Кнопка "Создать и копировать из текущего"
+				info = {}
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = L["Copy current"]
+				info.disabled = not Octo_profileKeys.CurrentProfile or not profiles[Octo_profileKeys.CurrentProfile]
+				info.func = function()
+					ShowCreateProfileDialog(true)
+				end
+				self:ddAddButton(info, level)
+
+				-- Добавляем разделитель
+				self:ddAddSeparator(level)
+
+				-- Кнопка "Переименовать текущий профиль"
+				info = {}
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = RENAME_GUILD
+				info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
+				info.func = function()
+					StaticPopupDialogs["OCTO_RENAME_PROFILE"] = {
+						text = L["Enter a new name for the profile"].."|n"..Octo_profileKeys.CurrentProfile,
+						button1 = RENAME_GUILD,
+						button2 = CANCEL,
+						hasEditBox = true,
+						editBoxWidth = 260,
+						maxLetters = 30,
+						OnAccept = function(dialog)
+							local newName = dialog.EditBox:GetText():trim()
+							if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
+								-- Проверяем, не существует ли уже профиль с таким именем
+								if profiles[newName] then
+									E.func_ShowMessage(L["A profile with the same name exists"])
+									return
+								end
+
+								-- Сохраняем данные текущего профиля под новым именем
+								profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
+								-- Удаляем старый профиль
+								profiles[Octo_profileKeys.CurrentProfile] = nil
+								-- Устанавливаем новый профиль как текущий
+								Octo_profileKeys.CurrentProfile = newName
+
+								-- Закрываем меню
+								self:ddCloseMenus()
+
+								-- Обновляем интерфейс
+								providerfunc()
+
+								E.func_ShowMessage(L["Profile successfully renamed"])
+							end
+						end,
+						OnShow = function(dialog)
+							dialog.EditBox:SetText(Octo_profileKeys.CurrentProfile or "")
+							dialog.EditBox:SetFocus()
+							dialog.EditBox:HighlightText()
+						end,
+						EditBoxOnEnterPressed = function(editBox)
+							local dialog = editBox:GetParent()
+							local newName = editBox:GetText():trim()
+							if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
+								-- Проверяем, не существует ли уже профиль с таким именем
+								if profiles[newName] then
+									E.func_ShowMessage(L["A profile with the same name exists"])
+									return
+								end
+
+								profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
+								profiles[Octo_profileKeys.CurrentProfile] = nil
+								Octo_profileKeys.CurrentProfile = newName
+
+								dialog:Hide()
+								providerfunc()
+								E.func_ShowMessage(L["Profile successfully renamed"])
+							end
+						end,
+						timeout = 0,
+						whileDead = true,
+						hideOnEscape = true,
+						preferredIndex = 3,
+					}
+					StaticPopup_Show("OCTO_RENAME_PROFILE")
+				end
+				self:ddAddButton(info, level)
+
+				-- Кнопка "Удалить текущий профиль"
+				info = {}
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = L["Delete current profile"]
+				info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
+				info.func = function()
+					if Octo_profileKeys.CurrentProfile ~= "Default" then
+						-- Запрос подтверждения
+						StaticPopupDialogs["OCTO_DELETE_PROFILE"] = {
+							text = L["Are you sure you want to delete the profile?"],
+							button1 = DELETE, -- Удалить
+							button2 = CANCEL,
+							OnAccept = function()
+								-- Удаляем текущий профиль
+								profiles[Octo_profileKeys.CurrentProfile] = nil
+								-- Переключаемся на профиль по умолчанию
+								Octo_profileKeys.CurrentProfile = "Default"
+
+								-- Закрываем меню
+								self:ddCloseMenus()
+
+								-- Обновляем интерфейс
+								providerfunc()
+
+								E.func_ShowMessage(L["Profile successfully deleted"])
+							end,
+							timeout = 0,
+							whileDead = true,
+							hideOnEscape = true,
+							preferredIndex = 3,
+						}
+						StaticPopup_Show("OCTO_DELETE_PROFILE")
+					end
+				end
+				self:ddAddButton(info, level)
+
+
+
+
+
+
+				-- Кнопка "Удалить текущий профиль"
+				info = {}
+				info.fontObject = OctoFont11
+				info.keepShownOnClick = false
+				info.notCheckable = true
+				info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys"
+				info.func = function()
+					wipe(Octo_profileKeys)
+					-- Octo_profileKeys = nil
+					Octo_profileKeys = {}
+					Octo_profileKeys.CurrentProfile = "Default"
+					Octo_profileKeys.SettingsEnabled = false
+					Octo_profileKeys.useGlobalProfile = false
+					E.func_CreateNewProfile("Default")
+					C_Timer.After(1, function()
+						providerfunc()
+					end)
+
+				end
+				self:ddAddButton(info, level)
+
+
+
+
+
+
+
+
 			end
+
 	end)
 end
 ----------------------------------------------------------------

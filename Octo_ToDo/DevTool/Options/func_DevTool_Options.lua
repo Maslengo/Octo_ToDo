@@ -21,7 +21,7 @@ function E.func_DevTool_Options(savedVars)
 			},
 			HOOINYA = {
 				type = "execute",
-				name = "HOOINYA",
+				name = "ВООБЩЕ ВСЁ",
 				desc = "УДАЛИТЬ ХУЙНЮ",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -29,6 +29,19 @@ function E.func_DevTool_Options(savedVars)
 						CharInfo.MASLENGO.GarrisonFollowersCount = nil
 						CharInfo.MASLENGO.GarrisonFollowers = nil
 						CharInfo.MASLENGO.HasGarrison = nil
+						CharInfo.MASLENGO.GARRISON = nil
+						CharInfo.MASLENGO.LegionRemixData = nil
+						CharInfo.MASLENGO.GreatVault = nil
+						CharInfo.MASLENGO.ItemsInBag = nil
+						CharInfo.MASLENGO.journalInstance = nil
+						CharInfo.MASLENGO.LFGInstance = nil
+						CharInfo.MASLENGO.ListOfQuests = nil
+						CharInfo.MASLENGO.ListOfParagonQuests = nil
+						CharInfo.MASLENGO.OctoTable_QuestID = nil
+						CharInfo.MASLENGO.professions = nil
+						CharInfo.MASLENGO.Reputation = nil
+						CharInfo.MASLENGO.SavedWorldBoss = nil
+						CharInfo.MASLENGO.UniversalQuest = nil
 					end
 					return
 				end,
@@ -57,13 +70,16 @@ function E.func_DevTool_Options(savedVars)
 				name = DELETE.." "..ALL,
 				desc = "Octo_ToDo_DB_Levels= {}|nOcto_ToDo_DB_Vars = {}",
 				func = function()
-					-- wipe(Octo_ToDo_DB_Levels)
-					-- wipe(Octo_ToDo_DB_Vars)
+						wipe(Octo_profileKeys)
+						wipe(Octo_ToDo_DB_Levels)
+						wipe(Octo_ToDo_DB_Vars)
+						wipe(Octo_Cache_DB)
+						wipe(Octo_DevTool_DB)
 
-					for _, tbl in ipairs(E.OctoTable_SavedVariables) do
-						print (tbl.name)
-						wipe(tbl)
-					end
+					-- for _, tbl in ipairs(E.OctoTable_SavedVariables) do
+					-- 	print (tbl.name)
+					-- 	wipe(tbl)
+					-- end
 					return --ReloadUI()
 				end,
 				width = E.FULL_WIDTH/4,

@@ -31,14 +31,12 @@ local function tempFunction()
 		{id = 3252, defS = true,}, -- REMIX
 		-- {id = 3293, defS = false,}, -- REMIX PANDA?
 		-- {id = 3251, defS = false,}, -- REMIX PANDA?
-
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 		{id = 124124, defS = false,}, -- Blood of Sargeras
 		{id = 254267, defS = true,}, -- REMIX
-		{id = 253224, defS = true,}, -- REMIX
+		{id = 253224, defS = false,}, -- REMIX
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -209,7 +207,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		{id = "LegionRemixResearch", defS = false,},
+		{id = "LegionRemixResearch", defS = true,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

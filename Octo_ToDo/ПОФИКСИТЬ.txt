@@ -35,8 +35,8 @@ ToDo:
 	добавить в тултип к аниме макс квантити
 	поменять у мувФрейма способ передвига фрейма на более плавный
 	собирать все предметы в сумках + пределать тултип для итемлвла
-	TextCenter (GreatVault)
-	TextCenter (CurrentKey)
+	TextCenter + tooltip (GreatVault)
+	TextCenter + tooltip (CurrentKey)
 	--ACCOUNT_STORE_CURRENCY_AVAILABLE_UPDATED(...)3139 (Награбленное)
 	тултип сдвинуть рамку
 	повесить mainframe на тот же слой, как и у близов(там не слой, там... надо ряд факторов) (toplevel)
@@ -50,7 +50,6 @@ ToDo:
 	E.func_questName(31342)
 	EventFrame:CreateDataProvider(frame.tooltip) -- tooltip
 	EventFrame:CreateDataProvider() -- mainframe
-	Удалить у всех персов сбор всего инвентаря -> MASLENGO_DEFAULTS ItemsALL = {   Bags = {}, Bank = {}, Void = {},
 	ПОФИКСИТЬ сбор декора
 	наконец-то собирать ковенант адекватно
 	ПОФИКСИТЬ в WTF -> LFGInstance
@@ -58,9 +57,27 @@ ToDo:
 	ПОФИКСИТЬ в WTF -> professions
 	ПОФИКСИТЬ в WTF -> CovenantAndAnima
 	ПОФИКСИТЬ в WTF -> MASLENGO->Currency->maxQuantity, quantity
+	ПОФИКСИТЬ в WTF -> OctoTable_QuestID (точно ли нужно?)
+	!!!!!!!!!!!!ПОФИКСИТЬ формат "ПОЛНЫЙ" с голдой
+	ПОФИКСИТЬ: TextCenter задания брать не с цифры а с самой таблицы? хз, мб еще в тултипе сделать пункты #listOfQuests
+	убрать "ДРУГОЕ/ПРАЗДНИКИ"
+	добавить поиск
+	ресет LFGInstance?
+	ресет SavedWorldBoss?
 
+
+	-- for _, tbl in ipairs(E.OctoTable_SavedVariables) do
+	-- 	print (tbl.name)
+	-- 	wipe(tbl)
+	-- end
+
+	/run opde(E.InitGlobalDB("Octo_ToDo"))
+	принтит только 1
+	[1] = {
+	},
+	[2] = "Octo_ToDo_DB",
 	# Добавлен локальный кэш иконок для предметов инвентаря.
-
+func_ResetOtrisovkaTables
 Сделано:
 	1. ширина фреймов по нику не учитывается
 	2. при дебаге не перерисовываются UniversalQuests
@@ -81,3 +98,5 @@ ToDo:
 	17. {45839}, -- Атака на Штормхейм (вернули)
 	18. -- for _, func in next,(E.Components) do -- mainframe (не обновляются E.func_mapName(2133)) если включены ID -> сделал TextLeft через функцию
 	19. ПОФИКСИТЬ загрузку айтемов при 1 появлении (мб ресет дата провайдера)
+	20. Удалить у всех персов сбор всего инвентаря -> MASLENGO_DEFAULTS ItemsALL = {   Bags = {}, Bank = {}, Void = {},
+	21. вернул ресет journalInstance

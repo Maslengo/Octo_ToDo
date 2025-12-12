@@ -88,3 +88,7 @@ E.minValue_ItemLevel = 0
 E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
+
+
+E.DataProvider_Otrisovka = {}
+

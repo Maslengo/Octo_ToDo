@@ -282,11 +282,11 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		ListOfParagonQuests = {}, -- Список квестов парагона
 		OctoTable_QuestID = {}, -- Квесты по ID
 		professions = { -- Профессии
-			[1] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
-			[2] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
-			[3] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
-			[4] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
-			[5] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0}
+			-- [1] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			-- [2] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			-- [3] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			-- [4] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0},
+			-- [5] = {skillLine = 0, skillLevel = 0, maxSkillLevel = 0}
 		},
 		Reputation = {}, -- Данные репутации
 		SavedWorldBoss = {}, -- Сохраненные мировые боссы
@@ -495,8 +495,7 @@ function EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
-	E.func_InitField(db, "GlobalProfile", "Default")
-	E.CurrentProfile = "Default"
+	E.func_InitField(db, "CurrentProfile", "Default")
 	E.func_InitField(db, "useGlobalProfile", false) -- все персонажи игнорируют profileKeys
 	E.func_InitField(db, "SettingsEnabled", false) -- только для режима настройки
 	E.func_InitSubTable(db, "profileKeys")
@@ -517,57 +516,9 @@ function EventFrame:Octo_profileKeys()
 			db.profileKeys[key] = db.profileKeys[key] or "Default"
 		end
 	end
-	----------------------------------------------------------------
-	-- Развлетвление таблиц для оптимизации
-	----------------------------------------------------------------
-	-- local OctoTables_DataOtrisovka = {}
-	local defaultProfile = Octo_profileKeys.profiles.Default
-	for _, func in next,(E.Components) do
-		local OctoTables_Vibor, OctoTables_DataOtrisovka = func()
-		for i, categoryKey in next,(OctoTables_Vibor) do
-			E.OctoTables_Vibor[i] = E.OctoTables_Vibor[i] or categoryKey
-		end
-		for i, categoryKey in next,(OctoTables_DataOtrisovka) do
-			E.OctoTables_DataOtrisovka[i] = E.OctoTables_DataOtrisovka[i] or categoryKey
-		end
-	end
 	-- opde(E.OctoTables_DataOtrisovka)
-	----------------------------------------------------------------
-	-- Заполнение дефолтных настроек
-	----------------------------------------------------------------
-	E.DataProvider_Otrisovka = {}
-	for categoryKey, v in next,(E.OctoTables_DataOtrisovka) do
-		for dataType, w in next,(v) do
-			E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
-			E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
-			if dataType ~= "UniversalQuests" then
-				for i, z in next,(w) do
-					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z.id)
-					defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
-					-- defaultProfile[dataType][z.id] = defaultProfile[dataType][z.id] or z.defS -- nil
-					if dataType == "Currencies" then E.ALL_Currencies[z.id] = true end -- /run opde(E.ALL_Currencies)
-					if dataType == "Items" then E.ALL_Items[z.id] = true end -- /run opde(E.ALL_Items)
-					if dataType == "Reputations" then E.ALL_Reputations[z.id] = true end -- /run opde(E.ALL_Reputations)
-					if dataType == "Additionally" then E.ALL_Additionally[z.id] = true end -- /run opde(E.ALL_Additionally)
-				end
-			else
-				for _, data in next,(w) do
-					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], data)
-					tinsert(E.ALL_UniversalQuests, data)
-					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-					defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or data.defS -- nil
-					for _, questData in ipairs(data.quests) do
-						if type(questData[1]) == "number" then
-							local questID = questData[1]
-							E.ALL_Quests[questID] = true
-						end
-					end
-					-- defaultProfile[dataType][questKey] = defaultProfile[dataType][questKey] or data.defS -- nil
-				end
-			end
-		end
-	end
-	-- opde(E.DataProvider_Otrisovka)
+	-- СОЗДАТЬ ТУТ НОВЫЙ ПРОФИЛЬ(ИМЯ)
+	E.func_CreateNewProfile("Default")
 	----------------------------------------------------------------
 	--
 	----------------------------------------------------------------
@@ -591,6 +542,12 @@ function EventFrame:Daily_Reset()
 	-- /dump E.func_SecondsToClock(C_DateAndTime.GetSecondsUntilDailyReset(), true)
 	-- Обрабатываем всех персонажей
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
+
+
+
 		-- Проверяем нужно ли выполнить сброс
 		if CharInfo.PlayerData.tmstp_Daily and CharInfo.PlayerData.tmstp_Daily < ServerTime then
 			-- Устанавливаем новую временную метку вне зависимости от региона
@@ -603,6 +560,43 @@ function EventFrame:Daily_Reset()
 					CharInfo.MASLENGO.UniversalQuest[questKey] = nil
 				end
 			end
+
+
+			for instanceID, v in next, (cm.journalInstance) do
+				if v then
+					for difficultyID, w in next, (v) do
+						if w and w.instanceReset and w.instanceReset < time() then -- 1765512000
+							cm.journalInstance[instanceID][difficultyID] = nil
+							-- print (w.instanceName, "NEEDRESET")
+						end
+					end
+				end
+			end
+			for dungeonID, v in next, (cm.LFGInstance) do
+				if v then
+					if cm.LFGInstance[dungeonID].donetoday then
+						print (cm.LFGInstance[dungeonID].donetoday)
+					end
+				end
+			end
+			for worldBossID, v in next, (cm.SavedWorldBoss) do
+				if v then
+					print (cm.SavedWorldBoss.reset)
+				end
+			end
+
+
+
+
+
+
+
+
+
+
+
+
+			-- print (CharInfo.PlayerData.Name)
 			-- Очищаем данные LFG
 			wipe(CharInfo.MASLENGO.LFGInstance)
 			for _, v in ipairs (E.OctoTable_LFGDungeons) do

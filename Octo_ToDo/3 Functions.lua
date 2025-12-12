@@ -1972,32 +1972,14 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
--- function E.getSettings(type, id)
--- -- Проверяем, существует ли таблица настроек для этого типа
--- if not Octo_profileKeys then
--- return false
--- end
--- local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][type]
--- if not settingsTable then
--- return false
--- end
--- -- Определяем ключ (строковый или числовой)
--- local key = id
--- local numID = tonumber(id)
--- if numID and settingsTable[numID] ~= nil then
--- key = numID
--- end
--- -- Возвращаем значение, если оно существует, иначе false
--- return settingsTable[key] or false
--- end
-function E.func_ShouldShow(id, dataType)
+function E.func_ShouldShow(id, dataType, CurrentProfile)
 	local shouldShow = false
 	if Octo_profileKeys.SettingsEnabled then
 		-- Режим настройки включен - показываем все валюты
 		shouldShow = true
 	else
 		-- Режим настройки выключен - проверяем настройки валют
-		local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType] -- dataType
+		local settingsTable = Octo_profileKeys.profiles[CurrentProfile][dataType] -- dataType
 		if settingsTable then
 			-- Проверяем числовой ключ
 			if settingsTable[id] then
@@ -2467,6 +2449,7 @@ E.OctoTable_Covenant = {
 	},
 }
 E.LIST_MAX_SIZE = 30
+E.DEBUG_TEXT = E.Blue_Color..BINDING_HEADER_DEBUG.."|r"
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.Green_Color.."DebugInfo|r: "
 E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
 function E.func_pizda(mountID)
@@ -4094,7 +4077,92 @@ function E.func_setOrNil(tbl, key, val)
 	tbl[key] = (val and val ~= 0) and val or nil
 end
 ----------------------------------------------------------------
+-- Функция глубокого копирования таблицы
+function E.func_DeepCopy(orig)
+	local orig_type = type(orig)
+	local copy
+	if orig_type == 'table' then
+		copy = {}
+		for orig_key, orig_value in next, orig, nil do
+			copy[E.func_DeepCopy(orig_key)] = E.func_DeepCopy(orig_value)
+		end
+		setmetatable(copy, E.func_DeepCopy(getmetatable(orig)))
+	else -- number, string, boolean, etc
+		copy = orig
+	end
+	return copy
+end
+
+-- Функция показа сообщения
+function E.func_ShowMessage(text)
+	-- Используем стандартное сообщение WoW или создаем свое
+	UIErrorsFrame:AddMessage(text, 1.0, 1.0, 1.0, 1.0, UIERRORS_HOLD_TIME)
+	print("Octo: "..text)
+end
 ----------------------------------------------------------------
+function E.func_CreateNewProfile(profileName)
+		E.DataProvider_Otrisovka = {}
+		Octo_profileKeys = Octo_profileKeys or {}
+		----------------------------------------------------------------
+		-- Развлетвление таблиц для оптимизации
+		----------------------------------------------------------------
+		-- local OctoTables_DataOtrisovka = {}
+		for _, func in next,(E.Components) do
+			local OctoTables_Vibor, OctoTables_DataOtrisovka = func()
+			for i, categoryKey in next,(OctoTables_Vibor) do
+				E.OctoTables_Vibor[i] = E.OctoTables_Vibor[i] or categoryKey
+			end
+			for i, categoryKey in next,(OctoTables_DataOtrisovka) do
+				E.OctoTables_DataOtrisovka[i] = E.OctoTables_DataOtrisovka[i] or categoryKey
+			end
+		end
+
+
+		----------------------------------------------------------------
+		-- Заполнение дефолтных настроек
+		----------------------------------------------------------------
+		Octo_profileKeys.profiles = Octo_profileKeys.profiles or {}
+		-- Создаем пустой профиль
+		Octo_profileKeys.profiles[profileName] = Octo_profileKeys.profiles[profileName] or {}
+		local CurrentProfile = Octo_profileKeys.profiles[profileName]
+		CurrentProfile.Currencies = CurrentProfile.Currencies or {}
+		CurrentProfile.Items = CurrentProfile.Items or {}
+		CurrentProfile.Reputations = CurrentProfile.Reputations or {}
+		CurrentProfile.UniversalQuests = CurrentProfile.UniversalQuests or {}
+		CurrentProfile.Additionally = CurrentProfile.Additionally or {}
+
+
+		for categoryKey, v in next,(E.OctoTables_DataOtrisovka) do
+			for dataType, w in next,(v) do
+				E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
+				E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
+				if dataType ~= "UniversalQuests" then
+					for i, z in next,(w) do
+						tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z.id)
+						CurrentProfile[dataType][z.id] = CurrentProfile[dataType][z.id] or z.defS -- nil
+						if dataType == "Currencies" then E.ALL_Currencies[z.id] = true end -- /run opde(E.ALL_Currencies)
+						if dataType == "Items" then E.ALL_Items[z.id] = true end -- /run opde(E.ALL_Items)
+						if dataType == "Reputations" then E.ALL_Reputations[z.id] = true end -- /run opde(E.ALL_Reputations)
+						if dataType == "Additionally" then E.ALL_Additionally[z.id] = true end -- /run opde(E.ALL_Additionally)
+					end
+				else
+					for _, data in next,(w) do
+						tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], data)
+						tinsert(E.ALL_UniversalQuests, data)
+						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+						CurrentProfile[dataType][questKey] = CurrentProfile[dataType][questKey] or data.defS -- nil
+						for _, questData in ipairs(data.quests) do
+							if type(questData[1]) == "number" then
+								local questID = questData[1]
+								E.ALL_Quests[questID] = true
+							end
+						end
+					end
+				end
+			end
+		end
+
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
