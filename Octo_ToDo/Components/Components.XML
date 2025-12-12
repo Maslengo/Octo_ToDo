@@ -13,6 +13,11 @@
 	<Script file="Components\13_TheBurningCrusade.lua"/>
 	<Script file="Components\14_WorldofWarcraft.lua"/>
 
+
+	<Script file="Components\50_ALL_Currencies.lua"/>
+	<Script file="Components\51_ALL_Items.lua"/>
+	<Script file="Components\52_ALL_Reputations.lua"/>
+
 	<Script file="Components\97_PVP.lua"/>
 	<Script file="Components\98_Holidays.lua"/>
 	<Script file="Components\99_Other.lua"/>

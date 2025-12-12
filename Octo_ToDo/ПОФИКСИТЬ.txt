@@ -22,7 +22,7 @@ ToDo:
 	репутация -> WOTLK -> две иконки орды/альянса
 	(подобрать иконку альянса/орды)
 	репутация -> сделать ЗАМЕНУ друг другом
-	ПОФИКСИТЬ загрузку айтемов при 1 появлении (мб ресет дата провайдера)
+
 	репутация -> БК -> 936 бесполезная?
 	репутация -> БК -> 922 орда?
 	463451 -- horde
@@ -41,7 +41,6 @@ ToDo:
 	тултип сдвинуть рамку
 	повесить mainframe на тот же слой, как и у близов(там не слой, там... надо ряд факторов) (toplevel)
 	убрать настройку ресурсов
-	{45839}, -- Атака на Штормхейм (ПОМЕНЯЛИ?)
 	alertFrame перенести в модули
 	 !!!!!!!переделать импорт UniversalQuests для праздников, через tinser и func
 	сломаны Short Server если с (Remix) в дропдауне
@@ -49,9 +48,17 @@ ToDo:
 	!!!!!!! LoadProfiles("OctoUI")
 	названия фреймов в модулях
 	E.func_questName(31342)
-	EventFrame:func_OctoTooltip_CreateDataProvider(frame.tooltip) -- tooltip
+	EventFrame:CreateDataProvider(frame.tooltip) -- tooltip
 	EventFrame:CreateDataProvider() -- mainframe
-	-- for _, func in next,(E.Components) do -- mainframe (не обновляются E.func_mapName(2133)) если включены ID
+	Удалить у всех персов сбор всего инвентаря -> MASLENGO_DEFAULTS ItemsALL = {   Bags = {}, Bank = {}, Void = {},
+	ПОФИКСИТЬ сбор декора
+	наконец-то собирать ковенант адекватно
+	ПОФИКСИТЬ в WTF -> LFGInstance
+	ПОФИКСИТЬ в WTF -> GARRISON->buids, summary?, curRes
+	ПОФИКСИТЬ в WTF -> professions
+	ПОФИКСИТЬ в WTF -> CovenantAndAnima
+	ПОФИКСИТЬ в WTF -> MASLENGO->Currency->maxQuantity, quantity
+
 	# Добавлен локальный кэш иконок для предметов инвентаря.
 
 Сделано:
@@ -69,5 +76,8 @@ ToDo:
 	12. убрать из натсроек "задания и т.п"
 	13. ПЕРЕДЕЛАТЬ ТУЛТИП ВАЛЮТЫ НА ТОТ ЧТО БЫЛ У ТАЙМВОЛК КАРРЕНСИ
 	14. ~~OTMEHA~~ поменять кнопки закрытия/настроек    "common-search-clearbutton"/"QuestLog-icon-setting"
-
-
+	15. сохраняю func_currencyName с quality + forcedQuality
+	16. сохраняю func_itemName с quality + forcedQuality
+	17. {45839}, -- Атака на Штормхейм (вернули)
+	18. -- for _, func in next,(E.Components) do -- mainframe (не обновляются E.func_mapName(2133)) если включены ID -> сделал TextLeft через функцию
+	19. ПОФИКСИТЬ загрузку айтемов при 1 появлении (мб ресет дата провайдера)

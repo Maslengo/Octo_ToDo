@@ -211,15 +211,25 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function func_itemName_CACHE(id)
+local function func_itemName_CACHE(id, forcedQuality)
 	local Cache = GetOrCreateCache("AllItems", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
+		if forcedQuality then
+			local colorHex = ITEM_QUALITY_COLORS[forcedQuality].hex
+			return colorHex..Cache[id][E.curLocaleLang].."|r"
+		end
 		return Cache[id][E.curLocaleLang]
 	end
 	local name = GetItemNameByID(id)
-	if name and name ~= "" then
+	local quality = GetItemQualityByID(id)
+	if name and name ~= "" and quality then
 		Cache[id] = Cache[id] or {}
-		Cache[id][E.curLocaleLang] = name
+		local colorHex = ITEM_QUALITY_COLORS[quality].hex
+		local result = colorHex..name.."|r"
+
+
+
+		Cache[id][E.curLocaleLang] = result
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
 			print (E.Lime_Color..ITEMS.."|r", E.Addon_Left_Color..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.Addon_Right_Color..id.."|r")
 		end
@@ -229,24 +239,21 @@ local function func_itemName_CACHE(id)
 end
 function E.func_itemName(id, forcedQuality)
 	if not id then return end
-	local quality = GetItemQualityByID(id) or 0
-	if forcedQuality then
-		quality = forcedQuality
-	end
-	-- local icon = E.func_texturefromIcon(E.func_GetItemIconByID(id)) or ""
-	local colorHex = ITEM_QUALITY_COLORS[quality].hex
-	local name = func_itemName_CACHE(id)
-	-- local result = icon..colorHex..name.."|r"
-	local result = colorHex..name.."|r"
-	return result..E.debugInfo_Items(id)
+	local name = func_itemName_CACHE(id, forcedQuality)
+	return name..E.debugInfo_Items(id)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function func_currencyName_CACHE(id)
+local function func_currencyName_CACHE(id, forcedQuality)
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		local hasMount = E.OctoTable_CurrencyMountForFuncCurName[id] or false
+		if forcedQuality then
+			local colorHex = ITEM_QUALITY_COLORS[forcedQuality].hex
+			return colorHex..Cache[id][E.curLocaleLang].."|r"..(hasMount and E.Lime_Color.."*|r" or "")
+		end
+
 		return Cache[id][E.curLocaleLang]..(hasMount and E.Lime_Color.."*|r" or "")
 	end
 	local info = GetCurrencyInfo(id)
@@ -271,10 +278,9 @@ local function func_currencyName_CACHE(id)
 	local vivod = Cache[id] and Cache[id][E.curLocaleLang] or E.Red_Color..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return vivod
 end
-function E.func_currencyName(id)
+function E.func_currencyName(id, forcedQuality)
 	if not id then return end
-	-- local cachedName = (E.func_texturefromIcon(E.func_GetCurrencyIcon(id)) or "")..func_currencyName_CACHE(id)
-	local cachedName = func_currencyName_CACHE(id)
+	local cachedName = func_currencyName_CACHE(id, forcedQuality)
 	return cachedName..E.debugInfo_Currencies(id)
 end
 ----------------------------------------------------------------

@@ -1,10 +1,18 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
+
+
+local function GetInfo(slotInfo)
+	return {
+
+	}
+end
+
+
 local function Collect_All_ItemsInBag()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectPlayerData or not collectMASLENGO then return end
-	collectMASLENGO.ItemsALL.Bags = collectMASLENGO.ItemsALL.Bags or {}
 	local usedSlots, totalSlots, Possible_Anima, Possible_CatalogedResearch = 0, 0, 0, 0
 	local keystoneFound = false
 	local hasKeystone = false
@@ -30,7 +38,6 @@ local function Collect_All_ItemsInBag()
 	local itemSubType2 = CATALOG_SHOP_TYPE_DECOR
 	local itemSubType3 = MOUNTS
 
-
 	local researchItemsLookup = {}
 	for _, tbl in ipairs(E.OctoTable_itemID_Cataloged_Research) do
 		researchItemsLookup[tbl.itemiD] = tbl.count
@@ -50,8 +57,6 @@ local function Collect_All_ItemsInBag()
 					local itemID = containerInfo.itemID
 					local quality = containerInfo.quality
 					local hyperlink = containerInfo.hyperlink
-					-- local name = E.func_itemName(itemID) -- ПОФИКСИТЬ (БЫЛ СПАМ)
-					collectMASLENGO.ItemsALL.Bags[itemID] = E.func_GetItemCount(itemID, true, true, true, false)
 					----------------------------------------------------------------
 					if not OctoTable_itemID_ItemsUsable[itemID] then
 

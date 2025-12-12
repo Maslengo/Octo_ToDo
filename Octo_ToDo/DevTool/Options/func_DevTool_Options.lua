@@ -19,6 +19,28 @@ function E.func_DevTool_Options(savedVars)
 				name = "",
 				order = GetOrder(),
 			},
+			HOOINYA = {
+				type = "execute",
+				name = "HOOINYA",
+				desc = "УДАЛИТЬ ХУЙНЮ",
+				func = function()
+					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+						CharInfo.MASLENGO.ItemsALL = nil
+						CharInfo.MASLENGO.GarrisonFollowersCount = nil
+						CharInfo.MASLENGO.GarrisonFollowers = nil
+						CharInfo.MASLENGO.HasGarrison = nil
+					end
+					return
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "",
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			Reload = {
 				type = "execute",
@@ -138,19 +160,6 @@ function E.func_DevTool_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			ItemsALL = {
-				type = "execute",
-				name = "ItemsALL",
-				desc = "CharInfo.MASLENGO.ItemsALL = {}",
-				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.ItemsALL= {}
-					end
-					return
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
 			-------------------------------------------------
 			ItemsInBag = {
 				type = "execute",

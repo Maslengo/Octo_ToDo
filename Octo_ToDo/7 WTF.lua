@@ -275,13 +275,6 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		GARRISON = {},
 		LegionRemixData = {},
 		GreatVault = {}, -- Данные Великого Хранилища
-		HasGarrison = {},
-		ItemsALL = { -- ПОФИКСИТЬ -> itemID = {bank = 1, bag = 2}
-			Bags = {},
-			Bank = {},
-			Void = {},
-			-- БАНК ОТРЯДА НА ВЕСЬ АКК
-		},
 		ItemsInBag = {}, -- Предметы в сумках
 		journalInstance = {}, -- Инстансы из журнала
 		LFGInstance = {}, -- Данные LFG
