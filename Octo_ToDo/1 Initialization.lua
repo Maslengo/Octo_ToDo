@@ -55,3 +55,4 @@ E.maxValue_Money = 0
 
 E.DataProvider_Otrisovka = {}
 
+E.CurrentProfile = "Default" -- profileName

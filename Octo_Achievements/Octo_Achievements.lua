@@ -156,12 +156,10 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
-local count = 0
 function EventFrame:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	local AchievementID = data.AchievementID
-	count = count + 1
-	frame.TextLeft:SetText(count..") "..AchievementID)
+	frame.TextLeft:SetText(AchievementID)
 
 	-- local AchievementID = data.AchievementID
 	-- local TextLeft = E.func_GetAchievementName(AchievementID)
@@ -171,14 +169,14 @@ function EventFrame:Octo_Frame_init(frame, node)
 	-- frame.TextLeft:SetText(TextLeft)
 	-- frame.textRIGHT:SetText(textRIGHT)
 
-	frame.tooltip = CreateAchievementTooltip(AchievementID)
-	if IsTracking(2, AchievementID) then
-		frame.texture_2:Show()
-		-- E.func_SetBackdropStyle(frame, E.classColorHexCurrent, .3, 0)
-	else
-		frame.texture_2:Hide()
-		-- E.func_SetBackdropStyle(frame, nil, 0, 0)
-	end
+	-- frame.tooltip = CreateAchievementTooltip(AchievementID)
+	-- if IsTracking(2, AchievementID) then
+	-- 	frame.texture_2:Show()
+	-- 	-- E.func_SetBackdropStyle(frame, E.classColorHexCurrent, .3, 0)
+	-- else
+	-- 	frame.texture_2:Hide()
+	-- 	-- E.func_SetBackdropStyle(frame, nil, 0, 0)
+	-- end
 end
 function EventFrame:Octo_Create_MainFrame_Achievements()
 	Octo_MainFrame_Achievements:SetPoint("CENTER", 0, 0)
@@ -229,6 +227,7 @@ end
 -- Octo_MainFrame_Achievements.view:SetDataProvider(EventFrame.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 -- end
 function EventFrame:CreateDataProvider()
+	E.func_StartDebugTimer()
 	if Octo_MainFrame_Achievements then
 		EventFrame.DataProvider = CreateTreeDataProvider()
 		local count = 0
@@ -257,6 +256,24 @@ function EventFrame:CreateDataProvider()
 				end
 			end
 		end
+-- (добавлять новый выбор в 1)
+-- 1 йцуйуц
+-- 1 петы
+-- 2 пвп
+-- 3 коллекц
+-- 4 наслед
+
+		-- for i = 1, 100000 do
+		-- 	count = count + 1
+
+		-- 	EventFrame.DataProvider:Insert({
+		-- 			-- TextLeft = TextLeft,
+		-- 			-- textRIGHT = E.func_GetAchievementCompletion(AchievementID),
+		-- 			AchievementID = i,
+		-- 			-- icon = icon,
+		-- 	})
+		-- end
+
 		if count > MAX_DISPLAY_LINES then
 			Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*MAX_DISPLAY_LINES)
 		elseif count == 0 then
@@ -266,6 +283,7 @@ function EventFrame:CreateDataProvider()
 		end
 		Octo_MainFrame_Achievements.view:SetDataProvider(EventFrame.DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	end
+	E.func_StopDebugTimer()
 end
 local MyEventsTable = {
 	"PLAYER_LOGIN",

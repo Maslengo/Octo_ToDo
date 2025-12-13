@@ -645,6 +645,7 @@ function EventFrame:func_UpdateGlobals()
 		end
 		E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
 	end
+	E.func_UpdateCurrentProfile()
 	if Octo_DevTool_DB then
 		E.DebugButton = Octo_DevTool_DB.DebugButton
 		E.DebugEvent = Octo_DevTool_DB.DebugEvent
@@ -678,6 +679,9 @@ function EventFrame:ADDON_LOADED(addonName)
 	----------------------------------------------------------------
 	EventFrame:func_UpdateGlobals()
 	----------------------------------------------------------------
+	-- C_Timer.NewTicker(3, function()
+	-- 	print (E.CurrentProfile, Octo_profileKeys.CurrentProfile)
+	-- end)
 end
 function EventFrame:VARIABLES_LOADED()
 	EventFrame:func_CheckAll()

@@ -1958,14 +1958,14 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-function E.func_ShouldShow(id, dataType, CurrentProfile)
+function E.func_ShouldShow(id, dataType, profileName)
 	local shouldShow = false
 	if Octo_profileKeys.isSettingsEnabled then
 		-- Режим настройки включен - показываем все валюты
 		shouldShow = true
 	else
 		-- Режим настройки выключен - проверяем настройки валют
-		local settingsTable = Octo_profileKeys.profiles[CurrentProfile][dataType] -- dataType
+		local settingsTable = Octo_profileKeys.profiles[profileName][dataType] -- dataType
 		if settingsTable then
 			-- Проверяем числовой ключ
 			if settingsTable[id] then
@@ -4324,78 +4324,21 @@ function E.func_ProcessUniversalQuests(categoryKey, questEntries, currentProfile
 	end
 end
 ----------------------------------------------------------------
-
--- function E.func_CreateNewProfile(profileName)
--- 	E.DataProvider_Otrisovka = {}
--- 	----------------------------------------------------------------
--- 	-- Развлетвление таблиц для оптимизации
--- 	----------------------------------------------------------------
--- 	-- local OctoTables_DataOtrisovka = {}
--- 	for _, func in next,(E.Components) do
--- 		local OctoTables_Vibor, OctoTables_DataOtrisovka = func()
--- 		for i, categoryKey in next,(OctoTables_Vibor) do
--- 			E.OctoTables_Vibor[i] = E.OctoTables_Vibor[i] or categoryKey
--- 		end
--- 		for i, categoryKey in next,(OctoTables_DataOtrisovka) do
--- 			E.OctoTables_DataOtrisovka[i] = E.OctoTables_DataOtrisovka[i] or categoryKey
--- 		end
--- 	end
--- 	----------------------------------------------------------------
--- 	-- Заполнение дефолтных настроек
--- 	----------------------------------------------------------------
-
--- 	Octo_profileKeys = Octo_profileKeys or {}
--- 	local db = Octo_profileKeys
--- 	E.func_InitField(db, "CurrentProfile", profileName)
--- 	E.func_InitField(db, "useGlobalProfile", false) -- все персонажи игнорируют profileKeys
--- 	E.func_InitField(db, "isSettingsEnabled", false) -- только для режима настройки
--- 	E.func_InitSubTable(db, "profileKeys")
--- 	E.func_InitSubTable(db, "profiles")
--- 	E.func_InitSubTable(db.profiles, profileName)
--- 	E.func_InitSubTable(db.profiles.Default, "Currencies")
--- 	E.func_InitSubTable(db.profiles.Default, "Items")
--- 	E.func_InitSubTable(db.profiles.Default, "Reputations")
--- 	E.func_InitSubTable(db.profiles.Default, "UniversalQuests")
--- 	E.func_InitSubTable(db.profiles.Default, "Additionally")
--- 	E.func_InitField(db.profiles.Default, "ExpansionToShow", {
--- 			[7] = true, -- Legion
--- 			[98] = true,
--- 			[99] = true
--- 	})
--- 	----------------------------------------------------------------
--- 	----------------------------------------------------------------
--- 	----------------------------------------------------------------
--- 	for categoryKey, v in next,(E.OctoTables_DataOtrisovka) do
--- 		for dataType, w in next,(v) do
--- 			E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
--- 			E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
--- 			if dataType ~= "UniversalQuests" then
--- 				for i, z in next,(w) do
--- 					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], z.id)
--- 					CurrentProfile[dataType][z.id] = CurrentProfile[dataType][z.id] or z.defS -- nil
--- 					if dataType == "Currencies" then E.ALL_Currencies[z.id] = true end -- /run opde(E.ALL_Currencies)
--- 					if dataType == "Items" then E.ALL_Items[z.id] = true end -- /run opde(E.ALL_Items)
--- 					if dataType == "Reputations" then E.ALL_Reputations[z.id] = true end -- /run opde(E.ALL_Reputations)
--- 					if dataType == "Additionally" then E.ALL_Additionally[z.id] = true end -- /run opde(E.ALL_Additionally)
--- 				end
--- 			else
--- 				for _, data in next,(w) do
--- 					tinsert(E.DataProvider_Otrisovka[categoryKey][dataType], data)
--- 					tinsert(E.ALL_UniversalQuests, data)
--- 					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
--- 					CurrentProfile[dataType][questKey] = CurrentProfile[dataType][questKey] or data.defS -- nil
--- 					for _, questData in ipairs(data.quests) do
--- 						if type(questData[1]) == "number" then
--- 							local questID = questData[1]
--- 							E.ALL_Quests[questID] = true
--- 						end
--- 					end
--- 				end
--- 			end
--- 		end
--- 	end
-
--- end
+function E.func_UpdateCurrentProfile(name)
+	if name then
+		Octo_profileKeys.CurrentProfile = name
+	end
+	E.CurrentProfile = Octo_profileKeys.CurrentProfile
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",

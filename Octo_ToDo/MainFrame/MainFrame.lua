@@ -47,6 +47,14 @@ local func_OnAcquiredLeft do
 		frame.TextLeft:SetJustifyH("LEFT")-- Горизонтальное выравнивание
 		frame.TextLeft:SetTextColor(textR, textG, textB, textA)
 	end
+
+
+
+	-- ИКОНКА НАСТРОЕК
+	-- ИКОНКА КАТЕГОРИЙ
+	-- ТЕКСТ КАТЕРГРИИ
+
+
 	local function Create_TextureLeft(frame)
 		frame.TextureLeft = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
 		frame.TextureLeft:Hide()
@@ -178,8 +186,8 @@ end
 local function func_SettingsButton_OnClick(button, frameData)
 	local dataType, id = ("#"):split(frameData.SettingsType)
 	-- Получаем таблицу настроек для типа
-	local CurrentProfile = Octo_profileKeys.CurrentProfile
-	local settingsTable = Octo_profileKeys.profiles[CurrentProfile][dataType]
+
+	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
 	if not settingsTable then return end
 	-- Определяем ключ (строковый или числовой)
 	local key = id
@@ -197,7 +205,7 @@ end
 -- Функция инициализации данных для левой колонки
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
-	local CurrentProfile = Octo_profileKeys.CurrentProfile
+
 	if frameData.IconLeft then
 		frame.CategoryIcon:SetTexture(frameData.IconLeft)
 		frame.CategoryIcon:SetAtlas(frameData.IconLeft, false)
@@ -207,7 +215,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	if Octo_profileKeys.isSettingsEnabled and frameData.SettingsType then
 		local dataType, id = ("#"):split(frameData.SettingsType)
 		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
-		if Octo_profileKeys.profiles[CurrentProfile][dataType][id] or Octo_profileKeys.profiles[CurrentProfile][dataType][tonumber(id)] then
+		if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
 		else
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
@@ -588,9 +596,9 @@ function EventFrame:CreateDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
 	local columnWidthsCenter = {}
-	local CurrentProfile = Octo_profileKeys.CurrentProfile
-	-- E.func_CreateNewProfile(CurrentProfile)
-	local ExpansionToShowTBL = Octo_profileKeys.profiles[CurrentProfile].ExpansionToShow
+	E.func_UpdateCurrentProfile()
+
+	local ExpansionToShowTBL = Octo_profileKeys.profiles[E.CurrentProfile].ExpansionToShow
 	-- Получение отсортированных данных персонажей
 	local sortedCharacters = E.func_SortCharacters()
 	local currentCharacterIndex
@@ -636,7 +644,7 @@ function EventFrame:CreateDataProvider()
 					if dataType == "UniversalQuests" then
 						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 					end
-					if dataType ~= "UniversalQuests" and E.func_ShouldShow(id, dataType, CurrentProfile) or E.func_ShouldShow(questKey, dataType, CurrentProfile) then
+					if dataType ~= "UniversalQuests" and E.func_ShouldShow(id, dataType, E.CurrentProfile) or E.func_ShouldShow(questKey, dataType, E.CurrentProfile) then
 						totalLines = totalLines + 1
 						local rowData = {
 							TextLeft = {},
