@@ -369,27 +369,32 @@ end
 -- Функции меню дополнений
 ----------------------------------------------------------------
 local function CreateExpansionsMenu(dropdown, providerfunc)
+	----------------------------------------------------------------
 	local function selectFunctionExpansion(menuButton, _, _, checked)
-		Octo_ToDo_DB_Vars.ExpansionToShow[menuButton.value] = checked or nil
+		local CurrentProfile = Octo_profileKeys.CurrentProfile
+		local ExpansionToShowTBL = Octo_profileKeys.profiles[CurrentProfile].ExpansionToShow
+		ExpansionToShowTBL[menuButton.value] = checked or nil
 		providerfunc()
 	end
 
 	return function(self, level, value)
+		local CurrentProfile = Octo_profileKeys.CurrentProfile
+		local ExpansionToShowTBL = Octo_profileKeys.profiles[CurrentProfile].ExpansionToShow
 		local info = {}
 		info.widgets = {{
 				icon = "interface/worldmap/worldmappartyicon",
 				OnClick = function(btn)
 					PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 					for expansionID, v in next, E.OctoTables_Vibor do
-						Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
+						ExpansionToShowTBL[expansionID] = false
 					end
-					Octo_ToDo_DB_Vars.ExpansionToShow[btn.value] = true
+					ExpansionToShowTBL[btn.value] = true
 					self:ddRefresh(level)
 					providerfunc()
 				end,
 		}}
 		info.checked = function(btn)
-			return Octo_ToDo_DB_Vars.ExpansionToShow[btn.value]
+			return ExpansionToShowTBL[btn.value]
 		end
 		info.func = selectFunctionExpansion
 		info.iconInfo = {tSizeX = E.ddMenuButtonHeight*2, tSizeY = E.ddMenuButtonHeight}
@@ -416,7 +421,7 @@ local function CreateExpansionsMenu(dropdown, providerfunc)
 		info.text = INTERACT_ICONS_SHOW_ALL
 		info.func = function(_, _, _, checked)
 			for expansionID, v in next, E.OctoTables_Vibor do
-				Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = true
+				ExpansionToShowTBL[expansionID] = true
 			end
 			self:ddRefresh(level)
 			providerfunc()
@@ -426,7 +431,7 @@ local function CreateExpansionsMenu(dropdown, providerfunc)
 		info.text = HIDE
 		info.func = function(_, _, _, checked)
 			for expansionID, v in next, E.OctoTables_Vibor do
-				Octo_ToDo_DB_Vars.ExpansionToShow[expansionID] = false
+				ExpansionToShowTBL[expansionID] = false
 			end
 			self:ddRefresh(level)
 			providerfunc()
@@ -441,6 +446,7 @@ end
 local function CreateProfilesMenu(dropdown, providerfunc)
 	local function func_remove_Profile(menuButton, arg1)
 		local profileName = menuButton.value
+
 		if profileName == "Default" then
 			return
 		end
@@ -580,6 +586,47 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		StaticPopup_Show("OCTO_CREATE_PROFILE")
 	end
 
+
+
+
+	-- Создаем кнопку удаления с тултипом
+	local function createDeleteWidget(profileName)
+		return {
+			icon = [[Interface/BUTTONS/UI-GroupLoot-Pass-Up]], -- Иконка удаления
+			width = 16,
+			height = 16,
+			OnClick = function(btn)
+				func_remove_Profile({value = profileName})
+				dropdown:ddCloseMenus()
+			end,
+			OnTooltipShow = function(btn, tooltip)
+				tooltip:AddLine(DELETE, nil, nil, nil, true)
+			end,
+		}
+	end
+	-- Interface\GossipFrame\HealerGossipIcon
+	-- Interface\Icons\Trade_Engineering
+	-- Interface\Buttons\UI-OptionsButton
+	-- Создаем кнопку переименования с тултипом
+	local function createRenameWidget(profileName)
+		return {
+			icon = [[Interface\WorldMap\GEAR_64GREY]], -- Иконка шестерёнки
+			width = 16,
+			height = 16,
+			OnClick = function(btn)
+				func_rename_Profile({value = profileName})
+				dropdown:ddCloseMenus()
+			end,
+			OnTooltipShow = function(btn, tooltip)
+				tooltip:AddLine(RENAME_GUILD, nil, nil, nil, true)
+			end,
+		}
+	end
+
+
+
+
+
 	return function(self, level, value)
 		local profiles = Octo_profileKeys.profiles
 		local profileNames = {}
@@ -593,21 +640,26 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		for _, profileName in ipairs(profileNames) do
 			local info = {}
 			info.fontObject = OctoFont11
-			info.keepShownOnClick = false
+			info.keepShownOnClick = true
 			info.notCheckable = false
-			info.isNotRadio = true
-			info.text = profileName
+			info.isNotRadio = false
 			info.value = profileName
-			info.checked = Octo_profileKeys.CurrentProfile == profileName
+			info.checked = function(btn) return Octo_profileKeys.CurrentProfile == profileName end
 			info.func = function(menuButton, _, _, checked)
 				Octo_profileKeys.CurrentProfile = menuButton.value
+				self:ddRefresh(level)
 				providerfunc()
 			end
 			info.arg1 = {self, level, value}
 
 			if profileName ~= "Default" then
-				info.remove = func_remove_Profile
-				info.removeDoNotHide = false
+				info.widgets = {} -- Виджеты
+				tinsert(info.widgets, createDeleteWidget(profileName)) -- Кнопка удаления
+				tinsert(info.widgets, createRenameWidget(profileName)) -- Кнопка ренейма
+				info.text = profileName
+			else
+				info.widgets = nil -- Для профиля Default
+				info.text = DEFAULT
 			end
 
 			self:ddAddButton(info, level)
@@ -638,97 +690,97 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 
 		self:ddAddSeparator(level)
 
-		info = {}
-		info.fontObject = OctoFont11
-		info.keepShownOnClick = false
-		info.notCheckable = true
-		info.text = "Переименовать текущий профиль"
-		info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
-		info.func = function()
-			StaticPopupDialogs["OCTO_RENAME_PROFILE"] = {
-				text = "Введите новое название для профиля '"..Octo_profileKeys.CurrentProfile.."':",
-				button1 = RENAME_GUILD,
-				button2 = CANCEL,
-				hasEditBox = true,
-				editBoxWidth = 260,
-				maxLetters = 30,
-				OnAccept = function(dialog)
-					local newName = dialog.EditBox:GetText():trim()
-					if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
-						if profiles[newName] then
-							E.func_PrintMessage(L["A profile with the same name exists"])
-							return
-						end
+		-- info = {}
+		-- info.fontObject = OctoFont11
+		-- info.keepShownOnClick = false
+		-- info.notCheckable = true
+		-- info.text = "Переименовать текущий профиль"
+		-- info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
+		-- info.func = function()
+		-- 	StaticPopupDialogs["OCTO_RENAME_PROFILE"] = {
+		-- 		text = "Введите новое название для профиля '"..Octo_profileKeys.CurrentProfile.."':",
+		-- 		button1 = RENAME_GUILD,
+		-- 		button2 = CANCEL,
+		-- 		hasEditBox = true,
+		-- 		editBoxWidth = 260,
+		-- 		maxLetters = 30,
+		-- 		OnAccept = function(dialog)
+		-- 			local newName = dialog.EditBox:GetText():trim()
+		-- 			if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
+		-- 				if profiles[newName] then
+		-- 					E.func_PrintMessage(L["A profile with the same name exists"])
+		-- 					return
+		-- 				end
 
-						profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
-						profiles[Octo_profileKeys.CurrentProfile] = nil
-						Octo_profileKeys.CurrentProfile = newName
+		-- 				profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
+		-- 				profiles[Octo_profileKeys.CurrentProfile] = nil
+		-- 				Octo_profileKeys.CurrentProfile = newName
 
-						dropdown:ddCloseMenus()
-						providerfunc()
-						E.func_PrintMessage(L["Profile successfully renamed"])
-					end
-				end,
-				OnShow = function(dialog)
-					dialog.EditBox:SetText(Octo_profileKeys.CurrentProfile or "")
-					dialog.EditBox:SetFocus()
-					dialog.EditBox:HighlightText()
-				end,
-				EditBoxOnEnterPressed = function(editBox)
-					local dialog = editBox:GetParent()
-					local newName = editBox:GetText():trim()
-					if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
-						if profiles[newName] then
-							E.func_PrintMessage(L["A profile with the same name exists"])
-							return
-						end
+		-- 				dropdown:ddCloseMenus()
+		-- 				providerfunc()
+		-- 				E.func_PrintMessage(L["Profile successfully renamed"])
+		-- 			end
+		-- 		end,
+		-- 		OnShow = function(dialog)
+		-- 			dialog.EditBox:SetText(Octo_profileKeys.CurrentProfile or "")
+		-- 			dialog.EditBox:SetFocus()
+		-- 			dialog.EditBox:HighlightText()
+		-- 		end,
+		-- 		EditBoxOnEnterPressed = function(editBox)
+		-- 			local dialog = editBox:GetParent()
+		-- 			local newName = editBox:GetText():trim()
+		-- 			if newName and newName ~= "" and newName ~= Octo_profileKeys.CurrentProfile then
+		-- 				if profiles[newName] then
+		-- 					E.func_PrintMessage(L["A profile with the same name exists"])
+		-- 					return
+		-- 				end
 
-						profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
-						profiles[Octo_profileKeys.CurrentProfile] = nil
-						Octo_profileKeys.CurrentProfile = newName
+		-- 				profiles[newName] = profiles[Octo_profileKeys.CurrentProfile]
+		-- 				profiles[Octo_profileKeys.CurrentProfile] = nil
+		-- 				Octo_profileKeys.CurrentProfile = newName
 
-						dialog:Hide()
-						providerfunc()
-						E.func_PrintMessage(L["Profile successfully renamed"])
-					end
-				end,
-				timeout = 0,
-				whileDead = true,
-				hideOnEscape = true,
-				preferredIndex = 3,
-			}
-			StaticPopup_Show("OCTO_RENAME_PROFILE")
-		end
-		self:ddAddButton(info, level)
+		-- 				dialog:Hide()
+		-- 				providerfunc()
+		-- 				E.func_PrintMessage(L["Profile successfully renamed"])
+		-- 			end
+		-- 		end,
+		-- 		timeout = 0,
+		-- 		whileDead = true,
+		-- 		hideOnEscape = true,
+		-- 		preferredIndex = 3,
+		-- 	}
+		-- 	StaticPopup_Show("OCTO_RENAME_PROFILE")
+		-- end
+		-- self:ddAddButton(info, level)
 
-		info = {}
-		info.fontObject = OctoFont11
-		info.keepShownOnClick = false
-		info.notCheckable = true
-		info.text = L["Delete current profile"]
-		info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
-		info.func = function()
-			if Octo_profileKeys.CurrentProfile ~= "Default" then
-				StaticPopupDialogs["OCTO_DELETE_PROFILE"] = {
-					text = "Вы уверены, что хотите удалить профиль '"..Octo_profileKeys.CurrentProfile.."'?",
-					button1 = DELETE,
-					button2 = CANCEL,
-					OnAccept = function()
-						profiles[Octo_profileKeys.CurrentProfile] = nil
-						Octo_profileKeys.CurrentProfile = "Default"
-						dropdown:ddCloseMenus()
-						providerfunc()
-						E.func_PrintMessage(L["Profile successfully deleted"])
-					end,
-					timeout = 0,
-					whileDead = true,
-					hideOnEscape = true,
-					preferredIndex = 3,
-				}
-				StaticPopup_Show("OCTO_DELETE_PROFILE")
-			end
-		end
-		self:ddAddButton(info, level)
+		-- info = {}
+		-- info.fontObject = OctoFont11
+		-- info.keepShownOnClick = false
+		-- info.notCheckable = true
+		-- info.text = L["Delete current profile"]
+		-- info.disabled = Octo_profileKeys.CurrentProfile == "Default" or not profiles[Octo_profileKeys.CurrentProfile]
+		-- info.func = function()
+		-- 	if Octo_profileKeys.CurrentProfile ~= "Default" then
+		-- 		StaticPopupDialogs["OCTO_DELETE_PROFILE"] = {
+		-- 			text = "Вы уверены, что хотите удалить профиль '"..Octo_profileKeys.CurrentProfile.."'?",
+		-- 			button1 = DELETE,
+		-- 			button2 = CANCEL,
+		-- 			OnAccept = function()
+		-- 				profiles[Octo_profileKeys.CurrentProfile] = nil
+		-- 				Octo_profileKeys.CurrentProfile = "Default"
+		-- 				dropdown:ddCloseMenus()
+		-- 				providerfunc()
+		-- 				E.func_PrintMessage(L["Profile successfully deleted"])
+		-- 			end,
+		-- 			timeout = 0,
+		-- 			whileDead = true,
+		-- 			hideOnEscape = true,
+		-- 			preferredIndex = 3,
+		-- 		}
+		-- 		StaticPopup_Show("OCTO_DELETE_PROFILE")
+		-- 	end
+		-- end
+		-- self:ddAddButton(info, level)
 
 		info = {}
 		info.fontObject = OctoFont11

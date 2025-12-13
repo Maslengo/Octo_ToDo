@@ -4216,9 +4216,10 @@ function E.func_InitializeProfileStructure(profileName)
 	E.func_InitSubTable(db, "profileKeys")
 	E.func_InitSubTable(db, "profiles")
 	E.func_InitSubTable(db.profiles, profileName)
-
+	----------------------------------------------------------------
 	-- Инициализация секций профиля
 	local profile = db.profiles[profileName]
+
 	local profileSections = {
 		"Currencies",
 		"Items",
@@ -4226,6 +4227,13 @@ function E.func_InitializeProfileStructure(profileName)
 		"UniversalQuests",
 		"Additionally"
 	}
+	-- Настройки расширений по умолчанию
+	E.func_InitField(profile, "ExpansionToShow", {
+		[7] = true,  -- Legion
+		[98] = true,
+		[99] = true
+	})
+	----------------------------------------------------------------
 
 	for _, section in pairs(profileSections) do
 		E.func_InitSubTable(profile, section)
@@ -4239,13 +4247,6 @@ function E.func_InitializeProfileStructure(profileName)
 	for _, section in pairs(profileSections) do
 		E.func_InitSubTable(defaultProfile, section)
 	end
-
-	-- Настройки расширений по умолчанию
-	E.func_InitField(defaultProfile, "ExpansionToShow", {
-		[7] = true,  -- Legion
-		[98] = true,
-		[99] = true
-	})
 
 	return db
 end

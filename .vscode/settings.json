@@ -301,7 +301,13 @@
 		"CurrencyTransferLog",
 		"CURRENCY_TRANSFER_DISABLED_MAX_QUANTITY",
 		"CURRENCY_TRANSFER_IN_PROGRESS",
-		"ERR_CURRENCY_TRANSFER_DISABLED"
+		"ERR_CURRENCY_TRANSFER_DISABLED",
+		"GameMenuFrame",
+		"Lerp",
+		"RENAME_GUILD",
+		"EDIT",
+		"GossipFrame",
+		"DEFAULT"
 	],
 	"Lua.type.weakUnionCheck": true,
 	"lua.targetVersion": "5.1"

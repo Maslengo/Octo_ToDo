@@ -589,6 +589,8 @@ function EventFrame:CreateDataProvider()
 	local columnWidthsLeft = {}
 	local columnWidthsCenter = {}
 	local CurrentProfile = Octo_profileKeys.CurrentProfile
+	-- E.func_CreateNewProfile(CurrentProfile)
+	local ExpansionToShowTBL = Octo_profileKeys.profiles[CurrentProfile].ExpansionToShow
 	-- Получение отсортированных данных персонажей
 	local sortedCharacters = E.func_SortCharacters()
 	local currentCharacterIndex
@@ -621,7 +623,8 @@ function EventFrame:CreateDataProvider()
 	-- opde(E.OctoTables_DataOtrisovka)
 	----------------------------------------------------------------
 	for categoryKey in next,(E.OctoTables_Vibor) do
-		if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
+		-- if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
+		if ExpansionToShowTBL[categoryKey] then
 			-- Обрабатываем типы данных в нужном порядке
 			for _, dataType in ipairs(dataDisplayOrder) do
 				-- for dataType in next,(E.OctoTables_DataOtrisovka[categoryKey]) do
