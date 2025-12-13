@@ -35,15 +35,15 @@ local function CreateUtilButton(name, frame, texture, size, func_onEnter, func_o
 	-- Set tooltip on enter
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
-			button.tooltip = func_onEnter()
-			E.func_OctoTooltip_OnEnter(button, {"BOTTOMLEFT", "TOPRIGHT"})
+				button.tooltip = func_onEnter()
+				E.func_OctoTooltip_OnEnter(button, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 	end
 	-- Set click handler
 	if func_onClick then
 		button:SetScript("OnClick", function()
-			func_onClick()
-			button.tooltip = nil
+				func_onClick()
+				button.tooltip = nil
 		end)
 	end
 	return button
@@ -87,11 +87,11 @@ function EventFrame:Octo_CloseButton(frame)
 		nil
 	)
 	button:SetScript("OnClick", function(self)
-		local parent = self:GetParent()
-		if parent then
-			parent:Hide()
-		end
-		self.tooltip = nil
+			local parent = self:GetParent()
+			if parent then
+				parent:Hide()
+			end
+			self.tooltip = nil
 	end)
 end
 function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
@@ -125,7 +125,7 @@ function E.func_CreateUtilsButton(frame, addonIconTexture)
 		utilityFrames.initialized = true
 	end
 	frame:HookScript("OnShow", function()
-		AttachUtilityFrames(frame)
+			AttachUtilityFrames(frame)
 	end)
 	if frame:IsShown() then
 		AttachUtilityFrames(frame)
@@ -135,11 +135,11 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	C_Timer.After(0, function()
-		for i, frame in ipairs(E.OctoTable_Frames) do
-			E.func_CreateUtilsButton(frame, "ToDo")
-		end
+			for i, frame in ipairs(E.OctoTable_Frames) do
+				E.func_CreateUtilsButton(frame, "ToDo")
+			end
 	end)
 end

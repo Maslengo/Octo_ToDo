@@ -8,12 +8,12 @@ local function Collect_All_PlayerInfo()
 	local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")
 	collectPlayerData.curServerShort = E.curServerShort
 	collectPlayerData.Name = E.curCharName
-	collectPlayerData.curServer = E.func_GetRealmName()
+	collectPlayerData.curServer = E.func_GetPlayerRealm()
 	collectPlayerData.className = E.className
 	collectPlayerData.classFilename = E.classFilename
 	collectPlayerData.classId = E.classId
 	collectPlayerData.GUID = E.curGUID
-	collectPlayerData.Faction = E.curFaction
+	collectPlayerData.Faction = E.FACTION_CURRENT
 	collectPlayerData.specId = specId
 	collectPlayerData.specName = specName
 	collectPlayerData.specIcon = specIcon

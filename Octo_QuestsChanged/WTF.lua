@@ -21,7 +21,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 }
 ----------------------------------------------------------------
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 ------------------------------------------------------------
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end

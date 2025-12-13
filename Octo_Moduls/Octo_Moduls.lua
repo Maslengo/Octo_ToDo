@@ -13,7 +13,7 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 	-- E.func_CreateMinimapButton(GlobalAddonName, "Moduls", EventFrame.savedVars, Octo_MainFrame_Moduls, nil, "Octo_MainFrame_Moduls")

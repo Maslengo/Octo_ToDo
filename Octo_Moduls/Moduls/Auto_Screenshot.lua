@@ -20,7 +20,7 @@ tinsert(E.Modules, function()
 		local message = EVENT_MESSAGES[event] or ""
 		local currentTime = date("%m/%d/%y %H:%M:%S")
 		C_Timer.After(1, function()
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message).." "..E.Yellow_Color..currentTime.."|r")
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(message).." "..E.COLOR_YELLOW..currentTime.."|r")
 			Screenshot()
 		end)
 	end

@@ -9,7 +9,7 @@ local categoryKey = 98
 
 
 local function func_TIMEDUNGNAMEPLUSICON()
-	local joinable, timewalkDungeonName = E.func_joinableDung()
+	local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon()
 	if joinable then
 		return timewalkDungeonName
 	end
@@ -27,7 +27,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = CALENDAR_FILTER_HOLIDAYS
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 1166, defS = true,}, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_joinableDung())
+		{id = 1166, defS = true,}, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon())
 		{id = 3309, defS = false,}, -- Hellstone Shard
 		{id = 2588, defS = false,}, -- Riders of Azeroth Badge
 	}
@@ -43,12 +43,12 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		-- E.func_EventName(181) (Noblegarden) (Сад чудес)
+		-- E.func_GetEventName(181) (Noblegarden) (Сад чудес)
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(13503, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(13503, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			defS = false,
@@ -61,7 +61,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(79575, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(79575, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "WhattheDuck",
@@ -75,7 +75,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(13479, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(13479, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
@@ -89,7 +89,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(79576, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(79576, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "AFowlConcoction",
@@ -103,7 +103,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(79577, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(79577, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "DuckTales",
@@ -117,7 +117,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(79578, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(79578, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
@@ -132,7 +132,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(79558, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(79558, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "FeatheredFiend",
@@ -146,7 +146,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_questName(79135, false) .. " ("..E.func_EventName(181)..")"
+				return E.func_GetQuestName(79135, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			showTooltip = true,
 			name_save = "QuackingDown",
@@ -157,11 +157,11 @@ local function tempFunction()
 				{79135},
 			},
 		},
-		-- E.func_EventName(201) (ChildrensWeek) (Детская неделя)
+		-- E.func_GetEventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
 		{
 			TextLeft = function()
-				return E.func_mapName(85) .."/"..E.func_mapName(84).. " ("..E.func_EventName(201)..")"
+				return E.func_GetMapName(85) .."/"..E.func_GetMapName(84).. " ("..E.func_GetEventName(201)..")"
 			end,
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
@@ -189,7 +189,7 @@ local function tempFunction()
 		----------------------------------------------------------------
 		{
 			TextLeft = function()
-				return "Shattrath" .. " ("..E.func_EventName(201)..")"
+				return "Shattrath" .. " ("..E.func_GetEventName(201)..")"
 			end,
 			showTooltip = true,
 			name_save = "Shattrath", --
@@ -219,7 +219,7 @@ local function tempFunction()
 		----------------------------------------------------------------
 		{
 			TextLeft = function()
-				return L["Daily quests"] .. " ("..E.func_EventName(181)..")" -- ПОФИКСИТЬ
+				return L["Daily quests"] .. " ("..E.func_GetEventName(181)..")" -- ПОФИКСИТЬ
 			end,
 			showTooltip = true,
 			name_save = "orgrimmarStormwindDAILY", --
@@ -239,7 +239,7 @@ local function tempFunction()
 		----------------------------------------------------------------
 		{
 			TextLeft = function()
-				return RAIDS..func_TIMEDUNGNAMEPLUSICON() --.. " ("..E.func_EventName(1583)..")",
+				return RAIDS..func_TIMEDUNGNAMEPLUSICON() --.. " ("..E.func_GetEventName(1583)..")",
 			end,
 			showTooltip = true,
 			name_save = "Raid",
@@ -257,7 +257,7 @@ local function tempFunction()
 		{
 			sorted = false,
 			TextLeft = function()
-				return DUNGEONS..func_TIMEDUNGNAMEPLUSICON() --.. " ("..E.func_EventName(1583)..")",
+				return DUNGEONS..func_TIMEDUNGNAMEPLUSICON() --.. " ("..E.func_GetEventName(1583)..")",
 			end,
 			showTooltip = true,
 			name_save = "Dungeons",
@@ -290,7 +290,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return "Profession Monthlies" .. " ("..E.func_EventName(479)..")"
+				return "Profession Monthlies" .. " ("..E.func_GetEventName(479)..")"
 			end,
 			showTooltip = true,
 			name_save = "ProfessionMonthlies",
@@ -317,7 +317,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return "Monthly Quests" .. " ("..E.func_EventName(479)..")"
+				return "Monthly Quests" .. " ("..E.func_GetEventName(479)..")"
 			end,
 			showTooltip = true,
 			name_save = "MonthlyQuests",
@@ -332,7 +332,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return "Acount-wide Dailies" .. " ("..E.func_EventName(479)..")"
+				return "Acount-wide Dailies" .. " ("..E.func_GetEventName(479)..")"
 			end,
 			showTooltip = true,
 			name_save = "AcountwideDailies",
@@ -347,7 +347,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return "item turns ins" .. " ("..E.func_EventName(479)..")"
+				return "item turns ins" .. " ("..E.func_GetEventName(479)..")"
 			end,
 			showTooltip = true,
 			name_save = "itemturnsins",
@@ -369,7 +369,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_itemName(93724) .. " ("..E.func_EventName(479)..")"
+				return E.func_GetItemName(93724) .. " ("..E.func_GetEventName(479)..")"
 			end,
 			showTooltip = true,
 			name_save = "DarkmoonFaire",
@@ -391,7 +391,7 @@ local function tempFunction()
 		},
 		{
 			TextLeft = function()
-				return E.func_itemName(92441) .. " (Warlock)"
+				return E.func_GetItemName(92441) .. " (Warlock)"
 			end,
 			showTooltip = true,
 			name_save = "GreenFire",
@@ -435,8 +435,8 @@ local function localfunc2()
 	-- TextCenter = CharInfo.MASLENGO.ItemsInBag[44791]
 	-- end
 	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_itemName(44791)
-	-- ColorLeft = E.Holiday_Color
+	-- TextLeft = E.func_GetItemName(44791)
+	-- ColorLeft = E.COLOR_HOLIDAY
 	-- ----------------------------------------------------------------
 	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 	-- ----------------------------------------------------------------
@@ -449,8 +449,8 @@ local function localfunc2()
 	-- TextCenter = CharInfo.MASLENGO.ItemsInBag[45072]
 	-- end
 	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_itemName(45072)
-	-- ColorLeft = E.Holiday_Color
+	-- TextLeft = E.func_GetItemName(45072)
+	-- ColorLeft = E.COLOR_HOLIDAY
 	-- ----------------------------------------------------------------
 	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 	-- ----------------------------------------------------------------
@@ -465,9 +465,9 @@ local function localfunc2()
 	-- local TimewalkHolidayTBL = {1705, 1583, 1265, 1063, 652, 622, 1508, 1667}
 	-- for _, HolidayID in ipairs(TimewalkHolidayTBL) do
 	-- if E.ActiveHoliday[HolidayID] then
-	-- local joinable, timewalkDungeonName = E.func_joinableDung()
+	-- local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon()
 	-- if joinable then
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysTimewalk", E.Event_Color)
+	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysTimewalk", E.COLOR_EVENT)
 	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 	-- ----------------------------------------------------------------
 	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
@@ -475,8 +475,8 @@ local function localfunc2()
 	-- ----------------------------------------------------------------
 	-- TextCenter = E.func_TextCenter_Currency(CharInfo, 1166)
 	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_currencyName(1166)..timewalkDungeonName
-	-- ColorLeft = E.Event_Color
+	-- TextLeft = E.func_GetCurrencyName(1166)..timewalkDungeonName
+	-- ColorLeft = E.COLOR_EVENT
 	-- SettingsType = "Currencies#"..1166
 	-- ----------------------------------------------------------------
 	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
@@ -504,8 +504,8 @@ local function localfunc2()
 	-- TextCenter = CharInfo.MASLENGO.LFGInstance[286].donetoday
 	-- end
 	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_texturefromIcon(E.func_GetItemIconByID(23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_LFGdungName(286)
-	-- ColorLeft = E.Holiday_Color
+	-- TextLeft = E.func_texturefromIcon(E.func_GetItemIcon(23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_GetLFGDungeonName(286)
+	-- ColorLeft = E.COLOR_HOLIDAY
 	-- ----------------------------------------------------------------
 	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 	-- ----------------------------------------------------------------
@@ -518,8 +518,8 @@ local function localfunc2()
 	-- TextCenter = CharInfo.MASLENGO.ItemsInBag[23247]
 	-- end
 	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_itemName(23247)
-	-- ColorLeft = E.Holiday_Color
+	-- TextLeft = E.func_GetItemName(23247)
+	-- ColorLeft = E.COLOR_HOLIDAY
 	-- ----------------------------------------------------------------
 	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
 	-- ----------------------------------------------------------------
@@ -529,15 +529,15 @@ local function localfunc2()
 	-- ----------------------------------------------------------------
 	-- ----------------------------------------------------------------
 	-- if E.ActiveHoliday[1691] then -- Алчный посланец
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysAGreedyEmissary", E.Red_Color)
+	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysAGreedyEmissary", E.COLOR_RED)
 	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 	-- ----------------------------------------------------------------
 	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 	-- ----------------------------------------------------------------
 	-- TextCenter = E.func_TextCenter_Currency(CharInfo, 3309)
 	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_currencyName(3309)
-	-- ColorLeft = E.Red_Color
+	-- TextLeft = E.func_GetCurrencyName(3309)
+	-- ColorLeft = E.COLOR_RED
 	-- SettingsType = "Currencies#"..3309
 	-- ----------------------------------------------------------------
 	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
@@ -548,7 +548,7 @@ local function localfunc2()
 	-- ----------------------------------------------------------------
 	-- ----------------------------------------------------------------
 	-- if E.ActiveHoliday[479] then -- Ярмарка новолунья
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysDarkmoonFaire", E.Purple_Color)
+	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysDarkmoonFaire", E.COLOR_PURPLE)
 	-- end
 	-- ----------------------------------------------------------------
 	-- ----------------------------------------------------------------

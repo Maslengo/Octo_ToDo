@@ -26,7 +26,7 @@ local function Collect_All_PlayerDurability()
 			end
 		end
 	end
-	collectPlayerData.PlayerDurability = E.func_CompactNumberRound(totalDurability)
+	collectPlayerData.PlayerDurability = E.func_CompactRoundNumber(totalDurability)
 end
 ----------------------------------------------------------------
 function E.Collect_All_PlayerDurability()

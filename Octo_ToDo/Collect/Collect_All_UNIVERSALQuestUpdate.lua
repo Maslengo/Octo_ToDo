@@ -19,9 +19,9 @@ local function Collect_All_UNIVERSALQuestUpdate()
 			if type(questData[1]) == "number" then
 				local questID = questData[1]
 				local faction = questData.faction
-				if not faction or faction == E.curFaction then
+				if not faction or faction == E.FACTION_CURRENT then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
-					local status = E.func_CheckCompletedByQuestID(questID)
+					local status = E.func_GetQuestStatus(questID)
 					totalQUEST = totalQUEST + 1
 					questDataTable[questID] = status
 					if isCompleted then

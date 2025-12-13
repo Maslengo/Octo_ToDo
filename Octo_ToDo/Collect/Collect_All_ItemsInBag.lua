@@ -17,7 +17,7 @@ local function Collect_All_ItemsInBag()
 	local keystoneFound = false
 	local hasKeystone = false
 	for _, itemID in ipairs(E.KeyStoneTBL) do
-		if E.func_GetItemCount(itemID, false, false, false, false) ~= 0 then
+		if E.func_GetItemQuantity(itemID, false, false, false, false) ~= 0 then
 			hasKeystone = true
 			break
 		end
@@ -87,7 +87,7 @@ local function Collect_All_ItemsInBag()
 						end
 					end
 					if itemID and researchItemsLookup[itemID] then
-						Possible_CatalogedResearch = Possible_CatalogedResearch + (researchItemsLookup[itemID] * E.func_GetItemCount(itemID))
+						Possible_CatalogedResearch = Possible_CatalogedResearch + (researchItemsLookup[itemID] * E.func_GetItemQuantity(itemID))
 					end
 					if stackCount and itemID and E.func_IsAnimaItemByID(itemID) then
 						if itemID == 183727 then
@@ -111,7 +111,7 @@ local function Collect_All_ItemsInBag()
 	end
 	-- local tbl = E.OctoTable_itemID_ALL
 	for itemID in next,(E.ALL_Items) do
-		local count = E.func_GetItemCount(itemID, true, true, true, false)
+		local count = E.func_GetItemQuantity(itemID, true, true, true, false)
 		if count ~= 0 then
 			collectMASLENGO.ItemsInBag[itemID] = count
 		end

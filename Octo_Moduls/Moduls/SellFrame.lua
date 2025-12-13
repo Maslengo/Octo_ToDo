@@ -66,7 +66,7 @@ local UseContainerItem = C_Container.UseContainerItem
 local GetItemCount = C_Item.GetItemCount
 local GetItemInfo = C_Item.GetItemInfo
 local GetContainerItemID = C_Container.GetContainerItemID
-local func_GetItemCount = function(...) return E.func_GetItemCount(...) end
+local func_GetItemCount = function(...) return E.func_GetItemQuantity(...) end
 -- Игнорируемые предметы (не для продажи)
 local ignorelist = {}
 for _, itemID in ipairs(E.OctoTable_itemID_Ignore_List) do
@@ -284,7 +284,7 @@ local function func_UpdateTooltip(button)
 							count = itemCount,
 							quality = quality,
 							sellPrice = sellPrice,
-							itemName = E.func_itemName(itemID, quality),
+							itemName = E.func_GetItemName(itemID, quality),
 							itemType = itemEquipLoc
 						}
 					end
@@ -308,11 +308,11 @@ local function func_UpdateTooltip(button)
 	table.sort(sorted_itemList, func_SortItems)
 	-- Формирование данных для тултипа
 	local SellOther_tooltip = {}
-	SellOther_tooltip[#SellOther_tooltip+1] = {" ", TOTAL..": "..E.func_MoneyString(totalMoney)}
+	SellOther_tooltip[#SellOther_tooltip+1] = {" ", TOTAL..": "..E.func_FormatMoney(totalMoney)}
 	for _, item in ipairs(sorted_itemList) do
-		local displayText = E.func_MoneyString(item.totalPrice)
+		local displayText = E.func_FormatMoney(item.totalPrice)
 		if item.count > 1 then
-			displayText = E.Blue_Color.."x"..item.count.."|r "..displayText
+			displayText = E.COLOR_BLUE.."x"..item.count.."|r "..displayText
 		end
 		table.insert(SellOther_tooltip, {
 				item.itemName,
@@ -453,7 +453,7 @@ local MyEventsTable = {
 	"TOOLTIP_DATA_UPDATE",
 	"MERCHANT_CLOSED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 --- Обрабатывает событие загрузки аддона
 function EventFrame:PLAYER_LOGIN()
 	EventFrame.func_CreateTradeButtons()

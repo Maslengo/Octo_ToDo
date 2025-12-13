@@ -10,7 +10,7 @@ local MyEventsTable = {
 	"READY_CHECK", -- Проверка готовности
 }
 -- Регистрация событий
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 -- Обработчик проверки готовности
 function EventFrame:READY_CHECK()
 	if InCombatLockdown() then return end

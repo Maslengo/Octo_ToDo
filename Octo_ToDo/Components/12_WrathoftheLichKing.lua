@@ -58,7 +58,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(24748, false)
+				return E.func_GetQuestName(24748, false)
 			end,
 			name_save = "Shadowmourne",
 			defS = true,

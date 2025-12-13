@@ -4,7 +4,7 @@ local Octo_MinecraftFrameFG, frameLEFT, frameRIGHT
 local EventFrame = CreateFrame("Frame")
 local Octo_MainFrame_Minecraft = CreateFrame("Button", "Octo_MainFrame_Minecraft", UIParent)
 Octo_MainFrame_Minecraft:Hide()
-E.func_InitFrame(Octo_MainFrame_Minecraft)
+E.func_RegisterFrame(Octo_MainFrame_Minecraft)
 -- Constants
 local SIZE = 64
 local HALF_SIZE = SIZE / 2
@@ -66,7 +66,7 @@ local function UpdateColorDisplay(frame, color, text, colorPickerFrame)
 	if colorPickerFrame then
 		colorPickerFrame.color:SetColorTexture(color.r, color.g, color.b)
 	end
-	text:SetText(string.format("r: %s\ng: %s\nb: %s\n \n%s", color.r, color.g, color.b, E.func_rgb2hexSTRING(color.r, color.g, color.b)))
+	text:SetText(string.format("r: %s\ng: %s\nb: %s\n \n%s", color.r, color.g, color.b, E.func_RGB2HexString(color.r, color.g, color.b)))
 end
 local function ColorSwatch_OnClick(color, updateFunc)
 	ColorPickerFrame:SetupColorPickerAndShow({
@@ -123,7 +123,7 @@ function EventFrame:CreateOcto_MinecraftFrameFG()
 	UpdateBG()
 end
 local MyEventsTable = {"ADDON_LOADED"}
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

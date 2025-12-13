@@ -1,5 +1,5 @@
 function() 
-	local vivod = ""
+	local output = ""
 	local rosterCurrencyData = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(3309)
 	if rosterCurrencyData then
 		for CharIndex, v in ipairs(rosterCurrencyData) do
@@ -8,7 +8,7 @@ function()
 			local characterGUID = v.characterGUID
 			local fullCharacterName = v.fullCharacterName
 			local currencyID = v.currencyID
-			vivod = vivod ..
+			output = output ..
 			"|cffFF00FFCharIndex:|r "..CharIndex.."|n"..
 			"|cffFF00FFcharacterName:|r "..characterName.."|n"..
 			"|cffFF00FFquantity:|r "..quantity.."|n"..
@@ -17,5 +17,5 @@ function()
 			"|cffFF00FFcurrencyID:|r "..currencyID.."|n|n"
 		end
 	end
-	return vivod
+	return output
 end

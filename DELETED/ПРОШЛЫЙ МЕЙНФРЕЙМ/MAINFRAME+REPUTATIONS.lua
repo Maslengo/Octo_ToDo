@@ -431,14 +431,14 @@ function E:func_TODO_CreateDataProvider()
 				for _, v in ipairs(tbl) do
 					local repInfo = E.OctoTable_ReputationsDB[v.id]
 					-- Проверяем соответствие фракции
-					local factionMatch = not Octo_ToDo_DB_Vars.OnlyCurrentFaction
-					or repInfo.side == E.curFaction
+					local factionMatch = not Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+					or repInfo.side == E.FACTION_CURRENT
 					or repInfo.side == "-"
 					if factionMatch then
 						numlines = numlines + 1
 						local zxc = CreateZxcTable(true)
 						for CharIndex, CharInfo in ipairs(sortedPlayersTBL) do
-							local FIRST, SECOND, vivod, ColorCenter = ("#"):split(CharInfo.MASLENGO.Reputation[v.id])
+							local FIRST, SECOND, output, ColorCenter = ("#"):split(CharInfo.MASLENGO.Reputation[v.id])
 							zxc.FIRST[CharIndex] = tonumber(FIRST) or 0
 							zxc.SECOND[CharIndex] = tonumber(SECOND) or 0
 							zxc.TextLeft = E:func_texturefromIcon(E.OctoTable_ReputationsDB[v.id].icon)..E:func_reputationName(v.id)
@@ -449,7 +449,7 @@ function E:func_TODO_CreateDataProvider()
 							-- zxc.IconLeft = E.ICON_EMPTY
 							-- end
 							zxc.ColorLeft = E.OctoTable_Expansions[index].color
-							zxc.TextCenter[CharIndex] = vivod
+							zxc.TextCenter[CharIndex] = output
 							zxc.tooltipRIGHT[CharIndex] = {}
 							zxc.ColorCenter[CharIndex] = ColorCenter
 							zxc.myType = {}

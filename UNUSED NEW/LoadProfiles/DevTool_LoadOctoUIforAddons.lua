@@ -50,7 +50,7 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	self:LoadOctoUIforAddons()
 end

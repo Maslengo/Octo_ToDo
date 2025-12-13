@@ -2,7 +2,7 @@
 function EventFrame:Octo_AbandonButton(frame)
 	local function func_onEnter()
 		local tooltip = {}
-		local numQuests = E.func_CurrentNumQuests()
+		local numQuests = E.func_GetQuestLogCount()
 		if numQuests > 0 then
 			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["Abandon All Quests"].."|r".." ("..numQuests..")"}
 			tooltip[#tooltip+1] = {" ", " "}
@@ -13,9 +13,9 @@ function EventFrame:Octo_AbandonButton(frame)
 					table.insert(list, info.questID)
 				end
 			end
-			table.sort(list, E.func_Reverse_order)
+			table.sort(list, E.func_SortByDescending)
 			for _, questID in ipairs(list) do
-				tooltip[#tooltip+1] = {E.func_questName(questID), E.func_CheckCompletedByQuestID(questID)}
+				tooltip[#tooltip+1] = {E.func_GetQuestName(questID), E.func_GetQuestStatus(questID)}
 			end
 		else
 			tooltip[#tooltip+1] = {E.classColorHexCurrent..L["No quests"].."|r"}
@@ -23,19 +23,19 @@ function EventFrame:Octo_AbandonButton(frame)
 		return tooltip
 	end
 	local function f_AbandonQuests()
-		local numQuests = E.func_CurrentNumQuests()
+		local numQuests = E.func_GetQuestLogCount()
 		for i = 1, GetNumQuestLogEntries() do
 			if numQuests ~= 0 then
 				local info = GetInfo(i)
 				if info and not info.isHeader and not info.isHidden then
-					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_questName(info.questID))
+					DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Abandon: "])..E.func_GetQuestName(info.questID))
 					SetSelectedQuest(info.questID)
 					SetAbandonQuest()
 					AbandonQuest()
 				end
 			end
 		end
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.Green_Color..numQuests.."|r")
+		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient(L["Total"]).." "..E.COLOR_GREEN..numQuests.."|r")
 	end
 	-- Create confirmation dialog
 	StaticPopupDialogs[GlobalAddonName.."Abandon_All_Quests"] = {
@@ -47,7 +47,7 @@ function EventFrame:Octo_AbandonButton(frame)
 		OnAccept = function() C_Timer.After(E.SPAM_TIME, f_AbandonQuests) end,
 	}
 	local function func_onClick()
-		if E.func_CurrentNumQuests() > 0 then
+		if E.func_GetQuestLogCount() > 0 then
 			StaticPopup_Show(GlobalAddonName.."Abandon_All_Quests")
 		end
 	end

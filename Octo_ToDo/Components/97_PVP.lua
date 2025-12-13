@@ -34,7 +34,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(47148, false)
+				return E.func_GetQuestName(47148, false)
 			end,
 			name_save = "SomethingDifferent",
 			defS = true,

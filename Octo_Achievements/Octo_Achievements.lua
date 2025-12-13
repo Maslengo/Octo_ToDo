@@ -4,7 +4,7 @@ E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 local Octo_MainFrame_Achievements = CreateFrame("BUTTON", "Octo_MainFrame_Achievements", UIParent, "BackdropTemplate")
 Octo_MainFrame_Achievements:Hide()
-E.func_InitFrame(Octo_MainFrame_Achievements)
+E.func_RegisterFrame(Octo_MainFrame_Achievements)
 ----------------------------------------------------------------
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
@@ -32,9 +32,9 @@ local StartTracking = C_ContentTracking.StartTracking
 local StopTracking = C_ContentTracking.StopTracking
 ----------------------------------------------------------------
 local function ToggleAchievement(AchievementID)
-	if E.func_achievementComplete(AchievementID) and IsTracking(2, AchievementID) then
+	if E.func_IsAchievementCompleted(AchievementID) and IsTracking(2, AchievementID) then
 		return StopTracking(2, AchievementID, 2)
-	elseif E.func_achievementComplete(AchievementID) then
+	elseif E.func_IsAchievementCompleted(AchievementID) then
 		return
 	elseif IsTracking(2, AchievementID) then
 		return StopTracking(2, AchievementID, 2)
@@ -117,11 +117,11 @@ end
 local function CreateAchievementTooltip(achievementID)
 	local tooltipData = {}
 	local _, _, points, completed, month, day, year, description, _, icon, _, _, _, _, isStatistic = GetAchievementInfo(achievementID)
-	local color = completed and E.Green_Color or E.Red_Color
+	local color = completed and E.COLOR_GREEN or E.COLOR_RED
 	-- Build header line
-	local TextLeft = E.func_texturefromIcon(icon)..E.func_achievementName(achievementID)
+	local TextLeft = E.func_texturefromIcon(icon)..E.func_GetAchievementName(achievementID)
 	if E.Config_DebugID_ALL then
-		TextLeft = TextLeft..E.Gray_Color.." id:"..achievementID.."|r"
+		TextLeft = TextLeft..E.COLOR_GRAY.." id:"..achievementID.."|r"
 	end
 	if points and points ~= 0 then
 		TextLeft = TextLeft.." "..color..points.."|r"
@@ -131,50 +131,60 @@ local function CreateAchievementTooltip(achievementID)
 	-- Add description if exists
 	if description and description ~= "" then
 		table_insert(tooltipData, {" ", " "})
-		table_insert(tooltipData, {E.Yellow_Color..description.."|r"})
+		table_insert(tooltipData, {E.COLOR_YELLOW..description.."|r"})
 		table_insert(tooltipData, {" ", " "})
 	end
 	-- Process criteria data
-	local vivodLeft, vivodRight = {}, {}
+	local OutputLeft, OutputRight = {}, {}
 	local numCriteria = GetAchievementNumCriteria(achievementID)
 	for critIndex = 1, numCriteria do
 		local criteriaString, _, completedCrit, quantity, reqQuantity = GetAchievementCriteriaInfo(achievementID, critIndex, false)
 		-- Left column (criteria text)
 		local text = criteriaString and criteriaString ~= "" and criteriaString or description
-		local critColor = completedCrit and E.Green_Color or (not completedCrit and quantity == 0 and E.Gray_Color or E.White_Color)
-		table_insert(vivodLeft, critColor .. text .. "|r")
+		local critColor = completedCrit and E.COLOR_GREEN or (not completedCrit and quantity == 0 and E.COLOR_GRAY or E.COLOR_WHITE)
+		table_insert(OutputLeft, critColor .. text .. "|r")
 		-- Right column (quantity)
 		local qText = isStatistic and "" or (critColor..(quantity or 0).." / "..(reqQuantity or 1).."|r")
-		table_insert(vivodRight, qText)
+		table_insert(OutputRight, qText)
 	end
 	-- Add criteria data to tooltip if any criteria exists
-	if #vivodLeft > 0 then
-		table_insert(tooltipData, {table_concat(vivodLeft, "|n"), table_concat(vivodRight, "|n")} )
+	if #OutputLeft > 0 then
+		table_insert(tooltipData, {table_concat(OutputLeft, "|n"), table_concat(OutputRight, "|n")} )
 	end
 	return tooltipData
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- ОТРИСОВЫВАЕТ ДАННЫЕ НА КНОПКЕ (АПДЕЙТ)
+local count = 0
 function EventFrame:Octo_Frame_init(frame, node)
 	local data = node:GetData()
-	frame.icon_1:SetTexture(data.icon)
-	frame.TextLeft:SetText(data.TextLeft)
-	frame.textRIGHT:SetText(data.textRIGHT or "NIL?")
-	frame.tooltip = CreateAchievementTooltip(data.AchievementID)
-	if IsTracking(2, data.AchievementID) then
+	local AchievementID = data.AchievementID
+	count = count + 1
+	frame.TextLeft:SetText(count..") "..AchievementID)
+
+	-- local AchievementID = data.AchievementID
+	-- local TextLeft = E.func_GetAchievementName(AchievementID)
+	-- local icon = E.func_GetAchievementIcon(AchievementID)
+	-- local textRIGHT = E.func_GetAchievementCompletion(AchievementID)
+	-- frame.icon_1:SetTexture(icon)
+	-- frame.TextLeft:SetText(TextLeft)
+	-- frame.textRIGHT:SetText(textRIGHT)
+
+	frame.tooltip = CreateAchievementTooltip(AchievementID)
+	if IsTracking(2, AchievementID) then
 		frame.texture_2:Show()
-		-- E.func_SetBackdrop(frame, E.classColorHexCurrent, .3, 0)
+		-- E.func_SetBackdropStyle(frame, E.classColorHexCurrent, .3, 0)
 	else
 		frame.texture_2:Hide()
-		-- E.func_SetBackdrop(frame, nil, 0, 0)
+		-- E.func_SetBackdropStyle(frame, nil, 0, 0)
 	end
 end
 function EventFrame:Octo_Create_MainFrame_Achievements()
 	Octo_MainFrame_Achievements:SetPoint("CENTER", 0, 0)
 	Octo_MainFrame_Achievements:SetScript("OnShow", function()
-		EventFrame:CreateDataProvider()
-		RequestRaidInfo()
+			EventFrame:CreateDataProvider()
+			RequestRaidInfo()
 	end)
 	-- Octo_MainFrame_Achievements:SetPoint("TOP", 0, -200)
 	Octo_MainFrame_Achievements:SetSize(LINE_WIDTH_LEFT*3, LINE_HEIGHT*MAX_DISPLAY_LINES)
@@ -226,23 +236,23 @@ function EventFrame:CreateDataProvider()
 			local total = GetCategoryNumAchievements(categoryID, true)
 			if total then
 				for i = 1, total do
-					local AchievementID, _, points, completedAchi, month, day, year, description, flags, icon, rewardText, isGuild, wasEarnedByMe, earnedBy, isStatistic = GetAchievementInfo(categoryID, i)
+					local AchievementID = GetAchievementInfo(categoryID, i)
 					if AchievementID then
-						if completedAchi == false or (completedAchi == Octo_Achievements_DB.Config_AchievementShowCompleted) then
-							local color = E.Red_Color
-							if completedAchi then color = E.Green_Color end
-							local TextLeft = E.func_achievementName(AchievementID)
-							if points and points ~= 0 then
-								TextLeft = TextLeft .. " " .. color..points.."|r"
-							end
-							count = count + 1
-							EventFrame.DataProvider:Insert({
-									TextLeft = TextLeft,
-									textRIGHT = E.func_achievementvivod(AchievementID),
-									AchievementID = AchievementID,
-									icon = icon,
-							})
-						end
+						-- if completedAchi == false or (completedAchi == Octo_Achievements_DB.Config_AchievementShowCompleted) then
+						-- local color = E.COLOR_RED
+						-- if completedAchi then color = E.COLOR_GREEN end
+						-- local TextLeft = E.func_GetAchievementName(AchievementID)
+						-- if points and points ~= 0 then
+						-- TextLeft = TextLeft .. " " .. color..points.."|r"
+						-- end
+						count = count + 1
+						EventFrame.DataProvider:Insert({
+								-- TextLeft = TextLeft,
+								-- textRIGHT = E.func_GetAchievementCompletion(AchievementID),
+								AchievementID = AchievementID,
+								-- icon = icon,
+						})
+						-- end
 					end
 				end
 			end
@@ -262,10 +272,10 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"CONTENT_TRACKING_UPDATE",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
 	self:Octo_Create_MainFrame_Achievements()
-	E.func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.Lime_Color, function() EventFrame:CreateDataProvider() end)
+	E.func_Create_DDframe_Achievements(Octo_MainFrame_Achievements, E.COLOR_LIME, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "Achievements", Octo_Achievements_DB, Octo_MainFrame_Achievements, nil, "Octo_MainFrame_Achievements")
 end
 function EventFrame:PLAYER_REGEN_DISABLED()

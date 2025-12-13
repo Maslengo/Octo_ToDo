@@ -50,7 +50,7 @@ end
 local function AddQuestToDB(questID)
 	local mapID, x, y = GetPlayerMapData()
 	if Octo_DevTool_DB.Config_QC_Quests then
-		print (E.func_questName(questID), E.Gray_Color.."id:"..questID.."|r")
+		print (E.func_GetQuestName(questID), E.COLOR_GRAY.."id:"..questID.."|r")
 	end
 	local quest = {
 		id = questID,
@@ -59,9 +59,9 @@ local function AddQuestToDB(questID)
 		x = x,
 		y = y,
 		playerName = E.curCharName,
-		curServer = E.func_GetRealmName(),
+		curServer = E.func_GetPlayerRealm(),
 		classColorHex = E.classColorHexCurrent,
-		curLocation = E.func_GetCurrentLocation and E.func_GetCurrentLocation() or "",
+		curLocation = E.func_GetPlayerLocation and E.func_GetPlayerLocation() or "",
 		specIcon = GetSpecializationIconSafe(),
 	}
 	EventFrame.savedVars.QC_Quests[questID] = quest
@@ -73,7 +73,7 @@ function EventFrame:func_CheckQuests()
 	C_Timer_After(E.SPAM_TIME, function()
 			local current = GetCompletedQuestsSafe()
 			for _, questID in ipairs(current) do
-				-- local nameTEST = E.func_questName(questID)
+				-- local nameTEST = E.func_GetQuestName(questID)
 				if not known_completed_quests[questID] and not session_quests[questID] and not SPAM_QUESTS[questID] then
 					session_quests[questID] = true
 					known_completed_quests[questID] = true
@@ -96,7 +96,7 @@ local MyEventsTable = {
 	"QUEST_LOG_UPDATE",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

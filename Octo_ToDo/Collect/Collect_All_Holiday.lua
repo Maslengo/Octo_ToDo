@@ -95,9 +95,9 @@ function E.Collect_All_Holiday()
 				local startDate = getCalendarTime(startTime)
 				local endDate = getCalendarTime(endTime)
 				local duration = endDate - startDate
-				holiday.event_duration = E.func_FriendsFrame_GetLastOnline(duration, true)
-				holiday.startTime = E.func_fixdate(startTime.monthDay).."/"..E.func_fixdate(startTime.month)
-				holiday.endTime = E.func_fixdate(endTime.monthDay).."/"..E.func_fixdate(endTime.month)
+				holiday.event_duration = E.func_FormatTimeAgo(duration, true)
+				holiday.startTime = E.func_FormatDateTwoDigits(startTime.monthDay).."/"..E.func_FormatDateTwoDigits(startTime.month)
+				holiday.endTime = E.func_FormatDateTwoDigits(endTime.monthDay).."/"..E.func_FormatDateTwoDigits(endTime.month)
 				holiday.ENDS = E.func_SecondsToClock(endDate - curTime)
 				holiday.iconTexture = eInfo.texture or event.iconTexture
 				holiday.priority = priority

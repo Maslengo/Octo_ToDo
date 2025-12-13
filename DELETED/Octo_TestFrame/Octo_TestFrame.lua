@@ -4,7 +4,7 @@ local EventFrame = CreateFrame("FRAME")
 -- Создание главного фрейма для тестового интерфейса
 local Octo_MainFrame_TestFrame = CreateFrame("BUTTON", "Octo_MainFrame_TestFrame", UIParent, "BackdropTemplate")
 Octo_MainFrame_TestFrame:Hide()
-E.func_InitFrame(Octo_MainFrame_TestFrame)
+E.func_RegisterFrame(Octo_MainFrame_TestFrame)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_TestFrame)
 -- Константы для настройки интерфейса
@@ -153,7 +153,7 @@ function EventFrame:func_initLEFT(frame, node)
 	-- Установка текста и цвета для левой колонки
 	frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
-		local r, g, b = E.func_hex2rgbNUMBER(frameData.ColorLeft)
+		local r, g, b = E.func_Hex2RGBFloat(frameData.ColorLeft)
 		frame.TextureLeft:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
 		frame.TextureLeft:Show()
 	else
@@ -183,7 +183,7 @@ function EventFrame:Octo_Frame_initCENT(frame, node)
 			secondFrame.ReputTextureAndBG:Hide()
 			-- Установка цвета фона, если он задан
 			if frameData.ColorCenter and frameData.ColorCenter[i] then
-				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.ColorCenter[i])
+				local r1, g1, b1 = E.func_Hex2RGBFloat(frameData.ColorCenter[i])
 				secondFrame.ReputTextureAndBG:SetWidth(columnWidth)
 				secondFrame.ReputTextureAndBG:Show()
 				secondFrame.ReputTextureAndBG:SetVertexColor(r1, g1, b1, .3)
@@ -230,7 +230,7 @@ function EventFrame:Octo_Create_MainFrame()
 		RequestRaidInfo()
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
-	local numPlayers = math_min(E.func_numPlayers(), EventFrame.MAX_COLUMN_COUNT)
+	local numPlayers = math_min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
 	Octo_MainFrame_TestFrame:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, LINE_HEIGHT * MAX_DISPLAY_LINES)
 	-- Настройки фрейма
 	Octo_MainFrame_TestFrame:SetDontSavePosition(true)
@@ -356,8 +356,8 @@ function EventFrame:Octo_Create_MainFrame()
 	HeaderFrameLeft.text:SetTextColor(textR, textG, textB, textA)
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLeft:SetScript("OnShow", function()
-		-- HeaderFrameLeft.text:SetText(E.func_texturefromIcon(E.ICON_FACTION).."Weekly Reset: "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetWeeklyReset()).."|r")
-		HeaderFrameLeft.text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r ")
+		-- HeaderFrameLeft.text:SetText(E.func_texturefromIcon(E.ICON_FACTION).."Weekly Reset: "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset()).."|r")
+		HeaderFrameLeft.text:SetText(E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), true).."|r ")
 	end)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
@@ -468,7 +468,7 @@ function EventFrame:CreateDataProvider()
 	local columnWidthsLeft = {}
 	local columnWidthsRight = {}
 	-- Получение отсортированных данных персонажей
-	local tbl = E.func_sorted()
+	local tbl = E.func_SortCharacters()
 	local currentCharacterIndex
 	-- Поиск индекса текущего персонажа
 	for CharIndex, CharInfo in ipairs(tbl) do
@@ -561,10 +561,10 @@ function EventFrame:CreateDataProvider()
 	end
 	local height = LINE_HEIGHT * MAX_DISPLAY_LINES + HEADER_HEIGHT
 	Octo_MainFrame_TestFrame:SetSize(width, height)
-	-- print (E.Blue_Color.."left|r", columnWidthsLeft[1]+INDENT_TEXT)
-	-- print (E.Red_Color.."rightChild|r", totalRightWidth_scrollContentFrame)
-	-- print (E.Gray_Color.."rightChild|r", totalRightWidth)
-	-- print (E.Purple_Color.."MainFrame|r", width)
+	-- print (E.COLOR_BLUE.."left|r", columnWidthsLeft[1]+INDENT_TEXT)
+	-- print (E.COLOR_RED.."rightChild|r", totalRightWidth_scrollContentFrame)
+	-- print (E.COLOR_GRAY.."rightChild|r", totalRightWidth)
+	-- print (E.COLOR_PURPLE.."MainFrame|r", width)
 	Octo_MainFrame_TestFrame.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
 	-- Освобождение всех фреймов из пула
 	Octo_MainFrame_TestFrame.pool:ReleaseAll()
@@ -591,14 +591,14 @@ function EventFrame:CreateDataProvider()
 		HeaderFrameRIGHT:SetHitRectInsets(1, 1, 1, 1)
 		-- Устанавливаем цвет фона в зависимости от фракции
 		if CharInfo.PlayerData.Faction == "Horde" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_HORDE)
+			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
 		elseif CharInfo.PlayerData.Faction == "Alliance" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_ALLIANCE)
+			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_ALLIANCE)
 		elseif CharInfo.PlayerData.Faction == "Neutral" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_NEUTRAL)
+			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
 		end
 		-- -- Установка цвета фона в зависимости от фракции
-		-- local charR, charG, charB = E.func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.COLOR_HORDE or E.COLOR_ALLIANCE)
+		-- local charR, charG, charB = E.func_Hex2RGBFloat(CharInfo.PlayerData.Faction == "Horde" and E.COLOR_HORDE or E.COLOR_ALLIANCE)
 		HeaderFrameRIGHT.charTexture:SetVertexColor(charR, charG, charB, E.ALPHA_BACKGROUND)
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameRIGHT:SetScript("OnEnter", function(self)
@@ -641,7 +641,7 @@ local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:Octo_Create_MainFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_TestFrame, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)

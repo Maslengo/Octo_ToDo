@@ -24,7 +24,7 @@ function EventFrame:OnLoad()
 		"Rarity_Options",
 	}
 	for _, name in ipairs(addons) do
-		E.func_LoadAddOnFORCED(name)
+		E.func_LoadAddOnForced(name)
 	end
 	C_AddOns.SaveAddOns()
 end
@@ -32,7 +32,7 @@ end
 local MyEventsTable = {
 	"ADDON_LOADED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

@@ -152,7 +152,7 @@ local classR, classG, classB = GetClassColor(E.classFilename)
 local function CreateMyAddonEditFrameTemplate(frameName, parent)
 	-- Создаем основной фрейм
 	local frame = CreateFrame("BUTTON", frameName, parent, "DialogBoxFrame")
-	-- E.func_InitFrame(frame)
+	-- E.func_RegisterFrame(frame)
 	-- local width = E.PHYSICAL_SCREEN_WIDTH/3
 	-- local height = E.PHYSICAL_SCREEN_HEIGHT/1.5
 	local width = E.PHYSICAL_SCREEN_WIDTH/2
@@ -295,7 +295,7 @@ end
 ------------------------------------------------------------
 -- Создаем фрейм для редактирования текста
 local editFrame = CreateMyAddonEditFrameTemplate("editFrame", UIParent)
--- E.func_InitFrame(editFrame)
+-- E.func_RegisterFrame(editFrame)
 editFrame:ClearAllPoints()
 editFrame:SetPoint("CENTER")
 local editBox = editFrame.editFrame
@@ -429,12 +429,12 @@ function EventFrame:func_itemslist(msg)
 	:ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
 	:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	:Then(function()
-			sort(list1, E.func_Reverse_order)
+			sort(list1, E.func_SortByDescending)
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E.func_itemName(id1).."\n"
+				str = str..id1..", -- "..E.func_GetItemName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E.func_itemName(id2).."\n"
+				str = str..id2..", -- "..E.func_GetItemName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
@@ -456,7 +456,7 @@ function EventFrame:func_itemslistSort24(msg)
 	-- :FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	-- local count = 0
 	-- promise1:Then(function()
-	-- sort(list1, E.func_Reverse_order)
+	-- sort(list1, E.func_SortByDescending)
 	-- for _, id1 in next, (list1) do
 	-- count = count + 1
 	-- if count < 24 then
@@ -476,18 +476,18 @@ function EventFrame:func_itemslistSort24(msg)
 	-------------------------- СРЕДНЕЕ 80ms ------------------------
 	----------------------------------------------------------------
 	-- E.func_TableRemoveDuplicates(GLOBAL_TABLE_ITEMS)
-	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_Reverse_order)
-	-- local vivod, count = "", 0
+	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_SortByDescending)
+	-- local output, count = "", 0
 	-- for _, itemID in ipairs(GLOBAL_TABLE_ITEMS) do
 	-- count = count + 1
 	-- if count < 24 then
-	-- vivod = vivod .. itemID..", "
+	-- output = output .. itemID..", "
 	-- else
 	-- count = 0
-	-- vivod = vivod .. itemID..",|n"
+	-- output = output .. itemID..",|n"
 	-- end
 	-- end
-	-- editBox:SetText(vivod)
+	-- editBox:SetText(output)
 	-- editFrame:Show()
 	----------------------------------------------------------------
 	-------------------------- СРЕДНЕЕ 32ms ------------------------
@@ -497,7 +497,7 @@ function EventFrame:func_itemslistSort24(msg)
 	end
 	print (tbl)
 	E.func_TableRemoveDuplicates(tbl)
-	table.sort(tbl, E.func_Reverse_order)
+	table.sort(tbl, E.func_SortByDescending)
 	local chunks = {}
 	local chunk_size = 24
 	local count = #tbl
@@ -527,7 +527,7 @@ function EventFrame:func_itemslistSortBOOLEN(msg)
 	:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	local count = 0
 	promise1:Then(function()
-			sort(list1, E.func_Reverse_order)
+			sort(list1, E.func_SortByDescending)
 			for _, id1 in next, (list1) do
 				count = count + 1
 				if count < 8 then
@@ -549,15 +549,15 @@ function EventFrame:func_questslist(msg)
 	local list1, list2 = {}, {}
 	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID_Paragon)
 	:ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
-	sort(list1, E.func_Reverse_order)
+	sort(list1, E.func_SortByDescending)
 	promise2:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
-	sort(list2, E.func_Reverse_order)
+	sort(list2, E.func_SortByDescending)
 	promise2:Then(function()
 			for _, id1 in next, (list1) do
-				str = str..id1..", -- "..E.func_questName(id1).."\n"
+				str = str..id1..", -- "..E.func_GetQuestName(id1).."\n"
 			end
 			for _, id2 in next, (list2) do
-				str = str..id2..", -- "..E.func_questName(id2).."\n"
+				str = str..id2..", -- "..E.func_GetQuestName(id2).."\n"
 			end
 			editBox:SetText(str)
 			editFrame:Show()
@@ -566,54 +566,54 @@ end
 function EventFrame:func_currencieslist(msg)
 	local str1 = ""
 	local str2 = ""
-	local vivod = ""
+	local output = ""
 	local list = {}
 	for currencyID, cachedName in next, (Octo_Cache_DB.AllCurrencies) do
 		tinsert(list, currencyID)
 	end
-	sort(list, E.func_Reverse_order)
+	sort(list, E.func_SortByDescending)
 	for _, currencyID in ipairs(list) do
-		if E.func_currencyName(currencyID) ~= (currencyID.. " (UNKNOWN)") then
-			str1 = str1..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
+		if E.func_GetCurrencyName(currencyID) ~= (currencyID.. " (UNKNOWN)") then
+			str1 = str1..currencyID..", --" ..E.func_GetCurrencyName(currencyID).."|n"
 		else
-			str2 = str2..currencyID..", --" ..E.func_currencyName(currencyID).."|n"
+			str2 = str2..currencyID..", --" ..E.func_GetCurrencyName(currencyID).."|n"
 		end
 	end
-	vivod = str1..str2
-	editBox:SetText(vivod)
+	output = str1..str2
+	editBox:SetText(output)
 	editFrame:Show()
 end
 function EventFrame:func_reputationslist(msg)
 	local str4 = ""
 	local str5 = ""
-	local vivod = ""
+	local output = ""
 	local list = {}
 	for _, reputationID in next, (E.OctoTable_allfaction) do
 		tinsert(list, reputationID)
 	end
-	sort(list, E.func_Reverse_order)
+	sort(list, E.func_SortByDescending)
 	for _, reputationID in next, (list) do
-		if E.func_reputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
-			str4 = str4..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
+		if E.func_GetReputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
+			str4 = str4..reputationID..", --" ..E.func_GetReputationName(reputationID).."|n"
 		else
-			str5 = str5..reputationID..", --" ..E.func_reputationName(reputationID).."|n"
+			str5 = str5..reputationID..", --" ..E.func_GetReputationName(reputationID).."|n"
 		end
 	end
-	vivod = str4..str5
-	editBox:SetText(vivod)
+	output = str4..str5
+	editBox:SetText(output)
 	editFrame:Show()
 end
 function EventFrame:func_spellslist(msg)
 	local str4 = ""
 	local str5 = ""
-	local vivod = ""
+	local output = ""
 	local list = {}
 	for intexRow, tbl in next, (E.OctoTable_Portals) do
 		for spellID, v in next, (tbl) do
 			tinsert(list, spellID)
 		end
 	end
-	sort(list, E.func_Reverse_order)
+	sort(list, E.func_SortByDescending)
 	for _, spellID in next, (list) do
 		if E.func_spellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
 			str4 = str4..spellID..", --" ..E.func_spellNameFull(spellID).."\n"
@@ -621,8 +621,8 @@ function EventFrame:func_spellslist(msg)
 			str5 = str5..spellID..", --" ..E.func_spellNameFull(spellID).."\n"
 		end
 	end
-	vivod = str4..str5
-	editBox:SetText(vivod)
+	output = str4..str5
+	editBox:SetText(output)
 	editFrame:Show()
 end
 -- Обработчик команд для /op
@@ -683,11 +683,11 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 -- Обработчик события VARIABLES_LOADED
 function EventFrame:VARIABLES_LOADED()
 	-- E.func_CreateMinimapButton(GlobalAddonName, "Debug", Octo_DevTool_DB)
 end
 function EventFrame:PLAYER_LOGIN()
-	E.func_Create_DDframe_editFrame(editFrame, E.Blue_Color, nil)
+	E.func_Create_DDframe_editFrame(editFrame, E.COLOR_BLUE, nil)
 end

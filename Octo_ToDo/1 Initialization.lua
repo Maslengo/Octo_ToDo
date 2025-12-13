@@ -1,44 +1,8 @@
 local GlobalAddonName, E = ... -- ns
 ----------------------------------------------------------------
--- local OctoTODOQWE = CreateFrame("FRAME", "OctoTODOQWE")
--- E.OctoTODOQWE = OctoTODOQWE
-
--- local function loadUI(addonName)
--- 	local myAddons = {
--- 		GlobalAddonName,
--- 		"Octo_Achievements",
--- 		"Octo_Moduls",
--- 		"Octo_QuestsChanged",
--- 	}
--- 	for _, a in ipairs(myAddons) do
--- 		if a == addonName then
--- 			function OctoTODOQWE.setMetaNS(ui)
--- 				ui.addon = addon
--- 				setmetatable(E, {__index = ui, __metatable = false})
--- 				setmetatable(ui, {__index = E, __metatable = false})
--- 			end
--- 			OctoTODOQWE:UnregisterEvent("ADDON_LOADED")
--- 			OctoTODOQWE.ADDON_LOADED = nil
--- 			OctoTODOQWE.setMetaNS = nil
--- 		end
--- 	end
--- end
-
--- OctoTODOQWE:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
--- OctoTODOQWE:RegisterEvent("ADDON_LOADED")
-
--- function OctoTODOQWE:ADDON_LOADED(addonName)
--- 	loadUI(addonName)
--- end
-
-
 E.MainAddonName = GlobalAddonName
 OctoEngine = E -- в других аддонах
-
-
-
-
-
+----------------------------------------------------------------
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
@@ -55,7 +19,6 @@ E.KeyStoneTBL = {}
 E.Modules = {}
 E.OctoTable_Expansions = {}
 E.OctoTable_Frames = {}
-E.OctoTable_GarrisonBuildingIDs = {}
 E.OctoTable_itemID_ALL = {}
 E.OctoTable_itemID_AutoOpen = {}
 E.OctoTable_itemID_Cataloged_Research = {}

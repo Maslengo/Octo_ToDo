@@ -21,7 +21,7 @@ local slashCommands = {
 		commands = {"/fs"},
 		handler = function(msg)
 			if not E.func_IsAddOnLoaded("Blizzard_DebugTools") then
-				E.func_LoadAddOnFORCED("Blizzard_DebugTools")
+				E.func_LoadAddOnForced("Blizzard_DebugTools")
 			end
 			FrameStackTooltip_Toggle(msg == "true", true, true)
 		end

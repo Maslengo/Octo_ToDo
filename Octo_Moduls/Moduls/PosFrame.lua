@@ -8,7 +8,7 @@ Octo_MainFrame_PosFrame:Hide()
 function EventFrame:CreatePosFrame()
 	local vars = EventFrame.savedVars.PosFrame
 	if not vars.Shown then return end
-	local Gray_Color = E.Gray_Color
+	local Gray_Color = E.COLOR_GRAY
 	Octo_MainFrame_PosFrame:Show()
 	Octo_MainFrame_PosFrame:SetPoint(vars.point, nil, vars.relativePoint, vars.xOfs, vars.yOfs)
 	Octo_MainFrame_PosFrame:SetSize(280, 32)
@@ -27,8 +27,8 @@ function EventFrame:CreatePosFrame()
 			local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_PosFrame:GetPoint()
 			vars.point = point
 			vars.relativePoint = relativePoint
-			vars.xOfs = E.func_CompactNumberRound(xOfs)
-			vars.yOfs = E.func_CompactNumberRound(yOfs)
+			vars.xOfs = E.func_CompactRoundNumber(xOfs)
+			vars.yOfs = E.func_CompactRoundNumber(yOfs)
 	end)
 	-- Create text elements
 	local function CreateTextElement(offset, r, g, b)
@@ -68,18 +68,18 @@ function EventFrame:CreatePosFrame()
 				end
 				local MapId = WorldMapFrame:GetMapID("current")
 				if MapId then
-					mapIdText:SetText(E.func_mapName(MapId)..Gray_Color.."id: "..MapId.."|r")
+					mapIdText:SetText(E.func_GetMapName(MapId)..Gray_Color.."id: "..MapId.."|r")
 				end
 				-- Update cursor text
 				if cursorX and cursorY then
-					cursorText:SetText(E.func_GetCoordFormated(cursorX, cursorY))
+					cursorText:SetText(E.func_FormatCoordinates(cursorX, cursorY))
 					playerText:SetPoint("CENTER", 0, -7)
 				else
 					cursorText:SetText("")
 					playerText:SetPoint("CENTER", 0, 0)
 				end
 				-- Update player position text
-				playerText:SetText(E.func_GetCoordFormated(posX, posY))
+				playerText:SetText(E.func_FormatCoordinates(posX, posY))
 			end
 	end)
 end
@@ -91,7 +91,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

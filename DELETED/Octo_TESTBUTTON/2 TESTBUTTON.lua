@@ -70,7 +70,7 @@ local function SetTextureByItemId(frame, itemId)
 	local item = Item:CreateFromItemID(itemId)
 	item:ContinueOnItemLoad(function()
 			local icon = item:GetItemIcon()
-			frame.Icon:SetTexture(E.func_GetItemIconByID(itemId))
+			frame.Icon:SetTexture(E.func_GetItemIcon(itemId))
 	end)
 end
 local function ClearAllInvalidHighlights()
@@ -289,7 +289,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end

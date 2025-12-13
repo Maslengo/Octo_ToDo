@@ -64,7 +64,7 @@ local MyEventsTable = {
 	"GOSSIP_SHOW",
 	"QUEST_PROGRESS",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:QUEST_DETAIL()
 	if not IsShiftKeyDown() then
 		if QuestIsFromAreaTrigger() then

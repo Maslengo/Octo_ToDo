@@ -3,7 +3,7 @@ E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 local Octo_MainFrame_AddonsManager = CreateFrame("BUTTON", "Octo_MainFrame_AddonsManager", UIParent, "BackdropTemplate")
 Octo_MainFrame_AddonsManager:Hide()
-E.func_InitFrame(Octo_MainFrame_AddonsManager)
+E.func_RegisterFrame(Octo_MainFrame_AddonsManager)
 ----------------------------------------------------------------
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
@@ -165,7 +165,7 @@ function EventFrame:CollectAddonInfo(index)
 		local firsticonTexture = ""
 		tooltipthird = {}
 		local textRIGHT = " "
-		local colorAddon = E.White_Color
+		local colorAddon = E.COLOR_WHITE
 		local Version = E.func_GetAddonVersion(index)
 		local Author = E.func_GetAddonAuthor(index)
 		local exists = E.func_DoesAddOnExist(index)
@@ -178,11 +178,11 @@ function EventFrame:CollectAddonInfo(index)
 			-- tooltipthird[#tooltipthird+1] = nil
 		end
 		if ( loadable or ( enabled and (reason == "DEP_DEMAND_LOADED" or reason == "DEMAND_LOADED") ) ) then
-			colorAddon =E.White_Color --"|cffFFC600" -- E.func_rgb2hexDEV(1.0, 0.78, 0.0)
+			colorAddon =E.COLOR_WHITE --"|cffFFC600" -- E.func_RGB2HexDev(1.0, 0.78, 0.0)
 		elseif ( enabled and reason ~= "DEP_DISABLED" ) then
-			colorAddon = "|cffFF1919"-- E.func_rgb2hexDEV(1.0, 0.1, 0.1)
+			colorAddon = "|cffFF1919"-- E.func_RGB2HexDev(1.0, 0.1, 0.1)
 		else
-			colorAddon = "|cff7F7F7F"-- E.func_rgb2hexDEV(0.5, 0.5, 0.5)
+			colorAddon = "|cff7F7F7F"-- E.func_RGB2HexDev(0.5, 0.5, 0.5)
 		end
 		local iconTexture = E.func_GetAddoniconTexture(index)
 		local iconAtlas = E.func_GetAddoniconAtlas(index)
@@ -194,10 +194,10 @@ function EventFrame:CollectAddonInfo(index)
 			TextLeft = title
 		end
 		if Octo_AddonsManager_DB.config.showVersion and Version ~= "" and Version ~= 0 then
-			TextLeft = TextLeft..E.Gray_Color.." ("..Version..")|r"
+			TextLeft = TextLeft..E.COLOR_GRAY.." ("..Version..")|r"
 		end
 		if Octo_AddonsManager_DB.config.showIndex then
-			TextLeft = E.Debug_Color..index.."|r "..TextLeft
+			TextLeft = E.COLOR_DEBUG..index.."|r "..TextLeft
 		end
 		-- if iconTexture then
 		-- TextLeft = CreateSimpleTextureMarkup(iconTexture, 20, 20) .. " " .. TextLeft
@@ -248,9 +248,9 @@ function EventFrame:CollectAddonInfo(index)
 			-- if (loadable and security ~= SECURE_PROTECTED_ADDON and security ~= SECURE_ADDON) then
 			-- local memory = GetAddOnMemoryUsage(index) or 0
 			-- if memory > 1024 then
-			-- tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory/1024).."|r Мб"}
+			-- tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactFormatNumber(memory/1024).."|r Мб"}
 			-- else
-			-- tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactNumberFormat(memory).."|r Кб"}
+			-- tooltipthird[#tooltipthird+1] = {"Использование памяти: ".. E.classColorHexCurrent..E.func_CompactFormatNumber(memory).."|r Кб"}
 			-- end
 			-- end
 			-- tooltipthird[#tooltipthird+1] = {" ", " "}
@@ -350,8 +350,8 @@ function EventFrame:Octo_Frame_init(frame, node)
 	frame.third.TextLeft:SetText(TextLeft)
 	frame.third.textRIGHT:SetText(textRIGHT)
 	frame.third.tooltip = tooltipthird
-	-- E.func_SetBackdrop(frame.first, nil, 0, 0)
-	-- E.func_SetBackdrop(frame.third, nil, 0, 0)
+	-- E.func_SetBackdropStyle(frame.first, nil, 0, 0)
+	-- E.func_SetBackdropStyle(frame.third, nil, 0, 0)
 end
 function EventFrame:Octo_Create_MainFrame_AddonsManager()
 	Octo_MainFrame_AddonsManager:SetPoint("CENTER", 0, 0)
@@ -526,7 +526,7 @@ function EventFrame:GetCycleByIndexSFMICT(iChild, iParent)
 	if Octo_AddonsTable_DB.depsByIndex[iChild] then
 		for _, depIndex in ipairs(Octo_AddonsTable_DB.depsByIndex[iChild]) do
 			if depIndex == iParent then
-				DEFAULT_CHAT_FRAME:AddMessage(E.Red_Color.."НАЙДЕН АБОБУС: |r".. iChild .." "..E.func_GetAddonName(iChild).." / "..iParent.." "..E.func_GetAddonName(iParent))
+				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_RED.."НАЙДЕН АБОБУС: |r".. iChild .." "..E.func_GetAddonName(iChild).." / "..iParent.." "..E.func_GetAddonName(iParent))
 				return true
 			end
 		end
@@ -562,7 +562,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_REGEN_DISABLED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
@@ -586,7 +586,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	self:CollectAllAddonsSFMICT()
 	self:Octo_Create_MainFrame_AddonsManager()
 	self:func_Create_AdditionalFrame()
-	E.func_Create_DDframe_AddonsManager(Octo_MainFrame_AddonsManager, E.Yellow_Color, function() E:AddonList_Update() end)
+	E.func_Create_DDframe_AddonsManager(Octo_MainFrame_AddonsManager, E.COLOR_YELLOW, function() E:AddonList_Update() end)
 	E:CreateDataProvider_AddonsManage()
 	E.func_Create_DDframe_AddonsManager_DDMenu()
 	--------------------------------------------------------------

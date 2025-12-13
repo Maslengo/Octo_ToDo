@@ -29,8 +29,8 @@ local zxc = {
 	totalColumns = 2
 }
 E.tbl_Otrisovka = {}
-E.tbl_Otrisovka.TextLeft = E.func_itemName(44791)
-E.tbl_Otrisovka.TextCenter = (function(itemID) return E.func_itemName(itemID) end)
+E.tbl_Otrisovka.TextLeft = E.func_GetItemName(44791)
+E.tbl_Otrisovka.TextCenter = (function(itemID) return E.func_GetItemName(itemID) end)
 E.tbl_Otrisovka.tooltipCENT = "tooltipCENT"
 local function func_TextLeft(i)
 	return E.tbl_Otrisovka.TextLeft[i]

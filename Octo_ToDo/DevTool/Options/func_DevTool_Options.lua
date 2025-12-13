@@ -349,7 +349,7 @@ function E.func_DevTool_Options(savedVars)
 			-------------------------------------------------
 			Config_DebugID_ALL = {
 				type = "toggle",
-				name = E.Blue_Color.."Config_DebugID_ALL|r",
+				name = E.COLOR_BLUE.."Config_DebugID_ALL|r",
 				desc = "",
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_DebugID_ALL

@@ -23,12 +23,12 @@ local function AddVignettesToDB(vignetteInfo)
 	local vignetteID = vignetteInfo.vignetteID
 	local name = vignetteInfo.name
 	local mapID, x, y = VignettePosition(GUID)
-	local curLocation, locationsFind = E.func_GetCurrentLocation()
+	local curLocation, locationsFind = E.func_GetPlayerLocation()
 	if mapID and locationsFind then
 		local vignetteKey = atlasName..name..mapID..E.curCharName
 		if not EventFrame.savedVars.QC_Vignettes[vignetteKey] then
 			if Octo_DevTool_DB.DebugQC_Vignettes then
-				print (atlasName, E.Gray_Color.."id:"..vignetteID.."|r", E.func_texturefromIcon(atlasName, nil, nil, true), name)
+				print (atlasName, E.COLOR_GRAY.."id:"..vignetteID.."|r", E.func_texturefromIcon(atlasName, nil, nil, true), name)
 			end
 			local vignettes = {
 				id = vignetteID,
@@ -37,7 +37,7 @@ local function AddVignettesToDB(vignetteInfo)
 				x = x,
 				y = y,
 				playerName = E.curCharName,
-				curServer = E.func_GetRealmName(),
+				curServer = E.func_GetPlayerRealm(),
 				classColorHex = E.classColorHexCurrent,
 				curLocation = curLocation,
 				specIcon = select(4, GetSpecializationInfo(GetSpecialization())),
@@ -73,7 +73,7 @@ local MyEventsTable = {
 	"ZONE_CHANGED_NEW_AREA",
 	"ZONE_CHANGED_INDOORS",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

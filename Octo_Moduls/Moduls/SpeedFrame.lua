@@ -24,8 +24,8 @@ function EventFrame:CreateSpeedFrame()
 			local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_SpeedFrame:GetPoint()
 			vars.point = point
 			vars.relativePoint = relativePoint
-			vars.xOfs = E.func_CompactNumberRound(xOfs)
-			vars.yOfs = E.func_CompactNumberRound(yOfs)
+			vars.xOfs = E.func_CompactRoundNumber(xOfs)
+			vars.yOfs = E.func_CompactRoundNumber(yOfs)
 	end)
 	local text_glide = Octo_MainFrame_SpeedFrame:CreateFontString()
 	text_glide:SetFontObject(OctoFont11)
@@ -45,13 +45,13 @@ function EventFrame:CreateSpeedFrame()
 			local base = isGliding and forwardSpeed or GetUnitSpeed("PLAYER")
 			local movespeed = base / BASE_MOVEMENT_SPEED * 100
 			if forwardSpeed > 1 then
-				text_glide:SetText("glide: ".. E.func_CompactNumberRound(forwardSpeed))
+				text_glide:SetText("glide: ".. E.func_CompactRoundNumber(forwardSpeed))
 				text_movespeed:SetPoint("CENTER", 0, -7)
 			else
 				text_glide:SetText("")
 				text_movespeed:SetPoint("CENTER", 0, 0)
 			end
-			text_movespeed:SetText(movespeed ~= 0 and E.func_CompactNumberRound(movespeed) or "")
+			text_movespeed:SetText(movespeed ~= 0 and E.func_CompactRoundNumber(movespeed) or "")
 	end)
 	Octo_MainFrame_SpeedFrame:Show()
 end
@@ -62,7 +62,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

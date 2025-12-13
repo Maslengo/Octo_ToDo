@@ -97,7 +97,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.curFaction == "Horde" and 53435 or 53436), false)
+				return E.func_GetQuestName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.FACTION_CURRENT == "Horde" and 53435 or 53436), false)
 			end,
 			name_save = "AzeriteForTheFaction",
 			defS = true,
@@ -195,7 +195,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(62)..": ".."Rares"
+				return E.func_GetMapName(62)..": ".."Rares"
 			end,
 			name_save = "DarkshoreRares",
 			defS = true,
@@ -291,7 +291,7 @@ local function tempFunction()
 		-- 	sorted = false,
 		-- 	showTooltip = true,
 			-- TextLeft = function()
-			-- 	return E.func_mapName(1462)..": "..E.func_questName(54088, false)
+			-- 	return E.func_GetMapName(1462)..": "..E.func_GetQuestName(54088, false)
 			-- end,
 		-- 	name_save = "TheMechagonianThreat",
 		-- defS = true,
@@ -332,7 +332,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(1462)..": Rares"
+				return E.func_GetMapName(1462)..": Rares"
 			end,
 			name_save = "MechagonRares",
 			defS = true,
@@ -384,7 +384,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(1462)..": Treasures"
+				return E.func_GetMapName(1462)..": Treasures"
 			end,
 			name_save = "MechagonTREASURE",
 			defS = true,
@@ -512,7 +512,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(1462)..": Dailies Visitor Quests"
+				return E.func_GetMapName(1462)..": Dailies Visitor Quests"
 			end,
 			name_save = "DAILY_VISITOR_QUESTS",
 			defS = true,
@@ -559,7 +559,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(1462)..": Daily WQ"
+				return E.func_GetMapName(1462)..": Daily WQ"
 			end,
 			name_save = "MechagonDAILYWQ",
 			defS = true,
@@ -575,7 +575,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(1462)..": "..E.func_achievementName(13489)
+				return E.func_GetMapName(1462)..": "..E.func_GetAchievementName(13489)
 			end,
 			name_save = "MechagonSecretFish",
 			defS = true,
@@ -599,7 +599,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(1462)..": "..E.func_achievementName(13791)
+				return E.func_GetMapName(1462)..": "..E.func_GetAchievementName(13791)
 			end,
 			name_save = "MechagonMakingAMount",
 			defS = true,
@@ -644,10 +644,10 @@ local function localfunc2()
 					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[158075] then
-						TextCenter = CharInfo.PlayerData.azeriteLVL and E.Green_Color..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.Gray_Color..CharInfo.PlayerData.azeriteEXP.."|r" or E.Orange_Color.."in bank|r"
+						TextCenter = CharInfo.PlayerData.azeriteLVL and E.COLOR_GREEN..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.COLOR_GRAY..CharInfo.PlayerData.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
 					end
 					----------------------------------------------------------------
-					TextLeft = E.func_itemName(158075)
+					TextLeft = E.func_GetItemName(158075)
 					ColorLeft = E.OctoTable_Expansions[categoryKey].color
 					SettingsType = "Items#"..158075
 					----------------------------------------------------------------
@@ -660,13 +660,13 @@ local function localfunc2()
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[169223] then
 						if CharInfo.PlayerData.cloak_lvl then
-							TextCenter = E.Cyan_Color..AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.cloak_lvl).."|r"
+							TextCenter = E.COLOR_CYAN..AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.cloak_lvl).."|r"
 						else
-							TextCenter = E.Orange_Color.."in bank|r"
+							TextCenter = E.COLOR_ORANGE.."in bank|r"
 						end
 					end
 					----------------------------------------------------------------
-					TextLeft = E.func_itemName(169223)
+					TextLeft = E.func_GetItemName(169223)
 					ColorLeft = E.OctoTable_Expansions[categoryKey].color
 					SettingsType = "Items#"..169223
 					----------------------------------------------------------------
@@ -677,7 +677,7 @@ local function localfunc2()
 					----------------------------------------------------------------
 					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					TooltipKey = "BfA_mechagonItems"
-					TextCenter = E.Gray_Color..ITEMS.."|r"
+					TextCenter = E.COLOR_GRAY..ITEMS.."|r"
 					----------------------------------------------------------------
 					TextLeft = "МЕХАГОН"
 					ColorLeft = E.OctoTable_Expansions[categoryKey].color

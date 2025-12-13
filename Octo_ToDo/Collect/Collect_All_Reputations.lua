@@ -6,16 +6,16 @@ local function Collect_All_Reputations()
 
 	for reputationID in next,(E.ALL_Reputations) do
 		if reputationID then
-			local vivod = E.func_CheckReputation(reputationID)
+			local output = E.func_GetReputationProgress(reputationID)
 			if C_Reputation.IsAccountWideReputation(reputationID) then
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					CharInfo.MASLENGO.Reputation[reputationID] = CharInfo.MASLENGO.Reputation[reputationID] or {}
 					if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
-						CharInfo.MASLENGO.Reputation[reputationID] = vivod
+						CharInfo.MASLENGO.Reputation[reputationID] = output
 					end
 				end
 			else
-				collectMASLENGO.Reputation[reputationID] = vivod
+				collectMASLENGO.Reputation[reputationID] = output
 			end
 		end
 	end

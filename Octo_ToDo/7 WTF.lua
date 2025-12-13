@@ -8,7 +8,7 @@ local LibDataBroker = LibStub("LibDataBroker-1.1") -- Для брокера да
 local LibSharedMedia = LibStub("LibSharedMedia-3.0") -- Для медиа-ресурсов
 local LibThingsLoad = LibStub("LibThingsLoad-1.0") -- Для асинхронной загрузки
 ----------------------------------------------------------------
-function EventFrame:func_CreateDataCacheAtStart()
+function EventFrame:func_CacheGameData()
 	----------------------------------------------------------------
 	local tblCurrencies = E.ALL_Currencies
 	-- local E.ALL_Quests = E.ALL_Quests
@@ -20,19 +20,19 @@ function EventFrame:func_CreateDataCacheAtStart()
 	E.func_TableConcat(E.ALL_Quests, E.OctoTable_RemixInfinityResearch)
 	----------------------------------------------------------------
 	for id in next,(E.ALL_Currencies) do -- for id = 42, 4000 do -- 42, 3372
-		local name = E.func_currencyName(id)
+		local name = E.func_GetCurrencyName(id)
 	end
 	-- for id in next,(E.ALL_Items) do
-	-- local name = E.func_itemName(id)
+	-- local name = E.func_GetItemName(id)
 	-- end
 	for id in next,(E.ALL_Reputations) do
-		local name = E.func_reputationName(id) -- "AllReputations"
+		local name = E.func_GetReputationName(id) -- "AllReputations"
 	end
 	-- for id in next,(E.ALL_Quests) do
-	-- local name = E.func_questName(id)
+	-- local name = E.func_GetQuestName(id)
 	-- end
 	for _, id in next,(E.OctoTable_NPC) do
-		local name = E.func_npcName(id)
+		local name = E.func_GetNPCName(id)
 	end
 	----------------------------------------------------------------
 	-- E.Collect_All_Reputations()
@@ -68,9 +68,9 @@ function EventFrame:func_CreateDataCacheAtStart()
 	-- end)
 	promise:ThenForAllWithCached(function(promise, ID, type)
 			if type == "quest" then
-				local quest = E.func_questName(ID) -- "AllQuests"
+				local quest = E.func_GetQuestName(ID) -- "AllQuests"
 			elseif type == "item" then
-				local item = E.func_itemName(ID)
+				local item = E.func_GetItemName(ID)
 				local qw = C_Item.GetItemQualityByID(ID)
 			end
 			-- if Octo_MainFrame_ToDo:IsShown() then
@@ -85,63 +85,12 @@ function EventFrame:func_CreateDataCacheAtStart()
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
-local function replaceZeroWithNil(tbl, smth)
-	-- Проверка входных параметров
-	if not tbl or not smth or type(tbl) ~= "table" then return end
-	-- Обработка случая когда smth - таблица значений для удаления
-	if type(smth) == "table" then
-		for q, w in ipairs(smth) do
-			for k, value in pairs(tbl) do
-				if value == w then -- Точное совпадение значения
-					print(k, E.Yellow_Color..tostring(value).."|r")
-					tbl[k] = nil -- Удаляем значение
-				elseif type(value) == "table" then
-					replaceZeroWithNil(value, w) -- Рекурсия для вложенных таблиц
-				end
-			end
-			return tbl
-		end
-		-- Обработка числовых значений для удаления
-	elseif type(smth) == "number" then
-		for k, value in pairs(tbl) do
-			if value == smth then
-				print(k, E.Purple_Color..tostring(value).."|r")
-				tbl[k] = nil
-			elseif type(value) == "table" then
-				replaceZeroWithNil(value, smth) -- Рекурсия
-			end
-		end
-		return tbl
-		-- Обработка строковых шаблонов
-	elseif type(smth) == "string" then
-		for k, value in pairs(tbl) do
-			-- Специальный случай для любых числовых значений
-			if value and smth == "anynumber" and type(value) == "number" then
-				print(k, E.COLOR_WOW_TOKEN..tostring(value).."|r")
-				tbl[k] = nil
-			else
-				replaceZeroWithNil(value, smth)
-			end
-			-- Поиск по строковому шаблону
-			if value and type(value) == "string" then
-				if string.find(value, smth) then
-					print(k, E.Magenta_Color..tostring(value).."|r")
-					tbl[k] = nil
-				end
-			else
-				replaceZeroWithNil(value, smth)
-			end
-		end
-		return tbl
-	end
-end
-----------------------------------------------------------------
-function EventFrame:CleaningIdenticalCharacters()
+function EventFrame:func_RemoveDuplicateCharacters()
 	if not Octo_ToDo_DB_Levels then return end
 	-- Получаем данные текущего игрока
 	local currentGUID = E.curGUID
 	local currentName = E.curCharName
-	local currentRealm = E.func_GetRealmName()
+	local currentRealm = E.func_GetPlayerRealm()
 	local foundDuplicates = false
 	-- Проходим по всем записям
 	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
@@ -177,16 +126,16 @@ function EventFrame:CleaningIdenticalCharacters()
 	end
 end
 ----------------------------------------------------------------
-function EventFrame:DatabaseClear()
+function EventFrame:func_DatabaseClear()
 	local enable = true -- Флаг включения/отключения очистки
 	if not enable then return end
 	if Octo_ToDo_DB_Levels then
 		-- Удаляем значения по шаблону "^0/"
-		replaceZeroWithNil(Octo_ToDo_DB_Levels, "^0/")
+		E.func_RemoveZeroValues(Octo_ToDo_DB_Levels, "^0/")
 		-- Очищаем валютные данные персонажей
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			if CharInfo.MASLENGO and CharInfo.MASLENGO.CurrencyID_Total then
-				replaceZeroWithNil(CharInfo.MASLENGO.CurrencyID_Total, "anynumber")
+				E.func_RemoveZeroValues(CharInfo.MASLENGO.CurrencyID_Total, "anynumber")
 			end
 			if string.find(CharInfo.PlayerData.Name, "^WTF:") then
 				print ("Remove: ", CharInfo.PlayerData.Name)
@@ -214,14 +163,12 @@ function EventFrame:DatabaseClear()
 			"CharInfo",
 		}
 	}
-	E.func_DeepClean(Octo_profileKeys, rules)
-	E.func_DeepClean(Octo_ToDo_DB_Levels, rules)
-	E.func_DeepClean(Octo_ToDo_DB_Vars, rules)
-	E.func_DeepClean(Octo_Cache_DB, rules)
-	E.func_DeepClean(Octo_DevTool_DB, rules)
+	E.func_CleanDeepTable(Octo_profileKeys, rules)
+	E.func_CleanDeepTable(Octo_ToDo_DB_Levels, rules)
+	E.func_CleanDeepTable(Octo_ToDo_DB_Vars, rules)
+	E.func_CleanDeepTable(Octo_Cache_DB, rules)
+	E.func_CleanDeepTable(Octo_DevTool_DB, rules)
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_Levels()
 	-- Получаем GUID текущего игрока
@@ -248,7 +195,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		classFilename = E.classFilename, -- Техническое имя класса
 		CurrentRegion = E.func_GetCurrentRegion(),
 		CurrentRegionName = E.CurrentRegionName,
-		curServer = E.func_GetRealmName(), -- Текущий сервер
+		curServer = E.func_GetPlayerRealm(), -- Текущий сервер
 		curServerShort = E.curServerShort, -- Короткое имя сервера
 		currentTier = E.currentTier, -- Текущий игровой тир
 		Faction = "Horde", -- Фракция
@@ -256,7 +203,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		guildName = "", -- Название гильдии
 		guildRankName = "", -- Ранг в гильдии
 		interfaceVersion = E.interfaceVersion, -- Версия интерфейса
-		isShownPLAYER = true, -- Флаг отображения
+		isShownPlayer = true, -- Флаг отображения
 		loginDate = currentDateTime, -- Дата входа
 		loginDay = currentDate, -- День входа
 		loginHour = currentTime, -- Время входа
@@ -372,10 +319,10 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		Config_numberFormatMode = 1, -- по умолчанию универсальный
 		Currencies = true, -- Квесты
 		Config_Texture = "Blizzard Raid Bar",
-		OnlyCurrentFaction = false, -- Только текущая фракция
+		isOnlyCurrentFaction = false, -- Только текущая фракция
 		ShowOnlyCurrentRegion = true, -- Только текущий BattleTag
-		ShowOnlyCurrentServer = false, -- Только текущий сервер
-		-- SettingsEnabled = false,
+		isOnlyCurrentServer = false, -- Только текущий сервер
+		-- isSettingsEnabled = false,
 		-- TalentTreeTweaks = true, -- Настройки дерева талантов
 		-- TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
 		-- TalentTreeTweaks_Scale = 1, -- Масштаб дерева
@@ -398,7 +345,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 			[7] = true, -- Legion
 			[98] = true,
 			[99] = true
-		})
+	})
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r" -- "|cffd177ffN|r|cffb682f7a|r|cff9a8ef0o|r|cff7f99e8w|r|cff63A4E0h|r"
@@ -490,34 +437,9 @@ function EventFrame:Octo_DevTool_DB()
 end
 ----------------------------------------------------------------
 function EventFrame:Octo_profileKeys()
-	----------------------------------------------------------------
-	--
-	----------------------------------------------------------------
-	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
-	E.func_InitField(db, "CurrentProfile", "Default")
-	E.func_InitField(db, "useGlobalProfile", false) -- все персонажи игнорируют profileKeys
-	E.func_InitField(db, "SettingsEnabled", false) -- только для режима настройки
-	E.func_InitSubTable(db, "profileKeys")
-	E.func_InitSubTable(db, "profiles")
-	E.func_InitSubTable(db.profiles, "Default")
-	E.func_InitSubTable(db.profiles.Default, "Currencies")
-	E.func_InitSubTable(db.profiles.Default, "Items")
-	E.func_InitSubTable(db.profiles.Default, "Reputations")
-	E.func_InitSubTable(db.profiles.Default, "UniversalQuests")
-	E.func_InitSubTable(db.profiles.Default, "Additionally")
 	----------------------------------------------------------------
-	if not Octo_ToDo_DB_Levels then return end
 	----------------------------------------------------------------
-	for GUID, CharInfo in next,(Octo_ToDo_DB_Levels) do
-		local pd = CharInfo and CharInfo.PlayerData
-		if pd and pd.Name and pd.curServer then
-			local key = pd.Name .. " - " .. pd.curServer
-			db.profileKeys[key] = db.profileKeys[key] or "Default"
-		end
-	end
-	-- opde(E.OctoTables_DataOtrisovka)
-	-- СОЗДАТЬ ТУТ НОВЫЙ ПРОФИЛЬ(ИМЯ)
 	E.func_CreateNewProfile("Default")
 	----------------------------------------------------------------
 	--
@@ -529,22 +451,30 @@ function EventFrame:Octo_profileKeys()
 		E.ALL_Reputations[reputationID] = true
 	end
 	----------------------------------------------------------------
-	--
+	if not Octo_ToDo_DB_Levels then return end
+	----------------------------------------------------------------
+	for GUID, CharInfo in next,(Octo_ToDo_DB_Levels) do
+		local pd = CharInfo and CharInfo.PlayerData
+		if pd and pd.Name and pd.curServer then
+			local key = pd.Name .. " - " .. pd.curServer
+			db.profileKeys[key] = db.profileKeys[key] or "Default"
+		end
+	end
 	----------------------------------------------------------------
 	-- E.OctoTables_Vibor[categoryKey] = E.OctoTables_Vibor[categoryKey] or {}
 	-- opde(OctoTables_Vibor)
 	-- opde(OctoTables_DataOtrisovka)
 end
 ----------------------------------------------------------------
-function EventFrame:Daily_Reset()
+function EventFrame:func_Daily_Reset()
 	local ServerTime = GetServerTime()
 	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
 	-- /dump E.func_SecondsToClock(C_DateAndTime.GetSecondsUntilDailyReset(), true)
 	-- Обрабатываем всех персонажей
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 
-	local pd = CharInfo.PlayerData
-	local cm = CharInfo.MASLENGO
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
 
 
 
@@ -617,7 +547,7 @@ function EventFrame:Daily_Reset()
 	end
 end
 ----------------------------------------------------------------
-function EventFrame:Weekly_Reset()
+function EventFrame:func_Weekly_Reset()
 	local ServerTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Проверяем нужно ли выполнить сброс
@@ -658,8 +588,8 @@ function EventFrame:Weekly_Reset()
 	end
 end
 ----------------------------------------------------------------
-function EventFrame:Month_Reset()
-	local tmstp_Month = E.func_tmstpDayReset(365/12)
+function EventFrame:func_Month_Reset()
+	local tmstp_Month = E.func_GetNextResetTime(365/12)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- Проверяем нужно ли выполнить сброс
 		if (CharInfo.PlayerData.tmstp_Month or 0) < GetServerTime() then
@@ -677,10 +607,10 @@ function EventFrame:Month_Reset()
 	end
 end
 ----------------------------------------------------------------
-function E.func_CheckAll()
+function EventFrame:func_CheckAll()
 	-- Чистка персонажей при старте
-	EventFrame:CleaningIdenticalCharacters()
-	-- EventFrame:DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
+	EventFrame:func_RemoveDuplicateCharacters()
+	-- EventFrame:func_DatabaseClear() -- ОЧЕНЬ ДОЛГАЯ
 	-- Инициализация всех компонентов
 	EventFrame:Octo_Cache_DB() -- Кэш данных
 	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
@@ -689,19 +619,12 @@ function E.func_CheckAll()
 	-- Применяем старые изменения
 	E.func_setOldChanges()
 	-- Очистка и сброс данных
-	EventFrame:Daily_Reset()
-	EventFrame:Weekly_Reset()
-	EventFrame:Month_Reset()
+	EventFrame:func_Daily_Reset()
+	EventFrame:func_Weekly_Reset()
+	EventFrame:func_Month_Reset()
 end
-local function GetSecondsUntilReset()
-	if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then
-		return C_DateAndTime.GetSecondsUntilDailyReset()
-	else
-		return GetQuestResetTime()
-	end
-end
-function EventFrame:ScheduleNextReset()
-	local seconds = GetSecondsUntilReset()
+function EventFrame:func_ScheduleResetTimer()
+	local seconds = E.func_GetTimeToReset()
 	if seconds and seconds > 0 then
 		-- На случай, если уже был таймер — отменим
 		if timerHandle then
@@ -709,13 +632,13 @@ function EventFrame:ScheduleNextReset()
 		end
 		-- Запускаем новый
 		timerHandle = C_Timer.NewTimer(seconds + 4, function()
-				E.func_CheckAll()
+				EventFrame:func_CheckAll()
 				E.func_Collect_All()
-				EventFrame:ScheduleNextReset() -- Планируем следующий ресет
+				EventFrame:func_ScheduleResetTimer() -- Планируем следующий ресет
 		end)
 	end
 end
-function E.func_UpdateGlobals()
+function EventFrame:func_UpdateGlobals()
 	if Octo_ToDo_DB_Vars then
 		if Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT then
 			E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
@@ -724,7 +647,7 @@ function E.func_UpdateGlobals()
 			E.ddMenuButtonHeight = E.GLOBAL_LINE_HEIGHT
 		end
 		if Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle then
-			E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+			E.func_UpdateFont()
 		end
 		E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
 	end
@@ -747,7 +670,7 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
 function EventFrame:ADDON_LOADED(addonName)
 	----------------------------------------------------------------
@@ -756,26 +679,24 @@ function EventFrame:ADDON_LOADED(addonName)
 	self.ADDON_LOADED = nil
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	E.func_CheckAll()
+	EventFrame:func_CheckAll()
 	EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
-	E.func_UpdateGlobals()
+	EventFrame:func_UpdateGlobals()
 	----------------------------------------------------------------
 end
 function EventFrame:VARIABLES_LOADED()
-	E.func_CheckAll()
+	EventFrame:func_CheckAll()
 end
 
 function EventFrame:PLAYER_LOGIN()
 	-- Обновляем кэш
-	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.curFaction or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
-	EventFrame:func_CreateDataCacheAtStart()
+	-- if Octo_Cache_DB.lastBuildNumber ~= E.buildNumber or Octo_Cache_DB.lastFaction ~= E.FACTION_CURRENT or Octo_Cache_DB.lastLocaleLang ~= E.curLocaleLang then
+	EventFrame:func_CacheGameData()
 	Octo_Cache_DB.lastBuildNumber = E.buildNumber
-	Octo_Cache_DB.lastFaction = E.curFaction
+	Octo_Cache_DB.lastFaction = E.FACTION_CURRENT
 	Octo_Cache_DB.lastLocaleLang = E.curLocaleLang
 	-- end
-	self:ScheduleNextReset()
-	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
-
+	self:func_ScheduleResetTimer()
 	E.Cache_All_EventNames_Year()
 end

@@ -166,7 +166,7 @@ local function tempFunction()
 			showTooltip = true,
 
 			TextLeft = function()
-				return E.func_mapName(2371)..": ".."Rares"
+				return E.func_GetMapName(2371)..": ".."Rares"
 			end,
 
 
@@ -211,7 +211,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2255)..": ".."Rares" -- Azj-Kahet
+				return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
 			end,
 			name_save = "Rares2255",
 			defS = true,
@@ -233,7 +233,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2215)..": ".."Rares" -- Hallowfall
+				return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
 			end,
 			name_save = "Rares2215",
 			defS = true,
@@ -256,7 +256,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2248)..": ".."Rares" -- Isle of Dorn
+				return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
 			end,
 			name_save = "Rares2248",
 			defS = true,
@@ -279,7 +279,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2214)..": ".."Rares" -- Ringing Deeps
+				return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
 			end,
 			name_save = "Rares2214",
 			defS = true,
@@ -302,7 +302,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2369)..": ".."Rares" -- Siren Isle
+				return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
 			end,
 			name_save = "Rares2369",
 			defS = true,
@@ -323,7 +323,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2346)..": ".."Rares" -- Undermine
+				return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
 			end,
 			name_save = "Rares2346",
 			defS = true,
@@ -345,7 +345,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2248)..": ".."Treasures" -- isle_of_dorn
+				return E.func_GetMapName(2248)..": ".."Treasures" -- isle_of_dorn
 			end,
 			name_save = "Treasures2248",
 			defS = true,
@@ -371,7 +371,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2369)..": ".."Treasures"
+				return E.func_GetMapName(2369)..": ".."Treasures"
 			end,
 			name_save = "Treasures2369",
 			defS = true,
@@ -395,7 +395,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2346)..": ".."Treasures" -- undermine
+				return E.func_GetMapName(2346)..": ".."Treasures" -- undermine
 			end,
 			name_save = "Treasures2346",
 			defS = true,
@@ -420,7 +420,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2214)..": ".."Treasures" -- ringing_deeps
+				return E.func_GetMapName(2214)..": ".."Treasures" -- ringing_deeps
 			end,
 			name_save = "Treasures2214",
 			defS = true,
@@ -443,7 +443,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2255)..": ".."Treasures" -- azj_kahet
+				return E.func_GetMapName(2255)..": ".."Treasures" -- azj_kahet
 			end,
 			name_save = "Treasures2255",
 			defS = true,
@@ -466,7 +466,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2215)..": ".."Treasures" -- hallowfall
+				return E.func_GetMapName(2215)..": ".."Treasures" -- hallowfall
 			end,
 			name_save = "Treasures2215",
 			defS = true,
@@ -491,7 +491,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_mapName(2346)..": ".."Treasures" -- undermine
+				return E.func_GetMapName(2346)..": ".."Treasures" -- undermine
 			end,
 			name_save = "Treasure2346",
 			defS = true,
@@ -533,7 +533,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(84370, false)
+				return E.func_GetQuestName(84370, false)
 			end,
 			name_save = "TheKeytoSuccess",
 			defS = true,
@@ -547,7 +547,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(82449, false)
+				return E.func_GetQuestName(82449, false)
 			end,
 			name_save = "TheCalloftheWorldsoul",
 			defS = true,
@@ -705,7 +705,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.TWW_BeledarCycle()..E.func_questName(83240, false)
+				return E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
 			end,
 			name_save = "TheTheaterTroupe",
 			defS = true,
@@ -719,7 +719,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(76586, false)
+				return E.func_GetQuestName(76586, false)
 			end,
 			name_save = "SpreadingtheLight",
 			defS = true,
@@ -733,7 +733,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(83333, false)
+				return E.func_GetQuestName(83333, false)
 			end,
 			name_save = "GearingUpforTrouble",
 			defS = true,
@@ -766,7 +766,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(82946, false)
+				return E.func_GetQuestName(82946, false)
 			end,
 			name_save = "RollinDownintheDeeps",
 			defS = true,
@@ -1466,7 +1466,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return "tww-karesh-warrants "..E.func_currencyName(3278)
+				return "tww-karesh-warrants "..E.func_GetCurrencyName(3278)
 			end,
 			name_save = "tww-karesh-warrants",
 			defS = true,

@@ -19,12 +19,12 @@ local function Collect_All_JournalInstance()
 				if defeatedBosses == 0 and lastBossDefeated then
 					lastBossDefeated = false
 				end
-				local color = E.Red_Color
+				local color = E.COLOR_RED
 				if lastBossDefeated then
-					color = E.Yellow_Color
+					color = E.COLOR_YELLOW
 				end
 				if defeatedBosses == totalBosses then
-					color = E.Green_Color
+					color = E.COLOR_GREEN
 				end
 				if instanceReset and instanceReset > 0 then
 					instanceReset = instanceReset + time()
@@ -42,9 +42,9 @@ local function Collect_All_JournalInstance()
 				else
 					DiffAbbr = "HZ"
 				end
-				local vivod = color..defeatedBosses.."/"..totalBosses.."|r"
+				local output = color..defeatedBosses.."/"..totalBosses.."|r"
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceName = instanceName
-				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].vivod = vivod
+				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].output = output
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceReset = instanceReset
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].difficultyName = difficultyName
 				collectMASLENGO.journalInstance[instanceId][instanceDifficulty].instanceDifficulty = instanceDifficulty

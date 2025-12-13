@@ -127,7 +127,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_questName(43533, false)
+				return E.func_GetQuestName(43533, false)
 			end,
 			defS = false,
 			name_save = "BalanceofPower",
@@ -176,7 +176,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.Legion_Remix_Invasion()
+				return E.Timers.Legion_Invasion()
 			end,
 			defS = true,
 			name_save = "InvasionQuests",
@@ -193,7 +193,7 @@ local function tempFunction()
 		-- {
 		-- showTooltip = true,
 			-- TextLeft = function()
-			-- 	return E.func_questName(92855, false)
+			-- 	return E.func_GetQuestName(92855, false)
 			-- end,
 		-- defS = true,
 		-- name_save = "MakeHasteNotWaste",

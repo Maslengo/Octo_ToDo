@@ -240,21 +240,21 @@ local function calculateColumnWidths(node)
 end
 
 -- local function func_UPDATE_OCTOTOOLTIP(tbl)
---     if E.OctoTooltip_GLOBAL_TABLE == nil then return end
---     EventFrame:CreateDataProvider(tbl)
+-- if E.OctoTooltip_GLOBAL_TABLE == nil then return end
+-- EventFrame:CreateDataProvider(tbl)
 -- end
 
 -- function E.func_UPDATE_OCTOTOOLTIP(tbl)
---     if E.OctoTooltip_GLOBAL_TABLE == nil then return end
+-- if E.OctoTooltip_GLOBAL_TABLE == nil then return end
 
---     -- Отменяем предыдущий запланированный таймер для тултипа
---     if EventFrame.tooltipUpdateTimer then
---         EventFrame.tooltipUpdateTimer:Cancel()
---         EventFrame.tooltipUpdateTimer = nil
---     end
+-- -- Отменяем предыдущий запланированный таймер для тултипа
+-- if EventFrame.tooltipUpdateTimer then
+-- EventFrame.tooltipUpdateTimer:Cancel()
+-- EventFrame.tooltipUpdateTimer = nil
+-- end
 
---     -- Выполняем СРАЗУ, без задержки спама
---     func_UPDATE_OCTOTOOLTIP(tbl)
+-- -- Выполняем СРАЗУ, без задержки спама
+-- func_UPDATE_OCTOTOOLTIP(tbl)
 -- end
 
 
@@ -292,7 +292,7 @@ function EventFrame:CreateDataProvider(tbl)
 				if type(value) ~= "table" then
 					value = tostring(value)
 					if value == "" then value = " " end
-					if value == " " then value = E.Yellow_Color.."SPACE|R" end
+					if value == " " then value = E.COLOR_YELLOW.."SPACE|R" end
 					table.insert(zxc, value)
 				end
 			else
@@ -343,14 +343,14 @@ function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft) -- ПОФИКСИ
 	end
 
 
-    E.OctoTooltip_GLOBAL_TABLE = frame.tooltip
-    EventFrame:CreateDataProvider(frame.tooltip)
-    OctoTooltip:Show()
+	E.OctoTooltip_GLOBAL_TABLE = frame.tooltip
+	EventFrame:CreateDataProvider(frame.tooltip)
+	OctoTooltip:Show()
 
 
 
 	C_Timer.After(0.001, function()
-		EventFrame:CreateDataProvider(frame.tooltip)
+			EventFrame:CreateDataProvider(frame.tooltip)
 	end)
 	if not frame.initScripts then
 		frame.initScripts = true
@@ -372,7 +372,7 @@ local MyEventsTable = {
 	"PLAYER_STARTED_MOVING",
 	"PLAYER_STOPPED_MOVING",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")
 	self.VARIABLES_LOADED = nil

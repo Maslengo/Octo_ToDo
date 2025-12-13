@@ -4,7 +4,7 @@ local EventFrame = CreateFrame("FRAME")
 local ItemsUsable = CreateFrame("BUTTON", "ItemsUsable", UIParent, "BackDropTemplate")
 ItemsUsable:Hide()
 local TestButton1 = CreateFrame("Button", "TestButton1", UIParent, "UIPanelButtonTemplate")
--- E.func_InitFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
+-- E.func_RegisterFrame(ItemsUsable) -- С ДАТА ПРОВАЙДЕРОМ
 ----------------------------------------------------------------
 -- Локальные переменные для работы с инвентарем
 local BACKPACK_CONTAINER = BACKPACK_CONTAINER
@@ -36,7 +36,7 @@ local func_OnAcquired do
 	-- 	-- opde(tooltipInfo.lines)
 	-- 	for i, v in next,(tooltipInfo.lines) do
 	-- 		local r, g, b = v.leftColor.r, v.leftColor.g, v.leftColor.b
-	-- 		local colorHEX = E.func_rgb2hex(r, g, b)
+	-- 		local colorHEX = E.func_RGB2Hex(r, g, b)
 	-- 		local leftText = v.leftText
 	-- 		tooltipOCTO[#tooltipOCTO+1] = {colorHEX..leftText.."|r"}
 	-- 	end
@@ -151,7 +151,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		lineFrames[i].text:SetText()
 	end
 	local itemID = frameData.itemID
-	frame.icon_1:SetTexture(E.func_GetItemIconByID(itemID))
+	frame.icon_1:SetTexture(E.func_GetItemIcon(itemID))
 	-- local itemID = frame.lineFrames[2].text:GetText()
 	-- frame:RegisterForClicks("LeftButtonUp", "LeftButtonDown")
 	frame:SetAttribute("useOnKeyDown", false)
@@ -255,7 +255,7 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
 	local OctoTable_itemID_Ignore_List = E.OctoTable_itemID_Ignore_List
 	local OctoTable_itemID_ItemsDelete = E.OctoTable_itemID_ItemsDelete
-	local func_GetItemCount = function(...) return E.func_GetItemCount(...) end
+	local func_GetItemCount = function(...) return E.func_GetItemQuantity(...) end
 	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = GetContainerNumSlots(bag)
 		for slot = numSlots, 1, -1 do
@@ -313,12 +313,12 @@ function EventFrame:func_ItemsUsable_CreateDataProvider()
 	local COLUMN_SIZES = {}
 	-- Создаем финальную таблицу для отображения
 	local color, itemName -- Локальные переменные для повторного использования
-	-- local color = E.White_Color
+	-- local color = E.COLOR_WHITE
 	for _, item in ipairs(sorted_itemList) do
 		local itemID = item.itemID
 		if itemID then
-			color = item.usable and E.Green_Color or E.Red_Color
-			itemName = E.func_itemName(itemID, item.quality)
+			color = item.usable and E.COLOR_GREEN or E.COLOR_RED
+			itemName = E.func_GetItemName(itemID, item.quality)
 			lines = lines + 1
 			local node = DataProvider:Insert({
 				itemName,
@@ -392,7 +392,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",
 	"PLAYER_REGEN_DISABLED",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	EventFrame:Create_ItemsUsable()
 	self:CreateTestButton1()

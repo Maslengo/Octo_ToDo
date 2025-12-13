@@ -281,8 +281,8 @@ function E.func_Octo_Moduls_Options(savedVars)
 			-------------------------------------------------
 			Config_Hide_SubscriptionInterstitialFrame = {
 				type = "toggle",
-				-- name = savedVars.Config_Hide_SubscriptionInterstitialFrame and E.Green_Color..L["Hide: SubscriptionInterstitialFrame"].."|r" or E.Red_Color..L["Hide: SubscriptionInterstitialFrame"].."|r",
-				name = E.Green_Color..L["Hide: SubscriptionInterstitialFrame"].."|r",
+				-- name = savedVars.Config_Hide_SubscriptionInterstitialFrame and E.COLOR_GREEN..L["Hide: SubscriptionInterstitialFrame"].."|r" or E.COLOR_RED..L["Hide: SubscriptionInterstitialFrame"].."|r",
+				name = E.COLOR_GREEN..L["Hide: SubscriptionInterstitialFrame"].."|r",
 				desc = "",
 				get = function()
 					return savedVars.Config_Hide_SubscriptionInterstitialFrame

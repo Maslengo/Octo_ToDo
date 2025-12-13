@@ -68,7 +68,7 @@ function E.func_Octo_Options(savedVars)
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = value
-					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
+					E.func_UpdateFont()
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -86,8 +86,7 @@ function E.func_Octo_Options(savedVars)
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = value
-					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
-				
+					E.func_UpdateFont()
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -103,8 +102,7 @@ function E.func_Octo_Options(savedVars)
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = value
-					E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle), Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize, Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags)
-					
+					E.func_UpdateFont()
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),

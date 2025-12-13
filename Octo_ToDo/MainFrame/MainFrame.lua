@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
-E.func_InitFrame(Octo_MainFrame_ToDo)
+E.func_RegisterFrame(Octo_MainFrame_ToDo)
 ----------------------------------------------------------------
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
@@ -204,7 +204,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	else
 		frame.CategoryIcon:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
-	if Octo_profileKeys.SettingsEnabled and frameData.SettingsType then
+	if Octo_profileKeys.isSettingsEnabled and frameData.SettingsType then
 		local dataType, id = ("#"):split(frameData.SettingsType)
 		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
 		if Octo_profileKeys.profiles[CurrentProfile][dataType][id] or Octo_profileKeys.profiles[CurrentProfile][dataType][tonumber(id)] then
@@ -240,7 +240,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	end
 	-- frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
-		local r, g, b = E.func_hex2rgbNUMBER(frameData.ColorLeft)
+		local r, g, b = E.func_Hex2RGBFloat(frameData.ColorLeft)
 		frame.TextureLeft:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
 		frame.TextureLeft:Show()
 	else
@@ -278,7 +278,7 @@ function EventFrame:func_InitCenter(frame, node)
 			columnFrames.ReputationBackground:Hide()
 			-- Установка цвета фона, если он задан
 			if frameData.ColorCenter and frameData.ColorCenter[i] then
-				local r1, g1, b1 = E.func_hex2rgbNUMBER(frameData.ColorCenter[i])
+				local r1, g1, b1 = E.func_Hex2RGBFloat(frameData.ColorCenter[i])
 				columnFrames.ReputationBackground:Show()
 				columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1, .3)
 				if frameData.IsReputation and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) ~= 0 then
@@ -339,7 +339,7 @@ function EventFrame:func_CreateMainFrame()
 			E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "OnShow")
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
-	local numPlayers = math_min(E.func_numPlayers(), EventFrame.MAX_COLUMN_COUNT)
+	local numPlayers = math_min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
 	Octo_MainFrame_ToDo:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
 	-- Настройки фрейма
 	Octo_MainFrame_ToDo:SetDontSavePosition(true)
@@ -467,7 +467,7 @@ function EventFrame:func_CreateMainFrame()
 	HeaderFrameLeft.Text:SetTextColor(textR, textG, textB, textA)
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLeft:SetScript("OnShow", function()
-			HeaderFrameLeft.Text:SetText(E.Purple_Color.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetWeeklyReset(), true).."|r ")
+			HeaderFrameLeft.Text:SetText(E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), true).."|r ")
 	end)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
@@ -480,7 +480,7 @@ function EventFrame:func_CreateMainFrame()
 		self.Nickname = self:CreateFontString()
 		self.Nickname:SetFontObject(OctoFont11)
 		self.Server = self:CreateFontString()
-		self.Server:SetFontObject(OctoFont11)
+		self.Server:SetFontObject(OctoFont10)
 		self.Text = self:CreateFontString()
 		self.Text:SetFontObject(OctoFont11)
 		self.Text:SetPoint("CENTER")
@@ -559,7 +559,7 @@ local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serv
 			frame.Nickname:GetStringWidth() + INDENT_LEFT,
 			MIN_COLUMN_WIDTH_Center
 	))
-	if not Octo_ToDo_DB_Vars.ShowOnlyCurrentServer then
+	if not Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 		frame.Server:SetText(serverTEXT)
 		width2 = math_ceil(math_max(
 				frame.Server:GetStringWidth() + INDENT_LEFT,
@@ -590,7 +590,7 @@ function EventFrame:CreateDataProvider()
 	local columnWidthsCenter = {}
 	local CurrentProfile = Octo_profileKeys.CurrentProfile
 	-- Получение отсортированных данных персонажей
-	local sortedCharacters = E.func_sorted()
+	local sortedCharacters = E.func_SortCharacters()
 	local currentCharacterIndex
 	-- Поиск индекса текущего персонажа
 	for CharIndex, CharInfo in ipairs(sortedCharacters) do
@@ -652,7 +652,7 @@ function EventFrame:CreateDataProvider()
 						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
 						rowData.IconLeft = IconLeft
 						rowData.TextLeft = TextLeft or "NONE"
-						rowData.ColorLeft = ColorLeft or E.Blue_Color
+						rowData.ColorLeft = ColorLeft or E.COLOR_BLUE
 						rowData.SettingsType = SettingsType
 						-- rowData.TooltipKey = TooltipKey
 						rowData.IsReputation = IsReputation or false
@@ -735,7 +735,7 @@ function EventFrame:CreateDataProvider()
 		-- Настройка текста заголовка
 		-- HeaderFrameCenter.Nickname:SetAllPoints()
 		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
-		if Octo_ToDo_DB_Vars.ShowOnlyCurrentServer then
+		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 			HeaderFrameCenter.Nickname:SetPoint("CENTER")
 		end
 		HeaderFrameCenter.Nickname:SetWordWrap(false)
@@ -754,14 +754,14 @@ function EventFrame:CreateDataProvider()
 		HeaderFrameCenter:SetHitRectInsets(1, 1, 1, 1)
 		-- Устанавливаем цвет фона в зависимости от фракции
 		if CharInfo.PlayerData.Faction == "Horde" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_HORDE)
+			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
 		elseif CharInfo.PlayerData.Faction == "Alliance" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_ALLIANCE)
+			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_ALLIANCE)
 		elseif CharInfo.PlayerData.Faction == "Neutral" then
-			charR, charG, charB = E.func_hex2rgbNUMBER(E.COLOR_NEUTRAL)
+			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
 		end
 		-- -- Установка цвета фона в зависимости от фракции
-		-- local charR, charG, charB = E.func_hex2rgbNUMBER(CharInfo.PlayerData.Faction == "Horde" and E.COLOR_HORDE or E.COLOR_ALLIANCE)
+		-- local charR, charG, charB = E.func_Hex2RGBFloat(CharInfo.PlayerData.Faction == "Horde" and E.COLOR_HORDE or E.COLOR_ALLIANCE)
 		HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.ALPHA_BACKGROUND)
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
@@ -806,7 +806,7 @@ local MyEventsTable = {
 	"PLAYER_STARTED_MOVING",
 	"PLAYER_STOPPED_MOVING",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
 	-- AlertFrame:ClearAllPoints()
 	-- AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)

@@ -3,7 +3,7 @@ E = _G.OctoEngine
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 local function HELP_TEXT(i, icon, name)
-	return E.func_Gradient("Gossip:")..E.Green_Color.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
+	return E.func_Gradient("Gossip:")..E.COLOR_GREEN.." ("..i..")|r "..E.func_texturefromIcon(icon)..name
 end
 ----------------------------------------------------------------
 local targetNPCID = nil
@@ -183,7 +183,7 @@ function EventFrame:func_Config_Auto_Gossip()
 		local flags = option.flags
 		local unitname = UnitName("TARGET")
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugGossip then
-			DEFAULT_CHAT_FRAME:AddMessage(E.Green_Color..i..")|r ", E.Blue_Color..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
+			DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_GREEN..i..")|r ", E.COLOR_BLUE..gossipOptionID.."|r", "flags:", flags, "icon: ", icon, E.func_texturefromIcon(icon), name)
 		end
 		-- print (option.gossipOptionID)
 		if option.gossipOptionID and not ignoreICONS[icon] and not gossipOptionIDsIGNORE[option.gossipOptionID] then
@@ -226,7 +226,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"GOSSIP_SHOW",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")

@@ -9,8 +9,8 @@ local function Collect_All_Mounts()
 	for _, mountID in ipairs(GetMountIDs()) do
 		local _, _, source = GetMountInfoExtraByID(mountID)
 		local price, currencyID = source:match("([%d %.,]+)|Hcurrency:(%d+)")
-		local curName = E.func_currencyName(currencyID)
-		local mouName = E.func_mountName(mountID)
+		local curName = E.func_GetCurrencyName(currencyID)
+		local mouName = E.func_GetMountName(mountID)
 		if price and currencyID then
 			if type(price) == "string" then
 				price = price:gsub("[%s%.]", "")

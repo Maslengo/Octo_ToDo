@@ -23,6 +23,7 @@ if L then
 	L["Delete current profile"] = true
 	L["Are you sure you want to delete the profile?"] = true
 	L["Settings mode"] = true
+	L["Characters"] = true
 
 	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = true
 	L["Stolen Anima Vessel"] = true
@@ -312,6 +313,7 @@ if L then
 	L["Delete current profile"] = "Удалить текущий профиль"
 	L["Are you sure you want to delete the profile?"] = "Вы уверены, что хотите удалить профиль?"
 	L["Settings mode"] = "Режим настройки"
+	L["Characters"] = "Персонажи"
 
 
 	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = "Разработка аддонов требует много времени и усилий. Если вам нравится пользоваться "..GlobalAddonName..", пожалуйста, поддержите его разработку, сделав пожертвование. Ваша поддержка помогает обеспечить дальнейшее улучшение и поддержку аддона. Спасибо за вашу щедрость!"

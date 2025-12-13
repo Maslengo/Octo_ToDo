@@ -33,7 +33,7 @@ function EventFrame:PortalsFrame()
 	AnchorFrame.icon:SetAllPoints(AnchorFrame)
 	AnchorFrame.icon:SetTexture("Interface\\Addons\\"..E.MainAddonName.."\\Media\\Arrow72.tga")
 	AnchorFrame.icon:SetRotation(math.pi * 0.75)
-	E.func_SetBackdrop(AnchorFrame)
+	E.func_SetBackdropStyle(AnchorFrame)
 	-- Add click handler if not already added
 	if not AnchorFrame.isInit2 then
 		AnchorFrame.isInit2 = true

@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 local function RegisterMyTables(dataType, value, number, index, path)
-	local leftText = E.Addon_Right_Color..tostring(number).."|r"
+	local leftText = E.COLOR_ADDON_RIGHT..tostring(number).."|r"
 	if dataType == "sound" then
 		LibSharedMedia:Register(dataType, leftText.." "..E.func_Gradient(value), path..value..[[.ogg]])
 	elseif dataType == "font" then

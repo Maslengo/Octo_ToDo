@@ -39,7 +39,7 @@ local function Collect_All_GreatVault()
 	for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
 		local activities = C_WeeklyRewards.GetActivities(i)
 		local activity_name = name_activities[i] or name
-		local vivod = nil
+		local output = nil
 		for k = 1, #activities do
 			local activityInfo = activities[k]
 			if activityInfo then
@@ -50,11 +50,11 @@ local function Collect_All_GreatVault()
 					vaultEntry.type = activity_name
 					vaultEntry.progress = (activityInfo.progress and activityInfo.progress ~= 0) and activityInfo.progress or nil
 					vaultEntry.threshold = activityInfo.threshold or nil
-					local hyperlink_STRING = E.func_GetDetailedItemLevelInfo(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
+					local hyperlink_STRING = E.func_GetItemLevelDetails(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo.id))
 					if hyperlink_STRING then
-						vivod = vivod and vivod..", "..hyperlink_STRING or hyperlink_STRING
-						if vivod and vivod ~= "" then
-							vaultEntry.hyperlink_STRING = vivod
+						output = output and output..", "..hyperlink_STRING or hyperlink_STRING
+						if output and output ~= "" then
+							vaultEntry.hyperlink_STRING = output
 						end
 					else
 						vaultEntry.hyperlink_STRING = nil

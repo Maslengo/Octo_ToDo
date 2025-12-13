@@ -19,16 +19,16 @@ function EventFrame:Octo_EventsButton(frame)
 			local titleText = E.func_texturefromIconEVENT(v.iconTexture)
 			local timeText = v.startTime.." - "..v.endTime
 			-- local name = v.title
-			local name = E.func_EventName(v.eventID)
+			local name = E.func_GetEventName(v.eventID)
 			if v.Active then
-				titleText = titleText..E.White_Color..name.."|r"..E.Green_Color.." ("..v.ENDS..")|r"
-				timeText = E.White_Color..timeText.."|r"
+				titleText = titleText..E.COLOR_WHITE..name.."|r"..E.COLOR_GREEN.." ("..v.ENDS..")|r"
+				timeText = E.COLOR_WHITE..timeText.."|r"
 			else
-				titleText = titleText..E.Gray_Color..name.."|r"
-				timeText = E.Gray_Color..timeText.."|r"
+				titleText = titleText..E.COLOR_GRAY..name.."|r"
+				timeText = E.COLOR_GRAY..timeText.."|r"
 			end
 			if E.Config_DebugID_ALL then
-				titleText = titleText..E.Gray_Color.." id:"..v.eventID.."|r"
+				titleText = titleText..E.COLOR_GRAY.." id:"..v.eventID.."|r"
 			end
 			tooltip[#tooltip+1] = {titleText, timeText}
 		end

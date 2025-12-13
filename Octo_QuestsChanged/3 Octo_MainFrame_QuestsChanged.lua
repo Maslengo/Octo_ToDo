@@ -5,7 +5,7 @@ local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 local Octo_MainFrame_QuestsChanged = CreateFrame("BUTTON", "Octo_MainFrame_QuestsChanged", UIParent, "BackdropTemplate")
 Octo_MainFrame_QuestsChanged:Hide()
-E.func_InitFrame(Octo_MainFrame_QuestsChanged)
+E.func_RegisterFrame(Octo_MainFrame_QuestsChanged)
 ----------------------------------------------------------------
 local LINE_HEIGHT = E.GLOBAL_LINE_HEIGHT
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT
@@ -226,7 +226,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 	local data = node:GetData()
 	if not data.zxc then return end
 	local frameData = data.zxc
-	local playerName = (frameData.classColorHex or E.Red_Color)..(frameData.playerName or UNKNOWN).."|r-"..E.func_CurServerShort(frameData.curServer)
+	local playerName = (frameData.classColorHex or E.COLOR_RED)..(frameData.playerName or UNKNOWN).."|r-"..E.func_GetRealmShortName(frameData.curServer)
 	frame.icon_1:SetTexture(frameData.specIcon)
 	frame.first.text:SetText(playerName)
 	if frameData.type == "QC_Quests" then
@@ -235,7 +235,7 @@ function EventFrame:Octo_Frame_init(frame, node)
 		else
 			frame.icon_2:SetTexture(E.ICON_EMPTY)
 		end
-		frame.third.text:SetText(E.func_questName(frameData.id))
+		frame.third.text:SetText(E.func_GetQuestName(frameData.id))
 	elseif frameData.type == "QC_Vignettes" then
 		if frameData.atlas then
 			frame.icon_2:SetAtlas(frameData.atlas)
@@ -251,15 +251,15 @@ function EventFrame:Octo_Frame_init(frame, node)
 	end
 	if frameData.id then
 		if frameData.atlas then
-			frame.second.text:SetText(frameData.atlas..E.Gray_Color.." id: "..frameData.id.."|r")
+			frame.second.text:SetText(frameData.atlas..E.COLOR_GRAY.." id: "..frameData.id.."|r")
 		else -- QUEST
-			frame.second.text:SetText(E.Gray_Color.."id: "..frameData.id.."|r")
+			frame.second.text:SetText(E.COLOR_GRAY.."id: "..frameData.id.."|r")
 		end
 	else
 		frame.second.text:SetText("qwe")
 	end
 	if frameData.mapID then
-		frame.fourth.text:SetText(E.Gray_Color.."id: "..frameData.mapID.. "|r")
+		frame.fourth.text:SetText(E.COLOR_GRAY.."id: "..frameData.mapID.. "|r")
 	else
 		frame.fourth.text:SetText("qwe")
 	end
@@ -267,13 +267,13 @@ function EventFrame:Octo_Frame_init(frame, node)
 	if frameData.curLocation and frameData.curLocation ~= "" then
 		frame.fifth.text:SetText(frameData.curLocation)
 	elseif frameData.mapID then
-		frame.fifth.text:SetText(E.func_mapName(frameData.mapID))
+		frame.fifth.text:SetText(E.func_GetMapName(frameData.mapID))
 	else
 		frame.fifth.text:SetText("qwe")
 	end
 	----------------------------------------------------------------
-	-- frame.sixth.text:SetText(E.Green_Color..E.func_GetCoordFormated(frameData.x, frameData.y).."|r")
-	frame.sixth.text:SetText(E.func_GetCoordFormated(frameData.x, frameData.y))
+	-- frame.sixth.text:SetText(E.COLOR_GREEN..E.func_FormatCoordinates(frameData.x, frameData.y).."|r")
+	frame.sixth.text:SetText(E.func_FormatCoordinates(frameData.x, frameData.y))
 	if self.minTime then
 		local done = frameData.time - self.minTime
 		-- local total = self.maxTime - self.minTime
@@ -402,7 +402,7 @@ local MyEventsTable = {
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_LOGIN",
 }
-E.func_RegisterMyEventsToFrames(EventFrame, MyEventsTable)
+E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
@@ -423,5 +423,5 @@ function EventFrame:PLAYER_REGEN_DISABLED()
 	end
 end
 function EventFrame:PLAYER_LOGIN()
-	E.func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.Blue_Color, function() EventFrame:func_QuestsChanged_CreateMyDataProvider() end)
+	E.func_Create_DDframe_QuestsChanged(Octo_MainFrame_QuestsChanged, E.COLOR_BLUE, function() EventFrame:func_QuestsChanged_CreateMyDataProvider() end)
 end

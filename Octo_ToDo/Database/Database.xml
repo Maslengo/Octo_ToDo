@@ -1,6 +1,5 @@
 <Ui>
 	<Script file="Database\Expansions.lua"/>
-	<Script file="Database\Garrison.lua"/>
 	<Script file="Database\Items.lua"/>
 	<Script file="Database\KeystoneAbbr.lua"/>
 	<Script file="Database\OctoTable_Mounts.lua"/>
