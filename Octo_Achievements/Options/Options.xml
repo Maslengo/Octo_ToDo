@@ -1,4 +1,0 @@
-<Ui>
-	<Script file="Options\func_Octo_Achievements_Options.lua"/>
-	<Script file="Options\Init.lua"/>
-</Ui>
