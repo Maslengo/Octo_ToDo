@@ -61,6 +61,7 @@ local func_OnAcquiredLeft do
 		frame.TextureLeft:SetAllPoints()
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
+
 	local function Create_CategoryIcon(frame)
 		frame.CategoryIcon = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		frame.CategoryIcon:SetPoint("TOPLEFT", 1, -1)
@@ -598,7 +599,7 @@ function EventFrame:CreateDataProvider()
 	local columnWidthsCenter = {}
 	E.func_UpdateCurrentProfile()
 
-	local ExpansionToShowTBL = Octo_profileKeys.profiles[E.CurrentProfile].ExpansionToShow
+	local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
 	-- Получение отсортированных данных персонажей
 	local sortedCharacters = E.func_SortCharacters()
 	local currentCharacterIndex
@@ -636,8 +637,6 @@ function EventFrame:CreateDataProvider()
 			-- Обрабатываем типы данных в нужном порядке
 			for _, dataType in ipairs(dataDisplayOrder) do
 				-- for dataType in next,(E.OctoTables_DataOtrisovka[categoryKey]) do
-
-
 				-- for i, id in next,(E.OctoTables_DataOtrisovka[categoryKey][dataType]) do
 				for i, id in next,(E.DataProvider_Otrisovka[categoryKey][dataType]) do
 					local questKey

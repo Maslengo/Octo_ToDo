@@ -4160,6 +4160,18 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+
+----------------------------------------------------------------
+function E.func_GetProfileData(key)
+	local tbl = Octo_profileKeys.profiles[E.CurrentProfile][key] or {}
+	return tbl
+end
+----------------------------------------------------------------
+
+function E.func_SHOULDSHOWatPROFILEDATA(profileName)
+
+
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_CreateNewProfile(profileName)
@@ -4250,6 +4262,8 @@ function E.func_InitializeProfileStructure(profileName)
 
 	return db
 end
+
+
 ----------------------------------------------------------------
 function E.func_PopulateProfileData(db, profileName)
 	local currentProfile = db.profiles[profileName]
@@ -4330,7 +4344,6 @@ function E.func_UpdateCurrentProfile(name)
 	end
 	E.CurrentProfile = Octo_profileKeys.CurrentProfile
 end
-----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

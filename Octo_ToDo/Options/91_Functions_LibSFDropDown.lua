@@ -371,13 +371,13 @@ end
 local function CreateExpansionsMenu(dropdown, providerfunc)
 	----------------------------------------------------------------
 	local function selectFunctionExpansion(menuButton, _, _, checked)
-		local ExpansionToShowTBL = Octo_profileKeys.profiles[E.CurrentProfile].ExpansionToShow
+		local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
 		ExpansionToShowTBL[menuButton.value] = checked or nil
 		providerfunc()
 	end
 
 	return function(self, level, value)
-		local ExpansionToShowTBL = Octo_profileKeys.profiles[E.CurrentProfile].ExpansionToShow
+		local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
 		local info = {}
 		info.fontObject = OctoFont11
 		info.widgets = {{
