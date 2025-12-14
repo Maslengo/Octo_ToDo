@@ -36,6 +36,16 @@ Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.background
 Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
+
+
+
+
+local function SafeTooltipShow(frame, ...)
+	-- if Octo_MainFrame_ToDo:IsShown() then
+		E.func_OctoTooltip_OnEnter(frame, ...)
+	-- end
+end
+
 local func_OnAcquiredLeft do
 	-- ИКОНКА НАСТРОЕК
 	-- ИКОНКА КАТЕГОРИЙ
@@ -45,19 +55,18 @@ local func_OnAcquiredLeft do
 		frame.SettingsButton:SetPropagateMouseClicks(true)
 		frame.SettingsButton:SetPropagateMouseMotion(true)
 		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
-		frame.SettingsButton:SetPoint("TOPLEFT", 1, -1)
+		-- frame.SettingsButton:SetPoint("TOPLEFT", 1, -1)
+		frame.SettingsButton:SetPoint("LEFT")
 		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
 		frame.SettingsButton:EnableMouse(true)
-
-
 
 		local texture = frame.SettingsButton:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("CENTER")
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
 		-- texture:SetTexCoord(.10, .90, .10, .90)
 		frame.SettingsTexture = texture
+		frame.SettingsButton:SetCollapsesLayout(true)
 	end
-
 
 	local function Create_CategoryIcon(frame)
 		frame.CategoryFrame = CreateFrame("FRAME", nil, frame)
@@ -68,8 +77,8 @@ local func_OnAcquiredLeft do
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
 		texture:SetTexCoord(.10, .90, .10, .90)
 		frame.CategoryTexture = texture
+		-- frame.CategoryFrame:SetCollapsesLayout(true)
 	end
-
 
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
@@ -82,7 +91,6 @@ local func_OnAcquiredLeft do
 		frame.TextLeft:SetJustifyH("LEFT")-- Горизонтальное выравнивание
 		frame.TextLeft:SetTextColor(textR, textG, textB, textA)
 	end
-
 
 	local function Create_TextureLeft(frame)
 		frame.TextureLeft = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
@@ -163,6 +171,9 @@ local func_OnAcquiredCenter do
 		columnFrame:SetHitRectInsets(1, 1, 1, 1)
 		columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
 	end
+
+
+
 	function func_OnAcquiredCenter(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
@@ -173,12 +184,16 @@ local func_OnAcquiredCenter do
 					if key then
 						-- Создание нового подфрейма для колонки
 						local columnFrame = CreateFrame("BUTTON", nil, frame)
+						columnFrame:Hide()
 						Create_CurrentCharBackground(columnFrame) -- Текстура для фона текущего персонажа
 						Create_ReputationBackground(columnFrame)-- Текстура для фона репутации
 						Create_TextCenter(columnFrame) -- Текстовое поле для центральной колонки
 						AdditionalSettings(columnFrame, frame)
 						-- Обработчики скрытия
-						columnFrame:SetScript("OnHide", columnFrame.Hide)
+						columnFrame:SetScript("OnHide", function()
+							columnFrame:Hide()
+							-- print (E.COLOR_RED.."нид хайд|r")
+						end)
 						columnFrame.CurrentCharBackground:SetScript("OnHide", columnFrame.CurrentCharBackground.Hide)
 						rawset(self, key, columnFrame)
 						return columnFrame
@@ -215,6 +230,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	else
 		frame.CategoryTexture:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
+	frame.SettingsButton:Show() -- не баг а фича
 	if Octo_profileKeys.isSettingsEnabled and frameData.SettingsType then
 		local dataType, id = ("#"):split(frameData.SettingsType)
 		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
@@ -225,7 +241,7 @@ function EventFrame:func_InitLEFT(frame, node)
 		end
 		frame.SettingsTexture:SetTexture(texture)
 		-- frame.CategoryTexture:Hide()
-		frame.SettingsButton:Show()
+		-- frame.SettingsButton:Show()
 	else
 		-- frame.CategoryTexture:Show()
 		frame.SettingsButton:Hide()
@@ -253,7 +269,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	-- local categoryKey = frameData.categoryKey
 
 	-- if E.OctoTable_Expansions[categoryKey] then
-	-- 	expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
+	--     expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
 	-- end
 
 
@@ -279,12 +295,23 @@ function EventFrame:func_InitLEFT(frame, node)
 			else
 				frame.tooltip = nil
 			end
-			E.func_OctoTooltip_OnEnter(frame, {"RIGHT", "LEFT"})
+			-- print ("func_InitLEFT OnEnter")
+			SafeTooltipShow(frame, {"RIGHT", "LEFT"})
 	end)
 end
 -- Функция инициализации данных для центральной колонки
 function EventFrame:func_InitCenter(frame, node)
 	local frameData = node:GetData()
+
+
+	-- for i = 1, #frame.columnFrames do
+	-- 	if frame.columnFrames[i] then
+	-- 		print (i, E.COLOR_GREEN.."HIDE|r")
+	-- 		frame.columnFrames[i]:Hide()
+	-- 	end
+	-- end
+
+
 	local accumulatedWidth = 0
 	local columnWidthsCenter = EventFrame.columnWidthsCenter or {}
 	-- Инициализация всех колонок для текущей строки
@@ -340,11 +367,14 @@ function EventFrame:func_InitCenter(frame, node)
 				else
 					columnFrames.tooltip = nil
 				end
-				E.func_OctoTooltip_OnEnter(columnFrames) --, {"LEFT", "RIGHT"}) -- если перс будет справа и тултип со скроллом, то будет габелла
+				-- print ("columnFrames OnEnter")
+
+				SafeTooltipShow(columnFrames) --, {"LEFT", "RIGHT"}) -- если перс будет справа и тултип со скроллом, то будет габелла
 		end)
 		columnFrames:Show()
 	end
 	for i = frameData.totalColumns+1, #frame.columnFrames do
+		-- print (i, "HIDE")
 		frame.columnFrames[i]:Hide()
 	end
 end
@@ -714,8 +744,8 @@ local function PassSearchFilter(TextLeft, searchText)
 	end
 
 	local text = type(TextLeft) == "function"
-		and TextLeft()
-		or tostring(TextLeft or "")
+	and TextLeft()
+	or tostring(TextLeft or "")
 
 	return text:lower():find(searchText:lower(), 1, true) ~= nil
 end
@@ -725,6 +755,7 @@ end
 
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
+	-- print ("CreateDataProvider")
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
@@ -780,70 +811,70 @@ function EventFrame:CreateDataProvider()
 
 
 
-										-- можно ли вообще рисовать эту строку
-										local canDraw = false
+					-- можно ли вообще рисовать эту строку
+					local canDraw = false
 
-										if dataType ~= "UniversalQuests" then
-											canDraw = E.func_ShouldShow(id, dataType, E.CurrentProfile)
-										else
-											canDraw = E.func_ShouldShow(questKey, dataType, E.CurrentProfile)
-										end
+					if dataType ~= "UniversalQuests" then
+						canDraw = E.func_ShouldShow(id, dataType, E.CurrentProfile)
+					else
+						canDraw = E.func_ShouldShow(questKey, dataType, E.CurrentProfile)
+					end
 
-										if canDraw then
-											local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation =
-												E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
+					if canDraw then
+						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation =
+						E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
 
-											-- фильтр поиска
-											canDraw = PassSearchFilter(TextLeft, EventFrame.searchFilter)
+						-- фильтр поиска
+						canDraw = PassSearchFilter(TextLeft, EventFrame.searchFilter)
 
-											if canDraw then
-												-- ====== ОДИН БЛОК, БЕЗ ELSE ======
-												totalLines = totalLines + 1
+						if canDraw then
+							-- ====== ОДИН БЛОК, БЕЗ ELSE ======
+							totalLines = totalLines + 1
 
-												local rowData = {
-													TextLeft = TextLeft or "NONE",
-													IconLeft = IconLeft,
-													ColorLeft = E.OctoTable_Expansions[categoryKey]
-														and E.OctoTable_Expansions[categoryKey].color
-														or E.COLOR_BLACK,
+							local rowData = {
+								TextLeft = TextLeft or "NONE",
+								IconLeft = IconLeft,
+								ColorLeft = E.OctoTable_Expansions[categoryKey]
+								and E.OctoTable_Expansions[categoryKey].color
+								or E.COLOR_BLACK,
 
-													SettingsType = SettingsType,
-													IsReputation = IsReputation or false,
-													categoryKey = categoryKey,
+								SettingsType = SettingsType,
+								IsReputation = IsReputation or false,
+								categoryKey = categoryKey,
 
-													TextCenter = {},
-													ColorCenter = {},
-													FirstReputation = {},
-													SecondReputation = {},
-													GUID = {},
+								TextCenter = {},
+								ColorCenter = {},
+								FirstReputation = {},
+								SecondReputation = {},
+								GUID = {},
 
-													currentCharacterIndex = currentCharacterIndex,
-													totalColumns = totalColumns,
-												}
+								currentCharacterIndex = currentCharacterIndex,
+								totalColumns = totalColumns,
+							}
 
-												for CharIndex, CharInfo in ipairs(sortedCharacters) do
-													local TextCenter, ColorCenter, FirstRep, SecondRep =
-														E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
+							for CharIndex, CharInfo in ipairs(sortedCharacters) do
+								local TextCenter, ColorCenter, FirstRep, SecondRep =
+								E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
 
-													rowData.TextCenter[CharIndex] = TextCenter
-													rowData.ColorCenter[CharIndex] = ColorCenter
-													rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
-													rowData.FirstReputation[CharIndex] = FirstRep or 0
-													rowData.SecondReputation[CharIndex] = SecondRep or 0
-												end
+								rowData.TextCenter[CharIndex] = TextCenter
+								rowData.ColorCenter[CharIndex] = ColorCenter
+								rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
+								rowData.FirstReputation[CharIndex] = FirstRep or 0
+								rowData.SecondReputation[CharIndex] = SecondRep or 0
+							end
 
-												local node = DataProvider:Insert(rowData)
+							local node = DataProvider:Insert(rowData)
 
-												for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do
-													columnWidthsLeft[j] = math_max(w, columnWidthsLeft[j] or 0)
-												end
+							for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do
+								columnWidthsLeft[j] = math_max(w, columnWidthsLeft[j] or 0)
+							end
 
-												for i, w in ipairs(func_calculateColumnWidthsCenter(node)) do
-													columnWidthsCenter[i] =
-														math_max(w, columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
-												end
-											end
-										end
+							for i, w in ipairs(func_calculateColumnWidthsCenter(node)) do
+								columnWidthsCenter[i] =
+								math_max(w, columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
+							end
+						end
+					end
 
 
 
@@ -855,55 +886,6 @@ function EventFrame:CreateDataProvider()
 			end
 		end
 	end
-
-	-- Если нет строк, создаём ОДНУ пустую строку-заглушку, но:
-	-- print (totalLines) -- принтит 0
-	-- print (DataProvider:GetSize(true))
-
-	-- if totalLines == 0 then
-	-- 	local rowData = {
-	-- 		TextLeft = "",
-	-- 		IconLeft = nil,
-	-- 		ColorLeft = nil,
-
-	-- 		TextCenter = {},
-	-- 		ColorCenter = {},
-	-- 		FirstReputation = {},
-	-- 		SecondReputation = {},
-	-- 		GUID = {},
-
-	-- 		currentCharacterIndex = currentCharacterIndex,
-	-- 		totalColumns = totalColumns,
-	-- 	}
-
-	-- 	for i = 1, totalColumns do
-	-- 		rowData.TextCenter[i] = ""
-	-- 	end
-
-	-- 	DataProvider:Insert(rowData)
-	-- 	totalLines = 1
-	-- end
-	-- print (totalLines) -- принтит 1
-
-
-	-- НЕ РАБОТАЕТ
-	-- if totalLines == 0 then
-	-- 	Octo_MainFrame_ToDo.ViewCenter:SetDataProvider(CreateTreeDataProvider())
-	-- 	Octo_MainFrame_ToDo.ViewLeft:SetDataProvider(CreateTreeDataProvider())
-	-- 	return
-	-- end
-
-
-	-- print("SIZE:", DataProvider:GetSize(true))
-	-- print("ROOT:", DataProvider:GetRootNode():GetSize())
-
-	-- if DataProvider:GetSize(true) == 0 then
-	-- 	DataProvider:Insert({
-	-- 		TextLeft = "",
-	-- 		TextCenter = {},
-	-- 		totalColumns = totalColumns,
-	-- 	})
-	-- end
 
 
 	-- Сохранение рассчитанных размеров колонок
@@ -933,7 +915,10 @@ function EventFrame:CreateDataProvider()
 	-- Расчет количества строк
 	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
 	MAX_DISPLAY_LINES = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
-	-- Установка размеров фрейма
+
+	----------------------------------------------------------------
+	-- ШИРИНА
+	----------------------------------------------------------------
 	local width = MIN_COLUMN_WIDTH_LEFT
 	if columnWidthsLeft and columnWidthsLeft[1] then
 		width = (columnWidthsLeft[1]+INDENT_TEXT or MIN_COLUMN_WIDTH_LEFT) + totalRightWidth
@@ -941,7 +926,22 @@ function EventFrame:CreateDataProvider()
 	if width%2 == 1 then
 		width = width + 1
 	end
+	----------------------------------------------------------------
+	-- ВЫСОТА
+	----------------------------------------------------------------
 	local height = E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES + E.HEADER_HEIGHT
+	----------------------------------------------------------------
+	-- если нет строк
+	----------------------------------------------------------------
+	-- if totalLines == 0 then
+	--     width = (MIN_COLUMN_WIDTH_LEFT + INDENT_TEXT or MIN_COLUMN_WIDTH_LEFT) + totalRightWidth
+	-- end
+	----------------------------------------------------------------
+	-- print(totalRightWidth)
+
+	-- print (MIN_COLUMN_WIDTH_LEFT+INDENT_TEXT, MAX_DISPLAY_LINES, totalLines, totalRightWidth, columnWidthsCenter[1])
+	-- print(E.COLOR_GREEN.."Ширина:|r", width)
+
 	Octo_MainFrame_ToDo:SetSize(width, height)
 	Octo_MainFrame_ToDo.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
 	-- Освобождение всех фреймов из пула
@@ -989,7 +989,8 @@ function EventFrame:CreateDataProvider()
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
 				HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
-				E.func_OctoTooltip_OnEnter(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
+				-- print ("HeaderFrameCenter OnEnter")
+				SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 		HeaderFrameCenter:Show()
 	end

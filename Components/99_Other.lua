@@ -30,10 +30,10 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		{id = "ListOfQuests", defS = false,},
-		{id = "LFGInstance", defS = false,},
-		{id = "AllItems", defS = false,},
-		{id = "Professions", defS = false,},
+		{id = "ListOfQuests", defS = true,},
+		{id = "LFGInstance", defS = true,},
+		{id = "AllItems", defS = true,},
+		{id = "Professions", defS = true,},
 		{id = "ItemLevel", defS = true,},
 		{id = "Money", defS = true,},
 		{id = "WasOnline", defS = true,},

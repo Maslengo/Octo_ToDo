@@ -178,27 +178,28 @@ function EventFrame:func_SmartAnchorTo(frame, point)
 	end
 end
 local function TooltipOnEnter()
-	if EventFrame.shouldShowScrollBar then
-		OctoTooltip:Show()
-		OctoTooltip:SetPropagateMouseMotion(false)
-	else
-		OctoTooltip:SetPropagateMouseMotion(true)
-	end
+		if EventFrame.shouldShowScrollBar then
+			OctoTooltip:Show()
+			OctoTooltip:SetPropagateMouseMotion(false)
+		else
+			OctoTooltip:SetPropagateMouseMotion(true)
+		end
 end
 local function TooltipOnLeave()
 	OctoTooltip:Hide()
 end
 local function TooltipOnShow()
-	local scrollBar = OctoTooltip.ScrollBar
-	local shouldShow = EventFrame.shouldShowScrollBar
-	if shouldShow ~= scrollBar:IsShown() then
-		if shouldShow then
-			scrollBar:Show()
-		else
-			scrollBar:Hide()
+		local scrollBar = OctoTooltip.ScrollBar
+		local shouldShow = EventFrame.shouldShowScrollBar
+		if shouldShow ~= scrollBar:IsShown() then
+			if shouldShow then
+				scrollBar:Show()
+			else
+				scrollBar:Hide()
+			end
 		end
-	end
-	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "OnShow")
+		E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "OnShow")
+
 end
 function EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
@@ -367,6 +368,8 @@ function EventFrame:CreateDataProvider(tbl)
 	end
 end
 function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft) -- ПОФИКСИТЬ (3им аргументом сделать point) либо повешать на объект 1395 hidingbar
+
+
 	if not frame.tooltip or #frame.tooltip == 0 then return end
 	if type(point) == "table" then
 		EventFrame:func_SmartAnchorTo(frame, point)
