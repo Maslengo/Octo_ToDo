@@ -2107,11 +2107,21 @@ function E.func_RegisterFrame(frame)
 			end)
 	end)
 end
-function E.func_FormatExpansion(expID)
-	local expIcon = E.func_texturefromIcon(E.OctoTable_Expansions[expID].icon, 16, 32)
-	local expName = E.OctoTable_Expansions[expID].color..E.OctoTable_Expansions[expID].nameVeryShort
-	return " "..expName..expIcon.."|r"
+
+
+function E.func_FormatExpansion(expID, iconSide)
+    local expansion = E.OctoTable_Expansions[expID]
+    local expIcon = E.func_texturefromIcon(expansion.icon, 16, 32)
+    local expName = expansion.color..expansion.nameVeryShort
+
+    if iconSide == "LEFT" then
+        return expIcon..expName.."|r"
+    end
+    -- По умолчанию RIGHT
+    return expName..expIcon.."|r"
 end
+
+
 function E.func_GetTimewalkingDungeon()
 	local joinable, timewalkDungeonName, result = false, "", ""
 	for expID, v in ipairs(E.OctoTable_Expansions) do
@@ -2732,12 +2742,12 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 	--------------------------------------------------------
 	for _, d in ipairs(characterData) do
 		-- local color = E.func_GetColorGradient(d.charValue, minValue, maxValue)
-		d.row[2] = d.prof1Icon
-		d.row[3] = d.prof1Text
-		d.row[4] = ""
-		d.row[5] = d.prof2Icon
-		d.row[6] = d.prof2Text
-		d.row[4] = ""
+		-- d.row[2] = ""
+		d.row[2] = {d.prof1Text..d.prof1Icon, "RIGHT"}
+		-- d.row[4] = ""
+		-- d.row[5] = ""
+		d.row[3] = {d.prof2Text..d.prof2Icon, "RIGHT"}
+		-- d.row[4] = ""
 		table.insert(tooltip, d.row)
 	end
 	--------------------------------------------------------
@@ -3196,7 +3206,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local mountID = v.mountID
 			local source = v.source
 			local price = v.price
-			tooltip[#tooltip+1] = {E.func_FormatMountInfo(mountID), source, E.func_CompactFormatNumber(price)..icon}
+			tooltip[#tooltip+1] = {E.func_FormatMountInfo(mountID), {source, "LEFT"}, E.func_CompactFormatNumber(price)..icon}
 		end
 	end
 	-- if dataType == "Currencies" and id == 3252 then

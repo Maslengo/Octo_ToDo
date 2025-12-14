@@ -250,11 +250,11 @@ function EventFrame:func_InitLEFT(frame, node)
 
 
 	local expansionICON = ""
-	local categoryKey = frameData.categoryKey
+	-- local categoryKey = frameData.categoryKey
 
-	if E.OctoTable_Expansions[categoryKey] then
-		expansionICON = E.func_FormatExpansion(categoryKey)
-	end
+	-- if E.OctoTable_Expansions[categoryKey] then
+	-- 	expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
+	-- end
 
 
 
@@ -268,7 +268,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	-- frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
 		local r, g, b = E.func_Hex2RGBFloat(frameData.ColorLeft)
-		frame.TextureLeft:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
+		frame.TextureLeft:SetVertexColor(r, g, b, .1) -- LEFT_TEXTURE_ALPHA
 		frame.TextureLeft:Show()
 	else
 		frame.TextureLeft:Hide()
