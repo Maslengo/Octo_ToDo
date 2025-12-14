@@ -1566,7 +1566,7 @@ function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, nil, nil, false
 	----------------------------------------------------------------
 	TextLeft = E.func_GetCurrencyName(id)
-	-- ColorLeft =
+	-- ColorLeft = E.COLOR_GREEN
 	IconLeft = E.func_GetCurrencyIcon(id)
 	SettingsType = dataType.."#"..id
 	-- TooltipKey =
@@ -3536,6 +3536,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					local forcedIcon = questData.forcedIcon
 					local addText = questData.addText
 					local Output_LEFT = ""
+					local Output_CENT = ""
 					local Output_RIGHT = ""
 					if questID then
 						Output_RIGHT = CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey][questID] or E.COLOR_GRAY..NONE.."|r"
@@ -3579,7 +3580,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 							-- local mountIconNumber = E.func_GetMountTexture(addText.mount)
 							-- local mountIcon = E.func_texturefromIcon(mountIconNumber)
 							-- local mountName = mountIcon..E.func_GetMountCollectedColor(addText.mount)..E.func_GetMountName(addText.mount).."|r"
-							Output_LEFT = Output_LEFT..E.COLOR_PURPLE.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)).."|r"
+							Output_CENT = Output_CENT..E.COLOR_PURPLE.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)).."|r"
 						end
 						if addText.notes then
 							Output_LEFT = Output_LEFT..addText.notes
@@ -3597,7 +3598,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					if faction == CharInfo.PlayerData.Faction then
 						Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(faction))..Output_LEFT
 					end
-					tooltip[#tooltip+1] = {Output_LEFT, Output_RIGHT}
+					tooltip[#tooltip+1] = {Output_LEFT, Output_CENT, Output_RIGHT}
+					-- tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "RIGHT"}, Output_RIGHT}
 				end
 			end
 		end

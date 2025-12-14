@@ -1,6 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
+EventFrame.searchFilter = nil
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
 E.func_RegisterFrame(Octo_MainFrame_ToDo)
@@ -36,48 +37,61 @@ Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 local func_OnAcquiredLeft do
+	-- ИКОНКА НАСТРОЕК
+	-- ИКОНКА КАТЕГОРИЙ
+	-- ТЕКСТ КАТЕРГРИИ
+	local function Create_SettingsButton(frame)
+		frame.SettingsButton = CreateFrame("BUTTON", nil, frame)
+		frame.SettingsButton:SetPropagateMouseClicks(true)
+		frame.SettingsButton:SetPropagateMouseMotion(true)
+		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
+		frame.SettingsButton:SetPoint("TOPLEFT", 1, -1)
+		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
+		frame.SettingsButton:EnableMouse(true)
+
+
+
+		local texture = frame.SettingsButton:CreateTexture(nil, "BACKGROUND", nil, 5)
+		texture:SetPoint("CENTER")
+		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		-- texture:SetTexCoord(.10, .90, .10, .90)
+		frame.SettingsTexture = texture
+	end
+
+
+	local function Create_CategoryIcon(frame)
+		frame.CategoryFrame = CreateFrame("FRAME", nil, frame)
+		frame.CategoryFrame:SetPoint("LEFT", frame.SettingsButton, "RIGHT")
+		frame.CategoryFrame:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		local texture = frame.CategoryFrame:CreateTexture(nil, "BACKGROUND", nil, 5)
+		texture:SetPoint("CENTER")
+		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		texture:SetTexCoord(.10, .90, .10, .90)
+		frame.CategoryTexture = texture
+	end
+
+
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
 		frame.TextLeft:SetFontObject(OctoFont11)
-		frame.TextLeft:SetPoint("LEFT", E.GLOBAL_LINE_HEIGHT+INDENT_TEXT+0, 0)
+		frame.TextLeft:SetPoint("LEFT", frame.CategoryFrame, "RIGHT")
+		-- frame.TextLeft:SetPoint("LEFT", E.GLOBAL_LINE_HEIGHT+INDENT_TEXT+0, 0)
 		frame.TextLeft:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
 		frame.TextLeft:SetWordWrap(false)
 		frame.TextLeft:SetJustifyV("MIDDLE")-- Вертикальное выравнивание
 		frame.TextLeft:SetJustifyH("LEFT")-- Горизонтальное выравнивание
 		frame.TextLeft:SetTextColor(textR, textG, textB, textA)
 	end
-	-- ИКОНКА НАСТРОЕК
-	-- ИКОНКА КАТЕГОРИЙ
-	-- ТЕКСТ КАТЕРГРИИ
+
+
 	local function Create_TextureLeft(frame)
 		frame.TextureLeft = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
 		frame.TextureLeft:Hide()
 		frame.TextureLeft:SetAllPoints()
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
-	local function Create_CategoryIcon(frame)
-		frame.CategoryIcon = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
-		frame.CategoryIcon:SetPoint("TOPLEFT", 1, -1)
-		frame.CategoryIcon:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-		frame.CategoryIcon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-	end
-	local function Create_SettingsButton(frame)
-		frame.SettingsButton = CreateFrame("BUTTON", nil, frame)
-		frame.SettingsButton:SetPropagateMouseClicks(true)
-		frame.SettingsButton:SetPropagateMouseMotion(true)
-		local texture = frame.SettingsButton:CreateTexture(nil, "BACKGROUND", nil, 5)
-		texture:SetPoint("TOPLEFT", 1, -1)
-		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-		texture:SetTexCoord(.10, .90, .10, .90)
-		-- Сохраняем текстуру в кнопке и во фрейме
-		frame.SettingsButton.ToggleIconTexture = texture
-		frame.ToggleIconTexture = texture
-		-- Настраиваем КНОПКУ (SettingsButton), а не текстуру!
-		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
-		frame.SettingsButton:SetPoint("TOPLEFT", 1, -1)
-		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
-		frame.SettingsButton:EnableMouse(true)
-	end
+
+
 	local function Create_Highlight(frame, owner)
 		frame.Highlight = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
 		frame.Highlight:SetPropagateMouseClicks(true)
@@ -106,10 +120,11 @@ local func_OnAcquiredLeft do
 		end
 		if not new then return end
 		local frameData = node:GetData()
-		Create_TextLeft(frame) -- Текстовое поле для левой колонки
-		Create_TextureLeft(frame) -- Текстура для фона левой колонки
-		Create_CategoryIcon(frame)
 		Create_SettingsButton(frame)
+		Create_CategoryIcon(frame)
+		Create_TextLeft(frame) -- Текстовое поле для левой колонки
+
+		Create_TextureLeft(frame) -- Текстура для фона левой колонки
 		Create_Highlight(frame, owner) -- Создание полноразмерного фрейма для подсветки
 		AdditionalSettings(frame)
 		-- Обработчики событий показа/скрытия фрейма
@@ -188,16 +203,17 @@ local function func_SettingsButton_OnClick(button, frameData)
 	local texture = newValue and
 	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen" or
 	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
-	button.ToggleIconTexture:SetTexture(texture)
+	local parentFrame = button:GetParent() -- кнопка находится внутри frame
+	parentFrame.SettingsTexture:SetTexture(texture)
 end
 -- Функция инициализации данных для левой колонки
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
 	if frameData.IconLeft then
-		frame.CategoryIcon:SetTexture(frameData.IconLeft)
-		frame.CategoryIcon:SetAtlas(frameData.IconLeft, false)
+		frame.CategoryTexture:SetTexture(frameData.IconLeft)
+		frame.CategoryTexture:SetAtlas(frameData.IconLeft, false)
 	else
-		frame.CategoryIcon:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
+		frame.CategoryTexture:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
 	end
 	if Octo_profileKeys.isSettingsEnabled and frameData.SettingsType then
 		local dataType, id = ("#"):split(frameData.SettingsType)
@@ -207,11 +223,11 @@ function EventFrame:func_InitLEFT(frame, node)
 		else
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
 		end
-		frame.ToggleIconTexture:SetTexture(texture)
-		frame.CategoryIcon:Hide()
+		frame.SettingsTexture:SetTexture(texture)
+		-- frame.CategoryTexture:Hide()
 		frame.SettingsButton:Show()
 	else
-		frame.CategoryIcon:Show()
+		-- frame.CategoryTexture:Show()
 		frame.SettingsButton:Hide()
 	end
 	frame.SettingsButton:SetScript("OnClick", function(self)
@@ -224,11 +240,30 @@ function EventFrame:func_InitLEFT(frame, node)
 		frame.TextLeft:SetWidth(newLeftWidth)
 		HeaderFrameLeft:SetWidth(newLeftWidth)
 	end
+
+
+
+
+
+
+
+
+
+	local expansionICON = ""
+	local categoryKey = frameData.categoryKey
+
+	if E.OctoTable_Expansions[categoryKey] then
+		expansionICON = E.func_FormatExpansion(categoryKey)
+	end
+
+
+
+
 	-- Установка текста и цвета для левой колонки
 	if type(frameData.TextLeft) == "function" then
-		frame.TextLeft:SetText(frameData.TextLeft()) -- ← Вызываем функцию!
+		frame.TextLeft:SetText(expansionICON..frameData.TextLeft()) -- ← Вызываем функцию!
 	else
-		frame.TextLeft:SetText(frameData.TextLeft) -- ← Просто строка
+		frame.TextLeft:SetText(expansionICON..frameData.TextLeft) -- ← Просто строка
 	end
 	-- frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
@@ -483,6 +518,113 @@ function EventFrame:func_CreateMainFrame()
 	-- Создание пула фреймов для заголовков колонок
 	Octo_MainFrame_ToDo.pool = CreateFramePool("FRAME", scrollContentFrame, nil, ResetPoolFrame, false, InitializePoolFrame)
 end
+
+-- Функция создания фрейма поиска
+function EventFrame:func_CreateSearchFrame()
+	-- Создание фрейма поиска
+	local SearchFrame = CreateFrame("Frame", nil, Octo_MainFrame_ToDo)
+	SearchFrame:SetPoint("TOP", Octo_MainFrame_ToDo, "TOP", 0, 55)
+	SearchFrame:SetSize(200, 25)
+	SearchFrame:SetFrameStrata("DIALOG")
+	Octo_MainFrame_ToDo.SearchFrame = SearchFrame
+
+	-- Поле ввода для поиска
+	local SearchBox = CreateFrame("EditBox", "Octo_SearchBox", SearchFrame, "InputBoxTemplate")
+	SearchBox:SetPoint("LEFT", SearchFrame, "LEFT")
+	SearchBox:SetSize(150, 20)
+	SearchBox:SetAutoFocus(false)
+	SearchBox:SetText("")
+
+
+
+	SearchBox:SetScript("OnEditFocusGained", function(self)
+			Octo_profileKeys.isSettingsEnabled = true
+	end)
+
+
+	SearchBox:SetScript("OnTextChanged", function(self)
+			EventFrame:ApplySearchFilter(self:GetText())
+	end)
+	SearchBox:SetScript("OnEscapePressed", function(self)
+			self:ClearFocus()
+			self:SetText("")
+			EventFrame:ApplySearchFilter("")
+	end)
+	SearchBox:SetScript("OnEnterPressed", function(self)
+			self:ClearFocus()
+	end)
+	Octo_MainFrame_ToDo.SearchBox = SearchBox
+
+	-- Кнопка сброса поиска
+	local ClearSearchButton = CreateFrame("Button", nil, SearchFrame)
+	ClearSearchButton:SetPoint("LEFT", SearchBox, "RIGHT", -5, 0)
+	ClearSearchButton:SetSize(20, 20)
+	ClearSearchButton:SetNormalTexture("Interface\\Buttons\\UI-StopButton")
+	ClearSearchButton:SetHighlightTexture("Interface\\Buttons\\UI-StopButton")
+	ClearSearchButton:SetScript("OnClick", function()
+			SearchBox:SetText("")
+			EventFrame:ApplySearchFilter("")
+			SearchBox:ClearFocus()
+			EventFrame:func_ResetsearchFilter()
+	end)
+	ClearSearchButton:Hide() -- Скрываем по умолчанию
+	Octo_MainFrame_ToDo.ClearSearchButton = ClearSearchButton
+
+	-- Обновляем видимость кнопки сброса при изменении текста
+	SearchBox:SetScript("OnTextChanged", function(self)
+			local text = self:GetText()
+			if text and text:trim() ~= "" then
+				ClearSearchButton:Show()
+			else
+				ClearSearchButton:Hide()
+			end
+			EventFrame:ApplySearchFilter(text)
+	end)
+
+end
+
+-- Функция применения фильтра поиска
+function EventFrame:ApplySearchFilter(searchText)
+	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.ViewLeft then return end
+	if searchText == nil or searchText == "" then
+		EventFrame:func_ResetsearchFilter()
+	end
+
+	searchText = searchText and searchText:lower():trim() or ""
+
+	-- Получаем текущий DataProvider
+	local dataProvider = Octo_MainFrame_ToDo.ViewLeft:GetDataProvider()
+	if not dataProvider then return end
+
+	-- Если поиск пустой, показываем все
+	if searchText == "" then
+		-- Здесь нужно будет пересоздать провайдер с исходными данными
+		EventFrame:CreateDataProvider()
+		return
+	end
+
+	-- Создаем новый провайдер для отфильтрованных данных
+	local FilteredDataProvider = CreateTreeDataProvider()
+
+	-- Перебираем все узлы в оригинальном провайдере
+	-- Вам может понадобиться сохранять оригинальный провайдер где-то
+	-- Для примера, создаем временный провайдер с фильтрацией
+
+	-- Временно скрываем фрейм и обновляем
+	EventFrame.searchFilter = searchText
+	EventFrame:CreateDataProvider()
+end
+
+function EventFrame:func_ResetsearchFilter()
+	EventFrame.searchFilter = nil
+	if Octo_MainFrame_ToDo.SearchBox then
+		Octo_MainFrame_ToDo.SearchBox:SetText("")
+	end
+	Octo_profileKeys.isSettingsEnabled = false
+
+	EventFrame:CreateDataProvider()
+end
+
 -- Функция расчета ширины колонок для левой части
 local function func_calculateColumnWidthsLEFT(node)
 	local frameData = node:GetData()
@@ -564,6 +706,23 @@ end
 function E.func_UPDATE_MAINFRAME()
 	E.func_SpamBlock(func_UPDATE_MAINFRAME, true)
 end
+
+
+local function PassSearchFilter(TextLeft, searchText)
+	if not searchText or searchText == "" then
+		return true
+	end
+
+	local text = type(TextLeft) == "function"
+		and TextLeft()
+		or tostring(TextLeft or "")
+
+	return text:lower():find(searchText:lower(), 1, true) ~= nil
+end
+
+
+
+
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	local DataProvider = CreateTreeDataProvider()
@@ -604,13 +763,13 @@ function EventFrame:CreateDataProvider()
 	----------------------------------------------------------------
 	-- local keys = {}
 	-- for categoryKey in next, E.OctoTables_Vibor do
-	-- 	table.insert(keys, categoryKey)
+	--     table.insert(keys, categoryKey)
 	-- end
 	-- for i = #keys, 1, -1 do
-	-- 	local categoryKey = keys[i]
-		----------------------------------------------------------------
+	--     local categoryKey = keys[i]
+	----------------------------------------------------------------
 	for categoryKey in next,(E.OctoTables_Vibor) do
-		----------------------------------------------------------------
+		-----------------------------------------------------------------
 		if ExpansionToShowTBL[categoryKey] then
 			for _, dataType in ipairs(dataDisplayOrder) do
 				for i, id in next,(E.DataProvider_Otrisovka[categoryKey][dataType]) do
@@ -618,56 +777,135 @@ function EventFrame:CreateDataProvider()
 					if dataType == "UniversalQuests" then
 						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 					end
-					if dataType ~= "UniversalQuests" and E.func_ShouldShow(id, dataType, E.CurrentProfile) or E.func_ShouldShow(questKey, dataType, E.CurrentProfile) then
-						totalLines = totalLines + 1
-						local rowData = {
-							TextLeft = {},
-							ColorLeft = {},
-							IconLeft = {},
-							SettingsType = {},
-							TooltipKey = {},
-							IsReputation = {},
-							TextCenter = {},
-							ColorCenter = {},
-							FirstReputation = {},
-							SecondReputation = {},
-							GUID = {},
-						}
-						-- Заполнение данных для левой колонки (берется из первого персонажа)
-						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
-						rowData.IconLeft = IconLeft
-						rowData.TextLeft = TextLeft or "NONE"
-						rowData.ColorLeft = ColorLeft or E.COLOR_BLUE
-						rowData.SettingsType = SettingsType
-						-- rowData.TooltipKey = TooltipKey
-						rowData.IsReputation = IsReputation or false
-						-- Заполнение данных для каждого персонажа
-						for CharIndex, CharInfo in ipairs(sortedCharacters) do
-							local TextCenter, ColorCenter, FirstReputation, SecondReputation = E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
-							rowData.TextCenter[CharIndex] = TextCenter
-							rowData.ColorCenter[CharIndex] = ColorCenter
-							rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
-							rowData.FirstReputation[CharIndex] = FirstReputation or 0
-							rowData.SecondReputation[CharIndex] = SecondReputation or 0
-						end
-						-- Установка дополнительных параметров
-						rowData.currentCharacterIndex = currentCharacterIndex
-						rowData.totalColumns = totalColumns
-						-- Вставка данных в провайдер
-						local node = DataProvider:Insert(rowData)
-						-- Расчет ширины колонок
-						for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do
-							columnWidthsLeft[j] = math_max(w, columnWidthsLeft[j] or HeaderFrameLeft.Text:GetWidth() or 0)
-						end
-						local rightWidths = func_calculateColumnWidthsCenter(node)
-						for i, w in ipairs(rightWidths) do
-							columnWidthsCenter[i] = math_max(w, columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
-						end
-					end
+
+
+
+										-- можно ли вообще рисовать эту строку
+										local canDraw = false
+
+										if dataType ~= "UniversalQuests" then
+											canDraw = E.func_ShouldShow(id, dataType, E.CurrentProfile)
+										else
+											canDraw = E.func_ShouldShow(questKey, dataType, E.CurrentProfile)
+										end
+
+										if canDraw then
+											local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation =
+												E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
+
+											-- фильтр поиска
+											canDraw = PassSearchFilter(TextLeft, EventFrame.searchFilter)
+
+											if canDraw then
+												-- ====== ОДИН БЛОК, БЕЗ ELSE ======
+												totalLines = totalLines + 1
+
+												local rowData = {
+													TextLeft = TextLeft or "NONE",
+													IconLeft = IconLeft,
+													ColorLeft = E.OctoTable_Expansions[categoryKey]
+														and E.OctoTable_Expansions[categoryKey].color
+														or E.COLOR_BLACK,
+
+													SettingsType = SettingsType,
+													IsReputation = IsReputation or false,
+													categoryKey = categoryKey,
+
+													TextCenter = {},
+													ColorCenter = {},
+													FirstReputation = {},
+													SecondReputation = {},
+													GUID = {},
+
+													currentCharacterIndex = currentCharacterIndex,
+													totalColumns = totalColumns,
+												}
+
+												for CharIndex, CharInfo in ipairs(sortedCharacters) do
+													local TextCenter, ColorCenter, FirstRep, SecondRep =
+														E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
+
+													rowData.TextCenter[CharIndex] = TextCenter
+													rowData.ColorCenter[CharIndex] = ColorCenter
+													rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
+													rowData.FirstReputation[CharIndex] = FirstRep or 0
+													rowData.SecondReputation[CharIndex] = SecondRep or 0
+												end
+
+												local node = DataProvider:Insert(rowData)
+
+												for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do
+													columnWidthsLeft[j] = math_max(w, columnWidthsLeft[j] or 0)
+												end
+
+												for i, w in ipairs(func_calculateColumnWidthsCenter(node)) do
+													columnWidthsCenter[i] =
+														math_max(w, columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
+												end
+											end
+										end
+
+
+
+
+
+
+
 				end
 			end
 		end
 	end
+
+	-- Если нет строк, создаём ОДНУ пустую строку-заглушку, но:
+	-- print (totalLines) -- принтит 0
+	-- print (DataProvider:GetSize(true))
+
+	-- if totalLines == 0 then
+	-- 	local rowData = {
+	-- 		TextLeft = "",
+	-- 		IconLeft = nil,
+	-- 		ColorLeft = nil,
+
+	-- 		TextCenter = {},
+	-- 		ColorCenter = {},
+	-- 		FirstReputation = {},
+	-- 		SecondReputation = {},
+	-- 		GUID = {},
+
+	-- 		currentCharacterIndex = currentCharacterIndex,
+	-- 		totalColumns = totalColumns,
+	-- 	}
+
+	-- 	for i = 1, totalColumns do
+	-- 		rowData.TextCenter[i] = ""
+	-- 	end
+
+	-- 	DataProvider:Insert(rowData)
+	-- 	totalLines = 1
+	-- end
+	-- print (totalLines) -- принтит 1
+
+
+	-- НЕ РАБОТАЕТ
+	-- if totalLines == 0 then
+	-- 	Octo_MainFrame_ToDo.ViewCenter:SetDataProvider(CreateTreeDataProvider())
+	-- 	Octo_MainFrame_ToDo.ViewLeft:SetDataProvider(CreateTreeDataProvider())
+	-- 	return
+	-- end
+
+
+	-- print("SIZE:", DataProvider:GetSize(true))
+	-- print("ROOT:", DataProvider:GetRootNode():GetSize())
+
+	-- if DataProvider:GetSize(true) == 0 then
+	-- 	DataProvider:Insert({
+	-- 		TextLeft = "",
+	-- 		TextCenter = {},
+	-- 		totalColumns = totalColumns,
+	-- 	})
+	-- end
+
+
 	-- Сохранение рассчитанных размеров колонок
 	EventFrame.columnWidthsLeft = columnWidthsLeft
 	EventFrame.columnWidthsCenter = columnWidthsCenter
@@ -796,6 +1034,7 @@ function EventFrame:PLAYER_LOGIN()
 	-- AlertFrame:ClearAllPoints()
 	-- AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
 	EventFrame:func_CreateMainFrame()
+	EventFrame:func_CreateSearchFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 end
