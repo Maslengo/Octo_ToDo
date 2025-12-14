@@ -1,18 +1,17 @@
 <Ui>
-	<Script file="Components\01_TheLastTitan.lua"/>
-	<Script file="Components\02_Midnight.lua"/>
-	<Script file="Components\03_TheWarWithin.lua"/>
-	<Script file="Components\04_Dragonflight.lua"/>
-	<Script file="Components\05_Shadowlands.lua"/>
-	<Script file="Components\06_BattleforAzeroth.lua"/>
+	<Script file="Components\01_WorldofWarcraft.lua"/>
+	<Script file="Components\02_TheBurningCrusade.lua"/>
+	<Script file="Components\03_WrathoftheLichKing.lua"/>
+	<Script file="Components\04_Cataclysm.lua"/>
+	<Script file="Components\05_MistsofPandaria.lua"/>
+	<Script file="Components\06_WarlordsofDraenor.lua"/>
 	<Script file="Components\07_Legion.lua"/>
-	<Script file="Components\09_WarlordsofDraenor.lua"/>
-	<Script file="Components\10_MistsofPandaria.lua"/>
-	<Script file="Components\11_Cataclysm.lua"/>
-	<Script file="Components\12_WrathoftheLichKing.lua"/>
-	<Script file="Components\13_TheBurningCrusade.lua"/>
-	<Script file="Components\14_WorldofWarcraft.lua"/>
-
+	<Script file="Components\08_BattleforAzeroth.lua"/>
+	<Script file="Components\09_Shadowlands.lua"/>
+	<Script file="Components\10_Dragonflight.lua"/>
+	<Script file="Components\11_TheWarWithin.lua"/>
+	<Script file="Components\12_Midnight.lua"/>
+	<Script file="Components\13_TheLastTitan.lua"/>
 
 	<Script file="Components\50_ALL_Currencies.lua"/>
 	<Script file="Components\51_ALL_Items.lua"/>

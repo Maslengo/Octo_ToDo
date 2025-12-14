@@ -4,7 +4,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
-local categoryKey = 5
+local categoryKey = 9
 local expansionID = 9
 ----------------------------------------------------------------
 local function tempFunction()

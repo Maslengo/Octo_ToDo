@@ -35,7 +35,6 @@ Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.background
 Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
-
 local func_OnAcquiredLeft do
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
@@ -47,21 +46,15 @@ local func_OnAcquiredLeft do
 		frame.TextLeft:SetJustifyH("LEFT")-- Горизонтальное выравнивание
 		frame.TextLeft:SetTextColor(textR, textG, textB, textA)
 	end
-
-
-
 	-- ИКОНКА НАСТРОЕК
 	-- ИКОНКА КАТЕГОРИЙ
 	-- ТЕКСТ КАТЕРГРИИ
-
-
 	local function Create_TextureLeft(frame)
 		frame.TextureLeft = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
 		frame.TextureLeft:Hide()
 		frame.TextureLeft:SetAllPoints()
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
-
 	local function Create_CategoryIcon(frame)
 		frame.CategoryIcon = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		frame.CategoryIcon:SetPoint("TOPLEFT", 1, -1)
@@ -106,16 +99,11 @@ local func_OnAcquiredLeft do
 		frame:SetPropagateMouseMotion(true)
 		frame:SetHitRectInsets(1, 1, 1, 1)
 	end
-
-
 	-- Функция инициализации элементов левой колонки
 	function func_OnAcquiredLeft(owner, frame, node, new)
-
 		if not C_AddOns.IsAddOnLoaded("Blizzard_CurrencyTransfer") then
 			C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
 		end
-
-
 		if not new then return end
 		local frameData = node:GetData()
 		Create_TextLeft(frame) -- Текстовое поле для левой колонки
@@ -187,7 +175,6 @@ end
 local function func_SettingsButton_OnClick(button, frameData)
 	local dataType, id = ("#"):split(frameData.SettingsType)
 	-- Получаем таблицу настроек для типа
-
 	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
 	if not settingsTable then return end
 	-- Определяем ключ (строковый или числовой)
@@ -206,7 +193,6 @@ end
 -- Функция инициализации данных для левой колонки
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
-
 	if frameData.IconLeft then
 		frame.CategoryIcon:SetTexture(frameData.IconLeft)
 		frame.CategoryIcon:SetAtlas(frameData.IconLeft, false)
@@ -239,9 +225,6 @@ function EventFrame:func_InitLEFT(frame, node)
 		HeaderFrameLeft:SetWidth(newLeftWidth)
 	end
 	-- Установка текста и цвета для левой колонки
-
-
-
 	if type(frameData.TextLeft) == "function" then
 		frame.TextLeft:SetText(frameData.TextLeft()) -- ← Вызываем функцию!
 	else
@@ -330,8 +313,6 @@ function EventFrame:func_InitCenter(frame, node)
 		frame.columnFrames[i]:Hide()
 	end
 end
-
-
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
 	-- Настройка позиции и обработчика показа фрейма
@@ -340,10 +321,9 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
 			RequestRaidInfo()
 			E.func_Collect_All()
-
 			EventFrame:CreateDataProvider()
 			C_Timer.After(1, function()
-				E.func_UPDATE_MAINFRAME()
+					E.func_UPDATE_MAINFRAME()
 			end)
 			E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "OnShow")
 	end)
@@ -520,7 +500,6 @@ local function func_calculateColumnWidthsLEFT(node)
 	-- Расчет ширины на основе текста
 	local columnWidthsLEFT = {}
 	-- framesLEFT[1].TextLeft:SetText(frameData.TextLeft)
-
 	if type(frameData.TextLeft) == "function" then
 		framesLEFT[1].TextLeft:SetText(frameData.TextLeft()) -- ← Вызываем функцию!
 	else
@@ -577,20 +556,14 @@ local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serv
 	end
 	return math_max(width1, width2)
 end
-
-
-
-
 local function func_UPDATE_MAINFRAME() -- providerfunc
 	if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and OctoTooltip and not OctoTooltip:IsShown() then
 		EventFrame:CreateDataProvider()
 	end
 end
-
 function E.func_UPDATE_MAINFRAME()
 	E.func_SpamBlock(func_UPDATE_MAINFRAME, true)
 end
-
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	local DataProvider = CreateTreeDataProvider()
@@ -598,7 +571,6 @@ function EventFrame:CreateDataProvider()
 	local columnWidthsLeft = {}
 	local columnWidthsCenter = {}
 	E.func_UpdateCurrentProfile()
-
 	local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
 	-- Получение отсортированных данных персонажей
 	local sortedCharacters = E.func_SortCharacters()
@@ -629,15 +601,18 @@ function EventFrame:CreateDataProvider()
 		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, E.func_TextCenter_Chars_nickname(CharInfo), E.func_TextCenter_Chars_server(CharInfo))
 	end
 	Octo_MainFrame_ToDo.pool:Release(HeaderFrameCenter)
-	-- opde(E.OctoTables_DataOtrisovka)
 	----------------------------------------------------------------
+	-- local keys = {}
+	-- for categoryKey in next, E.OctoTables_Vibor do
+	-- 	table.insert(keys, categoryKey)
+	-- end
+	-- for i = #keys, 1, -1 do
+	-- 	local categoryKey = keys[i]
+		----------------------------------------------------------------
 	for categoryKey in next,(E.OctoTables_Vibor) do
-		-- if Octo_ToDo_DB_Vars.ExpansionToShow[categoryKey] then
+		----------------------------------------------------------------
 		if ExpansionToShowTBL[categoryKey] then
-			-- Обрабатываем типы данных в нужном порядке
 			for _, dataType in ipairs(dataDisplayOrder) do
-				-- for dataType in next,(E.OctoTables_DataOtrisovka[categoryKey]) do
-				-- for i, id in next,(E.OctoTables_DataOtrisovka[categoryKey][dataType]) do
 				for i, id in next,(E.DataProvider_Otrisovka[categoryKey][dataType]) do
 					local questKey
 					if dataType == "UniversalQuests" then
