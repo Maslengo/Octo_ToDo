@@ -55,12 +55,12 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Dragonflight"] = {
-		{id = 2507, defS = true,}, --name = "Драконья экспедиция", side = "-", category = "Dragonflight", }, --[faction=2507]
-		{id = 2574, defS = true,}, --name = "Стражи Сна", side = "-", category = "Dragonflight", }, --[faction=2574]
-		{id = 2511, defS = true,}, --name = "Искарские клыкарры", side = "-", category = "Dragonflight", }, --[faction=2511]
-		{id = 2564, defS = true,}, --name = "Лоаммские ниффы", side = "-", category = "Dragonflight", }, --[faction=2564]
-		{id = 2503, defS = true,}, --name = "Кентавры Маруук", side = "-", category = "Dragonflight", }, --[faction=2503]
-		{id = 2510, defS = true,}, --name = "Союз Вальдраккена", side = "-", category = "Dragonflight", }, --[faction=2510]
+		{id = 2507, defS = false,}, --name = "Драконья экспедиция", side = "-", category = "Dragonflight", }, --[faction=2507]
+		{id = 2574, defS = false,}, --name = "Стражи Сна", side = "-", category = "Dragonflight", }, --[faction=2574]
+		{id = 2511, defS = false,}, --name = "Искарские клыкарры", side = "-", category = "Dragonflight", }, --[faction=2511]
+		{id = 2564, defS = false,}, --name = "Лоаммские ниффы", side = "-", category = "Dragonflight", }, --[faction=2564]
+		{id = 2503, defS = false,}, --name = "Кентавры Маруук", side = "-", category = "Dragonflight", }, --[faction=2503]
+		{id = 2510, defS = false,}, --name = "Союз Вальдраккена", side = "-", category = "Dragonflight", }, --[faction=2510]
 		----------------------------------------------------------------
 		{id = 2550, defS = false,}, --name = "Кобальтовая ассамблея", side = "-", category = "Союз Вальдраккена", }, --[faction=2550]
 		{id = 2544, defS = false,}, --name = "Консорциум ремесленников – филиал на Драконьих островах", side = "-", category = "Союз Вальдраккена", }, --[faction=2544]
@@ -528,7 +528,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(78821, false)
+				return E.func_GetMapName(2200)..": "..E.func_GetQuestName(78821, false)
 			end,
 			name_save = "EmeraldDream_BloomingDreamseeds",
 			defS = true,
@@ -542,7 +542,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.DF_Flower()..E.func_GetQuestName(78319, false)
+				return E.func_GetMapName(2200)..": "..E.Timers.DF_Flower()..E.func_GetQuestName(78319, false)
 			end,
 			name_save = "EmeraldDream_TheSuperbloom",
 			defS = true,
@@ -556,7 +556,9 @@ local function tempFunction()
 		{
 			sorted = true,
 			showTooltip = true,
-			TextLeft = "EmeraldDream_Rares",
+			TextLeft = function()
+				return E.func_GetMapName(2200)..": ".."Rares"
+			end,
 			name_save = "EmeraldDream_Rares",
 			defS = true,
 			reset = "Daily",
@@ -594,7 +596,10 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = "EmeraldDream_Treasures",
+
+			TextLeft = function()
+				return E.func_GetMapName(2200)..": ".."Treasures"
+			end,
 			name_save = "EmeraldDream_Treasures",
 			defS = true,
 			reset = "Once",
@@ -625,7 +630,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(78381, false)
+				return E.func_GetMapName(2200)..": "..E.func_GetQuestName(78381, false)
 			end,
 			name_save = "EmeraldDream_DreamsUnified",
 			defS = true,
@@ -638,7 +643,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = "EmeraldDream_Seeds",
+			TextLeft = function()
+				return E.func_GetMapName(2200)..": ".."Seeds"
+			end,
 			name_save = "EmeraldDream_Seeds",
 			defS = true,
 			reset = "Weekly",
@@ -652,7 +659,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = "TheGilneasReclamation_Storylines",
+			TextLeft = function()
+				return E.func_GetMapName(2200)..": ".."TheGilneasReclamation_Storylines"
+			end,
 			name_save = "TheGilneasReclamation_Storylines",
 			defS = true,
 			reset = "Once",

@@ -47,27 +47,27 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2770, defS = true,},
-		{id = 2710, defS = true,},
-		{id = 2704, defS = true,},
-		{id = 2696, defS = true,},
-		{id = 2699, defS = true,},
-		{id = 2744, defS = true,},
+		{id = 2770, defS = false,},
+		{id = 2710, defS = false,},
+		{id = 2704, defS = false,},
+		{id = 2696, defS = false,},
+		{id = 2699, defS = false,},
+		{id = 2744, defS = false,},
 
-		{id = 2714, defS = true,},
-		{id = 2712, defS = true,},
-		{id = 2711, defS = true,},
-		{id = 2713, defS = true,},
+		{id = 2714, defS = false,},
+		{id = 2712, defS = false,},
+		{id = 2711, defS = false,},
+		{id = 2713, defS = false,},
 
 		--[[NONAME]] {id = 2764, defS = false,},
 		--[[NONAME]] {id = 2742, defS = false,},
 		--[[NONAME]] {id = 2700, defS = false,},
 
-		-- {id = 2774, defS = true,}, -- Slayer's Duellum (Paragon)
-		-- {id = 2727, defS = true,}, -- Silvermoon Court (Paragon)
-		-- {id = 2726, defS = true,}, -- Hara'ti (Paragon)
-		-- {id = 2725, defS = true,}, -- The Singularity (Paragon)
-		-- {id = 2705, defS = true,}, -- Amani Tribe (Paragon)
+		-- {id = 2774, defS = false,}, -- Slayer's Duellum (Paragon)
+		-- {id = 2727, defS = false,}, -- Silvermoon Court (Paragon)
+		-- {id = 2726, defS = false,}, -- Hara'ti (Paragon)
+		-- {id = 2725, defS = false,}, -- The Singularity (Paragon)
+		-- {id = 2705, defS = false,}, -- Amani Tribe (Paragon)
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {

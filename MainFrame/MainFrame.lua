@@ -284,7 +284,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	-- frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
 		local r, g, b = E.func_Hex2RGBFloat(frameData.ColorLeft)
-		frame.TextureLeft:SetVertexColor(r, g, b, .1) -- LEFT_TEXTURE_ALPHA
+		frame.TextureLeft:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
 		frame.TextureLeft:Show()
 	else
 		frame.TextureLeft:Hide()
@@ -750,8 +750,54 @@ local function PassSearchFilter(TextLeft, searchText)
 	return text:lower():find(searchText:lower(), 1, true) ~= nil
 end
 
+-- Функция расчета ширины главного фрейма
+local function CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
+	-- print (columnWidthsLeft[1], columnWidthsCenter[1], totalRightWidth)
+	local leftColumnWidth = MIN_COLUMN_WIDTH_LEFT + INDENT_TEXT
+	if columnWidthsLeft and columnWidthsLeft[1] then
+		leftColumnWidth = columnWidthsLeft[1] + INDENT_TEXT
+	end
 
+	local width = leftColumnWidth + totalRightWidth
 
+	-- Делаем ширину четной для лучшего отображения
+	if width % 2 == 1 then
+		width = width + 1
+	end
+
+	return width
+end
+
+-- Функция расчета высоты главного фрейма
+local function CalculateMainFrameHeight(totalLines)
+	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
+	local maxDisplayLines = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+	return E.GLOBAL_LINE_HEIGHT * maxDisplayLines + E.HEADER_HEIGHT, maxDisplayLines
+end
+
+-- Функция расчета ограниченной ширины правой части
+local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColumns)
+	local totalRightWidth = 0
+	for i = 1, math_min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
+		local colWidth = columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center
+		if (totalRightWidth + colWidth) <= maxRIGHT then
+			totalRightWidth = totalRightWidth + colWidth
+		else
+			break
+		end
+	end
+	-- print("totalRightWidth", totalRightWidth)
+	return totalRightWidth
+end
+
+-- Функция расчета полной ширины правой части
+local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
+	local totalRightWidth = 0
+	for i = 1, math_min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
+		totalRightWidth = totalRightWidth + (columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
+	end
+	return totalRightWidth
+end
 
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
@@ -875,88 +921,115 @@ function EventFrame:CreateDataProvider()
 							end
 						end
 					end
-
-
-
-
-
-
-
 				end
 			end
 		end
 	end
 
 
+
+
+	-- === FIX: гарантируем хотя бы одну строку ===
+	if totalLines == 0 then
+		totalLines = 1
+
+		local rowData = {
+			TextLeft = "",
+			TextCenter = {},
+			ColorCenter = {},
+			FirstReputation = {},
+			SecondReputation = {},
+			GUID = {},
+			currentCharacterIndex = 1,
+			totalColumns = totalColumns > 0 and totalColumns or 1,
+		}
+
+		DataProvider:Insert(rowData)
+
+		columnWidthsLeft[1] = columnWidthsLeft[1] or MIN_COLUMN_WIDTH_LEFT
+		for i = 1, rowData.totalColumns do
+			columnWidthsCenter[i] = columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center
+		end
+	end
+
 	-- Сохранение рассчитанных размеров колонок
 	EventFrame.columnWidthsLeft = columnWidthsLeft
 	EventFrame.columnWidthsCenter = columnWidthsCenter
+
+
+	-- Обновление интерфейса
+	self:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
+end
+
+-- Функция обновления UI главного фрейма
+function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 	-- Обновление интерфейса, если фрейм существует
 	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.scrollContentFrame then return end
+
+	-- Устанавливаем провайдеры данных
 	Octo_MainFrame_ToDo.ViewCenter:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	Octo_MainFrame_ToDo.ViewLeft:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	-- Расчет общей ширины правой части
-	local totalRightWidth = 0
-	local maxRIGHT = MIN_COLUMN_WIDTH_LEFT
-	if columnWidthsLeft and columnWidthsLeft[1] then
-		maxRIGHT = MAX_FRAME_WIDTH - columnWidthsLeft[1]+INDENT_TEXT
-	end
-	for i = 1, math_min(#columnWidthsCenter, EventFrame.MAX_COLUMN_COUNT) do
-		if (totalRightWidth + columnWidthsCenter[i]) <= maxRIGHT then
-			totalRightWidth = totalRightWidth + columnWidthsCenter[i]
-		else
-			break
+
+	-- Расчет максимальной доступной ширины для правой части
+	local leftColumnWidth = columnWidthsLeft and columnWidthsLeft[1] or MIN_COLUMN_WIDTH_LEFT
+	local maxRIGHT = MAX_FRAME_WIDTH - leftColumnWidth - INDENT_TEXT
+
+	-- Гарантируем, что columnWidthsCenter содержит хотя бы минимальные ширины для каждого персонажа
+	if #columnWidthsCenter == 0 and totalColumns > 0 then
+		for i = 1, totalColumns do
+			columnWidthsCenter[i] = MIN_COLUMN_WIDTH_Center
 		end
 	end
-	local totalRightWidth_scrollContentFrame = 0
-	for i = 1, math_min(#columnWidthsCenter, EventFrame.MAX_COLUMN_COUNT) do
-		totalRightWidth_scrollContentFrame = totalRightWidth_scrollContentFrame + columnWidthsCenter[i]
-	end
-	-- Расчет количества строк
-	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
-	MAX_DISPLAY_LINES = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+
+	-- Расчет ширины правой части с ограничением по maxRIGHT
+	local totalRightWidth = CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, EventFrame.MAX_COLUMN_COUNT)
+
+	-- Расчет полной ширины для scrollContentFrame (без ограничений)
+	local totalRightWidth_scrollContentFrame = CalculateFullRightWidth(columnWidthsCenter, EventFrame.MAX_COLUMN_COUNT)
+
+	-- Расчет размеров фрейма
+	local width = CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
+	local height, maxDisplayLines = CalculateMainFrameHeight(totalLines)
+
+	-- Обновляем глобальную переменную
+	MAX_DISPLAY_LINES = maxDisplayLines
 
 	----------------------------------------------------------------
-	-- ШИРИНА
-	----------------------------------------------------------------
-	local width = MIN_COLUMN_WIDTH_LEFT
-	if columnWidthsLeft and columnWidthsLeft[1] then
-		width = (columnWidthsLeft[1]+INDENT_TEXT or MIN_COLUMN_WIDTH_LEFT) + totalRightWidth
-	end
-	if width%2 == 1 then
-		width = width + 1
-	end
-	----------------------------------------------------------------
-	-- ВЫСОТА
-	----------------------------------------------------------------
-	local height = E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES + E.HEADER_HEIGHT
-	----------------------------------------------------------------
-	-- если нет строк
-	----------------------------------------------------------------
-	-- if totalLines == 0 then
-	--     width = (MIN_COLUMN_WIDTH_LEFT + INDENT_TEXT or MIN_COLUMN_WIDTH_LEFT) + totalRightWidth
-	-- end
-	----------------------------------------------------------------
-	-- print(totalRightWidth)
+	-- print("Отладка размеров:",
+	-- 	E.COLOR_BLACK..E.func_SecondsToClock(GetServerTime(), true).."|r",
+	-- 	"totalRightWidth:", totalRightWidth,
+	-- 	"width:", width,
+	-- 	"height:", height,
+	-- 	"totalLines:", totalLines
+	-- )
 
-	-- print (MIN_COLUMN_WIDTH_LEFT+INDENT_TEXT, MAX_DISPLAY_LINES, totalLines, totalRightWidth, columnWidthsCenter[1])
-	-- print(E.COLOR_GREEN.."Ширина:|r", width)
-
+	-- Установка размеров фреймов
 	Octo_MainFrame_ToDo:SetSize(width, height)
 	Octo_MainFrame_ToDo.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
+
+	-- Создание заголовков колонок
+	self:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
+
+	-- Обновление позиций подфреймов в центральной колонке
+	self:UpdateCenterColumnPositions(columnWidthsCenter)
+end
+
+-- Функция создания заголовков колонок персонажей
+function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 	-- Освобождение всех фреймов из пула
 	Octo_MainFrame_ToDo.pool:ReleaseAll()
-	-- Создание заголовков для колонок персонажей
+
 	local accumulatedWidth = 0
 	for count, CharInfo in ipairs(sortedCharacters) do
 		local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
 		local columnWidth = columnWidthsCenter[count] or MIN_COLUMN_WIDTH_Center
+
 		-- Установка позиции и размера заголовка
 		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
+
 		-- Настройка текста заголовка
-		-- HeaderFrameCenter.Nickname:SetAllPoints()
 		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
 		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 			HeaderFrameCenter.Nickname:SetPoint("CENTER")
@@ -965,16 +1038,18 @@ function EventFrame:CreateDataProvider()
 		HeaderFrameCenter.Nickname:SetJustifyV("MIDDLE")
 		HeaderFrameCenter.Nickname:SetJustifyH("CENTER")
 		HeaderFrameCenter.Nickname:SetText(E.func_TextCenter_Chars_nickname(CharInfo))
-		-- HeaderFrameCenter.Server:SetAllPoints()
+
 		HeaderFrameCenter.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
 		HeaderFrameCenter.Server:SetWordWrap(false)
 		HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
 		HeaderFrameCenter.Server:SetJustifyH("CENTER")
 		HeaderFrameCenter.Server:SetText(E.func_TextCenter_Chars_server(CharInfo))
+
 		-- Настройка взаимодействия
 		HeaderFrameCenter:SetPropagateMouseClicks(true)
 		HeaderFrameCenter:SetPropagateMouseMotion(true)
 		HeaderFrameCenter:SetHitRectInsets(1, 1, 1, 1)
+
 		-- Устанавливаем цвет фона в зависимости от фракции
 		if CharInfo.PlayerData.Faction == "Horde" then
 			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
@@ -983,18 +1058,21 @@ function EventFrame:CreateDataProvider()
 		elseif CharInfo.PlayerData.Faction == "Neutral" then
 			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
 		end
-		-- -- Установка цвета фона в зависимости от фракции
-		-- local charR, charG, charB = E.func_Hex2RGBFloat(CharInfo.PlayerData.Faction == "Horde" and E.COLOR_HORDE or E.COLOR_ALLIANCE)
+
 		HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.ALPHA_BACKGROUND)
+
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
-				HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
-				-- print ("HeaderFrameCenter OnEnter")
-				SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
+			HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
+			SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
+
 		HeaderFrameCenter:Show()
 	end
-	-- Обновление позиций подфреймов в центральной колонке
+end
+
+-- Функция обновления позиций подфреймов в центральной колонке
+function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 	for _, frame in ipairs(Octo_MainFrame_ToDo.ViewCenter:GetFrames()) do
 		local accumulatedWidth = 0
 		for i = 1, #columnWidthsCenter do
@@ -1006,11 +1084,6 @@ function EventFrame:CreateDataProvider()
 			end
 		end
 	end
-	-- Ресет скроллбара
-	-- C_Timer.After(0, function()
-	-- EventFrame.horizontalScrollBar:SetScrollPercentage(0)
-	-- Octo_MainFrame_ToDo.ScrollBoxCenter:ScrollToElementDataIndex(1)
-	-- end)
 end
 -- Функция переключения видимости главного фрейма
 local function Toggle_Octo_MainFrame_TestFrame(frame)

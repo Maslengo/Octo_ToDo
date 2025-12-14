@@ -40,15 +40,15 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 1900, defS = true,}, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
-		{id = 1883, defS = true,}, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
-		{id = 1828, defS = true,}, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
-		{id = 1948, defS = true,}, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
-		{id = 1859, defS = true,}, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
-		{id = 1894, defS = true,}, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
-		{id = 2045, defS = true,}, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
-		{id = 2170, defS = true,}, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
-		{id = 2165, defS = true,}, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
+		{id = 1900, defS = false,}, --name = "Двор Фарондиса", side = "-", category = "Legion", }, --[faction=1900]
+		{id = 1883, defS = false,}, --name = "Ткачи Снов", side = "-", category = "Legion", }, --[faction=1883]
+		{id = 1828, defS = false,}, --name = "Племена Крутогорья", side = "-", category = "Legion", }, --[faction=1828]
+		{id = 1948, defS = false,}, --name = "Валарьяры", side = "-", category = "Legion", }, --[faction=1948]
+		{id = 1859, defS = false,}, --name = "Помраченные", side = "-", category = "Legion", }, --[faction=1859]
+		{id = 1894, defS = false,}, --name = "Стражи", side = "-", category = "Legion", }, --[faction=1894]
+		{id = 2045, defS = false,}, --name = "Армия погибели Легиона", side = "-", category = "Legion", }, --[faction=2045]
+		{id = 2170, defS = false,}, --name = "Защитники Аргуса", side = "-", category = "Legion", }, --[faction=2170]
+		{id = 2165, defS = false,}, --name = "Армия Света", side = "-", category = "Legion", }, --[faction=2165]
 		----------------------------------------------------------------
 		{id = 2018, defS = false,}, --name = "Отмщение Когтя", side = "-", category = "Legion", }, --[faction=2018]
 		----------------------------------------------------------------

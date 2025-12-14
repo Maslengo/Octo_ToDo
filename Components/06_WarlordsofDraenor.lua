@@ -29,10 +29,10 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Warlords of Draenor"] = {
-		{id = 1850, defS = true,}, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
-		{id = 1849, defS = true,}, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
-		{id = 1711, defS = true,}, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
-		{id = 1515, defS = true,}, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
+		{id = 1850, defS = false,}, --name = "Охотники за саблеронами", side = "-", category = "Warlords of Draenor", }, --[faction=1850]
+		{id = 1849, defS = false,}, --name = "Орден Пробудившихся", side = "-", category = "Warlords of Draenor", }, --[faction=1849]
+		{id = 1711, defS = false,}, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
+		{id = 1515, defS = false,}, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
 		----------------------------------------------------------------
 		{id = 1708, defS = false,}, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
 		{id = 1445, defS = false,}, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА

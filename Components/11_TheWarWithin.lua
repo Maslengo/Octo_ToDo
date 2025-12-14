@@ -122,23 +122,23 @@ local function tempFunction()
 		-- { id = 2648,},
 		-- { id = 2649,},
 		-- { id = 2658, },
-		{id = 2653, defS = true,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-		{id = 2640, defS = true,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
-		{id = 2600, defS = true,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-		{id = 2594, defS = true,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
-		{id = 2590, defS = true,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
-		{id = 2570, defS = true,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
+		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
+		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
+		{id = 2594, defS = false,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
+		{id = 2590, defS = false,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
+		{id = 2570, defS = false,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
 		----------------------------------------------------------------
-		{id = 2607, defS = true,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
-		{id = 2605, defS = true,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
-		{id = 2601, defS = true,}, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
+		{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
+		{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
+		{id = 2601, defS = false,}, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
 		----------------------------------------------------------------
-		{id = 2685, defS = true,}, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
-		{id = 2677, defS = true,}, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
-		{id = 2675, defS = true,}, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
-		{id = 2673, defS = true,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
-		{id = 2671, defS = true,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
-		{id = 2669, defS = true,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+		{id = 2685, defS = false,}, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
+		{id = 2677, defS = false,}, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
+		{id = 2675, defS = false,}, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
+		{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
+		{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
+		{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {

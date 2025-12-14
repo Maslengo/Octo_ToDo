@@ -878,7 +878,7 @@ function E.func_CompactRoundNumber(number)
 		return math_floor(number+.5)
 	end
 end
-function E.func_SecondsToClock(time)
+function E.func_SecondsToClock(time, allwaysShowSeconds)
 	local time = tonumber(time) or 0
 	if time <= 0 then
 		return ""
@@ -890,21 +890,31 @@ function E.func_SecondsToClock(time)
 	local secs = math_floor(time % 60)
 	local ms = time - math_floor(time)
 	local parts = {}
+
 	if years > 0 then
 		table_insert(parts, years..(L["time_YEAR"] or "y").." ")
 		table_insert(parts, days..(L["time_DAY"] or "d").." ")
 		table_insert(parts, hours..(L["time_HOUR"] or "h").." ")
 		table_insert(parts, mins..(L["time_MINUTE"] or "m"))
+		if allwaysShowSeconds then
+			table_insert(parts, " "..secs..(L["time_SECOND"] or "s"))
+		end
 	elseif days > 0 then
 		table_insert(parts, days..(L["time_DAY"] or "d").." ")
 		table_insert(parts, hours..(L["time_HOUR"] or "h").." ")
 		table_insert(parts, mins..(L["time_MINUTE"] or "m"))
+		if allwaysShowSeconds then
+			table_insert(parts, " "..secs..(L["time_SECOND"] or "s"))
+		end
 	elseif hours > 0 then
 		table_insert(parts, hours..(L["time_HOUR"] or "h").." ")
 		table_insert(parts, string_format("%02d", mins)..(L["time_MINUTE"] or "m"))
+		if allwaysShowSeconds then
+			table_insert(parts, " "..string_format("%02d", secs)..(L["time_SECOND"] or "s"))
+		end
 	elseif time >= 60 then
 		table_insert(parts, mins..(L["time_MINUTE"] or "m").." ")
-		if time < 600 then
+		if time < 600 or allwaysShowSeconds then
 			table_insert(parts, secs..(L["time_SECOND"] or "s"))
 		end
 	elseif time >= 1 then
@@ -912,6 +922,7 @@ function E.func_SecondsToClock(time)
 	else
 		table_insert(parts, string_format("%.3f", time).."ms")
 	end
+
 	return table_concat(parts)
 end
 function E.func_GetNextResetTime(time)

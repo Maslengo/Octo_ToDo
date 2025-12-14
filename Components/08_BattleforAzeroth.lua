@@ -34,12 +34,13 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Battle for Azeroth"] = {
-		{id = 2164, defS = true,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
-		{id = 2415, defS = true,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-		{id = 2391, defS = true,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-		{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-		{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-		{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+		{id = 2164, defS = false,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+		{id = 2415, defS = false,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+		{id = 2391, defS = false,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
+		{id = 2163, defS = false,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
+		{id = 2417, defS = false,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+		{id = 2427, defS = false,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+
 		{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
 		{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
 		{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]

@@ -31,11 +31,11 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 1204, defS = true,}, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
-		{id = 1173, defS = true,}, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
-		{id = 1171, defS = true,}, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
-		{id = 1158, defS = true,}, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
-		{id = 1135, defS = true,}, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
+		{id = 1204, defS = false,}, --name = "Хиджальские мстители", side = "-", category = "Cataclysm", }, --[faction=1204]
+		{id = 1173, defS = false,}, --name = "Рамкахены", side = "-", category = "Cataclysm", }, --[faction=1173]
+		{id = 1171, defS = false,}, --name = "Теразан", side = "-", category = "Cataclysm", }, --[faction=1171]
+		{id = 1158, defS = false,}, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
+		{id = 1135, defS = false,}, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
 		----------------------------------------------------------------
 		{id = 1178, defS = false,}, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
 		{id = 1172, defS = false,}, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]

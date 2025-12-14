@@ -27,17 +27,17 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 1156, defS = true,}, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
-		{id = 1119, defS = true,}, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
-		{id = 1106, defS = true,}, --name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", }, --[faction=1106]
-		{id = 1098, defS = true,}, --name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", }, --[faction=1098]
-		{id = 1091, defS = true,}, --name = "Драконий союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1091]
-		{id = 1090, defS = true,}, --name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", }, --[faction=1090]
-		{id = 1073, defS = true,}, --name = "Калу'ак", side = "-", category = "Wrath of the Lich King", }, --[faction=1073]
+		{id = 1156, defS = false,}, --name = "Пепельный союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1156]
+		{id = 1119, defS = false,}, --name = "Сыны Ходира", side = "-", category = "Wrath of the Lich King", }, --[faction=1119]
+		{id = 1106, defS = false,}, --name = "Серебряный Авангард", side = "-", category = "Wrath of the Lich King", }, --[faction=1106]
+		{id = 1098, defS = false,}, --name = "Рыцари Черного Клинка", side = "-", category = "Wrath of the Lich King", }, --[faction=1098]
+		{id = 1091, defS = false,}, --name = "Драконий союз", side = "-", category = "Wrath of the Lich King", }, --[faction=1091]
+		{id = 1090, defS = false,}, --name = "Кирин-Тор", side = "-", category = "Wrath of the Lich King", }, --[faction=1090]
+		{id = 1073, defS = false,}, --name = "Калу'ак", side = "-", category = "Wrath of the Lich King", }, --[faction=1073]
 		----------------------------------------------------------------
-		{id = 1117, defS = true,}, --name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", }, --[faction=1117]
-		{id = 1105, defS = true,}, --name = "Оракулы", side = "-", category = "Низина Шолазар", }, --[faction=1105]
-		{id = 1104, defS = true,}, --name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", }, --[faction=1104]
+		{id = 1117, defS = false,}, --name = "Низина Шолазар", side = "-", category = "Wrath of the Lich King", }, --[faction=1117]
+		{id = 1105, defS = false,}, --name = "Оракулы", side = "-", category = "Низина Шолазар", }, --[faction=1105]
+		{id = 1104, defS = false,}, --name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", }, --[faction=1104]
 		----------------------------------------------------------------
 		{id = 1052, defS = false,}, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052] -- ОРДА
 		----------------------------------------------------------------
