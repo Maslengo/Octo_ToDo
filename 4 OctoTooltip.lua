@@ -99,38 +99,61 @@ local func_OnAcquired do
 	end
 end
 function EventFrame:Octo_Frame_init(frame, node)
-	-- Получаем данные из узла и кэшируем часто используемые переменные
-	local frameData = node:GetData()
-	local lineFrames = frame.lineFrames -- Кэшируем для быстрого доступа
-	-- local numData = #frameData -- Количество элементов в данных
-	local numData = EventFrame.columns or 1 -- Количество элементов в данных
-	local numLines = #lineFrames -- Количество доступных lineFrames
-	local columnSizes = EventFrame.COLUMN_SIZES -- Размеры колонок (если есть)
-	-- Обрабатываем данные и обновляем соответствующие lineFrames
-	for i = 1, numData do
-		local currentText = frameData[i] or ""
-		if currentText then
-			lineFrames[i].text:SetText(currentText) -- Устанавливаем текст
-		end
-		-- Если заданы размеры колонок, применяем их
-		if columnSizes then
-			lineFrames[i]:SetWidth(columnSizes[i])
-		end
-		-- Определяем выравнивание текста (по умолчанию Center)
-		local justify = "CENTER"
-		if numData > 1 then
-			if i == 1 then -- Первый элемент выравниваем по ЛЕВОМУ краю
-				justify = "LEFT"
-			elseif i == numData then -- Последний элемент — по ПРАВОМУ
-				justify = "RIGHT"
-			end
-		end
-		lineFrames[i].text:SetJustifyH(justify)
-	end
-	-- Очищаем оставшиеся lineFrames (если данных меньше, чем фреймов)
-	for i = numData + 1, numLines do
-		lineFrames[i].text:SetText()
-	end
+    -- Получаем данные из узла и кэшируем часто используемые переменные
+    local frameData = node:GetData()
+    local lineFrames = frame.lineFrames -- Кэшируем для быстрого доступа
+    local numData = EventFrame.columns or 1 -- Количество элементов в данных
+    local numLines = #lineFrames -- Количество доступных lineFrames
+    local columnSizes = EventFrame.COLUMN_SIZES -- Размеры колонок (если есть)
+
+    -- Обрабатываем данные и обновляем соответствующие lineFrames
+    for i = 1, numData do
+        local currentItem = frameData[i]
+        local currentText = ""
+        local justify = "CENTER" -- По умолчанию
+
+        -- Определяем тип элемента: строка или таблица с настройками
+        if type(currentItem) == "table" then
+            -- Таблица с настройками: {текст, "RIGHT"} или {текст}
+            currentText = currentItem[1] or ""
+
+            -- Определяем выравнивание
+            if currentItem[2] then
+                local alignment = string.upper(currentItem[2])
+                if alignment == "LEFT" or alignment == "CENTER" or alignment == "RIGHT" then
+                    justify = alignment
+                end
+            end
+        else
+            -- Просто строка
+            currentText = currentItem or ""
+
+            -- Автоматическое выравнивание для нескольких колонок
+            if numData > 1 then
+                if i == 1 then -- Первый элемент выравниваем по ЛЕВОМУ краю
+                    justify = "LEFT"
+                elseif i == numData then -- Последний элемент — по ПРАВОМУ
+                    justify = "RIGHT"
+                end
+            end
+        end
+
+        -- Устанавливаем текст
+        lineFrames[i].text:SetText(currentText)
+
+        -- Устанавливаем выравнивание
+        lineFrames[i].text:SetJustifyH(justify)
+
+        -- Если заданы размеры колонок, применяем их
+        if columnSizes then
+            lineFrames[i]:SetWidth(columnSizes[i])
+        end
+    end
+
+    -- Очищаем оставшиеся lineFrames (если данных меньше, чем фреймов)
+    for i = numData + 1, numLines do
+        lineFrames[i].text:SetText()
+    end
 end
 local function GetTipAnchor(frame)
 	local x, y = frame:GetCenter()
@@ -224,97 +247,106 @@ function EventFrame:Create_OctoTooltip()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar)
 end
 local function calculateColumnWidths(node)
-	local frameData = node:GetData()
-	local frames = OctoTooltip.view:GetFrames()
-	if #frames == 0 then
-		OctoTooltip.view:AcquireInternal(1, node)
-		OctoTooltip.view:InvokeInitializers()
-	end
-	local columnWidths = {}
-	local sampleFrame = frames[1]
-	for i = 1, #frameData do
-		sampleFrame.lineFrames[i].text:SetText(frameData[i])
-		columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
-	end
-	return columnWidths
+    local frameData = node:GetData()
+    local frames = OctoTooltip.view:GetFrames()
+    if #frames == 0 then
+        OctoTooltip.view:AcquireInternal(1, node)
+        OctoTooltip.view:InvokeInitializers()
+    end
+
+    local columnWidths = {}
+    local sampleFrame = frames[1]
+
+    for i = 1, #frameData do
+        local currentItem = frameData[i]
+        local textToMeasure = ""
+
+        -- Извлекаем текст для измерения ширины
+        if type(currentItem) == "table" then
+            textToMeasure = currentItem[1] or ""
+        else
+            textToMeasure = currentItem or ""
+        end
+
+        sampleFrame.lineFrames[i].text:SetText(textToMeasure)
+        columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
+    end
+
+    return columnWidths
 end
-
--- local function func_UPDATE_OCTOTOOLTIP(tbl)
--- if E.OctoTooltip_GLOBAL_TABLE == nil then return end
--- EventFrame:CreateDataProvider(tbl)
--- end
-
--- function E.func_UPDATE_OCTOTOOLTIP(tbl)
--- if E.OctoTooltip_GLOBAL_TABLE == nil then return end
-
--- -- Отменяем предыдущий запланированный таймер для тултипа
--- if EventFrame.tooltipUpdateTimer then
--- EventFrame.tooltipUpdateTimer:Cancel()
--- EventFrame.tooltipUpdateTimer = nil
--- end
-
--- -- Выполняем СРАЗУ, без задержки спама
--- func_UPDATE_OCTOTOOLTIP(tbl)
--- end
 
 
 function EventFrame:CreateDataProvider(tbl)
-	-- opde(tbl)
-	local lines = 0
-	local columns = 0
-	local DataProvider = CreateTreeDataProvider()
-	local COLUMN_SIZES = {}
-	-- Если есть заголовки, вычисляем их ширину, но не добавляем в DataProvider
-	if tbl.Header then
-		-- Создаем временный узел только для расчета ширины
-		local tempHeaderNode = DataProvider:Insert(tbl.Header)
-		for i, width in ipairs(calculateColumnWidths(tempHeaderNode)) do
-			COLUMN_SIZES[i] = math.max(width, COLUMN_SIZES[i] or 0)
-		end
-		lines = lines + 1
-		-- DataProvider:Remove(tempHeaderNode) -- Удаляем, чтобы не мешал
-	end
-	local newColumnsNumber = 0
-	for stroka, v in ipairs(tbl) do
-		lines = lines + 1
-		local zxc = {}
-		for indexColumn = 1, #v do
-			newColumnsNumber = math.max(newColumnsNumber, #v)
-			local value = v[indexColumn]
-			if value == nil then
-				value = E.NIL
-			elseif value == true then
-				value = E.TRUE
-			elseif value == false then
-				value = E.FALSE
-			end
-			if E.DebugCharacterInfo then
-				if type(value) ~= "table" then
-					value = tostring(value)
-					if value == "" then value = " " end
-					if value == " " then value = E.COLOR_YELLOW.."SPACE|R" end
-					table.insert(zxc, value)
-				end
-			else
-				if type(value) ~= "table" then
-					value = tostring(value)
-					if value == "" then value = " " end
-					table.insert(zxc, value)
-				end
-			end
-		end
-		if newColumnsNumber > 0 then
-			-- if #zxc > 0 then
-			local node = DataProvider:Insert(zxc)
-			-- columns = #zxc
-			columns = newColumnsNumber
-			for j, w in ipairs(calculateColumnWidths(node)) do
-				COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
-			end
-		end
-	end
-	EventFrame.COLUMN_SIZES = COLUMN_SIZES
-	EventFrame.columns = columns
+    -- opde(tbl)
+    local lines = 0
+    local columns = 0
+    local DataProvider = CreateTreeDataProvider()
+    local COLUMN_SIZES = {}
+
+    -- Если есть заголовки, вычисляем их ширину, но не добавляем в DataProvider
+    if tbl.Header then
+        -- Создаем временный узел только для расчета ширины
+        local tempHeaderNode = DataProvider:Insert(tbl.Header)
+        for i, width in ipairs(calculateColumnWidths(tempHeaderNode)) do
+            COLUMN_SIZES[i] = math.max(width, COLUMN_SIZES[i] or 0)
+        end
+        lines = lines + 1
+        -- DataProvider:Remove(tempHeaderNode) -- Удаляем, чтобы не мешал
+    end
+
+    local newColumnsNumber = 0
+    for stroka, v in ipairs(tbl) do
+        lines = lines + 1
+        local zxc = {}
+
+        for indexColumn = 1, #v do
+            newColumnsNumber = math.max(newColumnsNumber, #v)
+            local value = v[indexColumn]
+
+            -- Обрабатываем значения
+            if value == nil then
+                value = E.NIL
+            elseif value == true then
+                value = E.TRUE
+            elseif value == false then
+                value = E.FALSE
+            end
+
+            -- Для таблиц проверяем первый элемент
+            if type(value) == "table" then
+                local tableValue = value[1]
+                if tableValue == nil then
+                    tableValue = E.NIL
+                elseif tableValue == true then
+                    tableValue = E.TRUE
+                elseif tableValue == false then
+                    tableValue = E.FALSE
+                end
+
+                -- Создаем новую таблицу с обработанными значениями
+                local processedValue = {}
+                processedValue[1] = tostring(tableValue)
+                processedValue[2] = value[2] -- Сохраняем выравнивание
+                table.insert(zxc, processedValue)
+            else
+                -- Обычные значения
+                value = tostring(value)
+                if value == "" then value = " " end
+                table.insert(zxc, value)
+            end
+        end
+
+        if newColumnsNumber > 0 then
+            local node = DataProvider:Insert(zxc)
+            columns = newColumnsNumber
+            for j, w in ipairs(calculateColumnWidths(node)) do
+                COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
+            end
+        end
+    end
+
+    EventFrame.COLUMN_SIZES = COLUMN_SIZES
+    EventFrame.columns = columns
 	local total_width = INDENT_TEXT*2 -- ОТСТУП
 	for i = 1, columns do
 		total_width = total_width + EventFrame.COLUMN_SIZES[i]

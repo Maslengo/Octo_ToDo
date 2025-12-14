@@ -3598,8 +3598,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					if faction == CharInfo.PlayerData.Faction then
 						Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(faction))..Output_LEFT
 					end
-					tooltip[#tooltip+1] = {Output_LEFT, Output_CENT, Output_RIGHT}
-					-- tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "RIGHT"}, Output_RIGHT}
+					-- tooltip[#tooltip+1] = {Output_LEFT, Output_CENT, Output_RIGHT}
+					tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
 				end
 			end
 		end
