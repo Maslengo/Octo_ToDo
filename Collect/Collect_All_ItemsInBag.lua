@@ -1,14 +1,5 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-
-
-local function GetInfo(slotInfo)
-	return {
-
-	}
-end
-
-
 local function Collect_All_ItemsInBag()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO

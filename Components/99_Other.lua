@@ -16,7 +16,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = OTHER
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		-- {id = 3139, defS = true,}, -- Награбленное
+		{id = 3139, defS = false,}, -- Награбленное
 		{id = 2032, defS = false,}, -- Торг Жетон
 	}
 	----------------------------------------------------------------

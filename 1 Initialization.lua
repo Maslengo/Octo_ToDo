@@ -34,7 +34,6 @@ E.OctoTable_Portals = {}
 E.OctoTable_QuestID = {}
 E.OctoTable_QuestID_Paragon = {}
 E.OctoTable_RemixInfinityResearch = {}
-E.OctoTable_ReputationsDB = {}
 E.OctoTable_SavedVariables = {}
 E.OctoTables_DataOtrisovka = {}
 E.Octo_ProfessionsskillLine = {}

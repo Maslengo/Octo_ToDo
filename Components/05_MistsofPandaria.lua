@@ -30,22 +30,23 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 1492, defS = false,}, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
-		{id = 1435, defS = false,}, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
-		{id = 1359, defS = false,}, --name = "Черный принц", side = "-", category = "Mists of Pandaria", }, --[faction=1359]
-		{id = 1345, defS = false,}, --name = "Хранители истории", side = "-", category = "Mists of Pandaria", }, --[faction=1345]
-		{id = 1341, defS = false,}, --name = "Небожители", side = "-", category = "Mists of Pandaria", }, --[faction=1341]
-		{id = 1337, defS = false,}, --name = "Клакси", side = "-", category = "Mists of Pandaria", }, --[faction=1337]
-		{id = 1271, defS = false,}, --name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", }, --[faction=1271]
-		{id = 1270, defS = false,}, --name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1270]
-		{id = 1269, defS = false,}, --name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", }, --[faction=1269]
+		{id = 1492, defS = true,}, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
+		{id = 1435, defS = true,}, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
+		{id = 1359, defS = true,}, --name = "Черный принц", side = "-", category = "Mists of Pandaria", }, --[faction=1359]
+		{id = 1345, defS = true,}, --name = "Хранители истории", side = "-", category = "Mists of Pandaria", }, --[faction=1345]
+		{id = 1341, defS = true,}, --name = "Небожители", side = "-", category = "Mists of Pandaria", }, --[faction=1341]
+		{id = 1337, defS = true,}, --name = "Клакси", side = "-", category = "Mists of Pandaria", }, --[faction=1337]
+		{id = 1271, defS = true,}, --name = "Орден Облачного Змея", side = "-", category = "Mists of Pandaria", }, --[faction=1271]
+		{id = 1270, defS = true,}, --name = "Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1270]
+		{id = 1269, defS = true,}, --name = "Золотой Лотос", side = "-", category = "Mists of Pandaria", }, --[faction=1269]
 		----------------------------------------------------------------
-		{id = 1388, defS = false,}, --name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", }, --[faction=1388]
-		{id = 1375, defS = false,}, --name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", }, --[faction=1375] -- ОРДА
-		{id = 1228, defS = false,}, --name = "Лесные хозены", side = "-", category = "Mists of Pandaria", }, --[faction=1228] -- ОРДА
-		{id = 1387, defS = false,}, --name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", }, --[faction=1387]
-		{id = 1376, defS = false,}, --name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", }, --[faction=1376] -- АЛЬЯНС
-		{id = 1242, defS = false,}, --name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", }, --[faction=1242] -- АЛЬЯНС
+		{id = 1388, defS = true,}, --name = "Войска Похитителей Солнца", side = "-", category = "Mists of Pandaria", }, --[faction=1388]
+		{id = 1375, defS = true,}, --name = "Армия Покорителей", side = "-", category = "Mists of Pandaria", }, --[faction=1375] -- ОРДА
+		{id = 1228, defS = true,}, --name = "Лесные хозены", side = "-", category = "Mists of Pandaria", }, --[faction=1228] -- ОРДА
+		----------------------------------------------------------------
+		{id = 1387, defS = true,}, --name = "Армия Кирин-Тора", side = "-", category = "Mists of Pandaria", }, --[faction=1387]
+		{id = 1376, defS = true,}, --name = "Операция \"Заслон\"", side = "-", category = "Mists of Pandaria", }, --[faction=1376] -- АЛЬЯНС
+		{id = 1242, defS = true,}, --name = "Цзинь-юй Жемчужного Плавника", side = "-", category = "Mists of Pandaria", }, --[faction=1242] -- АЛЬЯНС
 		----------------------------------------------------------------
 		{id = 1272, defS = false,}, --name = "Земледельцы", side = "-", category = "Mists of Pandaria", }, --[faction=1272]
 		{id = 1283, defS = false,}, --name = "Фермер Фун", side = "-", category = "Земледельцы", }, --[faction=1283]

@@ -3,7 +3,6 @@
 	<Script file="Database\Items.lua"/>
 	<Script file="Database\KeystoneAbbr.lua"/>
 	<Script file="Database\OctoTable_Mounts.lua"/>
-	<Script file="Database\OctoTable_ReputationsDB.lua"/>
 	<Script file="Database\OctoTable_Reputations_Paragon_Data.lua"/>
 	<Script file="Database\Quests.lua"/>
 	<Script file="Database\Spells.lua"/>

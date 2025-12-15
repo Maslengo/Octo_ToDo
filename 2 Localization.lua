@@ -4,6 +4,19 @@ local debug = false
 local L = AL3:NewLocale("Octo", "enUS", true, debug)
 if L then
 
+	L["TWW Weekly Cache"] = true
+
+	L["First Cache"] = true
+	L["Second Cache"] = true
+	L["Third Cache"] = true
+	L["Fourth Cache"] = true
+
+	L["Treasure"] = true
+	L["Lesser Visions of N'Zoth"] = true
+	L["Warfront"] = true
+
+
+
 	-- PROFILES
 	L["Profile"] = true
 	L["Profiles"] = true
@@ -292,7 +305,16 @@ end
 L = AL3:NewLocale("Octo", "ruRU")
 if L then
 
+	L["TWW Weekly Cache"] = "Еженедельный тайник TWW"
 
+	L["First Cache"] = "Первый тайник"
+	L["Second Cache"] = "Второй тайник"
+	L["Third Cache"] = "Третий тайник"
+	L["Fourth Cache"] = "Четвёртый тайник"
+
+	L["Treasure"] = "Сокровище"
+	L["Lesser Visions of N'Zoth"] = "Малое Видение Н'Зота"
+	L["Warfront"] = "Фронт"
 
 	-- PROFILES
 	L["Profile"] = "Профиль"

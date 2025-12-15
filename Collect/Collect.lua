@@ -41,6 +41,7 @@ local MyEventsTable = {
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BARBER_SHOP_APPEARANCE_APPLIED",
 	"BAG_UPDATE",
+	"BAG_UPDATE_DELAYED",
 	"COVENANT_CHOSEN",
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
@@ -96,6 +97,9 @@ local MyEventsTable = {
 	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
 	-- "QUEST_DATA_LOAD_RESULT",
+
+
+	"TRIAL_STATUS_UPDATE",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -106,6 +110,13 @@ function EventFrame:PLAYER_LOGIN()
 		E.func_RequestUIUpdate("PLAYER_LOGIN")
 	end)
 	E.Collect_All_Mounts()
+end
+
+
+
+function EventFrame:TRIAL_STATUS_UPDATE()
+	E.func_Collect_All()
+	E.func_RequestUIUpdate("TRIAL_STATUS_UPDATE")
 end
 function EventFrame:SKILL_LINES_CHANGED()
 	E.Collect_All_Professions()
@@ -140,6 +151,15 @@ function EventFrame:BAG_UPDATE()
 	-- E.Collect_All_GreatVault()
 	-- E.func_RequestUIUpdate("BAG_UPDATE")
 end
+
+function EventFrame:BAG_UPDATE_DELAYED()
+	E.Collect_All_ItemsInBag()
+	E.Collect_All_BfA_Azerite()
+	E.Collect_All_BfA_Cloaklvl()
+	E.Collect_All_GreatVault()
+	E.func_RequestUIUpdate("BAG_UPDATE_DELAYED")
+end
+
 function EventFrame:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
@@ -184,6 +204,7 @@ function EventFrame:PLAYER_EQUIPMENT_CHANGED()
 	E.func_RequestUIUpdate("PLAYER_EQUIPMENT_CHANGED")
 end
 function EventFrame:PLAYER_LEAVING_WORLD()
+	-- E.func_Collect_All()
 	self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 	self.PLAYER_LEAVING_WORLD = nil
 	E.Collect_All_GreatVault()

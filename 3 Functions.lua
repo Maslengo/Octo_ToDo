@@ -161,7 +161,8 @@ function E.func_texturefromIconEVENT(icon, iconSize)
 	return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
 end
 function E.func_GetItemIcon(itemID)
-	return GetItemIconByID(itemID)
+	local texture = GetItemIconByID(itemID) or E.ICON_QUESTION_MARK
+	return texture
 end
 function E.func_GetTSMPrice(itemID, myCount)
 	local result = ""
@@ -198,7 +199,8 @@ function E.func_GetLFGDungeonName(dID)
 	return RETRIEVING_DATA
 end
 function E.func_GetSpellIcon(spellID)
-	return GetSpellTexture(spellID)
+	local texture = GetSpellTexture(spellID) or E.ICON_QUESTION_MARK
+	return texture
 end
 function E.func_GetCurrencyIcon(currencyID)
 	local info = GetCurrencyInfo(currencyID)
@@ -240,6 +242,7 @@ local function func_itemName_CACHE(id, forcedQuality)
 end
 function E.func_GetItemName(id, forcedQuality)
 	if not id then return end
+	id = tonumber(id)
 	local name = func_itemName_CACHE(id, forcedQuality)
 	return name..E.debugInfo_Items(id)
 end
@@ -247,6 +250,9 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 local function func_currencyName_CACHE(id, forcedQuality)
+	if type(id) ~= "number" then
+		print (id)
+	end
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		local hasMount = E.OctoTable_CurrencyMountForFuncCurName[id] or false
@@ -255,23 +261,17 @@ local function func_currencyName_CACHE(id, forcedQuality)
 			return colorHex..Cache[id][E.curLocaleLang].."|r"..(hasMount and E.COLOR_LIME.."*|r" or "")
 		end
 
-		return Cache[id][E.curLocaleLang]..(hasMount and E.COLOR_LIME.."*|r" or "")
+		return Cache[id][E.curLocaleLang]..(hasMount and E.COLOR_RED.."*|r" or "")
 	end
 	local info = GetCurrencyInfo(id)
 	if not info then
 		return E.COLOR_RED..UNKNOWN.."|r"
 	end
-	local WarbandIcon = ""
-	if IsAccountTransferableCurrency(id) then
-		WarbandIcon = E.ICON_ACCOUNT_TRANSFERABLE
-	elseif IsAccountWideCurrency(id) then
-		WarbandIcon = E.ICON_ACCOUNT_WIDE
-	end
 	local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
 	local name = info.name
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
-		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"..WarbandIcon
+		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
 			print (E.COLOR_LIME..CURRENCY.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
@@ -281,6 +281,7 @@ local function func_currencyName_CACHE(id, forcedQuality)
 end
 function E.func_GetCurrencyName(id, forcedQuality)
 	if not id then return end
+	id = tonumber(id)
 	local cachedName = func_currencyName_CACHE(id, forcedQuality)
 	return cachedName..E.debugInfo_Currencies(id)
 end
@@ -318,6 +319,7 @@ local function func_npcName_CACHE(id)
 end
 function E.func_GetNPCName(id)
 	if not id then return end
+	id = tonumber(id)
 	if E.func_IsPTR() and E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id] then
 		return E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] or UNKNOWN
 	else
@@ -346,6 +348,7 @@ local function func_questName_CACHE(id)
 end
 function E.func_GetQuestName(id, ShowIcon)
 	if not id then return end
+	id = tonumber(id)
 	local cachedName = func_questName_CACHE(id)
 	if ShowIcon == false then
 		return cachedName..E.debugInfo_Quests(id)
@@ -387,14 +390,20 @@ local function func_reputationName_CACHE(id)
 		end
 	end
 	if name and name ~= "" then
-		local isAccountWide = IsAccountWideReputation(id) or false
-		if isAccountWide == true then
-			name = E.ICON_ACCOUNT_WIDE..name
-		end
+		-- local isAccountWide = IsAccountWideReputation(id) or false
+		-- if isAccountWide == true then
+		-- 	name = E.ICON_ACCOUNT_WIDE..name
+		-- end
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
 			print (E.COLOR_LIME..REPUTATION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+		end
+	elseif E.OctoTable_Reputations_DB[id] then
+		if E.OctoTable_Reputations_DB[id][E.curLocaleLang] ~= "NONE" then
+			return E.OctoTable_Reputations_DB[id][E.curLocaleLang]..E.COLOR_SKYBLUE.." (DB)|r"
+		elseif E.OctoTable_Reputations_DB[id]["enUS"] then
+			return E.OctoTable_Reputations_DB[id]["enUS"]..E.COLOR_SLATEGRAY.." (enUS)|r"
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -402,27 +411,15 @@ local function func_reputationName_CACHE(id)
 end
 function E.func_GetReputationName(id)
 	if not id then return end
-	local sideIcon = ""
-	local side = "-"
-	if E.OctoTable_ReputationsDB[id] then
-		side = E.OctoTable_ReputationsDB[id].side
-		if E.OctoTable_ReputationsDB[id].icon2 ~= "" then
-			sideIcon = E.func_texturefromIcon(E.OctoTable_ReputationsDB[id].icon2)
-		end
-	end
-	if side == "Alliance" then
-		sideIcon = E.func_texturefromIcon(E.ICON_ALLIANCE)..sideIcon
-		sideIcon = E.COLOR_BLUE..sideIcon.."|r"
-	elseif side == "Horde" then
-		sideIcon = E.func_texturefromIcon(E.ICON_HORDE)..sideIcon
-		sideIcon = E.COLOR_RED..sideIcon.."|r"
-	end
-	return sideIcon..func_reputationName_CACHE(id)..E.debugInfo_Reputations(id)
+	id = tonumber(id)
+	return func_reputationName_CACHE(id)..E.debugInfo_Reputations(id)
 end
 function E.func_GetReputationIcon(id)
-	if E.OctoTable_ReputationsDB[id] then
-		return E.OctoTable_ReputationsDB[id].icon
+	local reputationData = E.OctoTable_Reputations_DB[id]
+	if reputationData then
+		return reputationData.icon1
 	end
+	return
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -445,6 +442,7 @@ local function func_spellName_CACHE(id)
 end
 function E.func_GetSpellName(id)
 	if not id then return end
+	id = tonumber(id)
 	local cachedName = func_spellName_CACHE(id)
 	return cachedName..E.debugInfo_Spells(id)
 end
@@ -470,6 +468,7 @@ local function func_achievementName_CACHE(id)
 end
 function E.func_GetAchievementName(id)
 	if not id then return end
+	id = tonumber(id)
 	local cachedName = func_achievementName_CACHE(id)
 	return cachedName..E.debugInfo_Achievements(id)
 end
@@ -537,6 +536,7 @@ end
 
 function E.func_GetMapName(id)
 	if not id then return end
+	id = tonumber(id)
 	-- if C_Map.GetBestMapForUnit("player") == id then
 	-- return E.COLOR_NECROLORD..">>"..func_mapName_CACHE(id).."<<|r"
 	-- end
@@ -545,6 +545,7 @@ function E.func_GetMapName(id)
 end
 function E.func_GetFullMapName(id)
 	if not id then return end
+	id = tonumber(id)
 	local info = GetMapInfo(id)
 	if not info then
 		return UNKNOWN
@@ -615,6 +616,7 @@ local function func_EventName_CACHE(id)
 end
 function E.func_GetEventName(id)
 	if not id then return end
+	id = tonumber(id)
 	local cachedName = func_EventName_CACHE(id)
 	return cachedName..E.debugInfo_Events(id)
 end
@@ -639,11 +641,13 @@ local function func_ProfessionName_CACHE(id)
 end
 function E.func_GetProfessionName(id)
 	if not id then return end
+	id = tonumber(id)
 	local cachedName = func_ProfessionName_CACHE(id)
 	return cachedName..E.debugInfo_Professions(id)
 end
 -- function E.func_GetProfessionName(id)
 -- if not id then return end
+	-- id = tonumber(id)
 -- local result = GetTradeSkillDisplayName(id)
 -- return result..E.debugInfo_Professions(id)
 -- end
@@ -1031,9 +1035,21 @@ function E.func_FormatCoordinates(x, y)
 	end
 	return string_format("%.1f / %.1f", x * 100, y * 100)
 end
-function E.func_SortByDescending(a, b)
+function E.func_ReversSort(a, b)
 	return b < a
 end
+
+local reactionColors = {
+	[0] = E.COLOR_WHITE,
+	[1] = E.COLOR_RED,
+	[2] = E.COLOR_RED,
+	[3] = E.COLOR_ORANGE,
+	[4] = E.COLOR_YELLOW,
+	[5] = E.COLOR_YELLOW,
+	[6] = E.COLOR_GREEN,
+	[7] = E.COLOR_GREEN,
+	[8] = E.COLOR_GREEN,
+}
 function E.func_GetReputationProgress(reputationID)
 	local SHOWFULL = false
 	local FIRST, SECOND = 0, 0
@@ -1047,17 +1063,7 @@ function E.func_GetReputationProgress(reputationID)
 	local friendData = GetFriendshipReputation(reputationID)
 	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
 	local isMajor = IsMajorFaction(reputationID)
-	local reactionColors = {
-		[0] = E.COLOR_WHITE,
-		[1] = E.COLOR_RED,
-		[2] = E.COLOR_RED,
-		[3] = E.COLOR_ORANGE,
-		[4] = E.COLOR_YELLOW,
-		[5] = E.COLOR_YELLOW,
-		[6] = E.COLOR_GREEN,
-		[7] = E.COLOR_GREEN,
-		[8] = E.COLOR_GREEN,
-	}
+
 	if isSimple then
 		reaction = simpleData.reaction
 		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
@@ -1554,8 +1560,8 @@ function E.func_Otrisovka_LEFT_Dispatcher(categoryKey, CharInfo, dataType, id)
 		end
 	end
 	-- Если функция не найдена, возвращаем значения по умолчанию
-	-- TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
-	return "", nil, nil, nil, nil, false
+	-- TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
+	return "", nil, nil, nil, nil
 end
 function E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
@@ -1574,11 +1580,11 @@ end
 function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, nil, nil, false
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
 	----------------------------------------------------------------
 	TextLeft = E.func_GetCurrencyName(id)
 	-- ColorLeft = E.COLOR_GREEN
-	IconLeft = E.func_GetCurrencyIcon(id)
+	-- IconLeft = E.func_GetCurrencyIcon(id)
 	SettingsType = dataType.."#"..id
 	-- TooltipKey =
 	if id == 824 then
@@ -1590,9 +1596,8 @@ function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 			TextLeft = TextLeft..timewalkDungeonName
 		end
 	end
-	-- IsReputation =
 	----------------------------------------------------------------
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
@@ -1657,16 +1662,15 @@ end
 function E.func_Otrisovka_LEFT_Items(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, nil, nil, false
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
 	----------------------------------------------------------------
 	TextLeft = E.func_GetItemName(id)
 	-- ColorLeft =
-	IconLeft = E.func_GetItemIcon(id)
+	-- IconLeft = E.func_GetItemIcon(id)
 	SettingsType = dataType.."#"..id
 	-- TooltipKey =
-	-- IsReputation =
 	----------------------------------------------------------------
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_Center_Items(categoryKey, CharInfo, dataType, id)
@@ -1683,7 +1687,7 @@ end
 function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, nil, nil, false
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
 	----------------------------------------------------------------
 	local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 	local reset = data.reset -- questKey:match("_([^_]+)$")
@@ -1703,21 +1707,19 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 
 	TextLeft = output
 	-- ColorLeft =
-	if reset == "Daily" then
-		IconLeft = E.ICON_DAILY
-	elseif reset == "Weekly" then
-		IconLeft = E.ICON_WEEKLY
-	elseif reset == "Once" then
-		IconLeft = E.ICON_ONCE
-	elseif reset == "Month" then
-		IconLeft = E.ICON_MONTH
-	end
-	-- IconLeft =
+	-- if reset == "Daily" then
+	-- 	IconLeft = E.ICON_DAILY
+	-- elseif reset == "Weekly" then
+	-- 	IconLeft = E.ICON_WEEKLY
+	-- elseif reset == "Once" then
+	-- 	IconLeft = E.ICON_ONCE
+	-- elseif reset == "Month" then
+	-- 	IconLeft = E.ICON_MONTH
+	-- end
 	SettingsType = dataType.."#"..questKey
 	-- TooltipKey =
-	-- IsReputation =
 	----------------------------------------------------------------
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 -- function E.func_Otrisovka_Center_UniversalQuests(tbl, DESCRIPT)
@@ -1768,16 +1770,15 @@ end
 function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, nil, nil, false
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
 	----------------------------------------------------------------
 	TextLeft = E.func_GetReputationName(id)
 	-- ColorLeft =
-	IconLeft = E.func_GetReputationIcon(id)
+	-- IconLeft = E.func_GetReputationIcon(id)
 	SettingsType = dataType.."#"..id
 	TooltipKey = "Reputation_"..id
-	IsReputation = true
 	----------------------------------------------------------------
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 	----------------------------------------------------------------
 end
 function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
@@ -1812,7 +1813,7 @@ end
 function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation = "", nil, nil, dataType.."#"..id, nil, false
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
 	----------------------------------------------------------------
 	if id == "LegionRemixResearch" then
 		TextLeft = L["Infinite Research"]
@@ -1838,7 +1839,7 @@ function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 		IconLeft = 4352494
 	end
 	----------------------------------------------------------------
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, id)
@@ -2121,15 +2122,15 @@ end
 
 
 function E.func_FormatExpansion(expID, iconSide)
-    local expansion = E.OctoTable_Expansions[expID]
-    local expIcon = E.func_texturefromIcon(expansion.icon, 16, 32)
-    local expName = expansion.color..expansion.nameVeryShort
+	local expansion = E.OctoTable_Expansions[expID]
+	local expIcon = E.func_texturefromIcon(expansion.icon, 16, 32)
+	local expName = expansion.color..expansion.nameVeryShort
 
-    if iconSide == "LEFT" then
-        return expIcon..expName.."|r"
-    end
-    -- По умолчанию RIGHT
-    return expName..expIcon.."|r"
+	if iconSide == "LEFT" then
+		return expIcon..expName.."|r"
+	end
+	-- По умолчанию RIGHT
+	return expName..expIcon.."|r"
 end
 
 
@@ -2180,6 +2181,22 @@ function E.func_GetPlayerRealm()
 	return result
 end
 -- E.curServer = E.func_GetPlayerRealm()
+
+E.Config_DebugID_ALL = false
+E.Config_DebugID_Achievements = false
+E.Config_DebugID_Currencies = false
+E.Config_DebugID_worldBossID = false
+E.Config_DebugID_Quests = false
+E.Config_DebugID_Spells = false
+E.Config_DebugID_Maps = false
+E.Config_DebugID_instanceID = false
+E.Config_DebugID_Mounts = false
+E.Config_DebugID_NPCs = false
+E.Config_DebugID_Items = false
+E.Config_DebugID_Reputations = false
+E.Config_DebugID_Events = false
+E.Config_DebugID_Professions = false
+
 E.UNIVERSAL = "UNIVERSAL_"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
 E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"
@@ -2233,6 +2250,7 @@ E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMark
 -- [81] = "questlog-questtypeicon-dungeon",
 -- ["COMPLETED"] = "questlog-questtypeicon-quest",
 -- },
+E.TEXT_SPACE = " "
 E.SPAM_TIME = 3
 E.ICON_ONCE = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
@@ -2366,6 +2384,7 @@ E.COLOR_DEBUG = E.classColorHexCurrent
 E.COLOR_FUNCTION = "|cff87CDEB"
 E.FACTION_CURRENT = UnitFactionGroup("PLAYER")
 E.FACTION_OPPOSITE = E.FACTION_CURRENT == "Alliance" and "Horde" or "Alliance"
+E.ICON_TABARD = 135026
 E.ICON_ALLIANCE = 255140
 E.ICON_HORDE = 255142
 E.ICON_KYRIAN = 3641395
@@ -2406,8 +2425,8 @@ E.NONE = E.COLOR_GRAY..NONE.."|r"
 E.TRUE = E.COLOR_GREEN.."true|r"
 E.FALSE = E.COLOR_RED.."false|r"
 E.NIL = E.COLOR_RED.."nil|r"
-E.ICON_ACCOUNT_WIDE = CreateAtlasMarkup("warbands-icon", 16, 16)
-E.ICON_ACCOUNT_TRANSFERABLE = CreateAtlasMarkup("warbands-icon", 16, 16)
+E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 16)
+E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
 E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
 E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Util_Icons\\ICON_EMPTY"
@@ -2800,7 +2819,7 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 				local row = { leftText }
 				local row2Text = E.func_CompactFormatNumber(curquantity)
 				if curmaxQuantity > 0 then
-					row2Text = row2Text .. "/" .. E.func_CompactFormatNumber(curmaxQuantity)
+					row2Text = row2Text.."/"..E.func_CompactFormatNumber(curmaxQuantity)
 				end
 				total = total + curquantity
 				table.insert(characterData, {
@@ -3319,7 +3338,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if dataType == "Reputations" then
 		if CharInfo.MASLENGO.Reputation[id] and type(CharInfo.MASLENGO.Reputation[id]) == "string" then
 			local FIRST, SECOND, output, ColorCenter, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
-			local firstTEXT = E.func_texturefromIcon(E.func_GetReputationIcon(id))..E.func_GetReputationName(id)
+			local icon1texture = E.func_texturefromIcon(E.ICON_TABARD)
+			local icon2texture = E.func_GetReputationIcon(id) and E.func_texturefromIcon(E.func_GetReputationIcon(id)) or ""
+			local firstTEXT = icon1texture..icon2texture..E.func_GetReputationName(id)
 			local secondTEXT = FIRST.."/"..SECOND
 			if secondTEXT == "1/1" then
 				secondTEXT = E.DONE
@@ -3427,7 +3448,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			for questID in next, CharInfo.MASLENGO.ListOfQuests do
 				questIDs[#questIDs+1] = questID
 			end
-			table_sort(questIDs, E.func_SortByDescending)
+			table_sort(questIDs, E.func_ReversSort)
 			for i = 1, #questIDs do
 				local questID = questIDs[i]
 				tooltip[i] = {E.func_GetQuestName(questID), CharInfo.MASLENGO.ListOfQuests[questID]}
@@ -3513,8 +3534,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				if E.DebugUniversal then
 					tooltip[#tooltip+1] = {questKey, "forcedMaxQuest: "..totalQuest}
 				end
-				if totalQuest > 1 then
-
+				if totalQuest >= 1 then
 					local output
 					if type(data.TextLeft) == "function" then
 						output = data.TextLeft() -- ← Вызываем функцию!
@@ -3524,7 +3544,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 					local TextLeft = tostringall(E.func_FormatResetType(data.reset).." "..output)
 					tooltip[#tooltip+1] = {" ", TOTAL..": "..totalQuest}
-					tooltip[#tooltip+1] = {" "}
+					-- tooltip[#tooltip+1] = {" "}
 				end
 				-- Список квестов в тултипе
 				local questsToShow = {}
@@ -3603,6 +3623,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 							-- local mountName = mountIcon..E.func_GetMountCollectedColor(addText.mount)..E.func_GetMountName(addText.mount).."|r"
 							Output_CENT = Output_CENT..E.COLOR_PURPLE.." +"..string_format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)).."|r"
 						end
+						if addText.expansionText then
+							Output_CENT = Output_CENT..addText.expansionText
+						end
 						if addText.notes then
 							Output_LEFT = Output_LEFT..addText.notes
 						end
@@ -3620,7 +3643,13 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 						Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(faction))..Output_LEFT
 					end
 					-- tooltip[#tooltip+1] = {Output_LEFT, Output_CENT, Output_RIGHT}
-					tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
+					if Output_CENT ~= "" then
+						tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
+					else
+						tooltip[#tooltip+1] = {Output_LEFT, Output_RIGHT}
+						-- tooltip[#tooltip+1] = {Output_LEFT, Output_CENT ~= "" and {Output_CENT, "LEFT"} or nil, Output_RIGHT}
+					end
+
 				end
 			end
 		end
@@ -3643,10 +3672,14 @@ end
 function E.func_TextCenter_Chars_nickname(CharInfo)
 	local namePart = CharInfo.PlayerData.classColorHex..CharInfo.PlayerData.Name.."|r"
 	local levelPart = ""
+	local MailPart = ""
 	if CharInfo.PlayerData.UnitLevel and CharInfo.PlayerData.UnitLevel ~= E.currentMaxLevel and CharInfo.PlayerData.PlayerCanEarnExperience then
 		levelPart = " "..E.COLOR_YELLOW..CharInfo.PlayerData.UnitLevel.."|r"
 	end
-	return namePart..levelPart
+	if CharInfo.PlayerData.hasMail then
+		MailPart = E.func_texturefromIcon("UI-HUD-Minimap-Mail-Up", 16, 10, true)
+	end
+	return namePart..levelPart..MailPart
 end
 function E.func_TextCenter_Chars_server(CharInfo)
 	local serverPart = ""
@@ -4200,6 +4233,10 @@ end
 function E.func_CreateNewProfile(profileName)
 	-- Инициализация провайдера данных
 	E.DataProvider_Otrisovka = {}
+	E.ALL_UniversalQuests = {}
+	E.ALL_Additionally = {}
+	E.OctoTables_Vibor = {}
+	E.OctoTables_DataOtrisovka = {}
 
 	-- 1. Обработка компонентов
 	E.func_ProcessComponents()
@@ -4213,10 +4250,6 @@ end
 ----------------------------------------------------------------
 -- Вспомогательные функции
 function E.func_ProcessComponents()
-	-- Проверка и инициализация таблиц
-	E.OctoTables_Vibor = E.OctoTables_Vibor or {}
-	E.OctoTables_DataOtrisovka = E.OctoTables_DataOtrisovka or {}
-
 	-- Обработка компонентов
 	for _, componentFunc in pairs(E.Components) do
 		local OctoTables_Vibor, OctoTables_DataOtrisovka = componentFunc()
@@ -4264,8 +4297,9 @@ function E.func_InitializeProfileStructure(profileName)
 	}
 	-- Настройки расширений по умолчанию
 	E.func_InitField(profile, "ExpansionToShow", {
-		[7] = true,  -- Legion
-		[98] = true,
+		-- [7] = true, -- 07_Legion
+		[11] = true, -- 11_TheWarWithin
+		-- [98] = true, -- Holidays
 		[99] = true
 	})
 	----------------------------------------------------------------
@@ -4286,12 +4320,10 @@ function E.func_InitializeProfileStructure(profileName)
 	return db
 end
 
-
 ----------------------------------------------------------------
 function E.func_PopulateProfileData(db, profileName)
 	local currentProfile = db.profiles[profileName]
 	local defaultProfile = db.profiles.Default
-
 	for categoryKey, categoryData in pairs(E.OctoTables_DataOtrisovka) do
 		for dataType, dataEntries in pairs(categoryData) do
 			-- Инициализация структуры данных
@@ -4311,41 +4343,33 @@ function E.func_ProcessStandardData(categoryKey, dataType, dataEntries, currentP
 	for _, entry in pairs(dataEntries) do
 		-- Добавление ID в DataProvider
 		table.insert(E.DataProvider_Otrisovka[categoryKey][dataType], entry.id)
-
 		-- Установка значения по умолчанию для текущего профиля
-		currentProfile[dataType][entry.id] = currentProfile[dataType][entry.id] or entry.defS
+		if currentProfile[dataType][entry.id] == nil then currentProfile[dataType][entry.id] = entry.defS end
 
 		-- Установка значения по умолчанию для Default профиля
-		defaultProfile[dataType][entry.id] = defaultProfile[dataType][entry.id] or entry.defS
+		if defaultProfile[dataType][entry.id] == nil then defaultProfile[dataType][entry.id] = entry.defS end
 
 		-- Регистрация в глобальных таблицах
 		if dataType == "Currencies" then
-			E.ALL_Currencies = E.ALL_Currencies or {}
 			E.ALL_Currencies[entry.id] = true
 		elseif dataType == "Items" then
-			E.ALL_Items = E.ALL_Items or {}
 			E.ALL_Items[entry.id] = true
 		elseif dataType == "Reputations" then
-			E.ALL_Reputations = E.ALL_Reputations or {}
 			E.ALL_Reputations[entry.id] = true
 		elseif dataType == "Additionally" then
-			E.ALL_Additionally = E.ALL_Additionally or {}
 			E.ALL_Additionally[entry.id] = true
 		end
 	end
 end
 ----------------------------------------------------------------
 function E.func_ProcessUniversalQuests(categoryKey, questEntries, currentProfile, defaultProfile)
-	E.ALL_UniversalQuests = E.ALL_UniversalQuests or {}
-	E.ALL_Quests = E.ALL_Quests or {}
-
 	for _, questData in pairs(questEntries) do
 		-- Добавление данных квеста
 		table.insert(E.DataProvider_Otrisovka[categoryKey]["UniversalQuests"], questData)
 		table.insert(E.ALL_UniversalQuests, questData)
 
 		-- Создание уникального ключа для квеста
-		local questKey = E.UNIVERSAL .. questData.desc .. "_" .. questData.name_save .. "_" .. questData.reset
+		local questKey = E.UNIVERSAL..questData.desc.."_"..questData.name_save.."_"..questData.reset
 
 		-- Установка значений по умолчанию
 		currentProfile.UniversalQuests[questKey] = currentProfile.UniversalQuests[questKey] or questData.defS
@@ -4368,6 +4392,17 @@ function E.func_UpdateCurrentProfile(name)
 	E.CurrentProfile = Octo_profileKeys.CurrentProfile
 end
 ----------------------------------------------------------------
+function E.func_countTable(t)
+	if not t then
+		print ("NOT TABLE in func_countTable")
+		return 0
+	end
+	local count = 0
+	for _ in pairs(t) do
+		count = count + 1
+	end
+	return count
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

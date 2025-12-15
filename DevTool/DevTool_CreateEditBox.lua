@@ -429,7 +429,7 @@ function EventFrame:func_itemslist(msg)
 	:ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
 	:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	:Then(function()
-			sort(list1, E.func_SortByDescending)
+			sort(list1, E.func_ReversSort)
 			for _, id1 in next, (list1) do
 				str = str..id1..", -- "..E.func_GetItemName(id1).."\n"
 			end
@@ -456,7 +456,7 @@ function EventFrame:func_itemslistSort24(msg)
 	-- :FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	-- local count = 0
 	-- promise1:Then(function()
-	-- sort(list1, E.func_SortByDescending)
+	-- sort(list1, E.func_ReversSort)
 	-- for _, id1 in next, (list1) do
 	-- count = count + 1
 	-- if count < 24 then
@@ -476,7 +476,7 @@ function EventFrame:func_itemslistSort24(msg)
 	-------------------------- СРЕДНЕЕ 80ms ------------------------
 	----------------------------------------------------------------
 	-- E.func_TableRemoveDuplicates(GLOBAL_TABLE_ITEMS)
-	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_SortByDescending)
+	-- table.sort(GLOBAL_TABLE_ITEMS, E.func_ReversSort)
 	-- local output, count = "", 0
 	-- for _, itemID in ipairs(GLOBAL_TABLE_ITEMS) do
 	-- count = count + 1
@@ -497,7 +497,7 @@ function EventFrame:func_itemslistSort24(msg)
 	end
 	print (tbl)
 	E.func_TableRemoveDuplicates(tbl)
-	table.sort(tbl, E.func_SortByDescending)
+	table.sort(tbl, E.func_ReversSort)
 	local chunks = {}
 	local chunk_size = 24
 	local count = #tbl
@@ -527,7 +527,7 @@ function EventFrame:func_itemslistSortBOOLEN(msg)
 	:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
 	local count = 0
 	promise1:Then(function()
-			sort(list1, E.func_SortByDescending)
+			sort(list1, E.func_ReversSort)
 			for _, id1 in next, (list1) do
 				count = count + 1
 				if count < 8 then
@@ -549,9 +549,9 @@ function EventFrame:func_questslist(msg)
 	local list1, list2 = {}, {}
 	local promise2 = LibThingsLoad:Quests(E.OctoTable_QuestID_Paragon)
 	:ThenForAllWithCached(function(_, ids1) tinsert(list1, ids1) end)
-	sort(list1, E.func_SortByDescending)
+	sort(list1, E.func_ReversSort)
 	promise2:FailWithChecked(function(_, ids2) tinsert(list2, ids2) end)
-	sort(list2, E.func_SortByDescending)
+	sort(list2, E.func_ReversSort)
 	promise2:Then(function()
 			for _, id1 in next, (list1) do
 				str = str..id1..", -- "..E.func_GetQuestName(id1).."\n"
@@ -571,7 +571,7 @@ function EventFrame:func_currencieslist(msg)
 	for currencyID, cachedName in next, (Octo_Cache_DB.AllCurrencies) do
 		tinsert(list, currencyID)
 	end
-	sort(list, E.func_SortByDescending)
+	sort(list, E.func_ReversSort)
 	for _, currencyID in ipairs(list) do
 		if E.func_GetCurrencyName(currencyID) ~= (currencyID.. " (UNKNOWN)") then
 			str1 = str1..currencyID..", --" ..E.func_GetCurrencyName(currencyID).."|n"
@@ -591,7 +591,7 @@ function EventFrame:func_reputationslist(msg)
 	for _, reputationID in next, (E.OctoTable_allfaction) do
 		tinsert(list, reputationID)
 	end
-	sort(list, E.func_SortByDescending)
+	sort(list, E.func_ReversSort)
 	for _, reputationID in next, (list) do
 		if E.func_GetReputationName(reputationID) ~= (reputationID.. " (UNKNOWN)") then
 			str4 = str4..reputationID..", --" ..E.func_GetReputationName(reputationID).."|n"
@@ -613,7 +613,7 @@ function EventFrame:func_spellslist(msg)
 			tinsert(list, spellID)
 		end
 	end
-	sort(list, E.func_SortByDescending)
+	sort(list, E.func_ReversSort)
 	for _, spellID in next, (list) do
 		if E.func_spellNameFull(spellID) ~= "|cffFF4C4F"..SEARCH_LOADING_TEXT.."|r" then
 			str4 = str4..spellID..", --" ..E.func_spellNameFull(spellID).."\n"

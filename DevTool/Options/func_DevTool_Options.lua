@@ -24,26 +24,11 @@ function E.func_DevTool_Options(savedVars)
 				name = "ВООБЩЕ ВСЁ",
 				desc = "УДАЛИТЬ ХУЙНЮ",
 				func = function()
-					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-						CharInfo.MASLENGO.ItemsALL = nil
-						CharInfo.MASLENGO.GarrisonFollowersCount = nil
-						CharInfo.MASLENGO.GarrisonFollowers = nil
-						CharInfo.MASLENGO.HasGarrison = nil
-						CharInfo.MASLENGO.GARRISON = nil
-						CharInfo.MASLENGO.LegionRemixData = nil
-						CharInfo.MASLENGO.GreatVault = nil
-						CharInfo.MASLENGO.ItemsInBag = nil
-						CharInfo.MASLENGO.journalInstance = nil
-						CharInfo.MASLENGO.LFGInstance = nil
-						CharInfo.MASLENGO.ListOfQuests = nil
-						CharInfo.MASLENGO.ListOfParagonQuests = nil
-						CharInfo.MASLENGO.OctoTable_QuestID = nil
-						CharInfo.MASLENGO.professions = nil
-						CharInfo.MASLENGO.Reputation = nil
-						CharInfo.MASLENGO.SavedWorldBoss = nil
-						CharInfo.MASLENGO.UniversalQuest = nil
-					end
-					return
+					Octo_Cache_DB = nil
+					Octo_profileKeys = nil
+					Octo_ToDo_DB_Levels = nil
+					Octo_ToDo_DB_Vars = nil
+					Octo_DevTool_DB = nil
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -326,20 +311,7 @@ function E.func_DevTool_Options(savedVars)
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
-			-------------------------------------------------
-			CVar = {
-				type = "toggle",
-				name = "CVar",
-				desc = "",
-				get = function()
-					return Octo_DevTool_DB.CVar
-				end,
-				set = function(_, value)
-					Octo_DevTool_DB.CVar = value
-				end,
-				width = E.FULL_WIDTH/2,
-				order = GetOrder(),
-			},
+
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
@@ -352,10 +324,10 @@ function E.func_DevTool_Options(savedVars)
 				name = E.COLOR_BLUE.."Config_DebugID_ALL|r",
 				desc = "",
 				get = function()
-					return Octo_ToDo_DB_Vars.Config_DebugID_ALL
+					return Octo_DevTool_DB.Config_DebugID_ALL
 				end,
 				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_DebugID_ALL = value
+					Octo_DevTool_DB.Config_DebugID_ALL = value
 					E.Config_DebugID_ALL = value
 				end,
 				width = E.FULL_WIDTH/2,

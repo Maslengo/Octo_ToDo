@@ -24,8 +24,8 @@ local function tempFunction()
 		{id = 1710, defS = true,},
 		{id = 1716, defS = true,},
 		{id = 1717, defS = true,},
-		{id = 1718, defS = true,},
-		{id = 1580, defS = true,},
+		{id = 1718, defS = false,},
+		{id = 1580, defS = false,},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -34,23 +34,23 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Battle for Azeroth"] = {
-		{id = 2164, defS = false,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
-		{id = 2415, defS = false,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
-		{id = 2391, defS = false,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
-		{id = 2163, defS = false,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
-		{id = 2417, defS = false,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
-		{id = 2427, defS = false,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
+		{id = 2164, defS = true,}, --name = "Защитники Азерот", side = "-", category = "Battle for Azeroth", }, --[faction=2164]
+		{id = 2415, defS = true,}, --name = "Раджани", side = "-", category = "Battle for Azeroth", }, --[faction=2415]
+		{id = 2391, defS = true,}, --name = "Ржавоболтское сопротивление", side = "-", category = "Battle for Azeroth", }, --[faction=2391]
+		{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
+		{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
+		{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
 
 		{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
 		{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
 		{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
 		{id = 2103, defS = false,}, --name = "Империя Зандалари", side = "Horde", category = "Battle for Azeroth", }, --[faction=2103]
 		{id = 2156, defS = false,}, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
-		{id = 2233, defS = false,}, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
-		{id = 2370, defS = false,}, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
-		{id = 2390, defS = false,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
-		{id = 2389, defS = false,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
-		{id = 2388, defS = false,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+		-- {id = 2233, defS = false,}, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
+		-- {id = 2370, defS = false,}, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
+		{id = 2390, defS = true,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
+		{id = 2389, defS = true,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
+		{id = 2388, defS = true,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
 		{id = 2159, defS = false,}, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
 		{id = 2160, defS = false,}, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
 		{id = 2400, defS = false,}, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
@@ -60,9 +60,9 @@ local function tempFunction()
 		{id = 2398, defS = false,}, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
 		{id = 2397, defS = false,}, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
 		{id = 2396, defS = false,}, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
-		{id = 2376, defS = false,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
-		{id = 2375, defS = false,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
-		{id = 2377, defS = false,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
+		{id = 2376, defS = true,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
+		{id = 2375, defS = true,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
+		{id = 2377, defS = true,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
@@ -140,9 +140,9 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.BfA_Assault().."AssaultTheBlackEmpire"
+				return E.Timers.BfA_Assault()..WORLD_MAP_THREATS
 			end,
-			name_save = "AssaultTheBlackEmpire",
+			name_save = "bfa-nzoth-assault",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -158,7 +158,7 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = "miniVision",
+			TextLeft = L["Lesser Visions of N'Zoth"],
 			name_save = "miniVision",
 			defS = true,
 			reset = "Daily",
@@ -172,12 +172,43 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = SPLASH_BATTLEFORAZEROTH_8_3_0_FEATURE1_TITLE,
+			name_save = "Horrific Vision",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{57848, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 5 Masks"},},
+				{57844, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 4 Masks"},},
+				{57847, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 3 Masks"},},
+				{57843, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 2 Masks"},},
+				{57846, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear + 1 Masks"},},
+				{57842, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Full Clear No Masks"},},
+				{57845, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Vision Boss + 2 Bonus Objectives"},},
+				{57841, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Vision Boss Only"},},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+
+
+
+
+
+
+
 		{
 			-- sorted = true,
 			showTooltip = true,
-			TextLeft = "Warfront",
+			TextLeft = L["Warfront"],
 			name_save = "Warfront",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -199,7 +230,7 @@ local function tempFunction()
 				return E.func_GetMapName(62)..": ".."Rares"
 			end,
 			name_save = "DarkshoreRares",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -207,55 +238,55 @@ local function tempFunction()
 				{54695, faction = "Alliance", forcedText = {npcID = 148787},},
 				{54696, faction = "Horde", forcedText = {npcID = 148787},},
 				-- Aman
-				{54405, faction = "Alliance",forcedText = {npcID = 147966},},
+				{54405, faction = "Alliance", forcedText = {npcID = 147966},},
 				{54406, faction = "Horde", forcedText = {npcID = 147966},},
 				-- Amberclaw
-				{54285, faction = "Alliance",forcedText = {npcID = 147744},},
+				{54285, faction = "Alliance", forcedText = {npcID = 147744},},
 				{54286, faction = "Horde", forcedText = {npcID = 147744},},
 				-- Athrikus Narassin
-				{54278, faction = "Alliance",forcedText = {npcID = 147708},},
+				{54278, faction = "Alliance", forcedText = {npcID = 147708},},
 				{54279, faction = "Horde", forcedText = {npcID = 147708},},
 				-- Commander Ral'esh
-				{54426, faction = "Alliance",forcedText = {npcID = 148025},},
+				{54426, faction = "Alliance", forcedText = {npcID = 148025},},
 				{54427, faction = "Horde", forcedText = {npcID = 148025},},
 				-- Conflagros
-				{54232, faction = "Alliance",forcedText = {npcID = 147260},},
+				{54232, faction = "Alliance", forcedText = {npcID = 147260},},
 				{54233, faction = "Horde", forcedText = {npcID = 147260},},
 				-- Cyclarus
-				{54229, faction = "Alliance",forcedText = {npcID = 147241},},
+				{54229, faction = "Alliance", forcedText = {npcID = 147241},},
 				{54230, faction = "Horde", forcedText = {npcID = 147241},},
 				-- Glimmerspine
 				{54884, faction = "Alliance", forcedText = {npcID = 149654},},
 				{54885, faction = "Horde", forcedText = {npcID = 149654},},
 				-- Granokk
-				{54234, faction = "Alliance",forcedText = {npcID = 147261},},
+				{54234, faction = "Alliance", forcedText = {npcID = 147261},},
 				{54235, faction = "Horde", forcedText = {npcID = 147261},},
 				-- Gren Tornfur
-				{54428, faction = "Alliance",forcedText = {npcID = 148031},},
+				{54428, faction = "Alliance", forcedText = {npcID = 148031},},
 				{54429, faction = "Horde", forcedText = {npcID = 148031},},
 				-- Hydrath
-				{54227, faction = "Alliance",forcedText = {npcID = 147240},},
+				{54227, faction = "Alliance", forcedText = {npcID = 147240},},
 				{54228, faction = "Horde", forcedText = {npcID = 147240},},
 				-- Madfeather
-				{54887, faction = "Alliance",forcedText = {npcID = 149657},},
+				{54887, faction = "Alliance", forcedText = {npcID = 149657},},
 				{54888, faction = "Horde", forcedText = {npcID = 149657},},
 				-- Mrggr'marr
-				{54408, faction = "Alliance",forcedText = {npcID = 147970},},
+				{54408, faction = "Alliance", forcedText = {npcID = 147970},},
 				{54409, faction = "Horde", forcedText = {npcID = 147970},},
 				-- Scalefiend
-				{54893, faction = "Alliance",forcedText = {npcID = 149665},},
+				{54893, faction = "Alliance", forcedText = {npcID = 149665},},
 				{54894, faction = "Horde", forcedText = {npcID = 149665},},
 				-- Shattershard
 				{54289, faction = "Alliance", forcedText = {npcID = 147751},},
 				{54290, faction = "Horde", forcedText = {npcID = 147751},},
 				-- Soggoth the Slitherer
-				{54320, faction = "Alliance",forcedText = {npcID = 147897},},
+				{54320, faction = "Alliance", forcedText = {npcID = 147897},},
 				{54321, faction = "Horde", forcedText = {npcID = 147897},},
 				-- Stonebinder Ssra'vess
-				{54247, faction = "Alliance",forcedText = {npcID = 147332},},
+				{54247, faction = "Alliance", forcedText = {npcID = 147332},},
 				{54248, faction = "Horde", forcedText = {npcID = 147332},},
 				-- Twilight Prophet Graemeа
-				{54397, faction = "Alliance",forcedText = {npcID = 147942},},
+				{54397, faction = "Alliance", forcedText = {npcID = 147942},},
 				{54398, faction = "Horde", forcedText = {npcID = 147942},},
 				-- Athil Dewfire
 				{54431, faction = "Horde", forcedText = {npcID = 148037},}, -- УБИЛ ОРДОЙ 54892
@@ -336,12 +367,10 @@ local function tempFunction()
 				return E.func_GetMapName(1462)..": Rares"
 			end,
 			name_save = "MechagonRares",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-
-
 				{55512, forcedText = {npcID = 151934}, addText = {mount = 1229},}, -- RARE ELITE 154342 -- MOUNT
 				{55539, forcedText = {npcID = 151308},},
 				{55857, forcedText = {npcID = 153200},},
@@ -383,25 +412,26 @@ local function tempFunction()
 			-- forcedMaxQuest = 36+1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetMapName(1462)..": Treasures"
 			end,
 			name_save = "MechagonTREASURE",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{55547},
-				{55548},
-				{55549},
-				{55550},
-				{55551},
-				{55552},
-				{55553},
-				{55554},
-				{55555},
-				{55556},
+				{55547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{55548, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{55549, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{55550, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{55551, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{55552, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{55553, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{55554, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{55555, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{55556, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
 			},
 			forcedMaxQuest = 10,
 		},
@@ -516,7 +546,7 @@ local function tempFunction()
 				return E.func_GetMapName(1462)..": Dailies Visitor Quests"
 			end,
 			name_save = "DAILY_VISITOR_QUESTS",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -563,7 +593,7 @@ local function tempFunction()
 				return E.func_GetMapName(1462)..": Daily WQ"
 			end,
 			name_save = "MechagonDAILYWQ",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -579,7 +609,7 @@ local function tempFunction()
 				return E.func_GetMapName(1462)..": "..E.func_GetAchievementName(13489)
 			end,
 			name_save = "MechagonSecretFish",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -603,7 +633,7 @@ local function tempFunction()
 				return E.func_GetMapName(1462)..": "..E.func_GetAchievementName(13791)
 			end,
 			name_save = "MechagonMakingAMount",
-			defS = true,
+			defS = false,
 			reset = "Once",
 			desc = categoryKey,
 			quests = {
@@ -640,7 +670,7 @@ local function localfunc2()
 		if Octo_ToDo_DB_Vars.Items then
 			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
+					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[158075] then
 						TextCenter = CharInfo.PlayerData.azeriteLVL and E.COLOR_GREEN..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.COLOR_GRAY..CharInfo.PlayerData.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
@@ -650,12 +680,12 @@ local function localfunc2()
 					ColorLeft = E.OctoTable_Expansions[categoryKey].color
 					SettingsType = "Items#"..158075
 					----------------------------------------------------------------
-					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
+					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
 					----------------------------------------------------------------
 			end)
 			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
+					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					----------------------------------------------------------------
 					if CharInfo.MASLENGO.ItemsInBag[169223] then
 						if CharInfo.PlayerData.cloak_lvl then
@@ -669,19 +699,19 @@ local function localfunc2()
 					ColorLeft = E.OctoTable_Expansions[categoryKey].color
 					SettingsType = "Items#"..169223
 					----------------------------------------------------------------
-					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
+					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
 					----------------------------------------------------------------
 			end)
 			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
+					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					TooltipKey = "BfA_mechagonItems"
 					TextCenter = E.COLOR_GRAY..ITEMS.."|r"
 					----------------------------------------------------------------
 					TextLeft = "МЕХАГОН"
 					ColorLeft = E.OctoTable_Expansions[categoryKey].color
 					----------------------------------------------------------------
-					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, IsReputation, FirstReputation, SecondReputation
+					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
 					----------------------------------------------------------------
 			end)
 		end

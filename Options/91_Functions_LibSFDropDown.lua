@@ -38,6 +38,12 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 	DropDown.text:SetTextColor(1, 1, 1, 1)
 	DropDown.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
 
+	local width = math.max(math.ceil(DropDown.text:GetStringWidth())+50, 90)
+	if width % 2 == 1 then
+		width = width + 1
+	end
+	DropDown:SetSize(width, E.GLOBAL_LINE_HEIGHT)
+
 	LibSFDropDown:SetMixin(DropDown)
 	DropDown:SetPoint("BOTTOMLEFT", frame, "TOPLEFT", 0, 1)
 	DropDown:ddSetDisplayMode(GlobalAddonName)
@@ -47,6 +53,20 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 	DropDown:SetScript("OnClick", function(self)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
+
+
+	DropDown:SetScript("OnMouseDown", function(self)
+		-- self.text:ClearAllPoints()
+		-- self.text:SetPoint("CENTER", 1, -1)
+		self.text:AdjustPointsOffset(1, -1)
+	end)
+
+	DropDown:SetScript("OnMouseUp", function(self)
+		self.text:SetAllPoints()
+		self.text:AdjustPointsOffset(-1, 1)
+	end)
+
+
 	DropDown:ddSetOpenMenuUp(true)
 	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight-4)
 

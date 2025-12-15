@@ -12,14 +12,14 @@ local INDENT_TEXT = 4 -- Отступ для текста
 local MIN_COLUMN_WIDTH_LEFT = 200 -- Минимальная ширина левой колонки
 local MIN_COLUMN_WIDTH_Center = 90 -- Минимальная ширина центральной колонки
 local MAX_DISPLAY_LINES = E.MAX_DISPLAY_LINES -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.8 -- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.7 -- Максимальная ширина фрейма (80% экрана)
 local MAX_FRAME_HEIGHT = E.PHYSICAL_SCREEN_HEIGHT*.6 -- Максимальная высота фрейма (60% экрана)
 EventFrame.MAX_COLUMN_COUNT = 113 -- Максимальное количество колонок
 -- Цветовые настройки
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
 local textR, textG, textB, textA = 1, 1, 1, 1 -- Цвет текста (белый)
 local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
-local LEFT_TEXTURE_ALPHA = 0.1 -- Прозрачность текстуры левой колонки
+local LEFT_TEXTURE_ALPHA = .05 -- Прозрачность текстуры левой колонки
 local charR, charG, charB = 1, 1, 1
 -- Локальные ссылки на часто используемые функции для оптимизации
 local math_min = math.min
@@ -41,9 +41,9 @@ local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 
 
 local function SafeTooltipShow(frame, ...)
-	-- if Octo_MainFrame_ToDo:IsShown() then
+	if Octo_MainFrame_ToDo:IsShown() then
 		E.func_OctoTooltip_OnEnter(frame, ...)
-	-- end
+	end
 end
 
 local func_OnAcquiredLeft do
@@ -52,11 +52,12 @@ local func_OnAcquiredLeft do
 	-- ТЕКСТ КАТЕРГРИИ
 	local function Create_SettingsButton(frame)
 		frame.SettingsButton = CreateFrame("BUTTON", nil, frame)
+		frame.SettingsButton:Hide()
 		frame.SettingsButton:SetPropagateMouseClicks(true)
 		frame.SettingsButton:SetPropagateMouseMotion(true)
 		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 		-- frame.SettingsButton:SetPoint("TOPLEFT", 1, -1)
-		frame.SettingsButton:SetPoint("LEFT")
+		frame.SettingsButton:SetPoint("LEFT", 1, -1)
 		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
 		frame.SettingsButton:EnableMouse(true)
 
@@ -68,22 +69,48 @@ local func_OnAcquiredLeft do
 		frame.SettingsButton:SetCollapsesLayout(true)
 	end
 
-	local function Create_CategoryIcon(frame)
-		frame.CategoryFrame = CreateFrame("FRAME", nil, frame)
-		frame.CategoryFrame:SetPoint("LEFT", frame.SettingsButton, "RIGHT")
-		frame.CategoryFrame:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-		local texture = frame.CategoryFrame:CreateTexture(nil, "BACKGROUND", nil, 5)
+	local function Create_icon1frame(frame)
+		frame.icon1frame = CreateFrame("FRAME", nil, frame)
+		frame.icon1frame:Hide()
+		frame.icon1frame:SetPoint("LEFT", frame.SettingsButton, "RIGHT")
+		frame.icon1frame:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		local texture = frame.icon1frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("CENTER")
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
 		texture:SetTexCoord(.10, .90, .10, .90)
-		frame.CategoryTexture = texture
-		-- frame.CategoryFrame:SetCollapsesLayout(true)
+		frame.icon1texture = texture
+		frame.icon1frame:SetCollapsesLayout(true)
+	end
+	local function Create_icon2frame(frame)
+		frame.icon2frame = CreateFrame("FRAME", nil, frame)
+		frame.icon2frame:Hide()
+		frame.icon2frame:SetPoint("LEFT", frame.icon1frame, "RIGHT")
+		frame.icon2frame:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		local texture = frame.icon2frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+		texture:SetPoint("CENTER")
+		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		texture:SetTexCoord(.10, .90, .10, .90)
+		frame.icon2texture = texture
+		frame.icon2frame:SetCollapsesLayout(true)
+	end
+
+	local function Create_icon3frame(frame)
+		frame.icon3frame = CreateFrame("FRAME", nil, frame)
+		frame.icon3frame:Hide()
+		frame.icon3frame:SetPoint("LEFT", frame.icon2frame, "RIGHT")
+		frame.icon3frame:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		local texture = frame.icon3frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+		texture:SetPoint("CENTER")
+		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		-- texture:SetTexCoord(.10, .90, .10, .90)
+		frame.icon3texture = texture
+		frame.icon3frame:SetCollapsesLayout(true)
 	end
 
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
 		frame.TextLeft:SetFontObject(OctoFont11)
-		frame.TextLeft:SetPoint("LEFT", frame.CategoryFrame, "RIGHT")
+		frame.TextLeft:SetPoint("LEFT", frame.icon3frame, "RIGHT")
 		-- frame.TextLeft:SetPoint("LEFT", E.GLOBAL_LINE_HEIGHT+INDENT_TEXT+0, 0)
 		frame.TextLeft:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
 		frame.TextLeft:SetWordWrap(false)
@@ -129,7 +156,9 @@ local func_OnAcquiredLeft do
 		if not new then return end
 		local frameData = node:GetData()
 		Create_SettingsButton(frame)
-		Create_CategoryIcon(frame)
+		Create_icon1frame(frame)
+		Create_icon2frame(frame)
+		Create_icon3frame(frame)
 		Create_TextLeft(frame) -- Текстовое поле для левой колонки
 
 		Create_TextureLeft(frame) -- Текстура для фона левой колонки
@@ -192,7 +221,6 @@ local func_OnAcquiredCenter do
 						-- Обработчики скрытия
 						columnFrame:SetScript("OnHide", function()
 							columnFrame:Hide()
-							-- print (E.COLOR_RED.."нид хайд|r")
 						end)
 						columnFrame.CurrentCharBackground:SetScript("OnHide", columnFrame.CurrentCharBackground.Hide)
 						rawset(self, key, columnFrame)
@@ -204,13 +232,16 @@ local func_OnAcquiredCenter do
 end
 local function func_SettingsButton_OnClick(button, frameData)
 	local dataType, id = ("#"):split(frameData.SettingsType)
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
+		id = tonumber(id)
+	end
 	-- Получаем таблицу настроек для типа
 	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
 	if not settingsTable then return end
 	-- Определяем ключ (строковый или числовой)
 	local key = id
-	if settingsTable[tonumber(id)] ~= nil then
-		key = tonumber(id)
+	if settingsTable[tonumber(id)] == nil then
+		settingsTable[id] = false
 	end
 	-- Если запись существует, переключаем, иначе создаем с true
 	local newValue = not (settingsTable[key] or false)
@@ -221,29 +252,159 @@ local function func_SettingsButton_OnClick(button, frameData)
 	local parentFrame = button:GetParent() -- кнопка находится внутри frame
 	parentFrame.SettingsTexture:SetTexture(texture)
 end
+
+
+
+
+local function func_Setup_Currencies(frame, id)
+	local icon1 = E.func_GetCurrencyIcon(id)
+	frame.icon1texture:SetTexture(icon1)
+	frame.icon1frame:Show()
+	if C_CurrencyInfo.IsAccountWideCurrency(id) then
+		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
+		frame.icon3frame:Show()
+	elseif C_CurrencyInfo.IsAccountTransferableCurrency(id) then
+		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_TRANSFERABLE, false)
+		frame.icon3frame:Show()
+	else
+		frame.icon3texture:SetTexture(spacerEMPTY)			-- ОБЯЗАТЕЛЬНО!
+		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
+	end
+end
+
+local function func_Setup_Reputations(frame, id)
+
+	-- Первая иконка
+	frame.icon1texture:SetTexture(E.ICON_TABARD) -- E.func_GetReputationIcon(id)
+
+	-- Вторая иконка
+	local icon2 = E.func_GetReputationIcon(id)
+	if E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].side then
+		if E.OctoTable_Reputations_DB[id].side == "Horde" then
+			frame.icon2texture:SetTexture(E.ICON_HORDE)
+		else
+			frame.icon2texture:SetTexture(E.ICON_ALLIANCE)
+		end
+		frame.icon2frame:Show()
+	elseif icon2 then
+		frame.icon2texture:SetTexture(icon2)
+		frame.icon2frame:Show()
+	else
+		frame.icon2texture:SetTexture(spacerEMPTY)			-- ОБЯЗАТЕЛЬНО!
+		frame.icon2frame:Hide() 							-- ОБЯЗАТЕЛЬНО!
+	end
+	if C_Reputation.IsAccountWideReputation(id) then
+		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
+		frame.icon3frame:Show()
+	else
+		frame.icon3texture:SetTexture(spacerEMPTY)			-- ОБЯЗАТЕЛЬНО!
+		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
+	end
+end
+
+
+local function func_Setup_Items(frame, id)
+	local icon1 = E.func_GetItemIcon(id)
+	frame.icon1texture:SetTexture(icon1)
+	frame.icon1frame:Show()
+end
+
+local function func_Setup_Currencies(frame, id)
+	local icon1 = E.func_GetCurrencyIcon(id)
+	frame.icon1texture:SetTexture(icon1)
+	frame.icon1frame:Show()
+	if C_CurrencyInfo.IsAccountWideCurrency(id) then
+		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
+		frame.icon3frame:Show()
+	elseif C_CurrencyInfo.IsAccountTransferableCurrency(id) then
+		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_TRANSFERABLE, false)
+		frame.icon3frame:Show()
+	else
+		frame.icon3texture:SetTexture(spacerEMPTY)			-- ОБЯЗАТЕЛЬНО!
+		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
+	end
+end
+
+local function func_Setup_UniversalQuests(frame, id)
+	local IconLeft = nil
+	-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+	local reset = id:match("_([^_]+)$")
+	if reset == "Daily" then
+		IconLeft = E.ICON_DAILY
+	elseif reset == "Weekly" then
+		IconLeft = E.ICON_WEEKLY
+	elseif reset == "Once" then
+		IconLeft = E.ICON_ONCE
+	elseif reset == "Month" then
+		IconLeft = E.ICON_MONTH
+	end
+	if IconLeft then
+		frame.icon3texture:SetAtlas(IconLeft, false)
+		frame.icon3frame:Show()
+		frame.icon1frame:Hide()
+	else
+		frame.icon3texture:SetTexture(spacerEMPTY)			-- ОБЯЗАТЕЛЬНО!
+		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
+		-- frame.icon1frame:Show()								-- ОБЯЗАТЕЛЬНО!
+	end
+end
+
 -- Функция инициализации данных для левой колонки
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
-	if frameData.IconLeft then
-		frame.CategoryTexture:SetTexture(frameData.IconLeft)
-		frame.CategoryTexture:SetAtlas(frameData.IconLeft, false)
-	else
-		frame.CategoryTexture:SetTexture("Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY")
+	if not frameData.SettingsType then return end
+
+	local dataType, id = ("#"):split(frameData.SettingsType)
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
+		id = tonumber(id)
 	end
+	----------------------------------------------------------------
 	frame.SettingsButton:Show() -- не баг а фича
-	if Octo_profileKeys.isSettingsEnabled and frameData.SettingsType then
-		local dataType, id = ("#"):split(frameData.SettingsType)
-		local texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\spacerEMPTY"
+	frame.icon1frame:Show() -- не баг а фича
+	frame.icon2frame:Show() -- не баг а фича
+	frame.icon3frame:Show() -- не баг а фича
+	frame.SettingsButton:Hide() -- не баг а фича
+	-- frame.icon1frame:Hide() -- не баг а фича (ЧТО БЫ ТЕКСТ ВЫРАВНИВАЛСЯ)
+	frame.icon2frame:Hide() -- не баг а фича
+	frame.icon3frame:Hide() -- не баг а фича
+	----------------------------------------------------------------
+
+	if frameData.IconLeft then
+		frame.icon1texture:SetTexture(frameData.IconLeft)
+		frame.icon1texture:SetAtlas(frameData.IconLeft, false)
+	else
+		frame.icon1texture:SetTexture(E.ICON_EMPTY)
+	end
+	----------------------------------------------------------------
+	if dataType == "Currencies" then
+		func_Setup_Currencies(frame, id)
+	end
+	----------------------------------------------------------------
+	if dataType == "Items" then
+		func_Setup_Items(frame, id)
+	end
+	----------------------------------------------------------------
+	if dataType == "Reputations" then
+		func_Setup_Reputations(frame, id)
+	end
+	----------------------------------------------------------------
+	if dataType == "UniversalQuests" then
+		func_Setup_UniversalQuests(frame, id)
+	end
+
+
+	if Octo_profileKeys.isSettingsEnabled then
+		local texture = E.ICON_EMPTY
 		if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
 		else
 			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
 		end
 		frame.SettingsTexture:SetTexture(texture)
-		-- frame.CategoryTexture:Hide()
-		-- frame.SettingsButton:Show()
+		-- frame.icon1texture:Hide()
+		frame.SettingsButton:Show()
 	else
-		-- frame.CategoryTexture:Show()
+		-- frame.icon1texture:Show()
 		frame.SettingsButton:Hide()
 	end
 	frame.SettingsButton:SetScript("OnClick", function(self)
@@ -269,7 +430,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	-- local categoryKey = frameData.categoryKey
 
 	-- if E.OctoTable_Expansions[categoryKey] then
-	--     expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
+	-- expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
 	-- end
 
 
@@ -284,7 +445,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	-- frame.TextLeft:SetText(frameData.TextLeft)
 	if frameData.ColorLeft then
 		local r, g, b = E.func_Hex2RGBFloat(frameData.ColorLeft)
-		frame.TextureLeft:SetVertexColor(r, g, b, 0) -- LEFT_TEXTURE_ALPHA
+		frame.TextureLeft:SetVertexColor(r, g, b, LEFT_TEXTURE_ALPHA)
 		frame.TextureLeft:Show()
 	else
 		frame.TextureLeft:Hide()
@@ -295,21 +456,19 @@ function EventFrame:func_InitLEFT(frame, node)
 			else
 				frame.tooltip = nil
 			end
-			-- print ("func_InitLEFT OnEnter")
 			SafeTooltipShow(frame, {"RIGHT", "LEFT"})
 	end)
 end
 -- Функция инициализации данных для центральной колонки
 function EventFrame:func_InitCenter(frame, node)
 	local frameData = node:GetData()
+	if not frameData.SettingsType then return end
 
+	local dataType, id = ("#"):split(frameData.SettingsType)
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
+		id = tonumber(id)
+	end
 
-	-- for i = 1, #frame.columnFrames do
-	-- 	if frame.columnFrames[i] then
-	-- 		print (i, E.COLOR_GREEN.."HIDE|r")
-	-- 		frame.columnFrames[i]:Hide()
-	-- 	end
-	-- end
 
 
 	local accumulatedWidth = 0
@@ -335,7 +494,7 @@ function EventFrame:func_InitCenter(frame, node)
 				local r1, g1, b1 = E.func_Hex2RGBFloat(frameData.ColorCenter[i])
 				columnFrames.ReputationBackground:Show()
 				columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1, .3)
-				if frameData.IsReputation and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) ~= 0 then
+				if dataType == "Reputations" and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) ~= 0 then
 					local FirstReputation = tonumber(frameData.FirstReputation[i])
 					local SecondReputation = tonumber(frameData.SecondReputation[i])
 					if FirstReputation == SecondReputation then
@@ -343,7 +502,7 @@ function EventFrame:func_InitCenter(frame, node)
 					elseif FirstReputation >= 1 then
 						columnFrames.ReputationBackground:SetWidth(columnWidth/SecondReputation*FirstReputation)
 					end
-				elseif frameData.IsReputation and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) == 0 then
+				elseif dataType == "Reputations" and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) == 0 then
 					columnFrames.ReputationBackground:Hide()
 				else
 					columnFrames.ReputationBackground:SetWidth(columnWidth)
@@ -367,17 +526,20 @@ function EventFrame:func_InitCenter(frame, node)
 				else
 					columnFrames.tooltip = nil
 				end
-				-- print ("columnFrames OnEnter")
 
 				SafeTooltipShow(columnFrames) --, {"LEFT", "RIGHT"}) -- если перс будет справа и тултип со скроллом, то будет габелла
 		end)
 		columnFrames:Show()
 	end
 	for i = frameData.totalColumns+1, #frame.columnFrames do
-		-- print (i, "HIDE")
 		frame.columnFrames[i]:Hide()
 	end
 end
+
+local function HeaderFrameLeft_OnShow(frame)
+	return frame.Text:SetText(E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r ")
+end
+
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
 	-- Настройка позиции и обработчика показа фрейма
@@ -490,22 +652,40 @@ function EventFrame:func_CreateMainFrame()
 	-- Настройка взаимодействия с фреймом
 	Octo_MainFrame_ToDo:EnableMouse(true)
 	Octo_MainFrame_ToDo:SetMovable(true)
-	-- Обработчики перемещения фрейма
-	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
-			if button == "LeftButton" then
-				-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
-				-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
-				Octo_MainFrame_ToDo:StartMoving()
-			end
+
+
+	----------------------------------------------------------------
+	-- РЕЗКОЕ ПЕРЕМЕЩЕНИЕ
+	----------------------------------------------------------------
+	-- Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
+	-- 		if button == "LeftButton" then
+	-- 			-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
+	-- 			-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
+	-- 			Octo_MainFrame_ToDo:StartMoving()
+	-- 		end
+	-- end)
+	-- Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
+	-- 		if button == "LeftButton" then
+	-- 			-- Octo_MainFrame_ToDo:SetAlpha(1)
+	-- 			-- UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
+	-- 			Octo_MainFrame_ToDo:StopMovingOrSizing()
+	-- 			-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
+	-- 		end
+	-- end)
+	----------------------------------------------------------------
+	-- ПЛАВНОЕ ПЕРЕМЕЩЕНИЕ (что бы во время настройки не перемещать фрейм)
+	----------------------------------------------------------------
+	Octo_MainFrame_ToDo:RegisterForDrag("LeftButton")
+	Octo_MainFrame_ToDo:SetScript("OnDragStart", function(self, button)
+		Octo_MainFrame_ToDo:StartMoving()
 	end)
-	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
-			if button == "LeftButton" then
-				-- Octo_MainFrame_ToDo:SetAlpha(1)
-				-- UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
-				Octo_MainFrame_ToDo:StopMovingOrSizing()
-				-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
-			end
+	Octo_MainFrame_ToDo:SetScript("OnDragStop", function(self)
+		Octo_MainFrame_ToDo:StopMovingOrSizing()
 	end)
+	----------------------------------------------------------------
+
+
+
 	-- Обработчик клика правой кнопкой для скрытия фрейма
 	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp")
 	Octo_MainFrame_ToDo:SetScript("OnClick", Octo_MainFrame_ToDo.Hide)
@@ -520,9 +700,7 @@ function EventFrame:func_CreateMainFrame()
 	HeaderFrameLeft.Text:SetJustifyH("LEFT")
 	HeaderFrameLeft.Text:SetTextColor(textR, textG, textB, textA)
 	-- Обработчик показа заголовка левой колонки
-	HeaderFrameLeft:SetScript("OnShow", function()
-			HeaderFrameLeft.Text:SetText(E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), true).."|r ")
-	end)
+	HeaderFrameLeft:SetScript("OnShow", HeaderFrameLeft_OnShow)
 	-- Функция сброса пула фреймов
 	local function ResetPoolFrame(_, self)
 		self:Hide()
@@ -677,7 +855,7 @@ local function func_calculateColumnWidthsLEFT(node)
 	else
 		framesLEFT[1].TextLeft:SetText(frameData.TextLeft) -- ← Просто строка
 	end
-	columnWidthsLEFT[1] = math_ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT -- (иконка)
+	columnWidthsLEFT[1] = math_ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT -- (иконка)
 	return columnWidthsLEFT
 end
 -- Функция расчета ширины колонок для правой части
@@ -752,7 +930,6 @@ end
 
 -- Функция расчета ширины главного фрейма
 local function CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
-	-- print (columnWidthsLeft[1], columnWidthsCenter[1], totalRightWidth)
 	local leftColumnWidth = MIN_COLUMN_WIDTH_LEFT + INDENT_TEXT
 	if columnWidthsLeft and columnWidthsLeft[1] then
 		leftColumnWidth = columnWidthsLeft[1] + INDENT_TEXT
@@ -786,7 +963,6 @@ local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColum
 			break
 		end
 	end
-	-- print("totalRightWidth", totalRightWidth)
 	return totalRightWidth
 end
 
@@ -801,7 +977,6 @@ end
 
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
-	-- print ("CreateDataProvider")
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
@@ -840,10 +1015,10 @@ function EventFrame:CreateDataProvider()
 	----------------------------------------------------------------
 	-- local keys = {}
 	-- for categoryKey in next, E.OctoTables_Vibor do
-	--     table.insert(keys, categoryKey)
+	-- table.insert(keys, categoryKey)
 	-- end
 	-- for i = #keys, 1, -1 do
-	--     local categoryKey = keys[i]
+	-- local categoryKey = keys[i]
 	----------------------------------------------------------------
 	for categoryKey in next,(E.OctoTables_Vibor) do
 		-----------------------------------------------------------------
@@ -855,8 +1030,6 @@ function EventFrame:CreateDataProvider()
 						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 					end
 
-
-
 					-- можно ли вообще рисовать эту строку
 					local canDraw = false
 
@@ -867,7 +1040,7 @@ function EventFrame:CreateDataProvider()
 					end
 
 					if canDraw then
-						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey, IsReputation =
+						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey =
 						E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
 
 						-- фильтр поиска
@@ -883,9 +1056,7 @@ function EventFrame:CreateDataProvider()
 								ColorLeft = E.OctoTable_Expansions[categoryKey]
 								and E.OctoTable_Expansions[categoryKey].color
 								or E.COLOR_BLACK,
-
 								SettingsType = SettingsType,
-								IsReputation = IsReputation or false,
 								categoryKey = categoryKey,
 
 								TextCenter = {},
@@ -935,11 +1106,17 @@ function EventFrame:CreateDataProvider()
 
 		local rowData = {
 			TextLeft = "",
+			IconLeft = {},
+			ColorLeft = {},
+			-- SettingsType = {},
+			categoryKey = {},
+
 			TextCenter = {},
 			ColorCenter = {},
 			FirstReputation = {},
 			SecondReputation = {},
 			GUID = {},
+
 			currentCharacterIndex = 1,
 			totalColumns = totalColumns > 0 and totalColumns or 1,
 		}
@@ -995,14 +1172,6 @@ function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, so
 	MAX_DISPLAY_LINES = maxDisplayLines
 
 	----------------------------------------------------------------
-	-- print("Отладка размеров:",
-	-- 	E.COLOR_BLACK..E.func_SecondsToClock(GetServerTime(), true).."|r",
-	-- 	"totalRightWidth:", totalRightWidth,
-	-- 	"width:", width,
-	-- 	"height:", height,
-	-- 	"totalLines:", totalLines
-	-- )
-
 	-- Установка размеров фреймов
 	Octo_MainFrame_ToDo:SetSize(width, height)
 	Octo_MainFrame_ToDo.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
@@ -1108,7 +1277,7 @@ function EventFrame:PLAYER_LOGIN()
 	-- AlertFrame:ClearAllPoints()
 	-- AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
 	EventFrame:func_CreateMainFrame()
-	EventFrame:func_CreateSearchFrame()
+	-- EventFrame:func_CreateSearchFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")
 end

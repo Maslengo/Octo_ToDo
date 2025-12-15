@@ -62,11 +62,10 @@ function EventFrame:func_CacheGameData()
 		end
 	end
 	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
+
 	promise:AddItemsByKey(E.ALL_Items)
-	-- promise:Then(function()
-	-- print ("THEN")
-	-- end)
-	promise:ThenForAllWithCached(function(promise, ID, type)
+
+	:ThenForAllWithCached(function(promise, ID, type)
 			if type == "quest" then
 				local quest = E.func_GetQuestName(ID) -- "AllQuests"
 			elseif type == "item" then
@@ -77,11 +76,14 @@ function EventFrame:func_CacheGameData()
 			-- E.func_TODO_CreateDataProvider() -- Обновляем данные после загрузки
 			-- end
 	end)
-	-- promise:FailWithChecked(function(promise, ID, type)
-	-- if type == "quest" then
-	-- print (ID)
-	-- end
+	-- :FailWithChecked(function(promise, ID, type)
+	-- 	if type == "quest" then
+	-- 		oprint (ID)
+	-- 	elseif type == "item" then
+	-- 		oprint ("item", ID)
+	-- 	end
 	-- end)
+	-- :Then(function() oprint(E.COLOR_GREEN.."DONE|r") end)
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -309,7 +311,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Настройки отладки
 	-- Настройки функций аддона
 	local featureDefaults = {
-		Config_SPAM_TIME = 3,
+		Config_SPAM_TIME = 2,
 		Config_ADDON_HEIGHT = 20,
 		Config_AlphaOnTheMove = 1, -- Альфа в движении
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
@@ -405,16 +407,6 @@ function EventFrame:Octo_DevTool_DB()
 	E.func_InitField(Octo_DevTool_DB, "lastFaction", UNKNOWN)
 	E.func_InitField(Octo_DevTool_DB, "lastLocaleLang", UNKNOWN)
 	-- Инициализация подтаблиц
-	E.func_InitSubTable(Octo_DevTool_DB, "AllItems")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllCurrencies")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllNPCs")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllQuests")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllReputations")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllSpells")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllAchievements")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllVignettes")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllEvents")
-	E.func_InitSubTable(Octo_DevTool_DB, "AllProfessions")
 	E.func_InitSubTable(Octo_DevTool_DB, "watchedMovies")
 	----------------------------------------------------------------
 	if Octo_DevTool_DB.profileKeys and type(Octo_DevTool_DB.profileKeys) ~= "table" then
@@ -431,6 +423,7 @@ function EventFrame:Octo_DevTool_DB()
 end
 ----------------------------------------------------------------
 function EventFrame:Octo_profileKeys()
+	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -441,7 +434,7 @@ function EventFrame:Octo_profileKeys()
 	for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
 		E.ALL_Items[itemID] = true
 	end
-	for reputationID in next,(E.OctoTable_ReputationsDB) do
+	for reputationID in next,(E.OctoTable_Reputations_DB) do
 		E.ALL_Reputations[reputationID] = true
 	end
 	----------------------------------------------------------------
@@ -650,13 +643,37 @@ function EventFrame:func_UpdateGlobals()
 		E.DebugButton = Octo_DevTool_DB.DebugButton
 		E.DebugEvent = Octo_DevTool_DB.DebugEvent
 		E.DebugFunction = Octo_DevTool_DB.DebugFunction
-		E.Config_DebugID_ALL = Octo_DevTool_DB.Config_DebugID_ALL
 		E.DebugCharacterInfo = Octo_DevTool_DB.DebugCharacterInfo
 		E.DebugGossip = Octo_DevTool_DB.DebugGossip
 		E.DebugCache = Octo_DevTool_DB.DebugCache
 		E.DebugQC_Vignettes = Octo_DevTool_DB.DebugQC_Vignettes
 		E.DebugQC_Quests = Octo_DevTool_DB.DebugQC_Quests
 		E.DebugUniversal = Octo_DevTool_DB.DebugUniversal
+
+
+
+
+
+		E.Config_DebugID_ALL = Octo_DevTool_DB.Config_DebugID_ALL
+		E.Config_DebugID_Achievements = Octo_DevTool_DB.Config_DebugID_Achievements
+		E.Config_DebugID_Currencies = Octo_DevTool_DB.Config_DebugID_Currencies
+		E.Config_DebugID_worldBossID = Octo_DevTool_DB.Config_DebugID_worldBossID
+		E.Config_DebugID_Quests = Octo_DevTool_DB.Config_DebugID_Quests
+		E.Config_DebugID_Spells = Octo_DevTool_DB.Config_DebugID_Spells
+		E.Config_DebugID_Maps = Octo_DevTool_DB.Config_DebugID_Maps
+		E.Config_DebugID_instanceID = Octo_DevTool_DB.Config_DebugID_instanceID
+		E.Config_DebugID_Mounts = Octo_DevTool_DB.Config_DebugID_Mounts
+		E.Config_DebugID_NPCs = Octo_DevTool_DB.Config_DebugID_NPCs
+		E.Config_DebugID_Items = Octo_DevTool_DB.Config_DebugID_Items
+		E.Config_DebugID_Reputations = Octo_DevTool_DB.Config_DebugID_Reputations
+		E.Config_DebugID_Events = Octo_DevTool_DB.Config_DebugID_Events
+		E.Config_DebugID_Professions = Octo_DevTool_DB.Config_DebugID_Professions
+
+
+
+
+
+
 	end
 end
 ----------------------------------------------------------------

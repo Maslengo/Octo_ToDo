@@ -16,23 +16,15 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-
 		-- https://warcraft.wiki.gg/wiki/Catalyst
 		-- The War Within
 		-- (Season 4)
 		{id = 3278, defS = true,}, -- Астальные нити
-
-
-
 		{id = 3310, defS = true,}, -- SEASON 2
-
-
 		{id = 3269, defS = true,}, -- (Season 3)
 		{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
 		{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
 		{id = 1191, defS = true,},
-
-
 		{id = 2815, defS = true,}, -- Resonance Crystals
 		{id = 3226, defS = true,}, -- Market Research
 		{id = 3056, defS = true,}, -- Kej
@@ -47,7 +39,6 @@ local function tempFunction()
 		{id = 3223, defS = false,}, --
 		-- {id = 2839, defS = true,}, -- [DNT] Awakening Currency
 		{id = 3216, defS = false,}, --
-
 		-- season 3
 		{id = 3290, defS = true,}, -- Gilded Ethereal Crest -- 3-й сезон
 		{id = 3288, defS = true,}, -- Runed Ethereal Crest -- 3-й сезон
@@ -57,18 +48,15 @@ local function tempFunction()
 		-- {id = 3289, defS = true,}, -- Hidden
 		-- {id = 3287, defS = true,}, -- Hidden
 		-- {id = 3285, defS = true,}, -- Hidden
-
 		{id = 3356, defS = false,}, -- Untainted Mana-Crystals
 		{id = 3141, defS = false,}, -- Starlight Spark Dust
 		{id = 3028, defS = false,}, -- Restored Coffer Key
 		{id = 3008, defS = true,}, -- Valorstones
 		{id = 2803, defS = true,}, -- Undercoin
-
 		-- {id = 3110, defS = true,}, -- Gilded Undermine Crest
 		-- {id = 3109, defS = true,}, -- Runed Undermine Crest
 		-- {id = 3108, defS = true,}, -- Carved Undermine Crest
 		-- {id = 3107, defS = true,}, -- Weathered Undermine Crest
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -122,12 +110,12 @@ local function tempFunction()
 		-- { id = 2648,},
 		-- { id = 2649,},
 		-- { id = 2658, },
-		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
-		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-		{id = 2594, defS = false,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
-		{id = 2590, defS = false,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
-		{id = 2570, defS = false,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+		{id = 2653, defS = true,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
+		{id = 2640, defS = true,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
+		{id = 2600, defS = true,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
+		{id = 2594, defS = true,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
+		{id = 2590, defS = true,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
+		{id = 2570, defS = true,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
 		----------------------------------------------------------------
 		{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
 		{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
@@ -139,6 +127,11 @@ local function tempFunction()
 		{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
 		{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
 		{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+
+		{id = 2663, defS = false,}, -- Мира
+		{id = 2665, defS = false,}, -- Лиллистраза
+		{id = 2666, defS = false,}, -- Байки за чашкой
+		{id = 2664, defS = false,}, -- Флинн Фэйрвинд
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
@@ -164,15 +157,11 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-
 			TextLeft = function()
 				return E.func_GetMapName(2371)..": ".."Rares"
 			end,
-
-
-
 			name_save = "Rares2371",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -214,7 +203,7 @@ local function tempFunction()
 				return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
 			end,
 			name_save = "Rares2255",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -236,7 +225,7 @@ local function tempFunction()
 				return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
 			end,
 			name_save = "Rares2215",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -259,7 +248,7 @@ local function tempFunction()
 				return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
 			end,
 			name_save = "Rares2248",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -282,7 +271,7 @@ local function tempFunction()
 				return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
 			end,
 			name_save = "Rares2214",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -305,7 +294,7 @@ local function tempFunction()
 				return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
 			end,
 			name_save = "Rares2369",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -326,7 +315,7 @@ local function tempFunction()
 				return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
 			end,
 			name_save = "Rares2346",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
@@ -348,23 +337,23 @@ local function tempFunction()
 				return E.func_GetMapName(2248)..": ".."Treasures" -- isle_of_dorn
 			end,
 			name_save = "Treasures2248",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{82715},
-				{82714},
-				{82287},
-				{82325},
-				{83243},
-				{83246},
-				{83245},
-				{83244},
-				{82326},
-				{82246},
-				{83242},
-				{83094},
-				{83840},
+				{82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{82714, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{82287, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{82325, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{83243, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{83246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{83245, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{83244, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{82326, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{82246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				{83242, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+				{83094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+				{83840, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
 			},
 		},
 		{
@@ -374,21 +363,21 @@ local function tempFunction()
 				return E.func_GetMapName(2369)..": ".."Treasures"
 			end,
 			name_save = "Treasures2369",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{87446},
-				{86764},
-				{86767},
-				{86766},
-				{86732},
-				{85716},
-				{84547},
-				{84839},
-				{86765},
-				{84529},
-				{84527},
+				{87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{86764, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{86767, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{86766, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{86732, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{85716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{84547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{84839, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{86765, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{84529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				{84527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
 			},
 		},
 		{
@@ -398,22 +387,22 @@ local function tempFunction()
 				return E.func_GetMapName(2346)..": ".."Treasures" -- undermine
 			end,
 			name_save = "Treasures2346",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{85683},
-				{85698},
-				{85814},
-				{85426},
-				{85422},
-				{85424},
-				{85425},
-				{85492},
-				{85495},
-				{85494},
-				{85496},
-				{86487},
+				{85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				{85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+				{86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
 			},
 		},
 		{
@@ -423,20 +412,20 @@ local function tempFunction()
 				return E.func_GetMapName(2214)..": ".."Treasures" -- ringing_deeps
 			end,
 			name_save = "Treasures2214",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{82230},
-				{82239},
-				{82820},
-				{82464},
-				{82819},
-				{80485},
-				{82235},
-				{82818},
-				{83030},
-				{79308},
+				{82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{82239, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{82820, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{82464, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{82819, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{80485, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{82235, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{82818, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{83030, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{79308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
 			},
 		},
 		{
@@ -446,20 +435,20 @@ local function tempFunction()
 				return E.func_GetMapName(2255)..": ".."Treasures" -- azj_kahet
 			end,
 			name_save = "Treasures2255",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{82520},
-				{82718},
-				{82722},
-				{82720},
-				{82529},
-				{82721},
-				{82719},
-				{82727},
-				{82527},
-				{82525},
+				{82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{82718, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{82722, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{82720, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{82529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{82721, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{82719, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{82727, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{82527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{82525, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
 			},
 		},
 		{
@@ -469,22 +458,22 @@ local function tempFunction()
 				return E.func_GetMapName(2215)..": ".."Treasures" -- hallowfall
 			end,
 			name_save = "Treasures2215",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{83298},
-				{83263},
-				{83284},
-				{81468},
-				{81971},
-				{81978},
-				{81972},
-				{82005},
-				{83273},
-				{79275},
-				{80687},
-				{81518},
+				{83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{83263, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{83284, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{81468, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{81971, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{81978, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{81972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{82005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{83273, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{79275, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				{80687, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+				{81518, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
 			},
 		},
 		{
@@ -494,472 +483,42 @@ local function tempFunction()
 				return E.func_GetMapName(2346)..": ".."Treasures" -- undermine
 			end,
 			name_save = "Treasure2346",
-			defS = true,
+			defS = false,
 			reset = "Once", -- "Daily",
 			desc = categoryKey,
 			quests = {
-				{85683},
-				{85698},
-				{85814},
-				{85426},
-				{85422},
-				{85424},
-				{85425},
-				{85492},
-				{85495},
-				{85494},
-				{85496},
-				{86487},
-				{86630},
-				{85781},
-				{85785},
-				{86773},
-				{85787},
-				{86772},
-				{85786},
-				{86771},
-				{85788},
-				{86774},
-				{87007},
-				{85072},
-				{85116},
-				{85117},
-				{85114},
-				{85115},
+				{85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				{85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+				{86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+				{86630, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
+				{85781, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
+				{85785, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
+				{86773, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
+				{85787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
+				{86772, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
+				{85786, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
+				{86771, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
+				{85788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
+				{86774, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
+				{87007, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
+				{85072, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
+				{85116, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
+				{85117, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
+				{85114, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 27"},},
+				{85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
 			},
 		},
 		----------------------------------------------------------------------------
 		----------------------------------------------------------------------------
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(84370, false)
-			end,
-			name_save = "TheKeytoSuccess",
-			defS = true,
-			reset = "Daily", -- "Once", ???
-			desc = categoryKey,
-			quests = {
-				{84370},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(82449, false)
-			end,
-			name_save = "TheCalloftheWorldsoul",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
-			quests = {
-				-- 87424,
-				-- 87423,
-				-- 87422,
-				-- 87419,
-				-- 87417,
-				-- 82659,
-				-- 82516,
-				-- 82512,
-				-- 82511,
-				-- 82510,
-				-- 82509,
-				-- 82508,
-				-- 82507,
-				-- 82506,
-				-- 82505,
-				-- 82504,
-				-- 82503,
-				-- 82502,
-				-- 82501,
-				-- 82500,
-				-- 82499,
-				-- 82498,
-				-- 82497,
-				-- 82496,
-				-- 82495,
-				-- 82494,
-				-- 82493,
-				-- 82492,
-				-- 82491,
-				-- 82490,
-				-- 82489,
-				-- 82488,
-				-- 82487,
-				-- 82486,
-				-- 82485,
-				-- 82483,
-				-- 82482,
-				-- 82453,
-				-- 82452,
-				-- 82321,
-				-- 82286,
-				-- 82285,
-				-- 82263,
-				-- 82260,
-				-- 82207,
-				-- 82164,
-				-- 81985,
-				{82482}, -- Worldsoul: Snuffling
-				{82516}, -- Worldsoul: Forging a Pact
-				{82483}, -- Worldsoul: Spreading the Light
-				{82453}, -- Worldsoul: Encore!
-				{82489}, -- Worldsoul: The Dawnbreaker
-				{82659}, -- Worldsoul: Nerub-ar Palace
-				{87417}, -- Worldsoul: Dungeons
-				{87419}, -- Worldsoul: Delves
-				{82490}, -- Worldsoul: Priory of the Sacred Flame
-				{82491}, -- Worldsoul: Ara-Kara, City of Echoes
-				{82492}, -- Worldsoul: City of Threads
-				{82493}, -- Worldsoul: The Dawnbreaker
-				{82494}, -- Worldsoul: Ara-Kara, City of Echoes
-				{82496}, -- Worldsoul: City of Threads
-				{82497}, -- Worldsoul: The Stonevault
-				{82498}, -- Worldsoul: Darkflame Cleft
-				{82499}, -- Worldsoul: Priory of the Sacred Flame
-				{82500}, -- Worldsoul: The Rookery
-				{82501}, -- Worldsoul: The Dawnbreaker
-				{82502}, -- Worldsoul: Ara-Kara, City of Echoes
-				{82503}, -- Worldsoul: Cinderbrew Meadery
-				{82504}, -- Worldsoul: City of Threads
-				{82505}, -- Worldsoul: The Stonevault
-				{82506}, -- Worldsoul: Darkflame Cleft
-				{82507}, -- Worldsoul: Priory of the Sacred Flame
-				{82508}, -- Worldsoul: The Rookery
-				{82509}, -- Worldsoul: Nerub-ar Palace
-				{82510}, -- Worldsoul: Nerub-ar Palace
-				{82511}, -- Worldsoul: Awakening Machine
-				{89514}, -- Worldsoul: Horrific Visions Revisited
-				{82512}, -- Worldsoul: World Boss
-				{87423}, -- Worldsoul: Undermine Explorer
-				{87424}, -- Worldsoul: World Bosses
-				{82488}, -- Worldsoul: Darkflame Cleft
-				{82487}, -- Worldsoul: The Stonevault
-				{82486}, -- Worldsoul: The Rookery
-				{82485}, -- Worldsoul: Cinderbrew Meadery
-				{82452}, -- Worldsoul: World Quests
-				{87422}, -- Worldsoul: Undermine World Quests
-				{82495}, -- Worldsoul: Cinderbrew Meadery
-				{89502}, -- Worldsoul: Nightfall
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "Archives",
-			name_save = "Archives",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{82678},
-				{82679},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "Delves",
-			name_save = "Delves",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{82708},
-				{82707},
-				{82706},
-				{82709},
-				{82710},
-				{82711},
-				{82712},
-				{82746},
-				-- {39020},
-				{39033},
-				-- {40792},
-				{39042},
-				-- {39021},
-				{39034},
-				{39040},
-				{39041},
-				{44174},
-				{64970},
-				-- {72719},
-				-- {72724},
-				-- {72725},
-				-- {72726},
-				-- {83365},
-				-- {72727},
-				-- {83363},
-				{72810},
-				{83345},
-				{84776},
-				{83347},
-				{83358},
-				{83357},
-				{83366},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
-			end,
-			name_save = "TheTheaterTroupe",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83240},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(76586, false)
-			end,
-			name_save = "SpreadingtheLight",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{76586},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(83333, false)
-			end,
-			name_save = "GearingUpforTrouble",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83333},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "SpecialAssignments",
-			name_save = "SpecialAssignments",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{82355},
-				{81649},
-				{81691},
-				{83229},
-				{82852},
-				{82787},
-				{82414},
-				{82531},
-			},
-			forcedMaxQuest = 2,
-		},
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(82946, false)
-			end,
-			name_save = "RollinDownintheDeeps",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{82946},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "BiergothDungeonQuest",
-			name_save = "BiergothDungeonQuest",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83432},
-				{83436},
-				{83443},
-				{83457},
-				{83458},
-				{83459},
-				{83465},
-				{83469},
-				{83460},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "TWWProfessionWeeklies",
-			name_save = "TWWProfessionWeeklies",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{84127},
-				{84128},
-				{84129},
-				{84130},
-				{84131},
-				{84132},
-				{84133},
-				{83103},
-				{83102},
-				{83104},
-				{83106},
-				{83105},
-				{83097},
-				{83100},
-				{82993},
-				{83098},
-				{82992},
-				{84086},
-				{84084},
-				{84085},
-				{82970},
-				{82962},
-				{82965},
-				{82958},
-				{82916},
-			},
-			forcedMaxQuest = 2,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "TWWAlgariTreatise",
-			name_save = "TWWAlgariTreatise",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83725},
-				{83726},
-				{83727},
-				{83728},
-				{83729},
-				{83730},
-				{83731},
-				{83732},
-				{83733},
-				{83734},
-				{83735},
-			},
-			forcedMaxQuest = 2,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "AnniversaryRestoredCofferKey",
-			name_save = "AnniversaryRestoredCofferKey",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{86202},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "SirenIsleWeekly",
-			name_save = "SirenIsleWeekly",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{84852},
-				{84680},
-				{83932},
-				{84432},
-				{84248},
-				{84222},
-				{84851},
-				{83753},
-				{84299},
-				{84619},
-				{83827},
-				{84001},
-				{84850},
-				{85589},
-				{84430},
-				{85051},
-				{84627},
-			},
-			forcedMaxQuest = 6,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "MajorKeyflames",
-			name_save = "MajorKeyflames",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{79471},
-				{79470},
-				{79469},
-				{79380},
-				{79329},
-				{78657},
-				{78590},
-				{76338},
-			},
-			forcedMaxQuest = 8,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "MinorKeyflames",
-			name_save = "MinorKeyflames",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{81632},
-				-- 81574,
-				-- 80562,
-				{80004},
-				-- 79346,
-				-- 79216,
-				{79173},
-				-- 79158,
-				{78972},
-				-- 78933,
-				-- 78915,
-				{78656},
-				{76997},
-				-- 76733,
-				{76600},
-				{76394},
-				-- 76169,
-				-- SAVEDINSTANCE
-				-- 76169, -- Glow in the Dark
-				-- 76394, -- Shadows of Flavor
-				-- 76600, -- Right Between the Gyros-Optics
-				-- 76733, -- Tater Trawl
-				-- 76997, -- Lost in Shadows
-				-- 78656, -- Hose It Down
-				-- 78915, -- Squashing the Threat
-				-- 78933, -- The Sweet Eclipse
-				-- 78972, -- Harvest Havoc
-				-- 79158, -- Seeds of Salvation
-				-- 79173, -- Supply the Effort
-				-- 79216, -- Web of Manipulation
-				-- 79346, -- Chew On That
-				-- 80004, -- Crab Grab
-				-- 80562, -- Blossoming Delight
-				-- 81574, -- Sporadic Growth
-				-- 81632, -- Lizard Looters
-			},
-			forcedMaxQuest = 8,
-		},
 		{
 			sorted = false,
 			showTooltip = true,
@@ -992,29 +551,134 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 13,
 		},
+		----------------------------------------------------------------
+
+
+
+
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-weekly-cache",
-			name_save = "tww-weekly-cache",
+			TextLeft = function()
+				return E.func_GetQuestName(84776, false) -- (Зов вылазок) Пройдите 5 вылазок в Каз Алгаре.
+			end,
+			name_save = "A Call to Delves",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
-				{84736},
-				{84737},
-				{84738},
-				{84739},
+				{84776},
 			},
-			forcedMaxQuest = 4,
+			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-lesser-keyflame",
-			name_save = "tww-lesser-keyflame",
+			TextLeft = function()
+				return E.func_GetQuestName(83366, false) -- (Мир ждет) Выполните 10 локальных заданий в Каз Алгаре.
+			end,
+			name_save = "The World Awaits",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
+				{83366},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(83347, false) -- (Посланник войны) Пройдите 4 подземелья в эпохальном режиме.
+			end,
+			name_save = "Emissary of War",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83347},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(83345, false) -- (Призыв к бою) Одержите победу на 4 полях боя.
+			end,
+			name_save = "A Call to Battle",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83345},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return L["TWW Weekly Cache"]
+			end,
+			name_save = "TWW Weekly Cache",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{84736, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
+				{84737, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
+				{84738, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
+				{84739, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
+			},
+			-- forcedMaxQuest = 1, -- НАДО УТОЧНИТЬ
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return L["TWW Weekly Cache"].." S3"
+			end,
+			name_save = "TWW Weekly Cache S3",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{91175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
+				{91176, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
+				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
+				{91178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
+			},
+			-- forcedMaxQuest = 1, -- НАДО УТОЧНИТЬ
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return "Delver's Bounty" -- E.func_GetQuestName(86371, false)
+			end,
+			name_save = "Delver's Bounty",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{86371},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return "Lesser Keyflame" -- MinorKeyflames
+			end,
+			name_save = "Lesser Keyflame",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- SAVEDINSTANCE
 				{76169}, -- Glow in the Dark
 				{76394}, -- Shadows of Flavor
 				{76600}, -- Right Between the Gyros-Optics
@@ -1032,28 +696,72 @@ local function tempFunction()
 				{80562}, -- Blossoming Delight
 				{81574}, -- Sporadic Growth
 				{81632}, -- Lizard Looters
+				-- {nil},
+				-- -- МОЁ
+				-- {81632},
+				-- -- 81574,
+				-- -- 80562,
+				-- {80004},
+				-- -- 79346,
+				-- -- 79216,
+				-- {79173},
+				-- -- 79158,
+				-- {78972},
+				-- -- 78933,
+				-- -- 78915,
+				-- {78656},
+				-- {76997},
+				-- -- 76733,
+				-- {76600},
+				-- {76394},
+				-- -- 76169,
 			},
 			forcedMaxQuest = 8,
 		},
 		{
 			showTooltip = true,
-			TextLeft = "tww-brawl-weekly",
-			name_save = "tww-brawl-weekly",
+			TextLeft = "Major Keyflames",
+			name_save = "Major Keyflames",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
+			quests = {
+				{79471},
+				{79470},
+				{79469},
+				{79380},
+				{79329},
+				{78657},
+				{78590},
+				{76338},
+			},
+			forcedMaxQuest = 8,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(47148, false)
+			end,
+			name_save = "Brawl Weekly",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
 			quests = {
 				{47148},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-pvp-weekly",
-			name_save = "tww-pvp-weekly",
+			TextLeft = function()
+				return "PvP Weekly"
+			end,
+			name_save = "PvP Weekly",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{80184}, -- Preserving in Battle
 				{80185}, -- Preserving Solo
@@ -1062,45 +770,55 @@ local function tempFunction()
 				{80188}, -- Preserving in Arenas
 				{80189}, -- Preserving Teamwork
 			},
-			forcedMaxQuest = 6, -- ОДИН?
+			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-pvp-world",
-			name_save = "tww-pvp-world",
+			TextLeft = function()
+				return "World PvP Weekly"
+			end,
+			name_save = "World PvP Weekly",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{81793}, -- Sparks of War: Isle of Dorn
 				{81794}, -- Sparks of War: The Ringing Deeps
 				{81795}, -- Sparks of War: Hallowfall
 				{81796}, -- Sparks of War: Azj-Kahet
 				{86853}, -- Sparks of War: Undermine
+				{90781}, -- Sparks of War: K'aresh?
 			},
-			forcedMaxQuest = 5, -- ОДИН?
+			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-the-severed-threads",
-			name_save = "tww-the-severed-threads",
+			TextLeft = function()
+				return "The Severed Threads"
+			end,
+			name_save = "The Severed Threads",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{80670}, -- Eyes of the Weaver
 				{80671}, -- Blade of the General
 				{80672}, -- Hand of the Vizier
 			},
-			forcedMaxQuest = 3,
+			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-the-call-of-the-worldsoul",
-			name_save = "tww-the-call-of-the-worldsoul",
+			TextLeft = function()
+				return "The Call of the Worldsoul"
+			end,
+			name_save = "The Call of the Worldsoul",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82482}, -- Worldsoul: Snuffling
@@ -1110,6 +828,7 @@ local function tempFunction()
 				{82489}, -- Worldsoul: The Dawnbreaker
 				{82659}, -- Worldsoul: Nerub-ar Palace
 				{87417}, -- Worldsoul: Dungeons
+				{91052}, -- Worldsoul: Overcharged Delves
 				{87419}, -- Worldsoul: Delves
 				{82490}, -- Worldsoul: Priory of the Sacred Flame
 				{82491}, -- Worldsoul: Ara-Kara, City of Echoes
@@ -1131,12 +850,14 @@ local function tempFunction()
 				{82508}, -- Worldsoul: The Rookery
 				{82509}, -- Worldsoul: Nerub-ar Palace
 				{82510}, -- Worldsoul: Nerub-ar Palace
-				{82511}, -- Worldsoul: Awakening Machine
 				{89514}, -- Worldsoul: Horrific Visions Revisited
-				{82512}, -- Worldsoul: World Boss
-				{87423}, -- Worldsoul: Undermine Explorer
 				{87424}, -- Worldsoul: World Bosses
+				{82511}, -- Worldsoul: Awakening Machine
+				{82512}, -- Worldsoul: World Boss
+				{89492}, -- Worldsoul: Dastardly Duos in the Dome!
+				{87423}, -- Worldsoul: Undermine Explorer
 				{82488}, -- Worldsoul: Darkflame Cleft
+				{91855}, -- Worldsoul: K'aresh World Quests
 				{82487}, -- Worldsoul: The Stonevault
 				{82486}, -- Worldsoul: The Rookery
 				{82485}, -- Worldsoul: Cinderbrew Meadery
@@ -1148,87 +869,108 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-archives",
-			name_save = "tww-archives",
+			TextLeft = function()
+				return "Archives"
+			end,
+			name_save = "Archives",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
 				{82679}, -- Archives: Seeking History
 				{82678}, -- Archives: The First Disc
 			},
-			forcedMaxQuest = 2,
+			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-delves",
-			name_save = "tww-delves",
+			TextLeft = function()
+				return E.func_GetQuestName(82706, false) -- DELVES_LABEL
+			end,
+			name_save = "Delves",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
-				{82708}, -- Delves: Nerubian Menace
-				{82707}, -- Delves: Earthen Defense
+				-- {82708}, -- Delves: Nerubian Menace (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82707}, -- Delves: Earthen Defense (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
 				{82706}, -- Delves: Worldwide Research
-				{82709}, -- Delves: Percussive Archaeology
-				{82710}, -- Delves: Empire-ical Exploration
-				{82711}, -- Delves: Lost and Found
-				{82712}, -- Delves: Trouble Up and Down Khaz Algar
-				{82746}, -- Delves: Breaking Tough to Loot Stuff
+				-- {82709}, -- Delves: Percussive Archaeology (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82710}, -- Delves: Empire-ical Exploration (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82711}, -- Delves: Lost and Found (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82712}, -- Delves: Trouble Up and Down Khaz Algar (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82746}, -- Delves: Breaking Tough to Loot Stuff (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
 			},
-			forcedMaxQuest = 8,
+			forcedMaxQuest = 1, -- 8? НАДО УТОЧНИТЬ
 		},
+
+
+
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-the-theater-trope",
-			name_save = "tww-the-theater-trope",
+			TextLeft = function()
+				return E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
+			end,
+			name_save = "The Theater Troupe",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{83240},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-spreading-the-light",
-			name_save = "tww-spreading-the-light",
+			TextLeft = function()
+				return E.func_GetQuestName(76586, false)
+			end,
+			name_save = "Spreading the Light",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{76586},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-gearing-up-for-trouble",
-			name_save = "tww-gearing-up-for-trouble",
+			TextLeft = function()
+				return E.func_GetQuestName(83333, false)
+			end,
+			name_save = "Gearing Up for Trouble",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{83333},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-special-assignments",
-			name_save = "tww-special-assignments",
+			TextLeft = function()
+				return "Special Assignments"
+			end,
+			name_save = "Special Assignments",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{82355}, -- Special Assignment: Cinderbee Surge (Completing)
-				{81647}, -- Special Assignment: Titanic Resurgence (Completing)
+					{81647}, -- Special Assignment: Titanic Resurgence (Completing)
 				{81649}, -- Special Assignment: Titanic Resurgence (Completing)
-				{81650}, -- Special Assignment: Titanic Resurgence (Completing)
+					{81650}, -- Special Assignment: Titanic Resurgence (Completing)
 				{81691}, -- Special Assignment: Shadows Below (Completing)
 				{83229}, -- Special Assignment: When the Deeps Stir (Completing)
 				{82852}, -- Special Assignment: Lynx Rescue (Completing)
@@ -1237,28 +979,36 @@ local function tempFunction()
 				{82531}, -- Special Assignment: Bombs from Behind (Completing)
 				{85487}, -- Special Assignment: Boom! Headshot! (Completing)
 				{85488}, -- Special Assignment: Security Detail (Completing)
+				{89294}, -- Special Assignment: Aligned Views (Completing)
+				{89293}, -- Special Assignment: Overshadowed (Completing)
 			},
-			forcedMaxQuest = 3,
+			forcedMaxQuest = 4, -- НАДО УТОЧНИТЬ
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-rollin-down-in-the-deeps",
-			name_save = "tww-rollin-down-in-the-deeps",
+			TextLeft = function()
+				return E.func_GetQuestName(82946, false)
+			end,
+			name_save = "Rollin' Down in the Deeps",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{82946},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-biergoth-dungeon-quest",
-			name_save = "tww-biergoth-dungeon-quest",
+			TextLeft = function()
+				return "Biergoth Dungeon Quest"
+			end,
+			name_save = "Biergoth Dungeon Quest",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{83432}, -- The Rookery
 				{83436}, -- Cinderbrew Meadery
@@ -1270,27 +1020,33 @@ local function tempFunction()
 				{83469}, -- City of Threads
 				{86203}, -- Operation: Floodgate
 			},
-			forcedMaxQuest = 1, -- "any"
+			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-the-key-to-success",
-			name_save = "tww-the-key-to-success",
+			TextLeft = function()
+				return E.func_GetQuestName(84370, false)
+			end,
+			name_save = "The Key to Success",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{84370},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-services-requested",
-			name_save = "tww-services-requested",
+			TextLeft = function()
+				return "TWW Profession Weeklies"
+			end,
+			name_save = "TWW Profession Weeklies",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{84127}, -- Blacksmithing Services Requested
 				{84128}, -- Engineering Services Requested
@@ -1321,154 +1077,241 @@ local function tempFunction()
 			forcedMaxQuest = 2,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-algari-treatise",
-			name_save = "tww-algari-treatise",
+			TextLeft = function()
+				return "TWW Algari Treatise"
+			end,
+			name_save = "TWW Algari Treatise",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
-				{83725}, -- Algari Treatise on Alchemy
-				{83726}, -- Algari Treatise on Blacksmithing
-				{83727}, -- Algari Treatise on Enchanting
-				{83728}, -- Algari Treatise on Engineering
-				{83729}, -- Algari Treatise on Herbalism
-				{83730}, -- Algari Treatise on Inscription
-				{83731}, -- Algari Treatise on Jewelcrafting
-				{83732}, -- Algari Treatise on Leatherworking
-				{83733}, -- Algari Treatise on Mining
-				{83734}, -- Algari Treatise on Skinning
-				{83735}, -- Algari Treatise on Tailoring
+				{83725}, -- = L["Algari Treatise on Alchemy"],
+				{83726}, -- = L["Algari Treatise on Blacksmithing"],
+				{83727}, -- = L["Algari Treatise on Enchanting"],
+				{83728}, -- = L["Algari Treatise on Engineering"],
+				{83729}, -- = L["Algari Treatise on Herbalism"],
+				{83730}, -- = L["Algari Treatise on Inscription"],
+				{83731}, -- = L["Algari Treatise on Jewelcrafting"],
+				{83732}, -- = L["Algari Treatise on Leatherworking"],
+				{83733}, -- = L["Algari Treatise on Mining"],
+				{83734}, -- = L["Algari Treatise on Skinning"],
+				{83735}, -- = L["Algari Treatise on Tailoring"],
 			},
-			forcedMaxQuest = 2,
+			forcedMaxQuest = 2, -- НАДО УТОЧНИТЬ
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-anniversary-restored-coffer-key",
-			name_save = "tww-anniversary-restored-coffer-key",
+			TextLeft = function()
+				return "Anniversary Restored Coffer Key" --E.func_GetQuestName(86202, false)
+			end,
+			name_save = "Anniversary Restored Coffer Key",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{86202},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-siren-isle-weekly",
-			name_save = "tww-siren-isle-weekly",
+			TextLeft = function()
+				return "Siren Isle Weekly"
+			end,
+			name_save = "Siren Isle Weekly",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
-				-- Vrykul invasion
+				{nil, forcedText = {text = E.COLOR_SKYBLUE..E.TEXT_SPACE.."Vrykul invasion|r"},},
 				{84852}, -- Legacy of the Vrykul
 				{84680}, -- Rock 'n Stone Revival
 				{83932}, -- Historical Documents
 				{84432}, -- Longship Landing
 				{84248}, -- A Ritual of Runes
 				{84222}, -- Secure the Perimeter
-				-- Pirate invasion
+				{nil},
+				{nil, forcedText = {text = E.COLOR_STEELBLUE..E.TEXT_SPACE.."Pirate invasion|r"},},
 				{84851}, -- Tides of Greed
 				{83753}, -- Cannon Karma
 				{84299}, -- Pirate Plunder
 				{84619}, -- Ooker Dooker Literature Club
 				{83827}, -- Silence the Song
 				{84001}, -- Cart Blanche
-				-- Naga invasion
+				{nil},
+				{nil, forcedText = {text = E.COLOR_SLATEGRAY..E.TEXT_SPACE.."Naga invasion|r"},},
 				{84850}, -- Serpent's Wrath
 				{85589}, -- Ruffled Pages
 				{84430}, -- Crystal Crusade
 				{85051}, -- Beach Comber
 				{84627}, -- Three Heads of the Deep
 			},
-			forcedMaxQuest = 6,
+			forcedMaxQuest = 6, -- НАДО УТОЧНИТЬ
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-free-chett-list",
-			name_save = "tww-free-chett-list",
+			TextLeft = function()
+				return "Free C.H.E.T.T. List"
+			end,
+			name_save = "Free C.H.E.T.T. List",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
 				{87296},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = true,
 			showTooltip = true,
-			TextLeft = "tww-chett-list",
-			name_save = "tww-chett-list",
+			TextLeft = function()
+				return "C.H.E.T.T. List"
+			end,
+			name_save = "C.H.E.T.T. List",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
-				{86915}, -- Side with a Cartel
-				{86917}, -- Ship Right
-				{86918}, -- Reclaimed Scrap
-				{86919}, -- Side Gig
-				{86920}, -- War Mode Violence
-				{86923}, -- Go Fish
-				{86924}, -- Gotta Catch at Least a Few
-				{87302}, -- Rare Rivals
-				{87303}, -- Clean the Sidestreets
-				{87304}, -- Time to Vacate
-				{87305}, -- Desire to D.R.I.V.E.
-				{87306}, -- Kaja Cruising
-				{87307}, -- Garbage Day
+				{86915}, -- = L["Side with a Cartel"],
+				{86917}, -- = L["Ship Right"],
+				{86918}, -- = L["Reclaimed Scrap"],
+				{86919}, -- = L["Side Gig"],
+				{86920}, -- = L["War Mode Violence"],
+				{86923}, -- = L["Go Fish"],
+				{86924}, -- = L["Gotta Catch at Least a Few"],
+				{87302}, -- = L["Rare Rivals"],
+				{87303}, -- = L["Clean the Sidestreets"],
+				{87304}, -- = L["Time to Vacate"],
+				{87305}, -- = L["Desire to D.R.I.V.E."],
+				{87306}, -- = L["Kaja Cruising"],
+				{87307}, -- = L["Garbage Day"],
 			},
-			forcedMaxQuest = 4,
+			forcedMaxQuest = 4, -- НАДО УТОЧНИТЬ
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-delvers-bounty",
-			name_save = "tww-delvers-bounty",
+			TextLeft = function()
+				return E.func_GetQuestName(86775, false)
+			end,
+			name_save = "Urge to Surge",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
 			quests = {
-				{86371},
+				{86775},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-nightfall-scenario",
-			name_save = "tww-nightfall-scenario",
+			TextLeft = function()
+				return E.func_GetQuestName(85869, false)
+			end,
+			name_save = "Many Jobs, Handle It!",
 			defS = true,
 			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			desc = categoryKey,
+			quests = {
+				{85869},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(85879, false)
+			end,
+			name_save = "Reduce, Reuse, Resell",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{85879},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(91173, false) -- tww-nightfall-scenario
+			end,
+			name_save = "The Flame Burns Eternal",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
 			quests = {
 				{91173},
 			},
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
-			TextLeft = "tww-nightfall-daily",
-			name_save = "tww-nightfall-daily",
+			TextLeft = function()
+				return "Nightfall Daily"
+			end,
+			name_save = "Nightfall Daily",
 			defS = true,
-			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
+			reset = "Daily",
+			desc = categoryKey,
 			quests = {
 				{87475}, -- Sureki Incursion: Hold the Wall
 				{87477}, -- Sureki Incursion: Southern Swarm
 				{87480}, -- Sureki Incursion: The Eastern Assault
+				{nil},
 				{88711}, -- Radiant Incursion: Toxins and Pheromones
 				{88916}, -- Radiant Incursion: Sureki's End
 				{88945}, -- Radiant Incursion: Rak-Zakaz
 			},
-			forcedMaxQuest = 3,
+			forcedMaxQuest = 3, -- НАДО УТОЧНИТЬ
 		},
-		----------------------------------------------------------------
 		{
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return "tww-karesh-warrants "..E.func_GetCurrencyName(3278)
+				return E.func_GetQuestName(91093, false)
 			end,
-			name_save = "tww-karesh-warrants",
+			name_save = "More Than Just a Phase",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{91093},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(85460, false)
+			end,
+			name_save = "Ecological Succession",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{85460},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return "K'aresh Warrants"
+			end,
+			name_save = "K'aresh Warrants",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1482,21 +1325,10 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-		{
-			showTooltip = true,
-			TextLeft = "tww-weekly-cache_S3",
-			name_save = "tww-weekly-cache_S3",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey, -- STORYLINE
-			quests = {
-				{91175},
-				{91176},
-				{91177},
-				{91178},
-			},
-			forcedMaxQuest = 4,
-		},
+
+
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
@@ -1506,5 +1338,4 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)
