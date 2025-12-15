@@ -250,9 +250,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 local function func_currencyName_CACHE(id, forcedQuality)
-	if type(id) ~= "number" then
-		print (id)
-	end
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		local hasMount = E.OctoTable_CurrencyMountForFuncCurName[id] or false
@@ -1053,9 +1050,9 @@ local reactionColors = {
 function E.func_GetReputationProgress(reputationID)
 	local SHOWFULL = false
 	local FIRST, SECOND = 0, 0
-	local result = ""
+	-- local result = ""
 	local color = E.COLOR_PINK
-	local standingTEXT = ""
+	-- local standingTEXT = ""
 	local reaction = 0
 	local simpleData = GetFactionDataByID(reputationID)
 	local isSimple = simpleData ~= nil
@@ -1063,31 +1060,36 @@ function E.func_GetReputationProgress(reputationID)
 	local friendData = GetFriendshipReputation(reputationID)
 	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
 	local isMajor = IsMajorFaction(reputationID)
+	local repType = 0
 
 	if isSimple then
 		reaction = simpleData.reaction
-		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+		-- standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 		color = reactionColors[reaction] or E.COLOR_PINK
+		repType = 5
 	end
 	if isParagon then
 		local currentValue, threshold, _, _, tooLowLevelForParagon = GetFactionParagonInfo(reputationID)
 		if threshold then
 			local value = currentValue % threshold
 			color = E.COLOR_BLUE
-			result = value.."/"..threshold
+			-- result = value.."/"..threshold
 			if tooLowLevelForParagon then
-				result = result..E.COLOR_RED.."*|r"
+				-- result = result..E.COLOR_RED.."*|r"
+				color = E.COLOR_GRAY
 			end
 			FIRST, SECOND = value, threshold
 		end
+		repType = 4
 	elseif isMajor then
 		local majorData = GetMajorFactionData(reputationID)
 		if majorData then
 			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
 			local totalValue = majorData.renownLevelThreshold
-			result = currentValue.."/"..totalValue..color.."("..majorData.renownLevel..")|r"
+			-- result = currentValue.."/"..totalValue..color.."("..majorData.renownLevel..")|r"
 			FIRST, SECOND = currentValue, totalValue
 		end
+		repType = 3
 	elseif isFriend then
 		local standing = friendData.standing or 0
 		local reactionThreshold = friendData.reactionThreshold or 0
@@ -1099,12 +1101,13 @@ function E.func_GetReputationProgress(reputationID)
 		local maxLevel = rankInfo and rankInfo.maxLevel or 0
 		if currentLevel == maxLevel then
 			FIRST, SECOND = currentLevel, maxLevel
-			result = FIRST.."/"..SECOND
+			-- result = FIRST.."/"..SECOND
 		else
-			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+			-- standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
-			result = FIRST.."/"..SECOND..standingTEXT
+			-- result = FIRST.."/"..SECOND..standingTEXT
 		end
+		repType = 2
 	elseif isSimple and simpleData.currentStanding then
 		local barMin = simpleData.currentReactionThreshold
 		local barMax = simpleData.nextReactionThreshold
@@ -1113,14 +1116,21 @@ function E.func_GetReputationProgress(reputationID)
 		local totalValue = barMax - barMin
 		if currentValue == totalValue then
 			FIRST, SECOND = 1, 1
-			result = standingTEXT
+			-- result = standingTEXT
 		else
 			FIRST, SECOND = SHOWFULL and barMin or currentValue,
 			SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
-			result = FIRST.."/"..SECOND
+			-- result = FIRST.."/"..SECOND
 		end
+		repType = 1
 	end
-	return FIRST.."#"..SECOND.."#"..result.."#"..color.."#"..standingTEXT
+	if SECOND == 0 then -- NO INFO + где-то может repType записаться
+		return false
+	end
+
+	-- 1 simple, 2 Friend, 3 major, 4 paragon
+	return {FIRST, SECOND, repType, standing, maxStanding}
+	-- return FIRST.."#"..SECOND.."#"..repType.."#"..color.."#"..standingTEXT
 end
 function E.func_GetQuestLogCount()
 	local numQuests = 0
@@ -1781,13 +1791,24 @@ function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id) 
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 	----------------------------------------------------------------
 end
+
+
+
+E.STANDINGSREP = {
+	[1] = "SIMPLE",
+	[2] = "Friend",
+	[3] = "major",
+	[4] = "paragon",
+}
+ -- 1 simple, 2 Friend, 3 major, 4 paragon
+
 function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
 	if not categoryKey then return end
 	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	----------------------------------------------------------------
 	if CharInfo.MASLENGO.Reputation[id] and type(CharInfo.MASLENGO.Reputation[id]) == "string" then
-		local FIRST, SECOND, output, colorC, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
+		local FIRST, SECOND, repType, colorC, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
 		FirstReputation = tonumber(FIRST)
 		SecondReputation = tonumber(SECOND)
 		ColorCenter = colorC
@@ -1798,6 +1819,11 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 			TextCenter = E.DONE
 		elseif TextCenter == "0/0" then
 			TextCenter = ""
+		end
+		repType = tonumber(repType)
+		if repType and repType < 5 and repType ~= 2 then
+			local stText = GetText("FACTION_STANDING_LABEL"..repType, UnitSex("player"))
+			TextCenter = TextCenter .. ColorCenter..E.STANDINGSREP[repType]..stText.." ("..repType..")|r" -- ПОФИКСИТЬ РЕПА
 		end
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
@@ -4083,7 +4109,6 @@ end
 function E.func_SpamBlock(...)
 	local key = (""):join(tostringall(...))
 	local func, needCheckCombat, id = ...
-	-- print (func, needCheckCombat, id)
 	if type(func) ~= "function" then return end
 	local SPAM_TIME = E.SPAM_TIME
 	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
@@ -4403,8 +4428,46 @@ function E.func_countTable(t)
 	end
 	return count
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
+
+
+
+-- XOR для uint16
+local function xor16(a, b)
+	local r = 0
+	for i = 0, 15 do
+		local bitA = a % 2
+		local bitB = b % 2
+		local bitR = (bitA + bitB) % 2
+		r = r + bitR * 2^i
+		a = math.floor(a/2)
+		b = math.floor(b/2)
+	end
+	return r
+end
+
+-- Константа ключа
+local XOR_KEY = 0xABCD
+
+-- Кодирование массива чисел в uint16 с XOR
+function E.func_EncodeUInt16Array(arr)
+	local packed = {}
+	for i = 1, #arr do
+		assert(arr[i] >= 0 and arr[i] <= 65535, "Value out of uint16 range")
+		packed[i] = xor16(arr[i], XOR_KEY)
+	end
+	return packed
+end
+
+-- Декодирование массива чисел
+function E.func_DecodeUInt16Array(packed)
+	local arr = {}
+	for i = 1, #packed do
+		arr[i] = xor16(packed[i], XOR_KEY)
+	end
+	return arr
+end
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

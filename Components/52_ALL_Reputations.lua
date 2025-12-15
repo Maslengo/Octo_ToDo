@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
-local enable = false
+local enable = true
 if not enable then return end
 ----------------------------------------------------------------
 local categoryKey = 52

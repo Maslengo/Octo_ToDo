@@ -293,10 +293,10 @@ function EventFrame:Octo_ToDo_DB_Levels()
 				MASLENGO.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
-		-- Инициализируем данные репутации
-		for ID in next,(E.ALL_Reputations) do
-			MASLENGO.Reputation[ID] = MASLENGO.Reputation[ID] or "0#0###"
-		end
+		-- Инициализируем данные репутации (ТЕПЕРЬ НЕ НУЖНО)
+		-- for ID in next,(E.ALL_Reputations) do
+		-- 	MASLENGO.Reputation[ID] = MASLENGO.Reputation[ID] or "0#0###"
+		-- end
 		-- Инициализируем данные LFG инстансов
 		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
 			MASLENGO.LFGInstance[dungeonID] = MASLENGO.LFGInstance[dungeonID] or {}

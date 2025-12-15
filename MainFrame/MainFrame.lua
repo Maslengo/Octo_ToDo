@@ -495,6 +495,13 @@ function EventFrame:func_InitCenter(frame, node)
 				columnFrames.ReputationBackground:Show()
 				columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1, .3)
 				if dataType == "Reputations" and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) ~= 0 then
+				-- ПОФИКСИТЬ НА НОВЫЙ ЛАД
+				-- if dataType == "Reputations" then
+				-- 	local GUID = frameData.GUID[i]
+				-- 	local FirstReputation, SecondReputation, repType, colorC, standing = ("#"):split(Octo_ToDo_DB_Levels[GUID].MASLENGO.Reputation[id])
+				-- 	FirstReputation = tonumber(FirstReputation)
+				-- 	SecondReputation = tonumber(SecondReputation)
+
 					local FirstReputation = tonumber(frameData.FirstReputation[i])
 					local SecondReputation = tonumber(frameData.SecondReputation[i])
 					if FirstReputation == SecondReputation then

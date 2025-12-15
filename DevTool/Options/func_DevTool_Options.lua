@@ -14,32 +14,6 @@ function E.func_DevTool_Options(savedVars)
 		name = E.func_AddonNameForOptionsFunc(GlobalAddonName), -- BINDING_HEADER_DEBUG
 		args = {
 			-------------------------------------------------
-			["Header"..GetOrder()] = {
-				type = "header",
-				name = "",
-				order = GetOrder(),
-			},
-			HOOINYA = {
-				type = "execute",
-				name = "ВООБЩЕ ВСЁ",
-				desc = "УДАЛИТЬ ХУЙНЮ",
-				func = function()
-					Octo_Cache_DB = nil
-					Octo_profileKeys = nil
-					Octo_ToDo_DB_Levels = nil
-					Octo_ToDo_DB_Vars = nil
-					Octo_DevTool_DB = nil
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			["Header"..GetOrder()] = {
-				type = "header",
-				name = "",
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			Reload = {
 				type = "execute",
 				name = RELOADUI,
@@ -53,7 +27,7 @@ function E.func_DevTool_Options(savedVars)
 			DELETEALL = {
 				type = "execute",
 				name = DELETE.." "..ALL,
-				desc = "Octo_ToDo_DB_Levels= {}|nOcto_ToDo_DB_Vars = {}",
+				desc = "ВООБЩЕ ВСЁ",
 				func = function()
 						wipe(Octo_profileKeys)
 						wipe(Octo_ToDo_DB_Levels)
@@ -61,6 +35,11 @@ function E.func_DevTool_Options(savedVars)
 						wipe(Octo_Cache_DB)
 						wipe(Octo_DevTool_DB)
 
+						Octo_profileKeys = nil
+						Octo_ToDo_DB_Levels = nil
+						Octo_ToDo_DB_Vars = nil
+						Octo_Cache_DB = nil
+						Octo_DevTool_DB = nil
 					-- for _, tbl in ipairs(E.OctoTable_SavedVariables) do
 					-- 	print (tbl.name)
 					-- 	wipe(tbl)
@@ -79,7 +58,7 @@ function E.func_DevTool_Options(savedVars)
 			-------------------------------------------------
 			MASLENGO = {
 				type = "execute",
-				name = "MASLENGO",
+				name = DELETE.." ".."MASLENGO",
 				desc = "CharInfo.MASLENGO = {}",
 				func = function()
 					for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do

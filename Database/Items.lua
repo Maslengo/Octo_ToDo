@@ -769,7 +769,7 @@ do
 	for _, itemID in next, (E.OctoTable_itemID_ItemsUsable_Other) do
 		E.OctoTable_itemID_ItemsUsable[itemID] = 1
 	end
-	-- ЛАГУЧАЯ ХУЙНЯ
+	-- ЛАГУЧАЯ Х
 	-- for itemID, _ in next, (E.OctoTable_itemID_ItemsUsable) do
 	-- table.insert(E.OctoTable_itemID_ALL, itemID)
 	-- end
