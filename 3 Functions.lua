@@ -1278,7 +1278,7 @@ end
 function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, frame, func, frameString)
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
-			icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..nameForIcon,
+			icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\"..nameForIcon,
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
@@ -1437,7 +1437,7 @@ function E.func_RegisterEvents(frame, MyEventsTable)
 			if self[event] then
 				self[event](self,...)
 			else
-				DEFAULT_CHAT_FRAME:AddMessage(E.KILLTEXT..E.COLOR_EVENT..event.."|r"..E.KILLTEXT..tostring(DebugPath))
+				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
 				self:UnregisterEvent(event)
 				self.event = nil
 			end
@@ -2224,19 +2224,14 @@ E.Config_DebugID_Events = false
 E.Config_DebugID_Professions = false
 
 E.UNIVERSAL = "UNIVERSAL_"
-E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CentralFrame.tga"
-E.TEXTURE_REPUTATION_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Naowh.tga"
-E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\LeftFrame.tga"
-E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Octo\\CharFrame.tga"
-E.TEXTURE_HIGHLIGHT_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
+E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga"
+E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\LeftFrame.tga"
+E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CharFrame.tga"
 E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
-E.TEXTURE_BLANK_PATH = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\04_Statusbars\\Blank.tga"
-E.TEXTURE_HIGHLIGHT = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\BUTTON\\GlowTexture.tga"
 E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
 E.curLocaleLang = GetLocale() or "enUS"
-E.Icon_MailBox = "Interface/AddOns/"..GlobalAddonName.."/Media/ElvUI/Mail0.tga"
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
@@ -2292,8 +2287,8 @@ E.backgroundColorG = .08
 E.backgroundColorB = .08
 E.backgroundColorA = .8
 E.edgeSize = 1
-E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
-E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\03_Borders\\Octo.tga"
+E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
+E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
 E.menuBackdrop = {
 	bgFile = E.bgFile,
 	edgeFile = E.edgeFile,
@@ -2307,7 +2302,7 @@ E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2 -- Высота заголовка
 E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
 E.GLOBAL_LINE_WIDTH_LEFT = 200
 E.GLOBAL_LINE_WIDTH_RIGHT = 90
-E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\02_Fonts\\Octo.TTF"
+E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Fonts\\Expressway Rg Bold.TTF"
 E.GLOBAL_FONT_SIZE = 11
 E.OctoFont10 = CreateFont("OctoFont10")
 E.OctoFont10:CopyFontObject(GameTooltipText)
@@ -2455,7 +2450,7 @@ E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 
 E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
 E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
 E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
-E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Util_Icons\\ICON_EMPTY"
+E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\ICON_EMPTY"
 E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
 E.OctoTable_Prefixes = {
 	"Русский",
@@ -2505,7 +2500,6 @@ E.OctoTable_Covenant = {
 E.LIST_MAX_SIZE = 30
 E.DEBUG_TEXT = E.COLOR_BLUE..BINDING_HEADER_DEBUG.."|r"
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
-E.KILLTEXT = "|T".."Interface\\Addons\\"..E.MainAddonName.."\\Media\\ElvUI\\Facepalm.tga"..":14:14:::64:64:4:60:4:60|t"
 function E.func_FormatMountInfo(mountID)
 	local mountIconNumber = E.func_GetMountTexture(mountID)
 	local mountIcon = E.func_texturefromIcon(mountIconNumber)
@@ -3025,7 +3019,7 @@ function E.func_WasOnlineTooltipLeft(visiblePlayers, id)
 	--------------------------------------------------------
 	-- 5. Итоги сверху
 	--------------------------------------------------------
-	if #characterData > 0 then
+	if #characterData > 1 then
 		local heade1 = {
 			"",
 			TOTAL..": "..E.func_SecondsToClock(total),
@@ -4430,7 +4424,7 @@ function E.func_countTable(t)
 end
 
 
-
+----------------------------------------------------------------
 -- XOR для uint16
 local function xor16(a, b)
 	local r = 0
@@ -4466,8 +4460,6 @@ function E.func_DecodeUInt16Array(packed)
 	end
 	return arr
 end
-
-
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

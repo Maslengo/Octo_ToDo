@@ -30,8 +30,8 @@ end
 function E.func_Mounts_3252() --Bronze
 local tbl = {
 
-		-- {itemID = 253024, price = 20000, mountID = ЙЦУ, source = E.func_FormatExpansion(7),}, -- DRUID FORM
-		-- {itemID = 153193, price = 10000, mountID = ЙЦУ, source = E.func_FormatExpansion(7),}, -- TOY
+		-- {itemID = 253024, price = 20000, mountID = QWE, source = E.func_FormatExpansion(7),}, -- DRUID FORM
+		-- {itemID = 153193, price = 10000, mountID = QEW, source = E.func_FormatExpansion(7),}, -- TOY
 
 		{itemID = 138201, price = 20000, mountID = 2678, source = E.func_FormatExpansion(7),},
 		{itemID = 152816, price = 100000, mountID = 971, source = E.func_FormatExpansion(7),},

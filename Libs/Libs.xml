@@ -4,8 +4,6 @@
 	<Script file="CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
 	<Script file="LibIndentation-1.0\LibIndentation-1.0.lua"/>
 
-	<Include file="LibDeflate\lib.xml"/>
-	<Include file="LibSerialize\lib.xml"/>
 	<Include file="UTF8\lib.xml"/>
 	<Include file="LibSFDropDown\LibSFDropDown.xml"/>
 	<Include file="LibDataBroker-1.1\lib.xml"/>

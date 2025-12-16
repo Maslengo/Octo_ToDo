@@ -709,25 +709,25 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		end
 		self:ddAddButton(info, level)
 
-		self:ddAddSeparator(level)
+		-- self:ddAddSeparator(level)
 
-		info = {}
-		info.fontObject = OctoFont11
-		info.keepShownOnClick = false
-		info.notCheckable = true
-		info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys"
-		info.func = function()
-			wipe(Octo_profileKeys)
-			Octo_profileKeys = {}
-			Octo_profileKeys.CurrentProfile = "Default"
-			Octo_profileKeys.isSettingsEnabled = false
-			Octo_profileKeys.useGlobalProfile = false
-			E.func_CreateNewProfile("Default")
-			C_Timer.After(1, function()
-					providerfunc()
-			end)
-		end
-		self:ddAddButton(info, level)
+		-- info = {}
+		-- info.fontObject = OctoFont11
+		-- info.keepShownOnClick = false
+		-- info.notCheckable = true
+		-- info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys"
+		-- info.func = function()
+		-- 	wipe(Octo_profileKeys)
+		-- 	Octo_profileKeys = {}
+		-- 	Octo_profileKeys.CurrentProfile = "Default"
+		-- 	Octo_profileKeys.isSettingsEnabled = false
+		-- 	Octo_profileKeys.useGlobalProfile = false
+		-- 	E.func_CreateNewProfile("Default")
+		-- 	C_Timer.After(1, function()
+		-- 			providerfunc()
+		-- 	end)
+		-- end
+		-- self:ddAddButton(info, level)
 	end
 end
 

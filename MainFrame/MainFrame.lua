@@ -247,8 +247,8 @@ local function func_SettingsButton_OnClick(button, frameData)
 	local newValue = not (settingsTable[key] or false)
 	settingsTable[key] = newValue
 	local texture = newValue and
-	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen" or
-	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
+	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
+	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
 	local parentFrame = button:GetParent() -- кнопка находится внутри frame
 	parentFrame.SettingsTexture:SetTexture(texture)
 end
@@ -396,9 +396,9 @@ function EventFrame:func_InitLEFT(frame, node)
 	if Octo_profileKeys.isSettingsEnabled then
 		local texture = E.ICON_EMPTY
 		if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
-			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonONgreen"
+			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen"
 		else
-			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\AddonsManager\\buttonOFFred"
+			texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
 		end
 		frame.SettingsTexture:SetTexture(texture)
 		-- frame.icon1texture:Hide()

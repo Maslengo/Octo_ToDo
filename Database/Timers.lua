@@ -37,15 +37,10 @@ end
 -- baseTime, interval, duration, colorBefore, colorDuring, label)
 -- Dragonflight Timers
 function E.Timers.BfA_Assault()
-
-
-
 	local ZONE_CYCLE = {
 		{ mapID = 249, poiID = "ЙЦУЙЦУ", name = "УЛЬДУМ" }, -- Зулдазар
 		{ mapID = 390, poiID = "ЙУЦЙУЦ", name = "ДОЛ" }, -- Звук Тирагарда
 	}
-
-
 	return CreateTimer(1547611200, 86400, 86400)
 end
 -- Dragonflight Timers

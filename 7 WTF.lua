@@ -31,7 +31,7 @@ function EventFrame:func_CacheGameData()
 	-- for id in next,(E.ALL_Quests) do
 	-- local name = E.func_GetQuestName(id)
 	-- end
-	for _, id in next,(E.OctoTable_NPC) do
+	for id in next,(E.OctoTable_AllNPCs_DB) do
 		local name = E.func_GetNPCName(id)
 	end
 	----------------------------------------------------------------
@@ -344,7 +344,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontFlags = "OUTLINE"
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r" -- "|cffd177ffN|r|cffb682f7a|r|cff9a8ef0o|r|cff7f99e8w|r|cff63A4E0h|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffE|r|cffcb7afdx|r|cffc47cfbp|r|cffbe7ffar|r|cffb782f8e|r|cffb184f6s|r|cffaa87f4s|r|cffa48af2w|r|cff9d8cf0a|r|cff978fefy|r|cff9091ed |r|cff8a94ebR|r|cff8397e9g|r|cff7d99e7 |r|cff769ce5B|r|cff709fe4o|r|cff69a1e2l|r|cff63A4E0d|r" -- "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
