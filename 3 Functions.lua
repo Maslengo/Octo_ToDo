@@ -1036,23 +1036,25 @@ function E.func_ReversSort(a, b)
 	return b < a
 end
 
-local reactionColors = {
-	[0] = E.COLOR_WHITE,
-	[1] = E.COLOR_RED,
-	[2] = E.COLOR_RED,
-	[3] = E.COLOR_ORANGE,
-	[4] = E.COLOR_YELLOW,
-	[5] = E.COLOR_YELLOW,
-	[6] = E.COLOR_GREEN,
-	[7] = E.COLOR_GREEN,
-	[8] = E.COLOR_GREEN,
-}
+
 function E.func_GetReputationProgress(reputationID)
+	local reactionColors = {
+		[0] = E.COLOR_WHITE,
+		[1] = E.COLOR_RED,
+		[2] = E.COLOR_RED,
+		[3] = E.COLOR_ORANGE,
+		[4] = E.COLOR_YELLOW,
+		[5] = E.COLOR_YELLOW,
+		[6] = E.COLOR_GREEN,
+		[7] = E.COLOR_GREEN,
+		[8] = E.COLOR_GREEN,
+	}
+
 	local SHOWFULL = false
 	local FIRST, SECOND = 0, 0
 	-- local result = ""
 	local color = E.COLOR_PINK
-	-- local standingTEXT = ""
+	local standingTEXT = ""
 	local reaction = 0
 	local simpleData = GetFactionDataByID(reputationID)
 	local isSimple = simpleData ~= nil
@@ -1064,7 +1066,7 @@ function E.func_GetReputationProgress(reputationID)
 
 	if isSimple then
 		reaction = simpleData.reaction
-		-- standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 		color = reactionColors[reaction] or E.COLOR_PINK
 		repType = 5
 	end
@@ -1103,7 +1105,7 @@ function E.func_GetReputationProgress(reputationID)
 			FIRST, SECOND = currentLevel, maxLevel
 			-- result = FIRST.."/"..SECOND
 		else
-			-- standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
 			-- result = FIRST.."/"..SECOND..standingTEXT
 		end
@@ -1129,8 +1131,8 @@ function E.func_GetReputationProgress(reputationID)
 	end
 
 	-- 1 simple, 2 Friend, 3 major, 4 paragon
-	return {FIRST, SECOND, repType, standing, maxStanding}
-	-- return FIRST.."#"..SECOND.."#"..repType.."#"..color.."#"..standingTEXT
+	-- return {FIRST, SECOND, repType, standing, maxStanding}
+	return FIRST.."#"..SECOND.."#"..repType.."#"..color.."#"..standingTEXT
 end
 function E.func_GetQuestLogCount()
 	local numQuests = 0
@@ -1821,10 +1823,10 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 			TextCenter = ""
 		end
 		repType = tonumber(repType)
-		if repType and repType < 5 and repType ~= 2 then
-			local stText = GetText("FACTION_STANDING_LABEL"..repType, UnitSex("player"))
-			TextCenter = TextCenter .. ColorCenter..E.STANDINGSREP[repType]..stText.." ("..repType..")|r" -- ПОФИКСИТЬ РЕПА
-		end
+		-- if repType and repType < 5 and repType ~= 2 then
+		-- 	local stText = GetText("FACTION_STANDING_LABEL"..repType, UnitSex("player"))
+		-- 	TextCenter = TextCenter .. ColorCenter..E.STANDINGSREP[repType]..stText.." ("..repType..")|r" -- ПОФИКСИТЬ РЕПА
+		-- end
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
 				TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"

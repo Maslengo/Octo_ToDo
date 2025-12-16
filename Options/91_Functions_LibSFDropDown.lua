@@ -467,6 +467,11 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		local profileName = menuButton.value
 
 		if profileName == "Default" then
+			Octo_profileKeys.profiles[profileName] = nil
+			E.func_CreateNewProfile(profileName)
+			if Octo_profileKeys.CurrentProfile == profileName then
+				Octo_profileKeys.CurrentProfile = "Default"
+			end
 			return
 		end
 
@@ -644,7 +649,20 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		}
 	end
 
-
+	local function createResetWidget(profileName)
+		return {
+			icon = [[talents-button-undo]], -- Иконка удаления
+			width = 16,
+			height = 16,
+			OnClick = function(btn)
+				func_remove_Profile({value = profileName})
+				dropdown:ddCloseMenus()
+			end,
+			OnTooltipShow = function(btn, tooltip)
+				tooltip:AddLine(RESET, nil, nil, nil, true)
+			end,
+		}
+	end
 
 
 
@@ -678,9 +696,13 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 				tinsert(info.widgets, createDeleteWidget(profileName)) -- Кнопка удаления
 				tinsert(info.widgets, createRenameWidget(profileName)) -- Кнопка ренейма
 				info.text = profileName
-			else
-				info.widgets = nil -- Для профиля Default
+			elseif profileName == "Default" then
+				info.widgets = {}
+				tinsert(info.widgets, createResetWidget(profileName))
 				info.text = DEFAULT
+			-- else
+			-- 	info.widgets = nil -- Для профиля Default
+			-- 	info.text = DEFAULT
 			end
 
 			self:ddAddButton(info, level)
@@ -715,7 +737,7 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		-- info.fontObject = OctoFont11
 		-- info.keepShownOnClick = false
 		-- info.notCheckable = true
-		-- info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys"
+		-- info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys" -- ОТЛАДКА
 		-- info.func = function()
 		-- 	wipe(Octo_profileKeys)
 		-- 	Octo_profileKeys = {}

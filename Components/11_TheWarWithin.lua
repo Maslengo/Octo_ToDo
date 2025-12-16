@@ -20,14 +20,14 @@ local function tempFunction()
 		-- The War Within
 		-- (Season 4)
 		{id = 3278, defS = true,}, -- Астальные нити
-		{id = 3310, defS = true,}, -- SEASON 2
+		{id = 3310, defS = false,}, -- SEASON 2
 		{id = 3269, defS = true,}, -- (Season 3)
 		{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
 		{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
-		{id = 1191, defS = true,},
+		{id = 1191, defS = false,},
 		{id = 2815, defS = true,}, -- Resonance Crystals
-		{id = 3226, defS = true,}, -- Market Research
-		{id = 3056, defS = true,}, -- Kej
+		{id = 3226, defS = false,}, -- Market Research
+		{id = 3056, defS = false,}, -- Kej
 		{id = 3218, defS = false,}, -- Empty Kaja'Cola Can
 		{id = 3303, defS = false,}, --
 		{id = 3090, defS = false,}, -- Flame-Blessed Iron
@@ -42,8 +42,8 @@ local function tempFunction()
 		-- season 3
 		{id = 3290, defS = true,}, -- Gilded Ethereal Crest -- 3-й сезон
 		{id = 3288, defS = true,}, -- Runed Ethereal Crest -- 3-й сезон
-		{id = 3286, defS = true,}, -- Carved Ethereal Crest -- 3-й сезон
-		{id = 3284, defS = true,}, -- Weathered Ethereal Crest -- 3-й сезон
+		{id = 3286, defS = false,}, -- Carved Ethereal Crest -- 3-й сезон
+		{id = 3284, defS = false,}, -- Weathered Ethereal Crest -- 3-й сезон
 		-- {id = 3291, defS = true,}, -- Hidden
 		-- {id = 3289, defS = true,}, -- Hidden
 		-- {id = 3287, defS = true,}, -- Hidden
@@ -52,7 +52,7 @@ local function tempFunction()
 		{id = 3141, defS = false,}, -- Starlight Spark Dust
 		{id = 3028, defS = false,}, -- Restored Coffer Key
 		{id = 3008, defS = true,}, -- Valorstones
-		{id = 2803, defS = true,}, -- Undercoin
+		{id = 2803, defS = false,}, -- Undercoin
 		-- {id = 3110, defS = true,}, -- Gilded Undermine Crest
 		-- {id = 3109, defS = true,}, -- Runed Undermine Crest
 		-- {id = 3108, defS = true,}, -- Carved Undermine Crest
@@ -76,7 +76,6 @@ local function tempFunction()
 		-- { id = 2594,},
 		-- { id = 2600,},
 		-- { id = 2640,},
-		-- { id = 2658,},
 		-- { id = 2667,},
 		-- { id = 2736,},
 		-- { id = 2689,},
@@ -109,13 +108,13 @@ local function tempFunction()
 		-- { id = 2647,},
 		-- { id = 2648,},
 		-- { id = 2649,},
-		-- { id = 2658, },
-		{id = 2653, defS = true,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-		{id = 2640, defS = true,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
-		{id = 2600, defS = true,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-		{id = 2594, defS = true,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
-		{id = 2590, defS = true,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
-		{id = 2570, defS = true,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+		{id = 2658, defS = true,},
+		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
+		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
+		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
+		{id = 2594, defS = false,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
+		{id = 2590, defS = false,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
+		{id = 2570, defS = false,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
 		----------------------------------------------------------------
 		{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
 		{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
@@ -524,7 +523,7 @@ local function tempFunction()
 			showTooltip = true,
 			TextLeft = L["Delver's Call"],
 			name_save = "DelversCall",
-			defS = true,
+			defS = false,
 			reset = "Once",
 			desc = categoryKey,
 			quests = {
@@ -563,7 +562,7 @@ local function tempFunction()
 				return E.func_GetQuestName(84776, false) -- (Зов вылазок) Пройдите 5 вылазок в Каз Алгаре.
 			end,
 			name_save = "A Call to Delves",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -578,7 +577,7 @@ local function tempFunction()
 				return E.func_GetQuestName(83366, false) -- (Мир ждет) Выполните 10 локальных заданий в Каз Алгаре.
 			end,
 			name_save = "The World Awaits",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -593,7 +592,7 @@ local function tempFunction()
 				return E.func_GetQuestName(83347, false) -- (Посланник войны) Пройдите 4 подземелья в эпохальном режиме.
 			end,
 			name_save = "Emissary of War",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -608,7 +607,7 @@ local function tempFunction()
 				return E.func_GetQuestName(83345, false) -- (Призыв к бою) Одержите победу на 4 полях боя.
 			end,
 			name_save = "A Call to Battle",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -623,7 +622,7 @@ local function tempFunction()
 				return L["TWW Weekly Cache"]
 			end,
 			name_save = "TWW Weekly Cache",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -641,7 +640,7 @@ local function tempFunction()
 				return L["TWW Weekly Cache"].." S3"
 			end,
 			name_save = "TWW Weekly Cache S3",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -659,7 +658,7 @@ local function tempFunction()
 				return "Delver's Bounty" -- E.func_GetQuestName(86371, false)
 			end,
 			name_save = "Delver's Bounty",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -674,7 +673,7 @@ local function tempFunction()
 				return "Lesser Keyflame" -- MinorKeyflames
 			end,
 			name_save = "Lesser Keyflame",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -722,7 +721,7 @@ local function tempFunction()
 			showTooltip = true,
 			TextLeft = "Major Keyflames",
 			name_save = "Major Keyflames",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -744,7 +743,7 @@ local function tempFunction()
 				return E.func_GetQuestName(47148, false)
 			end,
 			name_save = "Brawl Weekly",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -759,7 +758,7 @@ local function tempFunction()
 				return "PvP Weekly"
 			end,
 			name_save = "PvP Weekly",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -779,7 +778,7 @@ local function tempFunction()
 				return "World PvP Weekly"
 			end,
 			name_save = "World PvP Weekly",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -799,7 +798,7 @@ local function tempFunction()
 				return "The Severed Threads"
 			end,
 			name_save = "The Severed Threads",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -816,7 +815,7 @@ local function tempFunction()
 				return "The Call of the Worldsoul"
 			end,
 			name_save = "The Call of the Worldsoul",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -875,7 +874,7 @@ local function tempFunction()
 				return "Archives"
 			end,
 			name_save = "Archives",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -892,7 +891,7 @@ local function tempFunction()
 				return E.func_GetQuestName(82706, false) -- DELVES_LABEL
 			end,
 			name_save = "Delves",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -918,7 +917,7 @@ local function tempFunction()
 				return E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
 			end,
 			name_save = "The Theater Troupe",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -933,7 +932,7 @@ local function tempFunction()
 				return E.func_GetQuestName(76586, false)
 			end,
 			name_save = "Spreading the Light",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -948,7 +947,7 @@ local function tempFunction()
 				return E.func_GetQuestName(83333, false)
 			end,
 			name_save = "Gearing Up for Trouble",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -963,7 +962,7 @@ local function tempFunction()
 				return "Special Assignments"
 			end,
 			name_save = "Special Assignments",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -991,7 +990,7 @@ local function tempFunction()
 				return E.func_GetQuestName(82946, false)
 			end,
 			name_save = "Rollin' Down in the Deeps",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1006,7 +1005,7 @@ local function tempFunction()
 				return "Biergoth Dungeon Quest"
 			end,
 			name_save = "Biergoth Dungeon Quest",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1029,7 +1028,7 @@ local function tempFunction()
 				return E.func_GetQuestName(84370, false)
 			end,
 			name_save = "The Key to Success",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1044,7 +1043,7 @@ local function tempFunction()
 				return "TWW Profession Weeklies"
 			end,
 			name_save = "TWW Profession Weeklies",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1083,7 +1082,7 @@ local function tempFunction()
 				return "TWW Algari Treatise"
 			end,
 			name_save = "TWW Algari Treatise",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1108,7 +1107,7 @@ local function tempFunction()
 				return "Anniversary Restored Coffer Key" --E.func_GetQuestName(86202, false)
 			end,
 			name_save = "Anniversary Restored Coffer Key",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1123,7 +1122,7 @@ local function tempFunction()
 				return "Siren Isle Weekly"
 			end,
 			name_save = "Siren Isle Weekly",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1159,7 +1158,7 @@ local function tempFunction()
 				return "Free C.H.E.T.T. List"
 			end,
 			name_save = "Free C.H.E.T.T. List",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1174,7 +1173,7 @@ local function tempFunction()
 				return "C.H.E.T.T. List"
 			end,
 			name_save = "C.H.E.T.T. List",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1201,7 +1200,7 @@ local function tempFunction()
 				return E.func_GetQuestName(86775, false)
 			end,
 			name_save = "Urge to Surge",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1216,7 +1215,7 @@ local function tempFunction()
 				return E.func_GetQuestName(85869, false)
 			end,
 			name_save = "Many Jobs, Handle It!",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1231,7 +1230,7 @@ local function tempFunction()
 				return E.func_GetQuestName(85879, false)
 			end,
 			name_save = "Reduce, Reuse, Resell",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1246,7 +1245,7 @@ local function tempFunction()
 				return E.func_GetQuestName(91173, false) -- tww-nightfall-scenario
 			end,
 			name_save = "The Flame Burns Eternal",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1261,7 +1260,7 @@ local function tempFunction()
 				return "Nightfall Daily"
 			end,
 			name_save = "Nightfall Daily",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -1282,7 +1281,7 @@ local function tempFunction()
 				return E.func_GetQuestName(91093, false)
 			end,
 			name_save = "More Than Just a Phase",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1297,7 +1296,7 @@ local function tempFunction()
 				return E.func_GetQuestName(85460, false)
 			end,
 			name_save = "Ecological Succession",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -1312,7 +1311,7 @@ local function tempFunction()
 				return "K'aresh Warrants"
 			end,
 			name_save = "K'aresh Warrants",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {

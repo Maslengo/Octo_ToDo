@@ -76,7 +76,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			Config_FontSize = {
 				type = "range",
-				name = "Config_FontSize",
+				name = L["Font Size"],
 				desc = "Config_FontSize",
 				min = 8,
 				max = 32,
@@ -94,7 +94,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			["Config_FontFlags"] = {
 				type = "select",
-				name = "Config_FontFlags",
+				name = L["Font Flags"],
 				values = {},
 				desc = "",
 				get = function()
@@ -132,7 +132,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			Config_ADDON_HEIGHT = {
 				type = "range",
-				name = "Высота одной строки",
+				name = L["Line Height"],
 				desc = "",
 				min = 10,
 				max = 50,
@@ -217,7 +217,7 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
-				name = "Настройка отображения персонажей",
+				name = L["Character Display Settings"],
 				order = GetOrder(),
 			},
 			-------------------------------------------------
@@ -261,6 +261,33 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
+
+			Config_DebugID_ALL = {
+				type = "toggle",
+				name = L["Show ID"],
+				desc = "",
+				get = function()
+					return Octo_DevTool_DB.Config_DebugID_ALL
+				end,
+				set = function(_, value)
+					Octo_DevTool_DB.Config_DebugID_ALL = value
+					E.Config_DebugID_ALL = value
+				end,
+				width = E.FULL_WIDTH/2,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+
+
+
+
+
 		},
 	}
 	-------------------------------------------------

@@ -235,25 +235,24 @@ local function func_SettingsButton_OnClick(button, frameData)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
 		id = tonumber(id)
 	end
-	-- Получаем таблицу настроек для типа
-	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
-	if not settingsTable then return end
-	-- Определяем ключ (строковый или числовой)
-	local key = id
-	if settingsTable[tonumber(id)] == nil then
-		settingsTable[id] = false
-	end
-	-- Если запись существует, переключаем, иначе создаем с true
-	local newValue = not (settingsTable[key] or false)
-	settingsTable[key] = newValue
-	local texture = newValue and
-	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
-	"Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
-	local parentFrame = button:GetParent() -- кнопка находится внутри frame
-	parentFrame.SettingsTexture:SetTexture(texture)
+    -- Инициализация таблицы если нужно
+    if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
+        Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
+    end
+
+    local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
+
+    -- Простое переключение
+    local newValue = not (settingsTable[id] or false)
+    settingsTable[id] = newValue
+
+    -- Обновление текстуры
+    local texture = newValue and
+        "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
+        "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
+
+    button:GetParent().SettingsTexture:SetTexture(texture)
 end
-
-
 
 
 local function func_Setup_Currencies(frame, id)
@@ -417,25 +416,12 @@ function EventFrame:func_InitLEFT(frame, node)
 		frame.TextLeft:SetWidth(newLeftWidth)
 		HeaderFrameLeft:SetWidth(newLeftWidth)
 	end
-
-
-
-
-
-
-
-
-
 	local expansionICON = ""
 	-- local categoryKey = frameData.categoryKey
 
 	-- if E.OctoTable_Expansions[categoryKey] then
 	-- expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
 	-- end
-
-
-
-
 	-- Установка текста и цвета для левой колонки
 	if type(frameData.TextLeft) == "function" then
 		frame.TextLeft:SetText(expansionICON..frameData.TextLeft()) -- ← Вызываем функцию!

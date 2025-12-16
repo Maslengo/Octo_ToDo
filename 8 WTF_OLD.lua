@@ -12,9 +12,10 @@ local function updateGlobal(db)
 	-- end
 end
 local function updateChar(CharInfo)
+	local db = Octo_ToDo_DB_Vars.DBVersion
 	-- IF < v95.7 CHAR
 	-- if compareVersion(95.7, CharInfo.PlayerData.DBVersion) then
-	if compareVersion(96.7, Octo_ToDo_DB_Vars.DBVersion) then
+	if compareVersion(96.7, db) then
 		-- wipe(CharInfo.MASLENGO.UniversalQuest)
 		if CharInfo.MASLENGO.currencyID then
 			CharInfo.MASLENGO.currencyID = nil
@@ -25,6 +26,12 @@ local function updateChar(CharInfo)
 		if CharInfo.MASLENGO.CurrencyID_totalEarned then
 			CharInfo.MASLENGO.CurrencyID_totalEarned = nil
 		end
+	end
+
+	if compareVersion(107.8, db) then
+		Octo_profileKeys = nil
+		Octo_profileKeys = {}
+		E.func_CreateNewProfile("Default")
 	end
 end
 function E.func_setOldChanges()

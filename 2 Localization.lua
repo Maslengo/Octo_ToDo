@@ -14,8 +14,12 @@ if L then
 	L["Treasure"] = true
 	L["Lesser Visions of N'Zoth"] = true
 	L["Warfront"] = true
-
-
+	L["Show ID"] = true
+	L["Font"] = true
+	L["Font Size"] = true
+	L["Font Flags"] = true
+	L["Line Height"] = true
+	L["Character Display Settings"]	= true
 
 	-- PROFILES
 	L["Profile"] = true
@@ -315,6 +319,12 @@ if L then
 	L["Treasure"] = "Сокровище"
 	L["Lesser Visions of N'Zoth"] = "Малое Видение Н'Зота"
 	L["Warfront"] = "Фронт"
+	L["Show ID"] = "Показывать ID"
+	L["Font"] = "Шрифт"
+	L["Font Size"] = "Размер шрифта"
+	L["Font Flags"] = "Стиль шрифта"
+	L["Line Height"] = "Высота строки"
+	L["Character Display Settings"] = "Настройка отображения персонажей"
 
 	-- PROFILES
 	L["Profile"] = "Профиль"

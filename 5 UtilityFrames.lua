@@ -81,7 +81,7 @@ function EventFrame:Octo_CloseButton(frame)
 	local button = CreateUtilButton(
 		"CloseButton",
 		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\CloseTest.tga", -- "common-search-clearbutton",--
+		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\Close.tga", -- "common-search-clearbutton",--
 		20,
 		function() return {{E.classColorHexCurrent..CLOSE.."|r"}} end,
 		nil
@@ -112,7 +112,7 @@ function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
 	CreateUtilButton(
 		"OptionsButton",
 		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..addonIconTexture, -- "QuestLog-icon-setting",--
+		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\"..addonIconTexture, -- "QuestLog-icon-setting",--
 		18,
 		func_onEnter,
 		func_onClick
