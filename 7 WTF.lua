@@ -169,7 +169,6 @@ function EventFrame:func_DatabaseClear()
 	E.func_CleanDeepTable(Octo_ToDo_DB_Levels, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_Vars, rules)
 	E.func_CleanDeepTable(Octo_Cache_DB, rules)
-	E.func_CleanDeepTable(Octo_DevTool_DB, rules)
 end
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_Levels()
@@ -324,6 +323,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		isOnlyCurrentFaction = false, -- Только текущая фракция
 		ShowOnlyCurrentRegion = true, -- Только текущий BattleTag
 		isOnlyCurrentServer = false, -- Только текущий сервер
+		Config_DebugID_ALL = false,
 		-- isSettingsEnabled = false,
 		-- TalentTreeTweaks = true, -- Настройки дерева талантов
 		-- TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
@@ -368,59 +368,7 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
-function EventFrame:Octo_DevTool_DB()
-	Octo_DevTool_DB = Octo_DevTool_DB or {}
-	-- EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
-	----------------------------------------------------------------
-	local defaultOptions = {
-		Config_DebugID_ALL = false,
-		Config_DebugID_Items = false, --E.debugInfo_Items(id)
-		Config_DebugID_Currencies = false, --E.debugInfo_Currencies(id)
-		Config_DebugID_NPCs = false, --E.debugInfo_NPCs(id)
-		Config_DebugID_Quests = false, --E.debugInfo_Quests(id)
-		Config_DebugID_Reputations = false, --E.debugInfo_Reputations(id)
-		Config_DebugID_Spells = false, --E.debugInfo_Spells(id)
-		Config_DebugID_Achievements = false, --E.debugInfo_Achievements(id)
-		Config_DebugID_Mounts = false, --E.debugInfo_Mounts(mountID)
-		Config_DebugID_Maps = false, --E.debugInfo_Maps(id)
-		Config_DebugID_Events = false, --E.debugInfo_Events(id)
-		Config_DebugID_Professions = false, --E.debugInfo_Professions(id)
-		Config_DebugID_instanceID = false, --E.debugInfo_instanceID(id) ПОФИКСИТЬ
-		Config_DebugID_worldBossID = false, --E.debugInfo_worldBossID(id) ПОФИКСИТЬ
-		DebugCharacterInfo = false,
-		DebugEvent = false,
-		DebugFunction = false,
-		DebugButton = false,
-		DebugGossip = false,
-		DebugCache = false,
-		DebugQC_Vignettes = false,
-		DebugQC_Quests = false,
-		DebugUniversal = false,
-		editorFontSize = 12, -- for i = 10, 16 do
-		editorTabSpaces = 4, -- for _, v in ipairs({0, 2, 3, 4}) do
-		editorTheme = "Twilight", -- for name in next, E.editorThemes do
-	}
-	for k, v in next, (defaultOptions) do
-		E.func_InitField(Octo_DevTool_DB, k, v)
-		E[k] = Octo_DevTool_DB[k] -- Копируем в глобальную таблицу
-	end
-	E.func_InitField(Octo_DevTool_DB, "lastFaction", UNKNOWN)
-	E.func_InitField(Octo_DevTool_DB, "lastLocaleLang", UNKNOWN)
-	-- Инициализация подтаблиц
-	E.func_InitSubTable(Octo_DevTool_DB, "watchedMovies")
-	----------------------------------------------------------------
-	if Octo_DevTool_DB.profileKeys and type(Octo_DevTool_DB.profileKeys) ~= "table" then
-		Octo_DevTool_DB.profileKeys = {}
-	end
-	Octo_DevTool_DB.profileKeys = Octo_DevTool_DB.profileKeys or {}
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData then
-			local currentKey = CharInfo.PlayerData.Name.." - "..CharInfo.PlayerData.curServer
-			Octo_DevTool_DB.profileKeys[currentKey] = "OctoUI"
-		end
-	end
-	----------------------------------------------------------------
-end
+
 ----------------------------------------------------------------
 function EventFrame:Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
@@ -602,7 +550,6 @@ function EventFrame:func_CheckAll()
 	EventFrame:Octo_Cache_DB() -- Кэш данных
 	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
 	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
-	EventFrame:Octo_DevTool_DB()
 	-- Применяем старые изменения
 	E.func_setOldChanges()
 	-- Очистка и сброс данных
@@ -636,45 +583,13 @@ function EventFrame:func_UpdateGlobals()
 		if Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle then
 			E.func_UpdateFont()
 		end
+		if Octo_ToDo_DB_Vars.Config_DebugID_ALL ~= nil then
+			E.Config_DebugID_ALL = Octo_ToDo_DB_Vars.Config_DebugID_ALL
+		end
 		E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
 	end
 	E.func_UpdateCurrentProfile()
-	if Octo_DevTool_DB then
-		E.DebugButton = Octo_DevTool_DB.DebugButton
-		E.DebugEvent = Octo_DevTool_DB.DebugEvent
-		E.DebugFunction = Octo_DevTool_DB.DebugFunction
-		E.DebugCharacterInfo = Octo_DevTool_DB.DebugCharacterInfo
-		E.DebugGossip = Octo_DevTool_DB.DebugGossip
-		E.DebugCache = Octo_DevTool_DB.DebugCache
-		E.DebugQC_Vignettes = Octo_DevTool_DB.DebugQC_Vignettes
-		E.DebugQC_Quests = Octo_DevTool_DB.DebugQC_Quests
-		E.DebugUniversal = Octo_DevTool_DB.DebugUniversal
 
-
-
-
-
-		E.Config_DebugID_ALL = Octo_DevTool_DB.Config_DebugID_ALL
-		E.Config_DebugID_Achievements = Octo_DevTool_DB.Config_DebugID_Achievements
-		E.Config_DebugID_Currencies = Octo_DevTool_DB.Config_DebugID_Currencies
-		E.Config_DebugID_worldBossID = Octo_DevTool_DB.Config_DebugID_worldBossID
-		E.Config_DebugID_Quests = Octo_DevTool_DB.Config_DebugID_Quests
-		E.Config_DebugID_Spells = Octo_DevTool_DB.Config_DebugID_Spells
-		E.Config_DebugID_Maps = Octo_DevTool_DB.Config_DebugID_Maps
-		E.Config_DebugID_instanceID = Octo_DevTool_DB.Config_DebugID_instanceID
-		E.Config_DebugID_Mounts = Octo_DevTool_DB.Config_DebugID_Mounts
-		E.Config_DebugID_NPCs = Octo_DevTool_DB.Config_DebugID_NPCs
-		E.Config_DebugID_Items = Octo_DevTool_DB.Config_DebugID_Items
-		E.Config_DebugID_Reputations = Octo_DevTool_DB.Config_DebugID_Reputations
-		E.Config_DebugID_Events = Octo_DevTool_DB.Config_DebugID_Events
-		E.Config_DebugID_Professions = Octo_DevTool_DB.Config_DebugID_Professions
-
-
-
-
-
-
-	end
 end
 ----------------------------------------------------------------
 local MyEventsTable = {

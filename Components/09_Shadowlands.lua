@@ -37,14 +37,14 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2470, defS = false,}, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
-		{id = 2472, defS = false,}, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
-		{id = 2478, defS = false,}, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
-		{id = 2432, defS = false,}, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
+		{id = 2470, defS = true,}, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
+		{id = 2472, defS = true,}, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
+		{id = 2478, defS = true,}, --name = "Просветленные", side = "-", category = "Темные Земли", }, --[faction=2478]
+		{id = 2432, defS = true,}, --name = "Ве'нари", side = "-", category = "Темные Земли", }, --[faction=2432]
 		----------------------------------------------------------------
-		{id = 2407, defS = false,}, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
+		{id = 2407, defS = true,}, --name = "Перерожденные", side = "-", category = "Темные Земли", }, --[faction=2407]
 		----------------------------------------------------------------
-		{id = 2413, defS = false,}, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
+		{id = 2413, defS = true,}, --name = "Двор Жнецов", side = "-", category = "Темные Земли", }, --[faction=2413]
 		{id = 2439, defS = false,}, --name = "Нераскаявшиеся", side = "-", category = "Темные Земли", }, --[faction=2439]
 		{id = 2445, defS = false,}, --name = "Пепельный двор", side = "-", category = "Темные Земли", }, --[faction=2445]
 		{id = 2455, defS = false,}, --name = "Хранитель склепа Каззир", side = "-", category = "Пепельный двор", }, --[faction=2455]
@@ -64,11 +64,11 @@ local function tempFunction()
 		{id = 2447, defS = false,}, --name = "Леди Лунная Ягода", side = "-", category = "Пепельный двор", }, --[faction=2447]
 		{id = 2446, defS = false,}, --name = "Баронесса Вайш", side = "-", category = "Пепельный двор", }, --[faction=2446]
 		----------------------------------------------------------------
-		{id = 2465, defS = false,}, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
+		{id = 2465, defS = true,}, --name = "Дикая Охота", side = "-", category = "Темные Земли", }, --[faction=2465]
 		{id = 2464, defS = false,}, --name = "Двор Ночи", side = "-", category = "Темные Земли", }, --[faction=2464]
 		{id = 2463, defS = false,}, --name = "Чесночник", side = "-", category = "Темные Земли", }, --[faction=2463]
 		----------------------------------------------------------------
-		{id = 2410, defS = false,}, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
+		{id = 2410, defS = true,}, --name = "Неумирающая армия", side = "-", category = "Темные Земли", }, --[faction=2410]
 		{id = 2462, defS = false,}, --name = "Штопальщики", side = "-", category = "Темные Земли", }, --[faction=2462]
 	}
 	----------------------------------------------------------------

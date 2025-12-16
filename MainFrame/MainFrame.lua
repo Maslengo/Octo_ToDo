@@ -10,10 +10,10 @@ E.func_RegisterFrame(Octo_MainFrame_ToDo)
 local INDENT_LEFT = 10
 local INDENT_TEXT = 4 -- Отступ для текста
 local MIN_COLUMN_WIDTH_LEFT = 200 -- Минимальная ширина левой колонки
-local MIN_COLUMN_WIDTH_Center = 90 -- Минимальная ширина центральной колонки
+local MIN_COLUMN_WIDTH_Center = 100 -- Минимальная ширина центральной колонки
 local MAX_DISPLAY_LINES = E.MAX_DISPLAY_LINES -- Максимальное количество строк
-local MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.7 -- Максимальная ширина фрейма (80% экрана)
-local MAX_FRAME_HEIGHT = E.PHYSICAL_SCREEN_HEIGHT*.6 -- Максимальная высота фрейма (60% экрана)
+local MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.8 -- Максимальная ширина фрейма (80% экрана)
+local MAX_FRAME_HEIGHT = E.PHYSICAL_SCREEN_HEIGHT*.7 -- Максимальная высота фрейма (60% экрана)
 EventFrame.MAX_COLUMN_COUNT = 113 -- Максимальное количество колонок
 -- Цветовые настройки
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)

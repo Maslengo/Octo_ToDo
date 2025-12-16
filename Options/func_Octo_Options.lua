@@ -267,10 +267,10 @@ function E.func_Octo_Options(savedVars)
 				name = L["Show ID"],
 				desc = "",
 				get = function()
-					return Octo_DevTool_DB.Config_DebugID_ALL
+					return Octo_ToDo_DB_Vars.Config_DebugID_ALL
 				end,
 				set = function(_, value)
-					Octo_DevTool_DB.Config_DebugID_ALL = value
+					Octo_ToDo_DB_Vars.Config_DebugID_ALL = value
 					E.Config_DebugID_ALL = value
 				end,
 				width = E.FULL_WIDTH/2,

@@ -1037,7 +1037,128 @@ function E.func_ReversSort(a, b)
 end
 
 
+-- function E.func_GetReputationProgress(reputationID)
+-- 	local reactionColors = {
+-- 		[0] = E.COLOR_WHITE,
+-- 		[1] = E.COLOR_RED,
+-- 		[2] = E.COLOR_RED,
+-- 		[3] = E.COLOR_ORANGE,
+-- 		[4] = E.COLOR_YELLOW,
+-- 		[5] = E.COLOR_YELLOW,
+-- 		[6] = E.COLOR_GREEN,
+-- 		[7] = E.COLOR_GREEN,
+-- 		[8] = E.COLOR_GREEN,
+-- 	}
+
+-- 	local SHOWFULL = false
+-- 	local FIRST, SECOND = 0, 0
+-- 	-- local result = ""
+-- 	local color = E.COLOR_PINK
+-- 	local standingTEXT = ""
+-- 	local reaction = 0
+-- 	local simpleData = GetFactionDataByID(reputationID)
+-- 	local isSimple = simpleData ~= nil
+-- 	local isParagon = IsFactionParagon(reputationID)
+-- 	local friendData = GetFriendshipReputation(reputationID)
+-- 	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
+-- 	local isMajor = IsMajorFaction(reputationID)
+-- 	local repType = 0
+
+-- 	if isSimple then
+-- 		reaction = simpleData.reaction
+-- 		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+-- 		color = reactionColors[reaction] or E.COLOR_PINK
+-- 		repType = 5
+-- 	end
+-- 	if isParagon then
+-- 		local currentValue, threshold, _, _, tooLowLevelForParagon = GetFactionParagonInfo(reputationID)
+-- 		if threshold then
+-- 			local value = currentValue % threshold
+-- 			color = E.COLOR_BLUE
+-- 			-- result = value.."/"..threshold
+-- 			-- if tooLowLevelForParagon then
+-- 				-- result = result..E.COLOR_RED.."*|r"
+-- 				-- color = E.COLOR_GRAY
+-- 			-- end
+-- 			FIRST, SECOND = value, threshold
+-- 		end
+-- 		repType = 4
+-- 	elseif isMajor then
+-- 		local majorData = GetMajorFactionData(reputationID)
+-- 		if majorData then
+-- 			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
+-- 			local totalValue = majorData.renownLevelThreshold
+-- 			-- result = currentValue.."/"..totalValue..color.."("..majorData.renownLevel..")|r"
+-- 			FIRST, SECOND = currentValue, totalValue
+-- 		end
+-- 		repType = 3
+-- 	elseif isFriend then
+-- 		local standing = friendData.standing or 0
+-- 		local reactionThreshold = friendData.reactionThreshold or 0
+-- 		local nextThreshold = friendData.nextThreshold or 0
+-- 		local currentValue = standing - reactionThreshold
+-- 		local totalValue = nextThreshold - reactionThreshold
+-- 		local rankInfo = GetFriendshipReputationRanks(friendData.friendshipFactionID)
+-- 		local currentLevel = rankInfo and rankInfo.currentLevel or 0
+-- 		local maxLevel = rankInfo and rankInfo.maxLevel or 0
+-- 		if currentLevel == maxLevel then
+-- 			FIRST, SECOND = currentLevel, maxLevel
+-- 			-- result = FIRST.."/"..SECOND
+-- 		else
+-- 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
+-- 			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
+-- 			-- result = FIRST.."/"..SECOND..standingTEXT
+-- 		end
+-- 		repType = 2
+-- 	elseif isSimple and simpleData.currentStanding then
+-- 		local barMin = simpleData.currentReactionThreshold
+-- 		local barMax = simpleData.nextReactionThreshold
+-- 		local barValue = simpleData.currentStanding
+-- 		local currentValue = barValue - barMin
+-- 		local totalValue = barMax - barMin
+-- 		if currentValue == totalValue then
+-- 			FIRST, SECOND = 1, 1
+-- 			-- result = standingTEXT
+-- 		else
+-- 			FIRST, SECOND = SHOWFULL and barMin or currentValue,
+-- 			SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
+-- 			-- result = FIRST.."/"..SECOND
+-- 		end
+-- 		repType = 1
+-- 	end
+-- 	if SECOND == 0 then -- NO INFO + где-то может repType записаться
+-- 		return false
+-- 	end
+
+
+-- 	-- 1 simple, 2 Friend, 3 major, 4 paragon
+-- 	-- return {FIRST, SECOND, repType, standing, maxStanding}
+-- 	return FIRST.."#"..SECOND.."#"..repType.."#"..color.."#"..standingTEXT
+-- end
+
+
+
+function E.func_GetMaxRenownLevel(reputationID)
+	local levels = C_MajorFactions.GetRenownLevels(reputationID)
+	if levels then
+		return levels[#levels].level
+	end
+end
+
+
 function E.func_GetReputationProgress(reputationID)
+	local SHOWFULL = false
+	local FIRST, SECOND = 0, 0
+	local result = ""
+	local color = E.COLOR_PINK
+	local standingTEXT = ""
+	local reaction = 0
+	local simpleData = GetFactionDataByID(reputationID)
+	local isSimple = simpleData ~= nil
+	local isParagon = IsFactionParagon(reputationID)
+	local friendData = GetFriendshipReputation(reputationID)
+	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
+	local isMajor = IsMajorFaction(reputationID)
 	local reactionColors = {
 		[0] = E.COLOR_WHITE,
 		[1] = E.COLOR_RED,
@@ -1049,49 +1170,32 @@ function E.func_GetReputationProgress(reputationID)
 		[7] = E.COLOR_GREEN,
 		[8] = E.COLOR_GREEN,
 	}
-
-	local SHOWFULL = false
-	local FIRST, SECOND = 0, 0
-	-- local result = ""
-	local color = E.COLOR_PINK
-	local standingTEXT = ""
-	local reaction = 0
-	local simpleData = GetFactionDataByID(reputationID)
-	local isSimple = simpleData ~= nil
-	local isParagon = IsFactionParagon(reputationID)
-	local friendData = GetFriendshipReputation(reputationID)
-	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
-	local isMajor = IsMajorFaction(reputationID)
-	local repType = 0
-
 	if isSimple then
 		reaction = simpleData.reaction
 		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 		color = reactionColors[reaction] or E.COLOR_PINK
-		repType = 5
 	end
 	if isParagon then
 		local currentValue, threshold, _, _, tooLowLevelForParagon = GetFactionParagonInfo(reputationID)
 		if threshold then
 			local value = currentValue % threshold
 			color = E.COLOR_BLUE
-			-- result = value.."/"..threshold
+			result = value.."/"..threshold
 			if tooLowLevelForParagon then
-				-- result = result..E.COLOR_RED.."*|r"
-				color = E.COLOR_GRAY
+				result = result..E.COLOR_RED.."*|r"
 			end
 			FIRST, SECOND = value, threshold
 		end
-		repType = 4
 	elseif isMajor then
 		local majorData = GetMajorFactionData(reputationID)
 		if majorData then
 			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
 			local totalValue = majorData.renownLevelThreshold
-			-- result = currentValue.."/"..totalValue..color.."("..majorData.renownLevel..")|r"
+			local maxLevel = E.func_GetMaxRenownLevel(reputationID)
+			standingTEXT = "("..majorData.renownLevel.."/"..maxLevel..")|r"
+			result = currentValue.."/"..totalValue..color.."("..majorData.renownLevel.."/"..maxLevel..")|r"
 			FIRST, SECOND = currentValue, totalValue
 		end
-		repType = 3
 	elseif isFriend then
 		local standing = friendData.standing or 0
 		local reactionThreshold = friendData.reactionThreshold or 0
@@ -1103,13 +1207,12 @@ function E.func_GetReputationProgress(reputationID)
 		local maxLevel = rankInfo and rankInfo.maxLevel or 0
 		if currentLevel == maxLevel then
 			FIRST, SECOND = currentLevel, maxLevel
-			-- result = FIRST.."/"..SECOND
+			result = FIRST.."/"..SECOND
 		else
 			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
 			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
-			-- result = FIRST.."/"..SECOND..standingTEXT
+			result = FIRST.."/"..SECOND..standingTEXT
 		end
-		repType = 2
 	elseif isSimple and simpleData.currentStanding then
 		local barMin = simpleData.currentReactionThreshold
 		local barMax = simpleData.nextReactionThreshold
@@ -1118,22 +1221,17 @@ function E.func_GetReputationProgress(reputationID)
 		local totalValue = barMax - barMin
 		if currentValue == totalValue then
 			FIRST, SECOND = 1, 1
-			-- result = standingTEXT
+			result = standingTEXT
 		else
 			FIRST, SECOND = SHOWFULL and barMin or currentValue,
 			SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
-			-- result = FIRST.."/"..SECOND
+			result = FIRST.."/"..SECOND
 		end
-		repType = 1
 	end
-	if SECOND == 0 then -- NO INFO + где-то может repType записаться
-		return false
-	end
-
-	-- 1 simple, 2 Friend, 3 major, 4 paragon
-	-- return {FIRST, SECOND, repType, standing, maxStanding}
-	return FIRST.."#"..SECOND.."#"..repType.."#"..color.."#"..standingTEXT
+	return FIRST.."#"..SECOND.."#"..result.."#"..color.."#"..standingTEXT
 end
+
+
 function E.func_GetQuestLogCount()
 	local numQuests = 0
 	for i = 1, GetNumQuestLogEntries() do
@@ -2192,7 +2290,7 @@ do
 	}
 	for _, name in ipairs(funcNames) do
 		E["debugInfo_"..name] = function(id)
-			local result = (E.Config_DebugID_ALL or Octo_DevTool_DB["Config_DebugID_"..name]) and (E.COLOR_GRAY.." id:"..id.."|r") or ""
+			local result = (E.Config_DebugID_ALL or Octo_ToDo_DB_Vars["Config_DebugID_"..name]) and (E.COLOR_GRAY.." id:"..id.."|r") or ""
 			return result
 		end
 	end

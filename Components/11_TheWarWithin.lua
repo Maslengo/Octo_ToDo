@@ -20,43 +20,47 @@ local function tempFunction()
 		-- The War Within
 		-- (Season 4)
 		{id = 3278, defS = true,}, -- Астальные нити
-		{id = 3310, defS = false,}, -- SEASON 2
 		{id = 3269, defS = true,}, -- (Season 3)
+		{id = 3028, defS = true,}, -- Restored Coffer Key
+		{id = 3310, defS = true,}, -- SEASON 2
+		{id = 2815, defS = true,}, -- Resonance Crystals
+		{id = 3218, defS = true,}, -- Empty Kaja'Cola Can
+		{id = 3090, defS = true,}, -- Flame-Blessed Iron
+		{id = 3056, defS = true,}, -- Kej
+		{id = 2803, defS = true,}, -- Undercoin
+
+		{id = 3290, defS = true,}, -- Gilded Ethereal Crest -- 3-й сезон
+		{id = 3288, defS = true,}, -- Runed Ethereal Crest -- 3-й сезон
+		{id = 3286, defS = false,}, -- Carved Ethereal Crest -- 3-й сезон
+		{id = 3284, defS = false,}, -- Weathered Ethereal Crest -- 3-й сезон
+		{id = 3008, defS = false,}, -- Valorstones
+
+
+
 		{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
 		{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
 		{id = 1191, defS = false,},
-		{id = 2815, defS = true,}, -- Resonance Crystals
 		{id = 3226, defS = false,}, -- Market Research
-		{id = 3056, defS = false,}, -- Kej
-		{id = 3218, defS = false,}, -- Empty Kaja'Cola Can
 		{id = 3303, defS = false,}, --
-		{id = 3090, defS = false,}, -- Flame-Blessed Iron
 		{id = 3055, defS = false,}, --
 		{id = 3089, defS = false,}, --
 		{id = 3149, defS = false,}, -- Displaced Corrupted Mementos
 		{id = 3220, defS = false,}, --
 		{id = 3093, defS = false,}, --
 		{id = 3223, defS = false,}, --
-		-- {id = 2839, defS = true,}, -- [DNT] Awakening Currency
+		-- {id = 2839, defS = false,}, -- [DNT] Awakening Currency
 		{id = 3216, defS = false,}, --
 		-- season 3
-		{id = 3290, defS = true,}, -- Gilded Ethereal Crest -- 3-й сезон
-		{id = 3288, defS = true,}, -- Runed Ethereal Crest -- 3-й сезон
-		{id = 3286, defS = false,}, -- Carved Ethereal Crest -- 3-й сезон
-		{id = 3284, defS = false,}, -- Weathered Ethereal Crest -- 3-й сезон
-		-- {id = 3291, defS = true,}, -- Hidden
-		-- {id = 3289, defS = true,}, -- Hidden
-		-- {id = 3287, defS = true,}, -- Hidden
-		-- {id = 3285, defS = true,}, -- Hidden
+		-- {id = 3291, defS = false,}, -- Hidden
+		-- {id = 3289, defS = false,}, -- Hidden
+		-- {id = 3287, defS = false,}, -- Hidden
+		-- {id = 3285, defS = false,}, -- Hidden
 		{id = 3356, defS = false,}, -- Untainted Mana-Crystals
 		{id = 3141, defS = false,}, -- Starlight Spark Dust
-		{id = 3028, defS = false,}, -- Restored Coffer Key
-		{id = 3008, defS = true,}, -- Valorstones
-		{id = 2803, defS = false,}, -- Undercoin
-		-- {id = 3110, defS = true,}, -- Gilded Undermine Crest
-		-- {id = 3109, defS = true,}, -- Runed Undermine Crest
-		-- {id = 3108, defS = true,}, -- Carved Undermine Crest
-		-- {id = 3107, defS = true,}, -- Weathered Undermine Crest
+		-- {id = 3110, defS = false,}, -- Gilded Undermine Crest
+		-- {id = 3109, defS = false,}, -- Runed Undermine Crest
+		-- {id = 3108, defS = false,}, -- Carved Undermine Crest
+		-- {id = 3107, defS = false,}, -- Weathered Undermine Crest
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -64,12 +68,12 @@ local function tempFunction()
 		-- {id = 138019, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 158923, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 151086, defS = true,}, -- СТАРЫЕ КЛЮЧИ
+		{id = 246771, defS = true,},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["The War Within"] = {
-		-- { id = 2688,},
 		-- { id = 2653,},
 		-- { id = 2570,},
 		-- { id = 2590,},
@@ -77,7 +81,6 @@ local function tempFunction()
 		-- { id = 2600,},
 		-- { id = 2640,},
 		-- { id = 2667,},
-		-- { id = 2736,},
 		-- { id = 2689,},
 		-- { id = 2693,},
 		-- { id = 2683,},
@@ -108,7 +111,12 @@ local function tempFunction()
 		-- { id = 2647,},
 		-- { id = 2648,},
 		-- { id = 2649,},
+		{id = 2736, defS = true,},
 		{id = 2658, defS = true,},
+		{id = 2688, defS = true,},
+
+
+
 		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
 		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
 		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]

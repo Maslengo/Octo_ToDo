@@ -28,7 +28,7 @@ local function updateChar(CharInfo)
 		end
 	end
 
-	if compareVersion(107.8, db) then
+	if compareVersion(107.9, db) then
 		Octo_profileKeys = nil
 		Octo_profileKeys = {}
 		E.func_CreateNewProfile("Default")
