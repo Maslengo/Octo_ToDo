@@ -917,33 +917,33 @@ function E.func_SecondsToClock(time, allwaysShowSeconds)
 	local parts = {}
 
 	if years > 0 then
-		table_insert(parts, years..(L["y"] or "y").." ")
-		table_insert(parts, days..(L["d"] or "d").." ")
-		table_insert(parts, hours..(L["h"] or "h").." ")
-		table_insert(parts, mins..(L["m"] or "m"))
+		table_insert(parts, years..L["y"].." ")
+		table_insert(parts, days..L["d"].." ")
+		table_insert(parts, hours..L["h"].." ")
+		table_insert(parts, mins..L["m"])
 		if allwaysShowSeconds then
-			table_insert(parts, " "..secs..(L["s"] or "s"))
+			table_insert(parts, " "..secs..L["s"])
 		end
 	elseif days > 0 then
-		table_insert(parts, days..(L["d"] or "d").." ")
-		table_insert(parts, hours..(L["h"] or "h").." ")
-		table_insert(parts, mins..(L["m"] or "m"))
+		table_insert(parts, days..L["d"].." ")
+		table_insert(parts, hours..L["h"].." ")
+		table_insert(parts, mins..L["m"])
 		if allwaysShowSeconds then
-			table_insert(parts, " "..secs..(L["s"] or "s"))
+			table_insert(parts, " "..secs..L["s"])
 		end
 	elseif hours > 0 then
-		table_insert(parts, hours..(L["h"] or "h").." ")
-		table_insert(parts, string_format("%02d", mins)..(L["m"] or "m"))
+		table_insert(parts, hours..L["h"].." ")
+		table_insert(parts, string_format("%02d", mins)..L["m"])
 		if allwaysShowSeconds then
-			table_insert(parts, " "..string_format("%02d", secs)..(L["s"] or "s"))
+			table_insert(parts, " "..string_format("%02d", secs)..L["s"])
 		end
 	elseif time >= 60 then
-		table_insert(parts, mins..(L["m"] or "m").." ")
+		table_insert(parts, mins..L["m"].." ")
 		if time < 600 or allwaysShowSeconds then
-			table_insert(parts, secs..(L["s"] or "s"))
+			table_insert(parts, secs..L["s"])
 		end
 	elseif time >= 1 then
-		table_insert(parts, secs..(L["s"] or "s"))
+		table_insert(parts, secs..L["s"])
 	else
 		table_insert(parts, string_format("%.3f", time).."ms")
 	end

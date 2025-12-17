@@ -606,4 +606,6 @@ function EventFrame:PLAYER_LOGIN()
 	-- end
 	self:func_ScheduleResetTimer()
 	E.Cache_All_EventNames_Year()
+
+	C_Timer.After(1, E.func_UpdateFont)
 end
