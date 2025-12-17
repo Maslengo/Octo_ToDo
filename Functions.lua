@@ -1045,6 +1045,8 @@ function E.func_GetRealmShortName(text)
 	end
 	return utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
 end
+
+
 E.curServerShort = E.func_GetRealmShortName(GetRealmName())
 function E.func_EncodeCoordinates(x, y)
 	return math_floor(x * 10000 + 0.5) * 10000 + math_floor(y * 10000 + 0.5)
@@ -2672,10 +2674,11 @@ function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	local colorServer = isVisible and "|cffFFFFFF" or E.COLOR_GRAY
 	local curPers = pd.GUID == E.curGUID and E.COLOR_GREEN.."*|r" or ""
 	local curServer = pd.curServer ~= currentRealm and "-"..pd.curServer or ""
+	local curServerShort = pd.curServerShort ~= E.curServerShort and "-"..pd.curServerShort or ""
 	local leftText =
 	E.func_texturefromIcon(pd.specIcon)..
 	colorPlayer..pd.Name..
-	colorServer..curServer.."|r"..
+	colorServer..curServerShort.."|r"..
 	curPers
 	return leftText
 end

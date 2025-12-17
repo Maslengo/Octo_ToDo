@@ -1,10 +1,14 @@
+
+
+
+
 local GlobalAddonName, E = ...
 local AL3 = LibStub("AceLocale-3.0")
-local debug = true
-local L = AL3:NewLocale(E.MainAddonName, "enUS", false, debug)
-local _, E = ...
+local debug = false
+local L = AL3:NewLocale(E.MainAddonName, "enUS", true, debug)
 
 if L then
+	L["Weekly Reset"] = true
 	L["Font settings"] = true
 	L["Extra Background Fade When Moving"] = true
 	L["Changes require a ReloadUI"] = true

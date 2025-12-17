@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 EventFrame.searchFilter = nil
@@ -528,8 +529,10 @@ function EventFrame:func_InitCenter(frame, node)
 end
 
 local function HeaderFrameLeft_OnShow(frame)
-	local text = E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r "
-	frame.Text:SetText(text)
+	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r"
+
+	-- local text = E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r "
+	frame.Text2:SetText(text)
 end
 
 -- Функция создания главного тестового фрейма
@@ -695,13 +698,25 @@ function EventFrame:func_CreateMainFrame()
 	-- Настройка заголовка левой колонки
 	HeaderFrameLeft:SetPoint("TOPLEFT")
 	HeaderFrameLeft:SetSize(MIN_COLUMN_WIDTH_LEFT, E.HEADER_HEIGHT)
-	HeaderFrameLeft.Text = HeaderFrameLeft:CreateFontString()
-	HeaderFrameLeft.Text:SetFontObject(OctoFont11)
-	HeaderFrameLeft.Text:SetPoint("LEFT", INDENT_TEXT, 0)
-	HeaderFrameLeft.Text:SetWordWrap(false)
-	HeaderFrameLeft.Text:SetJustifyV("MIDDLE")
-	HeaderFrameLeft.Text:SetJustifyH("LEFT")
-	HeaderFrameLeft.Text:SetTextColor(textR, textG, textB, textA)
+	HeaderFrameLeft.Text1 = HeaderFrameLeft:CreateFontString()
+	HeaderFrameLeft.Text1:SetFontObject(OctoFont10)
+	HeaderFrameLeft.Text1:SetPoint("LEFT", INDENT_TEXT, E.HEADER_TEXT_OFFSET)
+	HeaderFrameLeft.Text1:SetWordWrap(false)
+	HeaderFrameLeft.Text1:SetJustifyV("MIDDLE")
+	HeaderFrameLeft.Text1:SetJustifyH("LEFT")
+	HeaderFrameLeft.Text1:SetTextColor(textR, textG, textB, textA)
+	HeaderFrameLeft.Text1:SetText(E.COLOR_GRAY..L["Weekly Reset"].."|r")
+
+	HeaderFrameLeft.Text2 = HeaderFrameLeft:CreateFontString()
+	HeaderFrameLeft.Text2:SetFontObject(OctoFont11)
+	HeaderFrameLeft.Text2:SetPoint("LEFT", INDENT_TEXT, -E.HEADER_TEXT_OFFSET)
+	HeaderFrameLeft.Text2:SetWordWrap(false)
+	HeaderFrameLeft.Text2:SetJustifyV("MIDDLE")
+	HeaderFrameLeft.Text2:SetJustifyH("LEFT")
+	HeaderFrameLeft.Text2:SetTextColor(textR, textG, textB, textA)
+	HeaderFrameLeft.Text2:SetText()
+
+
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLeft:SetScript("OnShow", HeaderFrameLeft_OnShow)
 	-- Функция сброса пула фреймов
