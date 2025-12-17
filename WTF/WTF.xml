@@ -1,0 +1,5 @@
+<Ui>
+	<Script file="WTF\WTF.lua"/>
+	<Script file="WTF\WTF_CLEAR.lua"/>
+	<Script file="WTF\WTF_OLD.lua"/>
+</Ui>

@@ -1,6 +1,6 @@
 ## Interface: 120000, 110207
-## Version: v107.9
-# (12.0.0)(16.12.2025)
+## Version: v108.0
+# (12.0.0)(17.12.2025)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 ## Author: Octo
@@ -15,18 +15,14 @@
 Libs\Libs.xml
 Templates.xml
 
-1 Initialization.lua
-2 Localization.lua
-3 Functions.lua
-4 OctoTooltip.lua
-5 UtilityFrames.lua
-6 SharedMedia.lua
-7 WTF.lua
-8 WTF_OLD.lua
-9 WTF_CLEAR.lua
+Init.lua
+Locales\Localization.lua
+Functions.lua
+Media\SharedMedia.lua
+WTF\WTF.xml
 
 Database\Database.xml
 Components\Components.xml
 Collect\Collect.xml
-MainFrame\MainFrame.xml
+Frames\MainFrame.xml
 Options\Options.xml

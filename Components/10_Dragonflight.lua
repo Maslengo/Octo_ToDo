@@ -470,7 +470,7 @@ local function tempFunction()
 			end,
 			name_save = "ZaralekCavernSniffenseekingItems",
 			defS = false,
-			reset = "Weekly",
+			reset = "Once",
 			desc = categoryKey,
 			quests = {
 				{75771},

@@ -2,32 +2,32 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local ENABLE_DEBUG_TIMER = false
 local function func_Collect_All()
-	E.Collect_All_BfA_Azerite()
-	E.Collect_All_BfA_Cloaklvl()
-	E.Collect_All_Chromie()
-	E.Collect_All_Covenant()
-	E.Collect_All_Currency()
-	E.Collect_All_Delves()
-	E.Collect_All_Garrison()
-	E.Collect_All_GreatVault()
-	E.Collect_All_Holiday()
-	E.Collect_All_ItemLevel()
-	E.Collect_All_ItemsInBag()
-	E.Collect_All_JournalInstance()
-	E.Collect_All_LegionRemixData()
-	E.Collect_All_Locations()
-	E.Collect_All_LoginTime()
-	E.Collect_All_Mail()
-	E.Collect_All_MoneyOnLogin()
-	E.Collect_All_MoneyUpdate()
-	E.Collect_All_PlayerDurability()
-	E.Collect_All_PlayerInfo()
-	E.Collect_All_PlayerLevel()
-	E.Collect_All_Professions()
-	E.Collect_All_Quests()
-	E.Collect_All_Reputations()
-	E.Collect_All_UNIVERSALQuestUpdate()
-	E.Collect_All_WarMode()
+	E.Collect_BfA_Azerite()
+	E.Collect_BfA_Cloaklvl()
+	E.Collect_Chromie()
+	E.Collect_Covenant()
+	E.Collect_Currency()
+	E.Collect_Delves()
+	E.Collect_Garrison()
+	E.Collect_GreatVault()
+	E.Collect_Holiday()
+	E.Collect_ItemLevel()
+	E.Collect_ItemsInBag()
+	E.Collect_JournalInstance()
+	E.Collect_LegionRemixData()
+	E.Collect_Locations()
+	E.Collect_LoginTime()
+	E.Collect_Mail()
+	E.Collect_MoneyOnLogin()
+	E.Collect_MoneyUpdate()
+	E.Collect_PlayerDurability()
+	E.Collect_PlayerInfo()
+	E.Collect_PlayerLevel()
+	E.Collect_Professions()
+	E.Collect_Quests()
+	E.Collect_Reputations()
+	E.Collect_UniversalQuests()
+	E.Collect_WarMode()
 end
 ----------------------------------------------------------------
 function E.func_Collect_All()
@@ -47,6 +47,9 @@ local MyEventsTable = {
 	"CURRENCY_DISPLAY_UPDATE",
 	"CURRENCY_TRANSFER_LOG_UPDATE",
 	"ENCOUNTER_END",
+	"WEEKLY_REWARDS_UPDATE",
+	"CHALLENGE_MODE_COMPLETED",
+	"CHALLENGE_MODE_MAPS_UPDATE",
 	-- "GARRISON_BUILDING_ACTIVATED",
 	-- "GARRISON_BUILDING_ERROR",
 	-- "GARRISON_BUILDING_LIST_UPDATE",
@@ -109,7 +112,7 @@ function EventFrame:PLAYER_LOGIN()
 		E.func_Collect_All()
 		E.func_RequestUIUpdate("PLAYER_LOGIN")
 	end)
-	E.Collect_All_Mounts()
+	E.Collect_Mounts()
 end
 
 
@@ -119,44 +122,44 @@ function EventFrame:TRIAL_STATUS_UPDATE()
 	E.func_RequestUIUpdate("TRIAL_STATUS_UPDATE")
 end
 function EventFrame:SKILL_LINES_CHANGED()
-	E.Collect_All_Professions()
+	E.Collect_Professions()
 	E.func_RequestUIUpdate("SKILL_LINES_CHANGED")
 end
 function EventFrame:TRADE_SKILL_SHOW()
-	E.Collect_All_Professions()
+	E.Collect_Professions()
 	E.func_RequestUIUpdate("TRADE_SKILL_SHOW")
 end
 function EventFrame:PLAYER_XP_UPDATE()
-	E.Collect_All_PlayerLevel()
+	E.Collect_PlayerLevel()
 	E.func_RequestUIUpdate("PLAYER_XP_UPDATE")
 end
 function EventFrame:PLAYER_LEVEL_UP()
 	RequestTimePlayed()
-	E.Collect_All_PlayerLevel()
+	E.Collect_PlayerLevel()
 	E.func_RequestUIUpdate("PLAYER_LEVEL_UP")
 end
 function EventFrame:QUEST_LOG_UPDATE()
-	E.Collect_All_Quests()
-	E.Collect_All_Garrison()
-	E.Collect_All_UNIVERSALQuestUpdate()
-	E.Collect_All_Chromie()
-	E.Collect_All_GreatVault()
-	E.Collect_All_LegionRemixData()
+	E.Collect_Quests()
+	E.Collect_Garrison()
+	E.Collect_UniversalQuests()
+	E.Collect_Chromie()
+	-- E.Collect_GreatVault()
+	E.Collect_LegionRemixData()
 	E.func_RequestUIUpdate("QUEST_LOG_UPDATE")
 end
 function EventFrame:BAG_UPDATE()
-	-- E.Collect_All_ItemsInBag()
-	-- E.Collect_All_BfA_Azerite()
-	-- E.Collect_All_BfA_Cloaklvl()
-	-- E.Collect_All_GreatVault()
+	-- E.Collect_ItemsInBag()
+	-- E.Collect_BfA_Azerite()
+	-- E.Collect_BfA_Cloaklvl()
+	-- E.Collect_GreatVault()
 	-- E.func_RequestUIUpdate("BAG_UPDATE")
 end
 
 function EventFrame:BAG_UPDATE_DELAYED()
-	E.Collect_All_ItemsInBag()
-	E.Collect_All_BfA_Azerite()
-	E.Collect_All_BfA_Cloaklvl()
-	E.Collect_All_GreatVault()
+	E.Collect_ItemsInBag()
+	E.Collect_BfA_Azerite()
+	E.Collect_BfA_Cloaklvl()
+	-- E.Collect_GreatVault()
 	E.func_RequestUIUpdate("BAG_UPDATE_DELAYED")
 end
 
@@ -168,111 +171,111 @@ function EventFrame:ITEM_CHANGED(...)
 	end
 end
 function EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
-	E.Collect_All_ItemsInBag()
+	E.Collect_ItemsInBag()
 	E.func_RequestUIUpdate("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
 end
 function EventFrame:PLAYER_MONEY()
-	E.Collect_All_MoneyUpdate()
+	E.Collect_MoneyUpdate()
 	E.func_RequestUIUpdate("PLAYER_MONEY")
 end
 function EventFrame:ACCOUNT_MONEY()
-	E.Collect_All_MoneyUpdate()
+	E.Collect_MoneyUpdate()
 	E.func_RequestUIUpdate("ACCOUNT_MONEY")
 end
 function EventFrame:CURRENCY_DISPLAY_UPDATE(...)
 	local currencyID = ...
-	E.Collect_All_Currency()
-	E.Collect_All_Covenant()
+	E.Collect_Currency()
+	E.Collect_Covenant()
 	if currencyID then
 		E.Collect_TARGET_Currency(currencyID)
 	end
 	E.func_RequestUIUpdate("CURRENCY_DISPLAY_UPDATE")
 end
 function EventFrame:CURRENCY_TRANSFER_LOG_UPDATE()
-	E.Collect_All_Currency()
-	E.Collect_All_Covenant()
-	E.Collect_All_Currency_Account()
+	E.Collect_Currency()
+	E.Collect_Covenant()
+	E.Collect_Currency_Account()
 	C_Timer.After(1, function()
-		E.Collect_All_Currency_Account()
+		E.Collect_Currency_Account()
 	end)
 	E.func_RequestUIUpdate("CURRENCY_TRANSFER_LOG_UPDATE")
 end
 function EventFrame:PLAYER_EQUIPMENT_CHANGED()
-	E.Collect_All_ItemLevel()
-	E.Collect_All_BfA_Azerite()
-	E.Collect_All_BfA_Cloaklvl()
+	E.Collect_ItemLevel()
+	E.Collect_BfA_Azerite()
+	E.Collect_BfA_Cloaklvl()
 	E.func_RequestUIUpdate("PLAYER_EQUIPMENT_CHANGED")
 end
 function EventFrame:PLAYER_LEAVING_WORLD()
 	-- E.func_Collect_All()
 	self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 	self.PLAYER_LEAVING_WORLD = nil
-	E.Collect_All_GreatVault()
-	E.Collect_All_LoginTime()
+	-- E.Collect_GreatVault()
+	E.Collect_LoginTime()
 end
 function EventFrame:AZERITE_ITEM_EXPERIENCE_CHANGED()
-	E.Collect_All_BfA_Azerite()
-	E.Collect_All_BfA_Cloaklvl()
+	E.Collect_BfA_Azerite()
+	E.Collect_BfA_Cloaklvl()
 	E.func_RequestUIUpdate("AZERITE_ITEM_EXPERIENCE_CHANGED")
 
-	E.OBROBOTCHIT(Collect_All_BfA_Cloaklvl)
+	E.OBROBOTCHIT(Collect_BfA_Cloaklvl)
 end
 function EventFrame:COVENANT_CHOSEN(...)
 	local id = ...
-	E.Collect_All_Covenant()
+	E.Collect_Covenant()
 	E.func_RequestUIUpdate("COVENANT_CHOSEN")
 end
 function EventFrame:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
-	E.Collect_All_Covenant()
+	E.Collect_Covenant()
 	E.func_RequestUIUpdate("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
 end
 function EventFrame:PLAYER_DEAD()
-	E.Collect_All_PlayerDurability()
+	E.Collect_PlayerDurability()
 	E.func_RequestUIUpdate("PLAYER_DEAD")
 end
 function EventFrame:UPDATE_INVENTORY_DURABILITY()
-	E.Collect_All_PlayerDurability()
+	E.Collect_PlayerDurability()
 	E.func_RequestUIUpdate("UPDATE_INVENTORY_DURABILITY")
 end
 function EventFrame:PLAYER_SPECIALIZATION_CHANGED()
-	E.Collect_All_PlayerInfo()
+	E.Collect_PlayerInfo()
 	E.func_RequestUIUpdate("PLAYER_SPECIALIZATION_CHANGED")
 end
 function EventFrame:HEARTHSTONE_BOUND()
-	E.Collect_All_Locations()
+	E.Collect_Locations()
 	E.func_RequestUIUpdate("HEARTHSTONE_BOUND")
 end
 function EventFrame:ZONE_CHANGED()
-	E.Collect_All_Locations()
+	E.Collect_Locations()
 	E.func_RequestUIUpdate("ZONE_CHANGED")
 end
 function EventFrame:ZONE_CHANGED_NEW_AREA()
-	E.Collect_All_Locations()
+	E.Collect_Locations()
 	E.func_RequestUIUpdate("ZONE_CHANGED_NEW_AREA")
 end
 function EventFrame:SPELLS_CHANGED()
-	E.Collect_All_WarMode()
+	E.Collect_WarMode()
 	E.func_RequestUIUpdate("SPELLS_CHANGED")
 end
 function EventFrame:MAIL_INBOX_UPDATE()
-	E.Collect_All_Mail()
+	E.Collect_Mail()
 	E.func_RequestUIUpdate("MAIL_INBOX_UPDATE")
 end
 function EventFrame:MAIL_SHOW()
-	E.Collect_All_Mail()
+	E.Collect_Mail()
 	E.func_RequestUIUpdate("MAIL_SHOW")
 end
 function EventFrame:UPDATE_PENDING_MAIL()
-	E.Collect_All_Mail()
+	E.Collect_Mail()
 	E.func_RequestUIUpdate("UPDATE_PENDING_MAIL")
 end
 function EventFrame:PLAYER_REGEN_ENABLED()
-	E.Collect_All_Quests()
-	E.Collect_All_Garrison()
-	E.Collect_All_UNIVERSALQuestUpdate()
-	E.Collect_All_Reputations()
-	E.Collect_All_Currency()
-	E.Collect_All_LegionRemixData()
+	E.Collect_Quests()
+	E.Collect_Garrison()
+	E.Collect_UniversalQuests()
+	E.Collect_Reputations()
+	E.Collect_Currency()
+	E.Collect_LegionRemixData()
 	E.func_RequestUIUpdate("PLAYER_REGEN_ENABLED")
 end
 function EventFrame:ENCOUNTER_END()
@@ -280,42 +283,57 @@ function EventFrame:ENCOUNTER_END()
 	E.func_RequestUIUpdate("ENCOUNTER_END")
 end
 function EventFrame:UPDATE_INSTANCE_INFO()
-	E.Collect_All_JournalInstance()
+	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("UPDATE_INSTANCE_INFO")
 end
 function EventFrame:TIME_PLAYED_MSG(...)
-	E.Collect_All_Played(...)
-	E.Collect_All_PlayerLevel()
+	E.Collect_Played(...)
+	E.Collect_PlayerLevel()
 	E.func_RequestUIUpdate("TIME_PLAYED_MSG")
 end
 function EventFrame:QUEST_POI_UPDATE()
-	E.Collect_All_Chromie()
+	E.Collect_Chromie()
 	E.func_RequestUIUpdate("QUEST_POI_UPDATE")
 end
 function EventFrame:QUEST_REMOVED()
-	E.Collect_All_Quests()
-	E.Collect_All_LegionRemixData()
+	E.Collect_Quests()
+	E.Collect_LegionRemixData()
 	E.func_RequestUIUpdate("QUEST_REMOVED")
 end
 function EventFrame:SHOW_LOOT_TOAST(...)
-	E.Collect_All_lastCacheTime(...)
+	E.Collect_lastCacheTime(...)
 	E.func_RequestUIUpdate("SHOW_LOOT_TOAST")
 end
 function EventFrame:BARBER_SHOP_APPEARANCE_APPLIED()
-	E.Collect_All_PlayerInfo()
+	E.Collect_PlayerInfo()
 	E.func_RequestUIUpdate("BARBER_SHOP_APPEARANCE_APPLIED")
 end
 function EventFrame:UPDATE_FACTION()
-	E.Collect_All_Reputations()
+	E.Collect_Reputations()
 	E.func_RequestUIUpdate("UPDATE_FACTION")
 end
 function EventFrame:PLAYER_FLAGS_CHANGED()
-	E.Collect_All_PlayerInfo()
+	E.Collect_PlayerInfo()
 	E.func_RequestUIUpdate("PLAYER_FLAGS_CHANGED")
 end
 function EventFrame:PLAYER_UPDATE_RESTING()
-	E.Collect_All_PlayerInfo()
+	E.Collect_PlayerInfo()
 	E.func_RequestUIUpdate("PLAYER_UPDATE_RESTING")
+end
+
+function EventFrame:WEEKLY_REWARDS_UPDATE()
+	E.Collect_GreatVault()
+	E.func_RequestUIUpdate("WEEKLY_REWARDS_UPDATE")
+end
+
+function EventFrame:CHALLENGE_MODE_COMPLETED()
+	E.Collect_GreatVault()
+	E.func_RequestUIUpdate("CHALLENGE_MODE_COMPLETED")
+end
+
+function EventFrame:CHALLENGE_MODE_MAPS_UPDATE()
+	E.Collect_GreatVault()
+	E.func_RequestUIUpdate("CHALLENGE_MODE_MAPS_UPDATE")
 end
 
 -- function EventFrame:QUEST_DATA_LOAD_RESULT(...)

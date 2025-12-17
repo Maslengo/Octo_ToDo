@@ -22,9 +22,9 @@ local function tempFunction()
 		{id = 3278, defS = true,}, -- Астальные нити
 		{id = 3269, defS = true,}, -- (Season 3)
 		{id = 3028, defS = true,}, -- Restored Coffer Key
-		{id = 3310, defS = true,}, -- SEASON 2
+		{id = 3310, defS = false,}, -- SEASON 2
 		{id = 2815, defS = true,}, -- Resonance Crystals
-		{id = 3218, defS = true,}, -- Empty Kaja'Cola Can
+		{id = 3218, defS = false,}, -- Empty Kaja'Cola Can
 		{id = 3090, defS = true,}, -- Flame-Blessed Iron
 		{id = 3056, defS = true,}, -- Kej
 		{id = 2803, defS = true,}, -- Undercoin
