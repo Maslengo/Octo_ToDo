@@ -178,11 +178,11 @@ if L then
 	L["isCategoryFrameVisible"] = true
 	L["InDev"] = true
 	-- Time formats
-	L["time_YEAR"] = "y"
-	L["time_DAY"] = "d"
-	L["time_HOUR"] = "h"
-	L["time_MINUTE"] = "m"
-	L["time_SECOND"] = "s"
+	L["y"] = true
+	L["d"] = true
+	L["h"] = true
+	L["m"] = true
+	L["s"] = true
 	L["y. "] = true
 	L["d. "] = true
 	L["h. "] = true
