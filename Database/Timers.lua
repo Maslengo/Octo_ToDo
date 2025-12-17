@@ -1,6 +1,6 @@
 local GlobalAddonName, E =...
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 local function CreateTimer(baseTime, interval, duration, label)
 	if not baseTime or not interval or interval <= 0 then

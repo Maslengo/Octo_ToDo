@@ -1,8 +1,12 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local enable = true
+local Is_WarlordsofDraenor_available = E.func_Is_WarlordsofDraenor_available()
+----------------------------------------------------------------
 if not enable then return end
+if not Is_WarlordsofDraenor_available then return end;
+----------------------------------------------------------------
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 local categoryKey = 6
 local expansionID = 6

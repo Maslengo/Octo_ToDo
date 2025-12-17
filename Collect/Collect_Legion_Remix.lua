@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_LegionRemixData()
+local function Collect_Legion_Remix()
 	local collect = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collect then return end
 	----------------------------------------------------------------
@@ -23,6 +23,6 @@ local function Collect_LegionRemixData()
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
-function E.Collect_LegionRemixData()
-	E.func_SpamBlock(Collect_LegionRemixData, true)
+function E.Collect_Legion_Remix()
+	E.func_SpamBlock(Collect_Legion_Remix, true)
 end

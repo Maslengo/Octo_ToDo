@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_Currency()
+local function Collect_Currencies()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	local currencyCache = {}
@@ -44,7 +44,6 @@ local function Collect_Currency()
 				E.func_SetOrNil(charCurrency, "useTotalEarnedForMaxQty", useTotalEarnedForMaxQty)
 			else
 				-- Валюта аккаунтная, нужно всем персонажам сохранить одни и те же значения
-				-- print (E.func_GetCurrencyName(currencyID), currencyID)
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
 						local shared = CharInfo.MASLENGO.Currency[currencyID] or {}
@@ -61,7 +60,7 @@ local function Collect_Currency()
 	end
 end
 ----------------------------------------------------------------
-local function Collect_Currency_Account()
+local function Collect_Currencies_Account()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	local currencyCache = {}
@@ -87,7 +86,6 @@ local function Collect_Currency_Account()
 				for _, v in ipairs(rosterCurrencyData) do
 					currencyMap[v.characterGUID] = v.quantity
 				end
-				-- print (currencyID, E.func_GetCurrencyName(currencyID))
 				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
 						CharInfo.MASLENGO.Currency[currencyID] = CharInfo.MASLENGO.Currency[currencyID] or {}
@@ -107,7 +105,6 @@ local function Collect_Currency_Account()
 				E.func_SetOrNil(charCurrency, "useTotalEarnedForMaxQty", useTotalEarnedForMaxQty)
 			else
 				-- Валюта аккаунтная, нужно всем персонажам сохранить одни и те же значения
-				-- print (E.func_GetCurrencyName(currencyID), currencyID)
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
 						local shared = CharInfo.MASLENGO.Currency[currencyID] or {}
@@ -151,9 +148,9 @@ function E.Collect_TARGET_Currency(currencyID)
 	E.func_SetOrNil(charCurrency, "useTotalEarnedForMaxQty", useTotalEarnedForMaxQty)
 end
 ----------------------------------------------------------------
-function E.Collect_Currency()
-	E.func_SpamBlock(Collect_Currency, true)
+function E.Collect_Currencies()
+	E.func_SpamBlock(Collect_Currencies, true)
 end
-function E.Collect_Currency_Account()
-	E.func_SpamBlock(Collect_Currency_Account, true)
+function E.Collect_Currencies_Account()
+	E.func_SpamBlock(Collect_Currencies_Account, true)
 end

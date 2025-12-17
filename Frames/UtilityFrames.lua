@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 -- Constants
 local HEIGHT = 20

@@ -44,8 +44,8 @@ local function Collect_GreatVault()
 
 	-- C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
 	-- if WeeklyRewardsFrame then
-	--     WeeklyRewardsFrame:Show()
-	--     WeeklyRewardsFrame:Hide()
+	-- WeeklyRewardsFrame:Show()
+	-- WeeklyRewardsFrame:Hide()
 	-- end
 
 	C_WeeklyRewards.OnUIInteract()
@@ -63,7 +63,6 @@ local function Collect_GreatVault()
 	local overallScore = C_ChallengeMode.GetOverallDungeonScore()
 	collectPlayerData.RIO_Score = (overallScore and overallScore ~= 0) and overallScore or nil
 	collectPlayerData.RIO_weeklyBest = (currentWeekBestLevel and currentWeekBestLevel ~= 0) and currentWeekBestLevel or nil
-
 		----------------------------------------------------------------
 		if E.GW_Start then
 			 -- /run C_AddOns.LoadAddOn("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()

@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_ItemLevel()
+local function Collect_Character_ItemLevels()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
@@ -23,6 +23,6 @@ local function Collect_ItemLevel()
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
-function E.Collect_ItemLevel()
-	E.func_SpamBlock(Collect_ItemLevel, true)
+function E.Collect_Character_ItemLevels()
+	E.func_SpamBlock(Collect_Character_ItemLevels, true)
 end

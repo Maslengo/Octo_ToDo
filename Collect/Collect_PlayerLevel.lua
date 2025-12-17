@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_PlayerLevel()
+local function Collect_Character_Level()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local UnitLevel = UnitLevel("PLAYER")
@@ -28,6 +28,6 @@ local function Collect_PlayerLevel()
 	end
 end
 ----------------------------------------------------------------
-function E.Collect_PlayerLevel()
-	E.func_SpamBlock(Collect_PlayerLevel, false)
+function E.Collect_Character_Level()
+	E.func_SpamBlock(Collect_Character_Level, false)
 end

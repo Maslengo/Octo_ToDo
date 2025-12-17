@@ -1,8 +1,12 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local enable = true
+local Is_MistsofPandaria_available = E.func_Is_MistsofPandaria_available()
+----------------------------------------------------------------
 if not enable then return end
+if not Is_MistsofPandaria_available then return end;
+----------------------------------------------------------------
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 local categoryKey = 5
 local expansionID = 5

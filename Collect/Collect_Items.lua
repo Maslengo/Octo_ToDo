@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_ItemsInBag()
+local function Collect_Items()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectPlayerData or not collectMASLENGO then return end
@@ -113,6 +113,6 @@ local function Collect_ItemsInBag()
 	collectPlayerData.totalSlots = totalSlots ~= 0 and totalSlots or nil
 end
 ----------------------------------------------------------------
-function E.Collect_ItemsInBag()
-	E.func_SpamBlock(Collect_ItemsInBag, true)
+function E.Collect_Items()
+	E.func_SpamBlock(Collect_Items, true)
 end

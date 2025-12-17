@@ -61,7 +61,7 @@ local function generateEventKey(eventID, startTime)
 		startTime.month,
 		startTime.year)
 end
-function E.Collect_Holiday()
+function E.Collect_Holidays()
 	if not (GetHolidayInfo and E.ActiveHoliday and E.Holiday) then
 		return
 	end

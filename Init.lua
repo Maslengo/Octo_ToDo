@@ -50,7 +50,10 @@ E.minValue_ItemLevel = 0
 E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
-
+E.REPUTATION_ALPHA = .3 -- Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
+E.CHARACTER_ALPHA = .2 -- Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
+E.MAINBACKGROUND_ALPHA = .8 -- Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
+E.MOVINGBACKGROUND_ALPHA = 1 -- Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
 
 E.DataProvider_Otrisovka = {}
 

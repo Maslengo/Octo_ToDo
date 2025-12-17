@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 -- Переводы для названия настройки
 local NumberFormatSettingName = {
@@ -54,12 +54,12 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
-				name = FONT_SIZE,
+				name = L["Font settings"],
 				order = GetOrder(),
 			},
 			-------------------------------------------------
 			Config_FontStyle = {
-				name = "Font",
+				name = L["Font"],
 				type = "select",
 				dialogControl = "LSM30_Font",
 				values = LibSharedMedia:HashTable("font"),
@@ -77,7 +77,7 @@ function E.func_Octo_Options(savedVars)
 			Config_FontSize = {
 				type = "range",
 				name = L["Font Size"],
-				desc = "Config_FontSize",
+				desc = "",
 				min = 8,
 				max = 32,
 				step = 1,
@@ -109,20 +109,98 @@ function E.func_Octo_Options(savedVars)
 			},
 			-------------------------------------------------
 			-- Config_Texture = {
-			-- 	name = "Texture",
-			-- 	type = "select",
-			-- 	dialogControl = "LSM30_Statusbar",
-			-- 	values = LibSharedMedia:HashTable("statusbar"),
-			-- 	get = function()
-			-- 		return Octo_ToDo_DB_Vars.Config_Texture
-			-- 	end,
-			-- 	set = function(_, value)
-			-- 		Octo_ToDo_DB_Vars.Config_Texture = value
-					
-			-- 	end,
-			-- 	width = E.FULL_WIDTH/4,
-			-- 	order = GetOrder(),
+			-- name = "Texture",
+			-- type = "select",
+			-- dialogControl = "LSM30_Statusbar",
+			-- values = LibSharedMedia:HashTable("statusbar"),
+			-- get = function()
+			-- return Octo_ToDo_DB_Vars.Config_Texture
+			-- end,
+			-- set = function(_, value)
+			-- Octo_ToDo_DB_Vars.Config_Texture = value
+			-- end,
+			-- width = E.FULL_WIDTH/4,
+			-- order = GetOrder(),
 			-- },
+			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_REPUTATION_ALPHA = {
+				type = "range",
+				name = E.COLOR_RED..">|r"..L["Reputation Background"]..E.COLOR_RED.."<|r",
+				desc = CURSOR_SIZE_DEFAULT..": 0.3|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
+				min = 0,
+				max = 1,
+				step = .1,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA = value
+					E.REPUTATION_ALPHA = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_CHARACTER_ALPHA = {
+				type = "range",
+				name = E.COLOR_RED..">|r"..L["Character Background"]..E.COLOR_RED.."<|r",
+				desc = CURSOR_SIZE_DEFAULT..": 0.2|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
+				min = 0,
+				max = 1,
+				step = .1,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA = value
+					E.CHARACTER_ALPHA = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_MAINBACKGROUND_ALPHA = {
+				type = "range",
+				name = L["Addon Background"],
+				desc = CURSOR_SIZE_DEFAULT..": 0.8",
+				min = 0,
+				max = 1,
+				step = .1,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA = value
+					E.MAINBACKGROUND_ALPHA = value
+					Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_ExtraBackgroundFadeWhenMoving = {
+				type = "range",
+				name = L["Extra Background Fade When Moving"], -- L["Alpha On Drag"],
+				desc = CURSOR_SIZE_DEFAULT..": 1",
+				min = 0.1,
+				max = 1,
+				step = 0.1,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving = value
+					E.MOVINGBACKGROUND_ALPHA = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",
@@ -132,8 +210,8 @@ function E.func_Octo_Options(savedVars)
 			-------------------------------------------------
 			Config_ADDON_HEIGHT = {
 				type = "range",
-				name = L["Line Height"],
-				desc = "",
+				name = E.COLOR_RED..">|r"..L["Line Height"]..E.COLOR_RED.."<|r",
+				desc = CURSOR_SIZE_DEFAULT..": 20|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
 				min = 10,
 				max = 50,
 				step = 1,
@@ -148,27 +226,10 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_AlphaOnTheMove = {
-				type = "range",
-				name = L["Alpha On Move"], -- L["Alpha On Drag"],
-				desc = "",
-				min = 0.1,
-				max = 1,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_AlphaOnTheMove
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_AlphaOnTheMove = value
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
 			Config_ClampedToScreen = {
 				type = "toggle",
 				name = L["Clamped To Screen"],
-				desc = "",
+				desc = CURSOR_SIZE_DEFAULT..": "..NO,
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_ClampedToScreen
 				end,
@@ -224,7 +285,7 @@ function E.func_Octo_Options(savedVars)
 			Config_LevelToShow = {
 				type = "range",
 				name = L["Min. Level"],
-				desc = "",
+				desc = CURSOR_SIZE_DEFAULT..": 1",
 				min = 1,
 				max = 90,
 				step = 1,
@@ -241,7 +302,7 @@ function E.func_Octo_Options(savedVars)
 			Config_LevelToShowMAX = {
 				type = "range",
 				name = L["Max. Level"],
-				desc = "",
+				desc = CURSOR_SIZE_DEFAULT..": 90",
 				min = 1,
 				max = 90*2,
 				step = 1,
@@ -261,11 +322,10 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-
 			Config_DebugID_ALL = {
 				type = "toggle",
 				name = L["Show ID"],
-				desc = "",
+				desc = CURSOR_SIZE_DEFAULT..": "..NO,
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_DebugID_ALL
 				end,
@@ -283,11 +343,6 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-
-
-
-
-
 		},
 	}
 	-------------------------------------------------

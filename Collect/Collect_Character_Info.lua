@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_PlayerInfo()
+local function Collect_Character_Info()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
@@ -80,6 +80,6 @@ local function Collect_PlayerInfo()
 	collectPlayerData.CharDBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)"))
 end
 ----------------------------------------------------------------
-function E.Collect_PlayerInfo()
-	E.func_SpamBlock(Collect_PlayerInfo, false)
+function E.Collect_Character_Info()
+	E.func_SpamBlock(Collect_Character_Info, false)
 end

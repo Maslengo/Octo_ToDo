@@ -1,8 +1,12 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local enable = true
+local Is_Dragonflight_available = E.func_Is_Dragonflight_available()
+----------------------------------------------------------------
 if not enable then return end
+if not Is_Dragonflight_available then return end;
+----------------------------------------------------------------
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 local categoryKey = 10
 local expansionID = 10
@@ -123,7 +127,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.DF_CommunityFeast()..L["Community Feast"]
+				return E.Timers.DF_CommunityFeast()..E.func_GetQuestName(70893, false)
 			end,
 			name_save = "CommunityFeast",
 			defS = true,
@@ -144,7 +148,7 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{70866},
+				{70866, forcedText = {text = L["Siege on Dragonbane Keep"]},},
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -158,7 +162,7 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{70906},
+				{70906, forcedText = {text = L["Grand Hunt"]},},
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -172,7 +176,7 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{73162},
+				{73162, forcedText = {text = L["The Storm's Fury"]},},
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -546,13 +550,13 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_GetMapName(2151)..": ".."Storm-Bound Chest",
+			TextLeft = E.func_GetMapName(2151)..": "..L["Storm-Bound Chest"],
 			name_save = "StormBoundChest",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{74567},
+				{74567, forcedText = {text = L["Storm-Bound Chest"]},},
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -585,13 +589,13 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = "Disciple of Fyrakk",
+			TextLeft = L["Disciple of Fyrakk"],
 			name_save = "DiscipleofFyrakk",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{75467},
+				{75467, forcedText = {text = L["Disciple of Fyrakk"]},},
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -600,12 +604,12 @@ local function tempFunction()
 			TextLeft = function()
 				return E.func_GetMapName(2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift()
 			end,
-			name_save = L["Time Rift"],
+			name_save = "DFTimeRift",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{77836},
+				{77836, forcedText = {text = L["Time Rift"]},},
 			},
 			forcedMaxQuest = 1,
 		},
@@ -653,7 +657,7 @@ local function tempFunction()
 		-- },
 		-- {
 		-- showTooltip = true,
-		-- TextLeft = "Temporal Acquisitions Specialist",
+		-- TextLeft = L["Temporal Acquisitions Specialist"], -- есть ачива
 		-- name_save = "TemporalAcquisitionsSpecialist",
 		-- defS = true,
 		-- reset = "Once",

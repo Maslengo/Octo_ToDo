@@ -4,7 +4,7 @@ local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
 local LibStub = LibStub
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local strsplit = strsplit
 local table_sort = table.sort
@@ -141,6 +141,27 @@ function E.func_IsRemix()
 	return PlayerIsTimerunning()
 	-- return GetPlayerAuraBySpellID(1213439)
 end
+
+
+
+function E.func_Is_WorldofWarcraft_available() return E.interfaceVersion > 10000 end
+function E.func_Is_TheBurningCrusade_available() return E.interfaceVersion > 20000 end
+function E.func_Is_WrathoftheLichKing_available() return E.interfaceVersion > 30000 end
+function E.func_Is_Cataclysm_available() return E.interfaceVersion > 40000 end
+function E.func_Is_MistsofPandaria_available() return E.interfaceVersion > 50000 end
+function E.func_Is_WarlordsofDraenor_available() return E.interfaceVersion > 60000 end
+function E.func_Is_Legion_available() return E.interfaceVersion > 70000 end
+function E.func_Is_BattleforAzeroth_available() return E.interfaceVersion > 80000 end
+function E.func_Is_Shadowlands_available() return E.interfaceVersion > 90000 end
+function E.func_Is_Dragonflight_available() return E.interfaceVersion > 100000 end
+function E.func_Is_TheWarWithin_available() return E.interfaceVersion > 110000 end
+function E.func_Is_Midnight_available() return E.interfaceVersion > 120000 end
+function E.func_Is_TheLastTitan_available() return E.interfaceVersion > 130000 end
+
+
+
+
+
 function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
@@ -594,8 +615,8 @@ local function func_EventName_CACHE(id)
 	end
 	local name
 	if not E.Holiday or next(E.Holiday) == nil then
-		if E.Collect_Holiday then
-			pcall(E.Collect_Holiday)
+		if E.Collect_Holidays then
+			pcall(E.Collect_Holidays)
 		end
 	end
 	for eventKey, v in next, (E.Holiday) do
@@ -1995,7 +2016,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 
 				-- TextCenter = TextCenter..(rewards[1] or "-")..(rewards[1] or "-")..(rewards[1] or "-")
 				if vaultMin ~= 0 then
-					TextCenter = TextCenter..("  "..vaultMin.."/"..max)
+					TextCenter = TextCenter..(" "..vaultMin.."/"..max)
 				end
 				-- tooltip[#tooltip+1] = {
 				-- 	name,
@@ -2967,9 +2988,9 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
-			local cmC = CharInfo.MASLENGO.Currency
-			local curquantity = cmC[id] and cmC[id].quantity or 0
-			local curmaxQuantity = cmC[id] and cmC[id].maxQuantity or 0
+			local cm = CharInfo.MASLENGO
+			local curquantity = cm.Currency[id] and cm.Currency[id].quantity or 0
+			local curmaxQuantity = cm.Currency[id] and cm.Currency[id].maxQuantity or 0
 			-- Фильтр пустоты
 			local hasData = curquantity > 0
 			if hasData then
@@ -3262,7 +3283,6 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 			local reward1 = E.COLOR_GRAY.."-|r"
 			local reward2 = E.COLOR_GRAY.."-|r"
 			local reward3 = E.COLOR_GRAY.."-|r"
-			local maxQWE = 0
 			-- Фильтр пустоты
 			local hasData = (HasAvailableRewards > 0)
 
@@ -3348,6 +3368,96 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 	return tooltip
 end
 
+
+function E.func_ReputationsTooltipLeft(visiblePlayers, id)
+	local tooltip = {}
+	if not E.OctoTable_Reputations_Paragon_Data_NEW[id] then return end
+	local questID = E.OctoTable_Reputations_Paragon_Data_NEW[id].paragonQuest
+	-- local itemID = E.OctoTable_Reputations_Paragon_Data_NEW[id].itemCache
+	--------------------------------------------------------
+	-- 1. Сбор данных
+	--------------------------------------------------------
+	local characterData = {}
+	local IsAccountWideReputation = C_Reputation.IsAccountWideReputation(id)
+	if IsAccountWideReputation then
+		local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
+
+		local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[questID] and 1 or 0
+		local hasData = (DONEPERS > 0)
+		if hasData then
+			local leftText = pd.classColorHex..pd.Name.."|r"
+			local row = { leftText }
+			table.insert(characterData, {
+				row = row,
+				name = leftText,
+				sortValue = 1,
+				row2Text = E.COLOR_PURPLE..">"..QUEST_WATCH_QUEST_READY.."<|r",
+			})
+		end
+	else
+		local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+				local pd = CharInfo.PlayerData
+				local cm = CharInfo.MASLENGO
+				local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[questID] and 1 or 0
+				-- Фильтр пустоты
+				local hasData = (DONEPERS > 0)
+				if hasData then
+					local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
+					local row = { leftText }
+					-- local row2Text = DONEPERS > 0 and E.COLOR_BLUE..">"..REWARD.."<|r" or ""
+					local row2Text = DONEPERS > 0 and E.COLOR_PURPLE..">"..QUEST_WATCH_QUEST_READY.."<|r" or ""
+					table.insert(characterData, {
+							row = row,
+							name = pd.Name,
+							sortValue = DONEPERS,
+							row2Text = row2Text,
+					})
+				end
+			end
+		end
+	end
+	--------------------------------------------------------
+	-- 2. Сортировка
+	--------------------------------------------------------
+	table.sort(characterData, function(a, b)
+			if a.sortValue ~= b.sortValue then
+				return a.sortValue > b.sortValue
+			end
+			return a.name < b.name
+	end)
+	--------------------------------------------------------
+	-- 3. Градиент
+	--------------------------------------------------------
+	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+	--------------------------------------------------------
+	-- 4. Вывод персонажей
+	--------------------------------------------------------
+	for _, d in ipairs(characterData) do
+		local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
+		d.row[2] = d.row2Text
+		table.insert(tooltip, d.row)
+	end
+	--------------------------------------------------------
+	-- 5. Итоги сверху
+	--------------------------------------------------------
+	if #characterData > 1 then
+		local heade1 = {
+			"имя",
+			"",
+			"итемнейм",
+			"квест",
+		}
+		table.insert(tooltip, 1, heade1)
+	end
+	--------------------------------------------------------
+	return tooltip
+end
+
+
 function E.func_KeyTooltip_LEFT(SettingsType)
 	if not SettingsType then return end
 	local tooltip = {}
@@ -3408,8 +3518,9 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		tooltip = E.func_CurrentKeyTooltipLeft(visiblePlayers)
 	elseif SettingsType == "Additionally#GreatVault" then
 		tooltip = E.func_GreatVaultTooltipLeft(visiblePlayers)
+	elseif dataType == "Reputations" then
+		tooltip = E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	end
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		-- if CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 		local specIcon, color, Name
@@ -4227,8 +4338,8 @@ end
 function E.func_SmoothBackgroundAlphaChange(frame_main, frame_Background, event)
 	if InCombatLockdown() or not frame_main or not frame_Background or not event then return end
 	if frame_main:IsShown() then
-		local targetAlpha = Octo_ToDo_DB_Vars.Config_AlphaOnTheMove
-		if targetAlpha == 1 then return end
+		local targetAlpha = E.MOVINGBACKGROUND_ALPHA
+		-- if targetAlpha == 1 then return end
 		local duration = 0.3
 		local currentAlpha = frame_Background:GetAlpha()
 		if event == "PLAYER_STOPPED_MOVING" then

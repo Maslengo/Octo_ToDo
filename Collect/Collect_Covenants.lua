@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_Covenant()
+local function Collect_Covenants()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	local curCovID = C_Covenants.GetActiveCovenantID() or 0
@@ -23,6 +23,6 @@ local function Collect_Covenant()
 end
 ----------------------------------------------------------------
 
-function E.Collect_Covenant()
-	E.func_SpamBlock(Collect_Covenant, true)
+function E.Collect_Covenants()
+	E.func_SpamBlock(Collect_Covenants, true)
 end

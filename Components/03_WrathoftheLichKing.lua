@@ -1,8 +1,12 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
 ----------------------------------------------------------------
 local enable = true
+local Is_WrathoftheLichKing_available = E.func_Is_WrathoftheLichKing_available()
+----------------------------------------------------------------
 if not enable then return end
+if not Is_WrathoftheLichKing_available then return end;
+----------------------------------------------------------------
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 ----------------------------------------------------------------
 local categoryKey = 3
 local expansionID = 3

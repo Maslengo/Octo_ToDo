@@ -10,6 +10,8 @@
 	<Script file="Components\09_Shadowlands.lua"/>
 	<Script file="Components\10_Dragonflight.lua"/>
 	<Script file="Components\11_TheWarWithin.lua"/>
+	<Script file="Components\12_Midnight.lua"/>
+	<Script file="Components\13_TheLastTitan.lua"/>
 
 	<Script file="Components\99_Other.lua"/>
 </Ui>

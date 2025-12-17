@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_BfA_Azerite()
+local function Collect_BFA_HeartOfAzeroth()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local azeriteItemLocation = C_AzeriteItem.FindActiveAzeriteItem()
@@ -15,6 +15,6 @@ local function Collect_BfA_Azerite()
 		)
 end
 ----------------------------------------------------------------
-function E.Collect_BfA_Azerite()
-	E.func_SpamBlock(Collect_BfA_Azerite, true)
+function E.Collect_BFA_HeartOfAzeroth()
+	E.func_SpamBlock(Collect_BFA_HeartOfAzeroth, true)
 end

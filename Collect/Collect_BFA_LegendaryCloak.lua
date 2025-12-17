@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_BfA_Cloaklvl()
+local function Collect_BFA_LegendaryCloak()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local hasItem = E.func_GetItemQuantity(169223, false, false, false, false)
@@ -31,6 +31,6 @@ local function Collect_BfA_Cloaklvl()
 	end
 end
 ----------------------------------------------------------------
-function E.Collect_BfA_Cloaklvl()
-	E.func_SpamBlock(Collect_BfA_Cloaklvl, true)
+function E.Collect_BFA_LegendaryCloak()
+	E.func_SpamBlock(Collect_BFA_LegendaryCloak, true)
 end

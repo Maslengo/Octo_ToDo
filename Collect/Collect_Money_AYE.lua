@@ -1,16 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local function Collect_MoneyUpdate()
+local function Collect_Money_AYE()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	collectPlayerData.Money = GetMoney() or 0
-
-
-
-
-
-
-
 	----------------------------------------------------------------
 	local tempTable_Money = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -24,6 +17,6 @@ local function Collect_MoneyUpdate()
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
-function E.Collect_MoneyUpdate()
-	E.func_SpamBlock(Collect_MoneyUpdate, false)
+function E.Collect_Money_AYE()
+	E.func_SpamBlock(Collect_Money_AYE, false)
 end

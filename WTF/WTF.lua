@@ -3,8 +3,34 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local funcName = GlobalAddonName.."WTF"
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale("Octo")
+local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+E.OctoTable_Reputations_Paragon_Data_NEW = {}
+E.OctoTable_Reputations_Paragon_Data = {}
+----------------------------------------------------------------
+function EventFrame:func_ConcatSimpleTablesAtStart()
+	-- 1ms
+	-- E.func_StartDebugTimer()
+	for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
+		E.ALL_Items[itemID] = true
+	end
+	for reputationID, v in next,(E.OctoTable_Reputations_DB) do
+		E.ALL_Reputations[reputationID] = true
+		if v.paragonQuest and v.itemCache then
+			E.ALL_Quests[v.paragonQuest] = true
+			E.ALL_Items[v.itemCache] = true
+			E.OctoTable_Reputations_Paragon_Data_NEW[reputationID] = {
+				paragonQuest = v.paragonQuest,
+				itemCache = v.itemCache
+			}
+			E.OctoTable_Reputations_Paragon_Data[v.paragonQuest] = {
+				factionID = reputationID,
+				cache = v.itemCache
+			}
+		end
+	end
+	-- E.func_StopDebugTimer()
+end
 ----------------------------------------------------------------
 function EventFrame:func_CacheGameData()
 	E.func_TableConcat(E.ALL_Quests, E.OctoTable_QuestID_Paragon)
@@ -60,11 +86,11 @@ function EventFrame:func_CacheGameData()
 			end
 	end)
 	-- :FailWithChecked(function(promise, ID, type)
-	--     if type == "quest" then
-	--         oprint (ID)
-	--     elseif type == "item" then
-	--         oprint ("item", ID)
-	--     end
+	-- if type == "quest" then
+	-- oprint (ID)
+	-- elseif type == "item" then
+	-- oprint ("item", ID)
+	-- end
 	-- end)
 	-- :Then(function() oprint(E.COLOR_GREEN.."DONE|r") end)
 end
@@ -248,8 +274,6 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		CharInfo.PlayerData = CharInfo.PlayerData or {}
 		local cm = CharInfo.MASLENGO
 		local pd = CharInfo.PlayerData
-
-
 					pd.CharDBVersion = pd.CharDBVersion or 1
 					-- Заполняем стандартные значения
 					for k, v in next, (defaults) do
@@ -278,7 +302,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 					end
 					-- Инициализируем данные репутации (ТЕПЕРЬ НЕ НУЖНО)
 					-- for ID in next,(E.ALL_Reputations) do
-					--     cm.Reputation[ID] = cm.Reputation[ID] or "0#0###"
+					-- cm.Reputation[ID] = cm.Reputation[ID] or "0#0###"
 					-- end
 					-- Инициализируем данные LFG инстансов
 					for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
@@ -298,9 +322,8 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Настройки отладки
 	-- Настройки функций аддона
 	local featureDefaults = {
-		Config_SPAM_TIME = 2,
+		Config_SPAM_TIME = 3,
 		Config_ADDON_HEIGHT = 20,
-		Config_AlphaOnTheMove = 1, -- Альфа в движении
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
 		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
 		Config_LevelToShow = 1, -- Минимальный уровень для отображения
@@ -313,24 +336,19 @@ function EventFrame:Octo_ToDo_DB_Vars()
 		isOnlyCurrentServer = false, -- Только текущий сервер
 		Config_DebugID_ALL = false,
 		GlobalDBVersion = 0,
+		Config_REPUTATION_ALPHA = 0.3,
+		Config_CHARACTER_ALPHA = 0.2,
+		Config_MAINBACKGROUND_ALPHA = 0.8,
+		Config_ExtraBackgroundFadeWhenMoving = 1,
 		-- isSettingsEnabled = false,
 		-- TalentTreeTweaks = true, -- Настройки дерева талантов
 		-- TalentTreeTweaks_Alpha = 1, -- Прозрачность дерева
 		-- TalentTreeTweaks_Scale = 1, -- Масштаб дерева
-		-- TWW_Delve_Weekly = true, -- Еженедельные исследования
-		-- TWW_DungeonQuest_Weekly = true, -- Еженедельные квесты подземелий
-		-- UIErrorsFramePosition = true, -- Позиция фрейма ошибок
-		-- WorldBoss_Weekly = true, -- Еженедельные мировые боссы
 	}
 	-- Устанавливаем значения по умолчанию
 	for k, v in next, (featureDefaults) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
 	end
-	-- Octo_ToDo_DB_Vars.font = Octo_ToDo_DB_Vars.font or {}
-	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang] = Octo_ToDo_DB_Vars.font[E.curLocaleLang] or {}
-	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontStyle = "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
-	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontSize = 11
-	-- Octo_ToDo_DB_Vars.font[E.curLocaleLang].Config_FontFlags = "OUTLINE"
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffE|r|cffcb7afdx|r|cffc47cfbp|r|cffbe7ffar|r|cffb782f8e|r|cffb184f6s|r|cffaa87f4s|r|cffa48af2w|r|cff9d8cf0a|r|cff978fefy|r|cff9091ed |r|cff8a94ebR|r|cff8397e9g|r|cff7d99e7 |r|cff769ce5B|r|cff709fe4o|r|cff69a1e2l|r|cff63A4E0d|r" -- "|cffd177ffO|r|cffac86f5c|r|cff8895eat|r|cff63A4E0o|r"
@@ -354,7 +372,6 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
 	E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
 	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
-	E.func_InitSubTable(Octo_Cache_DB, "watchedMovies")
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -364,15 +381,6 @@ function EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	E.func_CreateNewProfile("Default")
-	----------------------------------------------------------------
-	--
-	----------------------------------------------------------------
-	for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
-		E.ALL_Items[itemID] = true
-	end
-	for reputationID in next,(E.OctoTable_Reputations_DB) do
-		E.ALL_Reputations[reputationID] = true
-	end
 	----------------------------------------------------------------
 	if not Octo_ToDo_DB_Levels then return end
 	----------------------------------------------------------------
@@ -385,8 +393,6 @@ function EventFrame:Octo_profileKeys()
 	end
 	----------------------------------------------------------------
 	-- E.OctoTables_Vibor[categoryKey] = E.OctoTables_Vibor[categoryKey] or {}
-	-- opde(OctoTables_Vibor)
-	-- opde(OctoTables_DataOtrisovka)
 end
 ----------------------------------------------------------------
 function EventFrame:func_Daily_Reset()
@@ -422,13 +428,13 @@ function EventFrame:func_Daily_Reset()
 			for dungeonID, v in next, (cm.LFGInstance) do
 				if v then
 					if cm.LFGInstance[dungeonID].donetoday then
-						print (cm.LFGInstance[dungeonID].donetoday)
+						-- print (cm.LFGInstance[dungeonID].donetoday)
 					end
 				end
 			end
 			for worldBossID, v in next, (cm.SavedWorldBoss) do
 				if v then
-					print (cm.SavedWorldBoss.reset)
+					-- print (cm.SavedWorldBoss.reset)
 				end
 			end
 			-- print (CharInfo.PlayerData.Name)
@@ -559,6 +565,10 @@ function EventFrame:func_UpdateGlobals()
 			E.Config_DebugID_ALL = Octo_ToDo_DB_Vars.Config_DebugID_ALL
 		end
 		E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
+		E.REPUTATION_ALPHA = Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
+		E.CHARACTER_ALPHA = Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
+		E.MAINBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
+		E.MOVINGBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
 	end
 	E.func_UpdateCurrentProfile()
 end
@@ -578,6 +588,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	EventFrame:func_CheckAll()
+	EventFrame:func_ConcatSimpleTablesAtStart()
 	EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
 	EventFrame:func_UpdateGlobals()

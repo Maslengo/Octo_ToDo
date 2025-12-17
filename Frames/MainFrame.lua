@@ -5,6 +5,9 @@ EventFrame.searchFilter = nil
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
 E.func_RegisterFrame(Octo_MainFrame_ToDo)
+-- Создаем отдельный фрейм для фона
+local Octo_MainFrame_ToDo_Background = CreateFrame("FRAME", "Octo_MainFrame_ToDo_Background", Octo_MainFrame_ToDo, "BackdropTemplate")
+-- Octo_MainFrame_ToDo_Background:Hide()
 ----------------------------------------------------------------
 -- Константы для настройки интерфейса
 local INDENT_LEFT = 10
@@ -27,13 +30,6 @@ local math_max = math.max
 local math_ceil= math.ceil
 local UIFrameFadeIn = UIFrameFadeIn
 local UIFrameFadeOut = UIFrameFadeOut
--- Создаем отдельный фрейм для фона
-local Octo_MainFrame_ToDo_Background = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "BackdropTemplate")
-Octo_MainFrame_ToDo_Background:SetAllPoints()
-Octo_MainFrame_ToDo_Background:SetFrameLevel(Octo_MainFrame_ToDo:GetFrameLevel() - 1) -- Ниже основного фрейма
-Octo_MainFrame_ToDo_Background:SetBackdrop(E.menuBackdrop)
-Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
 
@@ -175,7 +171,7 @@ local func_OnAcquiredCenter do
 		columnFrame.CurrentCharBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -2)
 		columnFrame.CurrentCharBackground:SetAllPoints()
 		columnFrame.CurrentCharBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
-		columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, E.ALPHA_BACKGROUND)
+		columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, E.CHARACTER_ALPHA)
 		columnFrame.CurrentCharBackground:Hide()
 	end
 	local function Create_ReputationBackground(columnFrame)
@@ -183,6 +179,8 @@ local func_OnAcquiredCenter do
 		columnFrame.ReputationBackground:SetPoint("LEFT")
 		columnFrame.ReputationBackground:SetHeight(E.GLOBAL_LINE_HEIGHT)
 		columnFrame.ReputationBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
+		columnFrame.ReputationBackground:SetVertexColor(classR, classG, classB, E.REPUTATION_ALPHA)
+		columnFrame.ReputationBackground:Hide()
 	end
 	local function Create_TextCenter(columnFrame)
 		columnFrame.TextCenter = columnFrame:CreateFontString()
@@ -235,23 +233,23 @@ local function func_SettingsButton_OnClick(button, frameData)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
 		id = tonumber(id)
 	end
-    -- Инициализация таблицы если нужно
-    if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
-        Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
-    end
+ -- Инициализация таблицы если нужно
+ if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
+ Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
+ end
 
-    local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
+ local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
 
-    -- Простое переключение
-    local newValue = not (settingsTable[id] or false)
-    settingsTable[id] = newValue
+ -- Простое переключение
+ local newValue = not (settingsTable[id] or false)
+ settingsTable[id] = newValue
 
-    -- Обновление текстуры
-    local texture = newValue and
-        "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
-        "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
+ -- Обновление текстуры
+ local texture = newValue and
+ "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
+ "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
 
-    button:GetParent().SettingsTexture:SetTexture(texture)
+ button:GetParent().SettingsTexture:SetTexture(texture)
 end
 
 
@@ -479,7 +477,7 @@ function EventFrame:func_InitCenter(frame, node)
 			if frameData.ColorCenter and frameData.ColorCenter[i] then
 				local r1, g1, b1 = E.func_Hex2RGBFloat(frameData.ColorCenter[i])
 				columnFrames.ReputationBackground:Show()
-				columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1, .3)
+				columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1)
 				if dataType == "Reputations" and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) ~= 0 then
 				-- ПОФИКСИТЬ НА НОВЫЙ ЛАД
 				-- if dataType == "Reputations" then
@@ -510,7 +508,7 @@ function EventFrame:func_InitCenter(frame, node)
 			end
 		else
 			columnFrames.TextCenter:SetText("")
-			columnFrames.ReputationBackground:SetVertexColor(0, 0, 0, 0)
+			columnFrames.ReputationBackground:SetVertexColor(0, 0, 0)
 			columnFrames.CurrentCharBackground:Hide()
 		end
 		columnFrames:SetScript("OnEnter", function()
@@ -530,11 +528,23 @@ function EventFrame:func_InitCenter(frame, node)
 end
 
 local function HeaderFrameLeft_OnShow(frame)
-	return frame.Text:SetText(E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r ")
+	local text = E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r "
+	frame.Text:SetText(text)
 end
 
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
+	Octo_MainFrame_ToDo_Background:SetAllPoints()
+	Octo_MainFrame_ToDo_Background:SetFrameLevel(Octo_MainFrame_ToDo:GetFrameLevel() - 1) -- Ниже основного фрейма
+	Octo_MainFrame_ToDo_Background:SetBackdrop(E.menuBackdrop)
+	Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+	Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+
+
+
+
+
+
 	-- Настройка позиции и обработчика показа фрейма
 	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.PHYSICAL_SCREEN_WIDTH*.1)
 	-- Octo_MainFrame_ToDo:SetPoint("CENTER")
@@ -650,31 +660,31 @@ function EventFrame:func_CreateMainFrame()
 	----------------------------------------------------------------
 	-- РЕЗКОЕ ПЕРЕМЕЩЕНИЕ
 	----------------------------------------------------------------
-	-- Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
-	-- 		if button == "LeftButton" then
-	-- 			-- Octo_MainFrame_ToDo:SetAlpha(Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
-	-- 			-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), Octo_ToDo_DB_Vars.Config_AlphaOnTheMove or E.backgroundColorA)
-	-- 			Octo_MainFrame_ToDo:StartMoving()
-	-- 		end
-	-- end)
-	-- Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
-	-- 		if button == "LeftButton" then
-	-- 			-- Octo_MainFrame_ToDo:SetAlpha(1)
-	-- 			-- UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
-	-- 			Octo_MainFrame_ToDo:StopMovingOrSizing()
-	-- 			-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
-	-- 		end
-	-- end)
+	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
+			if button == "LeftButton" then
+				-- Octo_MainFrame_ToDo:SetAlpha(E.MOVINGBACKGROUND_ALPHA or E.backgroundColorA)
+				-- UIFrameFadeOut(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), E.MOVINGBACKGROUND_ALPHA or E.backgroundColorA)
+				Octo_MainFrame_ToDo:StartMoving()
+			end
+	end)
+	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
+			if button == "LeftButton" then
+				-- Octo_MainFrame_ToDo:SetAlpha(1)
+				-- UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
+				Octo_MainFrame_ToDo:StopMovingOrSizing()
+				-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
+			end
+	end)
 	----------------------------------------------------------------
 	-- ПЛАВНОЕ ПЕРЕМЕЩЕНИЕ (что бы во время настройки не перемещать фрейм)
 	----------------------------------------------------------------
-	Octo_MainFrame_ToDo:RegisterForDrag("LeftButton")
-	Octo_MainFrame_ToDo:SetScript("OnDragStart", function(self, button)
-		Octo_MainFrame_ToDo:StartMoving()
-	end)
-	Octo_MainFrame_ToDo:SetScript("OnDragStop", function(self)
-		Octo_MainFrame_ToDo:StopMovingOrSizing()
-	end)
+	-- Octo_MainFrame_ToDo:RegisterForDrag("LeftButton")
+	-- Octo_MainFrame_ToDo:SetScript("OnDragStart", function(self, button)
+	-- 	Octo_MainFrame_ToDo:StartMoving()
+	-- end)
+	-- Octo_MainFrame_ToDo:SetScript("OnDragStop", function(self)
+	-- 	Octo_MainFrame_ToDo:StopMovingOrSizing()
+	-- end)
 	----------------------------------------------------------------
 
 
@@ -721,9 +731,9 @@ function EventFrame:func_CreateMainFrame()
 end
 
 function E.func_main_frame_toggle()
-    if Octo_MainFrame_ToDo then
-        Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
-    end
+ if Octo_MainFrame_ToDo then
+ Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
+ end
 end
 
 -- Функция создания фрейма поиска
@@ -1227,7 +1237,7 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
 		end
 
-		HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.ALPHA_BACKGROUND)
+		HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
 
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
