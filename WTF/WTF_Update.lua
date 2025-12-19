@@ -8,6 +8,7 @@ end
 local function updateChars(pd, cm, DBVersion)
 	----------------------------------------------------------------
 	if compareVersion(96.7, DBVersion) then
+		print ("96.7, DBVersion) then")
 		cm.currencyID = nil
 		cm.CurrencyID_Total = nil
 		cm.CurrencyID_totalEarned = nil
@@ -49,10 +50,10 @@ end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
 	----------------------------------------------------------------
-	if compareVersion(108.0, DBVersion) then
-		Octo_profileKeys = {}
-		E.func_CreateNewProfile("Default")
-	end
+	-- if compareVersion(108.0, DBVersion) then
+	-- 	Octo_profileKeys = {}
+	-- 	E.func_CreateNewProfile("Default")
+	-- end
 	----------------------------------------------------------------
 	if compareVersion(108.5, DBVersion) then
 		Octo_ToDo_DB_Vars.Config_SPAM_TIME = 2
@@ -74,6 +75,6 @@ function E.func_setOldChanges()
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	Octo_ToDo_DB_Vars.GlobalDBVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
 	updateGlobal(Octo_ToDo_DB_Vars.GlobalDBVersion)
-	-- Octo_ToDo_DB_Vars.GlobalDBVersion = currentVersion
+	Octo_ToDo_DB_Vars.GlobalDBVersion = currentVersion
 end
 ----------------------------------------------------------------

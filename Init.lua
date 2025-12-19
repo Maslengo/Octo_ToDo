@@ -339,16 +339,16 @@ function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersio
 function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
 function E.func_IsPTR() return GetCurrentRegion() >= 72 end -- 90 BETA midnight
 function E.func_IsRemix() return PlayerIsTimerunning() end
-function E.func_Is_WorldofWarcraft_available() return E.interfaceVersion > 10000 end
-function E.func_Is_TheBurningCrusade_available() return E.interfaceVersion > 20000 end
-function E.func_Is_WrathoftheLichKing_available() return E.interfaceVersion > 30000 end
-function E.func_Is_Cataclysm_available() return E.interfaceVersion > 40000 end
-function E.func_Is_MistsofPandaria_available() return E.interfaceVersion > 50000 end
-function E.func_Is_WarlordsofDraenor_available() return E.interfaceVersion > 60000 end
-function E.func_Is_Legion_available() return E.interfaceVersion > 70000 end
-function E.func_Is_BattleforAzeroth_available() return E.interfaceVersion > 80000 end
-function E.func_Is_Shadowlands_available() return E.interfaceVersion > 90000 end
-function E.func_Is_Dragonflight_available() return E.interfaceVersion > 100000 end
-function E.func_Is_TheWarWithin_available() return E.interfaceVersion > 110000 end
-function E.func_Is_Midnight_available() return E.interfaceVersion > 120000 end
-function E.func_Is_TheLastTitan_available() return E.interfaceVersion > 130000 end
+function E.func_Is_WorldofWarcraft_available() return E.interfaceVersion >= 10000 end
+function E.func_Is_TheBurningCrusade_available() return E.interfaceVersion >= 20000 end
+function E.func_Is_WrathoftheLichKing_available() return E.interfaceVersion >= 30000 end
+function E.func_Is_Cataclysm_available() return E.interfaceVersion >= 40000 end
+function E.func_Is_MistsofPandaria_available() return E.interfaceVersion >= 50000 end
+function E.func_Is_WarlordsofDraenor_available() return E.interfaceVersion >= 60000 end
+function E.func_Is_Legion_available() return E.interfaceVersion >= 70000 end
+function E.func_Is_BattleforAzeroth_available() return E.interfaceVersion >= 80000 end
+function E.func_Is_Shadowlands_available() return E.interfaceVersion >= 90000 end
+function E.func_Is_Dragonflight_available() return E.interfaceVersion >= 100000 end
+function E.func_Is_TheWarWithin_available() return E.interfaceVersion >= 110000 end
+function E.func_Is_Midnight_available() return E.interfaceVersion >= 120000 end
+function E.func_Is_TheLastTitan_available() return E.interfaceVersion >= 130000 end

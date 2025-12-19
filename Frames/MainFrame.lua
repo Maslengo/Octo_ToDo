@@ -213,12 +213,12 @@ local function func_SettingsButton_OnClick(button, frameData)
 		id = tonumber(id)
 	end
  -- Инициализация таблицы если нужно
- if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
- Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
- end
- local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
+	if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
+		Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
+	end
+	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
  -- Простое переключение
- local newValue = not (settingsTable[id] or false)
+	local newValue = not (settingsTable[id] or false)
  settingsTable[id] = newValue
  -- Обновление текстуры
  local texture = newValue and

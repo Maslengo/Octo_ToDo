@@ -202,7 +202,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 		--------------------------------------------------------
 		-- 5. Итоги сверху
 		--------------------------------------------------------
-		if #characterData > 1 then
+		if #characterData >= 1 then
 			local header = {
 				"",
 				E.func_texturefromIcon(E.ICON_KYRIAN),
