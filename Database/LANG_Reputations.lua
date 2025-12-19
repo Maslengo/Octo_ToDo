@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local ICON_ALLIANCE = 2024072 -- E.ICON_ALLIANCE
-local ICON_HORDE = 2024073 -- E.ICON_HORDE
+local ICON_ALLIANCE = E.ICON_ALLIANCE -- 2024072 --
+local ICON_HORDE = E.ICON_HORDE -- 2024073 --
 local ICON_KYRIAN = E.ICON_KYRIAN -- = 3641395
 local ICON_NECROLORD = E.ICON_NECROLORD -- = 3752259 -- 3641396
 local ICON_NIGHTFAE = E.ICON_NIGHTFAE -- = 3752258 -- 3641394

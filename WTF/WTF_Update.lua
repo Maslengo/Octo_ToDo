@@ -8,7 +8,7 @@ end
 local function updateChars(pd, cm, DBVersion)
 	----------------------------------------------------------------
 	if compareVersion(96.7, DBVersion) then
-		print ("96.7, DBVersion) then")
+		-- print ("96.7, DBVersion) then")
 		cm.currencyID = nil
 		cm.CurrencyID_Total = nil
 		cm.CurrencyID_totalEarned = nil
@@ -31,7 +31,7 @@ local function updateChars(pd, cm, DBVersion)
 		cm.Items.Bags = cm.Items.Bags or {}
 		if cm.ItemsInBag then
 			for itemID, count in next,(cm.ItemsInBag) do
-				print (pd.Name, itemID, count)
+				-- print (pd.Name, itemID, count)
 				cm.Items.Bags[itemID] = count
 			end
 			cm.ItemsInBag = nil
@@ -46,14 +46,34 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Reputation)
+	if compareVersion(108.8, DBVersion) then
+		if cm.Reputation then
+			for reputationID, v in next,(cm.Reputation) do
+				if type(v) == "table" then
+					cm.Reputation[reputationID] = nil
+				else
+					local fir, sec, result, col, standingTEXT = ("#"):split(v)
+					local FIRST = tonumber(fir or 0)
+					local SECOND = tonumber(sec or 0)
+					local color = col or E.COLOR_GRAY
+					if SECOND ~= 0 then
+						cm.Reputation[reputationID] = FIRST.."#"..SECOND.."##"..color.."#Login required#0"
+					else
+						cm.Reputation[reputationID] = nil
+					end
+				end
+			end
+		end
+	end
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
 	----------------------------------------------------------------
-	-- if compareVersion(108.0, DBVersion) then
-	-- 	Octo_profileKeys = {}
-	-- 	E.func_CreateNewProfile("Default")
-	-- end
+	if compareVersion(108.0, DBVersion) then
+		Octo_profileKeys = {}
+		E.func_CreateNewProfile("Default")
+	end
 	----------------------------------------------------------------
 	if compareVersion(108.5, DBVersion) then
 		Octo_ToDo_DB_Vars.Config_SPAM_TIME = 2
@@ -63,6 +83,7 @@ end
 ----------------------------------------------------------------
 function E.func_setOldChanges()
 	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
+	-- E.func_StartDebugTimer()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels or {}) do
 		local pd = CharInfo and CharInfo.PlayerData
 		local cm = CharInfo and CharInfo.MASLENGO
@@ -72,6 +93,7 @@ function E.func_setOldChanges()
 			pd.CharDBVersion = currentVersion
 		end
 	end
+	-- E.func_StopDebugTimer("E.func_setOldChanges")
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	Octo_ToDo_DB_Vars.GlobalDBVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
 	updateGlobal(Octo_ToDo_DB_Vars.GlobalDBVersion)

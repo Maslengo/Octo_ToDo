@@ -227,6 +227,8 @@ function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType
 	end -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
 	local STANDINGSREP = {
 		[1] = "SIMPLE",
 		[2] = "Friend",
@@ -238,26 +240,25 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	----------------------------------------------------------------
-	if CharInfo.MASLENGO.Reputation and CharInfo.MASLENGO.Reputation[id] and type(CharInfo.MASLENGO.Reputation[id]) == "string" then
-		local FIRST, SECOND, repType, colorC, standing = ("#"):split(CharInfo.MASLENGO.Reputation[id])
-		FirstReputation = tonumber(FIRST)
-		SecondReputation = tonumber(SECOND)
-		ColorCenter = colorC
-		local isParagonRewardEnableLEFT = ""
-		local isParagonRewardEnableRIGHT = ""
+	if cm.Reputation and cm.Reputation[id] and type(cm.Reputation[id]) == "string" then
+		local fir, sec, ParagonCount, col, standingTEXT, typ = ("#"):split(cm.Reputation[id])
+		FirstReputation = tonumber(fir)
+		SecondReputation = tonumber(sec)
+		ColorCenter = col
+		local repType = tonumber(typ or 0)
+		-- local percent = (SecondReputation > 0) and math.floor(FirstReputation / SecondReputation * 100) or 0
+		-- local percentResult = percent and percent > 0 and percent < 100 and " |cff888888"..percent.."%|r" or ""
 		TextCenter = E.func_CompactFormatNumber(FirstReputation).."/"..E.func_CompactFormatNumber(SecondReputation)
 		if TextCenter == "1/1" then
 			TextCenter = E.DONE
 		elseif TextCenter == "0/0" then
 			TextCenter = ""
 		end
-		repType = tonumber(repType)
-		-- if repType and repType < 5 and repType ~= 2 then
-		-- 	local stText = GetText("FACTION_STANDING_LABEL"..repType, UnitSex("player"))
-		-- 	TextCenter = TextCenter .. ColorCenter..STANDINGSREP[repType]..stText.." ("..repType..")|r" -- ПОФИКСИТЬ РЕПА
+		-- if repType == 3 then
+		-- 	TextCenter = TextCenter.."QWE"
 		-- end
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
-			if id == v.factionID and CharInfo.MASLENGO.ListOfParagonQuests[questID] then
+			if id == v.factionID and cm.ListOfParagonQuests[questID] then
 				TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"
 			end
 		end

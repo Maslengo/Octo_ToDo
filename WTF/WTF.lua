@@ -586,7 +586,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	self.ADDON_LOADED = nil
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	EventFrame:func_CheckAll()
+	-- EventFrame:func_CheckAll()
 	EventFrame:func_ConcatSimpleTablesAtStart()
 	EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------

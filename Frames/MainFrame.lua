@@ -995,13 +995,12 @@ function EventFrame:CreateDataProvider()
 								totalColumns = totalColumns,
 							}
 							for CharIndex, CharInfo in ipairs(sortedCharacters) do
-								local TextCenter, ColorCenter, FirstRep, SecondRep =
-								E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
+								local TextCenter, ColorCenter, FIRST, SECOND = E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
 								rowData.TextCenter[CharIndex] = TextCenter
 								rowData.ColorCenter[CharIndex] = ColorCenter
 								rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
-								rowData.FirstReputation[CharIndex] = FirstRep or 0
-								rowData.SecondReputation[CharIndex] = SecondRep or 0
+								rowData.FirstReputation[CharIndex] = FIRST or 0
+								rowData.SecondReputation[CharIndex] = SECOND or 0
 							end
 							local node = DataProvider:Insert(rowData)
 							for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do

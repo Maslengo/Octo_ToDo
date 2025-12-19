@@ -3,6 +3,7 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale(E.MainAddonName, "enUS", true, debug)
 if L then
+	L["Turned in:"] = true
 	L["Weekly Reset"] = true
 	L["Font settings"] = true
 	L["Extra Background Fade When Moving"] = true

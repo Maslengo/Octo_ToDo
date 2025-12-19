@@ -283,15 +283,22 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	----------------------------------------------------------------
 	if dataType == "Reputations" then
 		if cm.Reputation[id] and type(cm.Reputation[id]) == "string" then
-			local FIRST, SECOND, output, ColorCenter, standing = ("#"):split(cm.Reputation[id])
+			local fir, sec, ParagonCount, col, standingTEXT, typ = ("#"):split(cm.Reputation[id])
+			local FirstReputation = tonumber(fir)
+			local SecondReputation = tonumber(sec)
+			local ColorCenter = col
+			local repType = tonumber(typ or 0)
+			local percent = (SecondReputation > 0) and math.floor(FirstReputation / SecondReputation * 100) or 0
+			local percentResult = ColorCenter..percent.."%|r"
+			-- local percentResult = percent > 0 and percent < 1002 and E.COLOR_GRAY..percent.."%|r" or ""
 			local icon1texture = E.func_texturefromIcon(E.ICON_TABARD)
 			local icon2texture = E.func_GetReputationIcon(id) and E.func_texturefromIcon(E.func_GetReputationIcon(id)) or ""
 			local firstTEXT = icon1texture..icon2texture..E.func_GetReputationName(id)
-			local secondTEXT = FIRST.."/"..SECOND
+			local secondTEXT = FirstReputation.."/"..SecondReputation
 			if secondTEXT == "1/1" then
 				secondTEXT = E.DONE
 			end
-			local thirdTEXT = ColorCenter..standing.."|r"
+			local thirdTEXT = ColorCenter..standingTEXT.."|r"
 			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 				if id == v.factionID and cm.ListOfParagonQuests[questID] then
 					isParagonRewardEnable = E.COLOR_PURPLE..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
@@ -299,12 +306,18 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 				if id == v.factionID and cm.ListOfParagonQuests[questID] then
-					secondTEXT = E.COLOR_PURPLE..">"..FIRST.."/"..SECOND.."<".."|r"
+					secondTEXT = E.COLOR_PURPLE..">"..FirstReputation.."/"..SecondReputation.."<".."|r"
 				end
 			end
 			if secondTEXT ~= "0/0" then
-				tooltip[#tooltip+1] = {firstTEXT}
-				tooltip[#tooltip+1] = {secondTEXT, thirdTEXT}
+				tooltip[#tooltip+1] = {firstTEXT, thirdTEXT}
+				tooltip[#tooltip+1] = {"", secondTEXT.." "..percentResult}
+				if ParagonCount ~= "" then
+					local itemCache = E.OctoTable_Reputations_DB[id].itemCache
+					local itemCacheIcon = itemCache and E.func_texturefromIcon(E.func_GetItemIcon(itemCache)) or ""
+					tooltip[#tooltip+1] = {"", ""}
+					tooltip[#tooltip+1] = {itemCacheIcon..L["Turned in:"].."", ColorCenter..ParagonCount.."|r"}
+				end
 			end
 			-- else
 			-- opde(cm.Reputation[id])

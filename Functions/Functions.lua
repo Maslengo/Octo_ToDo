@@ -365,90 +365,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_GetReputationProgress(reputationID)
-	local SHOWFULL = false
-	local FIRST, SECOND = 0, 0
-	local result = ""
-	local color = E.COLOR_PINK
-	local standingTEXT = ""
-	local reaction = 0
-	local simpleData = GetFactionDataByID(reputationID)
-	local isSimple = simpleData ~= nil
-	local isParagon = IsFactionParagon(reputationID)
-	local friendData = GetFriendshipReputation(reputationID)
-	local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
-	local isMajor = IsMajorFaction(reputationID)
-	local reactionColors = {
-		[0] = E.COLOR_WHITE,
-		[1] = E.COLOR_RED,
-		[2] = E.COLOR_RED,
-		[3] = E.COLOR_ORANGE,
-		[4] = E.COLOR_YELLOW,
-		[5] = E.COLOR_YELLOW,
-		[6] = E.COLOR_GREEN,
-		[7] = E.COLOR_GREEN,
-		[8] = E.COLOR_GREEN,
-	}
-	if isSimple then
-		reaction = simpleData.reaction
-		standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
-		color = reactionColors[reaction] or E.COLOR_PINK
-	end
-	if isParagon then
-		local currentValue, threshold, _, _, tooLowLevelForParagon = GetFactionParagonInfo(reputationID)
-		if threshold then
-			local value = currentValue % threshold
-			color = E.COLOR_BLUE
-			result = value.."/"..threshold
-			if tooLowLevelForParagon then
-				result = result..E.COLOR_RED.."*|r"
-			end
-			FIRST, SECOND = value, threshold
-		end
-	elseif isMajor then
-		local majorData = GetMajorFactionData(reputationID)
-		if majorData then
-			local currentValue = majorData.renownReputationEarned % majorData.renownLevelThreshold
-			local totalValue = majorData.renownLevelThreshold
-			local maxLevel = E.func_GetMaxRenownLevel(reputationID)
-			standingTEXT = "("..majorData.renownLevel.."/"..maxLevel..")|r"
-			result = currentValue.."/"..totalValue..color.."("..majorData.renownLevel.."/"..maxLevel..")|r"
-			FIRST, SECOND = currentValue, totalValue
-		end
-	elseif isFriend then
-		local standing = friendData.standing or 0
-		local reactionThreshold = friendData.reactionThreshold or 0
-		local nextThreshold = friendData.nextThreshold or 0
-		local currentValue = standing - reactionThreshold
-		local totalValue = nextThreshold - reactionThreshold
-		local rankInfo = GetFriendshipReputationRanks(friendData.friendshipFactionID)
-		local currentLevel = rankInfo and rankInfo.currentLevel or 0
-		local maxLevel = rankInfo and rankInfo.maxLevel or 0
-		if currentLevel == maxLevel then
-			FIRST, SECOND = currentLevel, maxLevel
-			result = FIRST.."/"..SECOND
-		else
-			standingTEXT = " ("..currentLevel.."/"..maxLevel..")"
-			FIRST, SECOND = SHOWFULL and standing or currentValue, SHOWFULL and (friendData.maxRep or 0) or totalValue
-			result = FIRST.."/"..SECOND..standingTEXT
-		end
-	elseif isSimple and simpleData.currentStanding then
-		local barMin = simpleData.currentReactionThreshold
-		local barMax = simpleData.nextReactionThreshold
-		local barValue = simpleData.currentStanding
-		local currentValue = barValue - barMin
-		local totalValue = barMax - barMin
-		if currentValue == totalValue then
-			FIRST, SECOND = 1, 1
-			result = standingTEXT
-		else
-			FIRST, SECOND = SHOWFULL and barMin or currentValue,
-			SHOWFULL and (barMin < 0 and 42000 or barMax) or totalValue
-			result = FIRST.."/"..SECOND
-		end
-	end
-	return FIRST.."#"..SECOND.."#"..result.."#"..color.."#"..standingTEXT
-end
 function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, frame, func, frameString)
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
@@ -1302,6 +1218,27 @@ function E.func_CompactFormatNumber(num)
 	return s..suffixes[i]
 end
 ----------------------------------------------------------------
+function E.func_GetFactionDataByID(id)
+	return GetFactionDataByID(id)
+end
+function E.func_GetFactionParagonInfo(id)
+	return GetFactionParagonInfo(id)
+end
+function E.func_GetMajorFactionData(id)
+	return GetMajorFactionData(id)
+end
+function E.func_GetFriendshipReputationRanks(id)
+	return GetFriendshipReputationRanks(id)
+end
+function E.func_IsFactionParagon(id)
+	return IsFactionParagon(id)
+end
+function E.func_GetFriendshipReputation(id)
+	return GetFriendshipReputation(id)
+end
+function E.func_IsMajorFaction(id)
+	return IsMajorFaction(id)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

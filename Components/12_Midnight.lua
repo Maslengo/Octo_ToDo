@@ -54,16 +54,16 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2770, defS = true,},
-		{id = 2710, defS = true,},
-		{id = 2704, defS = true,},
-		{id = 2696, defS = true,},
-		{id = 2699, defS = true,},
-		{id = 2744, defS = true,},
-		{id = 2714, defS = true,},
-		{id = 2712, defS = true,},
-		{id = 2711, defS = true,},
-		{id = 2713, defS = true,},
+		{id = 2696, defS = true,}, -- Племя Амани
+		{id = 2699, defS = true,}, -- Сингулярность
+		{id = 2704, defS = true,}, -- Хара'ти
+		{id = 2710, defS = true,}, -- Двор Луносвета
+		{id = 2770, defS = false,},
+		{id = 2744, defS = false,},
+		{id = 2714, defS = false,},
+		{id = 2712, defS = false,},
+		{id = 2711, defS = false,},
+		{id = 2713, defS = false,},
 		-- {id = 2764, defS = false,}, -- [[NONAME]]
 		-- {id = 2742, defS = false,}, -- [[NONAME]]
 		-- {id = 2700, defS = false,}, -- [[NONAME]]

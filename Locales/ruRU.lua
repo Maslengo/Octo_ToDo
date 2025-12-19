@@ -4,6 +4,7 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale(E.MainAddonName, "ruRU") -- Russian localization
 if L then
+	L["Turned in:"] = "Сдано:"
 	L["Weekly Reset"] = "Еженедельный сброс"
 	L["Font settings"] = "Настройка шрифта"
 	L["Extra Background Fade When Moving"] = "Дополнительное затухание фона в движении"

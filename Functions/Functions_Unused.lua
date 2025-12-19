@@ -271,6 +271,8 @@ function E.func_GetMountIDFromItemID(itemID)
 end
 ----------------------------------------------------------------
 function E.ToggleVault()
+	-- GREAT_VAULT_REWARDS - Награды в Великом хранилище
+	-- Atlas: UI-Journeys-GreatVault-Button
 	if WeeklyRewardsFrame and ToggleFrame then
 		ToggleFrame(WeeklyRewardsFrame)
 	else
