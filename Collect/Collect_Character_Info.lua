@@ -1,6 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Character_Info()
+	E.curServerShort = E.func_GetRealmShortName(GetRealmName())
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
@@ -22,7 +23,7 @@ local function Collect_Character_Info()
 	collectPlayerData.RaceEnglish = RaceEnglish
 	collectPlayerData.raceID = raceID
 	collectPlayerData.classColorHex = E.classColorHexCurrent
-	collectPlayerData.CurrentRegion = E.func_GetCurrentRegion()
+	collectPlayerData.CurrentRegion = GetCurrentRegion()
 	collectPlayerData.CurrentRegionName = E.func_GetCurrentRegionName()
 	collectPlayerData.guildName = guildName
 	collectPlayerData.guildRankName = guildRankName

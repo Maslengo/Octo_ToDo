@@ -20,12 +20,19 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = OTHER
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 1166, defS = false,}, -- Искаженный временем знак
-		-- {id = 3139, defS = false,}, -- Награбленное
-		{id = 2032, defS = false,}, -- Торг Жетон
+		{id = 1166, defS = false,}, -- Timewarped Badge
+		-- {id = 3139, defS = false,}, -- Plunder
+		{id = 2032, defS = false,}, -- Trader's Tender
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 137642, defS = false,}, -- Mark of Honor
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -37,7 +44,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 		{id = "ListOfQuests", defS = false,},
 		{id = "LFGInstance", defS = true,},
-		{id = "AllItems", defS = false,},
+		{id = "AllItems", defS = true,},
 		{id = "Professions", defS = false,},
 		{id = "ItemLevel", defS = true,},
 		{id = "Money", defS = true,},

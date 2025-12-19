@@ -17,7 +17,6 @@ end
 function E.Collect_Garrison()
 	E.func_SpamBlock(Collect_Garrison, true)
 end
-
 function E.Collect_lastCacheTime(...)
 	local key = (""):join(tostringall(...))
 	E.func_SpamBlock(Collect_lastCacheTime(...), true, ...)

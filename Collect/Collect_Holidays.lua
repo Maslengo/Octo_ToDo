@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local time = time
-local GetServerTime = GetServerTime
 local GetCVarBool, SetCVar = GetCVarBool, SetCVar
 local GetHolidayInfo = C_Calendar.GetHolidayInfo
 local GetDayEvent = C_Calendar.GetDayEvent

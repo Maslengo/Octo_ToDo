@@ -7,7 +7,7 @@ local function Collect_Character_TimePlayed(totalTime, currentLevelTime)
 	collectPlayerData.realLevelTime = currentLevelTime
 end
 ----------------------------------------------------------------
-function E.Collect_Character_TimePlayed(...)
-	local key = (""):join(tostringall(...))
-	E.func_SpamBlock(Collect_Character_TimePlayed(...), false, ...)
+function E.Collect_Character_TimePlayed(totalTime, currentLevelTime)
+	local key = (""):join(tostringall(totalTime, currentLevelTime))
+	E.func_SpamBlock(Collect_Character_TimePlayed(totalTime, currentLevelTime), false)
 end

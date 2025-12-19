@@ -1,30 +1,23 @@
 if GetLocale() ~= "ruRU" then return end
-
 local GlobalAddonName, E = ...
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale(E.MainAddonName, "ruRU") -- Russian localization
-
 if L then
 	L["Weekly Reset"] = "Еженедельный сброс"
-
 	L["Font settings"] = "Настройка шрифта"
 	L["Extra Background Fade When Moving"] = "Дополнительное затухание фона в движении"
 	L["Changes require a ReloadUI"] = "Изменения требуют перезагрузки интерфейса"
 	L["Reputation Background"] = "Фон репутации"
 	L["Character Background"] = "Фон персонажа"
 	L["Addon Background"] = "Фон аддона"
-
-
 	L["Storm-Bound Chest"] = "Запечатанный бурей сундук"
 	L["Disciple of Fyrakk"] = "Ученик Фиракка"
 	L["TWW Weekly Cache"] = "Еженедельный тайник TWW"
-
 	L["First Cache"] = "Первый тайник"
 	L["Second Cache"] = "Второй тайник"
 	L["Third Cache"] = "Третий тайник"
 	L["Fourth Cache"] = "Четвёртый тайник"
-
 	L["Treasure"] = "Сокровище"
 	L["Lesser Visions of N'Zoth"] = "Малое Видение Н'Зота"
 	L["Warfront"] = "Фронт"
@@ -34,7 +27,6 @@ if L then
 	L["Font Flags"] = "Стиль шрифта"
 	L["Line Height"] = "Высота строки"
 	L["Character Display Settings"] = "Настройка отображения персонажей"
-
 	-- PROFILES
 	L["Profile"] = "Профиль"
 	L["Profiles"] = "Профили"
@@ -55,8 +47,6 @@ if L then
 	L["Are you sure you want to delete the profile?"] = "Вы уверены, что хотите удалить профиль?"
 	L["Settings mode"] = "Режим настройки"
 	L["Characters"] = "Персонажи"
-
-
 	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = "Разработка аддонов требует много времени и усилий. Если вам нравится пользоваться "..GlobalAddonName..", пожалуйста, поддержите его разработку, сделав пожертвование. Ваша поддержка помогает обеспечить дальнейшее улучшение и поддержку аддона. Спасибо за вашу щедрость!"
 	L["Stolen Anima Vessel"] = "Сосуд с украденной анимой"
 	L["Riftbound Cache"] = "Тайник Разлома"
@@ -145,8 +135,6 @@ if L then
 	L["Level"] = "Уровень"
 	L["Head"] = "Голова"
 	L["Maw"] = "Утроба"
-	L["Bank"] = "Банк"
-	L["Bags"] = "Сумки"
 	L["Feet"] = "Ступни"
 	L["Legs"] = "Ноги"
 	L["Back"] = "Спина"

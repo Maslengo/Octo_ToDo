@@ -89,7 +89,6 @@ local function Collect_Currencies_Account()
 				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
 						CharInfo.MASLENGO.Currency[currencyID] = CharInfo.MASLENGO.Currency[currencyID] or {}
-
 						E.func_SetOrNil(CharInfo.MASLENGO.Currency[currencyID], "quantity", currencyMap[GUID])
 						E.func_SetOrNil(CharInfo.MASLENGO.Currency[currencyID], "maxQuantity", maxQuantity)
 					end
@@ -125,22 +124,17 @@ function E.Collect_TARGET_Currency(currencyID)
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	collectMASLENGO.Currency = collectMASLENGO.Currency or {}
-
 	local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 	if not data then
 		collectMASLENGO.Currency[currencyID] = nil
 	end
-
 	collectMASLENGO.Currency[currencyID] = collectMASLENGO.Currency[currencyID] or {}
 	local charCurrency = collectMASLENGO.Currency[currencyID]
-
-
 	local quantity = data.quantity
 	local maxQuantity = data.maxQuantity
 	local totalEarned = data.totalEarned
 	local maxWeeklyQuantity = data.maxWeeklyQuantity
 	local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
-
 	E.func_SetOrNil(charCurrency, "quantity", quantity)
 	E.func_SetOrNil(charCurrency, "maxQuantity", maxQuantity)
 	E.func_SetOrNil(charCurrency, "totalEarned", totalEarned)

@@ -3,7 +3,6 @@ local GlobalAddonName, E = ...
 local function Collect_Mounts()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
-
 	local GetMountIDs = C_MountJournal.GetMountIDs
 	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
 	for _, mountID in ipairs(GetMountIDs()) do

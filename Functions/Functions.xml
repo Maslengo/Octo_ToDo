@@ -1,0 +1,15 @@
+<Ui>
+	<Script file="Functions\Functions.lua"/>
+	<Script file="Functions\Functions_CACHE.lua"/>
+	<Script file="Functions\Functions_DEBUG.lua"/>
+	<Script file="Functions\Functions_Profile.lua"/>
+	<Script file="Functions\Functions_Unused.lua"/>
+
+	<Script file="Functions\tooltip_LEFT.lua"/>
+	<Script file="Functions\tooltip_RIGHT.lua"/>
+	<Script file="Functions\tooltip_CHAR.lua"/>
+
+	<Script file="Functions\text_LEFT.lua"/>
+	<Script file="Functions\text_RIGHT.lua"/>
+	<Script file="Functions\text_CHAR.lua"/>
+</Ui>

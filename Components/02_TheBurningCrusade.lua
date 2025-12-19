@@ -27,10 +27,14 @@ local function tempFunction()
 		{id = 30183, defS = true,},
 		{id = 32428, defS = true,},
 		{id = 34664, defS = true,},
-
-
 		{id = 24581, defS = true,}, -- HORDE
 		{id = 24579, defS = true,}, -- ALLIANCE
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -69,5 +73,4 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)

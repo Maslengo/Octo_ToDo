@@ -50,6 +50,12 @@ local function tempFunction()
 		{id = 211515, defS = false,},
 	}
 	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	}
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Dragonflight"] = {

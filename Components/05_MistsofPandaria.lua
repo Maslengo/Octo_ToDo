@@ -33,6 +33,12 @@ local function tempFunction()
 		{id = 101529, defS = false,},
 	}
 	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	}
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		{id = 1492, defS = true,}, --name = "Император Шаохао", side = "-", category = "Mists of Pandaria", }, --[faction=1492]
 		{id = 1435, defS = true,}, --name = "Натиск Шадо-Пан", side = "-", category = "Mists of Pandaria", }, --[faction=1435]
@@ -96,5 +102,4 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)

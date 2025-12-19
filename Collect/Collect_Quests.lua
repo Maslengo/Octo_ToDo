@@ -34,8 +34,6 @@ local function Collect_Quests()
 		end
 	end
 end
-
-
 local function Collect_Quests_Universal()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end

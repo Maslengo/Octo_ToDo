@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 ----------------------------------------------------------------
 local function compareVersion(v1, v2)
 	return v1 > (v2 or 0)
@@ -26,6 +25,26 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	if compareVersion(108.5, DBVersion) then
+		cm.Items = cm.Items or {}
+		cm.Items.Bags = cm.Items.Bags or {}
+		if cm.ItemsInBag then
+			for itemID, count in next,(cm.ItemsInBag) do
+				print (pd.Name, itemID, count)
+				cm.Items.Bags[itemID] = count
+			end
+			cm.ItemsInBag = nil
+		end
+		if pd.usedSlots then
+			pd.usedSlots_BAGS = pd.usedSlots
+			pd.usedSlots = nil
+		end
+		if pd.totalSlots then
+			pd.totalSlots_BAGS = pd.totalSlots
+			pd.totalSlots = nil
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
@@ -35,13 +54,14 @@ local function updateGlobal(DBVersion)
 		E.func_CreateNewProfile("Default")
 	end
 	----------------------------------------------------------------
-	if compareVersion(108.1, DBVersion) then
-		Octo_ToDo_DB_Vars.Config_SPAM_TIME = 3
+	if compareVersion(108.5, DBVersion) then
+		Octo_ToDo_DB_Vars.Config_SPAM_TIME = 2
 	end
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 function E.func_setOldChanges()
+	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels or {}) do
 		local pd = CharInfo and CharInfo.PlayerData
 		local cm = CharInfo and CharInfo.MASLENGO
@@ -54,6 +74,6 @@ function E.func_setOldChanges()
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	Octo_ToDo_DB_Vars.GlobalDBVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
 	updateGlobal(Octo_ToDo_DB_Vars.GlobalDBVersion)
-	Octo_ToDo_DB_Vars.GlobalDBVersion = currentVersion
+	-- Octo_ToDo_DB_Vars.GlobalDBVersion = currentVersion
 end
 ----------------------------------------------------------------

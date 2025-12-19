@@ -20,7 +20,6 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-
 		{id = 361, defS = true,}, --
 		{id = 416, defS = true,}, -- Mark of the World Tree
 		{id = 614, defS = true,}, --
@@ -32,6 +31,12 @@ local function tempFunction()
 		-- {id = 52078, defS = true,},
 		-- {id = 69237, defS = true,},
 		-- {id = 71998, defS = true,},
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -56,5 +61,4 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)

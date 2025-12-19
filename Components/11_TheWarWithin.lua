@@ -24,23 +24,20 @@ local function tempFunction()
 		-- The War Within
 		-- (Season 4)
 		{id = 3278, defS = true,}, -- Астальные нити
-		{id = 3269, defS = true,}, -- (Season 3)
-		{id = 3028, defS = true,}, -- Restored Coffer Key
-		{id = 3310, defS = false,}, -- SEASON 2
-		{id = 2815, defS = true,}, -- Resonance Crystals
-		{id = 3218, defS = false,}, -- Empty Kaja'Cola Can
-		{id = 3090, defS = true,}, -- Flame-Blessed Iron
-		{id = 3056, defS = true,}, -- Kej
-		{id = 2803, defS = true,}, -- Undercoin
-
+		{id = 3141, defS = true,}, -- Starlight Spark Dust
 		{id = 3290, defS = true,}, -- Gilded Ethereal Crest -- 3-й сезон
 		{id = 3288, defS = true,}, -- Runed Ethereal Crest -- 3-й сезон
 		{id = 3286, defS = false,}, -- Carved Ethereal Crest -- 3-й сезон
 		{id = 3284, defS = false,}, -- Weathered Ethereal Crest -- 3-й сезон
-		{id = 3008, defS = false,}, -- Valorstones
-
-
-
+		{id = 3008, defS = true,}, -- Valorstones
+		{id = 3269, defS = true,}, -- (Season 3)
+		{id = 3028, defS = true,}, -- Restored Coffer Key
+		{id = 3310, defS = false,}, -- SEASON 2
+		{id = 2815, defS = false,}, -- Resonance Crystals
+		{id = 3218, defS = false,}, -- Empty Kaja'Cola Can
+		{id = 3090, defS = false,}, -- Flame-Blessed Iron
+		{id = 3056, defS = false,}, -- Kej
+		{id = 2803, defS = false,}, -- Undercoin
 		{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
 		{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
 		{id = 1191, defS = false,},
@@ -60,7 +57,6 @@ local function tempFunction()
 		-- {id = 3287, defS = false,}, -- Hidden
 		-- {id = 3285, defS = false,}, -- Hidden
 		{id = 3356, defS = false,}, -- Untainted Mana-Crystals
-		{id = 3141, defS = false,}, -- Starlight Spark Dust
 		-- {id = 3110, defS = false,}, -- Gilded Undermine Crest
 		-- {id = 3109, defS = false,}, -- Runed Undermine Crest
 		-- {id = 3108, defS = false,}, -- Carved Undermine Crest
@@ -73,6 +69,12 @@ local function tempFunction()
 		-- {id = 158923, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 151086, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		{id = 246771, defS = true,},
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -118,9 +120,6 @@ local function tempFunction()
 		{id = 2736, defS = true,},
 		{id = 2658, defS = true,},
 		{id = 2688, defS = true,},
-
-
-
 		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
 		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
 		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
@@ -138,7 +137,6 @@ local function tempFunction()
 		{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
 		{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
 		{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
-
 		{id = 2663, defS = false,}, -- Мира
 		{id = 2665, defS = false,}, -- Лиллистраза
 		{id = 2666, defS = false,}, -- Байки за чашкой
@@ -165,181 +163,181 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 2,
 		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2371)..": ".."Rares"
-			end,
-			name_save = "Rares2371",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
-				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
-				{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
-				{nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
-				{86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
-				{nil},
-				{91276, forcedText = {npcID = 245998}, },
-				{91275, forcedText = {npcID = 245997}, },
-				{90687, forcedText = {npcID = 238144}, },
-				{90689, forcedText = {npcID = 238536}, },
-				{90692, forcedText = {npcID = 241920}, },
-				{90694, forcedText = {npcID = 238384}, },
-				{nil},
-				{nil, addText = {spellID = 1214374},},
-				{90596, forcedText = {npcID = 232128}, },
-				{90586, forcedText = {npcID = 232077}, },
-				{90594, forcedText = {npcID = 231981}, },
-				{90588, forcedText = {npcID = 232108}, },
-				{90595, forcedText = {npcID = 232127}, },
-				{90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
-				{90591, forcedText = {npcID = 232189}, },
-				{90585, forcedText = {npcID = 232006}, },
-				{90583, forcedText = {npcID = 232129}, },
-				{90592, forcedText = {npcID = 232193}, },
-				{91293, forcedText = {npcID = 234845}, },
-				{90589, forcedText = {npcID = 232111}, },
-				{90593, forcedText = {npcID = 232195}, },
-				{90584, forcedText = {npcID = 232199}, },
-			},
-			-- forcedMaxQuest = 3,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
-			end,
-			name_save = "Rares2255",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{81695, forcedText = {npcID = 216031}, },
-				{78905, forcedText = {npcID = 214151}, },
-				{81704, forcedText = {npcID = 216042}, },
-				{81634, forcedText = {npcID = 216038}, },
-				{82077, forcedText = {npcID = 222624}, },
-				{81707, forcedText = {npcID = 216045}, },
-				{81699, forcedText = {npcID = 216041}, },
-				{82036, forcedText = {npcID = 216050}, },
-				{82034, forcedText = {npcID = 216048}, },
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
-			end,
-			name_save = "Rares2215",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{81763, forcedText = {npcID = 207802}, },
-				{82558, forcedText = {npcID = 206514}, },
-				{82560, forcedText = {npcID = 214757}, },
-				{82559, forcedText = {npcID = 206184}, },
-				{81880, forcedText = {npcID = 221753}, },
-				{80011, forcedText = {npcID = 218458}, },
-				{82562, forcedText = {npcID = 221179}, },
-				{82564, forcedText = {npcID = 207780}, },
-				{81881, forcedText = {npcID = 221767}, },
-				{81761, forcedText = {npcID = 221551}, },
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
-			end,
-			name_save = "Rares2248",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{82196, forcedText = {npcID = 219281}, },
-				{81893, forcedText = {npcID = 219264}, },
-				{81920, forcedText = {npcID = 221128}, },
-				{81895, forcedText = {npcID = 219265}, },
-				{81907, forcedText = {npcID = 219266}, },
-				{81905, forcedText = {npcID = 219279}, },
-				{81899, forcedText = {npcID = 219268}, },
-				{81902, forcedText = {npcID = 219270}, },
-				{81921, forcedText = {npcID = 220890}, },
-				{81897, forcedText = {npcID = 219267}, },
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
-			end,
-			name_save = "Rares2214",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{81674, forcedText = {npcID = 220265}, },
-				{80557, forcedText = {npcID = 220274}, },
-				{80505, forcedText = {npcID = 220276}, },
-				{81562, forcedText = {npcID = 220267}, },
-				{81511, forcedText = {npcID = 220266}, },
-				{80560, forcedText = {npcID = 220269}, },
-				{81566, forcedText = {npcID = 220272}, },
-				{80003, forcedText = {npcID = 218393}, },
-				{80536, forcedText = {npcID = 220286}, },
-				{81648, forcedText = {npcID = 221199}, },
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
-			end,
-			name_save = "Rares2369",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{85672, forcedText = {npcID = 229982}, },
-				{85669, forcedText = {npcID = 228201}, },
-				{85437, forcedText = {npcID = 229992}, },
-				{84801, forcedText = {npcID = 228601}, },
-				{84807, forcedText = {npcID = 228605}, },
-				{84804, forcedText = {npcID = 228603}, },
-				{84810, forcedText = {npcID = 228609}, },
-				{84813, forcedText = {npcID = 228612}, },
-			},
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
-			end,
-			name_save = "Rares2346",
-			defS = false,
-			reset = "Once", -- "Daily",
-			desc = categoryKey,
-			quests = {
-				{84917, forcedText = {npcID = 230931}, },
-				{84918, forcedText = {npcID = 230934}, },
-				{84919, forcedText = {npcID = 230940}, },
-				{84920, forcedText = {npcID = 230946}, },
-				{84921, forcedText = {npcID = 230951}, },
-				{84922, forcedText = {npcID = 230979}, },
-				{84926, forcedText = {npcID = 230995}, },
-				{84927, forcedText = {npcID = 231012}, },
-			},
-		},
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2371)..": ".."Rares"
+		-- 	end,
+		-- 	name_save = "Rares2371",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
+		-- 		{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
+		-- 		{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
+		-- 		{nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
+		-- 		{86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
+		-- 		{nil},
+		-- 		{91276, forcedText = {npcID = 245998}, },
+		-- 		{91275, forcedText = {npcID = 245997}, },
+		-- 		{90687, forcedText = {npcID = 238144}, },
+		-- 		{90689, forcedText = {npcID = 238536}, },
+		-- 		{90692, forcedText = {npcID = 241920}, },
+		-- 		{90694, forcedText = {npcID = 238384}, },
+		-- 		{nil},
+		-- 		{nil, addText = {spellID = 1214374},},
+		-- 		{90596, forcedText = {npcID = 232128}, },
+		-- 		{90586, forcedText = {npcID = 232077}, },
+		-- 		{90594, forcedText = {npcID = 231981}, },
+		-- 		{90588, forcedText = {npcID = 232108}, },
+		-- 		{90595, forcedText = {npcID = 232127}, },
+		-- 		{90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
+		-- 		{90591, forcedText = {npcID = 232189}, },
+		-- 		{90585, forcedText = {npcID = 232006}, },
+		-- 		{90583, forcedText = {npcID = 232129}, },
+		-- 		{90592, forcedText = {npcID = 232193}, },
+		-- 		{91293, forcedText = {npcID = 234845}, },
+		-- 		{90589, forcedText = {npcID = 232111}, },
+		-- 		{90593, forcedText = {npcID = 232195}, },
+		-- 		{90584, forcedText = {npcID = 232199}, },
+		-- 	},
+		-- 	-- forcedMaxQuest = 3,
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
+		-- 	end,
+		-- 	name_save = "Rares2255",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{81695, forcedText = {npcID = 216031}, },
+		-- 		{78905, forcedText = {npcID = 214151}, },
+		-- 		{81704, forcedText = {npcID = 216042}, },
+		-- 		{81634, forcedText = {npcID = 216038}, },
+		-- 		{82077, forcedText = {npcID = 222624}, },
+		-- 		{81707, forcedText = {npcID = 216045}, },
+		-- 		{81699, forcedText = {npcID = 216041}, },
+		-- 		{82036, forcedText = {npcID = 216050}, },
+		-- 		{82034, forcedText = {npcID = 216048}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
+		-- 	end,
+		-- 	name_save = "Rares2215",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{81763, forcedText = {npcID = 207802}, },
+		-- 		{82558, forcedText = {npcID = 206514}, },
+		-- 		{82560, forcedText = {npcID = 214757}, },
+		-- 		{82559, forcedText = {npcID = 206184}, },
+		-- 		{81880, forcedText = {npcID = 221753}, },
+		-- 		{80011, forcedText = {npcID = 218458}, },
+		-- 		{82562, forcedText = {npcID = 221179}, },
+		-- 		{82564, forcedText = {npcID = 207780}, },
+		-- 		{81881, forcedText = {npcID = 221767}, },
+		-- 		{81761, forcedText = {npcID = 221551}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
+		-- 	end,
+		-- 	name_save = "Rares2248",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{82196, forcedText = {npcID = 219281}, },
+		-- 		{81893, forcedText = {npcID = 219264}, },
+		-- 		{81920, forcedText = {npcID = 221128}, },
+		-- 		{81895, forcedText = {npcID = 219265}, },
+		-- 		{81907, forcedText = {npcID = 219266}, },
+		-- 		{81905, forcedText = {npcID = 219279}, },
+		-- 		{81899, forcedText = {npcID = 219268}, },
+		-- 		{81902, forcedText = {npcID = 219270}, },
+		-- 		{81921, forcedText = {npcID = 220890}, },
+		-- 		{81897, forcedText = {npcID = 219267}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
+		-- 	end,
+		-- 	name_save = "Rares2214",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{81674, forcedText = {npcID = 220265}, },
+		-- 		{80557, forcedText = {npcID = 220274}, },
+		-- 		{80505, forcedText = {npcID = 220276}, },
+		-- 		{81562, forcedText = {npcID = 220267}, },
+		-- 		{81511, forcedText = {npcID = 220266}, },
+		-- 		{80560, forcedText = {npcID = 220269}, },
+		-- 		{81566, forcedText = {npcID = 220272}, },
+		-- 		{80003, forcedText = {npcID = 218393}, },
+		-- 		{80536, forcedText = {npcID = 220286}, },
+		-- 		{81648, forcedText = {npcID = 221199}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
+		-- 	end,
+		-- 	name_save = "Rares2369",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{85672, forcedText = {npcID = 229982}, },
+		-- 		{85669, forcedText = {npcID = 228201}, },
+		-- 		{85437, forcedText = {npcID = 229992}, },
+		-- 		{84801, forcedText = {npcID = 228601}, },
+		-- 		{84807, forcedText = {npcID = 228605}, },
+		-- 		{84804, forcedText = {npcID = 228603}, },
+		-- 		{84810, forcedText = {npcID = 228609}, },
+		-- 		{84813, forcedText = {npcID = 228612}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
+		-- 	end,
+		-- 	name_save = "Rares2346",
+		-- 	defS = false,
+		-- 	reset = "Once", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{84917, forcedText = {npcID = 230931}, },
+		-- 		{84918, forcedText = {npcID = 230934}, },
+		-- 		{84919, forcedText = {npcID = 230940}, },
+		-- 		{84920, forcedText = {npcID = 230946}, },
+		-- 		{84921, forcedText = {npcID = 230951}, },
+		-- 		{84922, forcedText = {npcID = 230979}, },
+		-- 		{84926, forcedText = {npcID = 230995}, },
+		-- 		{84927, forcedText = {npcID = 231012}, },
+		-- 	},
+		-- },
 		----------------------------------------------------------------------------
 		-- {
 		-- 	sorted = false,
@@ -563,10 +561,6 @@ local function tempFunction()
 			-- forcedMaxQuest = 13,
 		},
 		----------------------------------------------------------------
-
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -919,9 +913,6 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- 8? НАДО УТОЧНИТЬ
 		},
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -1336,10 +1327,6 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-
-
-
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {

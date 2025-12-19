@@ -7,9 +7,6 @@ local function Collect_Character_ItemLevels()
 	collectPlayerData.avgItemLevel = math.floor(avgItemLevel)
 	collectPlayerData.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
 	collectPlayerData.avgItemLevelPvp = math.floor(avgItemLevelPvp)
-
-
-
 	----------------------------------------------------------------
 	local tempTable_ItemLevels = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do

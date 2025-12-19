@@ -29,7 +29,6 @@ local function tempFunction()
 		{id = 1149, defS = false,},
 		{id = 1416, defS = false,},
 		{id = 1273, defS = false,},
-
 		{id = 3292, defS = true,}, -- REMIX
 		{id = 3268, defS = true,}, -- REMIX
 		{id = 3252, defS = true,}, -- REMIX
@@ -41,6 +40,24 @@ local function tempFunction()
 		{id = 124124, defS = false,}, -- Blood of Sargeras
 		{id = 254267, defS = true,}, -- REMIX
 		{id = 253224, defS = false,}, -- REMIX
+		-- {id = 217956, defS = false,},
+		-- {id = 217731, defS = false,},
+		-- {id = 217929, defS = false,},
+		-- {id = 217730, defS = false,},
+		-- {id = 217928, defS = false,},
+		-- {id = 217608, defS = false,},
+		-- {id = 217605, defS = false,},
+		-- {id = 217607, defS = false,},
+		-- {id = 217606, defS = false,},
+		-- {id = 217901, defS = false,},
+		-- {id = 238727, defS = false,},
+		-- {id = 141295, defS = false,},
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -73,9 +90,6 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-
-
-
 		-- {
 		-- sorted = false,
 		-- showTooltip = true,
@@ -91,11 +105,6 @@ local function tempFunction()
 		-- },
 		-- -- forcedMaxQuest = 1,
 		-- },
-
-
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -216,7 +225,6 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)
 -- 1642 US REMIX
 -- 1643 EU REMIX (ru)

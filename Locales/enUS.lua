@@ -1,12 +1,7 @@
-
-
-
-
 local GlobalAddonName, E = ...
 local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale(E.MainAddonName, "enUS", true, debug)
-
 if L then
 	L["Weekly Reset"] = true
 	L["Font settings"] = true
@@ -15,16 +10,13 @@ if L then
 	L["Reputation Background"] = true
 	L["Character Background"] = true
 	L["Addon Background"] = true
-
 	L["Storm-Bound Chest"] = true -- https://www.wowhead.com/object=386356/
 	L["Disciple of Fyrakk"] = true -- https://www.wowhead.com/quest=74775/
 	L["TWW Weekly Cache"] = true
-
 	L["First Cache"] = true
 	L["Second Cache"] = true
 	L["Third Cache"] = true
 	L["Fourth Cache"] = true
-
 	L["Treasure"] = true
 	L["Lesser Visions of N'Zoth"] = true
 	L["Warfront"] = true
@@ -34,7 +26,6 @@ if L then
 	L["Font Flags"] = true
 	L["Line Height"] = true
 	L["Character Display Settings"]	= true
-
 	-- PROFILES
 	L["Profile"] = true
 	L["Profiles"] = true
@@ -55,7 +46,6 @@ if L then
 	L["Are you sure you want to delete the profile?"] = true
 	L["Settings mode"] = true
 	L["Characters"] = true
-
 	L["Addon development takes a large amount of time and effort. If you enjoy using "..GlobalAddonName..", please consider supporting its development by donating. Your support helps ensure the continued improvement and maintenance of the addon. Thank you for your generosity!"] = true
 	L["Stolen Anima Vessel"] = true
 	L["Riftbound Cache"] = true
@@ -145,8 +135,6 @@ if L then
 	L["Level"] = true
 	L["Head"] = true
 	L["Maw"] = true
-	L["Bank"] = true
-	L["Bags"] = true
 	L["Feet"] = true
 	L["Legs"] = true
 	L["Back"] = true

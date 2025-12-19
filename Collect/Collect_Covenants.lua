@@ -22,7 +22,6 @@ local function Collect_Covenants()
 	end
 end
 ----------------------------------------------------------------
-
 function E.Collect_Covenants()
 	E.func_SpamBlock(Collect_Covenants, true)
 end

@@ -25,6 +25,12 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	}
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		{id = 910, defS = false,}, --name = "Род Ноздорму", side = "-", category = "World of Warcraft", }, --[faction=910]
 		{id = 909, defS = false,}, --name = "Ярмарка Новолуния", side = "-", category = "World of Warcraft", }, --[faction=909]
@@ -95,5 +101,4 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)

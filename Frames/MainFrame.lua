@@ -25,24 +25,13 @@ local textR, textG, textB, textA = 1, 1, 1, 1 -- Цвет текста (белы
 local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
 local LEFT_TEXTURE_ALPHA = .05 -- Прозрачность текстуры левой колонки
 local charR, charG, charB = 1, 1, 1
--- Локальные ссылки на часто используемые функции для оптимизации
-local math_min = math.min
-local math_max = math.max
-local math_ceil= math.ceil
-local UIFrameFadeIn = UIFrameFadeIn
-local UIFrameFadeOut = UIFrameFadeOut
 -- Создание фрейма для заголовка левой колонки
 local HeaderFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
-
-
-
-
 local function SafeTooltipShow(frame, ...)
 	if Octo_MainFrame_ToDo:IsShown() then
 		E.func_OctoTooltip_OnEnter(frame, ...)
 	end
 end
-
 local func_OnAcquiredLeft do
 	-- ИКОНКА НАСТРОЕК
 	-- ИКОНКА КАТЕГОРИЙ
@@ -57,7 +46,6 @@ local func_OnAcquiredLeft do
 		frame.SettingsButton:SetPoint("LEFT", 1, -1)
 		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
 		frame.SettingsButton:EnableMouse(true)
-
 		local texture = frame.SettingsButton:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("CENTER")
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
@@ -65,7 +53,6 @@ local func_OnAcquiredLeft do
 		frame.SettingsTexture = texture
 		frame.SettingsButton:SetCollapsesLayout(true)
 	end
-
 	local function Create_icon1frame(frame)
 		frame.icon1frame = CreateFrame("FRAME", nil, frame)
 		frame.icon1frame:Hide()
@@ -90,7 +77,6 @@ local func_OnAcquiredLeft do
 		frame.icon2texture = texture
 		frame.icon2frame:SetCollapsesLayout(true)
 	end
-
 	local function Create_icon3frame(frame)
 		frame.icon3frame = CreateFrame("FRAME", nil, frame)
 		frame.icon3frame:Hide()
@@ -103,7 +89,6 @@ local func_OnAcquiredLeft do
 		frame.icon3texture = texture
 		frame.icon3frame:SetCollapsesLayout(true)
 	end
-
 	local function Create_TextLeft(frame)
 		frame.TextLeft = frame:CreateFontString()
 		frame.TextLeft:SetFontObject(OctoFont11)
@@ -115,15 +100,12 @@ local func_OnAcquiredLeft do
 		frame.TextLeft:SetJustifyH("LEFT")-- Горизонтальное выравнивание
 		frame.TextLeft:SetTextColor(textR, textG, textB, textA)
 	end
-
 	local function Create_TextureLeft(frame)
 		frame.TextureLeft = frame:CreateTexture(nil, "BACKGROUND", nil, -3) -- слой для фоновых текстур
 		frame.TextureLeft:Hide()
 		frame.TextureLeft:SetAllPoints()
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
-
-
 	local function Create_Highlight(frame, owner)
 		frame.Highlight = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
 		frame.Highlight:SetPropagateMouseClicks(true)
@@ -157,7 +139,6 @@ local func_OnAcquiredLeft do
 		Create_icon2frame(frame)
 		Create_icon3frame(frame)
 		Create_TextLeft(frame) -- Текстовое поле для левой колонки
-
 		Create_TextureLeft(frame) -- Текстура для фона левой колонки
 		Create_Highlight(frame, owner) -- Создание полноразмерного фрейма для подсветки
 		AdditionalSettings(frame)
@@ -199,9 +180,6 @@ local func_OnAcquiredCenter do
 		columnFrame:SetHitRectInsets(1, 1, 1, 1)
 		columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
 	end
-
-
-
 	function func_OnAcquiredCenter(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
@@ -238,22 +216,16 @@ local function func_SettingsButton_OnClick(button, frameData)
  if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
  Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
  end
-
  local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
-
  -- Простое переключение
  local newValue = not (settingsTable[id] or false)
  settingsTable[id] = newValue
-
  -- Обновление текстуры
  local texture = newValue and
  "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
  "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
-
  button:GetParent().SettingsTexture:SetTexture(texture)
 end
-
-
 local function func_Setup_Currencies(frame, id)
 	local icon1 = E.func_GetCurrencyIcon(id)
 	frame.icon1texture:SetTexture(icon1)
@@ -269,12 +241,9 @@ local function func_Setup_Currencies(frame, id)
 		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
 	end
 end
-
 local function func_Setup_Reputations(frame, id)
-
 	-- Первая иконка
 	frame.icon1texture:SetTexture(E.ICON_TABARD) -- E.func_GetReputationIcon(id)
-
 	-- Вторая иконка
 	local icon2 = E.func_GetReputationIcon(id)
 	if E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].side then
@@ -299,14 +268,11 @@ local function func_Setup_Reputations(frame, id)
 		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
 	end
 end
-
-
 local function func_Setup_Items(frame, id)
 	local icon1 = E.func_GetItemIcon(id)
 	frame.icon1texture:SetTexture(icon1)
 	frame.icon1frame:Show()
 end
-
 local function func_Setup_Currencies(frame, id)
 	local icon1 = E.func_GetCurrencyIcon(id)
 	frame.icon1texture:SetTexture(icon1)
@@ -322,7 +288,6 @@ local function func_Setup_Currencies(frame, id)
 		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
 	end
 end
-
 local function func_Setup_UniversalQuests(frame, id)
 	local IconLeft = nil
 	-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
@@ -346,12 +311,10 @@ local function func_Setup_UniversalQuests(frame, id)
 		-- frame.icon1frame:Show()								-- ОБЯЗАТЕЛЬНО!
 	end
 end
-
 -- Функция инициализации данных для левой колонки
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
 	if not frameData.SettingsType then return end
-
 	local dataType, id = ("#"):split(frameData.SettingsType)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
 		id = tonumber(id)
@@ -366,7 +329,6 @@ function EventFrame:func_InitLEFT(frame, node)
 	frame.icon2frame:Hide() -- не баг а фича
 	frame.icon3frame:Hide() -- не баг а фича
 	----------------------------------------------------------------
-
 	if frameData.IconLeft then
 		frame.icon1texture:SetTexture(frameData.IconLeft)
 		frame.icon1texture:SetAtlas(frameData.IconLeft, false)
@@ -389,8 +351,6 @@ function EventFrame:func_InitLEFT(frame, node)
 	if dataType == "UniversalQuests" then
 		func_Setup_UniversalQuests(frame, id)
 	end
-
-
 	if Octo_profileKeys.isSettingsEnabled then
 		local texture = E.ICON_EMPTY
 		if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
@@ -417,7 +377,6 @@ function EventFrame:func_InitLEFT(frame, node)
 	end
 	local expansionICON = ""
 	-- local categoryKey = frameData.categoryKey
-
 	-- if E.OctoTable_Expansions[categoryKey] then
 	-- expansionICON = E.func_FormatExpansion(categoryKey, "RIGHT")
 	-- end
@@ -448,14 +407,10 @@ end
 function EventFrame:func_InitCenter(frame, node)
 	local frameData = node:GetData()
 	if not frameData.SettingsType then return end
-
 	local dataType, id = ("#"):split(frameData.SettingsType)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
 		id = tonumber(id)
 	end
-
-
-
 	local accumulatedWidth = 0
 	local columnWidthsCenter = EventFrame.columnWidthsCenter or {}
 	-- Инициализация всех колонок для текущей строки
@@ -486,7 +441,6 @@ function EventFrame:func_InitCenter(frame, node)
 				-- 	local FirstReputation, SecondReputation, repType, colorC, standing = ("#"):split(Octo_ToDo_DB_Levels[GUID].MASLENGO.Reputation[id])
 				-- 	FirstReputation = tonumber(FirstReputation)
 				-- 	SecondReputation = tonumber(SecondReputation)
-
 					local FirstReputation = tonumber(frameData.FirstReputation[i])
 					local SecondReputation = tonumber(frameData.SecondReputation[i])
 					if FirstReputation == SecondReputation then
@@ -518,7 +472,6 @@ function EventFrame:func_InitCenter(frame, node)
 				else
 					columnFrames.tooltip = nil
 				end
-
 				SafeTooltipShow(columnFrames) --, {"LEFT", "RIGHT"}) -- если перс будет справа и тултип со скроллом, то будет габелла
 		end)
 		columnFrames:Show()
@@ -527,14 +480,11 @@ function EventFrame:func_InitCenter(frame, node)
 		frame.columnFrames[i]:Hide()
 	end
 end
-
 local function HeaderFrameLeft_OnShow(frame)
 	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r"
-
 	-- local text = E.COLOR_PURPLE.."Weekly Reset:|r "..E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r "
 	frame.Text2:SetText(text)
 end
-
 -- Функция создания главного тестового фрейма
 function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame_ToDo_Background:SetAllPoints()
@@ -542,15 +492,9 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame_ToDo_Background:SetBackdrop(E.menuBackdrop)
 	Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
 	Octo_MainFrame_ToDo_Background:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
-
-
-
-
-
-
 	-- Настройка позиции и обработчика показа фрейма
-	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.PHYSICAL_SCREEN_WIDTH*.1)
-	-- Octo_MainFrame_ToDo:SetPoint("CENTER")
+	-- Octo_MainFrame_ToDo:SetPoint("TOP", 0, -E.PHYSICAL_SCREEN_WIDTH*.1)
+	Octo_MainFrame_ToDo:SetPoint("CENTER")
 	Octo_MainFrame_ToDo:SetScript("OnShow", function()
 			RequestRaidInfo()
 			E.func_Collect_All()
@@ -561,7 +505,7 @@ function EventFrame:func_CreateMainFrame()
 			E.func_SmoothBackgroundAlphaChange(Octo_MainFrame_ToDo, Octo_MainFrame_ToDo_Background, "OnShow")
 	end)
 	-- Расчет размеров фрейма на основе количества игроков
-	local numPlayers = math_min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
+	local numPlayers = math.min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
 	Octo_MainFrame_ToDo:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
 	-- Настройки фрейма
 	Octo_MainFrame_ToDo:SetDontSavePosition(true)
@@ -658,8 +602,6 @@ function EventFrame:func_CreateMainFrame()
 	-- Настройка взаимодействия с фреймом
 	Octo_MainFrame_ToDo:EnableMouse(true)
 	Octo_MainFrame_ToDo:SetMovable(true)
-
-
 	----------------------------------------------------------------
 	-- РЕЗКОЕ ПЕРЕМЕЩЕНИЕ
 	----------------------------------------------------------------
@@ -676,6 +618,11 @@ function EventFrame:func_CreateMainFrame()
 				-- UIFrameFadeIn(Octo_MainFrame_ToDo, 0.2, Octo_MainFrame_ToDo:GetAlpha(), 1)
 				Octo_MainFrame_ToDo:StopMovingOrSizing()
 				-- local point, _, relativePoint, xOfs, yOfs = Octo_MainFrame_ToDo:GetPoint()
+				local left = Octo_MainFrame_ToDo:GetLeft()
+				local top = Octo_MainFrame_ToDo:GetTop()
+				Octo_MainFrame_ToDo:ClearAllPoints()
+				Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+				-- Octo_MainFrame_ToDo:SetPoint("TOPLEFT", left, top-UIParent:GetHeight())
 			end
 	end)
 	----------------------------------------------------------------
@@ -689,9 +636,6 @@ function EventFrame:func_CreateMainFrame()
 	-- 	Octo_MainFrame_ToDo:StopMovingOrSizing()
 	-- end)
 	----------------------------------------------------------------
-
-
-
 	-- Обработчик клика правой кнопкой для скрытия фрейма
 	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp")
 	Octo_MainFrame_ToDo:SetScript("OnClick", Octo_MainFrame_ToDo.Hide)
@@ -706,7 +650,6 @@ function EventFrame:func_CreateMainFrame()
 	HeaderFrameLeft.Text1:SetJustifyH("LEFT")
 	HeaderFrameLeft.Text1:SetTextColor(textR, textG, textB, textA)
 	HeaderFrameLeft.Text1:SetText(E.COLOR_GRAY..L["Weekly Reset"].."|r")
-
 	HeaderFrameLeft.Text2 = HeaderFrameLeft:CreateFontString()
 	HeaderFrameLeft.Text2:SetFontObject(OctoFont11)
 	HeaderFrameLeft.Text2:SetPoint("LEFT", INDENT_TEXT, -E.HEADER_TEXT_OFFSET)
@@ -715,8 +658,6 @@ function EventFrame:func_CreateMainFrame()
 	HeaderFrameLeft.Text2:SetJustifyH("LEFT")
 	HeaderFrameLeft.Text2:SetTextColor(textR, textG, textB, textA)
 	HeaderFrameLeft.Text2:SetText()
-
-
 	-- Обработчик показа заголовка левой колонки
 	HeaderFrameLeft:SetScript("OnShow", HeaderFrameLeft_OnShow)
 	-- Функция сброса пула фреймов
@@ -744,13 +685,11 @@ function EventFrame:func_CreateMainFrame()
 	-- Создание пула фреймов для заголовков колонок
 	Octo_MainFrame_ToDo.pool = CreateFramePool("FRAME", scrollContentFrame, nil, ResetPoolFrame, false, InitializePoolFrame)
 end
-
 function E.func_main_frame_toggle()
  if Octo_MainFrame_ToDo then
  Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
  end
 end
-
 -- Функция создания фрейма поиска
 function EventFrame:func_CreateSearchFrame()
 	-- Создание фрейма поиска
@@ -759,21 +698,15 @@ function EventFrame:func_CreateSearchFrame()
 	SearchFrame:SetSize(200, 25)
 	SearchFrame:SetFrameStrata("DIALOG")
 	Octo_MainFrame_ToDo.SearchFrame = SearchFrame
-
 	-- Поле ввода для поиска
 	local SearchBox = CreateFrame("EditBox", "Octo_SearchBox", SearchFrame, "InputBoxTemplate")
 	SearchBox:SetPoint("LEFT", SearchFrame, "LEFT")
 	SearchBox:SetSize(150, 20)
 	SearchBox:SetAutoFocus(false)
 	SearchBox:SetText("")
-
-
-
 	SearchBox:SetScript("OnEditFocusGained", function(self)
 			Octo_profileKeys.isSettingsEnabled = true
 	end)
-
-
 	SearchBox:SetScript("OnTextChanged", function(self)
 			EventFrame:ApplySearchFilter(self:GetText())
 	end)
@@ -786,7 +719,6 @@ function EventFrame:func_CreateSearchFrame()
 			self:ClearFocus()
 	end)
 	Octo_MainFrame_ToDo.SearchBox = SearchBox
-
 	-- Кнопка сброса поиска
 	local ClearSearchButton = CreateFrame("Button", nil, SearchFrame)
 	ClearSearchButton:SetPoint("LEFT", SearchBox, "RIGHT", -5, 0)
@@ -801,7 +733,6 @@ function EventFrame:func_CreateSearchFrame()
 	end)
 	ClearSearchButton:Hide() -- Скрываем по умолчанию
 	Octo_MainFrame_ToDo.ClearSearchButton = ClearSearchButton
-
 	-- Обновляем видимость кнопки сброса при изменении текста
 	SearchBox:SetScript("OnTextChanged", function(self)
 			local text = self:GetText()
@@ -812,51 +743,40 @@ function EventFrame:func_CreateSearchFrame()
 			end
 			EventFrame:ApplySearchFilter(text)
 	end)
-
 end
-
 -- Функция применения фильтра поиска
 function EventFrame:ApplySearchFilter(searchText)
 	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.ViewLeft then return end
 	if searchText == nil or searchText == "" then
 		EventFrame:func_ResetsearchFilter()
 	end
-
 	searchText = searchText and searchText:lower():trim() or ""
-
 	-- Получаем текущий DataProvider
 	local dataProvider = Octo_MainFrame_ToDo.ViewLeft:GetDataProvider()
 	if not dataProvider then return end
-
 	-- Если поиск пустой, показываем все
 	if searchText == "" then
 		-- Здесь нужно будет пересоздать провайдер с исходными данными
 		EventFrame:CreateDataProvider()
 		return
 	end
-
 	-- Создаем новый провайдер для отфильтрованных данных
 	local FilteredDataProvider = CreateTreeDataProvider()
-
 	-- Перебираем все узлы в оригинальном провайдере
 	-- Вам может понадобиться сохранять оригинальный провайдер где-то
 	-- Для примера, создаем временный провайдер с фильтрацией
-
 	-- Временно скрываем фрейм и обновляем
 	EventFrame.searchFilter = searchText
 	EventFrame:CreateDataProvider()
 end
-
 function EventFrame:func_ResetsearchFilter()
 	EventFrame.searchFilter = nil
 	if Octo_MainFrame_ToDo.SearchBox then
 		Octo_MainFrame_ToDo.SearchBox:SetText("")
 	end
 	Octo_profileKeys.isSettingsEnabled = false
-
 	EventFrame:CreateDataProvider()
 end
-
 -- Функция расчета ширины колонок для левой части
 local function func_calculateColumnWidthsLEFT(node)
 	local frameData = node:GetData()
@@ -879,7 +799,7 @@ local function func_calculateColumnWidthsLEFT(node)
 	else
 		framesLEFT[1].TextLeft:SetText(frameData.TextLeft) -- ← Просто строка
 	end
-	columnWidthsLEFT[1] = math_ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT -- (иконка)
+	columnWidthsLEFT[1] = math.ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT -- (иконка)
 	return columnWidthsLEFT
 end
 -- Функция расчета ширины колонок для правой части
@@ -904,7 +824,7 @@ local function func_calculateColumnWidthsCenter(node)
 	for i = 1, frameData.totalColumns do
 		if frameData.TextCenter[i] then
 			sampleFrameCenter.columnFrames[i].TextCenter:SetText(frameData.TextCenter[i])
-			columnWidthsCenter[i] = math_ceil(math_max(
+			columnWidthsCenter[i] = math.ceil(math.max(
 					sampleFrameCenter.columnFrames[i].TextCenter:GetStringWidth() + INDENT_LEFT,
 					MIN_COLUMN_WIDTH_Center
 			))
@@ -917,18 +837,18 @@ end
 local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serverTEXT)
 	frame.Nickname:SetText(nicknameTEXT)
 	local width2 = 0
-	local width1 = math_ceil(math_max(
+	local width1 = math.ceil(math.max(
 			frame.Nickname:GetStringWidth() + INDENT_LEFT,
 			MIN_COLUMN_WIDTH_Center
 	))
 	if not Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 		frame.Server:SetText(serverTEXT)
-		width2 = math_ceil(math_max(
+		width2 = math.ceil(math.max(
 				frame.Server:GetStringWidth() + INDENT_LEFT,
 				MIN_COLUMN_WIDTH_Center
 		))
 	end
-	return math_max(width1, width2)
+	return math.max(width1, width2)
 end
 local function func_UPDATE_MAINFRAME() -- providerfunc
 	if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and OctoTooltip and not OctoTooltip:IsShown() then
@@ -938,48 +858,38 @@ end
 function E.func_UPDATE_MAINFRAME()
 	E.func_SpamBlock(func_UPDATE_MAINFRAME, true)
 end
-
-
 local function PassSearchFilter(TextLeft, searchText)
 	if not searchText or searchText == "" then
 		return true
 	end
-
 	local text = type(TextLeft) == "function"
 	and TextLeft()
 	or tostring(TextLeft or "")
-
 	return text:lower():find(searchText:lower(), 1, true) ~= nil
 end
-
 -- Функция расчета ширины главного фрейма
 local function CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
 	local leftColumnWidth = MIN_COLUMN_WIDTH_LEFT + INDENT_TEXT
 	if columnWidthsLeft and columnWidthsLeft[1] then
 		leftColumnWidth = columnWidthsLeft[1] + INDENT_TEXT
 	end
-
 	local width = leftColumnWidth + totalRightWidth
-
 	-- Делаем ширину четной для лучшего отображения
 	if width % 2 == 1 then
 		width = width + 1
 	end
-
 	return width
 end
-
 -- Функция расчета высоты главного фрейма
 local function CalculateMainFrameHeight(totalLines)
 	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
-	local maxDisplayLines = math_max(1, math_min(totalLines, LINES_TOTAL or totalLines))
+	local maxDisplayLines = math.max(1, math.min(totalLines, LINES_TOTAL or totalLines))
 	return E.GLOBAL_LINE_HEIGHT * maxDisplayLines + E.HEADER_HEIGHT, maxDisplayLines
 end
-
 -- Функция расчета ограниченной ширины правой части
 local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColumns)
 	local totalRightWidth = 0
-	for i = 1, math_min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
+	for i = 1, math.min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
 		local colWidth = columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center
 		if (totalRightWidth + colWidth) <= maxRIGHT then
 			totalRightWidth = totalRightWidth + colWidth
@@ -989,16 +899,14 @@ local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColum
 	end
 	return totalRightWidth
 end
-
 -- Функция расчета полной ширины правой части
 local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 	local totalRightWidth = 0
-	for i = 1, math_min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
+	for i = 1, math.min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
 		totalRightWidth = totalRightWidth + (columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
 	end
 	return totalRightWidth
 end
-
 -- Функция создания и обновления провайдера данных
 function EventFrame:CreateDataProvider()
 	local DataProvider = CreateTreeDataProvider()
@@ -1025,9 +933,11 @@ function EventFrame:CreateDataProvider()
 	local dataDisplayOrder = {
 		"Currencies", -- 1. Валюта
 		"Items", -- 2. Итемы
-		"Additionally", -- 3. Адишинал
-		"UniversalQuests",-- 4. Универсал
-		"Reputations", -- 5. Репа
+		"Raids", -- 3. Рейды
+		"Dungeons", -- 4. Данжи
+		"Additionally", -- 5. Адишинал
+		"UniversalQuests",-- 6. Универсал
+		"Reputations", -- 7. Репа
 	}
 	----------------------------------------------------------------
 	-- Расчёт ширины правых фреймпулов
@@ -1053,27 +963,21 @@ function EventFrame:CreateDataProvider()
 					if dataType == "UniversalQuests" then
 						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 					end
-
 					-- можно ли вообще рисовать эту строку
 					local canDraw = false
-
 					if dataType ~= "UniversalQuests" then
 						canDraw = E.func_ShouldShow(id, dataType, E.CurrentProfile)
 					else
 						canDraw = E.func_ShouldShow(questKey, dataType, E.CurrentProfile)
 					end
-
 					if canDraw then
 						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey =
 						E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
-
 						-- фильтр поиска
 						canDraw = PassSearchFilter(TextLeft, EventFrame.searchFilter)
-
 						if canDraw then
 							-- ====== ОДИН БЛОК, БЕЗ ELSE ======
 							totalLines = totalLines + 1
-
 							local rowData = {
 								TextLeft = TextLeft or "NONE",
 								IconLeft = IconLeft,
@@ -1082,37 +986,30 @@ function EventFrame:CreateDataProvider()
 								or E.COLOR_BLACK,
 								SettingsType = SettingsType,
 								categoryKey = categoryKey,
-
 								TextCenter = {},
 								ColorCenter = {},
 								FirstReputation = {},
 								SecondReputation = {},
 								GUID = {},
-
 								currentCharacterIndex = currentCharacterIndex,
 								totalColumns = totalColumns,
 							}
-
 							for CharIndex, CharInfo in ipairs(sortedCharacters) do
 								local TextCenter, ColorCenter, FirstRep, SecondRep =
 								E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
-
 								rowData.TextCenter[CharIndex] = TextCenter
 								rowData.ColorCenter[CharIndex] = ColorCenter
 								rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
 								rowData.FirstReputation[CharIndex] = FirstRep or 0
 								rowData.SecondReputation[CharIndex] = SecondRep or 0
 							end
-
 							local node = DataProvider:Insert(rowData)
-
 							for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do
-								columnWidthsLeft[j] = math_max(w, columnWidthsLeft[j] or 0)
+								columnWidthsLeft[j] = math.max(w, columnWidthsLeft[j] or 0)
 							end
-
 							for i, w in ipairs(func_calculateColumnWidthsCenter(node)) do
 								columnWidthsCenter[i] =
-								math_max(w, columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
+								math.max(w, columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center)
 							end
 						end
 					end
@@ -1120,108 +1017,81 @@ function EventFrame:CreateDataProvider()
 			end
 		end
 	end
-
-
-
-
 	-- === FIX: гарантируем хотя бы одну строку ===
 	if totalLines == 0 then
 		totalLines = 1
-
 		local rowData = {
 			TextLeft = "",
 			IconLeft = {},
 			ColorLeft = {},
 			-- SettingsType = {},
 			categoryKey = {},
-
 			TextCenter = {},
 			ColorCenter = {},
 			FirstReputation = {},
 			SecondReputation = {},
 			GUID = {},
-
 			currentCharacterIndex = 1,
 			totalColumns = totalColumns > 0 and totalColumns or 1,
 		}
-
 		DataProvider:Insert(rowData)
-
 		columnWidthsLeft[1] = columnWidthsLeft[1] or MIN_COLUMN_WIDTH_LEFT
 		for i = 1, rowData.totalColumns do
 			columnWidthsCenter[i] = columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center
 		end
 	end
-
 	-- Сохранение рассчитанных размеров колонок
 	EventFrame.columnWidthsLeft = columnWidthsLeft
 	EventFrame.columnWidthsCenter = columnWidthsCenter
-
-
 	-- Обновление интерфейса
 	self:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 end
-
 -- Функция обновления UI главного фрейма
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 	-- Обновление интерфейса, если фрейм существует
 	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.scrollContentFrame then return end
-
 	-- Устанавливаем провайдеры данных
 	Octo_MainFrame_ToDo.ViewCenter:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	Octo_MainFrame_ToDo.ViewLeft:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-
 	-- Расчет максимальной доступной ширины для правой части
 	local leftColumnWidth = columnWidthsLeft and columnWidthsLeft[1] or MIN_COLUMN_WIDTH_LEFT
 	local maxRIGHT = MAX_FRAME_WIDTH - leftColumnWidth - INDENT_TEXT
-
 	-- Гарантируем, что columnWidthsCenter содержит хотя бы минимальные ширины для каждого персонажа
 	if #columnWidthsCenter == 0 and totalColumns > 0 then
 		for i = 1, totalColumns do
 			columnWidthsCenter[i] = MIN_COLUMN_WIDTH_Center
 		end
 	end
-
 	-- Расчет ширины правой части с ограничением по maxRIGHT
 	local totalRightWidth = CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, EventFrame.MAX_COLUMN_COUNT)
-
 	-- Расчет полной ширины для scrollContentFrame (без ограничений)
 	local totalRightWidth_scrollContentFrame = CalculateFullRightWidth(columnWidthsCenter, EventFrame.MAX_COLUMN_COUNT)
-
 	-- Расчет размеров фрейма
 	local width = CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
 	local height, maxDisplayLines = CalculateMainFrameHeight(totalLines)
-
 	-- Обновляем глобальную переменную
 	MAX_DISPLAY_LINES = maxDisplayLines
-
 	----------------------------------------------------------------
 	-- Установка размеров фреймов
 	Octo_MainFrame_ToDo:SetSize(width, height)
 	Octo_MainFrame_ToDo.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
-
 	-- Создание заголовков колонок
 	self:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
-
 	-- Обновление позиций подфреймов в центральной колонке
 	self:UpdateCenterColumnPositions(columnWidthsCenter)
 end
-
 -- Функция создания заголовков колонок персонажей
 function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 	-- Освобождение всех фреймов из пула
 	Octo_MainFrame_ToDo.pool:ReleaseAll()
-
 	local accumulatedWidth = 0
 	for count, CharInfo in ipairs(sortedCharacters) do
 		local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
 		local columnWidth = columnWidthsCenter[count] or MIN_COLUMN_WIDTH_Center
-
 		-- Установка позиции и размера заголовка
 		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
-
 		-- Настройка текста заголовка
 		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
 		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
@@ -1231,18 +1101,15 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter.Nickname:SetJustifyV("MIDDLE")
 		HeaderFrameCenter.Nickname:SetJustifyH("CENTER")
 		HeaderFrameCenter.Nickname:SetText(E.func_TextCenter_Chars_nickname(CharInfo))
-
 		HeaderFrameCenter.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
 		HeaderFrameCenter.Server:SetWordWrap(false)
 		HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
 		HeaderFrameCenter.Server:SetJustifyH("CENTER")
 		HeaderFrameCenter.Server:SetText(E.func_TextCenter_Chars_server(CharInfo))
-
 		-- Настройка взаимодействия
 		HeaderFrameCenter:SetPropagateMouseClicks(true)
 		HeaderFrameCenter:SetPropagateMouseMotion(true)
 		HeaderFrameCenter:SetHitRectInsets(1, 1, 1, 1)
-
 		-- Устанавливаем цвет фона в зависимости от фракции
 		if CharInfo.PlayerData.Faction == "Horde" then
 			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
@@ -1251,19 +1118,15 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		elseif CharInfo.PlayerData.Faction == "Neutral" then
 			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
 		end
-
 		HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
-
 		-- Обработчик наведения для отображения тултипа
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
 			HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
 			SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
-
 		HeaderFrameCenter:Show()
 	end
 end
-
 -- Функция обновления позиций подфреймов в центральной колонке
 function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 	for _, frame in ipairs(Octo_MainFrame_ToDo.ViewCenter:GetFrames()) do
@@ -1301,6 +1164,15 @@ function EventFrame:PLAYER_LOGIN()
 	-- AlertFrame:ClearAllPoints()
 	-- AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
 	EventFrame:func_CreateMainFrame()
+		EventFrame:CreateDataProvider()
+	C_Timer.After(1, function()
+		Octo_MainFrame_ToDo:Show()
+		Octo_MainFrame_ToDo:Hide()
+		local left = Octo_MainFrame_ToDo:GetLeft()
+		local top = Octo_MainFrame_ToDo:GetTop()
+		Octo_MainFrame_ToDo:ClearAllPoints()
+		Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+	end)
 	-- EventFrame:func_CreateSearchFrame()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, nil, "Octo_MainFrame_ToDo")

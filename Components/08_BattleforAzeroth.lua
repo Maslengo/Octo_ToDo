@@ -35,6 +35,12 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	}
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		-- header = {icon = E.OctoTable_Expansions[categoryKey].icon, name = E.OctoTable_Expansions[categoryKey].color..E.OctoTable_Expansions[categoryKey].name.."|r",},
 		-- ["Battle for Azeroth"] = {
@@ -44,7 +50,6 @@ local function tempFunction()
 		{id = 2163, defS = true,}, --name = "Тортолланские искатели", side = "-", category = "Battle for Azeroth", }, --[faction=2163]
 		{id = 2417, defS = true,}, --name = "Ульдумский союз", side = "-", category = "Battle for Azeroth", }, --[faction=2417]
 		{id = 2427, defS = true,}, --name = "Молодой акир", side = "-", category = "Battle for Azeroth", }, --[faction=2427]
-
 		{id = 2157, defS = false,}, --name = "Армия Чести", side = "Horde", category = "Battle for Azeroth", }, --[faction=2157]
 		{id = 2373, defS = false,}, --name = "Освобожденные", side = "Horde", category = "Battle for Azeroth", }, --[faction=2373]
 		{id = 2158, defS = false,}, --name = "Жители Вол'дуна", side = "Horde", category = "Battle for Azeroth", }, --[faction=2158]
@@ -176,8 +181,6 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -198,15 +201,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 1,
 		},
-
-
-
-
-
-
-
-
-
 		{
 			-- sorted = true,
 			showTooltip = true,
@@ -663,10 +657,7 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)
-
-
 local function localfunc2()
 	local OctoTable_Otrisovka_TextCenter = {}
 	----------------------------------------------------------------
@@ -676,7 +667,7 @@ local function localfunc2()
 					----------------------------------------------------------------
 					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					----------------------------------------------------------------
-					if CharInfo.MASLENGO.ItemsInBag[158075] then
+					if CharInfo.MASLENGO.Items.Bags[158075] then
 						TextCenter = CharInfo.PlayerData.azeriteLVL and E.COLOR_GREEN..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.COLOR_GRAY..CharInfo.PlayerData.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
 					end
 					----------------------------------------------------------------
@@ -691,7 +682,7 @@ local function localfunc2()
 					----------------------------------------------------------------
 					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
 					----------------------------------------------------------------
-					if CharInfo.MASLENGO.ItemsInBag[169223] then
+					if CharInfo.MASLENGO.Items.Bags[169223] then
 						if CharInfo.PlayerData.cloak_lvl then
 							TextCenter = E.COLOR_CYAN..AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.cloak_lvl).."|r"
 						else

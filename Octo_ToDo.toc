@@ -1,5 +1,5 @@
 ## Interface: 120000, 110207
-## Version: v108.4
+## Version: v108.5
 # (12.0.0)(17.12.2025)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
@@ -17,7 +17,7 @@ Templates.xml
 
 Init.lua
 Locales\Localization.xml
-Functions.lua
+Functions\Functions.xml
 Media\SharedMedia.lua
 WTF\WTF.xml
 

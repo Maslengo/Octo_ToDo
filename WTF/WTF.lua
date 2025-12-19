@@ -39,9 +39,9 @@ function EventFrame:func_CacheGameData()
 	for id in next,(E.ALL_Currencies) do -- for id = 42, 4000 do -- 42, 3372
 		local name = E.func_GetCurrencyName(id)
 	end
-	-- for id in next,(E.ALL_Items) do
-	-- local name = E.func_GetItemName(id)
-	-- end
+	for id in next,(E.ALL_Items) do
+		local name = E.func_GetItemName(id)
+	end
 	for id in next,(E.ALL_Reputations) do
 		local name = E.func_GetReputationName(id) -- "AllReputations"
 	end
@@ -65,12 +65,6 @@ function EventFrame:func_CacheGameData()
 			if questList then
 				for questID in next,(questList) do
 					E.ALL_Quests[questID] = true
-				end
-			end
-			local ItemsInBag = MASLENGO.ItemsInBag
-			if ItemsInBag then
-				for itemID in next,(ItemsInBag) do
-					E.ALL_Items[itemID] = true
 				end
 			end
 		end
@@ -206,7 +200,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		classColorHex = E.classColorHexCurrent, -- Цвет класса в HEX
 		className = E.className, -- Имя класса
 		classFilename = E.classFilename, -- Техническое имя класса
-		CurrentRegion = E.func_GetCurrentRegion(),
+		CurrentRegion = GetCurrentRegion(),
 		CurrentRegionName = E.CurrentRegionName,
 		curServer = E.func_GetPlayerRealm(), -- Текущий сервер
 		curServerShort = E.curServerShort, -- Короткое имя сервера
@@ -235,7 +229,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		GARRISON = {},
 		LegionRemixData = {},
 		GreatVault = {}, -- Данные Великого Хранилища
-		ItemsInBag = {}, -- Предметы в сумках
+		Items = {}, -- Предметы в сумках
 		journalInstance = {}, -- Инстансы из журнала
 		LFGInstance = {}, -- Данные LFG
 		ListOfQuests = {}, -- Список квестов
@@ -274,6 +268,10 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		CharInfo.PlayerData = CharInfo.PlayerData or {}
 		local cm = CharInfo.MASLENGO
 		local pd = CharInfo.PlayerData
+					cm.Items = cm.Items or {}
+					cm.Items.Bags = cm.Items.Bags or {}
+					cm.Items.Bank = cm.Items.Bank or {}
+					cm.Items.AccountBank = cm.Items.AccountBank or {}
 					pd.CharDBVersion = pd.CharDBVersion or 1
 					-- Заполняем стандартные значения
 					for k, v in next, (defaults) do
@@ -322,7 +320,7 @@ function EventFrame:Octo_ToDo_DB_Vars()
 	-- Настройки отладки
 	-- Настройки функций аддона
 	local featureDefaults = {
-		Config_SPAM_TIME = 3,
+		Config_SPAM_TIME = 2,
 		Config_ADDON_HEIGHT = 20,
 		Config_AchievementShowCompleted = true, -- Показывать завершенные достижения
 		Config_ClampedToScreen = false, -- Не привязывать к границам экрана
@@ -363,6 +361,8 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitField(Octo_Cache_DB, "lastLocaleLang", UNKNOWN)
 	-- Инициализация подтаблиц
 	E.func_InitSubTable(Octo_Cache_DB, "AllItems")
+	E.func_InitSubTable(Octo_Cache_DB, "AllRaids")
+	E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
 	E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E.func_InitSubTable(Octo_Cache_DB, "AllNPCs")
 	E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
@@ -397,32 +397,22 @@ end
 ----------------------------------------------------------------
 function EventFrame:func_Daily_Reset()
 	local ServerTime = GetServerTime()
-	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
-	-- /dump E.func_SecondsToClock(C_DateAndTime.GetSecondsUntilDailyReset(), true)
+	-- local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
+	E.Reset_JournalInstance()
 	-- Обрабатываем всех персонажей
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
 		-- Проверяем нужно ли выполнить сброс
-		if CharInfo.PlayerData.tmstp_Daily and CharInfo.PlayerData.tmstp_Daily < ServerTime then
+		if pd.tmstp_Daily and pd.tmstp_Daily < ServerTime then
 			-- Устанавливаем новую временную метку вне зависимости от региона
-			CharInfo.PlayerData.tmstp_Daily = CharInfo.PlayerData.tmstp_Daily + 86400
-			CharInfo.PlayerData.needResetDaily = true
+			pd.tmstp_Daily = pd.tmstp_Daily + 86400
+			pd.needResetDaily = true
 			-- Сбрасываем ежедневные квесты
 			for _, data in next,(E.ALL_UniversalQuests) do
 				if data.reset == "Daily" then
 					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 					cm.UniversalQuest[questKey] = nil
-				end
-			end
-			for instanceID, v in next, (cm.journalInstance) do
-				if v then
-					for difficultyID, w in next, (v) do
-						if w and w.instanceReset and w.instanceReset < time() then -- 1765512000
-							cm.journalInstance[instanceID][difficultyID] = nil
-							-- print (w.instanceName, "NEEDRESET")
-						end
-					end
 				end
 			end
 			for dungeonID, v in next, (cm.LFGInstance) do
@@ -437,7 +427,7 @@ function EventFrame:func_Daily_Reset()
 					-- print (cm.SavedWorldBoss.reset)
 				end
 			end
-			-- print (CharInfo.PlayerData.Name)
+			-- print (pd.Name)
 			-- Очищаем данные LFG
 			wipe(cm.LFGInstance)
 			for _, v in ipairs (E.OctoTable_LFGDungeons) do
@@ -445,8 +435,8 @@ function EventFrame:func_Daily_Reset()
 				cm.LFGInstance[v].donetoday = nil
 			end
 			-- Сбрасываем деньги
-			if CharInfo.PlayerData.MoneyOnDaily and CharInfo.PlayerData.Money then
-				CharInfo.PlayerData.MoneyOnDaily = CharInfo.PlayerData.Money
+			if pd.MoneyOnDaily and pd.Money then
+				pd.MoneyOnDaily = pd.Money
 			end
 			-- Сбрасываем LegionRemixResearch
 			if cm.LegionRemixData and cm.LegionRemixData.barValue and cm.LegionRemixData.barMax then
@@ -481,6 +471,7 @@ function EventFrame:func_Weekly_Reset()
 				-- Очищаем временные данные
 				cm.journalInstance = {}
 				cm.SavedWorldBoss = {}
+				cm.LFGInstance = {}
 				cm.GreatVault = {}
 				-- Сбрасываем еженедельные квесты
 				for _, data in next,(E.ALL_UniversalQuests) do
@@ -535,7 +526,14 @@ function EventFrame:func_CheckAll()
 end
 ----------------------------------------------------------------
 function EventFrame:func_ScheduleResetTimer()
-	local seconds = E.func_GetTimeToReset()
+	local function func_GetTimeToReset()
+		if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then
+			return C_DateAndTime.GetSecondsUntilDailyReset()
+		else
+			return GetQuestResetTime()
+		end
+	end
+	local seconds = func_GetTimeToReset()
 	if seconds and seconds > 0 then
 		-- На случай, если уже был таймер — отменим
 		if timerHandle then
@@ -577,6 +575,7 @@ local MyEventsTable = {
 	"ADDON_LOADED",
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
+	"UPDATE_INSTANCE_INFO",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
@@ -606,6 +605,36 @@ function EventFrame:PLAYER_LOGIN()
 	-- end
 	self:func_ScheduleResetTimer()
 	E.Cache_All_EventNames_Year()
-
 	C_Timer.After(1, E.func_UpdateFont)
+	----------------------------------------------------------------
+	EventFrame:func_UpdateGlobals()
+	----------------------------------------------------------------
+end
+----------------------------------------------------------------
+-- RESET
+----------------------------------------------------------------
+local function Reset_JournalInstance()
+	local ServerTime = GetServerTime()
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
+		for instanceID, v in next, (cm.journalInstance) do
+			if v then
+				for difficultyID, w in next, (v) do
+					if w and w.instanceReset and w.instanceReset < ServerTime then
+						cm.journalInstance[instanceID][difficultyID] = nil
+						-- print (w.instanceName, "NEEDRESET")
+					end
+				end
+			end
+		end
+	end
+end
+----------------------------------------------------------------
+function E.Reset_JournalInstance()
+	E.func_SpamBlock(Reset_JournalInstance, true)
+end
+function EventFrame:UPDATE_INSTANCE_INFO()
+	E.Reset_JournalInstance()
+	E.func_RequestUIUpdate("UPDATE_INSTANCE_INFO")
 end

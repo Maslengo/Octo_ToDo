@@ -15,7 +15,8 @@
 	<Script file="Collect\Collect_Garrison.lua"/>
 	<Script file="Collect\Collect_GreatVault.lua"/>
 	<Script file="Collect\Collect_Holidays.lua"/>
-	<Script file="Collect\Collect_Items.lua"/>
+	<Script file="Collect\Collect_Items_BAGS.lua"/>
+	<Script file="Collect\Collect_Items_BANK.lua"/>
 	<Script file="Collect\Collect_JournalInstance.lua"/>
 	<Script file="Collect\Collect_Legion_Remix.lua"/>
 	<Script file="Collect\Collect_Locations.lua"/>

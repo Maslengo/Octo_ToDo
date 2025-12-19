@@ -64,12 +64,6 @@ end
 function E.Timers.Treasure_Goblin()
 	return CreateTimer(1689159620, 3600, 300)
 end
-local spawns = {
-	{mapId = 2346},
-	{mapId = 85},
-	{mapId = 2248},
-	{mapId = 84},
-}
 function E.Timers.ElementalStorm()
 	return CreateTimer(1689166820, 10800, 7200)
 end
@@ -79,41 +73,74 @@ end
 function E.Timers.TWW_BeledarCycle()
 	return CreateTimer(1726311612, 10800, 1800, E.COLOR_YELLOW)
 end
+-- function E.Timers.Legion_Invasion()
+-- 	local ZONE_CYCLE = {
+-- 		{ mapID = 634, poiID = 5178 },
+-- 		{ mapID = 630, poiID = 5175 },
+-- 		{ mapID = 641, poiID = 5210 },
+-- 		{ mapID = 650, poiID = 5177 },
+-- 	}
+-- 	local BASE_TIME = {
+-- 		US = 1762333200,
+-- 		EU = 1762333200,
+-- 		CN = 1762434000 + 741600,
+-- 	}
+-- 	local INTERVAL = 66600
+-- 	local now = GetServerTime()
+-- 	for index, zone in ipairs(ZONE_CYCLE) do
+-- 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(zone.poiID)
+-- 		if sec and sec > 0 then
+-- 			local currentName = E.func_GetMapName(zone.mapID) or "???"
+-- 			local nextIndex = index % #ZONE_CYCLE + 1
+-- 			local nextName = E.func_GetMapName(ZONE_CYCLE[nextIndex].mapID) or "???"
+-- 			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..currentName..E.COLOR_GRAY.." -> "..nextName.."|r"
+-- 		end
+-- 	end
+-- 	local baseTime = BASE_TIME[E.CURRENT_REGION_NAME]
+-- 	if not baseTime then
+-- 		return E.COLOR_RED.."--:--|r "..L["Legion Invasion"]
+-- 	end
+-- 	local elapsed = now - baseTime
+-- 	local cyclesCompleted = math.floor(elapsed / INTERVAL)
+-- 	local nextZoneIndex = cyclesCompleted % #ZONE_CYCLE + 1
+-- 	local afterNextIndex = nextZoneIndex % #ZONE_CYCLE + 1
+-- 	local nextTime = baseTime + (cyclesCompleted + 1) * INTERVAL
+-- 	local nextZoneName = E.func_GetMapName(ZONE_CYCLE[nextZoneIndex].mapID) or "???"
+-- 	local afterNextName = E.func_GetMapName(ZONE_CYCLE[afterNextIndex].mapID) or "???"
+-- 	return E.COLOR_RED..E.func_SecondsToClock(nextTime - now).."|r "..L["Legion Invasion"]..E.COLOR_GRAY.." -> "..afterNextName.."|r"
+-- end
 function E.Timers.Legion_Invasion()
-	local ZONE_CYCLE = {
-		{ mapID = 634, poiID = 5178 },
-		{ mapID = 630, poiID = 5175 },
-		{ mapID = 641, poiID = 5210 },
+	local ZONE_DATA = {
 		{ mapID = 650, poiID = 5177 },
+		{ mapID = 634, poiID = 5178 },
+		{ mapID = 641, poiID = 5210 },
+		{ mapID = 630, poiID = 5175 },
 	}
 	local BASE_TIME = {
+		EU = 1762434000,
 		US = 1762333200,
-		EU = 1762333200,
 		CN = 1762434000 + 741600,
 	}
-	local INTERVAL = 66600
-	local now = GetServerTime()
-	for index, zone in ipairs(ZONE_CYCLE) do
-		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(zone.poiID)
-		if sec and sec > 0 then
-			local currentName = E.func_GetMapName(zone.mapID) or "???"
-			local nextIndex = index % #ZONE_CYCLE + 1
-			local nextName = E.func_GetMapName(ZONE_CYCLE[nextIndex].mapID) or "???"
-			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..currentName..E.COLOR_GRAY.." -> "..nextName.."|r"
+	local INVASION_INTERVAL = (14 * 3600) + (30 * 60) -- 66600
+	for i = 1, #ZONE_DATA do
+		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(ZONE_DATA[i].poiID)
+		if sec then
+			local zoneName = E.func_GetMapName(ZONE_DATA[i].mapID)
+			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..zoneName
 		end
 	end
 	local baseTime = BASE_TIME[E.CURRENT_REGION_NAME]
-	if not baseTime then
-		return E.COLOR_RED.."--:--|r "..L["Legion Invasion"]
+	if not baseTime then return end
+	local now = time() --GetServerTime()
+	while baseTime <= now do
+		baseTime = baseTime + INVASION_INTERVAL
 	end
-	local elapsed = now - baseTime
-	local cyclesCompleted = math.floor(elapsed / INTERVAL)
-	local nextZoneIndex = cyclesCompleted % #ZONE_CYCLE + 1
-	local afterNextIndex = nextZoneIndex % #ZONE_CYCLE + 1
-	local nextTime = baseTime + (cyclesCompleted + 1) * INTERVAL
-	local nextZoneName = E.func_GetMapName(ZONE_CYCLE[nextZoneIndex].mapID) or "???"
-	local afterNextName = E.func_GetMapName(ZONE_CYCLE[afterNextIndex].mapID) or "???"
-	return E.COLOR_RED..E.func_SecondsToClock(nextTime - now).."|r "..L["Legion Invasion"]..E.COLOR_GRAY.." -> "..afterNextName.."|r"
+	local nextIn = baseTime - now
+	-- local elapsed = now - baseTime
+	-- local cyclesCompleted = math.floor(elapsed / INTERVAL)
+	-- local nextInvasionTime = baseTime + (cyclesCompleted + 1) * INTERVAL
+	-- local timeToNext = nextInvasionTime - now
+	return E.COLOR_RED..E.func_SecondsToClock(nextIn).."|r "..L["Legion Invasion"]
 end
 function E.Timers.BfA_Invasion()
 	local ZONE_CYCLE = {

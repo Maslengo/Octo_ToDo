@@ -40,6 +40,12 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Raids = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	}
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
 		{id = 2470, defS = true,}, --name = "Легион Смерти", side = "-", category = "Темные Земли", }, --[faction=2470]
 		{id = 2472, defS = true,}, --name = "Кодекс архивариуса", side = "-", category = "Темные Земли", }, --[faction=2472]
@@ -132,8 +138,6 @@ local function tempFunction()
 		-- },
 		-- -- forcedMaxQuest = 1,
 		-- },
-
-
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -362,8 +366,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 12,
 		},
-
-
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -633,15 +635,6 @@ local function tempFunction()
 		-- },
 		-- -- forcedMaxQuest = 1,
 		-- },
-
-
-
-
-
-
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -797,10 +790,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 25,
 		},
-
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -846,9 +835,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 25,
 		},
-
-
-
 		{
 			sorted = true,
 			showTooltip = true,
