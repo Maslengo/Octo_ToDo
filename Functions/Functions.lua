@@ -1,4 +1,4 @@
-local GlobalAddonName, E =...
+local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
@@ -302,6 +302,7 @@ function E.func_FormatDateTwoDigits(date)
 	return result
 end
 function E.func_ShouldShow(id, dataType, profileName)
+
 	local shouldShow = false
 	if Octo_profileKeys.isSettingsEnabled then
 		-- Режим настройки включен - показываем все валюты
@@ -1190,6 +1191,10 @@ local function FormatWithSeparators(num)
 end
 function E.func_CompactFormatNumber(num)
 	num = num or 0
+	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 5 then
+		return AbbreviateLargeNumbers(num)
+	end
+
 	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 4 then
 		return num
 	end
@@ -1240,6 +1245,17 @@ function E.func_IsMajorFaction(id)
 	return IsMajorFaction(id)
 end
 ----------------------------------------------------------------
+function E.func_SI_to_EJ(id) -- jInstanceID func_SI_to_EJ
+	if not id then return end
+	local newID = Octo_Cache_DB.SavedInstanceID_to_EJInstance[id] or 0 -- jInstanceID
+	return newID
+end
+----------------------------------------------------------------
+function E.func_EJ_to_SI(id) -- 721 Чертоги доблести
+	if not id then return end
+	local newID = Octo_Cache_DB.EJInstance_to_SavedInstanceID[id] or 0 -- instanceID
+	return newID
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -33,10 +33,13 @@ local function tempFunction()
 		-- {id = 71998, defS = true,},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 187, defS = true,}, -- Dragon Soul
+			{id = 78, defS = true,}, -- Firelands
+			{id = 74, defS = true,}, -- Throne of the Four Winds
+			{id = 72, defS = true,}, -- The Bastion of Twilight
+			{id = 73, defS = true,}, -- Blackwing Descent
+			{id = 75, defS = true,}, -- Baradin Hold
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

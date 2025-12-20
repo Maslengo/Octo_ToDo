@@ -209,22 +209,20 @@ local func_OnAcquiredCenter do
 end
 local function func_SettingsButton_OnClick(button, frameData)
 	local dataType, id = ("#"):split(frameData.SettingsType)
-	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
- -- Инициализация таблицы если нужно
+	-- Инициализация таблицы если нужно
 	if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
 		Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
 	end
 	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
- -- Простое переключение
+	-- Простое переключение
 	local newValue = not (settingsTable[id] or false)
- settingsTable[id] = newValue
- -- Обновление текстуры
- local texture = newValue and
- "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or
- "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
- button:GetParent().SettingsTexture:SetTexture(texture)
+	settingsTable[id] = newValue
+	-- Обновление текстуры
+	local texture = newValue and "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
+	button:GetParent().SettingsTexture:SetTexture(texture)
 end
 local function func_Setup_Currencies(frame, id)
 	local icon1 = E.func_GetCurrencyIcon(id)
@@ -268,6 +266,9 @@ local function func_Setup_Reputations(frame, id)
 		frame.icon3frame:Hide()								-- ОБЯЗАТЕЛЬНО!
 	end
 end
+
+
+
 local function func_Setup_Items(frame, id)
 	local icon1 = E.func_GetItemIcon(id)
 	frame.icon1texture:SetTexture(icon1)
@@ -316,7 +317,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
 	if not frameData.SettingsType then return end
 	local dataType, id = ("#"):split(frameData.SettingsType)
-	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
 	----------------------------------------------------------------
@@ -346,6 +347,21 @@ function EventFrame:func_InitLEFT(frame, node)
 	----------------------------------------------------------------
 	if dataType == "Reputations" then
 		func_Setup_Reputations(frame, id)
+	end
+	if dataType == "RaidsOrDungeons" then
+		local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(id)
+		-- func_Setup_Raids(frame, id)
+		if isRaid then
+			frame.icon2frame:Show()
+			frame.icon2texture:SetAtlas("Raid")
+		else
+			frame.icon2frame:Show()
+			frame.icon2texture:SetAtlas("Dungeon")
+		end
+		-- frame.icon1frame:Show()
+		frame.icon1texture:SetTexture(buttonImage2)
+
+
 	end
 	----------------------------------------------------------------
 	if dataType == "UniversalQuests" then
@@ -408,7 +424,7 @@ function EventFrame:func_InitCenter(frame, node)
 	local frameData = node:GetData()
 	if not frameData.SettingsType then return end
 	local dataType, id = ("#"):split(frameData.SettingsType)
-	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" then
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
 	local accumulatedWidth = 0
@@ -595,7 +611,7 @@ function EventFrame:func_CreateMainFrame()
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCenter, Octo_MainFrame_ToDo.ScrollBarCenter, Octo_MainFrame_ToDo.ViewCenter)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCenter, Octo_MainFrame_ToDo.ScrollBarCenter)
 	-- Настройка фона и границы главного фрейма
-	Octo_MainFrame_ToDo:SetBackdrop(nil)
+	-- Octo_MainFrame_ToDo:SetBackdrop(nil)
 	-- Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
 	-- Octo_MainFrame_ToDo:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 	-- Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
@@ -933,11 +949,10 @@ function EventFrame:CreateDataProvider()
 	local dataDisplayOrder = {
 		"Currencies", -- 1. Валюта
 		"Items", -- 2. Итемы
-		"Raids", -- 3. Рейды
-		"Dungeons", -- 4. Данжи
-		"Additionally", -- 5. Адишинал
-		"UniversalQuests",-- 6. Универсал
-		"Reputations", -- 7. Репа
+		"Additionally", -- 3. Адишинал
+		"RaidsOrDungeons", -- 4. Рейды или данжи
+		"UniversalQuests",-- 5. Универсал
+		"Reputations", -- 6. Репа
 	}
 	----------------------------------------------------------------
 	-- Расчёт ширины правых фреймпулов
@@ -1003,7 +1018,7 @@ function EventFrame:CreateDataProvider()
 								rowData.SecondReputation[CharIndex] = SECOND or 0
 							end
 							local node = DataProvider:Insert(rowData)
-							for j, w in ipairs(func_calculateColumnWidthsLEFT(node, totalLines)) do
+							for j, w in ipairs(func_calculateColumnWidthsLEFT(node)) do
 								columnWidthsLeft[j] = math.max(w, columnWidthsLeft[j] or 0)
 							end
 							for i, w in ipairs(func_calculateColumnWidthsCenter(node)) do
@@ -1160,8 +1175,6 @@ local MyEventsTable = {
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
-	-- AlertFrame:ClearAllPoints()
-	-- AlertFrame:SetPoint("BOTTOMLEFT", 200, 300)
 	EventFrame:func_CreateMainFrame()
 		EventFrame:CreateDataProvider()
 	C_Timer.After(1, function()

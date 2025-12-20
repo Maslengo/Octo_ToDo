@@ -33,10 +33,13 @@ local function tempFunction()
 		{id = 101529, defS = false,},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 369, defS = true,}, -- Siege of Orgrimmar
+			{id = 362, defS = true,}, -- Throne of Thunder
+			{id = 320, defS = true,}, -- Terrace of Endless Spring
+			{id = 330, defS = true,}, -- Heart of Fear
+			{id = 317, defS = true,}, -- Mogu'shan Vaults
+			-- {id = 322, defS = true,}, -- Pandaria
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_JournalInstance()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	-- E.func_StartDebugTimer()
 	if not collectMASLENGO then return end
 	-- local DIFF_ABBR = {
 	-- 	[17] = "LFR",
@@ -12,7 +13,7 @@ local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	-- SavedInstances
 	----------------------------------------------------------------
-	collectMASLENGO.journalInstance = collectMASLENGO.journalInstance or {}
+	collectMASLENGO.journalInstance = {}
 	local NumSavedInstances = GetNumSavedInstances()
 	local ServerTime = GetServerTime()
 	if NumSavedInstances > 0 then
@@ -22,7 +23,7 @@ local function Collect_JournalInstance()
 			collectMASLENGO.journalInstance[instanceId][instanceDifficulty] = collectMASLENGO.journalInstance[instanceId][instanceDifficulty] or {}
 			local ji = collectMASLENGO.journalInstance[instanceId][instanceDifficulty]
 			if locked then
-				wipe(ji)
+				-- wipe(ji)
 				local lastBossDefeated = select(3, GetSavedInstanceEncounterInfo(i, totalBosses))
 				if defeatedBosses == 0 and lastBossDefeated then
 					lastBossDefeated = false
@@ -33,6 +34,9 @@ local function Collect_JournalInstance()
 				ji.totalBosses = totalBosses
 				ji.defeatedBosses = defeatedBosses
 				ji.lastBossDefeated = lastBossDefeated
+				ji.EJ_ID = E.func_SI_to_EJ(instanceId)
+
+
 				-- Bosses собираем только если нужно
 				if not ji.Bosses or #ji.Bosses ~= totalBosses then
 					ji.Bosses = {}
@@ -81,6 +85,7 @@ local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.journalInstance)
 	----------------------------------------------------------------
+	-- E.func_StopDebugTimer("Collect_JournalInstance")
 end
 ----------------------------------------------------------------
 function E.Collect_JournalInstance()

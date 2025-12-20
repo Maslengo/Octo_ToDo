@@ -30,10 +30,11 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 669, defS = true,}, -- Hellfire Citadel
+			{id = 457, defS = true,}, -- Blackrock Foundry
+			{id = 477, defS = true,}, -- Highmaul
+			-- {id = 557, defS = true,}, -- Draenor
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

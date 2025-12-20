@@ -50,10 +50,11 @@ local function tempFunction()
 		{id = 211515, defS = false,},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 1207, defS = true,}, -- Amirdrassil, the Dream's Hope
+			{id = 1208, defS = true,}, -- Aberrus, the Shadowed Crucible
+			{id = 1200, defS = true,}, -- Vault of the Incarnates
+			-- {id = 1205, defS = true,}, -- Dragon Isles -- WB
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

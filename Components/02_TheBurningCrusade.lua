@@ -31,10 +31,15 @@ local function tempFunction()
 		{id = 24579, defS = true,}, -- ALLIANCE
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 752, defS = true,}, -- Sunwell Plateau
+			{id = 751, defS = true,}, -- Black Temple
+			{id = 750, defS = true,}, -- The Battle for Mount Hyjal
+			{id = 749, defS = true,}, -- The Eye
+			{id = 748, defS = true,}, -- Serpentshrine Cavern
+			{id = 747, defS = true,}, -- Magtheridon's Lair
+			{id = 746, defS = true,}, -- Gruul's Lair
+			{id = 745, defS = true,}, -- Karazhan
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

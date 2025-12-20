@@ -71,10 +71,11 @@ local function tempFunction()
 		{id = 246771, defS = true,},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 1302, defS = true,}, -- Manaforge Omega
+			{id = 1296, defS = false,}, -- Liberation of Undermine
+			{id = 1273, defS = false,}, -- Nerub-ar Palace
+			-- {id = 1278, defS = true,}, -- Khaz Algar -- WB
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

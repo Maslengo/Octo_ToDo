@@ -30,10 +30,16 @@ local function tempFunction()
 		{id = 49908, defS = true,},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 761, defS = true,}, -- The Ruby Sanctum
+			{id = 758, defS = true,}, -- Icecrown Citadel
+			{id = 760, defS = true,}, -- Onyxia's Lair
+			{id = 757, defS = true,}, -- Trial of the Crusader
+			{id = 759, defS = true,}, -- Ulduar
+			{id = 756, defS = true,}, -- The Eye of Eternity
+			{id = 755, defS = true,}, -- The Obsidian Sanctum
+			{id = 754, defS = true,}, -- Naxxramas
+			{id = 753, defS = true,}, -- Vault of Archavon
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

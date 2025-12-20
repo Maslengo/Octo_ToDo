@@ -351,6 +351,7 @@ function E.func_Octo_Options(savedVars)
 		L["Localized format"],
 		L["Full with separators"],
 		L["Full"],
+		"Blizzard",
 	}
 	for index, name in ipairs(table_numberFormatMode) do
 		Options.args.Config_numberFormatMode.values[index] = name

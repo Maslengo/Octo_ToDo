@@ -54,10 +54,14 @@ local function tempFunction()
 		-- {id = 141295, defS = false,},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			-- {id = 959, defS = true,}, -- Invasion Points
+			{id = 946, defS = true,}, -- Antorus, the Burning Throne
+			{id = 875, defS = true,}, -- Tomb of Sargeras
+			{id = 786, defS = true,}, -- The Nighthold
+			{id = 861, defS = true,}, -- Trial of Valor
+			{id = 768, defS = true,}, -- The Emerald Nightmare
+			-- {id = 822, defS = true,}, -- Broken Isles
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

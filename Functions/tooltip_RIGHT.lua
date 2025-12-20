@@ -1,88 +1,15 @@
-local GlobalAddonName, E =...
+local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-----------------------------------------------------------------
-local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
-local LibStub = LibStub
-local strsplit = strsplit
-local GetClassColor = GetClassColor or C_ClassColor.GetClassColor
-local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
-local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
-local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
-local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
-local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
-local GetItemCooldown = GetItemCooldown or C_Item.GetItemCooldown
-local GetItemCount = GetItemCount or C_Item.GetItemCount
-local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
-local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
-local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
-local GetItemQualityColor = GetItemQualityColor or C_Item.GetItemQualityColor
-local IsAnimaItemByID = IsAnimaItemByID or C_Item.IsAnimaItemByID
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
-local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
-local GetSpellName = GetSpellName or C_Spell.GetSpellName
-local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
-local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
-local GetSpellCharges = GetSpellCharges or C_Spell.GetSpellCharges
-local IsSpellKnown = IsSpellKnown
-local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
-local IsAccountWideCurrency = IsAccountWideCurrency or C_CurrencyInfo.IsAccountWideCurrency
-local IsAccountTransferableCurrency = IsAccountTransferableCurrency or C_CurrencyInfo.IsAccountTransferableCurrency
-local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
-local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
-local IsQuestFlaggedCompleted = IsQuestFlaggedCompleted or C_QuestLog.IsQuestFlaggedCompleted
-local IsQuestFlaggedCompletedOnAccount = IsQuestFlaggedCompletedOnAccount or C_QuestLog.IsQuestFlaggedCompletedOnAccount
-local IsComplete = IsComplete or C_QuestLog.IsComplete
-local IsOnQuest = IsOnQuest or C_QuestLog.IsOnQuest
-local GetQuestObjectives = GetQuestObjectives or C_QuestLog.GetQuestObjectives
-local GetInfo = GetInfo or C_QuestLog.GetInfo
-local IsAccountQuest = IsAccountQuest or C_QuestLog.IsAccountQuest
-local IsFailed = IsFailed or C_QuestLog.IsFailed
-local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLogEntries
-local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
-local IsFactionParagon = IsFactionParagon or C_Reputation.IsFactionParagon
-local GetFactionParagonInfo = GetFactionParagonInfo or C_Reputation.GetFactionParagonInfo
-local IsAccountWideReputation = IsAccountWideReputation or C_Reputation.IsAccountWideReputation
-local IsMajorFaction = IsMajorFaction or C_Reputation.IsMajorFaction
-local GetMajorFactionData = GetMajorFactionData or C_MajorFactions.GetMajorFactionData
-local GetFriendshipReputation = GetFriendshipReputation or C_GossipInfo.GetFriendshipReputation
-local GetFriendshipReputationRanks = GetFriendshipReputationRanks or C_GossipInfo.GetFriendshipReputationRanks
-local GetCovenantData = GetCovenantData or C_Covenants.GetCovenantData
-local GetTradeSkillDisplayName = GetTradeSkillDisplayName or C_TradeSkillUI.GetTradeSkillDisplayName
-local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
-local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
-local GetMapGroupID = GetMapGroupID or C_Map.GetMapGroupID
-local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMembersInfo
-local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
-local GetSecondsUntilWeeklyReset = GetSecondsUntilWeeklyReset or C_DateAndTime.GetSecondsUntilWeeklyReset
-local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
-local GetHolidayInfo = C_Calendar.GetHolidayInfo
-local GetDayEvent = C_Calendar.GetDayEvent
-local GetMonthInfo = C_Calendar.GetMonthInfo
-local SetAbsMonth = C_Calendar.SetAbsMonth
-local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
-local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
-local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
-local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
-local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
--- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
-local GetMountIDs = C_MountJournal.GetMountIDs
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
-local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
-local GetMountFromItem = C_MountJournal.GetMountFromItem
-local classR, classG, classB = GetClassColor(E.classFilename)
-----------------------------------------------------------------
-----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if not GUID or not SettingsType then return end
+	local ServerTime = GetServerTime()
 	local tooltip = {}
 	local CharInfo = Octo_ToDo_DB_Levels[GUID]
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local dataType, id = ("#"):split(SettingsType)
-	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "Raids" or dataType == "Dungeons" then
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
 	if dataType == "Items" then
@@ -93,12 +20,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			if cm.Items.Bags[itemID] and cm.Items.Bank[itemID] then
 				total = total + cm.Items.Bags[itemID] + cm.Items.Bank[itemID]
 			end
-		elseif type(itemID) == "table" then
-			for _, v in ipairs(itemID) do
-				if cm.Items.Bags[itemID] and cm.Items.Bank[itemID] then
-					total = total + cm.Items.Bags[itemID] + cm.Items.Bank[itemID]
-				end
-			end
+		-- elseif type(itemID) == "table" then
+		-- 	for _, v in ipairs(itemID) do
+		-- 		if cm.Items.Bags[itemID] and cm.Items.Bank[itemID] then
+		-- 			total = total + cm.Items.Bags[itemID] + cm.Items.Bank[itemID]
+		-- 		end
+		-- 	end
 		end
 		if total > 0 then
 			tooltip[#tooltip+1] = {TOTAL..": "..E.func_CompactFormatNumber(total)}
@@ -156,10 +83,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local color = E.COLOR_GRAY
 			local cacheSize = cm.GARRISON.cacheSize or MAX_CACHE_SIZE
 			local lastCacheTime = cm.GARRISON.lastCacheTime
-			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
+			local timeUnitsSinceLastCollect = lastCacheTime and (ServerTime-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
 			local earnedSinceLastCollect = min(cacheSize, math.floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
 			local secondsToMax = cacheSize/RESOURCES_PER_INTERVAL*RESOURCE_GENERATION_INTERVAL
-			local timeUntilFull = (lastCacheTime + secondsToMax) - GetServerTime()
+			local timeUntilFull = (lastCacheTime + secondsToMax) - ServerTime
 			if earnedSinceLastCollect > 0 then
 				if earnedSinceLastCollect >= 5 then
 					color = (earnedSinceLastCollect == cacheSize) and E.COLOR_PURPLE or E.COLOR_YELLOW
@@ -170,7 +97,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			if earnedSinceLastCollect ~= cacheSize then
 				tooltip[#tooltip+1] = {"Time to full: ", E.func_SecondsToClock(timeUntilFull)}
 			end
-			tooltip[#tooltip+1] = {"Was earned: ", E.func_SecondsToClock(GetServerTime()-(cm.GARRISON.lastCacheTime or time()))}
+			tooltip[#tooltip+1] = {"Was earned: ", E.func_SecondsToClock(ServerTime-(cm.GARRISON.lastCacheTime or time()))}
 		end
 	end
 	----------------------------------------------------------------
@@ -299,11 +226,11 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				secondTEXT = E.DONE
 			end
 			local thirdTEXT = ColorCenter..standingTEXT.."|r"
-			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
-				if id == v.factionID and cm.ListOfParagonQuests[questID] then
-					isParagonRewardEnable = E.COLOR_PURPLE..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
-				end
-			end
+			-- for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
+			-- 	if id == v.factionID and cm.ListOfParagonQuests[questID] then
+			-- 		isParagonRewardEnable = E.COLOR_PURPLE..">>"..CONTRIBUTION_REWARD_TOOLTIP_TITLE.."<<|r"
+			-- 	end
+			-- end
 			for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 				if id == v.factionID and cm.ListOfParagonQuests[questID] then
 					secondTEXT = E.COLOR_PURPLE..">"..FirstReputation.."/"..SecondReputation.."<".."|r"
@@ -386,7 +313,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		local color = "|cffFFFFFF"
 		if pd.loginHour and pd.loginDay then
 			if pd.GUID == E.curGUID then
-				-- tooltip[#tooltip+1] = {"Время после релоуда: "..pd.classColorHex..E.func_SecondsToClock(GetServerTime() - pd.time).."|r", " "}
+				-- tooltip[#tooltip+1] = {"Время после релоуда: "..pd.classColorHex..E.func_SecondsToClock(ServerTime - pd.time).."|r", " "}
 				tooltip[#tooltip+1] = {string.format(TIME_PLAYED_ALERT, pd.classColorHex..E.func_SecondsToClock(GetSessionTime()).."|r" ), " "}
 			else
 				if pd.needResetWeekly then
@@ -418,7 +345,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	----------------------------------------------------------------
 	if SettingsType == "Additionally#LFGInstance" then
 		local combinedTooltip = {}
-		local ServerTime = GetServerTime()
 		for instanceID, v in next, (cm.journalInstance) do
 			for difficultyID, w in next, (v) do
 				if w.instanceReset then
@@ -439,7 +365,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					-- bosses = bosses..i..") "..(bossKilled and E.COLOR_GREEN..bossName.."|r" or E.COLOR_GRAY..bossName.."|r")
 					-- end
 					table.insert(combinedTooltip, {
-							name = output .. "id: "..instanceID,
+							name = output, --  .. "id: "..instanceID,
 							status = status, -- bosses
 							time = E.func_SecondsToClock(w.instanceReset-ServerTime)
 					})
@@ -637,6 +563,91 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		--elseif SettingsType == "ЙЦУЙЦУ" then
 		----------------------------------------------------------------
 		----------------------------------------------------------------
+	end
+	if dataType == "RaidsOrDungeons" then
+		local SI_ID = E.func_EJ_to_SI(id)
+		-- tooltip[#tooltip+1] = {"SettingsType", E.COLOR_BLUE..SettingsType.."|r"}
+		-- tooltip[#tooltip+1] = {"dataType", E.COLOR_BLUE..dataType.."|r"}
+		-- tooltip[#tooltip+1] = {"EJ_ID:", E.COLOR_BLUE..id.."|r"}
+		-- tooltip[#tooltip+1] = {"SI_ID:", E.COLOR_BLUE..SI_ID.."|r"}
+		-- tooltip[#tooltip+1] = {"", ""}
+		-- tooltip[#tooltip+1] = {"", ""}
+		-- Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.journalInstance)
+		-- for k, v in next, (E.Octo_Table_SI_IDS) do
+		-- 	if SI_ID == v.SI_ID then
+		-- 		local difficulties = v.difficulties
+		-- 		for difficultyID, totalBosses in next,(difficulties) do
+		-- 			-- local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(id)
+		-- 			local defeatedBosses, instanceReset = 0, 0
+		-- 			local Text1 = GetDifficultyInfo(difficultyID)
+		-- 			local Text2 = E.NONE
+		-- 			local Text3 = "-"
+		-- 			local color = E.COLOR_GRAY
+		-- 			if cm.journalInstance[SI_ID] and cm.journalInstance[SI_ID][difficultyID] then
+		-- 				instanceReset = cm.journalInstance[SI_ID][difficultyID].instanceReset or 0
+		-- 					defeatedBosses = cm.journalInstance[SI_ID][difficultyID].defeatedBosses or 0
+		-- 					-- local totalBosses = cm.journalInstance[SI_ID][difficultyID].totalBosses or 0
+		-- 					local lastBossDefeated = cm.journalInstance[SI_ID][difficultyID].lastBossDefeated or false
+		-- 					color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_RED)
+		-- 					local bosses = cm.journalInstance[SI_ID][difficultyID].Bosses
+		-- 					for bossI, w in next,(bosses) do
+		-- 						local bossName = w.bossName
+		-- 						local bossKilled = w.bossName
+		-- 						print (bossName, bossKilled)
+		-- 					end
+		-- 			end
+		-- 			if instanceReset > 0 then
+		-- 				Text2 = "|cff9999ff"..E.func_SecondsToClock(instanceReset-ServerTime).."|r"
+		-- 			end
+		-- 			Text3 = color..defeatedBosses.."/"..totalBosses.."|r"
+		-- 			tooltip[#tooltip+1] = {Text1, Text2, Text3}
+		-- 		end
+		-- 	end
+		-- end
+for k, v in next, (E.Octo_Table_SI_IDS) do
+	if SI_ID == v.SI_ID then
+		local difficulties = v.difficulties
+		local firstDifficulty = true -- Флаг для первой сложности
+		for difficultyID, totalBosses in next,(difficulties) do
+			-- Добавляем пустую строку-разделитель, если это не первая сложность
+			if not firstDifficulty then
+				tooltip[#tooltip+1] = {"", "", ""} -- Пустая строка для разделения
+			else
+				firstDifficulty = false
+			end
+			local defeatedBosses, instanceReset = 0, 0
+			local Text1 = GetDifficultyInfo(difficultyID)
+			local Text2 = E.NONE
+			local Text3 = E.COLOR_GRAY.."0/"..totalBosses.."|r"
+			local color = E.COLOR_GRAY
+			if cm.journalInstance[SI_ID] and cm.journalInstance[SI_ID][difficultyID] then
+				instanceReset = cm.journalInstance[SI_ID][difficultyID].instanceReset or 0
+				defeatedBosses = cm.journalInstance[SI_ID][difficultyID].defeatedBosses or 0
+				local lastBossDefeated = cm.journalInstance[SI_ID][difficultyID].lastBossDefeated or false
+				color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_RED)
+				-- Добавляем строку со сложностью и общим счетом
+				if instanceReset > 0 then
+					Text2 = "|cff9999ff"..E.func_SecondsToClock(instanceReset-ServerTime).."|r"
+				end
+				Text3 = color..defeatedBosses.."/"..totalBosses.."|r"
+				tooltip[#tooltip+1] = {Text3 .." ".. Text1, {" ", "LEFT"}, Text2}
+				-- Добавляем строки с именами боссов
+				local bosses = cm.journalInstance[SI_ID][difficultyID].Bosses or {}
+				for bossI, w in next,(bosses) do
+					local bossName = w.bossName
+					local bossKilled = w.bossKilled
+					-- Определяем цвет для имени босса в зависимости от того, убит ли он
+					local bossColor = bossKilled and E.COLOR_GREEN or E.COLOR_RED
+					-- Добавляем строку с именем босса и его статусом
+					tooltip[#tooltip+1] = {"", {bossColor..bossName.."|r", "LEFT"},""}
+				end
+			else
+				-- Если нет данных об инстансе, добавляем только строку со сложностью
+				tooltip[#tooltip+1] = {Text3 .." ".. Text1, " ", Text2}
+			end
+		end
+	end
+end
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

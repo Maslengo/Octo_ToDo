@@ -47,10 +47,11 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 1308, defS = true,}, -- March on Quel'Danas
+			{id = 1307, defS = true,}, -- The Voidspire
+			{id = 1314, defS = true,}, -- The Dreamrift
+			-- {id = 1312, defS = true,}, -- Midnight -- WB
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

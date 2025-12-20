@@ -35,10 +35,13 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 1180, defS = true,}, -- Ny'alotha, the Waking City
+			{id = 1179, defS = true,}, -- The Eternal Palace
+			{id = 1177, defS = true,}, -- Crucible of Storms
+			{id = 1176, defS = true,}, -- Battle of Dazar'alor
+			{id = 1031, defS = true,}, -- Uldir
+			-- {id = 1028, defS = true,}, -- Azeroth
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

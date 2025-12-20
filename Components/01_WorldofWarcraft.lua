@@ -25,10 +25,12 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 1301, defS = true,}, -- Blackrock Depths
+			{id = 744, defS = true,}, -- Temple of Ahn'Qiraj
+			{id = 743, defS = true,}, -- Ruins of Ahn'Qiraj
+			{id = 742, defS = true,}, -- Blackwing Lair
+			{id = 741, defS = true,}, -- Molten Core
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {

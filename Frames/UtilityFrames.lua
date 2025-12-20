@@ -18,6 +18,9 @@ local utilityFrames = {
 	buttons = {},
 	framerate = nil
 }
+
+
+
 local function CreateUtilButton(name, frame, texture, size, func_onEnter, func_onClick)
 	-- Reuse existing button if available
 	local button = utilityFrames.buttons[name]
@@ -30,8 +33,34 @@ local function CreateUtilButton(name, frame, texture, size, func_onEnter, func_o
 			button.icon:SetAtlas(texture)
 			button.icon:SetAllPoints()
 		end
+
+		-- Эффект нажатия (изменение прозрачности)
+		button:SetScript("OnMouseDown", function(self)
+			if self.icon then
+				self.icon:SetAlpha(0.7)  -- Затемняем иконку
+			end
+			-- self:SetScale(0.95)
+		end)
+
+		button:SetScript("OnMouseUp", function(self)
+			if self.icon then
+				self.icon:SetAlpha(1)
+			end
+			-- self:SetScale(1)
+		end)
+
+		button:SetScript("OnLeave", function(self)
+			if self.icon then
+				self.icon:SetAlpha(1)
+			end
+			-- self:SetScale(1)
+		end)
+
 		utilityFrames.buttons[name] = button
 	end
+
+
+
 	-- Set tooltip on enter
 	if func_onEnter then
 		button:SetScript("OnEnter", function(self)
@@ -46,12 +75,15 @@ local function CreateUtilButton(name, frame, texture, size, func_onEnter, func_o
 				button.tooltip = nil
 		end)
 	end
+
+
 	return button
 end
 -- Button order for attachment
 local utilityButtonsOrder = {
 	"CloseButton",
 	"OptionsButton",
+	"GreatVaultButton"
 }
 local function AttachUtilityFrames(targetFrame)
 	local prevButton = nil
@@ -61,20 +93,13 @@ local function AttachUtilityFrames(targetFrame)
 			button:SetParent(targetFrame)
 			button:ClearAllPoints()
 			if i == 1 then
-				button:SetPoint("BOTTOMRIGHT", targetFrame, "TOPRIGHT", 0, 0)
+				button:SetPoint("BOTTOMRIGHT", targetFrame, "TOPRIGHT", 0, 0) -- Первая кнопка позиционируется относительно targetFrame
 			else
-				button:SetPoint("RIGHT", prevButton, "LEFT", -2, 0)
+				button:SetPoint("RIGHT", prevButton, "LEFT", -4, 0) -- Последующие кнопки позиционируются относительно предыдущей кнопки с отступом -4
 			end
 			prevButton = button
 			button:Show()
 		end
-	end
-	-- Attach framerate display if available
-	if utilityFrames.framerate then
-		utilityFrames.framerate:SetParent(targetFrame)
-		utilityFrames.framerate:ClearAllPoints()
-		utilityFrames.framerate:SetPoint("RIGHT", prevButton, "LEFT", -4, 0)
-		utilityFrames.framerate:Show()
 	end
 end
 function EventFrame:Octo_CloseButton(frame)
@@ -118,10 +143,42 @@ function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
 		func_onClick
 	)
 end
+
+
+function EventFrame:Octo_GreatVaultButton(frame)
+	local function func_onEnter()
+		if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
+			C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
+		end
+		return {{E.classColorHexCurrent..RATED_PVP_WEEKLY_VAULT.."|r"}}
+	end
+
+	local function func_onClick()
+
+		if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
+			C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
+		end
+
+		if WeeklyRewards_ShowUI then
+			WeeklyRewards_ShowUI()
+		end
+	end
+
+	CreateUtilButton(
+		"GreatVaultButton", -- name
+		frame, -- frame
+		"greatVault-whole-normal", -- texture -- MIDNIGHT ("UI-Journeys-GreatVault-Button")
+		20, -- size
+		func_onEnter, -- func_onEnter
+		func_onClick -- func_onClick
+	)
+end
+
 function E.func_CreateUtilsButton(frame, addonIconTexture)
 	if not utilityFrames.initialized then
 		EventFrame:Octo_CloseButton(frame)
 		EventFrame:Octo_OptionsButton(frame, addonIconTexture)
+		EventFrame:Octo_GreatVaultButton(frame)
 		utilityFrames.initialized = true
 	end
 	frame:HookScript("OnShow", function()
@@ -143,3 +200,5 @@ function EventFrame:VARIABLES_LOADED()
 			end
 	end)
 end
+
+

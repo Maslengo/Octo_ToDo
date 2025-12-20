@@ -268,50 +268,50 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		CharInfo.PlayerData = CharInfo.PlayerData or {}
 		local cm = CharInfo.MASLENGO
 		local pd = CharInfo.PlayerData
-					cm.Items = cm.Items or {}
-					cm.Items.Bags = cm.Items.Bags or {}
-					cm.Items.Bank = cm.Items.Bank or {}
-					cm.Items.AccountBank = cm.Items.AccountBank or {}
-					pd.CharDBVersion = pd.CharDBVersion or 1
-					-- Заполняем стандартные значения
-					for k, v in next, (defaults) do
-						E.func_InitField(pd, k, v)
-					end
-					-- Заполняем MASLENGO значениями по умолчанию
-					for k, v in next, (MASLENGO_DEFAULTS) do
-						if cm[k] == nil then
-							cm[k] = type(v) == "table" and CopyTable(v) or v
-						end
-					end
-					-- Заполняем стандартные значения
-					for k, v in next, (GARRISON_default) do
-						E.func_InitField(cm.GARRISON, k, v)
-					end
-					-- Устанавливаем временные метки
-					pd.time = pd.time or pd.tmstp_Daily or ServerTime
-					pd.MoneyOnLogin = pd.MoneyOnLogin or pd.Money
-					pd.MoneyOnDaily = pd.MoneyOnDaily or pd.Money
-					pd.MoneyOnWeekly = pd.MoneyOnWeekly or pd.Money
-					-- Заполняем GARRISON значениями по умолчанию
-					for k, v in next, (GARRISON_DEFAULTS) do
-						if cm.GARRISON[k] == nil then
-							cm.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
-						end
-					end
-					-- Инициализируем данные репутации (ТЕПЕРЬ НЕ НУЖНО)
-					-- for ID in next,(E.ALL_Reputations) do
-					-- cm.Reputation[ID] = cm.Reputation[ID] or "0#0###"
-					-- end
-					-- Инициализируем данные LFG инстансов
-					for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
-						cm.LFGInstance[dungeonID] = cm.LFGInstance[dungeonID] or {}
-						E.func_InitField(cm.LFGInstance[dungeonID], "D_name", name)
-						cm.LFGInstance[dungeonID].donetoday = cm.LFGInstance[dungeonID].donetoday or nil
-					end
-					for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
-						cm.GreatVault[i] = cm.GreatVault[i] or {}
-						-- cm.GreatVault[i].rewards = cm.GreatVault[i].rewards or {}
-					end
+		cm.Items = cm.Items or {}
+		cm.Items.Bags = cm.Items.Bags or {}
+		cm.Items.Bank = cm.Items.Bank or {}
+		cm.Items.AccountBank = cm.Items.AccountBank or {}
+		pd.CharDBVersion = pd.CharDBVersion or 1
+		-- Заполняем стандартные значения
+		for k, v in next, (defaults) do
+			E.func_InitField(pd, k, v)
+		end
+		-- Заполняем MASLENGO значениями по умолчанию
+		for k, v in next, (MASLENGO_DEFAULTS) do
+			if cm[k] == nil then
+				cm[k] = type(v) == "table" and CopyTable(v) or v
+			end
+		end
+		-- Заполняем стандартные значения
+		for k, v in next, (GARRISON_default) do
+			E.func_InitField(cm.GARRISON, k, v)
+		end
+		-- Устанавливаем временные метки
+		pd.time = pd.time or pd.tmstp_Daily or ServerTime
+		pd.MoneyOnLogin = pd.MoneyOnLogin or pd.Money
+		pd.MoneyOnDaily = pd.MoneyOnDaily or pd.Money
+		pd.MoneyOnWeekly = pd.MoneyOnWeekly or pd.Money
+		-- Заполняем GARRISON значениями по умолчанию
+		for k, v in next, (GARRISON_DEFAULTS) do
+			if cm.GARRISON[k] == nil then
+				cm.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
+			end
+		end
+		-- Инициализируем данные репутации (ТЕПЕРЬ НЕ НУЖНО)
+		-- for ID in next,(E.ALL_Reputations) do
+		-- cm.Reputation[ID] = cm.Reputation[ID] or "0#0###"
+		-- end
+		-- Инициализируем данные LFG инстансов
+		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
+			cm.LFGInstance[dungeonID] = cm.LFGInstance[dungeonID] or {}
+			E.func_InitField(cm.LFGInstance[dungeonID], "D_name", name)
+			cm.LFGInstance[dungeonID].donetoday = cm.LFGInstance[dungeonID].donetoday or nil
+		end
+		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
+			cm.GreatVault[i] = cm.GreatVault[i] or {}
+			-- cm.GreatVault[i].rewards = cm.GreatVault[i].rewards or {}
+		end
 	end
 end
 ----------------------------------------------------------------
@@ -363,6 +363,8 @@ function EventFrame:Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllItems")
 	E.func_InitSubTable(Octo_Cache_DB, "AllRaids")
 	E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
+	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
+	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
 	E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
 	E.func_InitSubTable(Octo_Cache_DB, "AllNPCs")
 	E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
@@ -415,18 +417,18 @@ function EventFrame:func_Daily_Reset()
 					cm.UniversalQuest[questKey] = nil
 				end
 			end
-			for dungeonID, v in next, (cm.LFGInstance) do
-				if v then
-					if cm.LFGInstance[dungeonID].donetoday then
+			-- for dungeonID, v in next, (cm.LFGInstance) do
+			-- 	if v then
+			-- 		if cm.LFGInstance[dungeonID].donetoday then
 						-- print (cm.LFGInstance[dungeonID].donetoday)
-					end
-				end
-			end
-			for worldBossID, v in next, (cm.SavedWorldBoss) do
-				if v then
+			-- 		end
+			-- 	end
+			-- end
+			-- for worldBossID, v in next, (cm.SavedWorldBoss) do
+			-- 	if v then
 					-- print (cm.SavedWorldBoss.reset)
-				end
-			end
+			-- 	end
+			-- end
 			-- print (pd.Name)
 			-- Очищаем данные LFG
 			wipe(cm.LFGInstance)
@@ -556,6 +558,8 @@ function EventFrame:func_UpdateGlobals()
 			E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
 			E.ddMenuButtonHeight = E.GLOBAL_LINE_HEIGHT
 		end
+		Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
+		Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
 		if Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle then
 			E.func_UpdateFont()
 		end
@@ -576,6 +580,7 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 	"UPDATE_INSTANCE_INFO",
+	"PLAYER_ENTERING_WORLD",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
@@ -637,4 +642,42 @@ end
 function EventFrame:UPDATE_INSTANCE_INFO()
 	E.Reset_JournalInstance()
 	E.func_RequestUIUpdate("UPDATE_INSTANCE_INFO")
+end
+
+function EventFrame:PLAYER_ENTERING_WORLD()
+	-- E.func_StartDebugTimer()
+	local tbl1 = {}
+	local tbl2 = {}
+	local allDifficultyIDs = {
+	}
+	local function setActualInstances()
+		local numTiers = EJ_GetNumTiers()
+		if numTiers < 1 then
+			-- print (numTiers, "МЕНЬШЕ НУЛЯ")
+			return
+		end
+		local backupTier = EJ_GetCurrentTier()
+		for tier = 1, numTiers do
+			EJ_SelectTier(tier)
+			for j = 1, 2 do
+				local isRaid = j == 2
+				local index = 1
+				local jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+				while jInstanceID do
+					local name, _, _, _, _, _, _, _, _, instanceID = EJ_GetInstanceInfo(jInstanceID)
+					tbl1[instanceID] = jInstanceID
+					tbl2[jInstanceID] = instanceID
+					index = index + 1
+					jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+				end
+			end
+		end
+		EJ_SelectTier(backupTier)
+		return tbl1, tbl2
+	end
+	wipe(Octo_Cache_DB.SavedInstanceID_to_EJInstance)
+	wipe(Octo_Cache_DB.EJInstance_to_SavedInstanceID)
+	Octo_Cache_DB.SavedInstanceID_to_EJInstance, Octo_Cache_DB.EJInstance_to_SavedInstanceID = setActualInstances() -- /run opde(Octo_Cache_DB.AllDungeons)
+	-- E.func_StopDebugTimer("Collect_JournalInstance")
+	-- opde(setActualInstances())
 end

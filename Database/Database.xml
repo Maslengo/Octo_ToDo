@@ -9,4 +9,5 @@
 	<Script file="Database\Mounts.lua"/>
 	<Script file="Database\LANG_NPC.lua"/>
 	<Script file="Database\LANG_Reputations.lua"/>
+	<Script file="Database\RaidsOrDungeons.lua"/>
 </Ui>

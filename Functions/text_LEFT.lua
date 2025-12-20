@@ -1,79 +1,5 @@
-local GlobalAddonName, E =...
+local GlobalAddonName, E = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-----------------------------------------------------------------
-local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
-local LibStub = LibStub
-local strsplit = strsplit
-local GetClassColor = GetClassColor or C_ClassColor.GetClassColor
-local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
-local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
-local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
-local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
-local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
-local GetItemCooldown = GetItemCooldown or C_Item.GetItemCooldown
-local GetItemCount = GetItemCount or C_Item.GetItemCount
-local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
-local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
-local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
-local GetItemQualityColor = GetItemQualityColor or C_Item.GetItemQualityColor
-local IsAnimaItemByID = IsAnimaItemByID or C_Item.IsAnimaItemByID
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
-local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
-local GetSpellName = GetSpellName or C_Spell.GetSpellName
-local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
-local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
-local GetSpellCharges = GetSpellCharges or C_Spell.GetSpellCharges
-local IsSpellKnown = IsSpellKnown
-local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
-local IsAccountWideCurrency = IsAccountWideCurrency or C_CurrencyInfo.IsAccountWideCurrency
-local IsAccountTransferableCurrency = IsAccountTransferableCurrency or C_CurrencyInfo.IsAccountTransferableCurrency
-local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
-local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
-local IsQuestFlaggedCompleted = IsQuestFlaggedCompleted or C_QuestLog.IsQuestFlaggedCompleted
-local IsQuestFlaggedCompletedOnAccount = IsQuestFlaggedCompletedOnAccount or C_QuestLog.IsQuestFlaggedCompletedOnAccount
-local IsComplete = IsComplete or C_QuestLog.IsComplete
-local IsOnQuest = IsOnQuest or C_QuestLog.IsOnQuest
-local GetQuestObjectives = GetQuestObjectives or C_QuestLog.GetQuestObjectives
-local GetInfo = GetInfo or C_QuestLog.GetInfo
-local IsAccountQuest = IsAccountQuest or C_QuestLog.IsAccountQuest
-local IsFailed = IsFailed or C_QuestLog.IsFailed
-local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLogEntries
-local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
-local IsFactionParagon = IsFactionParagon or C_Reputation.IsFactionParagon
-local GetFactionParagonInfo = GetFactionParagonInfo or C_Reputation.GetFactionParagonInfo
-local IsAccountWideReputation = IsAccountWideReputation or C_Reputation.IsAccountWideReputation
-local IsMajorFaction = IsMajorFaction or C_Reputation.IsMajorFaction
-local GetMajorFactionData = GetMajorFactionData or C_MajorFactions.GetMajorFactionData
-local GetFriendshipReputation = GetFriendshipReputation or C_GossipInfo.GetFriendshipReputation
-local GetFriendshipReputationRanks = GetFriendshipReputationRanks or C_GossipInfo.GetFriendshipReputationRanks
-local GetCovenantData = GetCovenantData or C_Covenants.GetCovenantData
-local GetTradeSkillDisplayName = GetTradeSkillDisplayName or C_TradeSkillUI.GetTradeSkillDisplayName
-local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
-local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
-local GetMapGroupID = GetMapGroupID or C_Map.GetMapGroupID
-local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMembersInfo
-local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
-local GetSecondsUntilWeeklyReset = GetSecondsUntilWeeklyReset or C_DateAndTime.GetSecondsUntilWeeklyReset
-local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
-local GetHolidayInfo = C_Calendar.GetHolidayInfo
-local GetDayEvent = C_Calendar.GetDayEvent
-local GetMonthInfo = C_Calendar.GetMonthInfo
-local SetAbsMonth = C_Calendar.SetAbsMonth
-local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
-local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
-local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
-local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
-local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
--- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
-local GetMountIDs = C_MountJournal.GetMountIDs
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
-local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
-local GetMountFromItem = C_MountJournal.GetMountFromItem
-local classR, classG, classB = GetClassColor(E.classFilename)
-----------------------------------------------------------------
-----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_Dispatcher(categoryKey, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
@@ -92,7 +18,7 @@ end
 function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
 	----------------------------------------------------------------
 	TextLeft = E.func_GetCurrencyName(id)
 	-- ColorLeft = E.COLOR_GREEN
@@ -115,7 +41,7 @@ end
 function E.func_Otrisovka_LEFT_Items(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
 	----------------------------------------------------------------
 	TextLeft = E.func_GetItemName(id)
 	-- ColorLeft =
@@ -124,56 +50,31 @@ function E.func_Otrisovka_LEFT_Items(categoryKey, CharInfo, dataType, id)
 	-- TooltipKey =
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
-	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
+	----------------------------------------------------------------
 end
-function E.func_Otrisovka_LEFT_Raids(categoryKey, CharInfo, dataType, id)
+function E.func_Otrisovka_LEFT_RaidsOrDungeons(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
-	E.QWETBL = {}
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
 	----------------------------------------------------------------
-	local name, description, bgImage, buttonImage1, loreImage, buttonImage2, dungeonAreaMapID, link, shouldDisplayDifficulty, mapID, covenantID, isRaid = EJ_GetInstanceInfo(id)
-	if isRaid then
-		E.QWETBL[id] = E.QWETBL[id] or true
-	end
-	local color = isRaid and E.COLOR_GREEN or E.COLOR_RED
-	local totalEncounters, encountersCompleted = GetLFGDungeonNumEncounters(id)
+	-- local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(id)
+	local name = EJ_GetInstanceInfo(id)
 	----------------------------------------------------------------
-	TextLeft = color..(name or "NONAME").."|r".. E.COLOR_GRAY .. " id:"..id.."|r" .. (encountersCompleted or 0).."/"..(totalEncounters or 0)
+	local JI_ID = tonumber(id)
+	local SI_ID = E.func_EJ_to_SI(JI_ID)
+	TextLeft = name -- (isRaid and E.COLOR_GREEN or E.COLOR_BLUE) .. name .. "|r"
 	-- ColorLeft =
-	IconLeft = buttonImage2 or E.ICON_QUESTION_MARK
+	-- IconLeft = buttonImage2 or E.ICON_QUESTION_MARK -- "Raid"
 	SettingsType = dataType.."#"..id
 	-- TooltipKey =
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
-	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
-end
-function E.func_Otrisovka_LEFT_Dungeons(categoryKey, CharInfo, dataType, id)
-	if not categoryKey then return end
-	E.QWETBL = {}
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
-	----------------------------------------------------------------
-	local name, description, bgImage, buttonImage1, loreImage, buttonImage2, dungeonAreaMapID, link, shouldDisplayDifficulty, mapID, covenantID, isRaid = EJ_GetInstanceInfo(id)
-	if isRaid then
-		E.QWETBL[id] = E.QWETBL[id] or true
-	end
-	local color = isRaid and E.COLOR_GREEN or E.COLOR_RED
-	local totalEncounters, encountersCompleted = GetLFGDungeonNumEncounters(id)
-	----------------------------------------------------------------
-	TextLeft = color..(name or "NONAME").."|r".. E.COLOR_GRAY .. " id:"..id.."|r" .. (encountersCompleted or 0).."/"..(totalEncounters or 0) .. dungeonAreaMapID
-	-- ColorLeft =
-	IconLeft = buttonImage2 or E.ICON_QUESTION_MARK
-	SettingsType = dataType.."#"..id
-	-- TooltipKey =
-	----------------------------------------------------------------
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
-	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
 	----------------------------------------------------------------
 	local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 	local reset = data.reset -- questKey:match("_([^_]+)$")
@@ -205,7 +106,7 @@ end
 function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
 	if not categoryKey then return end
 	----------------------------------------------------------------
-	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, ni
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
 	----------------------------------------------------------------
 	TextLeft = E.func_GetReputationName(id)
 	-- ColorLeft =

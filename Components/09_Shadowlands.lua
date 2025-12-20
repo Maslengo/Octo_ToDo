@@ -40,10 +40,11 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Raids = {
-	}
-	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Dungeons = {
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+			{id = 1195, defS = true,}, -- Sepulcher of the First Ones
+			{id = 1193, defS = true,}, -- Sanctum of Domination
+			{id = 1190, defS = true,}, -- Castle Nathria
+			-- {id = 1192, defS = true,}, -- Shadowlands
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
