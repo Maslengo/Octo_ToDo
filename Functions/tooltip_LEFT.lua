@@ -798,15 +798,15 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	--------------------------------------------------------
 	-- 5. Итоги сверху
 	--------------------------------------------------------
-	if #characterData > 1 then
-		local heade1 = {
-			"имя",
-			"",
-			"итемнейм",
-			"квест",
-		}
-		table.insert(tooltip, 1, heade1)
-	end
+	-- if #characterData > 1 then
+	-- 	local heade1 = {
+	-- 		"имя",
+	-- 		"",
+	-- 		"итемнейм",
+	-- 		"квест",
+	-- 	}
+	-- 	table.insert(tooltip, 1, heade1)
+	-- end
 	--------------------------------------------------------
 	return tooltip
 end

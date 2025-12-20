@@ -82,12 +82,13 @@ local function Collect_Reputations()
 		-- PARAGON COUNT (сделать отдельно, сейчас прилепает к standingTEXT)
 		local ParagonCount = ""
 		if isParagon then
-			local earned, threshold = E.func_GetFactionParagonInfo(reputationID)
-			if earned and threshold then
-				local level = math.floor(earned / threshold)
-				-- if level > 0 then
+			local currentValue, threshold, _, hasRewardPending = E.func_GetFactionParagonInfo(reputationID)
+			if currentValue and threshold then
+				-- local level = math.floor(earned / threshold)
+				local level = math.floor(currentValue/threshold)-(hasRewardPending and 1 or 0)
+				if level > 0 then
 					ParagonCount = level
-				-- end
+				end
 			end
 		end
 		-- ДЕБАГ

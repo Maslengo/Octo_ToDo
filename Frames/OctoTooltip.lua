@@ -57,7 +57,7 @@ local func_OnAcquired do
 					__index = function(self, key)
 						if key then
 							-- Создаем новый фрейм для каждого элемента
-							local f = CreateFrame("BUTTON", "frame"..key, frame)
+							local f = CreateFrame("BUTTON", "OctoTooltip_Meta_frame"..key, frame)
 							f:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 							f:SetPropagateMouseMotion(true)
 							f:SetHeight(E.GLOBAL_LINE_HEIGHT)

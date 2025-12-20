@@ -3,26 +3,40 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function E.Cleanup_Obsolete_Reputations()
-	-- E.func_StartDebugTimer()
+	-- E.func_StartDebugTimer() -- 7 ms
 	local validReps = {}
 	for reputationID in next,(E.OctoTable_Reputations_DB) do
 		validReps[reputationID] = true
 	end
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
-		if cm and cm.Reputation then
-			local toRemove = {}
-			for reputationID in next, cm.Reputation do
-				if not validReps[reputationID] then
-					table.insert(toRemove, reputationID)
+		if cm then
+			if cm.Reputation then
+				for reputationID in next, cm.Reputation do
+					if not validReps[reputationID] then
+						-- print (pd.classColorHex..pd.Name.."|r", "cm.Reputation[reputationID] = nil")
+						cm.Reputation[reputationID] = nil
+					end
 				end
 			end
-			for _, repID in ipairs(toRemove) do
-				cm.Reputation[repID] = nil
+			----------------------------------------------------------------
+			-- /run opde(Octo_ToDo_DB_Levels[E.curGUID])
+			cm.GarrisonFollowers = nil
+			cm.GarrisonFollowersCount = nil
+			cm.garrisonType = nil
+			cm.HasGarrison = nil
+			cm.ItemsALL = nil
+			----------------------------------------------------------------
+			if cm.Currency then
+				for currencyID, v in next,(cm.Currency) do
+					if not next(v) then
+						cm.Currency[currencyID] = nil
+						-- print (pd.classColorHex..pd.Name.."|r", "cm.Currency[currencyID] = nil")
+					end
+				end
 			end
-			if next(cm.Reputation) == nil then
-				cm.Reputation = nil
-			end
+			----------------------------------------------------------------
 		end
 	end
 	-- E.func_StopDebugTimer()

@@ -66,6 +66,7 @@ local function updateChars(pd, cm, DBVersion)
 			end
 		end
 	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)

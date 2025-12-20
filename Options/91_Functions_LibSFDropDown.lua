@@ -671,7 +671,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				-- Основное меню первого уровня
 				local info = {}
 				info.fontObject = OctoFont11
-				-- Меню персонажей
+						-- Меню персонажей
 				info.hasArrow = true
 				info.hasArrowUp = true
 				info.keepShownOnClick = true
@@ -679,30 +679,30 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.text = L["Characters"]
 				info.value = L["Characters"]
 				self:ddAddButton(info, level)
-				-- Меню дополнений
+						-- Меню дополнений
 				info.text = EXPANSION_FILTER_TEXT
 				info.value = "expansions"
 				self:ddAddButton(info, level)
-				-- Меню профилей
+						-- Меню профилей
 				info.text = L["Profiles"]
 				info.value = L["Profiles"]
 				self:ddAddButton(info, level)
-				self:ddAddSeparator(level)
-				-- isSettingsEnabled
-				local info = {}
-				info.fontObject = OctoFont11
-				info.hasArrow = nil
-				info.hasArrowUp = nil
-				info.keepShownOnClick = true
-				info.notCheckable = false
-				info.isNotRadio = true
-				info.text = L["Settings mode"] -- "isSettingsEnabled"
-				info.checked = Octo_profileKeys.isSettingsEnabled
-				info.func = function(_, _, _, checked)
-					Octo_profileKeys.isSettingsEnabled = checked
-					providerfunc()
-				end
-				self:ddAddButton(info, level)
+				-- self:ddAddSeparator(level)
+						-- isSettingsEnabled
+				-- local info = {}
+				-- info.fontObject = OctoFont11
+				-- info.hasArrow = nil
+				-- info.hasArrowUp = nil
+				-- info.keepShownOnClick = true
+				-- info.notCheckable = false
+				-- info.isNotRadio = false
+				-- info.text = L["Settings mode"] -- "isSettingsEnabled"
+				-- info.checked = Octo_profileKeys.isSettingsEnabled
+				-- info.func = function(_, _, _, checked)
+				-- 	Octo_profileKeys.isSettingsEnabled = checked
+				-- 	providerfunc()
+				-- end
+				-- self:ddAddButton(info, level)
 			elseif level == 2 then
 				-- Роутинг на соответствующие меню
 				if value == L["Characters"] then

@@ -374,9 +374,13 @@ function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
 						Octo_profileKeys.isSettingsEnabled = false
-						if func then func() end
 						if frame then
-							frame:SetShown(not frame:IsShown())
+							if func then
+								func()
+							else
+								frame:SetShown(not frame:IsShown())
+							end
+
 							if frame:IsShown() then
 								if SettingsPanel:IsVisible() then
 									HideUIPanel(SettingsPanel)
@@ -386,6 +390,7 @@ function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 								end
 							end
 						end
+
 					end
 				elseif button == "RightButton" then
 					if frame and frame:IsShown() then
@@ -399,7 +404,10 @@ function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, fra
 				end
 			end,
 			OnTooltipShow = function(tooltip)
-				tooltip:AddDoubleLine(E.func_GetAddOnMetadata(AddonName, "Title"))
+				local version = E.func_GetAddOnMetadata(AddonName, "Version")
+				local title = E.func_GetAddOnMetadata(AddonName, "Title")
+				tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
+
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["Left Click:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["Right Click:"], GAMEMENU_OPTIONS)

@@ -75,6 +75,7 @@ E.Config_DebugID_ALL = false
 -- E.Config_DebugID_Events = false
 -- E.Config_DebugID_Professions = false
 E.UNIVERSAL = "UNIVERSAL_"
+E.TEXTURE_ADDON = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\ToDo.tga"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga"
 E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\LeftFrame.tga"
 E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CharFrame.tga"
