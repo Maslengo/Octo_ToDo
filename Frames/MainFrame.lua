@@ -737,18 +737,16 @@ function E.func_main_frame_toggle()
 end
 -- Функция создания фрейма поиска
 function EventFrame:func_CreateSearchBox()
-	-- Добавляем границу
 	SearchBox.Border = SearchBox:CreateTexture(nil, "BACKGROUND")
-	SearchBox.Border:SetAllPoints()
-	SearchBox.Border:SetColorTexture(0, 0, 0, 1) -- Черный цвет
-	SearchBox.Border:SetPoint("TOPLEFT", SearchBox, "TOPLEFT", -5, 0)  -- Отступы от края
+	-- SearchBox.Border:ClearAllPoints()
+	SearchBox.Border:SetColorTexture(0, 0, 0, 1)
+	SearchBox.Border:SetPoint("TOPLEFT", SearchBox, "TOPLEFT", -5, 0)
 	SearchBox.Border:SetPoint("BOTTOMRIGHT", SearchBox, "BOTTOMRIGHT", 0, 0)
-	-- Создаем фоновую текстуру для SearchBox
+	SearchBox.Border:SetDrawLayer("BACKGROUND", -1)
 	SearchBox.Background = SearchBox:CreateTexture(nil, "BACKGROUND")
-	SearchBox.Background:SetAllPoints() -- Заполняем всю область SearchBox
-	SearchBox.Background:SetColorTexture(0.15, 0.15, 0.15, 0.8) -- Темно-серый с прозрачностью
-	-- Чтобы граница была видна, нужно сделать фон меньше
-	SearchBox.Background:SetPoint("TOPLEFT", SearchBox, "TOPLEFT", -4, -1)  -- Отступы от края
+	-- SearchBox.Background:ClearAllPoints()
+	SearchBox.Background:SetColorTexture(0.15, 0.15, 0.15, 0.8)
+	SearchBox.Background:SetPoint("TOPLEFT", SearchBox, "TOPLEFT", -4, -1)
 	SearchBox.Background:SetPoint("BOTTOMRIGHT", SearchBox, "BOTTOMRIGHT", -1, 1)
 	----------------------------------------------------------------
 	-- Устанавливаем точку привязки и размер
