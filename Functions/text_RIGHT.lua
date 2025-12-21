@@ -178,14 +178,21 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		-- local percent = (SecondReputation > 0) and math.floor(FirstReputation / SecondReputation * 100) or 0
 		-- local percentResult = percent and percent > 0 and percent < 100 and " |cff888888"..percent.."%|r" or ""
 		TextCenter = E.func_CompactFormatNumber(FirstReputation).."/"..E.func_CompactFormatNumber(SecondReputation)
+
+		-- local newStandingTEXT = ""
+		-- if string.find(standingTEXT, "/") then
+		-- 	newStandingTEXT = standingTEXT
+		-- end
+		-- TextCenter = TextCenter..col..newStandingTEXT.."|r"
+
+
 		if TextCenter == "1/1" then
 			TextCenter = E.DONE
 		elseif TextCenter == "0/0" then
 			TextCenter = ""
 		end
-		-- if repType == 3 then
-		-- 	TextCenter = TextCenter.."QWE"
-		-- end
+
+
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if id == v.factionID and cm.ListOfParagonQuests[questID] then
 				TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"

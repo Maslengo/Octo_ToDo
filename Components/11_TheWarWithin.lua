@@ -118,26 +118,33 @@ local function tempFunction()
 		-- { id = 2647,},
 		-- { id = 2648,},
 		-- { id = 2649,},
+		----------------------------------------------------------------
 		{id = 2736, defS = true,},
 		{id = 2658, defS = true,},
 		{id = 2688, defS = true,},
-		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
-		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-		{id = 2594, defS = false,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
-		{id = 2590, defS = false,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
-		{id = 2570, defS = false,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
 		----------------------------------------------------------------
-		{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
-		{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
-		{id = 2601, defS = false,}, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
-		----------------------------------------------------------------
+		-- /run if (not MajorFactionRenownFrame) then MajorFactions_LoadUI(); end HideUIPanel(MajorFactionRenownFrame) MajorFactionRenownFrame:SetMajorFaction(2685) ShowUIPanel(MajorFactionRenownFrame)
+		-- majorfactions_icons_stars512
 		{id = 2685, defS = false,}, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
-		{id = 2677, defS = false,}, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
-		{id = 2675, defS = false,}, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
-		{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
-		{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
-		{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
+			{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+			{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
+			{id = 2677, defS = false,}, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
+			{id = 2675, defS = false,}, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
+			{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
+		----------------------------------------------------------------
+		{id = 2590, defS = false,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
+		{id = 2594, defS = false,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
+		{id = 2570, defS = false,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
+		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
+			{id = 2601, defS = false,}, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
+			{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
+			{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
+		----------------------------------------------------------------
+		----------------------------------------------------------------
 		{id = 2663, defS = false,}, -- Мира
 		{id = 2665, defS = false,}, -- Лиллистраза
 		{id = 2666, defS = false,}, -- Байки за чашкой
@@ -145,30 +152,110 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = L["World Boss"],
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
-				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
-				{81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
-				{81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
-				{85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
-				{nil},
-				{87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
-			},
-			forcedMaxQuest = 2,
-		},
+
+
+
+
+
+
+
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
 		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2371)..": ".."Rares"
+		-- 		return E.func_GetMapName(2472)..": "..E.func_GetQuestName(84956) -- storyline
+		-- 	end,
+		-- 	name_save = "AShadowyInvitation",
+		-- 	defS = true,
+		-- 	reset = "Once",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{84956},
+		-- 		{84957},
+		-- 		{85003},
+		-- 		{85039},
+		-- 		{84958},
+		-- 		{84959},
+		-- 		{84960},
+		-- 		{84961},
+		-- 		{84963},
+		-- 		{84964},
+		-- 		{84965},
+		-- 		{86835},
+		-- 		{84967},
+		-- 	},
+		-- 	-- forcedMaxQuest = 2,
+		-- },
+
+
+
+
+
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2371)..": "..E.func_GetQuestName(84862) -- Karesh storyline
+		-- 	end,
+		-- 	name_save = "VoidAlliance",
+		-- 	defS = true,
+		-- 	reset = "Once",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 			{85032},
+		-- 			{85961},
+		-- 			{84855},
+		-- 			{86495},
+		-- 			{84856},
+		-- 			{84857},
+		-- 			{84858},
+		-- 			{84859},
+		-- 			{84860},
+		-- 			{84861},
+		-- 			{84862},
+		-- 			{84863},
+		-- 			{84864},
+		-- 			{84865},
+		-- 			{84866},
+		-- 			{86946},
+		-- 			{90517},
+		-- 	},
+		-- 	-- forcedMaxQuest = 2,
+		-- },
+
+
+
+
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2371)..": "..E.func_GetQuestName(94933) -- Karesh storyline (НЕПРАВИЛЬНЫЙ КВ)
+		-- 	end,
+		-- 	name_save = "InSearchofDarkness",
+		-- 	defS = true,
+		-- 	reset = "Once",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{94933},
+		-- 		{90972},
+		-- 		{86786},
+		-- 		{89323},
+		-- 		{89324},
+		-- 		{89325},
+		-- 		{89326},
+		-- 		{89327},
+		-- 		{91044},
+		-- 	},
+		-- 	-- forcedMaxQuest = 2,
+		-- },
+
+
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
 		-- 	end,
 		-- 	name_save = "Rares2371",
 		-- 	defS = false,
@@ -339,7 +426,7 @@ local function tempFunction()
 		-- 		{84927, forcedText = {npcID = 231012}, },
 		-- 	},
 		-- },
-		----------------------------------------------------------------------------
+		-- --------------------------------------------------------------------------
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
@@ -527,8 +614,47 @@ local function tempFunction()
 		-- 		{85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
 		-- 	},
 		-- },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		----------------------------------------------------------------------------
 		----------------------------------------------------------------------------
+
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = L["World Boss"],
+			name_save = "WorldBoss",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
+				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
+				{81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
+				{81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
+				{85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
+				{nil},
+				{87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
+			},
+			forcedMaxQuest = 2,
+		},
 		{
 			sorted = false,
 			showTooltip = true,

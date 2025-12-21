@@ -244,16 +244,20 @@ local function func_Setup_Reputations(frame, id)
 	-- Первая иконка
 	frame.icon1texture:SetTexture(E.ICON_TABARD) -- E.func_GetReputationIcon(id)
 	-- Вторая иконка
-	local icon2 = E.func_GetReputationIcon(id)
-	if E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].side then
-		if E.OctoTable_Reputations_DB[id].side == "Horde" then
-			frame.icon2texture:SetTexture(E.ICON_HORDE)
-		else
-			frame.icon2texture:SetTexture(E.ICON_ALLIANCE)
-		end
+	local factionIcon = E.func_GetReputationSideIcon(id)
+	local AdditionalIcon = E.func_GetReputationIcon(id) -- reputationData.icon1 ICON_NIGHTFAE etc
+	local ReputationAtlas = E.func_GetReputationAtlas(id)
+	if factionIcon then
+		frame.icon2texture:SetTexture(factionIcon)
+					-- frame.icon2texture:SetAtlas(icon3)
 		frame.icon2frame:Show()
-	elseif icon2 then
-		frame.icon2texture:SetTexture(icon2)
+	elseif AdditionalIcon then
+		frame.icon2texture:SetTexture(AdditionalIcon)
+					-- frame.icon2texture:SetAtlas(AdditionalIcon)
+		frame.icon2frame:Show()
+	elseif ReputationAtlas then
+					-- frame.icon2texture:SetTexture(ReputationAtlas)
+		frame.icon2texture:SetAtlas(ReputationAtlas)
 		frame.icon2frame:Show()
 	else
 		frame.icon2texture:SetTexture(spacerEMPTY)            -- ОБЯЗАТЕЛЬНО!
@@ -386,10 +390,12 @@ function EventFrame:func_InitLEFT(frame, node)
 		end
 		if Octo_profileKeys.isSettingsEnabled then
 			local texture = E.ICON_EMPTY
-			if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
-				texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen"
-			else
-				texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
+			if Octo_profileKeys.profiles[E.CurrentProfile][dataType] and Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] ~= nil then
+				if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
+					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen"
+				else
+					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
+				end
 			end
 			frame.SettingsTexture:SetTexture(texture)
 			-- frame.icon1texture:Hide()

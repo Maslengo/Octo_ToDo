@@ -218,9 +218,36 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local percent = (SecondReputation > 0) and math.floor(FirstReputation / SecondReputation * 100) or 0
 			local percentResult = ColorCenter..percent.."%|r"
 			-- local percentResult = percent > 0 and percent < 1002 and E.COLOR_GRAY..percent.."%|r" or ""
-			local icon1texture = E.func_texturefromIcon(E.ICON_TABARD)
-			local icon2texture = E.func_GetReputationIcon(id) and E.func_texturefromIcon(E.func_GetReputationIcon(id)) or ""
-			local firstTEXT = icon1texture..icon2texture..E.func_GetReputationName(id)
+			local firstTEXT = ""
+			local ICON_TABARD = E.ICON_TABARD
+			if ICON_TABARD then
+				firstTEXT = firstTEXT..E.func_texturefromIcon(ICON_TABARD)
+			end
+			-- local icon2texture = E.func_GetReputationIcon(id) and E.func_texturefromIcon(E.func_GetReputationIcon(id)) or ""
+
+			local factionIcon = E.func_GetReputationSideIcon(id)
+			if factionIcon then
+				firstTEXT = firstTEXT..E.func_texturefromIcon(factionIcon)
+			end
+
+			local AdditionalIcon = E.func_GetReputationIcon(id) -- reputationData.icon1 ICON_NIGHTFAE etc
+			if AdditionalIcon then
+				firstTEXT = firstTEXT..E.func_texturefromIcon(AdditionalIcon)
+			end
+
+			local ReputationAtlas = E.func_GetReputationAtlas(id)
+			if ReputationAtlas then
+				firstTEXT = firstTEXT..E.func_texturefromIcon(ReputationAtlas, nil, nil, true)
+			end
+
+			local IsAccountWideReputation = C_Reputation.IsAccountWideReputation(id)
+			if IsAccountWideReputation then
+				firstTEXT = firstTEXT .. E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE, nil, nil, true)
+			end
+
+			firstTEXT = firstTEXT..E.func_GetReputationName(id)
+
+			-- local firstTEXT = icon1texture..icon2texture..E.func_GetReputationName(id)
 			local secondTEXT = FirstReputation.."/"..SecondReputation
 			if secondTEXT == "1/1" then
 				secondTEXT = E.DONE
@@ -420,8 +447,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local totalQuest = 0
 				local forcedMaxQuest = data.forcedMaxQuest
 				for _, questData in ipairs(data.quests) do
-					local faction = questData.faction
-					if not faction or faction == pd.Faction then
+					local FactionOrClass = questData.FactionOrClass
+					local class = questData.class
+					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 						if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
 							totalQuest = totalQuest + 1
 						elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
@@ -451,8 +479,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				-- Список квестов в тултипе
 				local questsToShow = {}
 				for _, questData in ipairs(data.quests) do
-					local faction = questData.faction
-					if not faction or faction == pd.Faction then
+					local FactionOrClass = questData.FactionOrClass
+					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 						table.insert(questsToShow, questData)
 					end
 				end
@@ -474,7 +502,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				-- Формирование строк тултипа
 				for _, questData in ipairs(questsToShow) do
 					local questID = questData[1]
-					local faction = questData.faction
+					local FactionOrClass = questData.FactionOrClass
 					local forcedText = questData.forcedText
 					local forcedIcon = questData.forcedIcon
 					local addText = questData.addText
@@ -541,8 +569,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 							Output_LEFT = Output_LEFT..addText.text
 						end
 					end
-					if faction == pd.Faction then
-						Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(faction))..Output_LEFT
+					if FactionOrClass and FactionOrClass[pd.Faction] then
+						Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(pd.Faction))..Output_LEFT
+					elseif FactionOrClass and FactionOrClass[pd.classFilename] then
+						Output_LEFT = E.func_texturefromIcon(pd.specIcon)..Output_LEFT
 					end
 					-- tooltip[#tooltip+1] = {Output_LEFT, Output_CENT, Output_RIGHT}
 					if Output_CENT ~= "" then

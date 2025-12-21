@@ -7,6 +7,7 @@ local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 E.OctoTable_Reputations_Paragon_Data_NEW = {}
 E.OctoTable_Reputations_Paragon_Data = {}
+
 ----------------------------------------------------------------
 function EventFrame:func_ConcatSimpleTablesAtStart()
 	-- 1ms
@@ -378,11 +379,19 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function EventFrame:Octo_profileKeys()
+	-- E.func_StartDebugTimer()
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
 	----------------------------------------------------------------
-	----------------------------------------------------------------
 	E.func_CreateNewProfile("Default")
+	----------------------------------------------------------------
+	if Octo_profileKeys and Octo_profileKeys.profiles then -- UPDATE OLD PROFILES
+		for profileName in next,(Octo_profileKeys.profiles) do
+			if profileName ~= "Default" then
+				E.func_CreateNewProfile(profileName)
+			end
+		end
+	end
 	----------------------------------------------------------------
 	if not Octo_ToDo_DB_Levels then return end
 	----------------------------------------------------------------
@@ -395,6 +404,7 @@ function EventFrame:Octo_profileKeys()
 	end
 	----------------------------------------------------------------
 	-- E.OctoTables_Vibor[categoryKey] = E.OctoTables_Vibor[categoryKey] or {}
+	-- E.func_StopDebugTimer("Octo_profileKeys")
 end
 ----------------------------------------------------------------
 function EventFrame:func_Daily_Reset()

@@ -94,10 +94,10 @@ local function tempFunction()
 				{52163, addText = {mapID = 895}, }, -- Крылатый тайфун (Тирагардское поморье)
 				{52157, addText = {mapID = 896}, }, -- Леденящая встреча (Друствар)
 				{nil},
-				{52848, addText = {mapID = 14}, faction = "Horde"}, -- "Львиный рык" (Нагорье Арати)
-				{52847, addText = {mapID = 14}, faction = "Alliance"}, -- "Гибельный вой" (Нагорье Арати)
-				{54896, addText = {mapID = 62}, faction = "Horde"}, -- Ивус Лесной Властелин (Темные берега)
-				{54895, addText = {mapID = 62}, faction = "Alliance"}, -- Ивус Трухлявый (Темные берега)
+				{52848, addText = {mapID = 14}, FactionOrClass = {Horde = true,}}, -- "Львиный рык" (Нагорье Арати)
+				{52847, addText = {mapID = 14}, FactionOrClass = {Alliance = true,}}, -- "Гибельный вой" (Нагорье Арати)
+				{54896, addText = {mapID = 62}, FactionOrClass = {Horde = true,}}, -- Ивус Лесной Властелин (Темные берега)
+				{54895, addText = {mapID = 62}, FactionOrClass = {Alliance = true,}}, -- Ивус Трухлявый (Темные берега)
 				{nil},
 				{58705, addText = {mapID = 390}, }, -- Великая императрица Шек'зара (Вечноцветущий дол)
 				{55466, addText = {mapID = 1527}, }, -- Вук'лаз Землелом (Ульдум)
@@ -118,8 +118,8 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
-				{53435, faction = "Horde",}, -- /dump C_QuestLog.IsOnQuest(53435)
-				{53436, faction = "Alliance",}, -- /dump C_QuestLog.IsOnQuest(53436)
+				{53435, FactionOrClass = {Horde = true,},}, -- /dump C_QuestLog.IsOnQuest(53435)
+				{53436, FactionOrClass = {Alliance = true,},}, -- /dump C_QuestLog.IsOnQuest(53436)
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -213,14 +213,14 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{53416, faction = "Horde"},
-				{53414, faction = "Alliance"},
-				{53955, faction = "Horde"},
-				{53992, faction = "Alliance"},
-				{56137, faction = "Horde"},
-				{57959, faction = "Horde"},
-				{56136, faction = "Alliance"},
-				{57960, faction = "Alliance"},
+				{53416, FactionOrClass = {Horde = true,}},
+				{53414, FactionOrClass = {Alliance = true,}},
+				{53955, FactionOrClass = {Horde = true,}},
+				{53992, FactionOrClass = {Alliance = true,}},
+				{56137, FactionOrClass = {Horde = true,}},
+				{57959, FactionOrClass = {Horde = true,}},
+				{56136, FactionOrClass = {Alliance = true,}},
+				{57960, FactionOrClass = {Alliance = true,}},
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -236,87 +236,87 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				-- Alash'anir
-				{54695, faction = "Alliance", forcedText = {npcID = 148787},},
-				{54696, faction = "Horde", forcedText = {npcID = 148787},},
+				{54695, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148787},},
+				{54696, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148787},},
 				-- Aman
-				{54405, faction = "Alliance", forcedText = {npcID = 147966},},
-				{54406, faction = "Horde", forcedText = {npcID = 147966},},
+				{54405, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147966},},
+				{54406, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147966},},
 				-- Amberclaw
-				{54285, faction = "Alliance", forcedText = {npcID = 147744},},
-				{54286, faction = "Horde", forcedText = {npcID = 147744},},
+				{54285, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147744},},
+				{54286, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147744},},
 				-- Athrikus Narassin
-				{54278, faction = "Alliance", forcedText = {npcID = 147708},},
-				{54279, faction = "Horde", forcedText = {npcID = 147708},},
+				{54278, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147708},},
+				{54279, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147708},},
 				-- Commander Ral'esh
-				{54426, faction = "Alliance", forcedText = {npcID = 148025},},
-				{54427, faction = "Horde", forcedText = {npcID = 148025},},
+				{54426, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148025},},
+				{54427, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148025},},
 				-- Conflagros
-				{54232, faction = "Alliance", forcedText = {npcID = 147260},},
-				{54233, faction = "Horde", forcedText = {npcID = 147260},},
+				{54232, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147260},},
+				{54233, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147260},},
 				-- Cyclarus
-				{54229, faction = "Alliance", forcedText = {npcID = 147241},},
-				{54230, faction = "Horde", forcedText = {npcID = 147241},},
+				{54229, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147241},},
+				{54230, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147241},},
 				-- Glimmerspine
-				{54884, faction = "Alliance", forcedText = {npcID = 149654},},
-				{54885, faction = "Horde", forcedText = {npcID = 149654},},
+				{54884, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149654},},
+				{54885, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149654},},
 				-- Granokk
-				{54234, faction = "Alliance", forcedText = {npcID = 147261},},
-				{54235, faction = "Horde", forcedText = {npcID = 147261},},
+				{54234, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147261},},
+				{54235, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147261},},
 				-- Gren Tornfur
-				{54428, faction = "Alliance", forcedText = {npcID = 148031},},
-				{54429, faction = "Horde", forcedText = {npcID = 148031},},
+				{54428, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 148031},},
+				{54429, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148031},},
 				-- Hydrath
-				{54227, faction = "Alliance", forcedText = {npcID = 147240},},
-				{54228, faction = "Horde", forcedText = {npcID = 147240},},
+				{54227, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147240},},
+				{54228, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147240},},
 				-- Madfeather
-				{54887, faction = "Alliance", forcedText = {npcID = 149657},},
-				{54888, faction = "Horde", forcedText = {npcID = 149657},},
+				{54887, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149657},},
+				{54888, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149657},},
 				-- Mrggr'marr
-				{54408, faction = "Alliance", forcedText = {npcID = 147970},},
-				{54409, faction = "Horde", forcedText = {npcID = 147970},},
+				{54408, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147970},},
+				{54409, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147970},},
 				-- Scalefiend
-				{54893, faction = "Alliance", forcedText = {npcID = 149665},},
-				{54894, faction = "Horde", forcedText = {npcID = 149665},},
+				{54893, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149665},},
+				{54894, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149665},},
 				-- Shattershard
-				{54289, faction = "Alliance", forcedText = {npcID = 147751},},
-				{54290, faction = "Horde", forcedText = {npcID = 147751},},
+				{54289, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147751},},
+				{54290, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147751},},
 				-- Soggoth the Slitherer
-				{54320, faction = "Alliance", forcedText = {npcID = 147897},},
-				{54321, faction = "Horde", forcedText = {npcID = 147897},},
+				{54320, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147897},},
+				{54321, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147897},},
 				-- Stonebinder Ssra'vess
-				{54247, faction = "Alliance", forcedText = {npcID = 147332},},
-				{54248, faction = "Horde", forcedText = {npcID = 147332},},
+				{54247, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147332},},
+				{54248, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147332},},
 				-- Twilight Prophet Graemeа
-				{54397, faction = "Alliance", forcedText = {npcID = 147942},},
-				{54398, faction = "Horde", forcedText = {npcID = 147942},},
+				{54397, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147942},},
+				{54398, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147942},},
 				-- Athil Dewfire
-				{54431, faction = "Horde", forcedText = {npcID = 148037},}, -- УБИЛ ОРДОЙ 54892
+				{54431, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148037},}, -- УБИЛ ОРДОЙ 54892
 				-- Blackpaw
-				{54890, faction = "Horde", forcedText = {npcID = 149660},}, -- УБИЛ ОРДОЙ
+				{54890, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149660},}, -- УБИЛ ОРДОЙ
 				-- Grimhorn
-				{54891, faction = "Horde", forcedText = {npcID = 149662},},
+				{54891, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149662},},
 				-- Onu
-				{54291, faction = "Horde", forcedText = {npcID = 147758},}, -- УБИЛ ОРДОЙ 54892
+				{54291, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147758},}, -- УБИЛ ОРДОЙ 54892
 				-- Sapper Odette
-				{54452, faction = "Horde", forcedText = {npcID = 148103},}, -- УБИЛ ОРДОЙ 54892
+				{54452, FactionOrClass = {Horde = true,}, forcedText = {npcID = 148103},}, -- УБИЛ ОРДОЙ 54892
 				-- Shadowclaw
-				{54892, faction = "Horde", forcedText = {npcID = 149663},}, -- УБИЛ ОРДОЙ 54892
+				{54892, FactionOrClass = {Horde = true,}, forcedText = {npcID = 149663},}, -- УБИЛ ОРДОЙ 54892
 				-- Thelar Moonstrike
-				{54252, faction = "Horde", forcedText = {npcID = 147435},},
+				{54252, FactionOrClass = {Horde = true,}, forcedText = {npcID = 147435},},
 				-- Agathe Wyrmwood
-				{54883, faction = "Alliance", forcedText = {npcID = 149517},},
+				{54883, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149517},},
 				-- Burninator Mark V
-				{54768, faction = "Alliance", forcedText = {npcID = 149141},},
+				{54768, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149141},},
 				-- Commander Drald
-				{54309, faction = "Alliance", forcedText = {npcID = 147845},},
+				{54309, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147845},},
 				-- Croz Bloodrage
-				{54886, faction = "Alliance", forcedText = {npcID = 149655},},
+				{54886, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149655},},
 				-- Moxo the Beheader
-				{54277, faction = "Alliance", forcedText = {npcID = 147701},},
+				{54277, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147701},},
 				-- Orwell Stevenson
-				{54889, faction = "Alliance", forcedText = {npcID = 149659},}, -- 149664
+				{54889, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 149659},}, -- 149664
 				-- Zim'kaga
-				{54274, faction = "Alliance", forcedText = {npcID = 147664},},
+				{54274, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 147664},},
 			},
 			-- forcedMaxQuest = 25,
 		},
@@ -332,25 +332,25 @@ local function tempFunction()
 		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		-- Только для Альянса
-		-- 		{54088, faction = "Alliance"},
-		-- 		{55040, faction = "Alliance"},
-		-- 		{54945, faction = "Alliance"},
-		-- 		{54087, faction = "Alliance"},
-		-- 		{54946, faction = "Alliance"},
-		-- 		{54947, faction = "Alliance"},
-		-- 		{54992, faction = "Alliance"},
-		-- 		{55645, faction = "Alliance"},
+		-- 		{54088, FactionOrClass = {Alliance = true,}},
+		-- 		{55040, FactionOrClass = {Alliance = true,}},
+		-- 		{54945, FactionOrClass = {Alliance = true,}},
+		-- 		{54087, FactionOrClass = {Alliance = true,}},
+		-- 		{54946, FactionOrClass = {Alliance = true,}},
+		-- 		{54947, FactionOrClass = {Alliance = true,}},
+		-- 		{54992, FactionOrClass = {Alliance = true,}},
+		-- 		{55645, FactionOrClass = {Alliance = true,}},
 		-- 		-- Только для Орды
-		-- 		{55646, faction = "Horde"},
-		-- 		{55647, faction = "Horde"},
-		-- 		{55648, faction = "Horde"},
-		-- 		{55630, faction = "Horde"},
-		-- 		{55632, faction = "Horde"},
-		-- 		{55649, faction = "Horde"},
-		-- 		{55650, faction = "Horde"},
-		-- 		{55651, faction = "Horde"},
-		-- 		{55652, faction = "Horde"},
-		-- 		{55685, faction = "Horde"},
+		-- 		{55646, FactionOrClass = {Horde = true,}},
+		-- 		{55647, FactionOrClass = {Horde = true,}},
+		-- 		{55648, FactionOrClass = {Horde = true,}},
+		-- 		{55630, FactionOrClass = {Horde = true,}},
+		-- 		{55632, FactionOrClass = {Horde = true,}},
+		-- 		{55649, FactionOrClass = {Horde = true,}},
+		-- 		{55650, FactionOrClass = {Horde = true,}},
+		-- 		{55651, FactionOrClass = {Horde = true,}},
+		-- 		{55652, FactionOrClass = {Horde = true,}},
+		-- 		{55685, FactionOrClass = {Horde = true,}},
 		-- 		-- Общие квесты
 		-- 		{55730},
 		-- 		{55731},
@@ -484,29 +484,29 @@ local function tempFunction()
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
-		-- {56031, faction = "Alliance"},
-		-- {56043, faction = "Alliance"},
-		-- {55095, faction = "Alliance"},
-		-- {54969, faction = "Alliance"},
-		-- {56640, faction = "Alliance"},
-		-- {56641, faction = "Alliance"},
-		-- {56642, faction = "Alliance"},
-		-- {56643, faction = "Alliance"},
-		-- {56644, faction = "Alliance"},
-		-- {55175, faction = "Alliance"},
-		-- {54972, faction = "Alliance"},
-		-- {56030, faction = "Horde"},
-		-- {56044, faction = "Horde"},
-		-- {55054, faction = "Horde"},
-		-- {54018, faction = "Horde"},
-		-- {54021, faction = "Horde"},
-		-- {54012, faction = "Horde"},
-		-- {55092, faction = "Horde"},
-		-- {56063, faction = "Horde"},
-		-- {54015, faction = "Horde"},
-		-- {56429, faction = "Horde"},
-		-- {55094, faction = "Horde"},
-		-- {55053, faction = "Horde"},
+		-- {56031, FactionOrClass = {Alliance = true,}},
+		-- {56043, FactionOrClass = {Alliance = true,}},
+		-- {55095, FactionOrClass = {Alliance = true,}},
+		-- {54969, FactionOrClass = {Alliance = true,}},
+		-- {56640, FactionOrClass = {Alliance = true,}},
+		-- {56641, FactionOrClass = {Alliance = true,}},
+		-- {56642, FactionOrClass = {Alliance = true,}},
+		-- {56643, FactionOrClass = {Alliance = true,}},
+		-- {56644, FactionOrClass = {Alliance = true,}},
+		-- {55175, FactionOrClass = {Alliance = true,}},
+		-- {54972, FactionOrClass = {Alliance = true,}},
+		-- {56030, FactionOrClass = {Horde = true,}},
+		-- {56044, FactionOrClass = {Horde = true,}},
+		-- {55054, FactionOrClass = {Horde = true,}},
+		-- {54018, FactionOrClass = {Horde = true,}},
+		-- {54021, FactionOrClass = {Horde = true,}},
+		-- {54012, FactionOrClass = {Horde = true,}},
+		-- {55092, FactionOrClass = {Horde = true,}},
+		-- {56063, FactionOrClass = {Horde = true,}},
+		-- {54015, FactionOrClass = {Horde = true,}},
+		-- {56429, FactionOrClass = {Horde = true,}},
+		-- {55094, FactionOrClass = {Horde = true,}},
+		-- {55053, FactionOrClass = {Horde = true,}},
 		-- },
 		-- },
 		-- {
@@ -528,16 +528,16 @@ local function tempFunction()
 		-- {55497},
 		-- {55618},
 		-- {57010},
-		-- {56162, faction = "Alliance"},
-		-- {56350, faction = "Alliance"},
-		-- {55361, faction = "Alliance"},
-		-- {55363, faction = "Alliance"},
-		-- {56156, faction = "Alliance"},
-		-- {56161, faction = "Horde"},
-		-- {55481, faction = "Horde"},
-		-- {55384, faction = "Horde"},
-		-- {55385, faction = "Horde"},
-		-- {55500, faction = "Horde"},
+		-- {56162, FactionOrClass = {Alliance = true,}},
+		-- {56350, FactionOrClass = {Alliance = true,}},
+		-- {55361, FactionOrClass = {Alliance = true,}},
+		-- {55363, FactionOrClass = {Alliance = true,}},
+		-- {56156, FactionOrClass = {Alliance = true,}},
+		-- {56161, FactionOrClass = {Horde = true,}},
+		-- {55481, FactionOrClass = {Horde = true,}},
+		-- {55384, FactionOrClass = {Horde = true,}},
+		-- {55385, FactionOrClass = {Horde = true,}},
+		-- {55500, FactionOrClass = {Horde = true,}},
 		-- },
 		-- -- forcedMaxQuest = "all",
 		-- },
@@ -563,8 +563,8 @@ local function tempFunction()
 				{56142},
 				{55528},
 				{56365},
-				{56552, faction = "Horde",},
-				{56558, faction = "Alliance"},
+				{56552, FactionOrClass = {Horde = true,},},
+				{56558, FactionOrClass = {Alliance = true,}},
 				{56572},
 				{56501},
 				{56493},

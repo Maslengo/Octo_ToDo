@@ -230,7 +230,25 @@ function E.func_GetReputationIcon(id)
 	if reputationData then
 		return reputationData.icon1
 	end
-	return
+	return nil
+end
+function E.func_GetReputationAtlas(id)
+	local reputationData = E.OctoTable_Reputations_DB[id]
+	if reputationData then
+		return reputationData.atlas
+	end
+	return nil
+end
+
+function E.func_GetReputationSideIcon(id)
+	local reputationData = E.OctoTable_Reputations_DB[id]
+	if reputationData and reputationData.side then
+		local side = reputationData.side
+		if side == "Horde" or side == "Alliance" then
+			return reputationData.icon1
+		end
+	end
+	return nil
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

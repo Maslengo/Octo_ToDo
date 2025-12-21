@@ -40,6 +40,7 @@ local GetInfo = GetInfo or C_QuestLog.GetInfo
 local IsAccountQuest = IsAccountQuest or C_QuestLog.IsAccountQuest
 local IsFailed = IsFailed or C_QuestLog.IsFailed
 local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLogEntries
+local GetMaxNumQuestsCanAccept = GetMaxNumQuestsCanAccept or C_QuestLog.GetMaxNumQuestsCanAccept
 local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
 local IsFactionParagon = IsFactionParagon or C_Reputation.IsFactionParagon
 local GetFactionParagonInfo = GetFactionParagonInfo or C_Reputation.GetFactionParagonInfo
@@ -222,14 +223,36 @@ function E.func_GetMaxRenownLevel(reputationID)
 		return levels[#levels].level
 	end
 end
+
+
+
+
+
+
+
+
+function E.func_GetNumQuestLogEntries()
+	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
+	return numShownEntries
+end
+
+-- /run E.func_GetQuestLogCount()
 function E.func_GetQuestLogCount()
 	local numQuests = 0
-	for i = 1, GetNumQuestLogEntries() do
+	local numShownEntries = E.func_GetNumQuestLogEntries()
+	for i = 1, numShownEntries do
 		local info = GetInfo(i)
-		numQuests = numQuests + (info and info.questID ~= 0 and not info.isHeader and not info.isHidden and 1 or 0)
+		numQuests = numQuests + (info and info.frequency and info.questID ~= 0 and not info.isHeader and not info.isHidden and 1 or 0)
 	end
 	return numQuests
 end
+
+function E.func_GetMaxNumQuestsCanAccept()
+	local result = GetMaxNumQuestsCanAccept()
+	return result
+end
+
+
 function E.func_GetAddOnMetadata(name, variable)
 	return GetAddOnMetadata(name, variable)
 end
