@@ -42,3 +42,15 @@ function E.debugInfo(id)
 	local result = E.Config_DebugID_ALL and (E.COLOR_GRAY.." id:"..id.."|r") or ""
 	return result
 end
+
+
+function E.func_goldenHeight(width)
+    -- Золотое сечение: высота = ширина / 1.618
+    return width / 1.61803398875
+end
+
+
+function E.func_goldenWidth(height)
+    -- Ширина = высота × 1.618
+    return height * 1.61803398875
+end

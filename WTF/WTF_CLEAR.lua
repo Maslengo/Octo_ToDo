@@ -15,7 +15,7 @@ function E.Cleanup_Obsolete_Reputations()
 			if cm.Reputation then
 				for reputationID in next, cm.Reputation do
 					if not validReps[reputationID] then
-						-- print (pd.classColorHex..pd.Name.."|r", "cm.Reputation[reputationID] = nil")
+						-- E.func_PrintMessage(pd.classColorHex..pd.Name.."|r", "cm.Reputation[reputationID] = nil")
 						cm.Reputation[reputationID] = nil
 					end
 				end
@@ -32,7 +32,7 @@ function E.Cleanup_Obsolete_Reputations()
 				for currencyID, v in next,(cm.Currency) do
 					if not next(v) then
 						cm.Currency[currencyID] = nil
-						-- print (pd.classColorHex..pd.Name.."|r", "cm.Currency[currencyID] = nil")
+						-- E.func_PrintMessage(pd.classColorHex..pd.Name.."|r", "cm.Currency[currencyID] = nil")
 					end
 				end
 			end

@@ -8,7 +8,6 @@ end
 local function updateChars(pd, cm, DBVersion)
 	----------------------------------------------------------------
 	if compareVersion(96.7, DBVersion) then
-		-- print ("96.7, DBVersion) then")
 		cm.currencyID = nil
 		cm.CurrencyID_Total = nil
 		cm.CurrencyID_totalEarned = nil
@@ -31,7 +30,6 @@ local function updateChars(pd, cm, DBVersion)
 		cm.Items.Bags = cm.Items.Bags or {}
 		if cm.ItemsInBag then
 			for itemID, count in next,(cm.ItemsInBag) do
-				-- print (pd.Name, itemID, count)
 				cm.Items.Bags[itemID] = count
 			end
 			cm.ItemsInBag = nil
@@ -63,6 +61,21 @@ local function updateChars(pd, cm, DBVersion)
 						cm.Reputation[reputationID] = nil
 					end
 				end
+			end
+		end
+	end
+	----------------------------------------------------------------
+	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Reputation)
+	if compareVersion(109.3, DBVersion) then
+		if cm.Items then
+			pd.usedSlots_BANK = nil
+			pd.totalSlots_BANK = nil
+
+			if cm.Items.Bank then
+				wipe(cm.Items.Bank)
+			end
+			if cm.Items.AccountBank then
+				cm.Items.AccountBank = nil
 			end
 		end
 	end

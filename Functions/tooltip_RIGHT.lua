@@ -16,19 +16,33 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		local itemID = id
 		local result = ""
 		local total = 0
+
+		local itemCount_Bags = 0
+		local itemCount_Bank = 0
+		-- local itemCount_AccountBank = 0
+
 		if type(itemID) == "number" then
-			if cm.Items.Bags[itemID] and cm.Items.Bank[itemID] then
-				total = total + cm.Items.Bags[itemID] + cm.Items.Bank[itemID]
+			if cm.Items.Bags[itemID] then
+				itemCount_Bags = itemCount_Bags + cm.Items.Bags[itemID]
 			end
-		-- elseif type(itemID) == "table" then
-		-- 	for _, v in ipairs(itemID) do
-		-- 		if cm.Items.Bags[itemID] and cm.Items.Bank[itemID] then
-		-- 			total = total + cm.Items.Bags[itemID] + cm.Items.Bank[itemID]
-		-- 		end
-		-- 	end
+			if cm.Items.Bank[itemID] then
+				itemCount_Bank = itemCount_Bank + cm.Items.Bank[itemID]
+			end
+			-- if Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank[itemID] then
+			-- 	itemCount_AccountBank = itemCount_AccountBank + Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank[itemID]
+			-- end
+			total = itemCount_Bags + itemCount_Bank -- + itemCount_AccountBank
 		end
-		if total > 0 then
-			tooltip[#tooltip+1] = {TOTAL..": "..E.func_CompactFormatNumber(total)}
+		if total > 0 and total ~= itemCount_Bags then
+			tooltip[#tooltip+1] = {" ",TOTAL..": "..E.func_CompactFormatNumber(total)}
+			tooltip[#tooltip+1] = {" "," "}
+			tooltip[#tooltip+1] = {BAG_NAME_BACKPACK, E.func_CompactFormatNumber(itemCount_Bags)}
+			if itemCount_Bank > 0 then
+				tooltip[#tooltip+1] = {BANK, E.func_CompactFormatNumber(itemCount_Bank)}
+			end
+			-- if itemCount_AccountBank > 0 then
+			-- 	tooltip[#tooltip+1] = {ACCOUNT_BANK_PANEL_TITLE, itemCount_AccountBank}
+			-- end
 		end
 	end
 	----------------------------------------------------------------
@@ -325,9 +339,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				if not oldValue then return end
 				local diff = pd.Money - oldValue
 				if diff == 0 then return end
-				local sign = diff > 0 and "+" or "-"
+				-- local sign = diff > 0 and "+" or "-"
 				local color = diff > 0 and E.COLOR_GREEN or E.COLOR_RED
-				local result = sign..E.func_FormatMoney(math.abs(diff))
+				local result = E.func_FormatMoney(math.abs(diff))
+				-- local result = sign..E.func_FormatMoney(math.abs(diff))
 				tooltip[#tooltip + 1] = {label, color..result.."|r"}
 			end
 			addMoneyDiff("SESSION", pd.MoneyOnLogin)
@@ -623,7 +638,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		-- 					for bossI, w in next,(bosses) do
 		-- 						local bossName = w.bossName
 		-- 						local bossKilled = w.bossName
-		-- 						print (bossName, bossKilled)
+		-- 						E.func_PrintMessage(bossName, bossKilled)
 		-- 					end
 		-- 			end
 		-- 			if instanceReset > 0 then

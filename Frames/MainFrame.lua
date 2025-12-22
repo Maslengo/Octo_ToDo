@@ -1242,6 +1242,8 @@ function EventFrame:PLAYER_LOGIN()
 	--         Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
 	-- end)
 	EventFrame:func_CreateSearchBox()
+
+	E.func_CreateMenuStyle()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, E.func_main_frame_toggle, "Octo_MainFrame_ToDo")
 end

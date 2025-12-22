@@ -7,15 +7,55 @@ local LibIndentation = LibStub("LibIndentation-1.0")
 ----------------------------------------------------------------
 -- Настраиваем стиль выпадающего меню
 ----------------------------------------------------------------
-LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-		local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-		frame:SetBackdrop(E.menuBackdrop)
-		frame:SetPoint("TOPLEFT", 8, -2)
-		frame:SetPoint("BOTTOMRIGHT", -8, 2)
-		frame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-		frame:SetBackdropBorderColor(0, 0, 0, 1)
-		return frame
-end)
+function E.func_CreateMenuStyle()
+	LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
+			local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+			frame:SetBackdrop(E.menuBackdrop)
+			frame:SetPoint("TOPLEFT", 8, -2)
+			frame:SetPoint("BOTTOMRIGHT", -8, 2)
+			frame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.MAINBACKGROUND_ALPHA ПОФИКСИТЬ
+			frame:SetBackdropBorderColor(0, 0, 0, 1)
+			return frame
+	end)
+end
+----------------------------------------------------------------
+local function func_SetBackdropStyle(frame, hexcolor, BackdropAlpha, edgeAlpha)
+	edgeAlpha = edgeAlpha or 1
+	local bgCr, bgCg, bgCb = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB
+	local bgCa = BackdropAlpha or E.MAINBACKGROUND_ALPHA
+	if hexcolor then
+		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
+	end
+	frame:SetBackdrop(E.menuBackdrop)
+	frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
+	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+	frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+	if not frame.isInit then
+		frame.isInit = true
+		frame:HookScript("OnEnter", function(self)
+				self:SetBackdropColor(self.r, self.g, self.b, self.a)
+				self:SetBackdropBorderColor(classR, classG, classB, 1)
+		end)
+		frame:HookScript("OnLeave", function(self)
+				self:SetBackdropColor(self.r, self.g, self.b, self.a)
+				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
+		end)
+		if frame.icon then
+			frame.icon:SetAllPoints(frame)
+			frame:SetScript("OnShow", function(self)
+					self.icon:SetVertexColor(1, 1, 1, 1)
+			end)
+			frame:SetScript("OnMouseDown", function(self)
+					self.icon:SetVertexColor(1, 0, 0, 0.5)
+					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
+			end)
+			frame:SetScript("OnMouseUp", function(self)
+					self.icon:SetVertexColor(classR, classG, classB, 1)
+					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
+			end)
+		end
+	end
+end
 ----------------------------------------------------------------
 -- Общие функции
 ----------------------------------------------------------------
@@ -23,7 +63,7 @@ local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2
 local function CreateBaseDropDown(frame, hex, providerfunc)
 	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 	DropDown:SetSize(LINE_WIDTH_LEFT, E.GLOBAL_LINE_HEIGHT)
-	E.func_SetBackdropStyle(DropDown)
+	func_SetBackdropStyle(DropDown)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
 	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
 	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)

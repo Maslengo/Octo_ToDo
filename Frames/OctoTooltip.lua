@@ -5,11 +5,6 @@ local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemp
 OctoTooltip:Hide()
 ----------------------------------------------------------------
 local OctoTooltip_Background = CreateFrame("FRAME", nil, OctoTooltip, "BackdropTemplate")
-OctoTooltip_Background:SetAllPoints()
-OctoTooltip_Background:SetFrameLevel(OctoTooltip:GetFrameLevel() - 1) -- Ниже основного фрейма
-OctoTooltip_Background:SetBackdrop(E.menuBackdrop)
-OctoTooltip_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-OctoTooltip_Background:SetBackdropBorderColor(0, 0, 0, 1)
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1 -- Цвет границы (черный)
 local INDENT_TEXT = 4
 local INDENT_SCROLL = 20
@@ -187,6 +182,14 @@ local function TooltipOnShow()
 	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "OnShow")
 end
 function EventFrame:Create_OctoTooltip()
+	----------------------------------------------------------------
+	OctoTooltip_Background:SetAllPoints()
+	OctoTooltip_Background:SetFrameLevel(OctoTooltip:GetFrameLevel() - 1) -- Ниже основного фрейма
+	OctoTooltip_Background:SetBackdrop(E.menuBackdrop)
+	OctoTooltip_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA)
+	OctoTooltip_Background:SetBackdropBorderColor(0, 0, 0, 1)
+	----------------------------------------------------------------
+
 	OctoTooltip:SetPropagateMouseClicks(true) -- БЫЛО ФОЛС
 	OctoTooltip:SetPropagateMouseMotion(false)
 	OctoTooltip:SetHitRectInsets(-1, -1, -1, -1) -- Коррекция области нажатия (-4 увеличение)

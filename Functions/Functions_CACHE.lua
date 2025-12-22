@@ -46,7 +46,7 @@ local function func_itemName_CACHE(id, forcedQuality)
 		local result = colorHex..name.."|r"
 		Cache[id][E.curLocaleLang] = result
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..ITEMS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..ITEMS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -84,7 +84,7 @@ local function func_currencyName_CACHE(id, forcedQuality)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = colorHex..info.name.."|r"
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..CURRENCY.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..CURRENCY.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -122,7 +122,7 @@ local function func_npcName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME.."NPC".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME.."NPC".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -151,7 +151,7 @@ local function func_questName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..QUESTS_LABEL.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..QUESTS_LABEL.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -208,7 +208,7 @@ local function func_reputationName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..REPUTATION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..REPUTATION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	elseif E.OctoTable_Reputations_DB[id] then
 		if E.OctoTable_Reputations_DB[id][E.curLocaleLang] ~= "NONE" then
@@ -263,7 +263,7 @@ local function func_spellName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..SPELLS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..SPELLS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -289,7 +289,7 @@ local function func_achievementName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..LOOT_JOURNAL_LEGENDARIES_SOURCE_ACHIEVEMENT.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -315,7 +315,7 @@ local function func_mountName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..MOUNTS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..MOUNTS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -353,7 +353,7 @@ local function func_mapName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME.."MAPS".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME.."MAPS".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
@@ -434,7 +434,7 @@ local function func_EventName_CACHE(id)
 	Cache[id] = Cache[id] or {}
 	Cache[id][E.curLocaleLang] = name
 	if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-		print (E.COLOR_LIME.."MAPS".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+		E.func_PrintMessage(E.COLOR_LIME.."MAPS".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return output
@@ -458,7 +458,7 @@ local function func_ProfessionName_CACHE(id)
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			print (E.COLOR_LIME..PROFESSIONS_TRACKER_HEADER_PROFESSION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+			E.func_PrintMessage(E.COLOR_LIME..PROFESSIONS_TRACKER_HEADER_PROFESSION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
 		end
 	end
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA

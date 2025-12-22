@@ -357,31 +357,18 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
-function E.func_TextCenter_Items(CharInfo, itemID, showIcon)
+function E.func_TextCenter_Items(CharInfo, itemID)
 	if not itemID then return "" end
-	showIcon = showIcon or false
 	local result = ""
 	local cm = CharInfo.MASLENGO
-	if type(itemID) == "number" then
-		if cm.Items.Bags[itemID] then
-			result = result .. cm.Items.Bags[itemID]
-		end
-		if cm.Items.Bank[itemID] then
-			result = result .. E.COLOR_GRAY.."+"..cm.Items.Bank[itemID].."|r"
-		end
-	elseif type(itemID) == "table" then
-		for _, v in ipairs(itemID) do
-			if cm.Items.Bags[itemID] then
-				result = result .. cm.Items.Bags[itemID]
-			end
-			if cm.Items.Bank[itemID] then
-				result = result .. E.COLOR_GRAY.."+"..cm.Items.Bank[itemID].."|r"
-			end
-		end
+	local Bags = cm.Items.Bags[itemID] or 0
+	local Bank = cm.Items.Bank[itemID] or 0
+	if Bags > 0 then
+		result = result .. E.func_CompactFormatNumber(Bags)
 	end
-	-- if showIcon and result ~= "" then
-	-- 	result = " +"..result..E.func_texturefromIcon(E.func_GetItemIcon(itemID))
-	-- end
+	if Bank > 0 then
+		result = result .. E.COLOR_GRAY.."+"..E.func_CompactFormatNumber(Bank).."|r"
+	end
 	return result
 end
 function E.func_TextCenter_Currency(CharInfo, currencyID, itemID)

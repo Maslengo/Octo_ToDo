@@ -1,5 +1,33 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
+-- /run opde(Enum.BagIndex)
+-- [1] = {
+----------------------------------------------------------------
+--     ["Characterbanktab"] = -2,
+--     ["CharacterBankTab_1"] = 6,
+--     ["CharacterBankTab_6"] = 11,
+--     ["CharacterBankTab_2"] = 7,
+--     ["CharacterBankTab_3"] = 8,
+--     ["CharacterBankTab_5"] = 10,
+--     ["CharacterBankTab_4"] = 9,
+----------------------------------------------------------------
+--     ["Accountbanktab"] = -3,
+--     ["AccountBankTab_1"] = 12,
+--     ["AccountBankTab_2"] = 13,
+--     ["AccountBankTab_3"] = 14,
+--     ["AccountBankTab_4"] = 15,
+--     ["AccountBankTab_5"] = 16,
+----------------------------------------------------------------
+--     ["Keyring"] = -1,
+--     ["Backpack"] = 0,
+--     ["Bag_1"] = 1,
+--     ["Bag_2"] = 2,
+--     ["Bag_3"] = 3,
+--     ["Bag_4"] = 4,
+--     ["ReagentBag"] = 5,
+----------------------------------------------------------------
+-- },
+----------------------------------------------------------------
 E.ItemInfoCache_BAGS = E.ItemInfoCache_BAGS or {}
 local function Collect_Items_BAGS()
 	local player = Octo_ToDo_DB_Levels[E.curGUID]
@@ -11,16 +39,26 @@ local function Collect_Items_BAGS()
 	local Possible_Anima, Possible_CatalogedResearch = 0, 0
 	local keystoneFound = false
 	local ItemCounts_BAGS = {}
-	for bag = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		local numSlots = C_Container.GetContainerNumSlots(bag)
+	local PlayerBags = {
+		Enum.BagIndex.Keyring, -- -1, (no need in retail?)
+		Enum.BagIndex.Backpack, -- 0,
+		Enum.BagIndex.Bag_1, -- 1,
+		Enum.BagIndex.Bag_2, -- 2,
+		Enum.BagIndex.Bag_3, -- 3,
+		Enum.BagIndex.Bag_4, -- 4,
+		Enum.BagIndex.ReagentBag, -- 5,
+	}
+	for _, bagID in next,(PlayerBags) do
+	-- for bagID = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
+		local numSlots = C_Container.GetContainerNumSlots(bagID)
 		if numSlots > 0 then
 			totalSlots_BAGS = totalSlots_BAGS + numSlots
-			local free, bagType = C_Container.GetContainerNumFreeSlots(bag)
+			local free, bagType = C_Container.GetContainerNumFreeSlots(bagID)
 			if bagType == 0 then
 				usedSlots_BAGS = usedSlots_BAGS + (numSlots - free)
 			end
 			for slot = 1, numSlots do
-				local info = C_Container.GetContainerItemInfo(bag, slot)
+				local info = C_Container.GetContainerItemInfo(bagID, slot)
 				if info then
 					local itemID = info.itemID
 					local stack = info.stackCount or 1

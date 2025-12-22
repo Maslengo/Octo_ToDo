@@ -873,9 +873,9 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(62858, false)
+				return E.func_GetQuestName(62863, false)
 			end,
-			name_save = "Return Lost Souls",
+			name_save = "ReturnLostSouls",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,

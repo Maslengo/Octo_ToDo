@@ -35,7 +35,7 @@ local function func_Collect_All()
 		local funcInfo = allFunctions[index]
 		if funcInfo then
 			-- E.func_StartDebugTimer()
-				pcall(funcInfo.func)
+			pcall(funcInfo.func)
 			-- E.func_StopDebugTimer("["..index.."/"..total.."] "..funcInfo.name)
 		end
 		index = index + 1
@@ -54,8 +54,6 @@ local MyEventsTable = {
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BARBER_SHOP_APPEARANCE_APPLIED",
-	"BAG_UPDATE",
-	"BAG_UPDATE_DELAYED",
 	"COVENANT_CHOSEN",
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
@@ -64,10 +62,29 @@ local MyEventsTable = {
 	"WEEKLY_REWARDS_UPDATE",
 	"CHALLENGE_MODE_COMPLETED",
 	"CHALLENGE_MODE_MAPS_UPDATE",
-	"BANKFRAME_OPENED",
 	"ITEM_COUNT_CHANGED",
-	"BANK_TAB_SETTINGS_UPDATED",
-	"BANK_TABS_CHANGED",
+
+
+	-- При изменениях в банке:
+	"BAG_UPDATE",                                -- (для банковских сумок) – при изменении предметов
+	"BAG_UPDATE_DELAYED",
+	"BANKFRAME_OPENED",                            -- инициирует полное сканирование
+	"PLAYERBANKSLOTS_CHANGED",                    -- при изменении в основной банковской ячейке
+	-- "PLAYERBANKBAGSLOTS_CHANGED",                -- при изменении банковских сумок (CLASSIS)
+	"BANK_TAB_SETTINGS_UPDATED",                -- при изменении настроек вкладок
+	"BANK_TABS_CHANGED",                        -- при покупке/изменении вкладок
+
+	-- При крафте/изменении предметов:
+	"TRADE_SKILL_ITEM_CRAFTED_RESULT",            -- с задержкой 2 секунды
+	"ITEM_CHANGED",                                -- с задержкой 1 секунда
+
+	-- Для Reagent Bank:
+	-- "REAGENTBANK_UPDATE",
+	-- "PLAYERREAGENTBANKSLOTS_CHANGED",
+
+	-- Для Warband Bank (Account Bank):
+	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",    -- основное событие при изменении
+
 	-- "GARRISON_BUILDING_ACTIVATED",
 	-- "GARRISON_BUILDING_ERROR",
 	-- "GARRISON_BUILDING_LIST_UPDATE",
@@ -89,10 +106,8 @@ local MyEventsTable = {
 	-- "GARRISON_UPDATE",
 	-- "GARRISON_UPGRADEABLE_RESULT",
 	"HEARTHSTONE_BOUND",
-	"ITEM_CHANGED",
 	"MAIL_INBOX_UPDATE",
 	"MAIL_SHOW",
-	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
 	"PLAYER_DEAD",
 	"PLAYER_EQUIPMENT_CHANGED",
 	"PLAYER_FLAGS_CHANGED",
@@ -154,40 +169,6 @@ function EventFrame:QUEST_LOG_UPDATE()
 	E.Collect_Legion_Remix()
 	E.Collect_Quests()
 	E.func_RequestUIUpdate("QUEST_LOG_UPDATE")
-end
-function EventFrame:BAG_UPDATE()
-	-- E.Collect_Items_BAGS()
-	-- if BankFrame and BankFrame:IsShown() then
-	-- 	E.Collect_Items_BANK()
-	-- end
-	-- E.Collect_BFA_HeartOfAzeroth()
-	-- E.Collect_BFA_LegendaryCloak()
-	-- E.Collect_GreatVault()
-	-- E.func_RequestUIUpdate("BAG_UPDATE")
-end
-function EventFrame:BAG_UPDATE_DELAYED()
-	E.Collect_Items_BAGS()
-	if BankFrame and BankFrame:IsShown() then
-		E.Collect_Items_BANK()
-	end
-	E.Collect_BFA_HeartOfAzeroth()
-	E.Collect_BFA_LegendaryCloak()
-	-- E.Collect_GreatVault()
-	E.func_RequestUIUpdate("BAG_UPDATE_DELAYED")
-end
-function EventFrame:ITEM_CHANGED(...)
-	local arg1, arg2 = ...
-	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
-		E.Collect_CurrentKey_ITEM_CHANGED(arg2)
-		E.func_RequestUIUpdate("ITEM_CHANGED")
-	end
-end
-function EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
-	E.Collect_Items_BAGS()
-	if BankFrame and BankFrame:IsShown() then
-		E.Collect_Items_BANK()
-	end
-	E.func_RequestUIUpdate("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
 end
 function EventFrame:PLAYER_MONEY()
 	E.Collect_Money_AYE()
@@ -350,37 +331,79 @@ end
 -- local questID = ...
 -- E.func_GetQuestName(questID)
 -- end
+
+
+
+
+
+
+
+
+function EventFrame:BAG_UPDATE()
+	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
+	E.func_RequestUIUpdate("BAG_UPDATE")
+end
+function EventFrame:BAG_UPDATE_DELAYED()
+	E.Collect_Items_BAGS()
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
+	E.Collect_BFA_HeartOfAzeroth()
+	E.Collect_BFA_LegendaryCloak()
+	-- E.Collect_GreatVault()
+	E.func_RequestUIUpdate("BAG_UPDATE_DELAYED")
+end
 function EventFrame:BANKFRAME_OPENED()
 	E.Collect_Items_BAGS()
-	C_Timer.After(0, function()
-		if BankFrame and BankFrame:IsShown() then
-			E.Collect_Items_BANK()
-		end
-	end)
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
 	E.func_RequestUIUpdate("BANKFRAME_OPENED")
 end
-function EventFrame:BANK_TAB_SETTINGS_UPDATED()
+function EventFrame:PLAYERBANKSLOTS_CHANGED()
+	if not BankFrame or not BankFrame:IsShown() then return end
 	E.Collect_Items_BAGS()
-	C_Timer.After(0, function()
-		if BankFrame and BankFrame:IsShown() then
-			E.Collect_Items_BANK()
-		end
-	end)
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
+	E.func_RequestUIUpdate("PLAYERBANKSLOTS_CHANGED")
+end
+function EventFrame:BANK_TAB_SETTINGS_UPDATED()
+	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_BAGS()
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
 	E.func_RequestUIUpdate("BANK_TAB_SETTINGS_UPDATED")
 end
 function EventFrame:BANK_TABS_CHANGED()
+	if not BankFrame or not BankFrame:IsShown() then return end
 	E.Collect_Items_BAGS()
-	C_Timer.After(0, function()
-		if BankFrame and BankFrame:IsShown() then
-			E.Collect_Items_BANK()
-		end
-	end)
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
 	E.func_RequestUIUpdate("BANK_TABS_CHANGED")
+end
+function EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
+	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_BAGS()
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
+	E.func_RequestUIUpdate("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
+end
+
+
+function EventFrame:ITEM_CHANGED(...)
+	E.Collect_Items_BAGS()
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
+
+	local arg1, arg2 = ...
+	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
+		E.Collect_CurrentKey_ITEM_CHANGED(arg2)
+		E.func_RequestUIUpdate("ITEM_CHANGED")
+	end
 end
 function EventFrame:ITEM_COUNT_CHANGED()
 	E.Collect_Items_BAGS()
-	if BankFrame and BankFrame:IsShown() then
-		E.Collect_Items_BANK()
-	end
+	E.Collect_Items_BANK()
+	E.Collect_Items_AccountBank()
 	E.func_RequestUIUpdate("ITEM_COUNT_CHANGED")
 end

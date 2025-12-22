@@ -124,10 +124,10 @@ function EventFrame:func_RemoveDuplicateCharacters()
 				pd.Name == currentName and
 				pd.curServer == currentRealm then
 					if GUID ~= currentGUID then
-						print(L["Removing duplicate: "], pd.Name.."-"..pd.curServer, "GUID:", GUID)
+						E.func_PrintMessage(L["Removing duplicate: "], pd.Name.."-"..pd.curServer, "GUID:", GUID)
 						Octo_ToDo_DB_Levels[GUID] = nil
 					else
-						print(L["Keeping current: "], pd.Name.."-"..pd.curServer, "GUID:", GUID)
+						E.func_PrintMessage(L["Keeping current: "], pd.Name.."-"..pd.curServer, "GUID:", GUID)
 					end
 				end
 			end
@@ -147,7 +147,7 @@ function EventFrame:func_DatabaseClear()
 				E.func_RemoveZeroValues(CharInfo.MASLENGO.CurrencyID_Total, "anynumber")
 			end
 			if string.find(CharInfo.PlayerData.Name, "^WTF:") then
-				print ("Remove: ", CharInfo.PlayerData.Name)
+				E.func_PrintMessage("Remove: ", CharInfo.PlayerData.Name)
 				Octo_ToDo_DB_Levels[GUID] = nil
 			end
 		end
@@ -272,7 +272,7 @@ function EventFrame:Octo_ToDo_DB_Levels()
 		cm.Items = cm.Items or {}
 		cm.Items.Bags = cm.Items.Bags or {}
 		cm.Items.Bank = cm.Items.Bank or {}
-		cm.Items.AccountBank = cm.Items.AccountBank or {}
+		-- cm.Items.AccountBank = cm.Items.AccountBank or {}
 		pd.CharDBVersion = pd.CharDBVersion or 1
 		-- Заполняем стандартные значения
 		for k, v in next, (defaults) do
@@ -314,6 +314,12 @@ function EventFrame:Octo_ToDo_DB_Levels()
 			-- cm.GreatVault[i].rewards = cm.GreatVault[i].rewards or {}
 		end
 	end
+end
+----------------------------------------------------------------
+function EventFrame:Octo_ToDo_DB_AccountData()
+	Octo_ToDo_DB_AccountData = Octo_ToDo_DB_AccountData or {}
+	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] or {}
+	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank or {}
 end
 ----------------------------------------------------------------
 function EventFrame:Octo_ToDo_DB_Vars()
@@ -430,16 +436,16 @@ function EventFrame:func_Daily_Reset()
 			-- for dungeonID, v in next, (cm.LFGInstance) do
 			-- 	if v then
 			-- 		if cm.LFGInstance[dungeonID].donetoday then
-						-- print (cm.LFGInstance[dungeonID].donetoday)
+						-- E.func_PrintMessage(cm.LFGInstance[dungeonID].donetoday)
 			-- 		end
 			-- 	end
 			-- end
 			-- for worldBossID, v in next, (cm.SavedWorldBoss) do
 			-- 	if v then
-					-- print (cm.SavedWorldBoss.reset)
+					-- E.func_PrintMessage(cm.SavedWorldBoss.reset)
 			-- 	end
 			-- end
-			-- print (pd.Name)
+			-- E.func_PrintMessage(pd.Name)
 			-- Очищаем данные LFG
 			wipe(cm.LFGInstance)
 			for _, v in ipairs (E.OctoTable_LFGDungeons) do
@@ -530,6 +536,7 @@ function EventFrame:func_CheckAll()
 	-- Инициализация всех компонентов
 	EventFrame:Octo_Cache_DB() -- Кэш данных
 	EventFrame:Octo_ToDo_DB_Levels() -- Данные персонажей
+	EventFrame:Octo_ToDo_DB_AccountData() -- Данные аккаунта
 	EventFrame:Octo_ToDo_DB_Vars() -- Настройки
 	E.func_setOldChanges() -- Применяем старые изменения
 	EventFrame:func_Daily_Reset() -- Дейли сброс
@@ -576,11 +583,21 @@ function EventFrame:func_UpdateGlobals()
 		if Octo_ToDo_DB_Vars.Config_DebugID_ALL ~= nil then
 			E.Config_DebugID_ALL = Octo_ToDo_DB_Vars.Config_DebugID_ALL
 		end
-		E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
-		E.REPUTATION_ALPHA = Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
-		E.CHARACTER_ALPHA = Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
-		E.MAINBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
-		E.MOVINGBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
+		if Octo_ToDo_DB_Vars.Config_SPAM_TIME then
+			E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
+		end
+		if Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA then
+			E.REPUTATION_ALPHA = Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
+		end
+		if Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA then
+			E.CHARACTER_ALPHA = Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
+		end
+		if Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA then
+			E.MAINBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
+		end
+		if Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving then
+			E.MOVINGBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
+		end
 	end
 	E.func_UpdateCurrentProfile()
 end
@@ -605,7 +622,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	EventFrame:func_ConcatSimpleTablesAtStart()
 	EventFrame:Octo_profileKeys()
 	----------------------------------------------------------------
-	EventFrame:func_UpdateGlobals()
+	EventFrame:func_UpdateGlobals() -- hzzachem
 	----------------------------------------------------------------
 end
 function EventFrame:VARIABLES_LOADED()
@@ -638,7 +655,7 @@ local function Reset_JournalInstance()
 				for difficultyID, w in next, (v) do
 					if w and w.instanceReset and w.instanceReset < ServerTime then
 						cm.journalInstance[instanceID][difficultyID] = nil
-						-- print (w.instanceName, "NEEDRESET")
+						-- E.func_PrintMessage(w.instanceName, "NEEDRESET")
 					end
 				end
 			end
@@ -663,7 +680,7 @@ function EventFrame:PLAYER_ENTERING_WORLD()
 	local function setActualInstances()
 		local numTiers = EJ_GetNumTiers()
 		if numTiers < 1 then
-			-- print (numTiers, "МЕНЬШЕ НУЛЯ")
+			-- E.func_PrintMessage(numTiers, "МЕНЬШЕ НУЛЯ")
 			return
 		end
 		local backupTier = EJ_GetCurrentTier()

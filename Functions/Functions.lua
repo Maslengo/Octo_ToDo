@@ -469,43 +469,6 @@ function E.func_Gradient(text, firstColor, secondColor)
 		return text
 	end
 end
-function E.func_SetBackdropStyle(frame, hexcolor, BackdropAlpha, edgeAlpha)
-	edgeAlpha = edgeAlpha or 1
-	local bgCr, bgCg, bgCb = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB
-	local bgCa = BackdropAlpha or E.backgroundColorA
-	if hexcolor then
-		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
-	end
-	frame:SetBackdrop(E.menuBackdrop)
-	frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
-	frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-	frame:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-	if not frame.isInit then
-		frame.isInit = true
-		frame:HookScript("OnEnter", function(self)
-				self:SetBackdropColor(self.r, self.g, self.b, self.a)
-				self:SetBackdropBorderColor(classR, classG, classB, 1)
-		end)
-		frame:HookScript("OnLeave", function(self)
-				self:SetBackdropColor(self.r, self.g, self.b, self.a)
-				self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
-		end)
-		if frame.icon then
-			frame.icon:SetAllPoints(frame)
-			frame:SetScript("OnShow", function(self)
-					self.icon:SetVertexColor(1, 1, 1, 1)
-			end)
-			frame:SetScript("OnMouseDown", function(self)
-					self.icon:SetVertexColor(1, 0, 0, 0.5)
-					self:SetBackdropBorderColor(1, 0, 0, edgeAlpha)
-			end)
-			frame:SetScript("OnMouseUp", function(self)
-					self.icon:SetVertexColor(classR, classG, classB, 1)
-					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
-			end)
-		end
-	end
-end
 function E.func_CountVisibleCharacters()
 	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
@@ -748,7 +711,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 		for q, w in ipairs(smth) do
 			for k, value in pairs(tbl) do
 				if value == w then -- Точное совпадение значения
-					print(k, E.COLOR_YELLOW..tostring(value).."|r")
+					E.func_PrintMessage(k, E.COLOR_YELLOW..tostring(value).."|r")
 					tbl[k] = nil -- Удаляем значение
 				elseif type(value) == "table" then
 					E.func_RemoveZeroValues(value, w) -- Рекурсия для вложенных таблиц
@@ -760,7 +723,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 	elseif type(smth) == "number" then
 		for k, value in pairs(tbl) do
 			if value == smth then
-				print(k, E.COLOR_PURPLE..tostring(value).."|r")
+				E.func_PrintMessage(k, E.COLOR_PURPLE..tostring(value).."|r")
 				tbl[k] = nil
 			elseif type(value) == "table" then
 				E.func_RemoveZeroValues(value, smth) -- Рекурсия
@@ -772,7 +735,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 		for k, value in pairs(tbl) do
 			-- Специальный случай для любых числовых значений
 			if value and smth == "anynumber" and type(value) == "number" then
-				print(k, E.COLOR_WOW_TOKEN..tostring(value).."|r")
+				E.func_PrintMessage(k, E.COLOR_WOW_TOKEN..tostring(value).."|r")
 				tbl[k] = nil
 			else
 				E.func_RemoveZeroValues(value, smth)
@@ -780,7 +743,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 			-- Поиск по строковому шаблону
 			if value and type(value) == "string" then
 				if string.find(value, smth) then
-					print(k, E.COLOR_MAGENTA..tostring(value).."|r")
+					E.func_PrintMessage(k, E.COLOR_MAGENTA..tostring(value).."|r")
 					tbl[k] = nil
 				end
 			else

@@ -799,13 +799,13 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	-- 5. Итоги сверху
 	--------------------------------------------------------
 	-- if #characterData > 1 then
-	-- 	local heade1 = {
-	-- 		"имя",
-	-- 		"",
-	-- 		"итемнейм",
-	-- 		"квест",
-	-- 	}
-	-- 	table.insert(tooltip, 1, heade1)
+	--     local heade1 = {
+	--         "имя",
+	--         "",
+	--         "итемнейм",
+	--         "квест",
+	--     }
+	--     table.insert(tooltip, 1, heade1)
 	-- end
 	--------------------------------------------------------
 	return tooltip
@@ -822,6 +822,7 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 	local total = 0
 	local total_BAGS = 0
 	local total_BANK = 0
+	local total_AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank[id] or 0
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
@@ -829,6 +830,7 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 			local cm = CharInfo.MASLENGO
 			local itemCount_Bags = cm.Items.Bags[id] or 0
 			local itemCount_Bank = cm.Items.Bank[id] or 0
+
 			-- Фильтр пустоты
 			local hasData = itemCount_Bags > 0 or itemCount_Bank > 0
 			if hasData then
@@ -852,6 +854,7 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 			end
 		end
 	end
+	-- total = total + total_AccountBank
 	--------------------------------------------------------
 	-- 2. Сортировка
 	--------------------------------------------------------
@@ -882,6 +885,23 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 		--------------------------------------------------------
 		-- 5. Итоги сверху
 		--------------------------------------------------------
+
+
+
+
+
+		-- if total_AccountBank > 0 then
+		-- 	local header = {
+		-- 		"",
+		-- 		{ACCOUNT_BANK_PANEL_TITLE..": "..total_AccountBank, "RIGHT"},
+		-- 		"",
+		-- 	}
+		-- 	table.insert(tooltip, 1, header)
+		-- end
+
+
+
+
 		if #characterData == 1 and total_BANK ~= 0 then
 			local header = {
 				"",

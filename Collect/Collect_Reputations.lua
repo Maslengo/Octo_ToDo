@@ -93,7 +93,7 @@ local function Collect_Reputations()
 		end
 		-- ДЕБАГ
 		-- if reputationID == 47 then
-		--     print(
+		--     E.func_PrintMessage(
 		--         reputationID,
 		--         "friend:", isFriend,
 		--         "major:", isMajor,

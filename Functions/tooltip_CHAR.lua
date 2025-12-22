@@ -20,8 +20,8 @@ function E.func_Tooltip_Chars(CharInfo)
 	local curLocation                  = pd.curLocation or ""
 	local usedSlots_BAGS               = pd.usedSlots_BAGS or 0
 	local totalSlots_BAGS              = pd.totalSlots_BAGS or 0
-	local usedSlots_BANK               = pd.usedSlots_BANK or 0
-	local totalSlots_BANK              = pd.totalSlots_BANK or 0
+	local usedSlots_BANK               = pd.usedSlots_BANK
+	local totalSlots_BANK              = pd.totalSlots_BANK
 	local numQuests                    = pd.numQuests or 0
 	local maxNumQuestsCanAccept        = pd.maxNumQuestsCanAccept or 0
 	local realTotalTime                = pd.realTotalTime or 0
@@ -73,7 +73,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
 		local icon = E.func_texturefromIcon(133634)
 		local textLeft = icon..BAG_NAME_BACKPACK..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
-		if totalSlots_BANK > 0 then
+		if usedSlots_BANK and totalSlots_BANK then
 			textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
 		end
 		tooltip_Chars[#tooltip_Chars + 1] = { textLeft, "" }
