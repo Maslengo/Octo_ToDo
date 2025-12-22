@@ -4,6 +4,7 @@ local LibStub = LibStub
 local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibIndentation = LibStub("LibIndentation-1.0")
+local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
 ----------------------------------------------------------------
 -- Настраиваем стиль выпадающего меню
 ----------------------------------------------------------------
@@ -19,12 +20,13 @@ function E.func_CreateMenuStyle()
 	end)
 end
 ----------------------------------------------------------------
-local function func_SetBackdropStyle(frame, hexcolor, BackdropAlpha, edgeAlpha)
+function E.func_SetBackdropStyle(frame, hexcolor, BackdropAlpha, edgeAlpha)
+	if not frame then return end
 	edgeAlpha = edgeAlpha or 1
 	local bgCr, bgCg, bgCb = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB
 	local bgCa = BackdropAlpha or E.MAINBACKGROUND_ALPHA
 	if hexcolor then
-		bgCr, bgCg, bgCb = self.func_hex2rgbNUMBER(hexcolor)
+		bgCr, bgCg, bgCb = E.func_Hex2RGBFloat(hexcolor)
 	end
 	frame:SetBackdrop(E.menuBackdrop)
 	frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
@@ -63,7 +65,7 @@ local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2
 local function CreateBaseDropDown(frame, hex, providerfunc)
 	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
 	DropDown:SetSize(LINE_WIDTH_LEFT, E.GLOBAL_LINE_HEIGHT)
-	func_SetBackdropStyle(DropDown)
+	E.func_SetBackdropStyle(DropDown)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
 	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
 	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)

@@ -442,39 +442,72 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 	--------------------------------------------------------
 	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 	--------------------------------------------------------
-	-- 4. Вывод персонажей
+	-- 4. Итоги сверху
+	--------------------------------------------------------
+	if #characterData > 0 then
+
+
+        if C_WowTokenPublic and C_WowTokenPublic.GetCurrentMarketPrice then
+            C_WowTokenPublic.UpdateMarketPrice()
+            local price = C_WowTokenPublic.GetCurrentMarketPrice()
+            if price and price > 0 then
+                table.insert(tooltip, {
+                    "",
+                    E.func_GetItemName(122284)..": "..E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
+                })
+            end
+        end
+
+        if C_Bank and C_Bank.FetchDepositedMoney then
+            local accountMoney = C_Bank.FetchDepositedMoney(Enum.BankType.Account)
+            if accountMoney and accountMoney > 0 then
+                table.insert(tooltip, {
+                   	"",
+                   	ACCOUNT_BANK_PANEL_TITLE..": "..E.func_FormatMoney(accountMoney)
+                })
+            end
+        end
+
+        table.insert(tooltip, {
+            "",
+            TOTAL..": "..E.func_FormatMoney(total)
+        })
+
+		-- C_WowTokenPublic.UpdateMarketPrice()
+		-- if C_WowTokenPublic and C_WowTokenPublic.GetCurrentMarketPrice then
+		-- 	local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
+		-- 	local header1 = {
+		-- 		"",
+		-- 		E.func_GetItemName(122284)..": "..E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
+		-- 	}
+		-- 	table.insert(tooltip, header1)
+		-- end
+		-- if C_Bank and C_Bank.FetchDepositedMoney then
+		-- 	local accountMoney = C_Bank.FetchDepositedMoney(Enum.BankType.Account)
+		-- 	if accountMoney and accountMoney > 0 then
+		-- 		local header2 = {
+		-- 			"",
+		-- 			ACCOUNT_BANK_PANEL_TITLE..": "..E.func_FormatMoney(accountMoney),
+		-- 		}
+		-- 		table.insert(tooltip, header2)
+		-- 	end
+		-- end
+		-- local header3 = {
+		-- 	"",
+		-- 	TOTAL..": "..E.func_FormatMoney(total),
+		-- }
+		-- table.insert(tooltip, header3)
+	end
+	--------------------------------------------------------
+	-- 5. Вывод персонажей
 	--------------------------------------------------------
 	for _, d in ipairs(characterData) do
 		local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
 		d.row[2] = color..d.row2Text.."|r"
 		table.insert(tooltip, d.row)
 	end
-	--------------------------------------------------------
-	-- 5. Итоги сверху
-	--------------------------------------------------------
-	if #characterData > 0 then
-		C_WowTokenPublic.UpdateMarketPrice()
-		if C_WowTokenPublic.GetCurrentMarketPrice() then
-			local price, hz = C_WowTokenPublic.GetCurrentMarketPrice()
-			local header1 = {
-				"",
-				E.func_GetItemName(122284)..": "..E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
-			}
-			table.insert(tooltip, 1, header1)
-		end
-		if C_Bank.FetchDepositedMoney(Enum.BankType.Account) then
-			local heade2 = {
-				"",
-				ACCOUNT_BANK_PANEL_TITLE..": "..E.func_FormatMoney(C_Bank.FetchDepositedMoney(Enum.BankType.Account)),
-			}
-			table.insert(tooltip, 2, heade2)
-		end
-		local heade3 = {
-			"",
-			TOTAL..": "..E.func_FormatMoney(total),
-		}
-		table.insert(tooltip, 3, heade3)
-	end
+
+
 	--------------------------------------------------------
 	return tooltip
 end

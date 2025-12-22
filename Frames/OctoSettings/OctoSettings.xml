@@ -1,0 +1,4 @@
+<Ui>
+	<Script file="Frames\OctoSettings\1st1.lua"/>
+	<Script file="Frames\OctoSettings\OctoSettings.lua"/>
+</Ui>
