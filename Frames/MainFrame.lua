@@ -276,21 +276,6 @@ local function func_Setup_Items(frame, id)
 	frame.icon1texture:SetTexture(icon1)
 	frame.icon1frame:Show()
 end
-local function func_Setup_Currencies(frame, id)
-	local icon1 = E.func_GetCurrencyIcon(id)
-	frame.icon1texture:SetTexture(icon1)
-	frame.icon1frame:Show()
-	if C_CurrencyInfo.IsAccountWideCurrency(id) then
-		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
-		frame.icon3frame:Show()
-	elseif C_CurrencyInfo.IsAccountTransferableCurrency(id) then
-		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_TRANSFERABLE, false)
-		frame.icon3frame:Show()
-	else
-		frame.icon3texture:SetTexture(spacerEMPTY)            -- ОБЯЗАТЕЛЬНО!
-		frame.icon3frame:Hide()                                -- ОБЯЗАТЕЛЬНО!
-	end
-end
 local function func_Setup_UniversalQuests(frame, id)
 	local IconLeft = nil
 	-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
@@ -686,11 +671,9 @@ function EventFrame:func_CreateMainFrame()
 	--     Octo_MainFrame_ToDo:StopMovingOrSizing()
 	-- end)
 	----------------------------------------------------------------
-	-- Обработчик клика правой кнопкой для скрытия фрейма
-	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp")
+	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp") -- Обработчик клика правой кнопкой для скрытия фрейма
 	Octo_MainFrame_ToDo:SetScript("OnClick", Octo_MainFrame_ToDo.Hide)
-	-- Настройка заголовка левой колонки
-	WeeklyResetFrameLeft:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT")
+	WeeklyResetFrameLeft:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT") -- Настройка заголовка левой колонки
 	WeeklyResetFrameLeft:SetSize(MIN_COLUMN_WIDTH_LEFT*2, E.GLOBAL_LINE_HEIGHT)
 	WeeklyResetFrameLeft.Text1 = WeeklyResetFrameLeft:CreateFontString()
 	WeeklyResetFrameLeft.Text1:SetFontObject(OctoFont11)
@@ -1245,7 +1228,7 @@ function EventFrame:PLAYER_LOGIN()
 
 	E.func_CreateMenuStyle()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
-	E.func_CreateMinimapButton(GlobalAddonName, "ToDo", Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, E.func_main_frame_toggle, "Octo_MainFrame_ToDo")
+	E.func_CreateMinimapButton(GlobalAddonName, Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, E.func_main_frame_toggle)
 end
 function EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame_ToDo:Hide()

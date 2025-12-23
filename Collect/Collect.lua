@@ -26,6 +26,7 @@ local function func_Collect_All()
 		{func = E.Collect_Professions, name = "Collect_Professions",},
 		{func = E.Collect_Reputations, name = "Collect_Reputations",},
 		{func = E.Collect_WarMode, name = "Collect_WarMode",},
+		{func = E.Collect_Statistics, name = "Collect_Statistics",},
 		{func = E.Collect_Quests, name = "Collect_Quests",},
 	}
 	local total = #allFunctions
@@ -390,6 +391,10 @@ function EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 end
 
 
+function EventFrame:TRADE_SKILL_ITEM_CRAFTED_RESULT()
+	E.Collect_Items_BAGS()
+	E.func_RequestUIUpdate("TRADE_SKILL_ITEM_CRAFTED_RESULT")
+end
 function EventFrame:ITEM_CHANGED(...)
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()

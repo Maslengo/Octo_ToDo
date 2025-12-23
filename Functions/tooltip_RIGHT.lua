@@ -239,12 +239,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			-- local icon2texture = E.func_GetReputationIcon(id) and E.func_texturefromIcon(E.func_GetReputationIcon(id)) or ""
 
-			local factionIcon = E.func_GetReputationSideIcon(id)
-			if factionIcon then
-				firstTEXT = firstTEXT..E.func_texturefromIcon(factionIcon)
-			end
+			-- local factionIcon = E.func_GetReputationSideIcon(id)
+			-- if factionIcon then
+			-- 	firstTEXT = firstTEXT..E.func_texturefromIcon(factionIcon)
+			-- end
 
-			local AdditionalIcon = E.func_GetReputationIcon(id) -- reputationData.icon1 ICON_NIGHTFAE etc
+			local AdditionalIcon = E.func_GetReputationIcon(id) -- reputationData.icon1 ICON_NIGHTFAE etc factionIcon!!!!!!!!!!!
 			if AdditionalIcon then
 				firstTEXT = firstTEXT..E.func_texturefromIcon(AdditionalIcon)
 			end

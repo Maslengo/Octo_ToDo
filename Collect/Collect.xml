@@ -29,5 +29,6 @@
 	<Script file="Collect\Collect_Professions.lua"/>
 	<Script file="Collect\Collect_Quests.lua"/>
 	<Script file="Collect\Collect_Reputations.lua"/>
+	<Script file="Collect\Collect_Statistics.lua"/>
 	<Script file="Collect\Collect_WarMode.lua"/>
 </Ui>

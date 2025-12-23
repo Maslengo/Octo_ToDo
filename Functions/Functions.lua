@@ -389,10 +389,13 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_CreateMinimapButton(AddonName, nameForIcon, Saved_Variables, frame, func, frameString)
+function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, frameString)
+	local iconName = AddonName:gsub("^Octo_", "")
+	local qwe = E.func_GetAddOnMetadata(AddonName, "Title")
+	local zxc = E.func_GetAddOnMetadata(AddonName, "Interface")
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
-			icon = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\"..nameForIcon,
+			icon = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\IconTexture\\"..iconName,
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
