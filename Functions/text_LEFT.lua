@@ -144,6 +144,12 @@ function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 	elseif id == "CurrentKey" then
 		TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
 		IconLeft = 4352494
+	elseif id == "HeartofAzeroth" then
+		TextLeft = E.func_GetItemName(158075)
+		IconLeft = E.func_GetItemIcon(158075)
+	elseif id == "Ashjrakamas" then
+		TextLeft = E.func_GetItemName(169223)
+		IconLeft = E.func_GetItemIcon(169223)
 	end
 	----------------------------------------------------------------
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey

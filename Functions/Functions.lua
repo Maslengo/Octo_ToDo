@@ -1171,7 +1171,7 @@ local CompactSuffixes = {
 	esMX = { "", " mil", " M", " mil M", " B" },
 	ptBR = { "", " mil", " mi", " bi", " tri" },
 	itIT = { "", " mila", " mln", " mld", " tln" },
-	zhCN = { "", "万", "亿", "万亿" }, -- Упрощённый китайский
+	zhCN = { "", "万", "亿", "兆" }, -- Упрощённый китайский
 	zhTW = { "", "萬", "億", "兆" }, -- Традиционный китайский
 	koKR = { "", "만", "억", "조" }, -- Корейский
 }
@@ -1191,36 +1191,65 @@ local function FormatWithSeparators(num)
 end
 function E.func_CompactFormatNumber(num)
 	num = num or 0
-	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 5 then
-		return AbbreviateLargeNumbers(num)
+	local locale = "enUS"
+	local suffixes = CompactSuffixes["enUS"]
+	local mode = Octo_ToDo_DB_Vars.Config_numberFormatMode or 1
+	local STEP_WEST = 1000
+	local STEP_ASIA = 10000
+	local DECIMALS = 1
+	local step = STEP_WEST
+	----------------------------------------------------------------
+	if mode == 1 then
+		suffixes = CompactSuffixes["enUS"]
+	elseif mode == 2 then
+		locale = E.curLocaleLang
+		suffixes = CompactSuffixes[locale] or CompactSuffixes["enUS"]
+		step = AsianLocales[locale] and STEP_ASIA or STEP_WEST
+	elseif mode == 3 then -- ПОЛНЫЙ С РАЗДЕЛИТЕЛЯМИ
+		return FormatWithSeparators(math.floor(num + 0.5))
+	elseif mode == 4 then -- ПОЛНЫЙ
+		return (math.floor(num + 0.5))
+	elseif mode == 5 then -- BLIZZ LIKE
+		if AbbreviateLargeNumbers then
+			return AbbreviateLargeNumbers(math.floor(num + 0.5))
+		else
+			return tostring(math.floor(num + 0.5))
+		end
+	elseif mode == 6 then -- Short & Clean
+		local i = 1
+		local sign = num < 0 and -1 or 1
+		num = math.abs(num)
+		while num >= step and i < #suffixes do
+			num = num / step
+			i = i + 1
+		end
+		local rounded = math.floor(num + 0.5) * sign
+		return tostring(rounded) .. suffixes[i]
+	end
+	----------------------------------------------------------------
+	local i = 1
+	local sign = num < 0 and -1 or 1
+	num = math.abs(num)
+
+	if not suffixes then
+		return tostring(math.floor(num * sign + 0.5))
 	end
 
-	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 4 then
-		return num
-	end
-	-- Полный формат с разделителями
-	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 3 then
-		return FormatWithSeparators(math.floor(num + 0.5))
-	end
-	local locale
-	local suffixes
-	local step
-	if Octo_ToDo_DB_Vars.Config_numberFormatMode == 1 then
-		locale = "enUS"
-		suffixes = CompactSuffixes["enUS"]
-		step = 1000
-	else -- локальный
-		locale = E.curLocaleLang or "enUS"
-		suffixes = CompactSuffixes[locale] or CompactSuffixes["enUS"]
-		step = AsianLocales[locale] and 10000 or 1000
-	end
-	local i = 1
 	while num >= step and i < #suffixes do
 		num = num / step
 		i = i + 1
 	end
-	local s = string.format("%.1f", num):gsub("%.0$", "")
-	return s..suffixes[i]
+
+	local rounded = tonumber(string.format("%."..DECIMALS.."f", num))
+	if rounded >= step and i < #suffixes then
+		rounded = rounded / step
+		i = i + 1
+	end
+
+	rounded = rounded * sign
+	local s = tostring(rounded):gsub("%.0$", "")
+	return s .. suffixes[i]
+
 end
 ----------------------------------------------------------------
 function E.func_GetFactionDataByID(id)

@@ -4,6 +4,17 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale(E.MainAddonName, "ruRU") -- Russian localization
 if L then
+
+	L["Universal"] = "Универсальный"
+	L["Localized"] = "Локализованный"
+	L["With separators"] = "С разделителями"
+	L["Full"] = "Полный"
+	L["Blizzard"] = "Blizzard"
+	L["Clean"] = "Минималистичный"
+
+
+
+
 	L["Turned in:"] = "Сдано:"
 	L["Weekly Reset"] = "Еженедельный сброс"
 	L["Font settings"] = "Настройка шрифта"
@@ -64,10 +75,6 @@ if L then
 	L["Prying Eye Discovery"] = "Находка любопытных"
 	L["Undulating Foliage"] = "Колыхающаяся листва"
 	L["Time Rift"] = "Временной разлом"
-	L["Universal (k/M/B/T)"] = "Универсальный (k/M/B/T)"
-	L["Localized format"] = "Локальный формат"
-	L["Full with separators"] = "Полный с разделителями"
-	L["Full"] = "Полный"
 	L["Number Format"] = "Формат чисел"
 	L["Min. Level"] = "Мин. уровень"
 	L["Max. Level"] = "Макс. уровень"

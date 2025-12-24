@@ -112,6 +112,8 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 end
 -- function E.func_Otrisovka_Center_UniversalQuests(tbl, DESCRIPT)
 function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType, data)
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
 	----------------------------------------------------------------
 	if data.quests then
 		----------------------------------------------------------------
@@ -127,8 +129,8 @@ function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType
 				local forcedMaxQuest = data.forcedMaxQuest
 				-- Подсчет общего числа квестов
 				for _, questData in ipairs(data.quests) do
-					local faction = questData.faction
-					if not faction or faction == CharInfo.PlayerData.Faction then
+				local FactionOrClass = questData.FactionOrClass
+					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 						if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
 							totalQuest = totalQuest + 1
 						elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
@@ -244,6 +246,21 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	if id == "CurrentKey" then -- ПОФИКСИТЬ
 		if pd.CurrentKey then
 			TextCenter = pd.CurrentKey
+		end
+	end
+	if id == "HeartofAzeroth" then
+		if cm.Items.Bags[158075] or cm.Items.Bank[158075] then
+			TextCenter = pd.azeriteLVL and E.COLOR_GREEN..pd.azeriteLVL.."|r".."+"..E.COLOR_GRAY..pd.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
+		end
+
+	end
+	if id == "Ashjrakamas" then
+		if cm.Items.Bags[169223] or cm.Items.Bank[169223] then
+			if pd.cloak_lvl then
+				TextCenter = E.COLOR_CYAN..AZERITE_ESSENCE_RANK:format(pd.cloak_lvl).."|r"
+			else
+				TextCenter = E.COLOR_ORANGE.."in bank|r"
+			end
 		end
 	end
 	if id == "LegionRemixResearch" then

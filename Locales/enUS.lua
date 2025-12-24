@@ -3,6 +3,15 @@ local AL3 = LibStub("AceLocale-3.0")
 local debug = false
 local L = AL3:NewLocale(E.MainAddonName, "enUS", true, debug)
 if L then
+
+	L["Universal"] = true
+	L["Localized"] = true
+	L["With separators"] = true
+	L["Full"] = true
+	L["Blizzard"] = true
+	L["Clean"] = true
+
+
 	L["Turned in:"] = true
 	L["Weekly Reset"] = true
 	L["Font settings"] = true
@@ -63,10 +72,6 @@ if L then
 	L["Prying Eye Discovery"] = true
 	L["Undulating Foliage"] = true
 	L["Time Rift"] = true
-	L["Universal (k/M/B/T)"] = true
-	L["Localized format"] = true
-	L["Full with separators"] = true
-	L["Full"] = true
 	L["Number Format"] = true
 	L["Min. Level"] = true
 	L["Max. Level"] = true

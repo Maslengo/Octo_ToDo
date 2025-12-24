@@ -656,11 +656,17 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+		{id = "HeartofAzeroth", defS = true,}, -- https://www.wowhead.com/item=158075/heart-of-azeroth
+		{id = "Ashjrakamas", defS = true,}, -- https://www.wowhead.com/item=169223/ashjrakamas-shroud-of-resolve
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
+
+
+
+
 local function localfunc2()
 	local OctoTable_Otrisovka_TextCenter = {}
 	----------------------------------------------------------------

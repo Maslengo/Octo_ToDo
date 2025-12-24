@@ -162,6 +162,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			tooltip[#tooltip+1] = {"RIO Score:", pd.RIO_Score or 0}
 		end
 	end
+	-- if id == "HeartofAzeroth" then
+	-- 	tooltip[#tooltip+1] = {"HeartofAzeroth"}
+	-- end
+	-- if id == "Ashjrakamas" then
+	-- 	tooltip[#tooltip+1] = {"Ashjrakamas"}
+	-- end
 	if id == "LegionRemixResearch" then
 		for questID in next,(E.OctoTable_RemixInfinityResearch) do
 			if cm.ListOfQuests[questID] then

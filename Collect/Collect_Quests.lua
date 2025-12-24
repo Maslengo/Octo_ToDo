@@ -83,7 +83,6 @@ local function Collect_Quests_Universal()
 			if type(questData[1]) == "number" then
 				local questID = questData[1]
 				local FactionOrClass = questData.FactionOrClass
-				-- if not FactionOrClass or FactionOrClass == E.FACTION_CURRENT then
 				if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 					local status = E.func_GetQuestStatus(questID)
@@ -96,6 +95,7 @@ local function Collect_Quests_Universal()
 						questDataTable.TextCenter = status
 						hasSingleQuestOutput = true
 					end
+
 				end
 			end
 		end

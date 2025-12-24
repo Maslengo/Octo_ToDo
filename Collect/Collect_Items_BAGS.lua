@@ -68,9 +68,9 @@ local function Collect_Items_BAGS()
 						local link = info.hyperlink
 						if link then
 							local _, _, _, dungeonID, lvl = strsplit(":", link)
-							dungeonID = tonumber(dungeonID)
+							local dungID = tonumber(dungeonID)
 							collectPlayerData.CurrentKeyLevel = tonumber(lvl)
-							collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
+							collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungID)
 							keystoneFound = true
 						end
 					end

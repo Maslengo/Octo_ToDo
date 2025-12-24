@@ -318,11 +318,12 @@ function E.func_Octo_Options(savedVars)
 	}
 	-------------------------------------------------
 	local table_numberFormatMode = {
-		L["Universal (k/M/B/T)"],
-		L["Localized format"],
-		L["Full with separators"],
-		L["Full"],
-		"Blizzard",
+		L["Universal"], -- "Универсальный"
+		L["Localized"], -- "Локализованный"
+		L["With separators"], -- "С разделителями"
+		L["Full"], -- "Полный"
+		L["Blizzard"], -- "Blizzard"
+		L["Clean"], -- "Минималистичный"
 	}
 	for index, name in ipairs(table_numberFormatMode) do
 		Options.args.Config_numberFormatMode.values[index] = name

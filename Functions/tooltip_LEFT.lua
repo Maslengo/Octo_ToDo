@@ -987,10 +987,18 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		tooltip = E.func_MoneyTooltipLeft(visiblePlayers)
 	elseif SettingsType == "Additionally#WasOnline" then
 		tooltip = E.func_WasOnlineTooltipLeft(visiblePlayers)
-	elseif SettingsType == "Additionally#CurrentKey" then
-		tooltip = E.func_CurrentKeyTooltipLeft(visiblePlayers)
 	elseif SettingsType == "Additionally#GreatVault" then
 		tooltip = E.func_GreatVaultTooltipLeft(visiblePlayers)
+	elseif SettingsType == "Additionally#CurrentKey" then
+		tooltip = E.func_CurrentKeyTooltipLeft(visiblePlayers)
+	-- elseif SettingsType == "Additionally#HeartofAzeroth" then
+		-- tooltip = E.func_HeartofAzerothTooltipLeft(visiblePlayers)
+	-- elseif SettingsType == "Additionally#Ashjrakamas" then
+		-- tooltip = E.func_AshjrakamasTooltipLeft(visiblePlayers)
+
+
+
+
 	elseif dataType == "Reputations" then
 		tooltip = E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	elseif dataType == "Items" then
@@ -998,6 +1006,9 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	end
 	return tooltip
 end
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
