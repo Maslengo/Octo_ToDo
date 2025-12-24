@@ -178,7 +178,8 @@ function E.func_Octo_Options(savedVars)
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA = value
 					E.MAINBACKGROUND_ALPHA = value
-					Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+							 Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+					Octo_MainFrame_QuestsChanged_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -237,36 +238,6 @@ function E.func_Octo_Options(savedVars)
 					Octo_ToDo_DB_Vars.Config_ClampedToScreen = value
 					if Octo_MainFrame_ToDo then
 						Octo_MainFrame_ToDo:SetClampedToScreen(value)
-					end
-					if TestButton1 then
-						TestButton1:SetClampedToScreen(value)
-					end
-					if ItemsUsable then
-						ItemsUsable:SetClampedToScreen(value)
-					end
-					if TestButton1 then
-						TestButton1:SetClampedToScreen(value)
-					end
-					if OctoDebugFunctions then
-						OctoDebugFunctions:SetClampedToScreen(value)
-					end
-					if TestButton3 then
-						TestButton3:SetClampedToScreen(value)
-					end
-					if Octo_MainFrame_Achievements then
-						Octo_MainFrame_Achievements:SetClampedToScreen(value)
-					end
-					if Octo_MainFrame_AddonsManager then
-						Octo_MainFrame_AddonsManager:SetClampedToScreen(value)
-					end
-					if Octo_MinecraftFrameFG then
-						Octo_MinecraftFrameFG:SetClampedToScreen(value)
-					end
-					if PosFrame then
-						PosFrame:SetClampedToScreen(value)
-					end
-					if QC_Quests then
-						QC_Quests:SetClampedToScreen(value)
 					end
 					if Octo_MainFrame_QuestsChanged then
 						Octo_MainFrame_QuestsChanged:SetClampedToScreen(value)

@@ -95,6 +95,9 @@ function E.func_GetCurrencyIcon(currencyID)
 	return info and info.iconFileID or E.ICON_EMPTY
 end
 function E.func_IsAccountQuest(questID)
+	if not questID then
+		return false
+	end
 	return IsAccountQuest(questID)
 end
 function E.func_IsQuestFlaggedCompletedOnAccount(questID)
@@ -1254,6 +1257,14 @@ function E.func_EJ_to_SI(id) -- 721 Чертоги доблести
 	return newID
 end
 ----------------------------------------------------------------
+function E.func_GetSpecializationIconSafe()
+	local specID = GetSpecialization()
+	if specID then
+		local _, _, _, icon = GetSpecializationInfo(specID)
+		return icon
+	end
+	return nil
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

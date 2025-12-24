@@ -926,12 +926,14 @@ local function CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, tot
 	end
 	return width
 end
+
 -- Функция расчета высоты главного фрейма
 local function CalculateMainFrameHeight(totalLines)
 	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
 	local maxDisplayLines = math.max(1, math.min(totalLines, LINES_TOTAL or totalLines))
 	return E.GLOBAL_LINE_HEIGHT * maxDisplayLines + E.HEADER_HEIGHT, maxDisplayLines
 end
+
 -- Функция расчета ограниченной ширины правой части
 local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColumns)
 	local totalRightWidth = 0

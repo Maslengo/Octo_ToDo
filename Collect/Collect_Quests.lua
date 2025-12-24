@@ -62,6 +62,10 @@ end
 
 local function Collect_Quests_Universal()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+
+	local pd = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	-- local cm = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+
 	if not collectMASLENGO then return end
 	local hasDataToSave = false
 	local tempUniversalQuest = {}
@@ -78,8 +82,9 @@ local function Collect_Quests_Universal()
 		for _, questData in ipairs(data.quests) do
 			if type(questData[1]) == "number" then
 				local questID = questData[1]
-				local faction = questData.faction
-				if not faction or faction == E.FACTION_CURRENT then
+				local FactionOrClass = questData.FactionOrClass
+				-- if not FactionOrClass or FactionOrClass == E.FACTION_CURRENT then
+				if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 					local status = E.func_GetQuestStatus(questID)
 					totalQUEST = totalQUEST + 1
