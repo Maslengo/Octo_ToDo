@@ -1,8 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-local DebugLocalization_Key = true
-local DebugLocalization_Lang = true
+local DebugLocalization_Key = false
+local DebugLocalization_Lang = false
 local color_red = E.COLOR_RED or "|cffFF0000"
 local curLocaleLang = E.curLocaleLang or "enUS"
 local meta_table = {

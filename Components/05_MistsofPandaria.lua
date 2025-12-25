@@ -98,6 +98,84 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 6,
 		},
+
+
+
+
+		{
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(504)..": "..E.func_GetQuestName(32641, false)
+			end,
+			name_save = "ChampionsoftheThunderKing",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{32641, FactionOrClass = {Horde = true,}},
+				{32640, FactionOrClass = {Alliance = true,}},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+
+		-- { -- no longer weekly
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(390)..": "..E.func_GetQuestName(32641, false)
+		-- 	end,
+		-- 	name_save = "WarforgedSeals",
+		-- 	defS = true,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{33133, FactionOrClass = {Horde = true,}},
+		-- 		{33134, FactionOrClass = {Alliance = true,}},
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
+
+
+
+		{
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(554)..": "..E.func_GetQuestName(33338, false)
+			end,
+			name_save = "EmpoweringtheHourglass",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{33338},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+
+
+
+		{
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(554)..": "..E.func_GetQuestName(33334, false)
+			end,
+			name_save = "StrongEnoughToSurvive",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{33334},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {

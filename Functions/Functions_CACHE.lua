@@ -18,6 +18,7 @@ local GetMonthInfo = C_Calendar.GetMonthInfo
 local SetAbsMonth = C_Calendar.SetAbsMonth
 local GetNumDayEvents =  C_Calendar.GetNumDayEvents
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
