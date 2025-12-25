@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 local LibStub = LibStub
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------

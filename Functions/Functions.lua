@@ -1,6 +1,16 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+EventFrame.measureFrame = CreateFrame("Frame")
+EventFrame.measureFrame:Hide()
+EventFrame.measureFrame:SetParent(UIParent)
+EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
+EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
+EventFrame.measureText:SetFontObject(OctoFont11)
+EventFrame.measureText:SetWordWrap(false)
+local measureText = EventFrame.measureText
+----------------------------------------------------------------
+local L = E.L
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
@@ -72,7 +82,6 @@ local GetMountIDs = C_MountJournal.GetMountIDs
 local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
 local GetMountFromItem = C_MountJournal.GetMountFromItem
-local classR, classG, classB = GetClassColor(E.classFilename)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -275,9 +284,6 @@ function E.func_GetCurrentExpansion()
 		return 1
 	end
 end
-function E.func_ProfessionIcon(skillLine)
-	return skillLine and E.func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
-end
 function E.func_FormatLastSeen(time, color)
 	if not time then
 		return FRIENDS_LIST_OFFLINE
@@ -438,8 +444,8 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
 
 				tooltip:AddLine(" ")
-				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["Left Click:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
-				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["Right Click:"], GAMEMENU_OPTIONS)
+				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
+				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], GAMEMENU_OPTIONS)
 			end,
 	})
 	if type(Saved_Variables.LibDataBroker) ~= "table" then
@@ -758,14 +764,6 @@ function E.func_RemoveZeroValues(tbl, smth)
 		end
 		return tbl
 	end
-end
-----------------------------------------------------------------
-function E.func_UpdateFont()
-	local Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
-	local Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
-	local Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
-	E.OctoFont10:SetFont(LibSharedMedia:Fetch("font", Config_FontStyle), Config_FontSize-1, Config_FontFlags)
-	E.OctoFont11:SetFont(LibSharedMedia:Fetch("font", Config_FontStyle), Config_FontSize, Config_FontFlags)
 end
 -- Функция глубокого копирования таблицы
 function E.func_CopyTableDeep(orig)
@@ -1130,7 +1128,7 @@ end
 function E.func_FormatResetType(text)
 	if not text then return end
 	local result = ""
-	if text == "Once" then
+	if text == "Regular" then
 		result = E.COLOR_YELLOW.."O|r"
 	elseif text == "Daily" then
 		result = E.COLOR_BLUE.."D|r"
@@ -1294,7 +1292,30 @@ function E.func_GetSpecializationIconSafe()
 	end
 	return nil
 end
+
 ----------------------------------------------------------------
+
+function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
+	minWidth = minWidth or 1
+	local result = type(textToMeasure) == "function" and textToMeasure() or textToMeasure
+	local text = tostring(result or "")
+	measureText:SetText(text)
+	local width = math.max(math.ceil(measureText:GetStringWidth()), minWidth) -- 8 indent
+	return width
+end
+----------------------------------------------------------------
+function E.func_UpdateFont()
+	local Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
+	local Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
+	local Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
+
+	local fontPath = LibSharedMedia:Fetch("font", Config_FontStyle)
+
+	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
+	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
+
+	measureText:SetFontObject(OctoFont11)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -6,7 +6,7 @@ local Is_TheWarWithin_available = E.func_Is_TheWarWithin_available()
 if not enable then return end
 if not Is_TheWarWithin_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 11
 local expansionID = 11
@@ -72,10 +72,10 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 1302, defS = true,}, -- Manaforge Omega
-			{id = 1296, defS = false,}, -- Liberation of Undermine
-			{id = 1273, defS = false,}, -- Nerub-ar Palace
-			-- {id = 1278, defS = true,}, -- Khaz Algar -- WB
+		{id = 1302, defS = true,}, -- Manaforge Omega
+		{id = 1296, defS = false,}, -- Liberation of Undermine
+		{id = 1273, defS = false,}, -- Nerub-ar Palace
+		-- {id = 1278, defS = true,}, -- Khaz Algar -- WB
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -127,19 +127,19 @@ local function tempFunction()
 		-- majorfactions_icons_stars512
 		{id = 2685, defS = false,}, --name = "Клуб лояльности Галаджио", side = "-", category = "Картели Нижней Шахты", }, --[faction=2685]
 		{id = 2653, defS = false,}, --name = "Картели Нижней Шахты", side = "-", category = "The War Within", }, --[faction=2653]
-			{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
-			{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
-			{id = 2677, defS = false,}, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
-			{id = 2675, defS = false,}, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
-			{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
+		{id = 2669, defS = false,}, --name = "Мрачные Решалы", side = "-", category = "Картели Нижней Шахты", }, --[faction=2669]
+		{id = 2673, defS = false,}, --name = "Картель Трюмных Вод", side = "-", category = "Картели Нижней Шахты", }, --[faction=2673]
+		{id = 2677, defS = false,}, --name = "Картель Хитрой Шестеренки", side = "-", category = "Картели Нижней Шахты", }, --[faction=2677]
+		{id = 2675, defS = false,}, --name = "Картель Черноводья", side = "-", category = "Картели Нижней Шахты", }, --[faction=2675]
+		{id = 2671, defS = false,}, --name = "Торговая компания", side = "-", category = "Картели Нижней Шахты", }, --[faction=2671]
 		----------------------------------------------------------------
 		{id = 2590, defS = false,}, --name = "Совет Дорногала", side = "-", category = "The War Within", }, --[faction=2590]
 		{id = 2594, defS = false,}, --name = "Ассамблея глубин", side = "-", category = "The War Within", }, --[faction=2594]
 		{id = 2570, defS = false,}, --name = "Арати Тайносводья", side = "-", category = "The War Within", }, --[faction=2570]
 		{id = 2600, defS = false,}, --name = "Отрезанные нити", side = "-", category = "The War Within", }, --[faction=2600]
-			{id = 2601, defS = false,}, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
-			{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
-			{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
+		{id = 2601, defS = false,}, --name = "Прядильщица", side = "-", category = "Отрезанные нити", }, --[faction=2601]
+		{id = 2605, defS = false,}, --name = "Генерал", side = "-", category = "Отрезанные нити", }, --[faction=2605]
+		{id = 2607, defS = false,}, --name = "Визирь", side = "-", category = "Отрезанные нити", }, --[faction=2607]
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		{id = 2640, defS = false,}, --name = "Бранн Бронзобород", side = "-", category = "The War Within", }, --[faction=2640]
@@ -152,490 +152,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-
-
-
-
-
-
-
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2472)..": "..E.func_GetQuestName(84956) -- storyline
-		-- 	end,
-		-- 	name_save = "AShadowyInvitation",
-		-- 	defS = true,
-		-- 	reset = "Once",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{84956},
-		-- 		{84957},
-		-- 		{85003},
-		-- 		{85039},
-		-- 		{84958},
-		-- 		{84959},
-		-- 		{84960},
-		-- 		{84961},
-		-- 		{84963},
-		-- 		{84964},
-		-- 		{84965},
-		-- 		{86835},
-		-- 		{84967},
-		-- 	},
-		-- 	-- forcedMaxQuest = 2,
-		-- },
-
-
-
-
-
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2371)..": "..E.func_GetQuestName(84862) -- Karesh storyline
-		-- 	end,
-		-- 	name_save = "VoidAlliance",
-		-- 	defS = true,
-		-- 	reset = "Once",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 			{85032},
-		-- 			{85961},
-		-- 			{84855},
-		-- 			{86495},
-		-- 			{84856},
-		-- 			{84857},
-		-- 			{84858},
-		-- 			{84859},
-		-- 			{84860},
-		-- 			{84861},
-		-- 			{84862},
-		-- 			{84863},
-		-- 			{84864},
-		-- 			{84865},
-		-- 			{84866},
-		-- 			{86946},
-		-- 			{90517},
-		-- 	},
-		-- 	-- forcedMaxQuest = 2,
-		-- },
-
-
-
-
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2371)..": "..E.func_GetQuestName(94933) -- Karesh storyline (НЕПРАВИЛЬНЫЙ КВ)
-		-- 	end,
-		-- 	name_save = "InSearchofDarkness",
-		-- 	defS = true,
-		-- 	reset = "Once",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{94933},
-		-- 		{90972},
-		-- 		{86786},
-		-- 		{89323},
-		-- 		{89324},
-		-- 		{89325},
-		-- 		{89326},
-		-- 		{89327},
-		-- 		{91044},
-		-- 	},
-		-- 	-- forcedMaxQuest = 2,
-		-- },
-
-
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
-		-- 	end,
-		-- 	name_save = "Rares2371",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
-		-- 		{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
-		-- 		{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
-		-- 		{nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
-		-- 		{86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
-		-- 		{nil},
-		-- 		{91276, forcedText = {npcID = 245998}, },
-		-- 		{91275, forcedText = {npcID = 245997}, },
-		-- 		{90687, forcedText = {npcID = 238144}, },
-		-- 		{90689, forcedText = {npcID = 238536}, },
-		-- 		{90692, forcedText = {npcID = 241920}, },
-		-- 		{90694, forcedText = {npcID = 238384}, },
-		-- 		{nil},
-		-- 		{nil, addText = {spellID = 1214374},},
-		-- 		{90596, forcedText = {npcID = 232128}, },
-		-- 		{90586, forcedText = {npcID = 232077}, },
-		-- 		{90594, forcedText = {npcID = 231981}, },
-		-- 		{90588, forcedText = {npcID = 232108}, },
-		-- 		{90595, forcedText = {npcID = 232127}, },
-		-- 		{90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
-		-- 		{90591, forcedText = {npcID = 232189}, },
-		-- 		{90585, forcedText = {npcID = 232006}, },
-		-- 		{90583, forcedText = {npcID = 232129}, },
-		-- 		{90592, forcedText = {npcID = 232193}, },
-		-- 		{91293, forcedText = {npcID = 234845}, },
-		-- 		{90589, forcedText = {npcID = 232111}, },
-		-- 		{90593, forcedText = {npcID = 232195}, },
-		-- 		{90584, forcedText = {npcID = 232199}, },
-		-- 	},
-		-- 	-- forcedMaxQuest = 3,
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
-		-- 	end,
-		-- 	name_save = "Rares2255",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{81695, forcedText = {npcID = 216031}, },
-		-- 		{78905, forcedText = {npcID = 214151}, },
-		-- 		{81704, forcedText = {npcID = 216042}, },
-		-- 		{81634, forcedText = {npcID = 216038}, },
-		-- 		{82077, forcedText = {npcID = 222624}, },
-		-- 		{81707, forcedText = {npcID = 216045}, },
-		-- 		{81699, forcedText = {npcID = 216041}, },
-		-- 		{82036, forcedText = {npcID = 216050}, },
-		-- 		{82034, forcedText = {npcID = 216048}, },
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
-		-- 	end,
-		-- 	name_save = "Rares2215",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{81763, forcedText = {npcID = 207802}, },
-		-- 		{82558, forcedText = {npcID = 206514}, },
-		-- 		{82560, forcedText = {npcID = 214757}, },
-		-- 		{82559, forcedText = {npcID = 206184}, },
-		-- 		{81880, forcedText = {npcID = 221753}, },
-		-- 		{80011, forcedText = {npcID = 218458}, },
-		-- 		{82562, forcedText = {npcID = 221179}, },
-		-- 		{82564, forcedText = {npcID = 207780}, },
-		-- 		{81881, forcedText = {npcID = 221767}, },
-		-- 		{81761, forcedText = {npcID = 221551}, },
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
-		-- 	end,
-		-- 	name_save = "Rares2248",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82196, forcedText = {npcID = 219281}, },
-		-- 		{81893, forcedText = {npcID = 219264}, },
-		-- 		{81920, forcedText = {npcID = 221128}, },
-		-- 		{81895, forcedText = {npcID = 219265}, },
-		-- 		{81907, forcedText = {npcID = 219266}, },
-		-- 		{81905, forcedText = {npcID = 219279}, },
-		-- 		{81899, forcedText = {npcID = 219268}, },
-		-- 		{81902, forcedText = {npcID = 219270}, },
-		-- 		{81921, forcedText = {npcID = 220890}, },
-		-- 		{81897, forcedText = {npcID = 219267}, },
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
-		-- 	end,
-		-- 	name_save = "Rares2214",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{81674, forcedText = {npcID = 220265}, },
-		-- 		{80557, forcedText = {npcID = 220274}, },
-		-- 		{80505, forcedText = {npcID = 220276}, },
-		-- 		{81562, forcedText = {npcID = 220267}, },
-		-- 		{81511, forcedText = {npcID = 220266}, },
-		-- 		{80560, forcedText = {npcID = 220269}, },
-		-- 		{81566, forcedText = {npcID = 220272}, },
-		-- 		{80003, forcedText = {npcID = 218393}, },
-		-- 		{80536, forcedText = {npcID = 220286}, },
-		-- 		{81648, forcedText = {npcID = 221199}, },
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
-		-- 	end,
-		-- 	name_save = "Rares2369",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{85672, forcedText = {npcID = 229982}, },
-		-- 		{85669, forcedText = {npcID = 228201}, },
-		-- 		{85437, forcedText = {npcID = 229992}, },
-		-- 		{84801, forcedText = {npcID = 228601}, },
-		-- 		{84807, forcedText = {npcID = 228605}, },
-		-- 		{84804, forcedText = {npcID = 228603}, },
-		-- 		{84810, forcedText = {npcID = 228609}, },
-		-- 		{84813, forcedText = {npcID = 228612}, },
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
-		-- 	end,
-		-- 	name_save = "Rares2346",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{84917, forcedText = {npcID = 230931}, },
-		-- 		{84918, forcedText = {npcID = 230934}, },
-		-- 		{84919, forcedText = {npcID = 230940}, },
-		-- 		{84920, forcedText = {npcID = 230946}, },
-		-- 		{84921, forcedText = {npcID = 230951}, },
-		-- 		{84922, forcedText = {npcID = 230979}, },
-		-- 		{84926, forcedText = {npcID = 230995}, },
-		-- 		{84927, forcedText = {npcID = 231012}, },
-		-- 	},
-		-- },
-		-- --------------------------------------------------------------------------
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2248)..": ".."Treasures" -- isle_of_dorn
-		-- 	end,
-		-- 	name_save = "Treasures2248",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{82714, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{82287, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{82325, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{83243, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{83246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{83245, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{83244, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{82326, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{82246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{83242, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{83094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 		{83840, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2369)..": ".."Treasures"
-		-- 	end,
-		-- 	name_save = "Treasures2369",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{86764, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{86767, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{86766, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{86732, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{85716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{84547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{84839, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{86765, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{84529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{84527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2346)..": ".."Treasures" -- undermine
-		-- 	end,
-		-- 	name_save = "Treasures2346",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2214)..": ".."Treasures" -- ringing_deeps
-		-- 	end,
-		-- 	name_save = "Treasures2214",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{82239, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{82820, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{82464, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{82819, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{80485, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{82235, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{82818, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{83030, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{79308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2255)..": ".."Treasures" -- azj_kahet
-		-- 	end,
-		-- 	name_save = "Treasures2255",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{82718, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{82722, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{82720, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{82529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{82721, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{82719, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{82727, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{82527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{82525, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2215)..": ".."Treasures" -- hallowfall
-		-- 	end,
-		-- 	name_save = "Treasures2215",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{83263, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{83284, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{81468, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{81971, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{81978, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{81972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{82005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{83273, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{79275, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{80687, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{81518, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 	},
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2346)..": ".."Treasures" -- undermine
-		-- 	end,
-		-- 	name_save = "Treasure2346",
-		-- 	defS = false,
-		-- 	reset = "Once", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 		{86630, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-		-- 		{85781, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
-		-- 		{85785, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
-		-- 		{86773, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
-		-- 		{85787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
-		-- 		{86772, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
-		-- 		{85786, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
-		-- 		{86771, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
-		-- 		{85788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
-		-- 		{86774, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
-		-- 		{87007, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
-		-- 		{85072, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
-		-- 		{85116, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
-		-- 		{85117, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
-		-- 		{85114, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 27"},},
-		-- 		{85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
-		-- 	},
-		-- },
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		----------------------------------------------------------------------------
-		----------------------------------------------------------------------------
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -655,282 +172,61 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 2,
 		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = L["Delver's Call"],
-			name_save = "DelversCall",
-			defS = false,
-			reset = "Once",
-			desc = categoryKey,
-			quests = {
-				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
-				{85648},
-				{83759},
-				{83758},
-				{nil},
-				{nil, addText = {mapID = 2215},}, -- Hallowfall
-				{83768},
-				{85664},
-				{83767},
-				{83769},
-				{nil},
-				{nil, addText = {mapID = 2214},}, -- The Ringing Deeps (Гулкие глубины.)
-				{85649},
-				{83766},
-				{nil},
-				{nil, addText = {mapID = 2255},}, -- Azj-Kahet
-				{83770},
-				{83771},
-				{85667},
-				{85666},
-			},
-			-- forcedMaxQuest = 13,
-		},
 		----------------------------------------------------------------
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(84776, false) -- (Зов вылазок) Пройдите 5 вылазок в Каз Алгаре.
-			end,
-			name_save = "A Call to Delves",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{84776},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(83366, false) -- (Мир ждет) Выполните 10 локальных заданий в Каз Алгаре.
-			end,
-			name_save = "The World Awaits",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83366},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(83347, false) -- (Посланник войны) Пройдите 4 подземелья в эпохальном режиме.
-			end,
-			name_save = "Emissary of War",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83347},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(83345, false) -- (Призыв к бою) Одержите победу на 4 полях боя.
-			end,
-			name_save = "A Call to Battle",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83345},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return L["TWW Weekly Cache"]
-			end,
-			name_save = "TWW Weekly Cache",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{84736, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
-				{84737, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
-				{84738, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
-				{84739, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
-			},
-			-- forcedMaxQuest = 1, -- НАДО УТОЧНИТЬ
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return L["TWW Weekly Cache"].." S3"
-			end,
-			name_save = "TWW Weekly Cache S3",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{91175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
-				{91176, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
-				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
-				{91178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
-			},
-			-- forcedMaxQuest = 1, -- НАДО УТОЧНИТЬ
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return "Delver's Bounty" -- E.func_GetQuestName(86371, false)
-			end,
-			name_save = "Delver's Bounty",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{86371},
-			},
-			forcedMaxQuest = 1,
-		},
+		-- 2255 Аз-Кахет
+		----------------------------------------------------------------
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
+		-- 	end,
+		-- 	name_save = "Rares2255",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{81695, forcedText = {npcID = 216031}, },
+		-- 		{78905, forcedText = {npcID = 214151}, },
+		-- 		{81704, forcedText = {npcID = 216042}, },
+		-- 		{81634, forcedText = {npcID = 216038}, },
+		-- 		{82077, forcedText = {npcID = 222624}, },
+		-- 		{81707, forcedText = {npcID = 216045}, },
+		-- 		{81699, forcedText = {npcID = 216041}, },
+		-- 		{82036, forcedText = {npcID = 216050}, },
+		-- 		{82034, forcedText = {npcID = 216048}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2255)..": "..L["Treasures"] -- azj_kahet
+		-- 	end,
+		-- 	name_save = "Treasures2255",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		-- 		{82718, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		-- 		{82722, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		-- 		{82720, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		-- 		{82529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		-- 		{82721, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		-- 		{82719, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		-- 		{82727, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		-- 		{82527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		-- 		{82525, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		-- 	},
+		-- },
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return "Lesser Keyflame" -- MinorKeyflames
+				return E.func_GetMapName(2255)..": "..L["Underworld Operative"] -- The Severed Threads
 			end,
-			name_save = "Lesser Keyflame",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				-- SAVEDINSTANCE
-				{76169}, -- Glow in the Dark
-				{76394}, -- Shadows of Flavor
-				{76600}, -- Right Between the Gyros-Optics
-				{76733}, -- Tater Trawl
-				{76997}, -- Lost in Shadows
-				{78656}, -- Hose It Down
-				{78915}, -- Squashing the Threat
-				{78933}, -- The Sweet Eclipse
-				{78972}, -- Harvest Havoc
-				{79158}, -- Seeds of Salvation
-				{79173}, -- Supply the Effort
-				{79216}, -- Web of Manipulation
-				{79346}, -- Chew On That
-				{80004}, -- Crab Grab
-				{80562}, -- Blossoming Delight
-				{81574}, -- Sporadic Growth
-				{81632}, -- Lizard Looters
-				-- {nil},
-				-- -- МОЁ
-				-- {81632},
-				-- -- 81574,
-				-- -- 80562,
-				-- {80004},
-				-- -- 79346,
-				-- -- 79216,
-				-- {79173},
-				-- -- 79158,
-				-- {78972},
-				-- -- 78933,
-				-- -- 78915,
-				-- {78656},
-				-- {76997},
-				-- -- 76733,
-				-- {76600},
-				-- {76394},
-				-- -- 76169,
-			},
-			forcedMaxQuest = 8,
-		},
-		{
-			showTooltip = true,
-			TextLeft = "Major Keyflames",
-			name_save = "Major Keyflames",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{79471},
-				{79470},
-				{79469},
-				{79380},
-				{79329},
-				{78657},
-				{78590},
-				{76338},
-			},
-			forcedMaxQuest = 8,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(47148, false)
-			end,
-			name_save = "Brawl Weekly",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{47148},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return "PvP Weekly"
-			end,
-			name_save = "PvP Weekly",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{80184}, -- Preserving in Battle
-				{80185}, -- Preserving Solo
-				{80186}, -- Preserving in War
-				{80187}, -- Preserving in Skirmishes
-				{80188}, -- Preserving in Arenas
-				{80189}, -- Preserving Teamwork
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return "World PvP Weekly"
-			end,
-			name_save = "World PvP Weekly",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{81793}, -- Sparks of War: Isle of Dorn
-				{81794}, -- Sparks of War: The Ringing Deeps
-				{81795}, -- Sparks of War: Hallowfall
-				{81796}, -- Sparks of War: Azj-Kahet
-				{86853}, -- Sparks of War: Undermine
-				{90781}, -- Sparks of War: K'aresh?
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return "The Severed Threads"
-			end,
-			name_save = "The Severed Threads",
+			name_save = "UnderworldOperative",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -941,13 +237,199 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+		----------------------------------------------------------------
+		-- 2248 Остров Дорн
+		----------------------------------------------------------------
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
+		-- 	end,
+		-- 	name_save = "Rares2248",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{82196, forcedText = {npcID = 219281}, },
+		-- 		{81893, forcedText = {npcID = 219264}, },
+		-- 		{81920, forcedText = {npcID = 221128}, },
+		-- 		{81895, forcedText = {npcID = 219265}, },
+		-- 		{81907, forcedText = {npcID = 219266}, },
+		-- 		{81905, forcedText = {npcID = 219279}, },
+		-- 		{81899, forcedText = {npcID = 219268}, },
+		-- 		{81902, forcedText = {npcID = 219270}, },
+		-- 		{81921, forcedText = {npcID = 220890}, },
+		-- 		{81897, forcedText = {npcID = 219267}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2248)..": "..L["Treasures"] -- isle_of_dorn
+		-- 	end,
+		-- 	name_save = "Treasures2248",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		-- 		{82714, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		-- 		{82287, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		-- 		{82325, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		-- 		{83243, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		-- 		{83246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		-- 		{83245, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		-- 		{83244, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		-- 		{82326, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		-- 		{82246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		-- 		{83242, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		-- 		{83094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+		-- 		{83840, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
+		-- 	},
+		-- },
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2248)..": "..E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
+			end,
+			name_save = "TheTheaterTroupe", -- The Theater Troupe
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83240},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		-- 2214 Гулкие Глубины
+		----------------------------------------------------------------
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
+		-- 	end,
+		-- 	name_save = "Rares2214",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{81674, forcedText = {npcID = 220265}, },
+		-- 		{80557, forcedText = {npcID = 220274}, },
+		-- 		{80505, forcedText = {npcID = 220276}, },
+		-- 		{81562, forcedText = {npcID = 220267}, },
+		-- 		{81511, forcedText = {npcID = 220266}, },
+		-- 		{80560, forcedText = {npcID = 220269}, },
+		-- 		{81566, forcedText = {npcID = 220272}, },
+		-- 		{80003, forcedText = {npcID = 218393}, },
+		-- 		{80536, forcedText = {npcID = 220286}, },
+		-- 		{81648, forcedText = {npcID = 221199}, },
+		-- 	},
+		-- },
+		-- --------------------------------------------------------------------------
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2214)..": "..L["Treasures"] -- ringing_deeps
+		-- 	end,
+		-- 	name_save = "Treasures2214",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		-- 		{82239, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		-- 		{82820, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		-- 		{82464, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		-- 		{82819, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		-- 		{80485, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		-- 		{82235, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		-- 		{82818, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		-- 		{83030, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		-- 		{79308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		-- 	},
+		-- },
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": "..E.func_GetQuestName(83333, false)
+			end,
+			name_save = "GearingUpforTrouble", -- Gearing Up for Trouble
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83333},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": "..E.func_GetQuestName(82946, false)
+			end,
+			name_save = "RollinDownintheDeeps",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{82946},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		-- 2339 Дорногал
+		----------------------------------------------------------------
+		{ -- https://www.wowhead.com/npc=226919/archivist-frithrun
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2339)..": "..L["Weekend Event"]
+			end,
+			name_save = "ArchivistFrithrun",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- {84776}, -- (Зов вылазок) Пройдите 5 вылазок в Каз Алгаре.
+				-- {83366}, -- (Мир ждет) Выполните 10 локальных заданий в Каз Алгаре.
+				-- {83347}, -- (Посланник войны) Пройдите 4 подземелья в эпохальном режиме.
+				-- {83345}, -- (Призыв к бою) Одержите победу на 4 полях боя.
+
+
+				{86731, addText = {expansionText = E.func_FormatExpansion(1, "LEFT")}}, -- 1 CLASSIC (An Original Path Through Time)
+				{83363, addText = {expansionText = E.func_FormatExpansion(2, "LEFT")}}, -- 2 TBC (A Burning Path Through Time)
+				{83365, addText = {expansionText = E.func_FormatExpansion(3, "LEFT")}}, -- 3 WOTLK (A Frozen Path Through Time)
+				{83359, addText = {expansionText = E.func_FormatExpansion(4, "LEFT")}}, -- 4 Cataclysm (A Shattered Path Through Time)
+				{83362, addText = {expansionText = E.func_FormatExpansion(5, "LEFT")}}, -- 5 PANDA (A Shrouded Path Through Time)
+				{83364, addText = {expansionText = E.func_FormatExpansion(6, "LEFT")}}, -- 6 DRAENOR (A Savage Path Through Time)
+				{83360, addText = {expansionText = E.func_FormatExpansion(7, "LEFT")}}, -- 7 LEGION (A Fel Path Through Time)
+				{88805, addText = {expansionText = E.func_FormatExpansion(8, "LEFT")}}, -- 8 BFA (A Scarred Path Through Time)
+				{92649, addText = {expansionText = E.func_FormatExpansion(9, "LEFT")}}, -- 9 SL (Темный путь сквозь время)
+
+				{83358}, -- The Arena Calls - Arena Skirmishes
+				{84776}, -- A Call to Delves - Delves
+				{83357}, -- AccountWeekly
+				{83366}, -- The World Awaits - World Quests
+				{83347}, -- Emissary of War - Mythic Dungeons
+				{83345}, -- A Call to Battle - Battlegrounds
+			},
+			forcedMaxQuest = 1, -- nadoutichnit
+		},
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return "The Call of the Worldsoul"
+				return E.func_GetMapName(2339)..": "..L["Worldsoul"]
 			end,
-			name_save = "The Call of the Worldsoul",
+			name_save = "TheCalloftheWorldsoul", -- The Call of the Worldsoul
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1004,7 +486,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return "Archives"
+				return E.func_GetMapName(2339)..": "..L["Archives"]
 			end,
 			name_save = "Archives",
 			defS = false,
@@ -1021,120 +503,9 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(82706, false) -- DELVES_LABEL
+				return E.func_GetMapName(2339)..": "..L["Weekly quests"].." ("..DUNGEONS..")" -- https://www.wowhead.com/npc=226623/biergoth
 			end,
-			name_save = "Delves",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
-				-- {82708}, -- Delves: Nerubian Menace (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				-- {82707}, -- Delves: Earthen Defense (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				{82706}, -- Delves: Worldwide Research
-				-- {82709}, -- Delves: Percussive Archaeology (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				-- {82710}, -- Delves: Empire-ical Exploration (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				-- {82711}, -- Delves: Lost and Found (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				-- {82712}, -- Delves: Trouble Up and Down Khaz Algar (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				-- {82746}, -- Delves: Breaking Tough to Loot Stuff (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-			},
-			forcedMaxQuest = 1, -- 8? НАДО УТОЧНИТЬ
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
-			end,
-			name_save = "The Theater Troupe",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83240},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(76586, false)
-			end,
-			name_save = "Spreading the Light",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{76586},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(83333, false)
-			end,
-			name_save = "Gearing Up for Trouble",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83333},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return "Special Assignments"
-			end,
-			name_save = "Special Assignments",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{82355}, -- Special Assignment: Cinderbee Surge (Completing)
-					{81647}, -- Special Assignment: Titanic Resurgence (Completing)
-				{81649}, -- Special Assignment: Titanic Resurgence (Completing)
-					{81650}, -- Special Assignment: Titanic Resurgence (Completing)
-				{81691}, -- Special Assignment: Shadows Below (Completing)
-				{83229}, -- Special Assignment: When the Deeps Stir (Completing)
-				{82852}, -- Special Assignment: Lynx Rescue (Completing)
-				{82787}, -- Special Assignment: Rise of the Colossals (Completing)
-				{82414}, -- Special Assignment: A Pound of Cure (Completing)
-				{82531}, -- Special Assignment: Bombs from Behind (Completing)
-				{85487}, -- Special Assignment: Boom! Headshot! (Completing)
-				{85488}, -- Special Assignment: Security Detail (Completing)
-				{89294}, -- Special Assignment: Aligned Views (Completing)
-				{89293}, -- Special Assignment: Overshadowed (Completing)
-			},
-			forcedMaxQuest = 4, -- НАДО УТОЧНИТЬ
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetQuestName(82946, false)
-			end,
-			name_save = "Rollin' Down in the Deeps",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{82946},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return "Biergoth Dungeon Quest"
-			end,
-			name_save = "Biergoth Dungeon Quest",
+			name_save = "BiergothDungeonQuest",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1148,6 +519,7 @@ local function tempFunction()
 				{83465}, -- Ara-Kara, City of Echoes
 				{83469}, -- City of Threads
 				{86203}, -- Operation: Floodgate
+				-- {86203, addText = {text = E.COLOR_GRAY.." ("..EJ_GetInstanceInfo(1268)..")|r"},}, -- Operation: Floodgate
 			},
 			forcedMaxQuest = 1,
 		},
@@ -1155,139 +527,190 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(84370, false)
+				return E.func_GetMapName(2339)..": "..L["Weekly quests"].." (PVP)"
 			end,
-			name_save = "The Key to Success",
+			name_save = "WeeklyPVP",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{84370},
+				-- {nil}, --"PvP Weekly"
+				{80184},
+				{80185},
+				{80186},
+				{80187},
+				{80188},
+				{80189},
+				{nil},
+				-- {nil}, --"World PvP Weekly"
+				{81793},
+				{81794},
+				{81795},
+				{81796},
+				{86853},
+				{90781},
+				{nil}, -- "Brawl Weekly"
+				{47148},
 			},
-			forcedMaxQuest = 1,
+			forcedMaxQuest = 3,
 		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return "TWW Profession Weeklies"
-			end,
-			name_save = "TWW Profession Weeklies",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{84127}, -- Blacksmithing Services Requested
-				{84128}, -- Engineering Services Requested
-				{84129}, -- Inscription Services Requested
-				{84130}, -- Jewelcrafting Services Requested
-				{84131}, -- Leatherworking Services Requested
-				{84132}, -- Tailoring Services Requested
-				{84133}, -- Alchemy Services Requested
-				{83103}, -- Acquiring Aqirite
-				{83102}, -- Bismuth is Business
-				{83104}, -- Identifying Ironclaw
-				{83106}, -- Null Pebble Excavation
-				{83105}, -- Rush-order Requisition
-				{83097}, -- Cinder and Storm
-				{83100}, -- Cracking the Shell
-				{82993}, -- From Shadows
-				{83098}, -- Snap and Crackle
-				{82992}, -- Stormcharged Goods
-				{84086}, -- A Rare Necessity
-				{84084}, -- Just a Pinch
-				{84085}, -- The Power of Potential
-				{82970}, -- A Bloom and A Blossom
-				{82962}, -- A Handful of Luredrops
-				{82965}, -- Light and Shadow
-				{82958}, -- Little Blessings
-				{82916}, -- When Fungi Bloom
-			},
-			forcedMaxQuest = 2,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return "TWW Algari Treatise"
-			end,
-			name_save = "TWW Algari Treatise",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{83725}, -- = L["Algari Treatise on Alchemy"],
-				{83726}, -- = L["Algari Treatise on Blacksmithing"],
-				{83727}, -- = L["Algari Treatise on Enchanting"],
-				{83728}, -- = L["Algari Treatise on Engineering"],
-				{83729}, -- = L["Algari Treatise on Herbalism"],
-				{83730}, -- = L["Algari Treatise on Inscription"],
-				{83731}, -- = L["Algari Treatise on Jewelcrafting"],
-				{83732}, -- = L["Algari Treatise on Leatherworking"],
-				{83733}, -- = L["Algari Treatise on Mining"],
-				{83734}, -- = L["Algari Treatise on Skinning"],
-				{83735}, -- = L["Algari Treatise on Tailoring"],
-			},
-			forcedMaxQuest = 2, -- НАДО УТОЧНИТЬ
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return "Anniversary Restored Coffer Key" --E.func_GetQuestName(86202, false)
-			end,
-			name_save = "Anniversary Restored Coffer Key",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{86202},
-			},
-			forcedMaxQuest = 1,
-		},
+		----------------------------------------------------------------
+		-- 2369 Siren Isle
+		----------------------------------------------------------------
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
+		-- 	end,
+		-- 	name_save = "Rares2369",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{85672, forcedText = {npcID = 229982}, },
+		-- 		{85669, forcedText = {npcID = 228201}, },
+		-- 		{85437, forcedText = {npcID = 229992}, },
+		-- 		{84801, forcedText = {npcID = 228601}, },
+		-- 		{84807, forcedText = {npcID = 228605}, },
+		-- 		{84804, forcedText = {npcID = 228603}, },
+		-- 		{84810, forcedText = {npcID = 228609}, },
+		-- 		{84813, forcedText = {npcID = 228612}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2369)..": "..L["Treasures"]
+		-- 	end,
+		-- 	name_save = "Treasures2369",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		-- 		{86764, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		-- 		{86767, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		-- 		{86766, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		-- 		{86732, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		-- 		{85716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		-- 		{84547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		-- 		{84839, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		-- 		{86765, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		-- 		{84529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		-- 		{84527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		-- 	},
+		-- },
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return "Siren Isle Weekly"
+				return E.func_GetMapName(2369)..": "..L["Weekly quests"]
 			end,
-			name_save = "Siren Isle Weekly",
+			name_save = "SirenIsleWeekly", -- Siren Isle Weekly
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{nil, forcedText = {text = E.COLOR_SKYBLUE..E.TEXT_SPACE.."Vrykul invasion|r"},},
 				{84852}, -- Legacy of the Vrykul
-				{84680}, -- Rock 'n Stone Revival
+				{84248}, -- A Ritual of Runes
 				{83932}, -- Historical Documents
 				{84432}, -- Longship Landing
-				{84248}, -- A Ritual of Runes
+				{84680}, -- Rock 'n Stone Revival
 				{84222}, -- Secure the Perimeter
 				{nil},
 				{nil, forcedText = {text = E.COLOR_STEELBLUE..E.TEXT_SPACE.."Pirate invasion|r"},},
 				{84851}, -- Tides of Greed
 				{83753}, -- Cannon Karma
-				{84299}, -- Pirate Plunder
-				{84619}, -- Ooker Dooker Literature Club
 				{83827}, -- Silence the Song
 				{84001}, -- Cart Blanche
+				{84299}, -- Pirate Plunder
+				{84619}, -- Ooker Dooker Literature Club
 				{nil},
 				{nil, forcedText = {text = E.COLOR_SLATEGRAY..E.TEXT_SPACE.."Naga invasion|r"},},
 				{84850}, -- Serpent's Wrath
-				{85589}, -- Ruffled Pages
+				{84252}, -- Peak Precision
 				{84430}, -- Crystal Crusade
-				{85051}, -- Beach Comber
 				{84627}, -- Three Heads of the Deep
+				{85051}, -- Beach Comber
+				{85589}, -- Ruffled Pages
 			},
-			forcedMaxQuest = 6, -- НАДО УТОЧНИТЬ
+			forcedMaxQuest = 6, -- nadoutichnit
 		},
+		----------------------------------------------------------------
+		-- 2346 Нижняя Шахта
+		----------------------------------------------------------------
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
+		-- 	end,
+		-- 	name_save = "Rares2346",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{84917, forcedText = {npcID = 230931}, },
+		-- 		{84918, forcedText = {npcID = 230934}, },
+		-- 		{84919, forcedText = {npcID = 230940}, },
+		-- 		{84920, forcedText = {npcID = 230946}, },
+		-- 		{84921, forcedText = {npcID = 230951}, },
+		-- 		{84922, forcedText = {npcID = 230979}, },
+		-- 		{84926, forcedText = {npcID = 230995}, },
+		-- 		{84927, forcedText = {npcID = 231012}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2346)..": "..L["Treasures"] -- undermine
+		-- 	end,
+		-- 	name_save = "Treasure2346",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		-- 		{85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		-- 		{85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		-- 		{85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		-- 		{85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		-- 		{85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		-- 		{85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		-- 		{85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		-- 		{85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		-- 		{85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		-- 		{85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		-- 		{86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+		-- 		{86630, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
+		-- 		{85781, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
+		-- 		{85785, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
+		-- 		{86773, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
+		-- 		{85787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
+		-- 		{86772, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
+		-- 		{85786, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
+		-- 		{86771, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
+		-- 		{85788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
+		-- 		{86774, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
+		-- 		{87007, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
+		-- 		{85072, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
+		-- 		{85116, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
+		-- 		{85117, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
+		-- 		{85114, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 27"},},
+		-- 		{85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
+		-- 	},
+		-- },
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return "Free C.H.E.T.T. List"
+				return E.func_GetMapName(2346)..": ".."Free C.H.E.T.T. List"
 			end,
-			name_save = "Free C.H.E.T.T. List",
+			name_save = "FreeCHETTList",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1300,9 +723,9 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return "C.H.E.T.T. List"
+				return E.func_GetMapName(2346)..": ".."C.H.E.T.T. List"
 			end,
-			name_save = "C.H.E.T.T. List",
+			name_save = "CHETTList",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1321,15 +744,15 @@ local function tempFunction()
 				{87306}, -- = L["Kaja Cruising"],
 				{87307}, -- = L["Garbage Day"],
 			},
-			forcedMaxQuest = 4, -- НАДО УТОЧНИТЬ
+			forcedMaxQuest = 4, -- nadoutichnit
 		},
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(86775, false)
+				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(86775, false)
 			end,
-			name_save = "Urge to Surge",
+			name_save = "UrgetoSurge",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1342,9 +765,9 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(85869, false)
+				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(85869, false)
 			end,
-			name_save = "Many Jobs, Handle It!",
+			name_save = "ManyJobsHandleIt",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1357,9 +780,9 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(85879, false)
+				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(85879, false)
 			end,
-			name_save = "Reduce, Reuse, Resell",
+			name_save = "ReduceReuseResell",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1368,13 +791,31 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+		----------------------------------------------------------------
+		-- 2215 Тайносводье
+		----------------------------------------------------------------
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(91173, false) -- tww-nightfall-scenario
+				return E.func_GetMapName(2215)..": "..E.func_GetQuestName(76586, false)
 			end,
-			name_save = "The Flame Burns Eternal",
+			name_save = "SpreadingTheLight",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{76586},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..E.func_GetQuestName(91173, false) -- tww-nightfall-scenario
+			end,
+			name_save = "TheFlameBurnsEternal",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1387,9 +828,9 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return "Nightfall Daily"
+				return E.func_GetMapName(2215)..": "..L["Incursion"] -- Daily incursions in Hollowfall or Azj-Kahet
 			end,
-			name_save = "Nightfall Daily",
+			name_save = "Incursion",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
@@ -1402,30 +843,180 @@ local function tempFunction()
 				{88916}, -- Radiant Incursion: Sureki's End
 				{88945}, -- Radiant Incursion: Rak-Zakaz
 			},
-			forcedMaxQuest = 3, -- НАДО УТОЧНИТЬ
+			forcedMaxQuest = 3, -- nadoutichnit
 		},
 		{
-			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(91093, false)
+				return E.func_GetMapName(2215)..": "..L["Major Keyflames"]
 			end,
-			name_save = "More Than Just a Phase",
+			name_save = "MajorKeyflames",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{91093},
+				{79471},
+				{79470},
+				{79469},
+				{79380},
+				{79329},
+				{78657},
+				{78590},
+				{76338},
 			},
-			forcedMaxQuest = 1,
+			forcedMaxQuest = 8,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..L["Lesser Keyflames"] -- MinorKeyflames
+			end,
+			name_save = "LesserKeyflame",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- SAVEDINSTANCE
+				{76169}, -- Glow in the Dark
+				{76394}, -- Shadows of Flavor
+				{76600}, -- Right Between the Gyros-Optics
+				{76733}, -- Tater Trawl
+				{76997}, -- Lost in Shadows
+				{78656}, -- Hose It Down
+				{78915}, -- Squashing the Threat
+				{78933}, -- The Sweet Eclipse
+				{78972}, -- Harvest Havoc
+				{79158}, -- Seeds of Salvation
+				{79173}, -- Supply the Effort
+				{79216}, -- Web of Manipulation
+				{79346}, -- Chew On That
+				{80004}, -- Crab Grab
+				{80562}, -- Blossoming Delight
+				{81574}, -- Sporadic Growth
+				{81632}, -- Lizard Looters
+				-- {nil},
+				-- -- МОЁ
+				-- {81632},
+				-- -- 81574,
+				-- -- 80562,
+				-- {80004},
+				-- -- 79346,
+				-- -- 79216,
+				-- {79173},
+				-- -- 79158,
+				-- {78972},
+				-- -- 78933,
+				-- -- 78915,
+				-- {78656},
+				-- {76997},
+				-- -- 76733,
+				-- {76600},
+				-- {76394},
+				-- -- 76169,
+			},
+			forcedMaxQuest = 8,
+		},
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
+		-- 	end,
+		-- 	name_save = "Rares2215",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{81763, forcedText = {npcID = 207802}, },
+		-- 		{82558, forcedText = {npcID = 206514}, },
+		-- 		{82560, forcedText = {npcID = 214757}, },
+		-- 		{82559, forcedText = {npcID = 206184}, },
+		-- 		{81880, forcedText = {npcID = 221753}, },
+		-- 		{80011, forcedText = {npcID = 218458}, },
+		-- 		{82562, forcedText = {npcID = 221179}, },
+		-- 		{82564, forcedText = {npcID = 207780}, },
+		-- 		{81881, forcedText = {npcID = 221767}, },
+		-- 		{81761, forcedText = {npcID = 221551}, },
+		-- 	},
+		-- },
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(2215)..": "..L["Treasures"] -- hallowfall
+		-- 	end,
+		-- 	name_save = "Treasures2215",
+		-- 	defS = false,
+		-- 	reset = "Regular", -- "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		-- 		{83263, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		-- 		{83284, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		-- 		{81468, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		-- 		{81971, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		-- 		{81978, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		-- 		{81972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		-- 		{82005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		-- 		{83273, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		-- 		{79275, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		-- 		{80687, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		-- 		{81518, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+		-- 	},
+		-- },
+		----------------------------------------------------------------
+		-- 2371 К'ареш
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
+			end,
+			name_save = "Rares2371",
+			defS = false,
+			reset = "Regular", -- "Daily",
+			desc = categoryKey,
+			quests = {
+				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
+				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
+				{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
+				{nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
+				{86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
+				{nil},
+				{91276, forcedText = {npcID = 245998}, },
+				{91275, forcedText = {npcID = 245997}, },
+				{90687, forcedText = {npcID = 238144}, },
+				{90689, forcedText = {npcID = 238536}, },
+				{90692, forcedText = {npcID = 241920}, },
+				{90694, forcedText = {npcID = 238384}, },
+				{nil},
+				{nil, addText = {spellID = 1214374},},
+				{90596, forcedText = {npcID = 232128}, },
+				{90586, forcedText = {npcID = 232077}, },
+				{90594, forcedText = {npcID = 231981}, },
+				{90588, forcedText = {npcID = 232108}, },
+				{90595, forcedText = {npcID = 232127}, },
+				{90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
+				{90591, forcedText = {npcID = 232189}, },
+				{90585, forcedText = {npcID = 232006}, },
+				{90583, forcedText = {npcID = 232129}, },
+				{90592, forcedText = {npcID = 232193}, },
+				{91293, forcedText = {npcID = 234845}, },
+				{90589, forcedText = {npcID = 232111}, },
+				{90593, forcedText = {npcID = 232195}, },
+				{90584, forcedText = {npcID = 232199}, },
+			},
+			-- forcedMaxQuest = 3,
 		},
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(85460, false)
+				return E.func_GetMapName(2371)..": "..E.func_GetQuestName(85460, false)
 			end,
-			name_save = "Ecological Succession",
+			name_save = "EcologicalSuccession", -- Ecological Succession
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1435,12 +1026,30 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2371)..": "..E.func_GetQuestName(91093, false)
+			end,
+			name_save = "MoreThanJustaPhase", -- More Than Just a Phase
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{91093},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		-- 2472 Тазавеш
+		----------------------------------------------------------------
+		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return "K'aresh Warrants"
+				return E.func_GetMapName(2472)..": "..L["Warrant"]
 			end,
-			name_save = "K'aresh Warrants",
+			name_save = "KareshWarrants",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -1454,6 +1063,229 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+		----------------------------------------------------------------
+		-- Вылазки
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Delves"]..": "..E.func_GetQuestName(82706, false) -- DELVES_LABEL
+			end,
+			name_save = "Delves",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
+				-- {82708}, -- Delves: Nerubian Menace (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82707}, -- Delves: Earthen Defense (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				{82706}, -- Delves: Worldwide Research
+				-- {82709}, -- Delves: Percussive Archaeology (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82710}, -- Delves: Empire-ical Exploration (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82711}, -- Delves: Lost and Found (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82712}, -- Delves: Trouble Up and Down Khaz Algar (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+				-- {82746}, -- Delves: Breaking Tough to Loot Stuff (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
+			},
+			forcedMaxQuest = 1, -- 8? nadoutichnit
+		},
+		{ -- The War Within Season 3
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Delves"]..": "..L["Delver's Bounty"] -- (E.func_GetItemName(233071) Season 2)(E.func_GetItemName(248142) Season 3)
+			end,
+			name_save = "DelversBountySeason3",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(248142))..E.func_GetItemName(248142)},}, -- This item can be fished in Excavation Site 9
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = L["Delves"]..": "..L["Delver's Call"],
+			name_save = "DelversCall",
+			defS = false,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
+				{85648},
+				{83759},
+				{83758},
+				{nil},
+				{nil, addText = {mapID = 2215},}, -- Hallowfall
+				{83768},
+				{85664},
+				{83767},
+				{83769},
+				{nil},
+				{nil, addText = {mapID = 2214},}, -- The Ringing Deeps (Гулкие глубины.)
+				{85649},
+				{83766},
+				{nil},
+				{nil, addText = {mapID = 2255},}, -- Azj-Kahet
+				{83770},
+				{83771},
+				{85667},
+				{85666},
+			},
+			-- forcedMaxQuest = 13,
+		},
+		----------------------------------------------------------------
+		-- РАЗНОЕ
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return TRADE_SKILLS..": "..L["Algari Treatise"]
+			end,
+			name_save = "AlgariTreatise",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83725, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222546))..E.func_GetItemName(222546)},}, -- = L["Algari Treatise on Alchemy"],
+				{83726, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222554))..E.func_GetItemName(222554)},}, -- = L["Algari Treatise on Blacksmithing"],
+				{83727, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222550))..E.func_GetItemName(222550)},}, -- = L["Algari Treatise on Enchanting"],
+				{83728, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222621))..E.func_GetItemName(222621)},}, -- = L["Algari Treatise on Engineering"],
+				{83729, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222552))..E.func_GetItemName(222552)},}, -- = L["Algari Treatise on Herbalism"],
+				{83730, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222548))..E.func_GetItemName(222548)},}, -- = L["Algari Treatise on Inscription"],
+				{83731, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222551))..E.func_GetItemName(222551)},}, -- = L["Algari Treatise on Jewelcrafting"],
+				{83732, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222549))..E.func_GetItemName(222549)},}, -- = L["Algari Treatise on Leatherworking"],
+				{83733, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222553))..E.func_GetItemName(222553)},}, -- = L["Algari Treatise on Mining"],
+				{83734, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222649))..E.func_GetItemName(222649)},}, -- = L["Algari Treatise on Skinning"],
+				{83735, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222547))..E.func_GetItemName(222547)},}, -- = L["Algari Treatise on Tailoring"],
+			},
+			forcedMaxQuest = 2, -- nadoutichnit
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return TRADE_SKILLS
+			end,
+			name_save = "ProfessionWeeklies",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{84127, addText = {IconVignette = "Mobile-Blacksmithing",}, }, -- Blacksmithing Services Requested
+				{84128, addText = {IconVignette = "Mobile-Enginnering",}, },  -- Engineering Services Requested
+				{84129, addText = {IconVignette = "Mobile-Inscription",}, },  -- Inscription Services Requested
+				{84130, addText = {IconVignette = "Mobile-Jewelcrafting",}, },  -- Jewelcrafting Services Requested
+				{84131, addText = {IconVignette = "Mobile-Leatherworking",}, },  -- Leatherworking Services Requested
+				{84132, addText = {IconVignette = "Mobile-Tailoring",}, },  -- Tailoring Services Requested
+				{84133, addText = {IconVignette = "Mobile-Alchemy",}, },  -- Alchemy Services Requested
+				{nil},
+
+				{83102, addText = {IconVignette = "Mobile-Mining",}, },  -- Bismuth is Business -- горняка
+				{83103, addText = {IconVignette = "Mobile-Mining",}, },  -- Acquiring Aqirite -- горняка
+				{83104, addText = {IconVignette = "Mobile-Mining",}, },  -- Identifying Ironclaw -- горняка
+				{83105, addText = {IconVignette = "Mobile-Mining",}, },  -- Rush-order Requisition -- горняка
+				{83106, addText = {IconVignette = "Mobile-Mining",}, },  -- Null Pebble Excavation -- горняка
+
+				{82992, addText = {IconVignette = "Mobile-Skinning",}, },  -- Stormcharged Goods -- шкуродера
+				{82993, addText = {IconVignette = "Mobile-Skinning",}, },  -- From Shadows -- шкуродера
+				{83097, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cinder and Storm -- шкуродера
+				{83098, addText = {IconVignette = "Mobile-Skinning",}, },  -- Snap and Crackle -- шкуродера
+				{83100, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cracking the Shell -- шкуродера
+
+				{84084, addText = {IconVignette = "Mobile-Enchanting",}, },  -- Just a Pinch -- зачаровывателя
+				{84085, addText = {IconVignette = "Mobile-Enchanting",}, },  -- The Power of Potential -- зачаровывателя
+				{84086, addText = {IconVignette = "Mobile-Enchanting",}, },  -- A Rare Necessity -- зачаровывателя
+
+				{82916, addText = {IconVignette = "Mobile-Herbalism",}, },  -- When Fungi Bloom -- травника
+				{82958, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Little Blessings -- травника
+				{82962, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Handful of Luredrops -- травника
+				{82965, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Light and Shadow -- травника
+				{82970, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Bloom and A Blossom -- травника
+			},
+			forcedMaxQuest = 2,
+		},
+		----------------------------------------------------------------
+		-- OTHER
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return OTHER..": "..L["Coffer Key"]
+			end,
+			name_save = "CofferKey",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(245653))..E.func_GetItemName(245653)}},
+				{84736, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
+				{84737, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
+				{84738, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
+				{84739, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
+				{nil},
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(238527))..E.func_GetItemName(238527)}},
+				{91175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
+				{91176, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
+				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
+				{91178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
+			},
+			forcedMaxQuest = 2, -- nadoutichnit
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return OTHER..": "..E.func_GetQuestName(84370, false)
+			end,
+			name_save = "TheKeytoSuccess",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{84370, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(227794))..E.func_GetItemName(227794)},},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return OTHER..": "..L["Special Assignment"]
+			end,
+			name_save = "SpecialAssignment",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{82355, addText = {mapID = 2248},}, -- Остров Дорн
+				{81647, addText = {mapID = 2248},}, -- Остров Дорн
+				{81649, addText = {mapID = 2248},}, -- Остров Дорн
+				{81650, addText = {mapID = 2248},}, -- Остров Дорн
+				{81691, addText = {mapID = 2214},}, -- Гулкие глубины
+				{83229, addText = {mapID = 2214},}, -- Гулкие глубины
+				{82787, addText = {mapID = 2215},}, -- Тайносводье
+				{82852, addText = {mapID = 2215},}, -- Тайносводье
+				{82414, addText = {mapID = 2256},}, -- Аз-Кахет
+				{82531, addText = {mapID = 2256},}, -- Аз-Кахет
+				{nil},
+				{85113, addText = {mapID = 2369},}, -- Siren Isle #2369 11.0.7
+				{nil},
+				{85487, addText = {mapID = 2346},}, -- Undermine #2346 11.1.0
+				{85488, addText = {mapID = 2346},}, -- Undermine #2346
+				{nil},
+				{89294, addText = {mapID = 2371},}, -- K'aresh #2371 11.2.0
+				{89293, addText = {mapID = 2371},}, -- K'aresh #2371
+			},
+			forcedMaxQuest = 4, -- nadoutichnit
+		},
+		----------------------------------------------------------------
+		----------------------------------------------------------------
+		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {

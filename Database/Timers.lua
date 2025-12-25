@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local function CreateTimer(baseTime, interval, duration, label)
 	if not baseTime or not interval or interval <= 0 then
@@ -56,10 +56,6 @@ function E.Timers.SL_Maw_TormentorsofTorghast()
 		CN = 1754917310,
 	}
 	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 7200, 900)
-end
-function E.Timers.Daily_Reset()
-	local timerText = CreateTimer(1687579264, 86400, 1)
-	return timerText..E.COLOR_GRAY.."Daily Reset|r"
 end
 function E.Timers.Treasure_Goblin()
 	return CreateTimer(1689159620, 3600, 300)

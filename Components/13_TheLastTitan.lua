@@ -6,7 +6,7 @@ local Is_TheLastTitan_available = E.func_Is_TheLastTitan_available()
 if not enable then return end
 -- if not Is_TheLastTitan_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 13
 local expansionID = 13

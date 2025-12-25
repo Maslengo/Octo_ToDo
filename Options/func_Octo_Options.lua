@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 -- Переводы для названия настройки
 local NumberFormatSettingName = {
@@ -322,7 +322,7 @@ function E.func_Octo_Options(savedVars)
 		L["Localized"], -- "Локализованный"
 		L["With separators"], -- "С разделителями"
 		L["Full"], -- "Полный"
-		L["Blizzard"], -- "Blizzard"
+		"Blizzard", -- "Blizzard"
 		L["Clean"], -- "Минималистичный"
 	}
 	for index, name in ipairs(table_numberFormatMode) do

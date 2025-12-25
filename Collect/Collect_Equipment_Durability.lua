@@ -3,30 +3,63 @@ local GlobalAddonName, E = ...
 local function Collect_Equipment_Durability()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	if not collectPlayerData then return end
-	local totalDurability = 100
 	local slots = {
-		[1] = _G.INVTYPE_HEAD,
-		[3] = _G.INVTYPE_SHOULDER,
-		[5] = _G.INVTYPE_CHEST,
-		[6] = _G.INVTYPE_WAIST,
-		[7] = _G.INVTYPE_LEGS,
-		[8] = _G.INVTYPE_FEET,
-		[9] = _G.INVTYPE_WRIST,
-		[10] = _G.INVTYPE_HAND,
-		[16] = _G.INVTYPE_WEAPONMAINHAND,
-		[17] = _G.INVTYPE_WEAPONOFFHAND,
-		[18] = _G.INVTYPE_RANGED,
+		INVSLOT_HEAD, -- 1
+		INVSLOT_SHOULDER, -- 3
+		INVSLOT_CHEST, -- 5
+		INVSLOT_WAIST, -- 6
+		INVSLOT_LEGS, -- 7
+		INVSLOT_FEET, -- 8
+		INVSLOT_WRIST, -- 9
+		INVSLOT_HAND, -- 10
+		INVSLOT_MAINHAND, -- 16
+		INVSLOT_OFFHAND, -- 17
 	}
-	for index in next, (slots) do
-		local currentDura, maxDura = GetInventoryItemDurability(index)
-		if currentDura and maxDura > 0 then
-			local perc = (currentDura/maxDura)*100
-			if perc < totalDurability then
-				totalDurability = perc
+	----------------------------------------------------------------
+	-- минимальная прочность
+	----------------------------------------------------------------
+	local lowestItemDurability = 100
+	for _, slotID in ipairs(slots) do
+		local cur, max = GetInventoryItemDurability(slotID)
+		if cur and max and max > 0 then
+			local perc = (cur / max) * 100
+			if perc < lowestItemDurability then
+				lowestItemDurability = perc
 			end
 		end
 	end
-	collectPlayerData.PlayerDurability = E.func_CompactRoundNumber(totalDurability)
+	----------------------------------------------------------------
+	-- минимальная НЕнулевая прочность
+	----------------------------------------------------------------
+	-- local lowestNonBrokenDurability = 100
+	-- local found = false
+	-- for _, slotID in ipairs(slots) do
+	-- 	local cur, max = GetInventoryItemDurability(slotID)
+	-- 	if cur and max and max > 0 and cur > 0 then
+	-- 		found = true
+	-- 		local perc = (cur / max) * 100
+	-- 		if perc < lowestNonBrokenDurability then
+	-- 			lowestNonBrokenDurability = perc
+	-- 		end
+	-- 	end
+	-- end
+	-- if not found then
+	-- 	lowestNonBrokenDurability = 0
+	-- end
+	----------------------------------------------------------------
+	-- средняя прочность экипировки
+	----------------------------------------------------------------
+	-- local sum, count = 0, 0
+	-- for _, slotID in next,(slots) do
+	-- 	local cur, max = GetInventoryItemDurability(slotID)
+	-- 	if cur and max and max > 0 then
+	-- 		sum = sum + (cur / max) * 100
+	-- 		count = count + 1
+	-- 	end
+	-- end
+	-- local averageDurability = count > 0 and (sum / count) or 100
+	----------------------------------------------------------------
+	collectPlayerData.PlayerDurability = E.func_CompactRoundNumber(lowestItemDurability)
 end
 ----------------------------------------------------------------
 function E.Collect_Equipment_Durability()

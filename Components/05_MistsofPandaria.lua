@@ -6,7 +6,7 @@ local Is_MistsofPandaria_available = E.func_Is_MistsofPandaria_available()
 if not enable then return end
 if not Is_MistsofPandaria_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 5
 local expansionID = 5

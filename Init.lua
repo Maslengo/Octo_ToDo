@@ -6,6 +6,7 @@ OctoEngine = E -- в других аддонах
 ----------------------------------------------------------------
 E.DEBUG = false
 ----------------------------------------------------------------
+E.L = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
@@ -103,7 +104,7 @@ E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHe
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
 E.TEXT_SPACE = " "
 E.SPAM_TIME = 3
-E.ICON_ONCE = "Crosshair_Quest_64"
+E.ICON_REGULAR = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
 E.ICON_WEEKLY = "Crosshair_Wrapper_64"
 E.ICON_MONTH = "cursor_Wrapper_64"

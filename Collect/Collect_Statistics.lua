@@ -20,7 +20,6 @@ local function Collect_Statistics()
 	-- end
 	-- opde(tbl)
 	----------------------------------------------------------------
-	--  print (GetComparisonStatistic(328)) -- [328] = "Total gold acquired",
 	----------------------------------------------------------------
 	-- opde(GetStatisticsCategoryList())
 	----------------------------------------------------------------

@@ -6,7 +6,7 @@ local Is_WarlordsofDraenor_available = E.func_Is_WarlordsofDraenor_available()
 if not enable then return end
 if not Is_WarlordsofDraenor_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 6
 local expansionID = 6
@@ -85,7 +85,7 @@ local function tempFunction()
 			TextLeft = GARRISON_LOCATION_TOOLTIP,
 			name_save = "GarrisonLevel",
 			defS = true,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{34378, FactionOrClass = {Horde = true,},},

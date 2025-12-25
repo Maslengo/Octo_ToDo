@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	local pd = CharInfo.PlayerData

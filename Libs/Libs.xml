@@ -10,7 +10,6 @@
 	<Include file="LibDBIcon-1.0\lib.xml"/>
 	<Include file="LibSharedMedia-3.0\lib.xml"/>
 	<Include file="LibThingsLoad\LibThingsLoad.xml"/>
-	<Include file="AceLocale-3.0\AceLocale-3.0.xml"/>
 	<Include file="AceGUI-3.0\AceGUI-3.0.xml"/>
 	<Include file="AceConfig-3.0\AceConfig-3.0.xml"/>
 	<Include file="AceGUI-3.0-SharedMediaWidgets\widget.xml"/>

@@ -185,46 +185,99 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function func_reputationName_CACHE(id)
-	local Cache = GetOrCreateCache("AllReputations", id)
-	if Cache[id] and Cache[id][E.curLocaleLang] then
-		return Cache[id][E.curLocaleLang]
-	end
-	local name = ""
-	local repInfo = GetFactionDataByID(id)
-	if repInfo then
-		name = repInfo.name
-	else
-		local reputationInfo = GetFriendshipReputation(id)
-		if reputationInfo.name then
-			name = reputationInfo.name
+-- local function func_reputationName_CACHE(id)
+--     local Cache = GetOrCreateCache("AllReputations", id)
+--     if Cache[id] and Cache[id][E.curLocaleLang] then
+--         return Cache[id][E.curLocaleLang]
+--     end
+--     local name = ""
+--     local repInfo = GetFactionDataByID(id)
+--     if repInfo then
+--         name = repInfo.name
+--     else
+--         local reputationInfo = GetFriendshipReputation(id)
+--         if reputationInfo.name then
+--             name = reputationInfo.name
+--         end
+--     end
+--     if name and name ~= "" then
+--         Cache[id] = Cache[id] or {}
+--         Cache[id][E.curLocaleLang] = name
+--         if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
+--             E.func_PrintMessage(E.COLOR_LIME..REPUTATION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+--         end
+--     elseif E.OctoTable_Reputations_DB[id] then
+--         if E.OctoTable_Reputations_DB[id][E.curLocaleLang] ~= "NONE" then
+--             return E.OctoTable_Reputations_DB[id][E.curLocaleLang]..E.COLOR_SKYBLUE.." (DB)|r"
+--         elseif E.OctoTable_Reputations_DB[id]["enUS"] then
+--             return E.OctoTable_Reputations_DB[id]["enUS"]..E.COLOR_SLATEGRAY.." (enUS)|r"
+--         end
+--     end
+--     local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
+--     return output
+-- end
+-- function E.func_GetReputationName(id)
+--     if not id then return end
+--     id = tonumber(id)
+--     return func_reputationName_CACHE(id)..E.debugInfo(id)
+-- end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local rep_meta_table = {
+	__index = function(self, id)
+		id = tonumber(id)
+		if not id then
+			local unknown = E.COLOR_RED..UNKNOWN.."|r"
+			rawset(self, id, unknown)
+			return unknown
 		end
-	end
-	if name and name ~= "" then
-		-- local isAccountWide = IsAccountWideReputation(id) or false
-		-- if isAccountWide == true then
-		-- name = E.ICON_ACCOUNT_WIDE..name
-		-- end
-		Cache[id] = Cache[id] or {}
-		Cache[id][E.curLocaleLang] = name
-		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
-			E.func_PrintMessage(E.COLOR_LIME..REPUTATION.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+		local Cache = GetOrCreateCache("AllReputations", id)
+		local name
+		-- проверяем кэш
+		if Cache[id] and Cache[id][E.curLocaleLang] then
+			name = Cache[id][E.curLocaleLang]
+		else
+			-- проверяем API
+			local repInfo = GetFactionDataByID(id)
+			if repInfo then
+				name = repInfo.name
+			else
+				local reputationInfo = GetFriendshipReputation(id)
+				if reputationInfo and reputationInfo.name then
+					name = reputationInfo.name
+				end
+			end
+			if name and name ~= "" then
+				Cache[id] = Cache[id] or {}
+				Cache[id][E.curLocaleLang] = name
+			else
+				local dbEntry = E.OctoTable_Reputations_DB[id]
+				if dbEntry then
+					if dbEntry[E.curLocaleLang] and dbEntry[E.curLocaleLang] ~= "NONE" then
+						name = dbEntry[E.curLocaleLang]..E.COLOR_SLATEGRAY.." (DB)|r"
+					elseif dbEntry["enUS"] then
+						name = dbEntry["enUS"]..E.COLOR_SKYBLUE.." (enUS)|r"
+					end
+				end
+			end
 		end
-	elseif E.OctoTable_Reputations_DB[id] then
-		if E.OctoTable_Reputations_DB[id][E.curLocaleLang] ~= "NONE" then
-			return E.OctoTable_Reputations_DB[id][E.curLocaleLang]..E.COLOR_SKYBLUE.." (DB)|r"
-		elseif E.OctoTable_Reputations_DB[id]["enUS"] then
-			return E.OctoTable_Reputations_DB[id]["enUS"]..E.COLOR_SLATEGRAY.." (enUS)|r"
+		if not name or name == "" then
+			name = E.COLOR_RED..UNKNOWN.."|r"
 		end
+		-- сохраняем результат в метатаблице
+		rawset(self, id, name)
+		return name
 	end
-	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
-	return output
-end
+}
+local ReputationNames = setmetatable({}, rep_meta_table)
 function E.func_GetReputationName(id)
-	if not id then return end
-	id = tonumber(id)
-	return func_reputationName_CACHE(id)..E.debugInfo(id)
+	if not id then return "no id" end
+	return ReputationNames[id]..(E.debugInfo(id) or "")
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_GetReputationIcon(id)
 	local reputationData = E.OctoTable_Reputations_DB[id]
 	if reputationData then
@@ -239,7 +292,6 @@ function E.func_GetReputationAtlas(id)
 	end
 	return nil
 end
-
 function E.func_GetReputationSideIcon(id)
 	local reputationData = E.OctoTable_Reputations_DB[id]
 	if reputationData and reputationData.side then
@@ -448,7 +500,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function func_ProfessionName_CACHE(id)
+local function func_ProfessionName_CACHE(id) -- https://warcraft.wiki.gg/wiki/TradeSkillLineID
 	local Cache = GetOrCreateCache("AllProfessions", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
@@ -464,7 +516,7 @@ local function func_ProfessionName_CACHE(id)
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r" -- RETRIEVING_DATA
 	return output
 end
-function E.func_GetProfessionName(id)
+function E.func_GetProfessionName(id) -- https://warcraft.wiki.gg/wiki/TradeSkillLineID
 	if not id then return end
 	id = tonumber(id)
 	local cachedName = func_ProfessionName_CACHE(id)
@@ -476,3 +528,7 @@ end
 -- local result = GetTradeSkillDisplayName(id)
 -- return result..E.debugInfo(id)
 -- end
+
+function E.func_ProfessionIcon(skillLine) -- https://warcraft.wiki.gg/wiki/TradeSkillLineID
+	return skillLine and E.func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
+end

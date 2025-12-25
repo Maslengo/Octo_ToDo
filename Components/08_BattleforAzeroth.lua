@@ -6,7 +6,7 @@ local Is_BattleforAzeroth_available = E.func_Is_BattleforAzeroth_available()
 if not enable then return end
 if not Is_BattleforAzeroth_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 8
 local expansionID = 8
@@ -328,7 +328,7 @@ local function tempFunction()
 			-- end,
 		-- 	name_save = "TheMechagonianThreat",
 		-- defS = true,
-		-- 	reset = "Once",
+		-- 	reset = "Regular",
 		-- 	desc = categoryKey,
 		-- 	quests = {
 		-- 		-- Только для Альянса
@@ -480,7 +480,7 @@ local function tempFunction()
 		-- TextLeft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- defS = true,
-		-- reset = "Once",
+		-- reset = "Regular",
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
@@ -515,7 +515,7 @@ local function tempFunction()
 		-- TextLeft = "UNLOCKING MECHAGON PART 2",
 		-- name_save = "UNLOCKING MECHAGON PART 2",
 		-- defS = true,
-		-- reset = "Once",
+		-- reset = "Regular",
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
@@ -635,7 +635,7 @@ local function tempFunction()
 			end,
 			name_save = "MechagonMakingAMount",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{55608},
@@ -672,40 +672,6 @@ local function localfunc2()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 		if Octo_ToDo_DB_Vars.Items then
-			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
-					----------------------------------------------------------------
-					if CharInfo.MASLENGO.Items.Bags[158075] then
-						TextCenter = CharInfo.PlayerData.azeriteLVL and E.COLOR_GREEN..CharInfo.PlayerData.azeriteLVL.."|r".."+"..E.COLOR_GRAY..CharInfo.PlayerData.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
-					end
-					----------------------------------------------------------------
-					TextLeft = E.func_GetItemName(158075)
-					ColorLeft = E.OctoTable_Expansions[categoryKey].color
-					SettingsType = "Items#"..158075
-					----------------------------------------------------------------
-					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-					----------------------------------------------------------------
-			end)
-			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
-					----------------------------------------------------------------
-					if CharInfo.MASLENGO.Items.Bags[169223] then
-						if CharInfo.PlayerData.cloak_lvl then
-							TextCenter = E.COLOR_CYAN..AZERITE_ESSENCE_RANK:format(CharInfo.PlayerData.cloak_lvl).."|r"
-						else
-							TextCenter = E.COLOR_ORANGE.."in bank|r"
-						end
-					end
-					----------------------------------------------------------------
-					TextLeft = E.func_GetItemName(169223)
-					ColorLeft = E.OctoTable_Expansions[categoryKey].color
-					SettingsType = "Items#"..169223
-					----------------------------------------------------------------
-					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-					----------------------------------------------------------------
-			end)
 			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 					----------------------------------------------------------------
 					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil

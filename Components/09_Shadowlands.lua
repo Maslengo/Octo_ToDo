@@ -6,7 +6,7 @@ local Is_Shadowlands_available = E.func_Is_Shadowlands_available()
 if not enable then return end
 if not Is_Shadowlands_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 9
 local expansionID = 9
@@ -126,8 +126,8 @@ local function tempFunction()
 		-- {
 		-- sorted = false,
 		-- showTooltip = true,
-		-- TextLeft = L["Troubles at Home"], -- E.func_GetQuestName(61981, false),
-		-- name_save = "Troubles at Home",
+		-- TextLeft = L["Troubles at Home"], -- E.func_GetQuestName(60425, false),
+		-- name_save = "TroublesatHome",
 		-- defS = true,
 		-- reset = "Weekly",
 		-- desc = categoryKey,
@@ -245,11 +245,11 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..AREA_LOOTING_UNLOCKED -- AREA_LOOTING_UNLOCKED "Treasures"
+				return E.func_GetMapName(1970)..": "..AREA_LOOTING_UNLOCKED -- AREA_LOOTING_UNLOCKED L["Treasures"]
 			end,
 			name_save = "ZMtreasures",
 			defS = true,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{65520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -288,7 +288,7 @@ local function tempFunction()
 			end,
 			name_save = "ZMUndulatingFoliage",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{65572, forcedText = {text = L["Undulating Foliage"]},},
@@ -349,7 +349,7 @@ local function tempFunction()
 			end,
 			name_save = "Concordance",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{65179, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 1"},},
@@ -550,17 +550,17 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".. L["Relic Gorgers"]
+				return E.func_GetMapName(1961)..": ".. L["Relic Gorger"]
 			end,
 			name_save = "KORTHIARelicGorgers",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{64433, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorgers"].." 1"},},
-				{64434, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorgers"].." 2"},},
-				{64435, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorgers"].." 3"},},
-				{64436, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorgers"].." 4"},},
+				{64433, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 1"},},
+				{64434, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 2"},},
+				{64435, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 3"},},
+				{64436, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 4"},},
 			},
 			forcedMaxQuest = 4,
 		},
@@ -587,9 +587,9 @@ local function tempFunction()
 				{64361, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 4"},},
 				{64362, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 5"},},
 				{nil},
-				{64021, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Caches"].." 1"},},
-				{64363, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Caches"].." 2"},},
-				{64364, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Caches"].." 3"},},
+				{64021, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"].." 1"},},
+				{64363, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"].." 2"},},
+				{64364, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"].." 3"},},
 				{nil},
 				{64787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 1"},},
 				{64788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 2"},},
@@ -620,7 +620,7 @@ local function tempFunction()
 		-- end,
 		-- name_save = "KORTHIAitems",
 		-- defS = true,
-		-- reset = "Once",
+		-- reset = "Regular",
 		-- desc = categoryKey,
 		-- quests = {
 		-- {64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
@@ -688,14 +688,14 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["Event: Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast()
+				return E.func_GetMapName(1543)..": "..L["Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast()
 			end,
 			name_save = "MAWtormentor",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{63854, addText = {IconVignette = "Tormentors-Boss",}, forcedText = {text = L["Event: Tormentors of Torghast"]},},
+				{63854, addText = {IconVignette = "Tormentors-Boss",}, forcedText = {text = L["Tormentors of Torghast"]},},
 			},
 			forcedMaxQuest = 1,
 		},

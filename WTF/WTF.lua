@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local funcName = GlobalAddonName.."WTF"
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 E.OctoTable_Reputations_Paragon_Data_NEW = {}
 E.OctoTable_Reputations_Paragon_Data = {}
@@ -124,10 +124,10 @@ function EventFrame:func_RemoveDuplicateCharacters()
 				pd.Name == currentName and
 				pd.curServer == currentRealm then
 					if GUID ~= currentGUID then
-						E.func_PrintMessage(L["Removing duplicate: "], pd.Name.."-"..pd.curServer, "GUID:", GUID)
+						E.func_PrintMessage("Removing duplicate: ", pd.Name.."-"..pd.curServer, "GUID:", GUID)
 						Octo_ToDo_DB_Levels[GUID] = nil
 					else
-						E.func_PrintMessage(L["Keeping current: "], pd.Name.."-"..pd.curServer, "GUID:", GUID)
+						E.func_PrintMessage("Keeping current: ", pd.Name.."-"..pd.curServer, "GUID:", GUID)
 					end
 				end
 			end

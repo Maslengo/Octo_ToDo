@@ -6,7 +6,7 @@ local Is_WorldofWarcraft_available = E.func_Is_WorldofWarcraft_available()
 if not enable then return end
 if not Is_WorldofWarcraft_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 99
 -- local expansionID =
@@ -26,7 +26,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-		{id = 137642, defS = false,}, -- Mark of Honor
+		-- {id = 137642, defS = false,}, -- Mark of Honor
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
@@ -77,7 +77,7 @@ local function tempFunction()
 	-- 			{92649, addText = {expansionText = E.func_FormatExpansion(9, "LEFT")}}, -- 9 SL (Темный путь сквозь время)
 
 	-- 			{nil},
-	-- 			{nil, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = "Weekend Event"},},
+	-- 			{nil, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Weekend Event"]},},
 	-- 			-- NORMAL TIMEWALK
 	-- 			{85947, addText = {expansionText = E.func_FormatExpansion(1, "LEFT")}}, -- 1 CLASSIC
 	-- 			{85948, addText = {expansionText = E.func_FormatExpansion(2, "LEFT")}}, -- 2 TBC
@@ -100,7 +100,7 @@ local function tempFunction()
 		{id = "Professions", defS = false,},
 		{id = "ItemLevel", defS = true,},
 		{id = "Money", defS = true,},
-		{id = "WasOnline", defS = true,},
+		{id = "LastOnline", defS = true,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

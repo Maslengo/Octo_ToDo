@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_Dispatcher(categoryKey, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
@@ -92,8 +92,8 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	-- 	IconLeft = E.ICON_DAILY
 	-- elseif reset == "Weekly" then
 	-- 	IconLeft = E.ICON_WEEKLY
-	-- elseif reset == "Once" then
-	-- 	IconLeft = E.ICON_ONCE
+	-- elseif reset == "Regular" then
+	-- 	IconLeft = E.ICON_REGULAR
 	-- elseif reset == "Month" then
 	-- 	IconLeft = E.ICON_MONTH
 	-- end
@@ -136,8 +136,8 @@ function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
 		TextLeft = STAT_AVERAGE_ITEM_LEVEL
 	elseif id == "Money" then
 		TextLeft = BONUS_ROLL_REWARD_MONEY
-	elseif id == "WasOnline" then
-		TextLeft = L["Was online"]
+	elseif id == "LastOnline" then
+		TextLeft = L["Last online"]
 	elseif id == "GreatVault" then
 		TextLeft = RATED_PVP_WEEKLY_VAULT
 		IconLeft = "greatVault-whole-normal"

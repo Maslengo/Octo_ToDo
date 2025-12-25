@@ -6,7 +6,7 @@ local Is_Dragonflight_available = E.func_Is_Dragonflight_available()
 if not enable then return end
 if not Is_Dragonflight_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 10
 local expansionID = 10
@@ -274,11 +274,11 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": ".."Treasures"
+				return E.func_GetMapName(2200)..": "..L["Treasures"]
 			end,
 			name_save = "EmeraldDream_Treasures",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{77872, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -310,7 +310,7 @@ local function tempFunction()
 			end,
 			name_save = "EmeraldDream_DreamsUnified",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{78381},
@@ -341,7 +341,7 @@ local function tempFunction()
 		-- end,
 		-- name_save = "TheGilneasReclamation_Storylines",
 		-- defS = true,
-		-- reset = "Once",
+		-- reset = "Regular",
 		-- desc = categoryKey,
 		-- quests = {
 		-- {78178},
@@ -477,11 +477,11 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": "..L["Sniffenseeking (items)"]
+				return E.func_GetMapName(2133)..": ".. L["Sniffenseeking"].." ("..ITEMS..")"
 			end,
 			name_save = "ZaralekCavernSniffenseekingItems",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{75771},
@@ -583,7 +583,7 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = "Fyrakk Assaults",
+			TextLeft = L["Fyrakk Assaults"], -- 7432 AREA POI ID
 			name_save = "FyrakkAssaults",
 			defS = false,
 			reset = "Weekly",
@@ -627,7 +627,7 @@ local function tempFunction()
 			end,
 			name_save = "DreamsurgeInvestigation",
 			defS = false,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{77414},
@@ -662,31 +662,31 @@ local function tempFunction()
 		-- },
 		-- forcedMaxQuest = 1,
 		-- },
-		-- {
-		-- showTooltip = true,
-		-- TextLeft = L["Temporal Acquisitions Specialist"], -- есть ачива
-		-- name_save = "TemporalAcquisitionsSpecialist",
-		-- defS = true,
-		-- reset = "Once",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {76406},
-		-- {76547},
-		-- {76521},
-		-- {76404},
-		-- {76548},
-		-- {76379},
-		-- {76459},
-		-- {76362},
-		-- {76546},
-		-- {76453},
-		-- {76544},
-		-- {76449},
-		-- {76351},
-		-- {76533},
-		-- },
-		-- forcedMaxQuest = 14,
-		-- },
+		{
+			showTooltip = true,
+			TextLeft = E.func_GetAchievementName(18554),
+			name_save = "TemporalAcquisitionsSpecialist",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{76406},
+				{76547},
+				{76521},
+				{76404},
+				{76548},
+				{76379},
+				{76459},
+				{76362},
+				{76546},
+				{76453},
+				{76544},
+				{76449},
+				{76351},
+				{76533},
+			},
+			forcedMaxQuest = 14,
+		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------

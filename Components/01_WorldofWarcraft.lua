@@ -6,7 +6,7 @@ local Is_WorldofWarcraft_available = E.func_Is_WorldofWarcraft_available()
 if not enable then return end
 if not Is_WorldofWarcraft_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 1
 local expansionID = 1

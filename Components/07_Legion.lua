@@ -6,7 +6,7 @@ local Is_Legion_available = E.func_Is_Legion_available()
 if not enable then return end
 if not Is_Legion_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 7
 local expansionID = 7
@@ -148,7 +148,7 @@ local function tempFunction()
 			end,
 			defS = false,
 			name_save = "BalanceofPower",
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			MainquestID = 43533,
 			quests = {

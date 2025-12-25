@@ -1,8 +1,14 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 EventFrame.searchFilter = nil
+EventFrame.measureFrame = CreateFrame("Frame")
+EventFrame.measureFrame:SetParent(UIParent)
+EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
+EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
+EventFrame.measureText:SetFontObject(OctoFont11)
+EventFrame.measureText:SetWordWrap(false)
 local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate")
 Octo_MainFrame_ToDo:Hide()
 E.func_RegisterFrame(Octo_MainFrame_ToDo)
@@ -206,6 +212,43 @@ local func_OnAcquiredCenter do
 					end
 				end
 		})
+
+		-- container → нужная таблица
+		-- parentFrame → нужный родитель
+
+		-- container = setmetatable({}, {
+		-- 	__index = function(self, key)
+		-- 		-- разрешаем только последовательное создание
+		-- 		if key ~= #self + 1 then
+		-- 			return rawget(self, key)
+		-- 		end
+
+		-- 		local f = CreateFrame("BUTTON", nil, parentFrame)
+		-- 		f:SetPropagateMouseClicks(true)
+		-- 		f:SetPropagateMouseMotion(true)
+		-- 		f:SetHeight(E.GLOBAL_LINE_HEIGHT)
+
+		-- 		if key == 1 then
+		-- 			f:SetPoint("TOPLEFT", parentFrame, "TOPLEFT", INDENT_TEXT + 1, 0)
+		-- 		else
+		-- 			local prev = rawget(self, key - 1)
+		-- 			f:SetPoint("TOPLEFT", prev, "TOPRIGHT", 0, 0)
+		-- 		end
+
+		-- 		f:RegisterForClicks("LeftButtonUp")
+
+		-- 		f.text = f:CreateFontString(nil, "OVERLAY")
+		-- 		f.text:SetFontObject(OctoFont11)
+		-- 		f.text:SetAllPoints()
+		-- 		f.text:SetWordWrap(false)
+		-- 		f.text:SetJustifyV("MIDDLE")
+		-- 		f.text:SetJustifyH("CENTER")
+		-- 		f.text:SetTextColor(1, 1, 1, 1)
+
+		-- 		rawset(self, key, f)
+		-- 		return f
+		-- 	end
+		-- })
 	end
 end
 local function func_SettingsButton_OnClick(button, frameData)
@@ -284,8 +327,8 @@ local function func_Setup_UniversalQuests(frame, id)
 		IconLeft = E.ICON_DAILY
 	elseif reset == "Weekly" then
 		IconLeft = E.ICON_WEEKLY
-	elseif reset == "Once" then
-		IconLeft = E.ICON_ONCE
+	elseif reset == "Regular" then
+		IconLeft = E.ICON_REGULAR
 	elseif reset == "Month" then
 		IconLeft = E.ICON_MONTH
 	end
@@ -820,60 +863,50 @@ function EventFrame:func_ResetsearchFilter()
 	end
 	EventFrame:CreateDataProvider()
 end
+
 -- Функция расчета ширины колонок для левой части
 local function func_calculateColumnWidthsLEFT(node)
 	local frameData = node:GetData()
-	local framesLEFT = Octo_MainFrame_ToDo.ViewLeft:GetFrames()
-	local framesCENT = Octo_MainFrame_ToDo.ViewCenter:GetFrames()
-	-- Создание тестовых фреймов, если их нет
-	if #framesLEFT == 0 then
-		Octo_MainFrame_ToDo.ViewLeft:AcquireInternal(1, node)
-		Octo_MainFrame_ToDo.ViewLeft:InvokeInitializers()
-	end
-	if #framesCENT == 0 then
-		Octo_MainFrame_ToDo.ViewCenter:AcquireInternal(1, node)
-		Octo_MainFrame_ToDo.ViewCenter:InvokeInitializers()
-	end
+
+	-- local framesLEFT = Octo_MainFrame_ToDo.ViewLeft:GetFrames()
+	-- local framesCENT = Octo_MainFrame_ToDo.ViewCenter:GetFrames()
+	-- -- Создание тестовых фреймов, если их нет
+	-- if #framesLEFT == 0 then
+	-- 	Octo_MainFrame_ToDo.ViewLeft:AcquireInternal(1, node)
+	-- 	Octo_MainFrame_ToDo.ViewLeft:InvokeInitializers()
+	-- end
+	-- if #framesCENT == 0 then
+	-- 	Octo_MainFrame_ToDo.ViewCenter:AcquireInternal(1, node)
+	-- 	Octo_MainFrame_ToDo.ViewCenter:InvokeInitializers()
+	-- end
 	-- Расчет ширины на основе текста
 	local columnWidthsLEFT = {}
-	-- framesLEFT[1].TextLeft:SetText(frameData.TextLeft)
-	if type(frameData.TextLeft) == "function" then
-		framesLEFT[1].TextLeft:SetText(frameData.TextLeft()) -- ← Вызываем функцию!
-	else
-		framesLEFT[1].TextLeft:SetText(frameData.TextLeft) -- ← Просто строка
-	end
-	columnWidthsLEFT[1] = math.ceil(framesLEFT[1].TextLeft:GetStringWidth()) + INDENT_LEFT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT -- (иконка)
+
+	local textToMeasure = frameData.TextLeft
+	local width = E.func_MeasureTextWidth(textToMeasure, MIN_COLUMN_WIDTH)
+
+	columnWidthsLEFT[1] = width + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT -- (3 иконки)
 	return columnWidthsLEFT
 end
 -- Функция расчета ширины колонок для правой части
 local function func_calculateColumnWidthsCenter(node)
 	local frameData = node:GetData()
-	local framesCENT = Octo_MainFrame_ToDo.ViewCenter:GetFrames()
-	-- Создание тестовых фреймов, если их нет
-	if #framesCENT == 0 then
-		Octo_MainFrame_ToDo.ViewCenter:AcquireInternal(1, node)
-		Octo_MainFrame_ToDo.ViewCenter:InvokeInitializers()
-		framesCENT = Octo_MainFrame_ToDo.ViewCenter:GetFrames()
-	end
+
+
+	-- local framesCENT = Octo_MainFrame_ToDo.ViewCenter:GetFrames()
+	-- -- Создание тестовых фреймов, если их нет
+	-- if #framesCENT == 0 then
+	-- 	Octo_MainFrame_ToDo.ViewCenter:AcquireInternal(1, node)
+	-- 	Octo_MainFrame_ToDo.ViewCenter:InvokeInitializers()
+	-- 	framesCENT = Octo_MainFrame_ToDo.ViewCenter:GetFrames()
+	-- end
 	local columnWidthsCenter = {}
-	local sampleFrameCenter = framesCENT[1]
-	-- for i = 1, frameData.totalColumns do
-	-- if not sampleFrameCenter.columnFrames[i] then
-	--     sampleFrameCenter.columnFrames[i] = sampleFrameCenter.columnFrames[i] -- Вызовет __index
-	-- end
-	-- end
+
 	for i = 1, frameData.totalColumns do
-		-- Инициализация всех подфреймов (раньше было 2 цикла)
-		if not sampleFrameCenter.columnFrames[i] then
-			sampleFrameCenter.columnFrames[i] = sampleFrameCenter.columnFrames[i] -- Вызовет __index
-		end
-		-- Расчет ширины для каждой колонки
 		if frameData.TextCenter[i] then
-			sampleFrameCenter.columnFrames[i].TextCenter:SetText(frameData.TextCenter[i])
-			columnWidthsCenter[i] = math.ceil(math.max(
-					sampleFrameCenter.columnFrames[i].TextCenter:GetStringWidth() + INDENT_LEFT,
-					MIN_COLUMN_WIDTH_Center
-			))
+			local textToMeasure = frameData.TextCenter[i]
+			local width = E.func_MeasureTextWidth(textToMeasure, MIN_COLUMN_WIDTH_Center)
+			columnWidthsCenter[i] = width
 		else
 			columnWidthsCenter[i] = MIN_COLUMN_WIDTH_Center
 		end
@@ -881,19 +914,25 @@ local function func_calculateColumnWidthsCenter(node)
 	return columnWidthsCenter
 end
 local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serverTEXT)
-	frame.Nickname:SetText(nicknameTEXT)
-	local width2 = 0
-	local width1 = math.ceil(math.max(
-			frame.Nickname:GetStringWidth() + INDENT_LEFT,
-			MIN_COLUMN_WIDTH_Center
-	))
-	if not Octo_ToDo_DB_Vars.isOnlyCurrentServer then
-		frame.Server:SetText(serverTEXT)
-		width2 = math.ceil(math.max(
-				frame.Server:GetStringWidth() + INDENT_LEFT,
-				MIN_COLUMN_WIDTH_Center
-		))
-	end
+
+	local textToMeasure1 = nicknameTEXT
+	local width1 = E.func_MeasureTextWidth(textToMeasure1, MIN_COLUMN_WIDTH_Center)
+
+	local textToMeasure2 = serverTEXT
+	local width2 = E.func_MeasureTextWidth(textToMeasure2, MIN_COLUMN_WIDTH_Center)
+	-- frame.Nickname:SetText(nicknameTEXT)
+	-- local width2 = 0
+	-- local width1 = math.ceil(math.max(
+	-- 		frame.Nickname:GetStringWidth() + INDENT_LEFT,
+	-- 		MIN_COLUMN_WIDTH_Center
+	-- ))
+	-- if not Octo_ToDo_DB_Vars.isOnlyCurrentServer then
+	-- 	frame.Server:SetText(serverTEXT)
+	-- 	width2 = math.ceil(math.max(
+	-- 			frame.Server:GetStringWidth() + INDENT_LEFT,
+	-- 			MIN_COLUMN_WIDTH_Center
+	-- 	))
+	-- end
 	return math.max(width1, width2)
 end
 local function func_UPDATE_MAINFRAME() -- providerfunc

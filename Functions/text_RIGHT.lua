@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 function E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
 	-- Пробуем разные варианты названий функций
@@ -355,7 +355,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 			-- end
 		end
 	end
-	if id == "WasOnline" then
+	if id == "LastOnline" then
 		local color = E.COLOR_WHITE
 		if pd.loginHour and pd.loginDay then
 			if pd.GUID == E.curGUID then

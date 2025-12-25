@@ -6,7 +6,7 @@ local Is_WrathoftheLichKing_available = E.func_Is_WrathoftheLichKing_available()
 if not enable then return end
 if not Is_WrathoftheLichKing_available then return end;
 ----------------------------------------------------------------
-local L = LibStub("AceLocale-3.0"):GetLocale(E.MainAddonName)
+local L = E.L
 ----------------------------------------------------------------
 local categoryKey = 3
 local expansionID = 3
@@ -78,7 +78,7 @@ local function tempFunction()
 			end,
 			name_save = "Shadowmourne",
 			defS = true,
-			reset = "Once",
+			reset = "Regular",
 			desc = categoryKey,
 			quests = {
 				{24545, FactionOrClass = {PALADIN = true, WARRIOR = true, DEATHKNIGHT = true,},},
