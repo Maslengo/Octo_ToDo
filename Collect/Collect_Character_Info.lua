@@ -1,9 +1,12 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Character_Info()
-	E.curServerShort = E.func_GetRealmShortName(GetRealmName())
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
+	E.curServerShort = E.func_GetRealmShortName(GetRealmName())
 	local specId, specName, _, specIcon = GetSpecializationInfo(GetSpecialization())
 	local RaceLocal, RaceEnglish, raceID = UnitRace("PLAYER")
 	local guildName, guildRankName, guildRankIndex = GetGuildInfo("PLAYER")

@@ -13,7 +13,31 @@ local GlobalAddonName, E = ...
 -- ["zhTW"] = "",
 -- },
 -- Таблица с переводами
+
+
+
 E.translations = {
+
+
+
+	["Click to View Equipment"] = {
+		["ruRU"] = "Нажмите, чтобы посмотреть экипировку",
+		["deDE"] = "Klicken, um Ausrüstung anzuzeigen",
+		["esES"] = "Haz clic para ver el equipo",
+		["esMX"] = "Haz clic para ver el equipo",
+		["frFR"] = "Cliquez pour voir l’équipement",
+		["itIT"] = "Clicca per visualizzare l’equipaggiamento",
+		["ptBR"] = "Clique para ver o equipamento",
+		["koKR"] = "장비를 보려면 클릭",
+		["zhCN"] = "点击查看装备",
+		["zhTW"] = "點擊查看裝備",
+	},
+
+
+
+
+
+
 	["Warrant"] = { -- https://www.wowhead.com/quest=89490/warrant-arcana-monger-sozer
 		["ruRU"] = "Ордер",
 		["deDE"] = "Haftbefehl",
@@ -566,18 +590,6 @@ E.translations = {
 		["zhCN"] = "字体设置",
 		["zhTW"] = "字型設定",
 	},
-	["Extra Background Fade When Moving"] = {
-		["ruRU"] = "Дополнительное затухание фона в движении",
-		["deDE"] = "Zusätzliches Hintergrundverblassen beim Bewegen",
-		["esES"] = "Desvanecimiento extra del fondo al moverse",
-		["esMX"] = "Desvanecimiento extra del fondo al moverse",
-		["frFR"] = "Estompage supplémentaire de l'arrière-plan en mouvement",
-		["itIT"] = "Dissolvenza extra dello sfondo durante il movimento",
-		["ptBR"] = "Desvanecimento extra do fundo ao se mover",
-		["koKR"] = "이동 시 배경 추가 페이드",
-		["zhCN"] = "移动时额外背景淡出",
-		["zhTW"] = "移動時額外背景淡出",
-	},
 	["Changes require a ReloadUI"] = {
 		["ruRU"] = "Изменения требуют перезагрузки интерфейса",
 		["deDE"] = "Änderungen erfordern ein Neuladen der UI",
@@ -1033,6 +1045,43 @@ E.translations = {
 		["koKR"] = "중간 클릭:",
 		["zhCN"] = "中键:",
 		["zhTW"] = "中鍵:",
+	},
+
+	["RMB"] = {
+		["ruRU"] = "ПКМ",
+		["deDE"] = "RMT",
+		["esES"] = "CDM",
+		["esMX"] = "CDM",
+		["frFR"] = "CMM",
+		["itIT"] = "DST",
+		["ptBR"] = "CDM",
+		["koKR"] = "우클릭",
+		["zhCN"] = "右键",
+		["zhTW"] = "右鍵",
+	},
+	["LMB"] = {
+		["ruRU"] = "ЛКМ",
+		["deDE"] = "LMT",
+		["esES"] = "CIM",
+		["esMX"] = "CIM",
+		["frFR"] = "CGM",
+		["itIT"] = "SIN",
+		["ptBR"] = "CEM",
+		["koKR"] = "좌클릭",
+		["zhCN"] = "左键",
+		["zhTW"] = "左鍵",
+	},
+	["MMB"] = {
+		["ruRU"] = "СКМ",
+		["deDE"] = "MMT",
+		["esES"] = "CCM",
+		["esMX"] = "CCM",
+		["frFR"] = "CMM",
+		["itIT"] = "CTR",
+		["ptBR"] = "CMM",
+		["koKR"] = "중간 클릭",
+		["zhCN"] = "中键",
+		["zhTW"] = "中鍵",
 	},
 	["Auto Sell Grey"] = {
 		["ruRU"] = "Автопродажа серого хлама",

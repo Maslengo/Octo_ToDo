@@ -1,8 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_LoginTime()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
 	collectPlayerData.loginDate = date("%d.%m.%Y %H:%M:%S")
 	collectPlayerData.loginDay = date("%d.%m.%Y")
 	collectPlayerData.loginHour = date("%H:%M")

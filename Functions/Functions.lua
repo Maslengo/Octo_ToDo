@@ -1,5 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
+local L = E.L
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+local LibTranslit = LibStub("LibTranslit-1.0")
+----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 EventFrame.measureFrame = CreateFrame("Frame")
 EventFrame.measureFrame:Hide()
@@ -9,9 +13,6 @@ EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
 EventFrame.measureText:SetFontObject(OctoFont11)
 EventFrame.measureText:SetWordWrap(false)
 local measureText = EventFrame.measureText
-----------------------------------------------------------------
-local L = E.L
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
 local strsplit = strsplit
@@ -235,19 +236,10 @@ function E.func_GetMaxRenownLevel(reputationID)
 		return levels[#levels].level
 	end
 end
-
-
-
-
-
-
-
-
 function E.func_GetNumQuestLogEntries()
 	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
 	return numShownEntries
 end
-
 -- /run E.func_GetQuestLogCount()
 function E.func_GetQuestLogCount()
 	local numQuests = 0
@@ -258,13 +250,10 @@ function E.func_GetQuestLogCount()
 	end
 	return numQuests
 end
-
 function E.func_GetMaxNumQuestsCanAccept()
 	local result = GetMaxNumQuestsCanAccept()
 	return result
 end
-
-
 function E.func_GetAddOnMetadata(name, variable)
 	return GetAddOnMetadata(name, variable)
 end
@@ -334,7 +323,6 @@ function E.func_FormatDateTwoDigits(date)
 	return result
 end
 function E.func_ShouldShow(id, dataType, profileName)
-
 	local shouldShow = false
 	if Octo_profileKeys.isSettingsEnabled then
 		-- Режим настройки включен - показываем все валюты
@@ -392,7 +380,9 @@ function E.func_SpamBlock(...)
 	end
 	E._spamLocks[key] = currentTime -- Обновляем время последнего выполнения
 	func() -- Выполняем функцию
-	E.func_UPDATE_MAINFRAME()
+	if E.func_UPDATE_MAINFRAME then
+		E.func_UPDATE_MAINFRAME()
+	end
 	return false -- всё ок
 end
 ----------------------------------------------------------------
@@ -415,7 +405,6 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 							else
 								frame:SetShown(not frame:IsShown())
 							end
-
 							if frame:IsShown() then
 								if SettingsPanel:IsVisible() then
 									HideUIPanel(SettingsPanel)
@@ -425,7 +414,6 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 								end
 							end
 						end
-
 					end
 				elseif button == "RightButton" then
 					if frame and frame:IsShown() then
@@ -442,7 +430,6 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				local version = E.func_GetAddOnMetadata(AddonName, "Version")
 				local title = E.func_GetAddOnMetadata(AddonName, "Title")
 				tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
-
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], GAMEMENU_OPTIONS)
@@ -494,7 +481,7 @@ function E.func_CountVisibleCharacters()
 	local CurrentRegionName = E.CurrentRegionName
 	local checkCurrentServer = isOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local PlayerData = CharInfo.PlayerData
 			if GUID == curGUID then
@@ -532,7 +519,7 @@ function E.func_SortCharacters()
 	local CurrentRegionName = E.CurrentRegionName
 	local checkCurrentServer = isOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if not CharInfo.PlayerData then
 		else
 			local PlayerData = CharInfo.PlayerData
@@ -575,48 +562,12 @@ function E.func_SortCharacters()
 	return sorted
 end
 ----------------------------------------------------------------
-function E.func_SmoothBackgroundAlphaChange(frame_main, frame_Background, event)
-	if InCombatLockdown() or not frame_main or not frame_Background or not event then return end
-	if frame_main:IsShown() then
-		local targetAlpha = E.MOVINGBACKGROUND_ALPHA
-		-- if targetAlpha == 1 then return end
-		local duration = 0.3
-		local currentAlpha = frame_Background:GetAlpha()
-		if event == "PLAYER_STOPPED_MOVING" then
-			targetAlpha = 1
-			duration = 0.1
-		elseif event == "OnShow" then
-			targetAlpha = 1
-			duration = 0.5
-		end
-		if currentAlpha == targetAlpha then return end
-		if not frame_Background.alphaAnim then
-			frame_Background.alphaAnim = frame_Background:CreateAnimationGroup()
-			frame_Background.alphaAnim.animation = frame_Background.alphaAnim:CreateAnimation("Alpha")
-			frame_Background.alphaAnim.animation:SetDuration(duration)
-			frame_Background.alphaAnim:SetScript("OnFinished", function(self)
-					frame_Background:SetAlpha(self.targetAlpha)
-			end)
-		end
-		if math.abs(currentAlpha - targetAlpha) < 0.01 then
-			return
-		end
-		frame_Background.alphaAnim.animation:SetFromAlpha(currentAlpha)
-		frame_Background.alphaAnim.animation:SetToAlpha(targetAlpha)
-		frame_Background.alphaAnim.targetAlpha = targetAlpha
-		if frame_Background.alphaAnim:IsPlaying() then
-			frame_Background.alphaAnim:Stop()
-		end
-		frame_Background.alphaAnim:Play()
-	end
-end
-----------------------------------------------------------------
 function E.func_GetColorGradient(value, minValue, maxValue, minHex, midHex, maxHex)
 	local UseOnlyTwoColor = false -- (min and max)
 	-- дефолты на случай кривых рук
 	minHex = minHex or E.COLOR_RED
 	midHex = midHex or E.COLOR_YELLOW
-	maxHex = maxHex or E.COLOR_GREEN
+	maxHex = maxHex or E.COLOR_WHITE or E.COLOR_GREEN
 	if not value or not minValue or not maxValue or minValue >= maxValue then
 		return maxHex
 	end
@@ -845,20 +796,39 @@ function E.func_GetCurrentRegionName()
 	return result
 end
 E.CurrentRegionName = E.func_GetCurrentRegionName()
-function E.func_RegisterFrame(frame)
+function E.func_RegisterFrame_ICONS(frame)
+	E.OctoTable_Frames_ICONS = E.OctoTable_Frames_ICONS or {}
+	E.OctoTable_Frames_SIMPLE = E.OctoTable_Frames_SIMPLE or {}
 	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
 	frame.insertIn_SecuredFrames_SequredFrames = true
-	table.insert(E.OctoTable_Frames, frame)
+	table.insert(E.OctoTable_Frames_ICONS, frame)
 	table.insert(UISpecialFrames, frame:GetName())
 	C_Timer.After(0, function()
 			frame:HookScript("OnShow", function()
-					for i, other in ipairs(E.OctoTable_Frames) do
+					for i, other in ipairs(E.OctoTable_Frames_ICONS) do
 						if frame ~= other and other:IsShown() then
 							other:Hide()
 						end
 					end
 			end)
+			frame:HookScript("OnHide", function()
+				if E.OctoTable_Frames_SIMPLE then
+					for i, other in ipairs(E.OctoTable_Frames_SIMPLE) do
+						if other:IsShown() then
+							other:Hide()
+						end
+					end
+				end
+			end)
 	end)
+end
+function E.func_RegisterFrame_SIMPLE(frame)
+	E.OctoTable_Frames_ICONS = E.OctoTable_Frames_ICONS or {}
+	E.OctoTable_Frames_SIMPLE = E.OctoTable_Frames_SIMPLE or {}
+	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
+	frame.insertIn_SecuredFrames_SequredFrames = true
+	table.insert(E.OctoTable_Frames_SIMPLE, frame)
+	table.insert(UISpecialFrames, frame:GetName())
 end
 function E.func_GetPlayerRealm()
 	local result = GetRealmName()
@@ -901,10 +871,12 @@ function E.func_GetMinMaxValue(tbl, data)
 end
 ----------------------------------------------------------------
 -- Функция показа сообщения
-function E.func_PrintMessage(text)
+function E.func_PrintMessage(...)
 	-- Используем стандартное сообщение WoW или создаем свое
-	UIErrorsFrame:AddMessage(E.func_Gradient(text), 1.0, 1.0, 1.0, 1.0, UIERRORS_HOLD_TIME)
+	-- UIErrorsFrame:AddMessage(E.func_Gradient(text), 1.0, 1.0, 1.0, 1.0, UIERRORS_HOLD_TIME)
 	-- DEFAULT_CHAT_FRAME:AddMessage(E.func_GetAddOnMetadata(E.MainAddonName, "Title")..": "..text)
+	-- DEFAULT_CHAT_FRAME:AddMessage(...)
+	print(...)
 end
 function E.InitGlobalDB(addonName)
 	local savedVarName = addonName.."_DB"
@@ -1228,26 +1200,21 @@ function E.func_CompactFormatNumber(num)
 	local i = 1
 	local sign = num < 0 and -1 or 1
 	num = math.abs(num)
-
 	if not suffixes then
 		return tostring(math.floor(num * sign + 0.5))
 	end
-
 	while num >= step and i < #suffixes do
 		num = num / step
 		i = i + 1
 	end
-
 	local rounded = tonumber(string.format("%."..DECIMALS.."f", num))
 	if rounded >= step and i < #suffixes then
 		rounded = rounded / step
 		i = i + 1
 	end
-
 	rounded = rounded * sign
 	local s = tostring(rounded):gsub("%.0$", "")
 	return s .. suffixes[i]
-
 end
 ----------------------------------------------------------------
 function E.func_GetFactionDataByID(id)
@@ -1292,9 +1259,7 @@ function E.func_GetSpecializationIconSafe()
 	end
 	return nil
 end
-
 ----------------------------------------------------------------
-
 function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
 	minWidth = minWidth or 1
 	local result = type(textToMeasure) == "function" and textToMeasure() or textToMeasure
@@ -1308,18 +1273,45 @@ function E.func_UpdateFont()
 	local Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
 	local Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
 	local Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
-
 	local fontPath = LibSharedMedia:Fetch("font", Config_FontStyle)
-
 	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
 	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
-
 	measureText:SetFontObject(OctoFont11)
 end
 ----------------------------------------------------------------
+function E.func_GetSlotNameForEmptySlot(slotID)
+	local slotAPIName = E.OctoTable_SlotMapping[slotID].name
+	if slotAPIName then
+		return _G[slotAPIName] or slotAPIName
+	end
+	return "Slot "..slotID
+end
 ----------------------------------------------------------------
+function E.func_GetEmptySlotIcon(slotID)
+	local slotAPIName = E.OctoTable_SlotMapping[slotID].name
+	if slotAPIName then
+		local _, texture = GetInventorySlotInfo(slotAPIName)
+		return texture or 134400
+	end
+	return 134400
+end
 ----------------------------------------------------------------
+function E.func_translit(text)
+	if E.Enable_Translit then
+		return LibTranslit:Transliterate(text)
+	end
+	return text
+end
 ----------------------------------------------------------------
+function E:func_CanCollectData()
+    local db = Octo_ToDo_DB_Levels
+    if not db then return false end
+
+    local char = db[self.curGUID]
+    if not char then return false end
+
+    return char.MASLENGO ~= nil and char.PlayerData ~= nil
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1373,7 +1365,7 @@ function E.func_RegisterEvents(frame, MyEventsTable)
 end
 ----------------------------------------------------------------
 function E.func_RunAfterCombat()
-	for key in next,(E._inCombats) do
+	for key in next, (E._inCombats) do
 		if type(callback) == "function" then
 			callback()
 			E._inCombats[key] = nil

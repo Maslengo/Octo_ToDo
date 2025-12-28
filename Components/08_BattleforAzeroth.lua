@@ -674,7 +674,7 @@ local function localfunc2()
 		if Octo_ToDo_DB_Vars.Items then
 			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil, nil
+					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil
 					TooltipKey = "BfA_mechagonItems"
 					TextCenter = E.COLOR_GRAY..ITEMS.."|r"
 					----------------------------------------------------------------

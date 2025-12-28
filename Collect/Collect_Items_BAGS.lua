@@ -30,10 +30,11 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 E.ItemInfoCache_BAGS = E.ItemInfoCache_BAGS or {}
 local function Collect_Items_BAGS()
-	local player = Octo_ToDo_DB_Levels[E.curGUID]
-	if not player then return end
-	local collectPlayerData = player.PlayerData
-	local collectMASLENGO = player.MASLENGO
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	if not collectPlayerData or not collectMASLENGO then return end
 	local usedSlots_BAGS, totalSlots_BAGS = 0, 0
 	local Possible_Anima, Possible_CatalogedResearch = 0, 0
@@ -48,7 +49,7 @@ local function Collect_Items_BAGS()
 		Enum.BagIndex.Bag_4, -- 4,
 		Enum.BagIndex.ReagentBag, -- 5,
 	}
-	for _, bagID in next,(PlayerBags) do
+	for _, bagID in next, (PlayerBags) do
 	-- for bagID = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = C_Container.GetContainerNumSlots(bagID)
 		if numSlots > 0 then

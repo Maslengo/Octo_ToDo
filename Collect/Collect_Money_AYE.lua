@@ -1,8 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Money_AYE()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
 	collectPlayerData.Money = GetMoney() or 0
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	----------------------------------------------------------------

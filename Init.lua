@@ -23,7 +23,8 @@ E.Holiday = {}
 E.KeyStoneTBL = {}
 E.Modules = {}
 E.OctoTable_Expansions = {}
-E.OctoTable_Frames = {}
+E.OctoTable_Frames_ICONS = {}
+E.OctoTable_Frames_SIMPLE = {}
 E.OctoTable_itemID_ALL = {}
 E.OctoTable_itemID_AutoOpen = {}
 E.OctoTable_itemID_Cataloged_Research = {}
@@ -55,10 +56,9 @@ E.minValue_ItemLevel = 0
 E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
-E.REPUTATION_ALPHA = .3 -- Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
-E.CHARACTER_ALPHA = .2 -- Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
+E.REPUTATION_ALPHA = .4 -- Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
+E.CHARACTER_ALPHA = .1 -- Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
 E.MAINBACKGROUND_ALPHA = .8 -- Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
-E.MOVINGBACKGROUND_ALPHA = 1 -- Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
 E.DataProvider_Otrisovka = {}
 E.CurrentProfile = "Default" -- profileName
 E.Config_DebugID_ALL = false
@@ -353,3 +353,27 @@ function E.func_Is_Dragonflight_available() return E.interfaceVersion >= 100000 
 function E.func_Is_TheWarWithin_available() return E.interfaceVersion >= 110000 end
 function E.func_Is_Midnight_available() return E.interfaceVersion >= 120000 end
 function E.func_Is_TheLastTitan_available() return E.interfaceVersion >= 130000 end
+
+
+E.OctoTable_SlotMapping = {
+	[1] = {name = "HEADSLOT", invslot = INVSLOT_HEAD, priority = 1},
+	[2] = {name = "NECKSLOT", invslot = INVSLOT_NECK, priority = 2},
+	[3] = {name = "SHOULDERSLOT", invslot = INVSLOT_SHOULDER, priority = 3},
+	[15] = {name = "BACKSLOT", invslot = INVSLOT_BACK, priority = 4},
+	[5] = {name = "CHESTSLOT", invslot = INVSLOT_CHEST, priority = 5},
+
+	[4] = {name = "SHIRTSLOT", invslot = INVSLOT_BODY, priority = 6},
+	[19] = {name = "TABARDSLOT", invslot = INVSLOT_TABARD, priority = 7},
+
+	[9] = {name = "WRISTSLOT", invslot = INVSLOT_WRIST, priority = 8},
+	[10] = {name = "HANDSSLOT", invslot = INVSLOT_HAND, priority = 9},
+	[6] = {name = "WAISTSLOT", invslot = INVSLOT_WAIST, priority = 10},
+	[7] = {name = "LEGSSLOT", invslot = INVSLOT_LEGS, priority = 11},
+	[8] = {name = "FEETSLOT", invslot = INVSLOT_FEET, priority = 12},
+	[11] = {name = "FINGER0SLOT", invslot = INVSLOT_FINGER1, priority = 13},
+	[12] = {name = "FINGER1SLOT", invslot = INVSLOT_FINGER2, priority = 14},
+	[13] = {name = "TRINKET0SLOT", invslot = INVSLOT_TRINKET1, priority = 15},
+	[14] = {name = "TRINKET1SLOT", invslot = INVSLOT_TRINKET2, priority = 16},
+	[16] = {name = "MAINHANDSLOT", invslot = INVSLOT_MAINHAND, priority = 17},
+	[17] = {name = "SECONDARYHANDSLOT", invslot = INVSLOT_OFFHAND, priority = 18},
+}

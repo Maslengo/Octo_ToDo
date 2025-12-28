@@ -1,107 +1,139 @@
 local GlobalAddonName, E = ...
-function E.func_Mounts_1166() --Timewalk
+local ALWAYS = _G.ALWAYS or "Always"
+local PRICE_5K   = 5000
+local PRICE_10K  = 10000
+local PRICE_20K  = 20000
+local PRICE_40K  = 40000
+local PRICE_100K = 100000
+function E.func_Mounts_1166() -- Timewalk
+	local colorGray = E.COLOR_GRAY or "|cFF808080"
+	local source2 = E.func_FormatExpansion(2)
+	local source3 = E.func_FormatExpansion(3)
+	local source4 = E.func_FormatExpansion(4)
+	local source5 = E.func_FormatExpansion(5)
+	local source6 = E.func_FormatExpansion(6)
+	local source7 = E.func_FormatExpansion(7)
+	local source8 = E.func_FormatExpansion(8)
+	local source9 = E.func_FormatExpansion(9)
+	local source11 = E.func_FormatExpansion(11)
+	local SOURCE_ALWAYS = (colorGray) .. ALWAYS .. "|r"
 	local tbl = {
-		{itemID = 129923, price = 5000, mountID = 778, source = E.func_FormatExpansion(2),}, -- Eclipse Dragonhawk (TBC Timewalking)
-		{itemID = 224399, price = 5000, mountID = 2225, source = E.func_FormatExpansion(2),},
-			{itemID = 129922, price = 5000, mountID = 552, source = E.func_FormatExpansion(3),},
-		{itemID = 231374, price = 5000, mountID = 2317, source = E.func_FormatExpansion(3),},
-		{itemID = 234730, price = 5000, mountID = 2473, source = E.func_FormatExpansion(4),},
-		{itemID = 234740, price = 5000, mountID = 2474, source = E.func_FormatExpansion(5),},
-			{itemID = 167894, price = 5000, mountID = 1242, source = E.func_FormatExpansion(6),},
-		{itemID = 0, price = 5000, mountID = 1243, source = E.func_FormatExpansion(6),},
-		{itemID = 234716, price = 5000, mountID = 2470, source = E.func_FormatExpansion(6),},
-		{itemID = 187595, price = 5000, mountID = 1521, source = E.func_FormatExpansion(7),},
-		{itemID = 234721, price = 5000, mountID = 2471, source = E.func_FormatExpansion(7),},
-		{itemID = 0, price = 5000, mountID = 781, source = E.func_FormatExpansion(8),}, -- Infinite Timereaver (Timewalking boss drop)
-		{itemID = 245695, price = 5000, mountID = 2586, source = E.func_FormatExpansion(8),},
-		{itemID = 245694, price = 5000, mountID = 2587, source = E.func_FormatExpansion(8),},
-		{itemID = 258515, price = 5000, mountID = 2804, source = E.func_FormatExpansion(9),},
-		{itemID = 259463, price = 5000, mountID = 2815, source = E.func_FormatExpansion(9),},
-		{itemID = 186469, price = 5000, mountID = 293, source = E.func_FormatExpansion(11),},
-		{itemID = 208572, price = 5000, mountID = 1798, source = E.func_FormatExpansion(11),},
-		{itemID = 224398, price = 5000, mountID = 2224, source = E.func_FormatExpansion(11),},
-		{itemID = 232624, price = 5000, mountID = 2321, source = E.COLOR_GRAY..ALWAYS.."|r",},
-		{itemID = 205208, price = 5000, mountID = 1737, source = E.COLOR_GRAY..ALWAYS.."|r",},
-		{itemID = 238739, price = 5000, mountID = 2518, source = E.COLOR_GRAY..ALWAYS.."|r",},
+		-- TBC Timewalking
+		{itemID = 129923, price = PRICE_5K, mountID = 778,   source = source2},
+		{itemID = 224399, price = PRICE_5K, mountID = 2225,  source = source2},
+		-- Wrath Timewalking
+		{itemID = 129922, price = PRICE_5K, mountID = 552,   source = source3},
+		{itemID = 231374, price = PRICE_5K, mountID = 2317,  source = source3},
+		-- Cataclysm Timewalking
+		{itemID = 234730, price = PRICE_5K, mountID = 2473,  source = source4},
+		-- Mists Timewalking
+		{itemID = 234740, price = PRICE_5K, mountID = 2474,  source = source5},
+		-- WoD Timewalking
+		{itemID = 167894, price = PRICE_5K, mountID = 1242,  source = source6},
+		{itemID = 0,      price = PRICE_5K, mountID = 1243,  source = source6},
+		{itemID = 234716, price = PRICE_5K, mountID = 2470,  source = source6},
+		-- Legion Timewalking
+		{itemID = 187595, price = PRICE_5K, mountID = 1521,  source = source7},
+		{itemID = 234721, price = PRICE_5K, mountID = 2471,  source = source7},
+		-- BfA Timewalking
+		{itemID = 0,      price = PRICE_5K, mountID = 781,   source = source8}, -- Infinite Timereaver
+		{itemID = 245695, price = PRICE_5K, mountID = 2586,  source = source8},
+		{itemID = 245694, price = PRICE_5K, mountID = 2587,  source = source8},
+		-- Shadowlands Timewalking
+		{itemID = 258515, price = PRICE_5K, mountID = 2804,  source = source9},
+		{itemID = 259463, price = PRICE_5K, mountID = 2815,  source = source9},
+		-- Dragonflight Timewalking
+		{itemID = 186469, price = PRICE_5K, mountID = 293,   source = source11},
+		{itemID = 208572, price = PRICE_5K, mountID = 1798,  source = source11},
+		{itemID = 224398, price = PRICE_5K, mountID = 2224,  source = source11},
+		-- Always available
+		{itemID = 232624, price = PRICE_5K, mountID = 2321,  source = SOURCE_ALWAYS},
+		{itemID = 205208, price = PRICE_5K, mountID = 1737,  source = SOURCE_ALWAYS},
+		{itemID = 238739, price = PRICE_5K, mountID = 2518,  source = SOURCE_ALWAYS},
 	}
 	return tbl
 end
-function E.func_Mounts_3252() --Bronze
-local tbl = {
-		-- {itemID = 253024, price = 20000, mountID = QWE, source = E.func_FormatExpansion(7),}, -- DRUID FORM
-		-- {itemID = 153193, price = 10000, mountID = QEW, source = E.func_FormatExpansion(7),}, -- TOY
-		{itemID = 138201, price = 20000, mountID = 2678, source = E.func_FormatExpansion(7),},
-		{itemID = 152816, price = 100000, mountID = 971, source = E.func_FormatExpansion(7),},
-		{itemID = 152789, price = 100000, mountID = 954, source = E.func_FormatExpansion(7),},
-		{itemID = 142236, price = 100000, mountID = 875, source = E.func_FormatExpansion(7),},
-		{itemID = 143643, price = 100000, mountID = 899, source = E.func_FormatExpansion(7),},
-		{itemID = 138258, price = 20000, mountID = 802, source = E.func_FormatExpansion(7),},
-		{itemID = 131734, price = 40000, mountID = 779, source = E.func_FormatExpansion(7),},
-		{itemID = 252954, price = 20000, mountID = 2720, source = E.func_FormatExpansion(7),},
-		{itemID = 141713, price = 100000, mountID = 847, source = E.func_FormatExpansion(7),},
-		{itemID = 137575, price = 100000, mountID = 633, source = E.func_FormatExpansion(7),},
-		{itemID = 253032, price = 20000, mountID = 2730, source = E.func_FormatExpansion(7),},
-		{itemID = 137574, price = 100000, mountID = 791, source = E.func_FormatExpansion(7),},
-		{itemID = 253013, price = 20000, mountID = 2721, source = E.func_FormatExpansion(7),},
-		{itemID = 253033, price = 20000, mountID = 2731, source = E.func_FormatExpansion(7),},
-		{itemID = 152814, price = 40000, mountID = 970, source = E.func_FormatExpansion(7),},
-		{itemID = 253028, price = 20000, mountID = 2726, source = E.func_FormatExpansion(7),},
-		{itemID = 250192, price = 10000, mountID = 2653, source = E.func_FormatExpansion(7),},
-		{itemID = 253031, price = 20000, mountID = 2729, source = E.func_FormatExpansion(7),},
-		{itemID = 253029, price = 20000, mountID = 2727, source = E.func_FormatExpansion(7),},
-		{itemID = 253025, price = 20000, mountID = 2723, source = E.func_FormatExpansion(7),},
-		{itemID = 253030, price = 20000, mountID = 2728, source = E.func_FormatExpansion(7),},
-		{itemID = 253026, price = 20000, mountID = 2724, source = E.func_FormatExpansion(7),},
-		{itemID = 253027, price = 20000, mountID = 2725, source = E.func_FormatExpansion(7),},
-		{itemID = 147805, price = 20000, mountID = 944, source = E.func_FormatExpansion(7),},
-		{itemID = 250428, price = 10000, mountID = 2663, source = E.func_FormatExpansion(7),},
-		{itemID = 147806, price = 20000, mountID = 943, source = E.func_FormatExpansion(7),},
-		{itemID = 152904, price = 40000, mountID = 980, source = E.func_FormatExpansion(7),},
-		{itemID = 143764, price = 20000, mountID = 905, source = E.func_FormatExpansion(7),},
-		{itemID = 250728, price = 10000, mountID = 2670, source = E.func_FormatExpansion(7),},
-		{itemID = 250757, price = 10000, mountID = 2678, source = E.func_FormatExpansion(7),},
-		{itemID = 250723, price = 10000, mountID = 2666, source = E.func_FormatExpansion(7),},
-		{itemID = 152903, price = 40000, mountID = 981, source = E.func_FormatExpansion(7),},
-		{itemID = 147804, price = 20000, mountID = 942, source = E.func_FormatExpansion(7),},
-		{itemID = 152790, price = 40000, mountID = 955, source = E.func_FormatExpansion(7),},
-		{itemID = 250721, price = 10000, mountID = 2574, source = E.func_FormatExpansion(7),},
-		{itemID = 152905, price = 40000, mountID = 979, source = E.func_FormatExpansion(7),},
-		{itemID = 153043, price = 20000, mountID = 984, source = E.func_FormatExpansion(7),},
-		{itemID = 250761, price = 10000, mountID = 2679, source = E.func_FormatExpansion(7),},
-		{itemID = 239687, price = 10000, mountID = 2546, source = E.func_FormatExpansion(7),},
-		{itemID = 147807, price = 20000, mountID = 941, source = E.func_FormatExpansion(7),},
-		{itemID = 250803, price = 10000, mountID = 2688, source = E.func_FormatExpansion(7),},
-		{itemID = 250758, price = 10000, mountID = 2683, source = E.func_FormatExpansion(7),},
-		{itemID = 250429, price = 10000, mountID = 2665, source = E.func_FormatExpansion(7),},
-		{itemID = 153042, price = 20000, mountID = 983, source = E.func_FormatExpansion(7),},
-		{itemID = 250751, price = 10000, mountID = 2675, source = E.func_FormatExpansion(7),},
-		{itemID = 239665, price = 10000, mountID = 2542, source = E.func_FormatExpansion(7),},
-		{itemID = 152842, price = 40000, mountID = 974, source = E.func_FormatExpansion(7),},
-		{itemID = 250427, price = 10000, mountID = 2664, source = E.func_FormatExpansion(7),},
-		{itemID = 250760, price = 10000, mountID = 2681, source = E.func_FormatExpansion(7),},
-		{itemID = 250759, price = 10000, mountID = 2682, source = E.func_FormatExpansion(7),},
-		{itemID = 250748, price = 10000, mountID = 2674, source = E.func_FormatExpansion(7),},
-		{itemID = 153044, price = 20000, mountID = 985, source = E.func_FormatExpansion(7),},
-		{itemID = 250747, price = 10000, mountID = 2673, source = E.func_FormatExpansion(7),},
-		{itemID = 239667, price = 10000, mountID = 2544, source = E.func_FormatExpansion(7),},
-		{itemID = 250802, price = 10000, mountID = 2686, source = E.func_FormatExpansion(7),},
-		{itemID = 251795, price = 10000, mountID = 2706, source = E.func_FormatExpansion(7),},
-		{itemID = 152840, price = 40000, mountID = 976, source = E.func_FormatExpansion(7),},
-		{itemID = 250745, price = 10000, mountID = 2671, source = E.func_FormatExpansion(7),},
-		{itemID = 152844, price = 40000, mountID = 973, source = E.func_FormatExpansion(7),},
-		{itemID = 152843, price = 40000, mountID = 906, source = E.func_FormatExpansion(7),},
-		{itemID = 250752, price = 10000, mountID = 2676, source = E.func_FormatExpansion(7),},
-		{itemID = 250756, price = 10000, mountID = 2677, source = E.func_FormatExpansion(7),},
-		{itemID = 152841, price = 40000, mountID = 975, source = E.func_FormatExpansion(7),},
-		{itemID = 250426, price = 10000, mountID = 2662, source = E.func_FormatExpansion(7),},
-		{itemID = 250425, price = 10000, mountID = 2661, source = E.func_FormatExpansion(7),},
-		{itemID = 250804, price = 10000, mountID = 2689, source = E.func_FormatExpansion(7),},
-		{itemID = 250805, price = 10000, mountID = 2690, source = E.func_FormatExpansion(7),},
-		{itemID = 250746, price = 10000, mountID = 2672, source = E.func_FormatExpansion(7),},
-		{itemID = 250806, price = 10000, mountID = 2691, source = E.func_FormatExpansion(7),},
-		{itemID = 250424, price = 10000, mountID = 2660, source = E.func_FormatExpansion(7),},
-		{itemID = 251796, price = 10000, mountID = 2705, source = E.func_FormatExpansion(7),},
-		{itemID = 250423, price = 10000, mountID = 2593, source = E.func_FormatExpansion(7),},
+function E.func_Mounts_3252() -- Bronze
+	local source7 = E.func_FormatExpansion(7)
+	local tbl = {
+		-- Mounts with price PRICE_10K
+		-- {itemID = 153193, price = PRICE_10K, mountID = 999999999, source = source7,}, -- TOY? how?
+		{itemID = 250192, price = PRICE_10K, mountID = 2653, source = source7},
+		{itemID = 250428, price = PRICE_10K, mountID = 2663, source = source7},
+		{itemID = 250728, price = PRICE_10K, mountID = 2670, source = source7},
+		{itemID = 250757, price = PRICE_10K, mountID = 2678, source = source7},
+		{itemID = 250723, price = PRICE_10K, mountID = 2666, source = source7},
+		{itemID = 250721, price = PRICE_10K, mountID = 2574, source = source7},
+		{itemID = 250761, price = PRICE_10K, mountID = 2679, source = source7},
+		{itemID = 239687, price = PRICE_10K, mountID = 2546, source = source7},
+		{itemID = 250803, price = PRICE_10K, mountID = 2688, source = source7},
+		{itemID = 250758, price = PRICE_10K, mountID = 2683, source = source7},
+		{itemID = 250429, price = PRICE_10K, mountID = 2665, source = source7},
+		{itemID = 250751, price = PRICE_10K, mountID = 2675, source = source7},
+		{itemID = 239665, price = PRICE_10K, mountID = 2542, source = source7},
+		{itemID = 250427, price = PRICE_10K, mountID = 2664, source = source7},
+		{itemID = 250760, price = PRICE_10K, mountID = 2681, source = source7},
+		{itemID = 250759, price = PRICE_10K, mountID = 2682, source = source7},
+		{itemID = 250748, price = PRICE_10K, mountID = 2674, source = source7},
+		{itemID = 250747, price = PRICE_10K, mountID = 2673, source = source7},
+		{itemID = 239667, price = PRICE_10K, mountID = 2544, source = source7},
+		{itemID = 250802, price = PRICE_10K, mountID = 2686, source = source7},
+		{itemID = 251795, price = PRICE_10K, mountID = 2706, source = source7},
+		{itemID = 250745, price = PRICE_10K, mountID = 2671, source = source7},
+		{itemID = 250752, price = PRICE_10K, mountID = 2676, source = source7},
+		{itemID = 250756, price = PRICE_10K, mountID = 2677, source = source7},
+		{itemID = 250426, price = PRICE_10K, mountID = 2662, source = source7},
+		{itemID = 250425, price = PRICE_10K, mountID = 2661, source = source7},
+		{itemID = 250804, price = PRICE_10K, mountID = 2689, source = source7},
+		{itemID = 250805, price = PRICE_10K, mountID = 2690, source = source7},
+		{itemID = 250746, price = PRICE_10K, mountID = 2672, source = source7},
+		{itemID = 250806, price = PRICE_10K, mountID = 2691, source = source7},
+		{itemID = 250424, price = PRICE_10K, mountID = 2660, source = source7},
+		{itemID = 251796, price = PRICE_10K, mountID = 2705, source = source7},
+		{itemID = 250423, price = PRICE_10K, mountID = 2593, source = source7},
+		-- Mounts with price PRICE_20K
+		-- {itemID = 253024, price = PRICE_20K, mountID = 999999999, source = source7,}, -- DRUID FORM
+		{itemID = 138201, price = PRICE_20K, mountID = 2678, source = source7},
+		{itemID = 138258, price = PRICE_20K, mountID = 802,  source = source7},
+		{itemID = 252954, price = PRICE_20K, mountID = 2720, source = source7},
+		{itemID = 253032, price = PRICE_20K, mountID = 2730, source = source7},
+		{itemID = 253013, price = PRICE_20K, mountID = 2721, source = source7},
+		{itemID = 253033, price = PRICE_20K, mountID = 2731, source = source7},
+		{itemID = 253028, price = PRICE_20K, mountID = 2726, source = source7},
+		{itemID = 253031, price = PRICE_20K, mountID = 2729, source = source7},
+		{itemID = 253029, price = PRICE_20K, mountID = 2727, source = source7},
+		{itemID = 253025, price = PRICE_20K, mountID = 2723, source = source7},
+		{itemID = 253030, price = PRICE_20K, mountID = 2728, source = source7},
+		{itemID = 253026, price = PRICE_20K, mountID = 2724, source = source7},
+		{itemID = 253027, price = PRICE_20K, mountID = 2725, source = source7},
+		{itemID = 147805, price = PRICE_20K, mountID = 944,  source = source7},
+		{itemID = 147806, price = PRICE_20K, mountID = 943,  source = source7},
+		{itemID = 143764, price = PRICE_20K, mountID = 905,  source = source7},
+		{itemID = 147804, price = PRICE_20K, mountID = 942,  source = source7},
+		{itemID = 153043, price = PRICE_20K, mountID = 984,  source = source7},
+		{itemID = 147807, price = PRICE_20K, mountID = 941,  source = source7},
+		{itemID = 153042, price = PRICE_20K, mountID = 983,  source = source7},
+		{itemID = 153044, price = PRICE_20K, mountID = 985,  source = source7},
+		-- Mounts with price PRICE_40K
+		{itemID = 131734, price = PRICE_40K, mountID = 779,  source = source7},
+		{itemID = 152814, price = PRICE_40K, mountID = 970,  source = source7},
+		{itemID = 152904, price = PRICE_40K, mountID = 980,  source = source7},
+		{itemID = 152903, price = PRICE_40K, mountID = 981,  source = source7},
+		{itemID = 152790, price = PRICE_40K, mountID = 955,  source = source7},
+		{itemID = 152905, price = PRICE_40K, mountID = 979,  source = source7},
+		{itemID = 152842, price = PRICE_40K, mountID = 974,  source = source7},
+		{itemID = 152840, price = PRICE_40K, mountID = 976,  source = source7},
+		{itemID = 152844, price = PRICE_40K, mountID = 973,  source = source7},
+		{itemID = 152843, price = PRICE_40K, mountID = 906,  source = source7},
+		{itemID = 152841, price = PRICE_40K, mountID = 975,  source = source7},
+		-- Mounts with price PRICE_100K
+		{itemID = 152816, price = PRICE_100K, mountID = 971, source = source7},
+		{itemID = 152789, price = PRICE_100K, mountID = 954, source = source7},
+		{itemID = 142236, price = PRICE_100K, mountID = 875, source = source7},
+		{itemID = 143643, price = PRICE_100K, mountID = 899, source = source7},
+		{itemID = 141713, price = PRICE_100K, mountID = 847, source = source7},
+		{itemID = 137575, price = PRICE_100K, mountID = 633, source = source7},
+		{itemID = 137574, price = PRICE_100K, mountID = 791, source = source7},
 	}
 	return tbl
 end

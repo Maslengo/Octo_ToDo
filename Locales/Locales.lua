@@ -8,7 +8,7 @@ local curLocaleLang = E.curLocaleLang or "enUS"
 local meta_table = {
 	__index = function(self, key)
 		local translationTable = E.translations[key]
-		-- если ключа вообще нет
+		-- if there is no key at all
 		if not translationTable then
 			if DebugLocalization_Key then
 				DEFAULT_CHAT_FRAME:AddMessage(color_red.."No key:|r "..key)
@@ -16,11 +16,11 @@ local meta_table = {
 			rawset(self, key, key)
 			return key
 		end
-		-- если ключ есть, но нет перевода
+		-- if there is a key, but no translation
 		if not translationTable[curLocaleLang] and DebugLocalization_Lang then
 			DEFAULT_CHAT_FRAME:AddMessage(color_red..curLocaleLang..":|r "..key)
 		end
-		-- возвращаем перевод или сам ключ как fallback
+		-- We return the translation or the key itself as a fallback
 		local translation = translationTable[curLocaleLang] or key
 		rawset(self, key, translation)
 		return translation

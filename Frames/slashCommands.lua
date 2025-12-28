@@ -1,13 +1,10 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------
--- Slash-команды
-----------------------------------------------------------------
 local slashCommands = {
 	OCTO = {
 		commands = {"/octo"},
 		handler = function(msg)
 			if not InCombatLockdown() then
-				E.func_main_frame_toggle() -- Переключаем фрейм
+				E.func_main_frame_toggle()
 			end
 		end
 	},
@@ -36,7 +33,6 @@ local slashCommands = {
 		end
 	},
 }
--- Регистрируем все slash-команды
 for name, data in next, (slashCommands) do
 	SlashCmdList[name] = data.handler
 	for i, cmd in ipairs(data.commands) do

@@ -1,8 +1,10 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Reputations()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectMASLENGO then return end
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -121,13 +123,13 @@ local function Collect_Reputations()
 	else
 		collectMASLENGO.Reputation = {}
 	end
-	for reputationID in next,(E.OctoTable_Reputations_DB) do -- E.ALL_Reputations
+	for reputationID in next, (E.OctoTable_Reputations_DB) do -- E.ALL_Reputations
 		local output = func_GetReputationProgress(reputationID)
 		-- if output then
 		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID)
 		if isAccountWide then
 			-- Аккаунтовая: обновляем всех
-			for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+			for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 				local pd = CharInfo.PlayerData
 				local cm = CharInfo.MASLENGO
 				if pd.CurrentRegionName == E.CurrentRegionName then

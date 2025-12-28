@@ -1,8 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Equipment_Durability()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
 	local slots = {
 		INVSLOT_HEAD, -- 1
 		INVSLOT_SHOULDER, -- 3
@@ -20,9 +23,9 @@ local function Collect_Equipment_Durability()
 	----------------------------------------------------------------
 	local lowestItemDurability = 100
 	for _, slotID in ipairs(slots) do
-		local cur, max = GetInventoryItemDurability(slotID)
-		if cur and max and max > 0 then
-			local perc = (cur / max) * 100
+		local current, maximum = GetInventoryItemDurability(slotID)
+		if current and maximum and maximum > 0 then
+			local perc = (current / maximum) * 100
 			if perc < lowestItemDurability then
 				lowestItemDurability = perc
 			end
@@ -34,10 +37,10 @@ local function Collect_Equipment_Durability()
 	-- local lowestNonBrokenDurability = 100
 	-- local found = false
 	-- for _, slotID in ipairs(slots) do
-	-- 	local cur, max = GetInventoryItemDurability(slotID)
-	-- 	if cur and max and max > 0 and cur > 0 then
+	-- 	local current, maximum = GetInventoryItemDurability(slotID)
+	-- 	if current and maximum and maximum > 0 and current > 0 then
 	-- 		found = true
-	-- 		local perc = (cur / max) * 100
+	-- 		local perc = (current / maximum) * 100
 	-- 		if perc < lowestNonBrokenDurability then
 	-- 			lowestNonBrokenDurability = perc
 	-- 		end
@@ -50,10 +53,10 @@ local function Collect_Equipment_Durability()
 	-- средняя прочность экипировки
 	----------------------------------------------------------------
 	-- local sum, count = 0, 0
-	-- for _, slotID in next,(slots) do
-	-- 	local cur, max = GetInventoryItemDurability(slotID)
-	-- 	if cur and max and max > 0 then
-	-- 		sum = sum + (cur / max) * 100
+	-- for _, slotID in next, (slots) do
+	-- 	local current, maximum = GetInventoryItemDurability(slotID)
+	-- 	if current and maximum and maximum > 0 then
+	-- 		sum = sum + (current / maximum) * 100
 	-- 		count = count + 1
 	-- 	end
 	-- end

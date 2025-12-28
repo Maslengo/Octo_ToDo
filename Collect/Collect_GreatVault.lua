@@ -5,6 +5,11 @@ E.GW_Start = true
 ----------------------------------------------------------------
 local function Collect_GreatVault()
 	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
+	----------------------------------------------------------------
 	E.name_activities = setmetatable({
 			[0] = E.NONE, -- "None"
 			[1] = DUNGEONS,							-- Enum.WeeklyRewardChestThresholdType.Activities
@@ -28,9 +33,6 @@ local function Collect_GreatVault()
 	-- local hasGeneratedRewards = C_WeeklyRewards.HasGeneratedRewards()
 	-- local hasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 	----------------------------------------------------------------
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectPlayerData or not collectMASLENGO then return end
 	collectMASLENGO.GreatVault = collectMASLENGO.GreatVault or {}
 	wipe(collectMASLENGO.GreatVault)
 	-- collectPlayerData.RIO_Score = nil

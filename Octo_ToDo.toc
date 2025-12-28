@@ -1,6 +1,6 @@
 ## Interface: 120000, 110207
-## Version: v109.9
-# (12.0.0)(25.12.2025)
+## Version: v110.0
+# (12.0.0)(28.12.2025)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 ## Author: Octo
@@ -27,5 +27,4 @@ Database\Database.xml
 Components\Components.xml
 Collect\Collect.xml
 Frames\MainFrame.xml
-#Frames\OctoSettings\OctoSettings.xml
 Options\Options.xml

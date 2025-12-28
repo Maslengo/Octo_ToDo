@@ -1,8 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Covenants()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectMASLENGO then return end
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	local curCovID = C_Covenants.GetActiveCovenantID() or 0
 	if curCovID > 0 then
 		local curCovLevel = C_CovenantSanctumUI.GetRenownLevel()

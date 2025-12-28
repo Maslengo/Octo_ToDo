@@ -29,17 +29,17 @@ local function tempFunction()
 		{id = 1149, defS = false,},
 		{id = 1416, defS = false,},
 		{id = 1273, defS = false,},
-		{id = 3292, defS = true,}, -- REMIX
-		{id = 3268, defS = true,}, -- REMIX
-		{id = 3252, defS = true,}, -- REMIX
+		{id = 3292, defS = true,}, -- REMIX LEGION
+		{id = 3268, defS = true,}, -- REMIX LEGION
+		{id = 3252, defS = true,}, -- REMIX LEGION
 		-- {id = 3293, defS = false,}, -- REMIX PANDA?
 		-- {id = 3251, defS = false,}, -- REMIX PANDA?
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 		{id = 124124, defS = false,}, -- Blood of Sargeras
-		{id = 254267, defS = true,}, -- REMIX
-		{id = 253224, defS = false,}, -- REMIX
+		{id = 254267, defS = false,}, -- REMIX LEGION
+		{id = 253224, defS = false,}, -- REMIX LEGION
 		-- {id = 217956, defS = false,},
 		-- {id = 217731, defS = false,},
 		-- {id = 217929, defS = false,},
@@ -121,16 +121,16 @@ local function tempFunction()
 				{43193, forcedText = {npcID = 109331}, addText = {mapID = 630},}, -- Каламир 109331 Азсуна (4).
 				{43192, forcedText = {npcID = 108829}, addText = {mapID = 630},}, -- Левантия 108829 Азсуна (2).
 				{44287, forcedText = {npcID = 102075}, addText = {mapID = 630},}, -- Иссохший Дж'им 102075 Азсуна (4).
-				{nil},
+				-- {nil},
 				{42819, forcedText = {npcID = 108879}, addText = {mapID = 641},}, -- Хумонгрис <Чародей> 108879 Валь'шара (5).
 				{42779, forcedText = {npcID = 108678}, addText = {mapID = 641},}, -- Шар'тос 108678 Валь'шара (6).
-				{nil},
+				-- {nil},
 				{43448, forcedText = {npcID = 110378}, addText = {mapID = 650},}, -- Драгон Зиморожденный 110378 Крутогорье (4).
 				{43985, forcedText = {npcID = 99929}, addText = {mapID = 650},}, -- Обломок 99929 Крутогорье (2).
-				{nil},
+				-- {nil},
 				{42270, forcedText = {npcID = 107023}, addText = {mapID = 634},}, -- Нитхегг 107023 Штормхейм (3).
 				{42269, addText = {mapID = 634},}, -- Капитан Хринг 106981, Пленительница душ Мевра 106984, Разоритель Йдорн 106982, Штормхейм (5).
-				{nil},
+				-- {nil},
 				{43512, forcedText = {npcID = 109943}, addText = {mapID = 680},}, -- Ана-Муз 109943 Сурамар .
 				{43513, forcedText = {npcID = 110321}, addText = {mapID = 680},}, -- На'зак Одержимый 110321 Сурамар (10).
 				{nil},
@@ -139,7 +139,7 @@ local function tempFunction()
 				{46948, forcedText = {npcID = 117303}, addText = {mapID = 646},}, -- Малификус 117303 Расколотый берег (6).
 				{46945, forcedText = {npcID = 117470}, addText = {mapID = 646},}, -- Си'ваш 117470 Расколотый берег (6).
 			},
-			forcedMaxQuest = 1,
+			forcedMaxQuest = 2,
 		},
 		{
 			showTooltip = true,

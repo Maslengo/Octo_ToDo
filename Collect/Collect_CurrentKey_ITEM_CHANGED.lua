@@ -1,8 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_CurrentKey_ITEM_CHANGED(arg2)
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
 	local dungeonSTR = select(18, strsplit(":", arg2))
 	local lvl = select(20, strsplit(":", arg2))
 	local dungeonID = tonumber(dungeonSTR)

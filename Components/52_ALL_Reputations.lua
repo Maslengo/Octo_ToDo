@@ -35,7 +35,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	local sorted = {}
-	for id in next,(E.OctoTable_Reputations_DB) do
+	for id in next, (E.OctoTable_Reputations_DB) do
 		tinsert(sorted, id)
 	end
 	table.sort(sorted, E.func_ReversSort)

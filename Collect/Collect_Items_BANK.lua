@@ -29,13 +29,13 @@ local GlobalAddonName, E = ...
 -- },
 ----------------------------------------------------------------
 local function Collect_Items_BANK()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	C_Timer.After(0, function()
 			if not BankFrame or not BankFrame:IsShown() then return end
-			local player = Octo_ToDo_DB_Levels[E.curGUID]
-			if not player then return end
-			local collectPlayerData = player.PlayerData
-			local collectMASLENGO = player.MASLENGO
-			if not collectPlayerData or not collectMASLENGO then return end
 			local usedSlots_BANK, totalSlots_BANK = 0, 0
 			local usedSlots_AccountBank, totalSlots_AccountBank = 0, 0
 			local keystoneFound = false
@@ -55,7 +55,7 @@ local function Collect_Items_BANK()
 				Enum.BagIndex.CharacterBankTab_6, -- 11,
 			}
 			-- BANK
-			for _, bagID in next,(bankTabs) do
+			for _, bagID in next, (bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
 					totalSlots_BANK = totalSlots_BANK + numSlots
@@ -95,13 +95,13 @@ local function Collect_Items_BANK()
 	end)
 end
 local function Collect_Items_AccountBank()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	C_Timer.After(0, function()
 			if not BankFrame or not BankFrame:IsShown() then return end
-			local player = Octo_ToDo_DB_Levels[E.curGUID]
-			if not player then return end
-			local collectPlayerData = player.PlayerData
-			local collectMASLENGO = player.MASLENGO
-			if not collectPlayerData or not collectMASLENGO then return end
 			local usedSlots_BANK, totalSlots_BANK = 0, 0
 			local usedSlots_AccountBank, totalSlots_AccountBank = 0, 0
 			local keystoneFound = false
@@ -120,7 +120,7 @@ local function Collect_Items_AccountBank()
 				Enum.BagIndex.AccountBankTab_4, -- 15
 				Enum.BagIndex.AccountBankTab_5, -- 16
 			}
-			for _, bagID in next,(Account_bankTabs) do
+			for _, bagID in next, (Account_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
 					totalSlots_AccountBank = totalSlots_AccountBank + numSlots

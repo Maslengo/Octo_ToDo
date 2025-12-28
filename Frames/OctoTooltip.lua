@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemplate")
 OctoTooltip:Hide()
-local OctoTooltip_Background = CreateFrame("FRAME", nil, OctoTooltip, "BackdropTemplate")
+E.func_RegisterFrame_SIMPLE(OctoTooltip)
 EventFrame.measureFrame = CreateFrame("Frame")
 EventFrame.measureFrame:SetParent(UIParent)
 EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
@@ -10,11 +10,12 @@ EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
 EventFrame.measureText:SetFontObject(OctoFont11)
 EventFrame.measureText:SetWordWrap(false)
 local TEXT_PADDING = 6
--- local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
+local SEPARATOR_HEIGHT = 2
 local SEPARATOR_KEY = "---"
 local INDENT_TEXT = 4
 local INDENT_SCROLL = 20
 local MAX_DISPLAY_LINES = 24
+local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / E.GLOBAL_LINE_HEIGHT))*.7)
 if MAX_DISPLAY_LINES > LINES_TOTAL then
 	MAX_DISPLAY_LINES = LINES_TOTAL
@@ -52,38 +53,6 @@ local func_OnAcquired do
 			frame:SetPropagateMouseClicks(true)
 			frame:SetPropagateMouseMotion(true)
 			frame:SetHitRectInsets(1, 1, 1, 1)
-			-- frame.lineFrames = setmetatable({}, {
-			--         __index = function(self, key)
-			--             if key then
-			--                 local f = CreateFrame("BUTTON", nil, frame)
-			--                 f:SetPropagateMouseClicks(true)
-			--                 f:SetPropagateMouseMotion(true)
-			--                 f:SetHeight(E.GLOBAL_LINE_HEIGHT)
-			--                 if key == 1 then
-			--                     f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEXT+1, 0)
-			--                 else
-			--                     local prevKey = key - 1
-			--                     local prevFrame = rawget(self, prevKey) or self[prevKey]
-			--                     f:SetPoint("TOPLEFT", prevFrame, "TOPRIGHT", 0, 0)
-			--                 end
-			--                 f:RegisterForClicks("LeftButtonUp")
-			--                 f.text = f:CreateFontString()
-			--                 f.text:SetFontObject(OctoFont11)
-			--                 f.text:SetAllPoints()
-			--                 f.text:SetWordWrap(false)
-			--                 f.text:SetJustifyV("MIDDLE")
-			--                 f.text:SetJustifyH("CENTER")
-			--                 f.text:SetTextColor(1, 1, 1, 1)
-			--                 rawset(self, key, f)
-			--                 return f
-			--             end
-			--         end
-			-- })
-			-- Почему это теперь безопасно
-			--     __index больше не создаёт побочных фреймов
-			--     порядок колонок всегда предсказуем
-			--     никакой скрытой рекурсии
-			--     отладка становится человеческой
 			frame.lineFrames = setmetatable({}, {
 					__index = function(self, key)
 						if key ~= #self + 1 then
@@ -148,20 +117,11 @@ function EventFrame:Octo_Frame_init(frame, node)
 			frame.separator:SetPoint("CENTER", 0, 0)
 		end
 		frame.separator:Show()
-		-- if not frame.debugBg then
-		--     frame.debugBg = frame:CreateTexture(nil, "BACKGROUND")
-		--     frame.debugBg:SetAllPoints()
-		--     frame.debugBg:SetColorTexture(0, 1, 0, 0.3)
-		-- end
-		-- frame.debugBg:Show()
 		return
 	end
 	if frame.separator then
 		frame.separator:Hide()
 	end
-	-- if frame.debugBg then
-	--     frame.debugBg:Hide()
-	-- end
 	local numData = EventFrame.columns or 1
 	local columnSizes = EventFrame.COLUMN_SIZES
 	for i = 1, numData do
@@ -244,14 +204,13 @@ local function TooltipOnShow()
 			scrollBar:Hide()
 		end
 	end
-	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "OnShow")
 end
 function EventFrame:Create_OctoTooltip()
-	OctoTooltip_Background:SetAllPoints()
-	OctoTooltip_Background:SetFrameLevel(OctoTooltip:GetFrameLevel() - 1)
-	OctoTooltip_Background:SetBackdrop(E.menuBackdrop)
-	OctoTooltip_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA)
-	OctoTooltip_Background:SetBackdropBorderColor(0, 0, 0, 1)
+	OctoTooltip:SetBackdrop(E.menuBackdrop)
+	OctoTooltip:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA)
+	OctoTooltip:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+
+
 	OctoTooltip:SetPropagateMouseClicks(true)
 	OctoTooltip:SetPropagateMouseMotion(false)
 	OctoTooltip:SetHitRectInsets(-1, -1, -1, -1)
@@ -259,10 +218,9 @@ function EventFrame:Create_OctoTooltip()
 	OctoTooltip:SetScript("OnLeave", TooltipOnLeave)
 	OctoTooltip:SetScript("OnShow", TooltipOnShow)
 	OctoTooltip:SetPoint("CENTER")
-	OctoTooltip:SetSize(1, E.GLOBAL_LINE_HEIGHT*1)
+	OctoTooltip:SetSize(SEPARATOR_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 	OctoTooltip:SetClampedToScreen(true)
 	OctoTooltip:SetFrameStrata("TOOLTIP")
-	OctoTooltip:SetBackdrop(nil)
 	OctoTooltip.ScrollBox = CreateFrame("FRAME", nil, OctoTooltip, "WowScrollBoxList")
 	OctoTooltip.ScrollBox:SetAllPoints()
 	OctoTooltip.ScrollBox:SetPropagateMouseClicks(true)
@@ -289,20 +247,11 @@ function EventFrame:Create_OctoTooltip()
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar)
 end
 local function calculateColumnWidths(node)
-
 	local frameData = node:GetData()
 	if frameData and frameData[1] == SEPARATOR_KEY then
 		return {}
 	end
-	-- local frames = OctoTooltip.view:GetFrames()
-	-- if #frames == 0 then
-	--     OctoTooltip.view:AcquireInternal(1, node)
-	--     OctoTooltip.view:InvokeInitializers()
-	--     frames = OctoTooltip.view:GetFrames()
-	-- end
 	local columnWidths = {}
-	-- local sampleFrame = frames[1]
-	-- if sampleFrame and sampleFrame.lineFrames then
 	for i = 1, #frameData do
 		local currentItem = frameData[i]
 		local textToMeasure = ""
@@ -312,17 +261,8 @@ local function calculateColumnWidths(node)
 			textToMeasure = currentItem or ""
 		end
 		local width = E.func_MeasureTextWidth(textToMeasure)
-		-- width = math.max(width, MIN_COLUMN_WIDTH)
 		columnWidths[i] = width
-
-		-- if sampleFrame.lineFrames[i] then
-		--     sampleFrame.lineFrames[i].text:SetText(textToMeasure)
-		--     columnWidths[i] = sampleFrame.lineFrames[i].text:GetStringWidth()
-		-- else
-		--     columnWidths[i] = 0
-		-- end
 	end
-	-- end
 	return columnWidths
 end
 function EventFrame:CreateDataProvider(tbl)
@@ -407,9 +347,6 @@ function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft)
 	E.OctoTooltip_GLOBAL_TABLE = frame.tooltip
 	EventFrame:CreateDataProvider(frame.tooltip)
 	OctoTooltip:Show()
-	-- C_Timer.After(0.001, function()
-	--         EventFrame:CreateDataProvider(frame.tooltip)
-	-- end)
 	if not frame.initScripts then
 		frame.initScripts = true
 		frame:SetScript("OnLeave", function()
@@ -427,8 +364,6 @@ end
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_REGEN_DISABLED",
-	"PLAYER_STARTED_MOVING",
-	"PLAYER_STOPPED_MOVING",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
@@ -438,10 +373,4 @@ function EventFrame:VARIABLES_LOADED()
 end
 function EventFrame:PLAYER_REGEN_DISABLED()
 	OctoTooltip:Hide()
-end
-function EventFrame:PLAYER_STARTED_MOVING()
-	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "PLAYER_STARTED_MOVING")
-end
-function EventFrame:PLAYER_STOPPED_MOVING()
-	E.func_SmoothBackgroundAlphaChange(OctoTooltip, OctoTooltip_Background, "PLAYER_STOPPED_MOVING")
 end

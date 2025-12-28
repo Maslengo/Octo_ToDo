@@ -35,6 +35,52 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetEventName(141)
+			end,
+			name_save = "FeastofWinterVeil", -- "Feast of Winter Veil"
+			defS = true,
+			reset = "Month",
+			desc = categoryKey,
+			quests = {
+				{8744, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
+				{8768, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
+				{8769, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
+				{8803, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
+				{91041, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
+				{91042, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
+
+				{8744, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
+				{8768, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
+				{8769, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
+				{8803, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
+				{91041, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
+				{91042, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+
+
+
 		-- E.func_GetEventName(181) (Noblegarden) (Сад чудес)
 		{
 			sorted = false,

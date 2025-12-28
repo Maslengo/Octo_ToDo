@@ -77,6 +77,7 @@ local function tempFunction()
 		{id = 1358, defS = false,}, --name = "Нат Пэгл", side = "-", category = "Рыболовы", }, --[faction=1358]
 		----------------------------------------------------------------
 		{id = 1357, defS = false,}, --name = "Номи", side = "-", category = "Другое", }, --[faction=1357]
+		-- {id = 1216, defS = false,}, -- Shang Xi's Academy
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {

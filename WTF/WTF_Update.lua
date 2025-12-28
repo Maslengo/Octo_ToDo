@@ -29,7 +29,7 @@ local function updateChars(pd, cm, DBVersion)
 		cm.Items = cm.Items or {}
 		cm.Items.Bags = cm.Items.Bags or {}
 		if cm.ItemsInBag then
-			for itemID, count in next,(cm.ItemsInBag) do
+			for itemID, count in next, (cm.ItemsInBag) do
 				cm.Items.Bags[itemID] = count
 			end
 			cm.ItemsInBag = nil
@@ -47,7 +47,7 @@ local function updateChars(pd, cm, DBVersion)
 	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Reputation)
 	if compareVersion(108.8, DBVersion) then
 		if cm.Reputation then
-			for reputationID, v in next,(cm.Reputation) do
+			for reputationID, v in next, (cm.Reputation) do
 				if type(v) == "table" then
 					cm.Reputation[reputationID] = nil
 				else

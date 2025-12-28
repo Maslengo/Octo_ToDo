@@ -1,9 +1,12 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_JournalInstance()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	-- E.func_StartDebugTimer()
-	if not collectMASLENGO then return end
 	-- local DIFF_ABBR = {
 	-- 	[17] = "LFR",
 	-- 	[1]  = "N", [14] = "N",

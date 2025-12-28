@@ -1,8 +1,7 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------
 function E.func_IsAvailable(id, curType)
 	if id and curType then
-		if curType == "spell" and IsSpellKnown(id) then -- ПОФИКСИТЬ (Устаревшие API в Retail 11.2.7 C_Spell.IsSpellKnown(id))
+		if curType == "spell" and IsSpellKnown(id) then
 			return true
 		elseif curType == "item" and GetItemCount(id, false, false, false) > 0 then
 			return true
@@ -101,7 +100,6 @@ function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType
 		end
 	end
 end
-----------------------------------------------------------------
 function E.func_countTable(t)
 	if not t then
 		return 0
@@ -112,8 +110,6 @@ function E.func_countTable(t)
 	end
 	return count
 end
-----------------------------------------------------------------
--- XOR для uint16
 local function xor16(a, b)
 	local r = 0
 	for i = 0, 15 do
@@ -126,9 +122,7 @@ local function xor16(a, b)
 	end
 	return r
 end
--- Константа ключа
 local XOR_KEY = 0xABCD
--- Кодирование массива чисел в uint16 с XOR
 function E.func_EncodeUInt16Array(arr)
 	local packed = {}
 	for i = 1, #arr do
@@ -137,7 +131,6 @@ function E.func_EncodeUInt16Array(arr)
 	end
 	return packed
 end
--- Декодирование массива чисел
 function E.func_DecodeUInt16Array(packed)
 	local arr = {}
 	for i = 1, #packed do
@@ -145,7 +138,6 @@ function E.func_DecodeUInt16Array(packed)
 	end
 	return arr
 end
-----------------------------------------------------------------
 function E.func_ResetOtrisovkaTables(categoryKey)
 	E.OctoTables_DataOtrisovka[categoryKey].Currencies = {}
 	E.OctoTables_DataOtrisovka[categoryKey].Items = {}
@@ -189,27 +181,15 @@ end
 function E.func_GetAchievementIcon(id)
 	return select(10, GetAchievementInfo(id))
 end
-----------------------------------------------------------------
 function E.func_GetMountIDFromItemID(itemID)
 	return GetMountFromItem(itemID)
 end
-----------------------------------------------------------------
 function E.ToggleVault()
-	-- GREAT_VAULT_REWARDS - Награды в Великом хранилище
-	-- Atlas: UI-Journeys-GreatVault-Button
 	if WeeklyRewardsFrame and ToggleFrame then
 		ToggleFrame(WeeklyRewardsFrame)
 	else
 		WeeklyRewards_ShowUI()
 	end
 end
-----------------------------------------------------------------
 function E.func_ColoredTime()
-
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------

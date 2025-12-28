@@ -2,10 +2,12 @@ local GlobalAddonName, E = ...
 local enable = false
 ----------------------------------------------------------------
 local function Collect_Statistics()
-	if not enable then return end
 	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
+	if not enable then return end
 	-- E.func_StartDebugTimer()
 	----------------------------------------------------------------
 	-- local last5statistics = GetLatestUpdatedStats()

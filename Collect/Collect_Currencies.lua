@@ -1,10 +1,13 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Currencies()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectMASLENGO then return end
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	local currencyCache = {}
-	for currencyID in next,(E.ALL_Currencies) do
+	for currencyID in next, (E.ALL_Currencies) do
 		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID)
 		local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 		if not data then
@@ -26,7 +29,7 @@ local function Collect_Currencies()
 				for _, v in ipairs(rosterCurrencyData) do
 					currencyMap[v.characterGUID] = v.quantity
 				end
-				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
 						CharInfo.MASLENGO.Currency[currencyID] = CharInfo.MASLENGO.Currency[currencyID] or {}
 						E.func_SetOrNil(CharInfo.MASLENGO.Currency[currencyID], "quantity", currencyMap[GUID])
@@ -64,7 +67,7 @@ local function Collect_Currencies_Account()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	local currencyCache = {}
-	for currencyID in next,(E.ALL_Currencies) do
+	for currencyID in next, (E.ALL_Currencies) do
 		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID)
 		local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 		if not data then
@@ -86,7 +89,7 @@ local function Collect_Currencies_Account()
 				for _, v in ipairs(rosterCurrencyData) do
 					currencyMap[v.characterGUID] = v.quantity
 				end
-				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
 						CharInfo.MASLENGO.Currency[currencyID] = CharInfo.MASLENGO.Currency[currencyID] or {}
 						E.func_SetOrNil(CharInfo.MASLENGO.Currency[currencyID], "quantity", currencyMap[GUID])

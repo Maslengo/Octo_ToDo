@@ -1,10 +1,16 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Mounts()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
+	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	if not collectPlayerData then return end
+	----------------------------------------------------------------
 	local GetMountIDs = C_MountJournal.GetMountIDs
 	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
+	local cache_1166 = E.func_Mounts_1166()
+	local cache_3252 = E.func_Mounts_3252()
+
 	for _, mountID in ipairs(GetMountIDs()) do
 		local _, _, source = GetMountInfoExtraByID(mountID)
 		local price, currencyID = source:match("([%d %.,]+)|Hcurrency:(%d+)")
@@ -23,12 +29,12 @@ local function Collect_Mounts()
 		end
 		-- таймволк
 		E.OctoTable_ALL_Mounts[1166] = E.OctoTable_ALL_Mounts[1166] or {}
-		for i, v in ipairs(E.func_Mounts_1166()) do
+		for i, v in ipairs(cache_1166) do
 			E.OctoTable_ALL_Mounts[1166][v.mountID] = v.price
 		end
 		-- Бронза
 		E.OctoTable_ALL_Mounts[3252] = E.OctoTable_ALL_Mounts[3252] or {}
-		for i, v in ipairs(E.func_Mounts_3252()) do
+		for i, v in ipairs(cache_3252) do
 			E.OctoTable_ALL_Mounts[3252][v.mountID] = v.price
 		end
 	end

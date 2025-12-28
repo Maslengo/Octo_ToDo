@@ -1,6 +1,8 @@
 <Ui>
 	<Script file="Frames\OctoTooltip.lua"/>
 	<Script file="Frames\MainFrame.lua"/>
+	<Script file="Frames\EquipmentsFrame.lua"/>
+
 	<Script file="Frames\UtilityFrames.lua"/>
 	<Script file="Frames\slashCommands.lua"/>
 </Ui>

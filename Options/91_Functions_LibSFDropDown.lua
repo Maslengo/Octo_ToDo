@@ -100,7 +100,7 @@ local function GetRegionsData()
 	local RegionList = {}
 	local Octo_Regions = {}
 	local countRegions = 0
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName then
 			if not RegionList[CharInfo.PlayerData.CurrentRegionName] then
 				countRegions = countRegions + 1
@@ -116,7 +116,7 @@ local function GetRegionsData()
 end
 local function GetServersData(regionName)
 	local tbl_Servers = {}
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData and CharInfo.PlayerData.curServer and
 		(not regionName or CharInfo.PlayerData.CurrentRegionName == regionName) then
 			tbl_Servers[CharInfo.PlayerData.curServer] = tbl_Servers[CharInfo.PlayerData.curServer] or {}
@@ -133,7 +133,7 @@ local function GetServersData(regionName)
 end
 local function GetCharactersData(serverName, regionName)
 	local characters = {}
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData and CharInfo.PlayerData.curServer == serverName and
 		(not regionName or CharInfo.PlayerData.CurrentRegionName == regionName) then
 			tinsert(characters, {
@@ -222,7 +222,7 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			info.notCheckable = true
 			info.text = INTERACT_ICONS_SHOW_ALL
 			info.func = function(_, _, _, checked)
-				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					CharInfo.PlayerData.isShownPlayer = true
 				end
 				providerfunc()
@@ -230,7 +230,7 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			self:ddAddButton(info, level)
 			info.text = HIDE
 			info.func = function(_, _, _, checked)
-				for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					CharInfo.PlayerData.isShownPlayer = false
 				end
 				providerfunc()

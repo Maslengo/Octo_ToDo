@@ -5,7 +5,7 @@ local EventFrame = CreateFrame("FRAME")
 function E.Cleanup_Obsolete_Reputations()
 	-- E.func_StartDebugTimer() -- 7 ms
 	local validReps = {}
-	for reputationID in next,(E.OctoTable_Reputations_DB) do
+	for reputationID in next, (E.OctoTable_Reputations_DB) do
 		validReps[reputationID] = true
 	end
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -29,7 +29,7 @@ function E.Cleanup_Obsolete_Reputations()
 			cm.ItemsALL = nil
 			----------------------------------------------------------------
 			if cm.Currency then
-				for currencyID, v in next,(cm.Currency) do
+				for currencyID, v in next, (cm.Currency) do
 					if not next(v) then
 						cm.Currency[currencyID] = nil
 						-- E.func_PrintMessage(pd.classColorHex..pd.Name.."|r", "cm.Currency[currencyID] = nil")

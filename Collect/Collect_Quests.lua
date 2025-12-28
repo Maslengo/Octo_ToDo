@@ -1,9 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Quests()
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	if not collectPlayerData or not collectMASLENGO then return end
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	wipe(collectMASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.ListOfParagonQuests)
 	wipe(collectMASLENGO.OctoTable_QuestID)
@@ -61,15 +63,17 @@ end
 
 
 local function Collect_Quests_Universal()
+	----------------------------------------------------------------
+	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-
-	local pd = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
 	-- local cm = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 
 	if not collectMASLENGO then return end
 	local hasDataToSave = false
 	local tempUniversalQuest = {}
-	for _, data in next,(E.ALL_UniversalQuests) do
+	for _, data in next, (E.ALL_UniversalQuests) do
 		if not data.quests then
 			break
 		end
@@ -83,7 +87,7 @@ local function Collect_Quests_Universal()
 			if type(questData[1]) == "number" then
 				local questID = questData[1]
 				local FactionOrClass = questData.FactionOrClass
-				if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
+				if not FactionOrClass or (FactionOrClass[collectPlayerData.Faction] or FactionOrClass[collectPlayerData.classFilename]) then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 					local status = E.func_GetQuestStatus(questID)
 					totalQUEST = totalQUEST + 1

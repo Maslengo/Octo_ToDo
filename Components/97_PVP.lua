@@ -16,9 +16,9 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = PVP_OPTIONS -- BUG_CATEGORY14
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 2123, defS = true,},	-- Bloody Tokens
 		{id = 1602, defS = true,}, -- Conquest
 		{id = 1792, defS = true,}, -- Honor
-		{id = 2123, defS = true,},	-- Bloody Tokens
 		{id = 391, defS = false,}, -- Tol Barad Commendation
 		{id = 2797, defS = false,}, -- Trophy of Strife
 	}

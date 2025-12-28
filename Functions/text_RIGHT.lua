@@ -1,25 +1,19 @@
 local GlobalAddonName, E = ...
 local L = E.L
-----------------------------------------------------------------
 function E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
-	-- Пробуем разные варианты названий функций
 	local funcNames = {
 		"func_Otrisovka_Center_"..dataType,
 	}
 	for _, funcName in ipairs(funcNames) do
-		if E[funcName] --[[and dataType ~= "UniversalQuests"]] then
+		if E[funcName] then
 			return E[funcName](categoryKey, CharInfo, dataType, id)
 		end
 	end
-	-- Если функция не найдена, возвращаем значения по умолчанию
-	-- TextCenter, ColorCenter, FirstReputation, SecondReputation
 	return "", nil, nil, nil
 end
 function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
-	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-	----------------------------------------------------------------
 	TextCenter = E.func_TextCenter_Currency(CharInfo, id)
 	if id == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
 		TextCenter = string.format("%s%s +%d|r", TextCenter, E.COLOR_PURPLE, CharInfo.PlayerData.Possible_CatalogedResearch)
@@ -43,7 +37,7 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			end
 		end
 	elseif id == 1822 then
-		local typeSL = 1 -- Renown
+		local typeSL = 1
 		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
 			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
@@ -55,7 +49,7 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			end
 		end
 	elseif id == 1813 then
-		local typeSL = 2 -- Anima
+		local typeSL = 2
 		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
 			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
 			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
@@ -70,32 +64,23 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			TextCenter = TextCenter..E.COLOR_BLUE.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
 		end
 	end
-	----------------------------------------------------------------
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
-	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_Center_Items(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
-	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-	----------------------------------------------------------------
 	TextCenter = E.func_TextCenter_Items(CharInfo, id)
-	----------------------------------------------------------------
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
-	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
-	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-	----------------------------------------------------------------
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local JI_ID = tonumber(id)
 	local SI_ID = E.func_EJ_to_SI(JI_ID)
-
 	if cm.journalInstance[SI_ID] then
-		for difficultyID, v in next,(cm.journalInstance[SI_ID]) do
+		for difficultyID, v in next, (cm.journalInstance[SI_ID]) do
 			local defeatedBosses = cm.journalInstance[SI_ID][difficultyID].defeatedBosses or 0
 			local totalBosses = cm.journalInstance[SI_ID][difficultyID].totalBosses or 0
 			local difficultyName = GetDifficultyInfo(difficultyID)
@@ -106,30 +91,22 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 			end
 		end
 	end
-	----------------------------------------------------------------
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
-	----------------------------------------------------------------
 end
--- function E.func_Otrisovka_Center_UniversalQuests(tbl, DESCRIPT)
 function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
-	----------------------------------------------------------------
 	if data.quests then
-		----------------------------------------------------------------
 		local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-		----------------------------------------------------------------
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-		----------------------------------------------------------------
 		local showTooltip = data.showTooltip or false
 		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] then
 			local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter
 			if LeftData then
 				local totalQuest = 0
 				local forcedMaxQuest = data.forcedMaxQuest
-				-- Подсчет общего числа квестов
 				for _, questData in ipairs(data.quests) do
-				local FactionOrClass = questData.FactionOrClass
+					local FactionOrClass = questData.FactionOrClass
 					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 						if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
 							totalQuest = totalQuest + 1
@@ -142,7 +119,6 @@ function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType
 					end
 				end
 				forcedMaxQuest = totalQuest
-				-- Формирование текста в центре
 				if type(LeftData) == "number" and forcedMaxQuest then
 					TextCenter = LeftData >= forcedMaxQuest and E.DONE or LeftData.."/"..forcedMaxQuest
 				elseif forcedMaxQuest ~= 1 then
@@ -152,12 +128,10 @@ function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType
 				end
 			end
 		end
-		----------------------------------------------------------------
 		return TextCenter, ColorCenter, FirstReputation, SecondReputation
-		----------------------------------------------------------------
-	end -- func_Otrisovka_LEFT_Dispatcher
+	end
 end
-function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id) -- func_Otrisovka_LEFT_Dispatcher
+function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local STANDINGSREP = {
@@ -166,52 +140,33 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		[3] = "major",
 		[4] = "paragon",
 	}
-	 -- 1 simple, 2 Friend, 3 major, 4 paragon
 	if not categoryKey then return end
-	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-	----------------------------------------------------------------
 	if cm.Reputation and cm.Reputation[id] and type(cm.Reputation[id]) == "string" then
 		local fir, sec, ParagonCount, col, standingTEXT, typ = ("#"):split(cm.Reputation[id])
 		FirstReputation = tonumber(fir)
 		SecondReputation = tonumber(sec)
 		ColorCenter = col
 		local repType = tonumber(typ or 0)
-		-- local percent = (SecondReputation > 0) and math.floor(FirstReputation / SecondReputation * 100) or 0
-		-- local percentResult = percent and percent > 0 and percent < 100 and " |cff888888"..percent.."%|r" or ""
 		TextCenter = E.func_CompactFormatNumber(FirstReputation).."/"..E.func_CompactFormatNumber(SecondReputation)
-
-		-- local newStandingTEXT = ""
-		-- if string.find(standingTEXT, "/") then
-		-- 	newStandingTEXT = standingTEXT
-		-- end
-		-- TextCenter = TextCenter..col..newStandingTEXT.."|r"
-
-
 		if TextCenter == "1/1" then
 			TextCenter = E.DONE
 		elseif TextCenter == "0/0" then
 			TextCenter = ""
 		end
-
-
 		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 			if id == v.factionID and cm.ListOfParagonQuests[questID] then
 				TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"
 			end
 		end
 	end
-	----------------------------------------------------------------
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
-	----------------------------------------------------------------
 end
 function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
-	----------------------------------------------------------------
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
-	----------------------------------------------------------------
 	if id == "GreatVault" then
 		if pd.HasAvailableRewards then
 			TextCenter = E.COLOR_BLUE..">"..REWARD.."<|r"
@@ -221,29 +176,16 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				local name = E.name_activities[ID]
 				local activities = C_WeeklyRewards.GetActivities(ID)
 				local max = activities and activities[3] and activities[3].threshold or 0
-				-- Безопасное получение данных из cm.GreatVault
 				local vaultData = cm.GreatVault and cm.GreatVault[ID]
 				local vaultMin = vaultData and vaultData.min or 0
 				local rewards = vaultData and vaultData.rewards or {}
-				-- TextCenter = TextCenter..(rewards[1] or "-")..(rewards[1] or "-")..(rewards[1] or "-")
 				if vaultMin ~= 0 then
 					TextCenter = TextCenter..(" "..vaultMin.."/"..max)
 				end
-				-- tooltip[#tooltip+1] = {
-				-- 	name,
-				-- 	" ",
-				-- 	" ",
-				-- 	vaultMin.."/"..max,
-				-- 	" ",
-				-- 	" ",
-				-- 	rewards[1] or "-",
-				-- 	rewards[2] or "-",
-				-- 	rewards[3] or "-"
-				-- }
 			end
 		end
 	end
-	if id == "CurrentKey" then -- ПОФИКСИТЬ
+	if id == "CurrentKey" then
 		if pd.CurrentKey then
 			TextCenter = pd.CurrentKey
 		end
@@ -252,7 +194,6 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		if cm.Items.Bags[158075] or cm.Items.Bank[158075] then
 			TextCenter = pd.azeriteLVL and E.COLOR_GREEN..pd.azeriteLVL.."|r".."+"..E.COLOR_GRAY..pd.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
 		end
-
 	end
 	if id == "Ashjrakamas" then
 		if cm.Items.Bags[169223] or cm.Items.Bank[169223] then
@@ -303,12 +244,11 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		end
 		if count ~= 0 then
 			TextCenter = tostring(count)
-			-- TextCenter = E.COLOR_GRAY..DUNGEONS.."|r"
 		end
 	end
 	if id == "AllItems" then
 		local count = 0
-		for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
+		for itemID in next, (E.ALL_Items) do
 			if cm.Items.Bags[itemID] or cm.Items.Bank[itemID] then
 				count = count + 1
 				break
@@ -329,9 +269,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		end
 	end
 	if id == "ItemLevel" then
-		----------------------------------------------------------------
 		if pd.avgItemLevelEquipped and pd.avgItemLevel then
-			-- TextCenter = color..pd.avgItemLevelEquipped
 			TextCenter = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
 			if pd.avgItemLevel > pd.avgItemLevelEquipped then
 				TextCenter = TextCenter.."/"..pd.avgItemLevel.."|r"
@@ -341,18 +279,9 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 			end
 		end
 	end
-	----------------------------------------------------------------
 	if id == "Money" then
 		if pd.Money then
 			TextCenter = E.func_GetColorGradient(pd.Money, E.minValue_Money, E.maxValue_Money)..E.func_FormatMoney(pd.Money)
-			-- TextCenter = E.func_FormatMoney(pd.Money)
-			-- if pd.MoneyOnLogin then
-			-- if pd.Money < pd.MoneyOnLogin then
-			-- TextCenter = TextCenter..E.COLOR_RED.."-|r"
-			-- elseif pd.Money > pd.MoneyOnLogin then
-			-- TextCenter = TextCenter..E.COLOR_GREEN.."+|r"
-			-- end
-			-- end
 		end
 	end
 	if id == "LastOnline" then
@@ -370,9 +299,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 			end
 		end
 	end
-	----------------------------------------------------------------
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
-	---------------------------------------------------------------- -- func_Otrisovka_LEFT_Dispatcher
 end
 function E.func_TextCenter_Items(CharInfo, itemID)
 	if not itemID then return "" end

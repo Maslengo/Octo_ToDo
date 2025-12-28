@@ -21,6 +21,7 @@ local function func_Collect_All()
 		{func = E.Collect_Mail, name = "Collect_Mail",},
 		{func = E.Collect_Money_AYE, name = "Collect_Money_AYE",},
 		{func = E.Collect_Equipment_Durability, name = "Collect_Equipment_Durability",},
+		{func = E.Collect_Equipments, name = "Collect_Equipments",},
 		{func = E.Collect_Character_Info, name = "Collect_Character_Info",},
 		{func = E.Collect_Character_Level, name = "Collect_Character_Level",},
 		{func = E.Collect_Professions, name = "Collect_Professions",},
@@ -201,6 +202,7 @@ function EventFrame:PLAYER_EQUIPMENT_CHANGED()
 	E.Collect_Character_ItemLevels()
 	E.Collect_BFA_HeartOfAzeroth()
 	E.Collect_BFA_LegendaryCloak()
+	E.Collect_Equipments()
 	E.func_RequestUIUpdate("PLAYER_EQUIPMENT_CHANGED")
 end
 function EventFrame:PLAYER_LEAVING_WORLD()
@@ -226,10 +228,12 @@ function EventFrame:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
 	E.func_RequestUIUpdate("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
 end
 function EventFrame:PLAYER_DEAD()
+	E.Collect_Equipments()
 	E.Collect_Equipment_Durability()
 	E.func_RequestUIUpdate("PLAYER_DEAD")
 end
 function EventFrame:UPDATE_INVENTORY_DURABILITY()
+	E.Collect_Equipments()
 	E.Collect_Equipment_Durability()
 	E.func_RequestUIUpdate("UPDATE_INVENTORY_DURABILITY")
 end

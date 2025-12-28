@@ -132,7 +132,7 @@ function E.func_Octo_Options(savedVars)
 			Config_REPUTATION_ALPHA = {
 				type = "range",
 				name = E.COLOR_RED..">|r"..L["Reputation Background"]..E.COLOR_RED.."<|r",
-				desc = CURSOR_SIZE_DEFAULT..": 0.3|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
+				desc = CURSOR_SIZE_DEFAULT..": 0.4|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
 				min = 0,
 				max = 1,
 				step = .1,
@@ -150,7 +150,7 @@ function E.func_Octo_Options(savedVars)
 			Config_CHARACTER_ALPHA = {
 				type = "range",
 				name = E.COLOR_RED..">|r"..L["Character Background"]..E.COLOR_RED.."<|r",
-				desc = CURSOR_SIZE_DEFAULT..": 0.2|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
+				desc = CURSOR_SIZE_DEFAULT..": 0.1|n|n"..E.COLOR_RED..L["Changes require a ReloadUI"].."|r",
 				min = 0,
 				max = 1,
 				step = .1,
@@ -180,24 +180,6 @@ function E.func_Octo_Options(savedVars)
 					E.MAINBACKGROUND_ALPHA = value
 							 Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
 					Octo_MainFrame_QuestsChanged_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
-			-------------------------------------------------
-			Config_ExtraBackgroundFadeWhenMoving = {
-				type = "range",
-				name = L["Extra Background Fade When Moving"], -- L["Alpha On Drag"],
-				desc = CURSOR_SIZE_DEFAULT..": 1",
-				min = 0.1,
-				max = 1,
-				step = 0.1,
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_ExtraBackgroundFadeWhenMoving = value
-					E.MOVINGBACKGROUND_ALPHA = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -241,6 +223,9 @@ function E.func_Octo_Options(savedVars)
 					end
 					if Octo_MainFrame_QuestsChanged then
 						Octo_MainFrame_QuestsChanged:SetClampedToScreen(value)
+					end
+					if EquipmentsFrame then
+						EquipmentsFrame:SetClampedToScreen(value)
 					end
 				end,
 				width = E.FULL_WIDTH/4,
