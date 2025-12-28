@@ -83,7 +83,9 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
 			showTooltip = true,
-			TextLeft = L["World Boss"],
+			TextLeft = function()
+				return L["World Boss"]
+			end,
 			name_save = "WorldBoss",
 			defS = true,
 			reset = "Weekly",

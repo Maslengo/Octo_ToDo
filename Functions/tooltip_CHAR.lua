@@ -5,33 +5,34 @@ function E.func_Tooltip_Chars(CharInfo)
 	local tooltip = {}
 	local pd = CharInfo.PlayerData
 	local color = E.COLOR_SKYBLUE
-	local classColorHex                    = pd.classColorHex or E.COLOR_GREEN
-	local Name                            = pd.Name or ""
-	local curServer                        = pd.curServer or ""
-	local guildName                        = pd.guildName or ""
-	local guildRankName                    = pd.guildRankName or ""
-	local guildRankIndex                = pd.guildRankIndex or 0
-	local PlayerDurability                = pd.PlayerDurability or 100
-	local RaceLocal                        = pd.RaceLocal or ""
-	local UnitLevel                        = pd.UnitLevel or 0
-	local UnitXPPercent                    = pd.UnitXPPercent or 0
-	local WarMode                        = pd.WarMode or false
-	local Chromie_name                    = pd.Chromie_name or ""
-	local curLocation                    = pd.curLocation or ""
-	local usedSlots_BAGS                = pd.usedSlots_BAGS or 0
-	local totalSlots_BAGS                = pd.totalSlots_BAGS or 0
-	local usedSlots_BANK                = pd.usedSlots_BANK
-	local totalSlots_BANK                = pd.totalSlots_BANK
-	local numQuests                        = pd.numQuests or 0
-	local maxNumQuestsCanAccept            = pd.maxNumQuestsCanAccept or 0
-	local realTotalTime                    = pd.realTotalTime or 0
-	local specIcon                        = pd.specIcon or 0
-	local specTexture                    = E.func_texturefromIcon(specIcon)
+	local classColorHex = pd.classColorHex or E.COLOR_GREEN
+	local Name = pd.Name or ""
+	local curServer = pd.curServer or ""
+	local guildName = pd.guildName or ""
+	local guildRankName = pd.guildRankName or ""
+	local guildRankIndex = pd.guildRankIndex or 0
+	local PlayerDurability = pd.PlayerDurability or 100
+	local RaceLocal = pd.RaceLocal or ""
+	local UnitLevel = pd.UnitLevel or 0
+	local UnitXPPercent = pd.UnitXPPercent or 0
+	local WarMode = pd.WarMode or false
+	local Chromie_name = pd.Chromie_name or ""
+	local curLocation = pd.curLocation or ""
+	local usedSlots_BAGS = pd.usedSlots_BAGS or 0
+	local totalSlots_BAGS = pd.totalSlots_BAGS or 0
+	local usedSlots_BANK = pd.usedSlots_BANK
+	local totalSlots_BANK = pd.totalSlots_BANK
+	local numQuests = pd.numQuests or 0
+	local maxNumQuestsCanAccept = pd.maxNumQuestsCanAccept or 0
+	local realTotalTime = pd.realTotalTime or 0
+	local specIcon = pd.specIcon or 0
+	local specTexture = E.func_texturefromIcon(specIcon)
 	local durColor = E.func_GetColorGradient(PlayerDurability, 0, 100)
 
 
-	local playerNameWithLevel = E.func_TextCenter_Chars_nickname(CharInfo, true)
-	local playerServer = E.func_TextCenter_Chars_server(CharInfo, true)
+	local playerNameWithLevel = E.func_CharInfo_NickName(CharInfo, true)
+	local playerServer = E.func_CharInfo_Server(CharInfo, true)
+	local guild = E.func_CharInfo_Guild(CharInfo, true)
 
 	if Name ~= "" and curServer ~= "" then
 		tooltip[#tooltip + 1] = {
@@ -42,7 +43,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	end
 	if guildName ~= "" and guildRankName ~= "" and guildRankIndex > 0 then
 		tooltip[#tooltip + 1] = {
-			"<"..E.COLOR_GREEN..guildName.."|r> ["..E.COLOR_GREEN..guildRankName.."|r]"
+			guild
 		}
 	end
 	-- if RaceLocal ~= "" then
@@ -155,8 +156,8 @@ function E.func_Tooltip_Chars(CharInfo)
 		}
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color.."buildVersion|r", classColorHex..pd.buildVersion.."|r"}
-		tooltip[#tooltip+1] = {color.."buildNumber|r",  classColorHex..pd.buildNumber.."|r"}
-		tooltip[#tooltip+1] = {color.."buildDate|r",    classColorHex..pd.buildDate.."|r"}
+		tooltip[#tooltip+1] = {color.."buildNumber|r", classColorHex..pd.buildNumber.."|r"}
+		tooltip[#tooltip+1] = {color.."buildDate|r", classColorHex..pd.buildDate.."|r"}
 		tooltip[#tooltip+1] = {color.."interfaceVersion|r", classColorHex..pd.interfaceVersion.."|r"}
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color.."currentTier|r", classColorHex..pd.currentTier.."|r"}

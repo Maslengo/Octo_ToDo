@@ -302,6 +302,7 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 		Config_REPUTATION_ALPHA = 0.4,
 		Config_CHARACTER_ALPHA = 0.1,
 		Config_MAINBACKGROUND_ALPHA = 0.8,
+		Config_UseTranslit = false,
 	}
 	for k, v in next, (featureDefaults) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
@@ -496,6 +497,10 @@ function EventFrame:func_UpdateGlobals()
 		if Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA then
 			E.MAINBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
 		end
+		if Octo_ToDo_DB_Vars.Config_UseTranslit then
+			E.Config_UseTranslit = Octo_ToDo_DB_Vars.Config_UseTranslit
+		end
+
 	end
 	E.func_UpdateCurrentProfile()
 end

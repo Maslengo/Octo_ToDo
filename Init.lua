@@ -104,6 +104,7 @@ E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHe
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
 E.TEXT_SPACE = " "
 E.SPAM_TIME = 3
+E.Config_UseTranslit = false
 E.ICON_REGULAR = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
 E.ICON_WEEKLY = "Crosshair_Wrapper_64"

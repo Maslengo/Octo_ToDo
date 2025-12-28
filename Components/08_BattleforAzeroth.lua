@@ -81,7 +81,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = L["World Boss"],
+			TextLeft = function()
+				return L["World Boss"]
+			end,
 			name_save = "WorldBoss",
 			defS = true,
 			reset = "Weekly",
@@ -170,7 +172,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = L["Lesser Visions of N'Zoth"],
+			TextLeft = function()
+				return L["Lesser Visions of N'Zoth"]
+			end,
 			name_save = "miniVision",
 			defS = true,
 			reset = "Daily",
@@ -207,7 +211,9 @@ local function tempFunction()
 		{
 			-- sorted = true,
 			showTooltip = true,
-			TextLeft = L["Warfront"],
+			TextLeft = function()
+				return L["Warfront"]
+			end,
 			name_save = "Warfront",
 			defS = false,
 			reset = "Weekly",

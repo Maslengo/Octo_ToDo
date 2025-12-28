@@ -289,7 +289,23 @@ function E.func_Octo_Options(savedVars)
 					Octo_ToDo_DB_Vars.Config_DebugID_ALL = value
 					E.Config_DebugID_ALL = value
 				end,
-				width = E.FULL_WIDTH/2,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_UseTranslit = {
+				type = "toggle",
+				name = L["Translit"],
+				desc = CURSOR_SIZE_DEFAULT..": "..NO,
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_UseTranslit
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_UseTranslit = value
+					E.Config_UseTranslit = value
+					E.func_RefreshTranslations()
+				end,
+				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
 			},
 			-------------------------------------------------

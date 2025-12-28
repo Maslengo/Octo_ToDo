@@ -114,7 +114,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = L["World Boss"],
+			TextLeft = function()
+				return L["World Boss"]
+			end,
 			name_save = "WorldBoss",
 			defS = true,
 			reset = "Weekly",
@@ -583,7 +585,12 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = L["Fyrakk Assaults"], -- 7432 AREA POI ID
+			TextLeft = function()
+				return L["Fyrakk Assaults"] -- 7432 AREA POI ID
+			end,
+
+
+
 			name_save = "FyrakkAssaults",
 			defS = false,
 			reset = "Weekly",
@@ -596,7 +603,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = L["Disciple of Fyrakk"],
+			TextLeft = function()
+				return L["Disciple of Fyrakk"]
+			end,
 			name_save = "DiscipleofFyrakk",
 			defS = false,
 			reset = "Weekly",

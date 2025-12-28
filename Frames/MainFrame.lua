@@ -783,7 +783,7 @@ function EventFrame:CreateDataProvider()
 	}
 	local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
 	for CharIndex, CharInfo in ipairs(sortedCharacters) do
-		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, E.func_TextCenter_Chars_nickname(CharInfo), E.func_TextCenter_Chars_server(CharInfo))
+		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, E.func_CharInfo_NickName(CharInfo), E.func_CharInfo_Server(CharInfo))
 	end
 	Octo_MainFrame_ToDo.pool:Release(HeaderFrameCenter)
 	for categoryKey in next, (E.OctoTables_Vibor) do
@@ -899,19 +899,25 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
+
+
+
 		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
-		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
-			HeaderFrameCenter.Nickname:SetPoint("CENTER")
-		end
 		HeaderFrameCenter.Nickname:SetWordWrap(false)
 		HeaderFrameCenter.Nickname:SetJustifyV("MIDDLE")
 		HeaderFrameCenter.Nickname:SetJustifyH("CENTER")
-		HeaderFrameCenter.Nickname:SetText(E.func_TextCenter_Chars_nickname(CharInfo))
 		HeaderFrameCenter.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
 		HeaderFrameCenter.Server:SetWordWrap(false)
 		HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
 		HeaderFrameCenter.Server:SetJustifyH("CENTER")
-		HeaderFrameCenter.Server:SetText(E.func_TextCenter_Chars_server(CharInfo))
+
+		HeaderFrameCenter.Nickname:SetText(E.func_CharInfo_NickName(CharInfo))
+		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
+			HeaderFrameCenter.Nickname:SetPoint("CENTER")
+			HeaderFrameCenter.Server:SetText("")
+		else
+			HeaderFrameCenter.Server:SetText(E.func_CharInfo_Server(CharInfo))
+		end
 		HeaderFrameCenter:SetPropagateMouseClicks(true)
 		HeaderFrameCenter:SetPropagateMouseMotion(true)
 		HeaderFrameCenter:SetHitRectInsets(1, 1, 1, 1)

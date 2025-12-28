@@ -567,7 +567,7 @@ function E.func_GetColorGradient(value, minValue, maxValue, minHex, midHex, maxH
 	-- дефолты на случай кривых рук
 	minHex = minHex or E.COLOR_RED
 	midHex = midHex or E.COLOR_YELLOW
-	maxHex = maxHex or E.COLOR_WHITE or E.COLOR_GREEN
+	maxHex = maxHex or E.COLOR_GREEN -- or E.COLOR_WHITE
 	if not value or not minValue or not maxValue or minValue >= maxValue then
 		return maxHex
 	end
@@ -1297,7 +1297,8 @@ function E.func_GetEmptySlotIcon(slotID)
 end
 ----------------------------------------------------------------
 function E.func_translit(text)
-	if E.Enable_Translit then
+	if E.Config_UseTranslit then
+	-- if E.curLocaleLang ~= "ruRU" then
 		return LibTranslit:Transliterate(text)
 	end
 	return text
@@ -1313,6 +1314,9 @@ function E:func_CanCollectData()
     return char.MASLENGO ~= nil and char.PlayerData ~= nil
 end
 ----------------------------------------------------------------
+function E.func_RefreshTranslations()
+	wipe(E.L)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

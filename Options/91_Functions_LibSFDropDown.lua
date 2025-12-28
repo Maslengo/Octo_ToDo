@@ -35,16 +35,16 @@ function E.func_SetBackdropStyle(frame, hex)
 		-- frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 		-- frame:SetBackdropBorderColor(0, 0, 0, 1)
 		frame:HookScript("OnEnter", function(self)
-			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			self:SetBackdropBorderColor(R1, G1, G1, 1)
+				self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				self:SetBackdropBorderColor(R1, G1, G1, 1)
 		end)
 		frame:HookScript("OnLeave", function(self)
-			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			self:SetBackdropBorderColor(0, 0, 0, 1)
+				self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				self:SetBackdropBorderColor(0, 0, 0, 1)
 		end)
 		frame:SetScript("OnShow", function(self)
-			self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-			self:SetBackdropBorderColor(0, 0, 0, 1)
+				self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				self:SetBackdropBorderColor(0, 0, 0, 1)
 		end)
 	end
 end
@@ -81,13 +81,13 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 			self:ddToggle(1, nil, self, self:GetWidth()-7, -self:GetHeight()-2)
 	end)
 	DropDown:SetScript("OnMouseDown", function(self)
-		-- self.text:ClearAllPoints()
-		-- self.text:SetPoint("CENTER", 1, -1)
-		self.text:AdjustPointsOffset(1, -1)
+			-- self.text:ClearAllPoints()
+			-- self.text:SetPoint("CENTER", 1, -1)
+			self.text:AdjustPointsOffset(1, -1)
 	end)
 	DropDown:SetScript("OnMouseUp", function(self)
-		self.text:SetAllPoints()
-		self.text:AdjustPointsOffset(-1, 1)
+			self.text:SetAllPoints()
+			self.text:AdjustPointsOffset(-1, 1)
 	end)
 	DropDown:ddSetOpenMenuUp(true)
 	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight-4)
@@ -101,12 +101,13 @@ local function GetRegionsData()
 	local Octo_Regions = {}
 	local countRegions = 0
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName then
-			if not RegionList[CharInfo.PlayerData.CurrentRegionName] then
+		local pd = CharInfo.PlayerData
+		if pd and pd.CurrentRegionName then
+			if not RegionList[pd.CurrentRegionName] then
 				countRegions = countRegions + 1
-				Octo_Regions[countRegions] = CharInfo.PlayerData.CurrentRegionName
+				Octo_Regions[countRegions] = pd.CurrentRegionName
 			end
-			RegionList[CharInfo.PlayerData.CurrentRegionName] = true
+			RegionList[pd.CurrentRegionName] = true
 		end
 	end
 	if countRegions > 0 then
@@ -117,9 +118,13 @@ end
 local function GetServersData(regionName)
 	local tbl_Servers = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData and CharInfo.PlayerData.curServer and
-		(not regionName or CharInfo.PlayerData.CurrentRegionName == regionName) then
-			tbl_Servers[CharInfo.PlayerData.curServer] = tbl_Servers[CharInfo.PlayerData.curServer] or {}
+		local pd = CharInfo.PlayerData
+		local curServer = pd.curServer
+		-- local curServer = E.func_CharInfo_Server(CharInfo, true)
+		local CurrentRegionName = pd.CurrentRegionName
+		if pd and curServer and
+		(not regionName or CurrentRegionName == regionName) then
+			tbl_Servers[curServer] = tbl_Servers[curServer] or {}
 		end
 	end
 	local serverNames = {}
@@ -134,17 +139,21 @@ end
 local function GetCharactersData(serverName, regionName)
 	local characters = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData and CharInfo.PlayerData.curServer == serverName and
-		(not regionName or CharInfo.PlayerData.CurrentRegionName == regionName) then
+		local pd = CharInfo.PlayerData
+		local curServer = pd.curServer
+		-- local curServer = E.func_CharInfo_Server(CharInfo, true)
+		if pd and curServer == serverName and
+		(not regionName or pd.CurrentRegionName == regionName) then
 			tinsert(characters, {
 					GUID = GUID,
-					Name = CharInfo.PlayerData.Name,
-					classColorHex = CharInfo.PlayerData.classColorHex,
-					UnitLevel = CharInfo.PlayerData.UnitLevel,
-					avgItemLevel = CharInfo.PlayerData.avgItemLevel,
-					specIcon = CharInfo.PlayerData.specIcon,
-					isShownPlayer = CharInfo.PlayerData.isShownPlayer,
-					curServer = CharInfo.PlayerData.curServer
+					-- Name = pd.Name,
+					Name = E.func_CharInfo_NickName(CharInfo, true, false, false, true),
+					classColorHex = pd.classColorHex,
+					UnitLevel = pd.UnitLevel,
+					avgItemLevel = pd.avgItemLevel,
+					specIcon = pd.specIcon,
+					isShownPlayer = pd.isShownPlayer,
+					curServer = curServer
 			})
 		end
 	end
@@ -220,18 +229,20 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			info.hasArrow = nil
 			info.keepShownOnClick = false
 			info.notCheckable = true
-			info.text = INTERACT_ICONS_SHOW_ALL
+			info.text = L["Show All"] -- INTERACT_ICONS_SHOW_ALL
 			info.func = function(_, _, _, checked)
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					CharInfo.PlayerData.isShownPlayer = true
+					local pd = CharInfo.PlayerData
+					pd.isShownPlayer = true
 				end
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
-			info.text = HIDE
+			info.text = L["Hide All"]
 			info.func = function(_, _, _, checked)
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-					CharInfo.PlayerData.isShownPlayer = false
+					local pd = CharInfo.PlayerData
+					pd.isShownPlayer = false
 				end
 				providerfunc()
 			end
@@ -305,14 +316,15 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.isNotRadio = true
-					local output = char.classColorHex..char.Name.."|r"
-					if char.UnitLevel ~= E.currentMaxLevel then
-						output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
-					end
-					if char.Name == E.curCharName then
-						output = output..E.COLOR_GREEN.."*|r"
-					end
-					info.text = output
+					-- local output = char.classColorHex..char.Name.."|r"
+					-- if char.UnitLevel ~= E.currentMaxLevel then
+					-- 	output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
+					-- end
+					-- if char.Name == E.curCharName then
+					-- 	output = output..E.COLOR_GREEN.."*|r"
+					-- end
+					-- info.text = output
+					info.text = char.Name
 					info.value = char.GUID
 					info.func = selectFunctionisShownPlayer
 					info.checked = char.isShownPlayer
@@ -337,14 +349,15 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					info.fontObject = OctoFont11
 					info.keepShownOnClick = true
 					info.isNotRadio = true
-					local output = char.classColorHex..char.Name.."|r"
-					if char.UnitLevel ~= E.currentMaxLevel then
-						output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
-					end
-					if char.Name == E.curCharName then
-						output = output..E.COLOR_GREEN.."*|r"
-					end
-					info.text = output
+					-- local output = char.classColorHex..char.Name.."|r"
+					-- if char.UnitLevel ~= E.currentMaxLevel then
+					-- 	output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
+					-- end
+					-- if char.Name == E.curCharName then
+					-- 	output = output..E.COLOR_GREEN.."*|r"
+					-- end
+					-- info.text = output
+					info.text = char.Name
 					info.value = char.GUID
 					info.func = selectFunctionisShownPlayer
 					info.checked = char.isShownPlayer
@@ -409,7 +422,7 @@ local function CreateExpansionsMenu(dropdown, providerfunc)
 		info.fontObject = OctoFont11
 		info.keepShownOnClick = true
 		info.notCheckable = true
-		info.text = INTERACT_ICONS_SHOW_ALL
+		info.text = L["Show All"] -- INTERACT_ICONS_SHOW_ALL
 		info.func = function(_, _, _, checked)
 			for expansionID, v in next, E.OctoTables_Vibor do
 				ExpansionToShowTBL[expansionID] = true
@@ -418,7 +431,7 @@ local function CreateExpansionsMenu(dropdown, providerfunc)
 			providerfunc()
 		end
 		self:ddAddButton(info, level)
-		info.text = HIDE
+		info.text = L["Hide All"]
 		info.func = function(_, _, _, checked)
 			for expansionID, v in next, E.OctoTables_Vibor do
 				ExpansionToShowTBL[expansionID] = false
@@ -643,9 +656,9 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 				info.widgets = {}
 				tinsert(info.widgets, createResetWidget(profileName))
 				info.text = DEFAULT
-			-- else
-			-- 	info.widgets = nil -- Для профиля Default
-			-- 	info.text = DEFAULT
+				-- else
+				--     info.widgets = nil -- Для профиля Default
+				--     info.text = DEFAULT
 			end
 			self:ddAddButton(info, level)
 		end
@@ -676,15 +689,15 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		-- info.notCheckable = true
 		-- info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys" -- ОТЛАДКА
 		-- info.func = function()
-		-- 	wipe(Octo_profileKeys)
-		-- 	Octo_profileKeys = {}
-		-- 	Octo_profileKeys.CurrentProfile = "Default"
-		-- 	Octo_profileKeys.isSettingsEnabled = false
-		-- 	Octo_profileKeys.useGlobalProfile = false
-		-- 	E.func_CreateNewProfile("Default")
-		-- 	C_Timer.After(1, function()
-		-- 			providerfunc()
-		-- 	end)
+		--     wipe(Octo_profileKeys)
+		--     Octo_profileKeys = {}
+		--     Octo_profileKeys.CurrentProfile = "Default"
+		--     Octo_profileKeys.isSettingsEnabled = false
+		--     Octo_profileKeys.useGlobalProfile = false
+		--     E.func_CreateNewProfile("Default")
+		--     C_Timer.After(1, function()
+		--             providerfunc()
+		--     end)
 		-- end
 		-- self:ddAddButton(info, level)
 	end
@@ -703,7 +716,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				-- Основное меню первого уровня
 				local info = {}
 				info.fontObject = OctoFont11
-						-- Меню персонажей
+				-- Меню персонажей
 				info.hasArrow = true
 				info.hasArrowUp = true
 				info.keepShownOnClick = true
@@ -711,16 +724,16 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.text = L["Characters"]
 				info.value = L["Characters"]
 				self:ddAddButton(info, level)
-						-- Меню дополнений
+				-- Меню дополнений
 				info.text = EXPANSION_FILTER_TEXT
 				info.value = "expansions"
 				self:ddAddButton(info, level)
-						-- Меню профилей
+				-- Меню профилей
 				info.text = L["Profiles"]
 				info.value = L["Profiles"]
 				self:ddAddButton(info, level)
 				-- self:ddAddSeparator(level)
-						-- isSettingsEnabled
+				-- isSettingsEnabled
 				-- local info = {}
 				-- info.fontObject = OctoFont11
 				-- info.hasArrow = nil
@@ -731,8 +744,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				-- info.text = L["Settings mode"] -- "isSettingsEnabled"
 				-- info.checked = Octo_profileKeys.isSettingsEnabled
 				-- info.func = function(_, _, _, checked)
-				-- 	Octo_profileKeys.isSettingsEnabled = checked
-				-- 	providerfunc()
+				--     Octo_profileKeys.isSettingsEnabled = checked
+				--     providerfunc()
 				-- end
 				-- self:ddAddButton(info, level)
 			elseif level == 2 then

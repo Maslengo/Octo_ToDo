@@ -112,7 +112,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = L["World Boss"],
+			TextLeft = function()
+				return L["World Boss"]
+			end,
 			defS = true,
 			name_save = "WorldBoss",
 			reset = "Weekly",

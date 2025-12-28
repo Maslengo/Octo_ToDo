@@ -30,13 +30,13 @@ function E.func_Mounts_1166() -- Timewalk
 		{itemID = 234740, price = PRICE_5K, mountID = 2474,  source = source5},
 		-- WoD Timewalking
 		{itemID = 167894, price = PRICE_5K, mountID = 1242,  source = source6},
-		{itemID = 0,      price = PRICE_5K, mountID = 1243,  source = source6},
+		{itemID = 167895, price = PRICE_5K, mountID = 1243,  source = source6}, -- https://www.wowhead.com/mount/1243
 		{itemID = 234716, price = PRICE_5K, mountID = 2470,  source = source6},
 		-- Legion Timewalking
 		{itemID = 187595, price = PRICE_5K, mountID = 1521,  source = source7},
 		{itemID = 234721, price = PRICE_5K, mountID = 2471,  source = source7},
 		-- BfA Timewalking
-		{itemID = 0,      price = PRICE_5K, mountID = 781,   source = source8}, -- Infinite Timereaver
+		{itemID = 133543, price = PRICE_5K, mountID = 781,   source = source8}, -- Infinite Timereaver https://www.wowhead.com/mount/781
 		{itemID = 245695, price = PRICE_5K, mountID = 2586,  source = source8},
 		{itemID = 245694, price = PRICE_5K, mountID = 2587,  source = source8},
 		-- Shadowlands Timewalking

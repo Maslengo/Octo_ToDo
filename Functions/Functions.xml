@@ -11,5 +11,6 @@
 
 	<Script file="Functions\text_LEFT.lua"/>
 	<Script file="Functions\text_RIGHT.lua"/>
-	<Script file="Functions\text_CHAR.lua"/>
+
+	<Script file="Functions\CharInfo.lua"/>
 </Ui>

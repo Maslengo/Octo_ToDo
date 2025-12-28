@@ -18,8 +18,60 @@ local GlobalAddonName, E = ...
 
 E.translations = {
 
+	-- [QUESTS_LABEL] = {
+	-- 	["ruRU"] = QUESTS_LABEL,
+	-- 	["deDE"] = QUESTS_LABEL,
+	-- 	["esES"] = QUESTS_LABEL,
+	-- 	["esMX"] = QUESTS_LABEL,
+	-- 	["frFR"] = QUESTS_LABEL,
+	-- 	["itIT"] = QUESTS_LABEL,
+	-- 	["ptBR"] = QUESTS_LABEL,
+	-- 	["koKR"] = QUESTS_LABEL,
+	-- 	["zhCN"] = QUESTS_LABEL,
+	-- 	["zhTW"] = QUESTS_LABEL,
+	-- },
 
 
+
+
+	["Translit"] = {
+		["ruRU"] = "Транслит",
+		["deDE"] = "Translit",
+		["esES"] = "Translit",
+		["esMX"] = "Translit",
+		["frFR"] = "Translit",
+		["itIT"] = "Translit",
+		["ptBR"] = "Translit",
+		["koKR"] = "트랜슬릿",
+		["zhCN"] = "转写",
+		["zhTW"] = "轉寫",
+	},
+
+	["Show All"] = { -- INTERACT_ICONS_SHOW_ALL
+		["ruRU"] = "Показать всех",
+		["deDE"] = "Alle anzeigen",
+		["esES"] = "Mostrar todos",
+		["esMX"] = "Mostrar todos",
+		["frFR"] = "Tout afficher",
+		["itIT"] = "Mostra tutti",
+		["ptBR"] = "Mostrar todos",
+		["koKR"] = "모두 표시",
+		["zhCN"] = "显示全部",
+		["zhTW"] = "顯示全部",
+	},
+
+	["Hide All"] = {
+		["ruRU"] = "Скрыть всех",
+		["deDE"] = "Alle verbergen",
+		["esES"] = "Ocultar todos",
+		["esMX"] = "Ocultar todos",
+		["frFR"] = "Tout masquer",
+		["itIT"] = "Nascondi tutti",
+		["ptBR"] = "Ocultar todos",
+		["koKR"] = "모두 숨기기",
+		["zhCN"] = "隐藏全部",
+		["zhTW"] = "隱藏全部",
+	},
 	["Click to View Equipment"] = {
 		["ruRU"] = "Нажмите, чтобы посмотреть экипировку",
 		["deDE"] = "Klicken, um Ausrüstung anzuzeigen",
@@ -32,12 +84,6 @@ E.translations = {
 		["zhCN"] = "点击查看装备",
 		["zhTW"] = "點擊查看裝備",
 	},
-
-
-
-
-
-
 	["Warrant"] = { -- https://www.wowhead.com/quest=89490/warrant-arcana-monger-sozer
 		["ruRU"] = "Ордер",
 		["deDE"] = "Haftbefehl",

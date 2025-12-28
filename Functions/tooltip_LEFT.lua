@@ -3,15 +3,19 @@ local L = E.L
 function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	local pd = CharInfo.PlayerData
 	local isVisible = visiblePlayers[GUID]
-	local colorPlayer = isVisible and pd.classColorHex or E.COLOR_GRAY
-	local colorServer = isVisible and "|cffFFFFFF" or E.COLOR_GRAY
-	local curPers = pd.GUID == E.curGUID and E.COLOR_GREEN.."*|r" or ""
-	local curServerShort = pd.curServerShort ~= E.curServerShort and "-"..pd.curServerShort or ""
+	local CustomColor
+	if not isVisible then
+		CustomColor = E.COLOR_GRAY
+	end
+
+	local CharName = E.func_CharInfo_NickName(CharInfo, false, true, CustomColor, true)
+	local curServerShort = pd.curServerShort ~= E.curServerShort and "-"..E.func_CharInfo_Server(CharInfo, nil, true, CustomColor) or ""
+
 	local leftText =
 	E.func_texturefromIcon(pd.specIcon)..
-	colorPlayer..E.func_translit(pd.Name)..
-	colorServer..E.func_translit(curServerShort).."|r"..
-	curPers
+	CharName..
+	curServerShort
+
 	return leftText
 end
 function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)

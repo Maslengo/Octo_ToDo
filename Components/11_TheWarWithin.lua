@@ -156,7 +156,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = L["World Boss"],
+			TextLeft = function()
+				return L["World Boss"]
+			end,
 			name_save = "WorldBoss",
 			defS = true,
 			reset = "Weekly",
@@ -1107,7 +1109,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = L["Delves"]..": "..L["Delver's Call"],
+			TextLeft = function()
+				return L["Delves"]..": "..L["Delver's Call"]
+			end,
 			name_save = "DelversCall",
 			defS = false,
 			reset = "Regular",

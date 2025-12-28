@@ -266,13 +266,18 @@ function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, Ch
 		return
 	end
 
+
+
 	NameHeader.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
+
+	NameHeader.Nickname:SetText(E.func_CharInfo_NickName(CharInfo)) -- playerNameText
 	if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 		NameHeader.Nickname:SetPoint("CENTER")
+		NameHeader.Server:SetText("")
+	else
+		NameHeader.Server:SetText(E.func_CharInfo_Server(CharInfo)) -- playerServerText
 	end
 
-	NameHeader.Nickname:SetText(E.func_TextCenter_Chars_nickname(CharInfo)) -- playerNameText
-	NameHeader.Server:SetText(E.func_TextCenter_Chars_server(CharInfo)) -- playerServerText
 
 
 
