@@ -783,7 +783,15 @@ function EventFrame:CreateDataProvider()
 	}
 	local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
 	for CharIndex, CharInfo in ipairs(sortedCharacters) do
-		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, E.func_CharInfo_NickName(CharInfo), E.func_CharInfo_Server(CharInfo))
+		local nicknameTEXT = E.func_CharInfo_NickName(CharInfo)
+		local serverTEXT = ""
+		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
+			serverTEXT = ""
+		else
+			serverTEXT = E.func_CharInfo_Server(CharInfo)
+		end
+
+		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, nicknameTEXT, serverTEXT)
 	end
 	Octo_MainFrame_ToDo.pool:Release(HeaderFrameCenter)
 	for categoryKey in next, (E.OctoTables_Vibor) do

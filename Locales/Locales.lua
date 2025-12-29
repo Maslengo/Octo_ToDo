@@ -36,14 +36,6 @@ local meta_table = {
 
 setmetatable(L, meta_table)
 
--- функция сброса кэша
-function E.func_RefreshTranslations()
-	for k in pairs(L) do
-		rawset(L, k, nil)
-	end
-end
-
-
 ----------------------------------------------------------------
 -- local L = E.L
 -- DEFAULT_CHAT_FRAME:AddMessage(L["qwe"])

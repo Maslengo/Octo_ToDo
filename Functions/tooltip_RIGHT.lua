@@ -238,7 +238,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if SettingsType == "Additionally#AllItems" then
-		tooltip = E.func_BuildItemTooltip(CharInfo, E.ALL_Items, false)
+		-- tooltip = E.func_BuildItemTooltip(CharInfo, E.ALL_Items, false)
+		tooltip = E.func_BuildItemTooltip(CharInfo, E.OctoTable_itemID_ALL, false)
 	end
 	if SettingsType == "Additionally#Professions" then
 		local charProf = cm.professions
@@ -550,7 +551,7 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 	local Items_BANK = CharInfo.MASLENGO.Items.Bank
 	local total_BAGS = 0
 	local total_BANK = 0
-	for itemID in next, (TBL) do
+	for i, itemID in ipairs(TBL) do
 		local count_BAGS = Items_BAGS[itemID] or 0
 		local count_BANK = Items_BANK[itemID] or 0
 		local hasData = needShowAllItems or (count_BAGS > 0 or count_BANK > 0)

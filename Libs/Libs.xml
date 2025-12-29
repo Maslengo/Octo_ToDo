@@ -20,7 +20,5 @@
 	<Include file="LibTranslit\LibTranslit-1.0.xml"/>
 	<Include file="LibSerialize-1.2.1\lib.xml"/>
 	<Include file="LibDeflate\lib.xml"/>
-	<Include file="NickTag-1.0\NickTag-1.0.xml"/>
-	<Script file="PlayerInfo\PlayerInfo.lua"/>
 
 </UI>
