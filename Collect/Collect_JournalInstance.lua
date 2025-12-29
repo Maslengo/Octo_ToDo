@@ -6,7 +6,7 @@ local function Collect_JournalInstance()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
-	-- E.func_StartDebugTimer()
+	-- E.DEBUG_START()
 	-- local DIFF_ABBR = {
 	-- 	[17] = "LFR",
 	-- 	[1]  = "N", [14] = "N",
@@ -88,7 +88,7 @@ local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.journalInstance)
 	----------------------------------------------------------------
-	-- E.func_StopDebugTimer("Collect_JournalInstance")
+	-- E.DEBUG_STOP("Collect_JournalInstance")
 end
 ----------------------------------------------------------------
 function E.Collect_JournalInstance()

@@ -8,7 +8,7 @@ local function Collect_Statistics()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
 	if not enable then return end
-	-- E.func_StartDebugTimer()
+	-- E.DEBUG_START()
 	----------------------------------------------------------------
 	-- local last5statistics = GetLatestUpdatedStats()
 	----------------------------------------------------------------
@@ -25,7 +25,7 @@ local function Collect_Statistics()
 	----------------------------------------------------------------
 	-- opde(GetStatisticsCategoryList())
 	----------------------------------------------------------------
-	-- E.func_StopDebugTimer()
+	-- E.DEBUG_STOP()
 end
 ----------------------------------------------------------------
 function E.Collect_Statistics()

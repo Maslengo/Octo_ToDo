@@ -29,7 +29,7 @@ local function Collect_Equipments()
 				local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
 				local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) or false
 				local ItemDataCached = C_Item.IsItemDataCached(itemLocation) or false
-				if ItemID and not E.ALL_Items[ItemID] then
+				if ItemID then
 					local cacheName = E.func_GetItemName(ItemID)
 					E.ALL_Items[ItemID] = true
 				end

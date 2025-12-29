@@ -5,88 +5,112 @@ local L = E.L
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 E.OctoTable_Reputations_Paragon_Data_NEW = {}
 E.OctoTable_Reputations_Paragon_Data = {}
-function EventFrame:func_ConcatSimpleTablesAtStart()
-	for _, itemID in ipairs(E.OctoTable_itemID_ALL) do
-		E.ALL_Items[itemID] = true
-	end
-	for reputationID, v in next, (E.OctoTable_Reputations_DB) do
-		E.ALL_Reputations[reputationID] = true
-		if v.paragonQuest and v.itemCache then
-			E.ALL_Quests[v.paragonQuest] = true
-			E.ALL_Items[v.itemCache] = true
-			E.OctoTable_Reputations_Paragon_Data_NEW[reputationID] = {
-				paragonQuest = v.paragonQuest,
-				itemCache = v.itemCache
-			}
-			E.OctoTable_Reputations_Paragon_Data[v.paragonQuest] = {
-				factionID = reputationID,
-				cache = v.itemCache
-			}
-		end
-	end
-	if Octo_Cache_DB and Octo_Cache_DB.AllItems then
-		for itemID in next, Octo_Cache_DB.AllItems do
-			if not E.ALL_Items[itemID] then
-				E.ALL_Items[itemID] = true
+-- local function mergeTableIntoSet(tbl1, tbl2)
+-- 	for itemID in next, (tbl2) do
+-- 		tbl1[itemID] = true
+-- 	end
+-- end
+function EventFrame:func_CacheGameData()
+	----------------------------------------------------------------
+	-- E.DEBUG_START()
+	----------------------------------------------------------------
+	local E = E
+	local ALL_Items = E.ALL_Items
+	local ALL_Quests = E.ALL_Quests
+	local ALL_Reputations = E.ALL_Reputations
+	local OctoTable_Reputations_DB = E.OctoTable_Reputations_DB
+	local OctoTable_SlotMapping = E.OctoTable_SlotMapping
+	local Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels
+	local ALL_Currencies = E.ALL_Currencies
+	local AllNPCs_DB = E.OctoTable_AllNPCs_DB
+	----------------------------------------------------------------
+	-- Сливаем таблицы предметов и квестов
+	local itemTables = {
+		E.KeyStoneTBL,
+		E.OctoTable_itemID_MECHAGON,
+		E.OctoTable_itemID_ALL,
+		E.OctoTable_itemID_Ignore_List,
+		E.OctoTable_itemID_ItemsDelete,
+		E.OctoTable_itemID_Cataloged_Research,
+		Octo_Cache_DB and Octo_Cache_DB.AllItems,
+	}
+	local questTables = {
+		E.OctoTable_QuestID_Paragon,
+		E.OctoTable_QuestID,
+		E.OctoTable_RemixInfinityResearch
+	}
+	-- Проход по предметам и квестам из таблиц
+	for i = 1, #itemTables do
+		local tbl = itemTables[i]
+		if tbl then
+			for id in next, tbl do
+				ALL_Items[id] = true
 			end
 		end
 	end
-end
-function EventFrame:func_CacheGameData()
-	E.func_TableConcat(E.ALL_Quests, E.OctoTable_QuestID_Paragon)
-	E.func_TableConcat(E.ALL_Quests, E.OctoTable_QuestID)
-	E.func_TableConcat(E.ALL_Quests, E.OctoTable_RemixInfinityResearch)
-	for id in next, (E.ALL_Currencies) do
-		local name = E.func_GetCurrencyName(id)
+	for i = 1, #questTables do
+		local tbl = questTables[i]
+		if tbl then
+			for qid in next, tbl do
+				ALL_Quests[qid] = true
+			end
+		end
 	end
-	for id in next, (E.ALL_Items) do
-		local name = E.func_GetItemName(id)
+	-- Репутации и связанные квесты/предметы
+	for repID, data in next, OctoTable_Reputations_DB do
+		ALL_Reputations[repID] = true
+		if data.paragonQuest and data.itemCache then
+			local pq, ic = data.paragonQuest, data.itemCache
+			ALL_Quests[pq] = true
+			ALL_Items[ic] = true
+			E.OctoTable_Reputations_Paragon_Data_NEW[repID] = { paragonQuest = pq, itemCache = ic }
+			E.OctoTable_Reputations_Paragon_Data[pq] = { factionID = repID, cache = ic }
+		end
 	end
-	for id in next, (E.ALL_Reputations) do
-		local name = E.func_GetReputationName(id)
-	end
-	for id in next, (E.OctoTable_AllNPCs_DB) do
-		local name = E.func_GetNPCName(id)
-	end
-	for i = 1, C_QuestLog.GetNumQuestLogEntries() do
+	-- QuestLog квесты
+	local numQuests = C_QuestLog.GetNumQuestLogEntries()
+	for i = 1, numQuests do
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
-			E.ALL_Quests[info.questID] = true
+			ALL_Quests[info.questID] = true
 		end
 	end
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local pd = CharInfo and CharInfo.PlayerData
-		local cm = CharInfo and CharInfo.MASLENGO
-		if cm then
-			local questList = cm.ListOfQuests
-			if questList then
-				for questID in next, (questList) do
-					E.ALL_Quests[questID] = true
+	-- Проход по персонажам и их инвентарю/квестам
+	for _, CharInfo in next, Octo_ToDo_DB_Levels do
+		if CharInfo then
+			local pd = CharInfo.PlayerData
+			local cm = CharInfo.MASLENGO
+			if cm and cm.ListOfQuests then
+				for qid in next, cm.ListOfQuests do
+					ALL_Quests[qid] = true
+				end
+			end
+			if pd and pd.InventoryType then
+				local inv = pd.InventoryType
+				for slotID in next, OctoTable_SlotMapping do
+					local slot = inv[slotID]
+					if slot and slot.ItemID then
+						ALL_Items[slot.ItemID] = true
+					end
 				end
 			end
 		end
-
-		if pd.InventoryType then
-			for slotID in next, E.OctoTable_SlotMapping do
-				local v = pd.InventoryType[slotID]
-				if v and v.ItemID and not E.ALL_Items[v.ItemID] then
-					E.ALL_Items[v.ItemID] = true
-				end
-			end
-		end
 	end
-
-
-	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
-	promise:AddItemsByKey(E.ALL_Items)
-	:ThenForAllWithCached(function(promise, ID, type)
-			if type == "quest" then
-				local quest = E.func_GetQuestName(ID)
-			elseif type == "item" then
-				local item = E.func_GetItemName(ID)
-				local qw = C_Item.GetItemQualityByID(ID)
-			end
+	----------------------------------------------------------------
+	-- Асинхронная загрузка
+	local promise = LibThingsLoad:QuestsByKey(ALL_Quests)
+	promise:AddItemsByKey(ALL_Items)
+	:ThenForAllWithCached(function(_, ID, type)
+		if type == "quest" then
+			E.func_GetQuestName(ID)
+		elseif type == "item" then
+			E.func_GetItemName(ID)
+			-- C_Item.GetItemQualityByID(ID)
+		end
 	end)
+	----------------------------------------------------------------
+	-- E.DEBUG_STOP("func_CacheGameData")
+	----------------------------------------------------------------
 end
 function EventFrame:func_RemoveDuplicateCharacters()
 	if not Octo_ToDo_DB_Levels then return end
@@ -315,9 +339,7 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 end
 function EventFrame:Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
-
 	Octo_Cache_DB.interfaceVersion = E.interfaceVersion
-
 	E.func_InitSubTable(Octo_Cache_DB, "AllItems")
 	E.func_InitSubTable(Octo_Cache_DB, "AllRaids")
 	E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
@@ -333,7 +355,6 @@ function EventFrame:Init_Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
 	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
 end
-
 function EventFrame:init_Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
@@ -444,7 +465,6 @@ function EventFrame:func_CheckAll()
 	EventFrame:init_Octo_ToDo_DB_AccountData()
 	EventFrame:Init_Octo_Cache_DB()
 	E.func_setOldChanges()
-
 	EventFrame:func_Daily_Reset()
 	EventFrame:func_Weekly_Reset()
 	EventFrame:func_Month_Reset()
@@ -500,7 +520,6 @@ function EventFrame:func_UpdateGlobals()
 		if Octo_ToDo_DB_Vars.Config_UseTranslit then
 			E.Config_UseTranslit = Octo_ToDo_DB_Vars.Config_UseTranslit
 		end
-
 	end
 	E.func_UpdateCurrentProfile()
 end
@@ -516,16 +535,13 @@ function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	if Octo_Cache_DB.interfaceVersion ~= E.interfaceVersion then
 		Octo_Cache_DB = {}
 	end
 	Octo_Cache_DB.interfaceVersion = E.interfaceVersion
-
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	EventFrame:func_ConcatSimpleTablesAtStart()
 	EventFrame:init_Octo_profileKeys()
 	EventFrame:func_UpdateGlobals()
 end

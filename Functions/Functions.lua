@@ -298,7 +298,7 @@ function E.func_FormatTimeAgo(timeDiff, isAbsolute)
 		return format(LASTONLINE_YEARS, math.floor(timeDiff / SECONDS_PER_YEAR))
 	end
 end
-function E.func_TableConcat(table1, table2)
+function E.func_TableConcat(table1, table2) -- func_ArrayConcatUnsafe
 	local len = #table1
 	for i = 1, #table2 do
 		len = len + 1
@@ -306,6 +306,11 @@ function E.func_TableConcat(table1, table2)
 	end
 	return table1
 end
+
+
+
+
+
 function E.func_MergeTables(table1, table2)
 	for k, v in next, (table2) do
 		table1[k] = v

@@ -97,7 +97,7 @@ end
 ----------------------------------------------------------------
 function E.func_setOldChanges()
 	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
-	-- E.func_StartDebugTimer()
+	-- E.DEBUG_START()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels or {}) do
 		local pd = CharInfo and CharInfo.PlayerData
 		local cm = CharInfo and CharInfo.MASLENGO
@@ -107,7 +107,7 @@ function E.func_setOldChanges()
 			pd.CharDBVersion = currentVersion
 		end
 	end
-	-- E.func_StopDebugTimer("E.func_setOldChanges")
+	-- E.DEBUG_STOP("E.func_setOldChanges")
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	Octo_ToDo_DB_Vars.GlobalDBVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
 	updateGlobal(Octo_ToDo_DB_Vars.GlobalDBVersion)

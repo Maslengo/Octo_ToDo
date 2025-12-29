@@ -36,9 +36,9 @@ local function func_Collect_All()
 	local function ExecuteNext()
 		local funcInfo = allFunctions[index]
 		if funcInfo then
-			-- E.func_StartDebugTimer()
+			-- E.DEBUG_START()
 			pcall(funcInfo.func)
-			-- E.func_StopDebugTimer("["..index.."/"..total.."] "..funcInfo.name)
+			-- E.DEBUG_STOP("["..index.."/"..total.."] "..funcInfo.name)
 		end
 		index = index + 1
 		if index <= total then

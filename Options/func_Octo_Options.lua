@@ -178,8 +178,15 @@ function E.func_Octo_Options(savedVars)
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA = value
 					E.MAINBACKGROUND_ALPHA = value
-							 Octo_MainFrame_ToDo_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
-					Octo_MainFrame_QuestsChanged_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+					if Octo_MainFrame_ToDo then
+						Octo_MainFrame_ToDo:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+					end
+					if EquipmentsFrame then
+						EquipmentsFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+					end
+					if OctoTooltip then
+						OctoTooltip:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.backgroundColorA
+					end
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),

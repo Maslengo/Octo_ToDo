@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function E.Cleanup_Obsolete_Reputations()
-	-- E.func_StartDebugTimer() -- 7 ms
+	-- E.DEBUG_START() -- 7 ms
 	local validReps = {}
 	for reputationID in next, (E.OctoTable_Reputations_DB) do
 		validReps[reputationID] = true
@@ -39,7 +39,7 @@ function E.Cleanup_Obsolete_Reputations()
 			----------------------------------------------------------------
 		end
 	end
-	-- E.func_StopDebugTimer()
+	-- E.DEBUG_STOP()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
