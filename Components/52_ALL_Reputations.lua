@@ -25,7 +25,6 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {

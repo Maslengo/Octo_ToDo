@@ -80,6 +80,18 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	if compareVersion(110.4, DBVersion) then
+		if cm.journalInstance then
+			wipe(cm.journalInstance)
+		end
+		if cm.SavedWorldBoss then
+			wipe(cm.SavedWorldBoss)
+		end
+		if cm.LFGInstance then
+			wipe(cm.LFGInstance)
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
@@ -91,6 +103,10 @@ local function updateGlobal(DBVersion)
 	----------------------------------------------------------------
 	if compareVersion(108.5, DBVersion) then
 		Octo_ToDo_DB_Vars.Config_SPAM_TIME = 2
+	end
+	----------------------------------------------------------------
+	if compareVersion(110.4, DBVersion) then
+		Octo_ToDo_DB_Vars.Config_UseTranslit = false
 	end
 	----------------------------------------------------------------
 end

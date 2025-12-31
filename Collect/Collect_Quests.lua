@@ -35,13 +35,9 @@ local function Collect_Quests()
 		end
 	end
 end
-
-
-
 -- function E.func_GetCountedQuests()
 --     local counted = 0
 --     local total = C_QuestLog.GetNumQuestLogEntries()
-
 --     for i = 1, total do
 --         local info = C_QuestLog.GetInfo(i)
 --         if info and not info.isHeader then
@@ -58,25 +54,17 @@ end
 --     end
 --     return counted
 -- end
-
-
-
-
 local function Collect_Quests_Universal()
-	----------------------------------------------------------------
+	--------------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	----------------------------------------------------------------
-	-- local cm = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-
+	--------------------------------------------------------------------
 	if not collectMASLENGO then return end
 	local hasDataToSave = false
 	local tempUniversalQuest = {}
-	for _, data in next, (E.ALL_UniversalQuests) do
-		if not data.quests then
-			break
-		end
+	for _, data in ipairs(E.ALL_UniversalQuests) do
+		if not data.quests then break end
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 		local questDataTable = {}
 		local count = 0
@@ -89,22 +77,37 @@ local function Collect_Quests_Universal()
 				local FactionOrClass = questData.FactionOrClass
 				if not FactionOrClass or (FactionOrClass[collectPlayerData.Faction] or FactionOrClass[collectPlayerData.classFilename]) then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
-					local status = E.func_GetQuestStatus(questID)
+					local status = E.func_GetQuestStatus(questID, true)
 					totalQUEST = totalQUEST + 1
 					questDataTable[questID] = status
 					if isCompleted then
 						count = count + 1
 					end
-					if (totalQUEST == 1 or forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
+					-- Для одиночных квестов
+					if (forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
 						questDataTable.TextCenter = status
 						hasSingleQuestOutput = true
 					end
-
 				end
 			end
 		end
-		if not hasSingleQuestOutput and count ~= 0 then
-			questDataTable.TextCenter = count
+		-- Если не нашли одиночный активный квест
+		if not hasSingleQuestOutput then
+			-- Определяем максимальное количество квестов для отображения
+			local maxToShow = forcedMaxQuest ~= nil and forcedMaxQuest or totalQUEST
+			if maxToShow == 0 then
+			    -- Нет квестов с ID в группе, не записываем TextCenter
+			    questDataTable.TextCenter = nil
+			elseif count >= maxToShow then
+			    -- Все необходимые квесты выполнены, показываем DONE/Готово
+			    questDataTable.TextCenter = true -- if type(TextCenter) == "boolean" then TextCenter = E.DONE end
+			elseif count > 0 then
+			    -- Часть квестов выполнена, показываем X/Y
+			    questDataTable.TextCenter = count.."/"..maxToShow
+			elseif count == 0 then
+			    -- Квесты есть, но ни один не выполнен, не показываем TextCenter
+			    questDataTable.TextCenter = nil
+			end
 		end
 		if next(questDataTable) ~= nil then
 			tempUniversalQuest[questKey] = questDataTable

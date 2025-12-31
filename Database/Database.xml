@@ -2,7 +2,8 @@
 	<Script file="Database\Expansions.lua"/>
 	<Script file="Database\Items.lua"/>
 	<Script file="Database\KeystoneAbbr.lua"/>
-	<Script file="Database\OctoTable_Mounts.lua"/>
+	<Script file="Database\OctoTable_Currencies.lua"/>
+	<Script file="Database\OctoTable_DifficultyTable.lua"/>
 	<Script file="Database\Quests.lua"/>
 	<Script file="Database\Spells.lua"/>
 	<Script file="Database\Timers.lua"/>

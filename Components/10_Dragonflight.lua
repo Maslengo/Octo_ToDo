@@ -115,7 +115,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return L["World Boss"]
+				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
 			end,
 			name_save = "WorldBoss",
 			defS = true,
@@ -270,7 +270,7 @@ local function tempFunction()
 				{77859, forcedText = {npcID = 209912},},
 				{77856, forcedText = {npcID = 209915},},
 			},
-			forcedMaxQuest = 27,
+			-- forcedMaxQuest = 27,
 		},
 		{
 			sorted = false,
@@ -283,27 +283,29 @@ local function tempFunction()
 			reset = "Regular",
 			desc = categoryKey,
 			quests = {
-				{77872, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-				{77950, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-				{78005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-				{78107, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-				{78359, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-				{77858, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-				{78120, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-				{78006, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-				{78360, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-				{78361, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-				{78550, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-				{78551, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-				{78547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-				{78552, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
-				{78831, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
-				{78911, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
-				{78833, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
-				{78834, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
-				{78835, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
+				{77872, forcedText = {itemID = 208067}, addText = {coords = 34105633}, }, -- Item -- quest = {77855, 77857, 77860, 77872},
+				{78006, forcedText = {itemID = 208067}, addText = {coords = 55275726}, }, -- item
+
+				{77950, forcedText = {itemID = 208047}, addText = {coords = 39146553}, },
+				{78005, forcedText = {itemID = 208047}, addText = {coords = 61625960}, },
+				{78107, forcedText = {itemID = 210434}, addText = {coords = 47055309}, }, -- Transmog
+				{78359, forcedText = {itemID = 210631}, addText = {coords = 63863509}, }, -- Transmog
+				{77858, forcedText = {itemID = 210725}, addText = {coords = 47493485}, }, -- toy
+				{78120, forcedText = {itemID = 210411}, addText = {coords = 37263069}, }, -- toy
+				{78360, forcedText = {itemID = 210659}, addText = {coords = 64231928}, }, -- Transmog
+				{78361, forcedText = {itemID = 210660}, addText = {coords = 32938325}, }, -- Transmog
+				{78550, forcedText = {itemID = 210686}, addText = {coords = 69575284}, }, -- Transmog
+				{78551, forcedText = {itemID = 210678}, addText = {coords = 55324538}, }, -- Transmog
+				{78547, forcedText = {itemID = 210675}, addText = {coords = 55672258}, }, -- Transmog
+				{78552, forcedText = {itemID = 210682}, addText = {coords = 46408615}, }, -- Transmog
+				{78831, forcedText = {itemID = 210049}, addText = {coords = 49816171}, }, -- Book
+
+				{78911, forcedText = {itemID = 210737}, addText = {coords = 60834489}, }, -- Book
+				{78833, forcedText = {itemID = 208649}, addText = {coords = 54462464}, }, -- Book
+				{78834, forcedText = {itemID = 210346}, addText = {coords = 59641910}, }, -- Book
+				{78835, forcedText = {itemID = 208619}, addText = {coords = 53712395}, }, -- Book
 			},
-			forcedMaxQuest = 19,
+			-- forcedMaxQuest = 19,
 		},
 		{
 			showTooltip = true,
@@ -362,6 +364,55 @@ local function tempFunction()
 		-- },
 		-- forcedMaxQuest = 13,
 		-- },
+
+
+
+
+
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2239)..": "..L["Treasures"]
+			end,
+			name_save = "Amirdrassil_Treasures",
+			defS = false,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				-- {82823, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213012}, forcedText = {text = L["Treasure"].." 1"},}, -- 79490, 53475574
+				-- {82826, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213008}, forcedText = {text = L["Treasure"].." 2"},}, -- 79496, 31311613
+				-- {82831, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213160}, forcedText = {text = L["Treasure"].." 3"},}, -- 79520, 29042885
+				-- {82829, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213011}, forcedText = {text = L["Treasure"].." 4"},}, -- 79499, 47905688
+				-- {82830, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213013}, forcedText = {text = L["Treasure"].." 5"},}, -- 79500, 51910589
+				-- {82821, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213010}, forcedText = {text = L["Treasure"].." 6"},}, -- 79472, 55306436
+				-- {82824, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213009}, forcedText = {text = L["Treasure"].." 7"},}, -- 79493, 48287641
+				-- {82827, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213007}, forcedText = {text = L["Treasure"].." 8"},}, -- 79497, 49137030
+				-- {82828, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213006}, forcedText = {text = L["Treasure"].." 9"},}, -- 79498, 58465190
+				-- {82822, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213003}, forcedText = {text = L["Treasure"].." 10"},}, -- 79473, 54697720
+				-- {82825, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213005}, forcedText = {text = L["Treasure"].." 11"},}, -- 79494, 52541771
+
+				{82823, forcedText = {itemID = 213012}, addText = {coords = 53475574}, }, -- 79490,
+				{82826, forcedText = {itemID = 213008}, addText = {coords = 31311613}, }, -- 79496,
+				{82831, forcedText = {itemID = 213160}, addText = {coords = 29042885}, }, -- 79520,
+				{82829, forcedText = {itemID = 213011}, addText = {coords = 47905688}, }, -- 79499,
+				{82830, forcedText = {itemID = 213013}, addText = {coords = 51910589}, }, -- 79500,
+				{82821, forcedText = {itemID = 213010}, addText = {coords = 55306436}, }, -- 79472,
+				{82824, forcedText = {itemID = 213009}, addText = {coords = 48287641}, }, -- 79493,
+				{82827, forcedText = {itemID = 213007}, addText = {coords = 49137030}, }, -- 79497,
+				{82828, forcedText = {itemID = 213006}, addText = {coords = 58465190}, }, -- 79498,
+				{82822, forcedText = {itemID = 213003}, addText = {coords = 54697720}, }, -- 79473,
+				{82825, forcedText = {itemID = 213005}, addText = {coords = 52541771}, }, -- 79494,
+
+			},
+			-- forcedMaxQuest = 11,
+		},
+
+
+
+
+
+
 		{
 			showTooltip = true,
 			TextLeft = function()

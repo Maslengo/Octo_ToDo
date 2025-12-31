@@ -326,10 +326,10 @@ function EventFrame:func_InitLEFT(frame, node)
 			local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(id)
 			if isRaid then
 				frame.icon2frame:Show()
-				frame.icon2texture:SetAtlas("Raid")
+				frame.icon2texture:SetAtlas(E.ATLAS_RAID)
 			else
 				frame.icon2frame:Show()
-				frame.icon2texture:SetAtlas("Dungeon")
+				frame.icon2texture:SetAtlas(E.ATLAS_DUNGEON)
 			end
 			frame.icon1texture:SetTexture(buttonImage2)
 		end
@@ -589,8 +589,19 @@ function EventFrame:func_CreateMainFrame()
 		self:SetSize(MIN_COLUMN_WIDTH_Center, E.HEADER_HEIGHT)
 		self.Nickname = self:CreateFontString()
 		self.Nickname:SetFontObject(OctoFont11)
+
+
 		self.Server = self:CreateFontString()
 		self.Server:SetFontObject(OctoFont10)
+
+
+		self.Mail = self:CreateFontString()
+		self.Mail:SetFontObject(OctoFont10)
+
+
+		self.Durability = self:CreateFontString()
+		self.Durability:SetFontObject(OctoFont10)
+
 		self.Text = self:CreateFontString()
 		self.Text:SetFontObject(OctoFont11)
 		self.Text:SetPoint("CENTER")
@@ -606,10 +617,12 @@ end
 function E.func_main_frame_toggle()
 	if Octo_MainFrame_ToDo then
 		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
-		local left = Octo_MainFrame_ToDo:GetLeft()
-		local top = Octo_MainFrame_ToDo:GetTop()
-		Octo_MainFrame_ToDo:ClearAllPoints()
-		Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+		if not InCombatLockdown() then
+			local left = Octo_MainFrame_ToDo:GetLeft()
+			local top = Octo_MainFrame_ToDo:GetTop()
+			Octo_MainFrame_ToDo:ClearAllPoints()
+			Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+		end
 	end
 end
 function EventFrame:func_CreateSearchBox()
@@ -929,6 +942,25 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter:SetPropagateMouseClicks(true)
 		HeaderFrameCenter:SetPropagateMouseMotion(true)
 		HeaderFrameCenter:SetHitRectInsets(1, 1, 1, 1)
+
+
+		HeaderFrameCenter.Mail:SetPoint("TOPRIGHT")
+		HeaderFrameCenter.Mail:SetWordWrap(false)
+		HeaderFrameCenter.Mail:SetJustifyV("MIDDLE")
+		HeaderFrameCenter.Mail:SetJustifyH("RIGHT")
+		local Mail = E.func_CharInfo_Mail(CharInfo)
+		HeaderFrameCenter.Mail:SetText(Mail)
+
+
+		HeaderFrameCenter.Durability:SetPoint("BOTTOMRIGHT")
+		HeaderFrameCenter.Durability:SetWordWrap(false)
+		HeaderFrameCenter.Durability:SetJustifyV("MIDDLE")
+		HeaderFrameCenter.Durability:SetJustifyH("RIGHT")
+		local Durability = E.func_CharInfo_Durability(CharInfo, false, 41)
+		HeaderFrameCenter.Durability:SetText(Durability)
+
+
+
 		local faction = pd.Faction or "Neutral"
 		if faction == "Horde" then
 			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)

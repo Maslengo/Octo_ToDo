@@ -1,10 +1,21 @@
 local GlobalAddonName, E = ...
+
+
+local OctoTable_LFGDungeons = {
+	[286] = "Повелитель Холода Ахун",
+	[287] = "Корен Худовар",
+	[285] = "Всадник без головы",
+}
+
+
 ----------------------------------------------------------------
 local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
+	local ServerTime = GetServerTime()
 	----------------------------------------------------------------
 	-- E.DEBUG_START()
 	-- local DIFF_ABBR = {
@@ -18,27 +29,26 @@ local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	collectMASLENGO.journalInstance = {}
 	local NumSavedInstances = GetNumSavedInstances()
-	local ServerTime = GetServerTime()
 	if NumSavedInstances > 0 then
-		for i = 1, NumSavedInstances do
-			local instanceName, _, instanceReset, instanceDifficulty, locked, _, _, _, _, _, totalBosses, defeatedBosses, _, instanceId = GetSavedInstanceInfo(i)
-			collectMASLENGO.journalInstance[instanceId] = collectMASLENGO.journalInstance[instanceId] or {}
-			collectMASLENGO.journalInstance[instanceId][instanceDifficulty] = collectMASLENGO.journalInstance[instanceId][instanceDifficulty] or {}
-			local ji = collectMASLENGO.journalInstance[instanceId][instanceDifficulty]
+		for index = 1, NumSavedInstances do
+			local name, _, instanceReset, instanceDifficulty, locked, _, _, _, _, _, totalBosses, defeatedBosses, _, SI_ID = GetSavedInstanceInfo(index)
 			if locked then
+				local EJ_ID = E.func_SI_to_EJ(SI_ID)
+				collectMASLENGO.journalInstance[EJ_ID] = collectMASLENGO.journalInstance[EJ_ID] or {}
+				collectMASLENGO.journalInstance[EJ_ID][instanceDifficulty] = collectMASLENGO.journalInstance[EJ_ID][instanceDifficulty] or {}
+				local ji = collectMASLENGO.journalInstance[EJ_ID][instanceDifficulty]
+				ji.EJ_ID = EJ_ID
+				ji.SI_ID = SI_ID
 				-- wipe(ji)
-				local lastBossDefeated = select(3, GetSavedInstanceEncounterInfo(i, totalBosses))
+				local lastBossDefeated = select(3, GetSavedInstanceEncounterInfo(index, totalBosses))
 				if defeatedBosses == 0 and lastBossDefeated then
 					lastBossDefeated = false
 				end
-				ji.instanceName = instanceName
+				ji.name = name
 				ji.instanceReset = instanceReset > 0 and (instanceReset + ServerTime) or 0 -- deepseek
-				-- ji.instanceReset = instanceReset + ServerTime -- RESET -> ServerTime-w.instanceReset
 				ji.totalBosses = totalBosses
 				ji.defeatedBosses = defeatedBosses
 				ji.lastBossDefeated = lastBossDefeated
-				ji.EJ_ID = E.func_SI_to_EJ(instanceId)
-
 
 				-- Bosses собираем только если нужно
 				if not ji.Bosses or #ji.Bosses ~= totalBosses then
@@ -46,7 +56,7 @@ local function Collect_JournalInstance()
 				end
 				for p = 1, totalBosses do
 					ji.Bosses[p] = ji.Bosses[p] or {}
-					local bossName, _, bossKilled = GetSavedInstanceEncounterInfo(i, p)
+					local bossName, _, bossKilled = GetSavedInstanceEncounterInfo(index, p)
 					ji.Bosses[p].bossName = bossName
 					ji.Bosses[p].bossKilled = bossKilled
 				end
@@ -56,30 +66,33 @@ local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	-- WorldBosses
 	----------------------------------------------------------------
-	collectMASLENGO.SavedWorldBoss = collectMASLENGO.SavedWorldBoss or {}
+	collectMASLENGO.SavedWorldBoss = {}
 	local NumSavedWorldBosses = GetNumSavedWorldBosses()
 	if NumSavedWorldBosses > 0 then
-		for i = 1, NumSavedWorldBosses do
-			local name, worldBossID, reset = GetSavedWorldBossInfo(i)
+		for index = 1, NumSavedWorldBosses do
+			local name, worldBossID, reset = GetSavedWorldBossInfo(index)
 			collectMASLENGO.SavedWorldBoss[worldBossID] = {}
 			collectMASLENGO.SavedWorldBoss[worldBossID].name = name
-			collectMASLENGO.SavedWorldBoss[worldBossID].reset = reset
+			collectMASLENGO.SavedWorldBoss[worldBossID].instanceReset = reset > 0 and (reset + ServerTime) or 0 -- deepseek
 		end
 	end
 	----------------------------------------------------------------
 	-- RandomDungeons
 	----------------------------------------------------------------
-	collectMASLENGO.LFGInstance = collectMASLENGO.LFGInstance or {}
-	for i = 1, GetNumRandomDungeons() do
-		local dungeonID, name = GetLFGRandomDungeonInfo(i)
-		if dungeonID and E.OctoTable_LFGDungeons[dungeonID] then
+	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
+	collectMASLENGO.LFGInstance = {}
+	for index = 1, GetNumRandomDungeons() do
+		local dungeonID, name, typeID, _, _, _, _, _, _, _, _, textureFilename, difficultyID = GetLFGRandomDungeonInfo(index)
+		if dungeonID and OctoTable_LFGDungeons[dungeonID] then
 			local donetoday = GetLFGDungeonRewards(dungeonID)
-			collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
-			collectMASLENGO.LFGInstance[dungeonID].D_name = name -- local D_name = GetLFGDungeonInfo(dungeonID)
-			if donetoday == true then
-				collectMASLENGO.LFGInstance[dungeonID].donetoday = E.DONE
-			else
-				collectMASLENGO.LFGInstance[dungeonID].donetoday = nil
+			if donetoday then
+				collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
+				collectMASLENGO.LFGInstance[dungeonID].name = name
+				collectMASLENGO.LFGInstance[dungeonID].typeID = typeID
+				collectMASLENGO.LFGInstance[dungeonID].textureFilename = textureFilename
+				collectMASLENGO.LFGInstance[dungeonID].difficultyID = difficultyID
+				collectMASLENGO.LFGInstance[dungeonID].instanceReset = SecondsUntilDailyReset > 0 and (SecondsUntilDailyReset + ServerTime) or 0 -- deepseek
+				collectMASLENGO.LFGInstance[dungeonID].reset = SecondsUntilDailyReset
 			end
 		end
 	end
@@ -87,6 +100,7 @@ local function Collect_JournalInstance()
 	-- DEBUG
 	----------------------------------------------------------------
 	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.journalInstance)
+	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.LFGInstance)
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("Collect_JournalInstance")
 end

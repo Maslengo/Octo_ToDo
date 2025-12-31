@@ -18,21 +18,80 @@ local GlobalAddonName, E = ...
 
 E.translations = {
 
-	-- [QUESTS_LABEL] = {
-	-- 	["ruRU"] = QUESTS_LABEL,
-	-- 	["deDE"] = QUESTS_LABEL,
-	-- 	["esES"] = QUESTS_LABEL,
-	-- 	["esMX"] = QUESTS_LABEL,
-	-- 	["frFR"] = QUESTS_LABEL,
-	-- 	["itIT"] = QUESTS_LABEL,
-	-- 	["ptBR"] = QUESTS_LABEL,
-	-- 	["koKR"] = QUESTS_LABEL,
-	-- 	["zhCN"] = QUESTS_LABEL,
-	-- 	["zhTW"] = QUESTS_LABEL,
-	-- },
+
+	["Temporarily disabled in combat"] = {
+		["ruRU"] = "Временно отключено во время боя",
+		["enUS"] = "Temporarily disabled in combat",
+		["deDE"] = "Vorübergehend im Kampf deaktiviert",
+		["esES"] = "Desactivado temporalmente en combate",
+		["esMX"] = "Desactivado temporalmente en combate",
+		["frFR"] = "Désactivé temporairement en combat",
+		["itIT"] = "Disabilitato temporaneamente in combattimento",
+		["ptBR"] = "Desativado temporariamente em combate",
+		["koKR"] = "전투 중 일시적으로 비활성화됨",
+		["zhCN"] = "战斗中暂时禁用",
+		["zhTW"] = "戰鬥中暫時停用",
+	},
+
+
+	["Abbreviation"] = {
+		["ruRU"] = "Аббревиатура",
+		["deDE"] = "Abkürzung",
+		["esES"] = "Abreviatura",
+		["esMX"] = "Abreviatura",
+		["frFR"] = "Abréviation",
+		["itIT"] = "Abbreviazione",
+		["ptBR"] = "Abreviação",
+		["koKR"] = "약어",
+		["zhCN"] = "缩写",
+		["zhTW"] = "縮寫",
+	},
 
 
 
+	["Use English abbreviations for raid and dungeon difficulties instead of full names"] = {
+		["ruRU"] = "Использовать английские аббревиатуры для сложностей рейдов и подземелий вместо полных названий",
+		["deDE"] = "Verwendet englische Abkürzungen für Schlachtzug- und Dungeon-Schwierigkeiten anstelle der vollständigen Namen",
+		["esES"] = "Usa abreviaturas en inglés para las dificultades de bandas y mazmorras en lugar de los nombres completos",
+		["esMX"] = "Usa abreviaturas en inglés para las dificultades de bandas y calabozos en lugar de los nombres completos",
+		["frFR"] = "Utilise des abréviations anglaises pour les difficultés de raids et de donjons au lieu des noms complets",
+		["itIT"] = "Usa abbreviazioni inglesi per le difficoltà di incursioni e spedizioni invece dei nomi completi",
+		["ptBR"] = "Usa abreviações em inglês para as dificuldades de raides e masmorras em vez dos nomes completos",
+		["koKR"] = "레이드 및 던전 난이도의 전체 이름 대신 영어 약어를 사용합니다",
+		["zhCN"] = "使用英文缩写来表示团队副本和地下城难度，而不是完整名称",
+		["zhTW"] = "使用英文縮寫顯示團隊與地城難度，而非完整名稱",
+	},
+
+
+
+
+
+
+	["Shows all raid difficulties in the tooltip"] = {
+		["ruRU"] = "Показывает в подсказке все сложности рейда",
+		["deDE"] = "Zeigt alle Schlachtzugschwierigkeiten im Tooltip an",
+		["esES"] = "Muestra todas las dificultades de la banda en la descripción emergente",
+		["esMX"] = "Muestra todas las dificultades de la banda en la descripción emergente",
+		["frFR"] = "Affiche toutes les difficultés du raid dans l’infobulle",
+		["itIT"] = "Mostra tutte le difficoltà dell’incursione nel tooltip",
+		["ptBR"] = "Mostra todas as dificuldades da raide na dica de interface",
+		["koKR"] = "공격대의 모든 난이도를 툴팁에 표시합니다",
+		["zhCN"] = "在提示中显示团队副本的所有难度",
+		["zhTW"] = "在提示中顯示團隊副本的所有難度",
+	},
+
+	["All Difficulties"] = {
+		["ruRU"] = "Все сложности",
+		["deDE"] = "Alle Schwierigkeitsgrade",
+		["esES"] = "Todas las dificultades",
+		["esMX"] = "Todas las dificultades",
+		["frFR"] = "Toutes les difficultés",
+		["itIT"] = "Tutte le difficoltà",
+		["ptBR"] = "Todas as dificuldades",
+		["koKR"] = "모든 난이도",
+		["zhCN"] = "所有难度",
+		["zhTW"] = "所有難度",
+	},
 
 	["Translit"] = {
 		["ruRU"] = "Транслит",
@@ -1525,30 +1584,30 @@ E.translations = {
 		["zhCN"] = "史诗钥石",
 		["zhTW"] = "傳奇鑰石",
 	},
-	["World Boss"] = {
-		["ruRU"] = "Мировой босс",
-		["deDE"] = "Weltboss",
-		["esES"] = "Jefe mundial",
-		["esMX"] = "Jefe mundial",
-		["frFR"] = "Boss mondial",
-		["itIT"] = "Boss mondiale",
-		["ptBR"] = "Chefe mundial",
-		["koKR"] = "월드 보스",
-		["zhCN"] = "世界首领",
-		["zhTW"] = "世界首領",
-	},
-	["World Bosses"] = {
-		["ruRU"] = "Мировые боссы",
-		["deDE"] = "Weltbosse",
-		["esES"] = "Jefes mundiales",
-		["esMX"] = "Jefes mundiales",
-		["frFR"] = "Boss mondiaux",
-		["itIT"] = "Boss mondiali",
-		["ptBR"] = "Chefes mundiais",
-		["koKR"] = "월드 보스들",
-		["zhCN"] = "世界首领",
-		["zhTW"] = "世界首領",
-	},
+	-- ["World Boss"] = {
+	-- 	["ruRU"] = "Мировой босс",
+	-- 	["deDE"] = "Weltboss",
+	-- 	["esES"] = "Jefe mundial",
+	-- 	["esMX"] = "Jefe mundial",
+	-- 	["frFR"] = "Boss mondial",
+	-- 	["itIT"] = "Boss mondiale",
+	-- 	["ptBR"] = "Chefe mundial",
+	-- 	["koKR"] = "월드 보스",
+	-- 	["zhCN"] = "世界首领",
+	-- 	["zhTW"] = "世界首領",
+	-- },
+	-- ["World Bosses"] = {
+	-- 	["ruRU"] = "Мировые боссы",
+	-- 	["deDE"] = "Weltbosse",
+	-- 	["esES"] = "Jefes mundiales",
+	-- 	["esMX"] = "Jefes mundiales",
+	-- 	["frFR"] = "Boss mondiaux",
+	-- 	["itIT"] = "Boss mondiali",
+	-- 	["ptBR"] = "Chefes mundiais",
+	-- 	["koKR"] = "월드 보스들",
+	-- 	["zhCN"] = "世界首领",
+	-- 	["zhTW"] = "世界首領",
+	-- },
 	["Weekend Event"] = {
 		["ruRU"] = "Событие выходного дня",
 		["deDE"] = "Wochenendereignis",

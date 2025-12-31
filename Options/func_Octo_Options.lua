@@ -267,13 +267,49 @@ function E.func_Octo_Options(savedVars)
 				name = L["Max. Level"],
 				desc = CURSOR_SIZE_DEFAULT..": 90",
 				min = 1,
-				max = 90*2,
+				max = 90,
 				step = 1,
 				get = function()
 					return Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 				end,
 				set = function(_, value)
 					Octo_ToDo_DB_Vars.Config_LevelToShowMAX = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			["Header"..GetOrder()] = {
+				type = "header",
+				name = "Tooltip",
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_ShowAllDifficulties = {
+				type = "toggle",
+				name = E.func_texturefromIcon(E.ATLAS_RAID, nil, nil, true) .. L["All Difficulties"],
+				desc = CURSOR_SIZE_DEFAULT..": "..NO .. "|n|n" .. L["Shows all raid difficulties in the tooltip"],
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_ShowAllDifficulties
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_ShowAllDifficulties = value
+					E.Config_ShowAllDifficulties = value
+				end,
+				width = E.FULL_WIDTH/4,
+				order = GetOrder(),
+			},
+			-------------------------------------------------
+			Config_DifficultyAbbreviation = {
+				type = "toggle",
+				name = E.func_texturefromIcon(E.ATLAS_RAID, nil, nil, true) .. L["Abbreviation"],
+				desc = CURSOR_SIZE_DEFAULT..": "..YES.."|n|n"..L["Use English abbreviations for raid and dungeon difficulties instead of full names"],
+				get = function()
+					return Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation
+				end,
+				set = function(_, value)
+					Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation = value
+					E.Config_DifficultyAbbreviation = value
 				end,
 				width = E.FULL_WIDTH/4,
 				order = GetOrder(),
@@ -300,21 +336,21 @@ function E.func_Octo_Options(savedVars)
 				order = GetOrder(),
 			},
 			-------------------------------------------------
-			Config_UseTranslit = {
-				type = "toggle",
-				name = L["Translit"],
-				desc = CURSOR_SIZE_DEFAULT..": "..NO,
-				get = function()
-					return Octo_ToDo_DB_Vars.Config_UseTranslit
-				end,
-				set = function(_, value)
-					Octo_ToDo_DB_Vars.Config_UseTranslit = value
-					E.Config_UseTranslit = value
-					E.func_RefreshTranslations()
-				end,
-				width = E.FULL_WIDTH/4,
-				order = GetOrder(),
-			},
+			-- Config_UseTranslit = {
+			-- 	type = "toggle",
+			-- 	name = L["Translit"],
+			-- 	desc = CURSOR_SIZE_DEFAULT..": "..NO,
+			-- 	get = function()
+			-- 		return Octo_ToDo_DB_Vars.Config_UseTranslit
+			-- 	end,
+			-- 	set = function(_, value)
+			-- 		Octo_ToDo_DB_Vars.Config_UseTranslit = value
+			-- 		E.Config_UseTranslit = value
+			-- 		E.func_RefreshTranslations()
+			-- 	end,
+			-- 	width = E.FULL_WIDTH/4,
+			-- 	order = GetOrder(),
+			-- },
 			-------------------------------------------------
 			["Header"..GetOrder()] = {
 				type = "header",

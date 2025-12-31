@@ -3,7 +3,7 @@ local GlobalAddonName, E = ...
 local enable = false
 if not enable then return end
 ----------------------------------------------------------------
-local categoryKey = 50
+local categoryKey = 53
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -13,7 +13,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
-	OctoTables_Vibor[categoryKey].name = CURRENCY
+	OctoTables_Vibor[categoryKey].name = "RaidsOrDungeons"
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
@@ -22,6 +22,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+		-- EJ INSTANCES
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -33,20 +34,22 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
 	}
 	----------------------------------------------------------------
+
+
+
 	local sorted = {}
-	-- for i, id in ipairs(E.OctoTable_Currencies) do
-	for id in next, (E.OctoTable_Currencies) do
-		tinsert(sorted, id)
+	for SI_ID, v in next, (E.Octo_Table_SI_IDS) do
+		local JI_ID = v.JI_ID
+		tinsert(sorted, JI_ID)
 	end
 	table.sort(sorted, E.func_ReversSort)
 	for i, id in ipairs(sorted) do
-		tinsert(OctoTables_DataOtrisovka[categoryKey].Currencies, {id = id, defS = true,})
+		tinsert(OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons, {id = id, defS = true,})
 	end
+
 
 
 
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)
-

@@ -113,7 +113,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return L["World Boss"]
+				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
 			end,
 			defS = true,
 			name_save = "WorldBoss",

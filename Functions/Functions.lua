@@ -227,6 +227,26 @@ function E.func_FormatCoordinates(x, y)
 	end
 	return string.format("%.1f / %.1f", x * 100, y * 100)
 end
+
+
+function E.func_UnpackCoordinates(packed)
+    if not packed or packed == 0 then
+        return nil, nil
+    end
+
+    local packedStr = tostring(packed)
+    if #packedStr ~= 8 then
+        return nil, nil
+    end
+
+    local x = tonumber(packedStr:sub(1, 4)) / 10000
+    local y = tonumber(packedStr:sub(5, 8)) / 10000
+
+    return x, y  -- Возвращаем ДВА ЧИСЛА
+end
+
+
+
 function E.func_ReversSort(a, b)
 	return b < a
 end
@@ -438,6 +458,8 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], GAMEMENU_OPTIONS)
+				tooltip:AddLine(" ")
+				tooltip:AddLine(E.COLOR_RED..L["Temporarily disabled in combat"].."|r")
 			end,
 	})
 	if type(Saved_Variables.LibDataBroker) ~= "table" then
@@ -782,10 +804,11 @@ function E.func_GetTimewalkingDungeon()
 	end
 	return joinable, result, timewalkDungeonName:match("%((.-)%)")
 end
-function E.func_FormatExpansion(expID, iconSide)
+function E.func_FormatExpansion(expID, iconSide, fullName)
 	local expansion = E.OctoTable_Expansions[expID]
 	local expIcon = E.func_texturefromIcon(expansion.icon, 16, 32)
-	local expName = expansion.color..expansion.nameVeryShort
+	local color = expansion.color
+	local expName = color.. (fullName and expansion.name or expansion.nameVeryShort)
 	if iconSide == "LEFT" then
 		return expIcon..expName.."|r"
 	end
@@ -1020,7 +1043,7 @@ function E.func_GetPlayerLocation()
 	end
 	return UNKNOWN, true
 end
-function E.func_GetQuestStatus(questID)
+function E.func_GetQuestStatus(questID, forceBoolean)
 	if not questID then return end
 	local result
 	-- серый фейл
@@ -1030,7 +1053,11 @@ function E.func_GetQuestStatus(questID)
 	if IsFailed(questID) then
 		result = E.COLOR_RED..FAILED.."|r"
 	elseif IsQuestFlaggedCompleted(questID) then
-		result = E.DONE
+		if forceBoolean then
+			result = true
+		else
+			result = E.DONE
+		end
 	elseif IsComplete(questID) then
 		result = E.COLOR_PURPLE..">"..QUEST_WATCH_QUEST_READY.."<|r"
 	elseif not E.func_IsOnQuest(questID) then
@@ -1302,12 +1329,28 @@ function E.func_GetEmptySlotIcon(slotID)
 end
 ----------------------------------------------------------------
 function E.func_translit(text)
-	if E.Config_UseTranslit then
-	-- if E.curLocaleLang ~= "ruRU" then
-		return LibTranslit:Transliterate(text)
+	if not E.Config_UseTranslit then
+		return text
 	end
-	return text
+
+	if type(text) ~= "string" or text == "" then
+		return text
+	end
+
+	-- нет кириллицы → не трогаем
+	if not text:find("[А-Яа-яЁё]") then
+		return text
+	end
+
+	local result = LibTranslit:Transliterate(text)
+
+	-- защита от пустых строк
+	if not result or result == "" then
+		return text
+	end
+	return result
 end
+
 ----------------------------------------------------------------
 function E:func_CanCollectData()
     local db = Octo_ToDo_DB_Levels

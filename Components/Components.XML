@@ -16,6 +16,9 @@
 	<Script file="Components\50_ALL_Currencies.lua"/>
 	<Script file="Components\51_ALL_Items.lua"/>
 	<Script file="Components\52_ALL_Reputations.lua"/>
+	<Script file="Components\53_ALL_RaidsOrDungeons.lua"/>
+	<Script file="Components\54_TEST_UNIVERSAL.lua"/>
+
 	<Script file="Components\97_PVP.lua"/>
 	<Script file="Components\98_Holidays.lua"/>
 

@@ -305,7 +305,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if SettingsType == "Additionally#ListOfQuests" then
 		if pd.numQuests then
 			local questIDs = {}
-			for questID in next, cm.ListOfQuests do
+			for questID in next, (cm.ListOfQuests) do
 				questIDs[#questIDs+1] = questID
 			end
 			table.sort(questIDs, E.func_ReversSort)
@@ -317,226 +317,347 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if SettingsType == "Additionally#LFGInstance" then
 		local combinedTooltip = {}
-		for instanceID, v in next, (cm.journalInstance) do
+		for EJ_ID, v in next, (cm.journalInstance) do
 			for difficultyID, w in next, (v) do
-				if w.instanceReset then
-					local instanceReset = w.instanceReset
+				local instanceReset = w.instanceReset
+				if instanceReset then
 					local defeatedBosses = w.defeatedBosses
 					local totalBosses = w.totalBosses
 					local lastBossDefeated = w.lastBossDefeated
-					local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_RED)
-					local difficultyName = GetDifficultyInfo(difficultyID)
-					local name = w.instanceName
-					local output = name.." ("..difficultyName..") "..E.debugInfo(instanceID)
+					local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
+					local difficultyName = E.func_GetDifficultyName(difficultyID)
+					-- local name = w.name
+					-- local EJ_ID = w.EJ_ID
+					local name = E.func_GetDungeonName(EJ_ID)
+					local _, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
+					local icon
+					if isRaid then
+						icon = E.func_texturefromIcon(buttonImage2)..E.func_texturefromIcon(E.ATLAS_RAID, nil, nil, true)
+					else
+						icon = E.func_texturefromIcon(buttonImage2)..E.func_texturefromIcon(E.ATLAS_DUNGEON, nil, nil, true)
+					end
+					local LeftText = icon .. name
 					local status = color..defeatedBosses.."/"..totalBosses.."|r"
 					table.insert(combinedTooltip, {
-							name = output,
+							LeftText = LeftText,
+							difficultyID = difficultyID,
 							status = status,
-							time = E.func_SecondsToClock(w.instanceReset-ServerTime)
+							time = E.func_SecondsToClock(instanceReset-ServerTime)
 					})
 				end
 			end
 		end
 		for dungeonID, v in next, (cm.LFGInstance) do
-			if cm.LFGInstance[dungeonID].donetoday then
-				table.insert(combinedTooltip, {
-						name = cm.LFGInstance[dungeonID].D_name..E.debugInfo(dungeonID),
-						status = " ",
-						time = cm.LFGInstance[dungeonID].donetoday
-				})
+			if cm.LFGInstance[dungeonID] then
+				local instanceReset = v.instanceReset
+				if instanceReset then
+					local name = cm.LFGInstance[dungeonID].name..E.debugInfo(dungeonID)
+					local icon = E.func_texturefromIcon(E.ATLAS_DUNGEON, nil, nil, true)
+					local textureFilename = v.textureFilename
+					if textureFilename then
+						icon = E.func_texturefromIcon(textureFilename) .. icon
+					end
+					local LeftText = icon .. name
+					table.insert(combinedTooltip, {
+							LeftText = LeftText,
+							difficultyID = v.difficultyID,
+							status = " ",
+							time = E.func_SecondsToClock(instanceReset-ServerTime),
+					})
+				end
 			end
 		end
 		for worldBossID, v in next, (cm.SavedWorldBoss) do
-			table.insert(combinedTooltip, {
-					name = v.name..E.debugInfo(worldBossID),
-					status = " ",
-					time = E.func_SecondsToClock(v.reset)
-			})
+			local instanceReset = v.instanceReset
+			if instanceReset then
+				local name = v.name..E.debugInfo(worldBossID)
+				local icon = E.func_texturefromIcon(E.ATLAS_WORLDBOSS, nil, nil, true)
+				local LeftText = icon .. name
+				table.insert(combinedTooltip, {
+						LeftText = LeftText,
+						difficultyID = 172, -- RAID_INFO_WORLD_BOSS, -- L["World Boss"]
+						status = " ",
+						time = E.func_SecondsToClock(instanceReset-ServerTime),
+				})
+			end
 		end
 		table.sort(combinedTooltip, function(a, b)
-				return a.name < b.name
+				local pa = E.OctoTable_DifficultyTable[a.difficultyID] and E.OctoTable_DifficultyTable[a.difficultyID].prior or 999
+				local pb = E.OctoTable_DifficultyTable[b.difficultyID] and E.OctoTable_DifficultyTable[b.difficultyID].prior or 999
+				return pa > pb
 		end)
 		for _, v in ipairs(combinedTooltip) do
 			tooltip[#tooltip+1] = {
-				v.name,
-				"|cff9999ff"..v.time.."|r",
-				v.status
+				v.LeftText,
+				E.func_GetDifficultyName(v.difficultyID),
+				v.status,
+				E.COLOR_TIME..v.time.."|r",
 			}
 		end
 	end
 	if dataType == "UniversalQuests" then
 		for _, data in next, (E.ALL_UniversalQuests) do
-			if not data.quests then
-				break
-			end
-			local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-			local showTooltip = data.showTooltip or false
-			if showTooltip and id == questKey then
-				local totalQuest = 0
-				local forcedMaxQuest = data.forcedMaxQuest
-				for _, questData in ipairs(data.quests) do
-					local FactionOrClass = questData.FactionOrClass
-					local class = questData.class
-					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
-						if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
-							totalQuest = totalQuest + 1
-						elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
-							totalQuest = forcedMaxQuest
-							break
-						else
-							totalQuest = totalQuest + 1
-						end
-					end
-				end
-				forcedMaxQuest = totalQuest
-				if E.DebugUniversal then
-					tooltip[#tooltip+1] = {questKey, "forcedMaxQuest: "..totalQuest}
-				end
-				if totalQuest >= 1 then
-					local output
-					if type(data.TextLeft) == "function" then
-						output = data.TextLeft()
-					else
-						output = data.TextLeft
-					end
-					local TextLeft = tostringall(E.func_FormatResetType(data.reset).." "..output)
-					tooltip[#tooltip+1] = {" ", TOTAL..": "..totalQuest}
-				end
-				local questsToShow = {}
-				for _, questData in ipairs(data.quests) do
-					local FactionOrClass = questData.FactionOrClass
-					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
-						table.insert(questsToShow, questData)
-					end
-				end
-				if data.sorted ~= false then
-					table.sort(questsToShow, function(a, b)
-							local function getName(entry)
-								if entry.forcedText then
-									if entry.forcedText.npcID then
-										return E.func_GetNPCName(entry.forcedText.npcID) or ""
-									elseif entry.forcedText.text then
-										return entry.forcedText.text or ""
-									end
+			if data.quests then
+				local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+				local showTooltip = data.showTooltip or false
+				if showTooltip and id == questKey then
+					local totalQuest = 0
+					local forcedMaxQuest = data.forcedMaxQuest
+					for _, questData in ipairs(data.quests) do
+						if type(questData[1]) == "number" then
+							local FactionOrClass = questData.FactionOrClass
+							local class = questData.class
+							if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
+								if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
+									totalQuest = totalQuest + 1
+								elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
+									totalQuest = forcedMaxQuest
+									break
+								else
+									totalQuest = totalQuest + 1
 								end
-								return E.func_GetQuestName(entry[1]) or ""
 							end
-							return getName(a) < getName(b)
-					end)
-				end
-				for _, questData in ipairs(questsToShow) do
-					local questID = questData[1]
-					local FactionOrClass = questData.FactionOrClass
-					local forcedText = questData.forcedText
-					local forcedIcon = questData.forcedIcon
-					local addText = questData.addText
-					local Output_LEFT = ""
-					local Output_CENT = ""
-					local Output_RIGHT = ""
-					if questID then
-						Output_RIGHT = cm.UniversalQuest and cm.UniversalQuest[questKey] and cm.UniversalQuest[questKey][questID] or E.COLOR_GRAY..NONE.."|r"
+						end
 					end
-					if forcedText then
-						if forcedText.text then
-							Output_LEFT = Output_LEFT..forcedText.text.." "
+					forcedMaxQuest = totalQuest
+					if E.DebugUniversal then
+						tooltip[#tooltip+1] = {questKey, "forcedMaxQuest: "..totalQuest}
+					end
+					if totalQuest >= 1 then
+						local output
+						if type(data.TextLeft) == "function" then
+							output = data.TextLeft()
+						else
+							output = data.TextLeft
 						end
-						if forcedText.npcID then
-							Output_LEFT = Output_LEFT..E.func_GetNPCName(forcedText.npcID).." "
+						local TextLeft = tostringall(E.func_FormatResetType(data.reset).." "..output)
+						tooltip[#tooltip+1] = {" ", TOTAL..": "..totalQuest}
+					end
+					local questsToShow = {}
+					for _, questData in ipairs(data.quests) do
+						-- if type(questData[1]) == "number" then
+						local FactionOrClass = questData.FactionOrClass
+						if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
+							table.insert(questsToShow, questData)
 						end
-						if forcedText.achievementID then
-							Output_LEFT = Output_LEFT..E.func_GetAchievementName(forcedText.achievementID).." "
-						end
-						if forcedText.itemID then
-							Output_LEFT = Output_LEFT..E.func_GetItemName(forcedText.itemID).." "
-						end
-						if forcedText.Icon then
-							Output_LEFT = E.func_texturefromIcon(forcedText.Icon)..Output_LEFT
-						end
-						Output_LEFT = Output_LEFT:match("^(.-)%s*$")
-					else
+						-- end
+					end
+					if data.sorted ~= false then
+						table.sort(questsToShow, function(a, b)
+								local function getName(entry)
+									if entry.forcedText then
+										if entry.forcedText.npcID then
+											return E.func_GetNPCName(entry.forcedText.npcID) or ""
+										elseif entry.forcedText.text then
+											return entry.forcedText.text or ""
+										end
+									end
+									return E.func_GetQuestName(entry[1]) or ""
+								end
+								return getName(a) < getName(b)
+						end)
+					end
+					for _, questData in ipairs(questsToShow) do
+						local questID = questData[1]
+						local FactionOrClass = questData.FactionOrClass
+						local forcedText = questData.forcedText
+						local forcedIcon = questData.forcedIcon
+						local addText = questData.addText
+						local Output_LEFT = ""
+						local Output_CENT = ""
+						local Output_RIGHT = ""
 						if questID then
-							Output_LEFT = Output_LEFT..E.func_GetQuestName(questID)
+							local status = cm.UniversalQuest and cm.UniversalQuest[questKey] and cm.UniversalQuest[questKey][questID] or E.COLOR_GRAY..NONE.."|r"
+							if status and type(status) == "boolean" then
+								status = E.DONE
+							end
+							Output_RIGHT = status
 						end
-					end
-					if addText then
-						if addText.IconVignette then
-							Output_LEFT = E.func_texturefromIcon(addText.IconVignette, nil, nil, true)..Output_LEFT
+						if forcedText then
+							if forcedText.text then
+								Output_LEFT = Output_LEFT..forcedText.text.." "
+							end
+							if forcedText.npcID then
+								Output_LEFT = Output_LEFT..E.func_GetNPCName(forcedText.npcID).." "
+							end
+							if forcedText.achievementID then
+								Output_LEFT = Output_LEFT..E.func_GetAchievementName(forcedText.achievementID).." "
+							end
+							if forcedText.itemID then
+								Output_LEFT = Output_LEFT..E.func_texturefromIcon(E.func_GetItemIcon(forcedText.itemID))..E.func_GetItemName(forcedText.itemID).." "
+							end
+							if forcedText.Icon then
+								Output_LEFT = E.func_texturefromIcon(forcedText.Icon)..Output_LEFT
+							end
+							Output_LEFT = Output_LEFT:match("^(.-)%s*$")
+						else
+							if questID then
+								Output_LEFT = Output_LEFT..E.func_GetQuestName(questID)
+							end
 						end
-						if addText.Icon then
-							Output_LEFT = E.func_texturefromIcon(addText.Icon)..Output_LEFT
+						if addText then
+							if addText.IconVignette then
+								Output_LEFT = E.func_texturefromIcon(addText.IconVignette, nil, nil, true)..Output_LEFT
+							end
+							if addText.Icon then
+								Output_LEFT = E.func_texturefromIcon(addText.Icon)..Output_LEFT
+							end
+							if addText.mount then
+								Output_CENT = Output_CENT..E.COLOR_PURPLE.." +"..string.format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)).."|r"
+							end
+							if addText.expansionText then
+								Output_CENT = Output_CENT..addText.expansionText
+							end
+							if addText.notes then
+								Output_LEFT = Output_LEFT..addText.notes
+							end
+							if addText.mapID then
+								Output_LEFT = Output_LEFT..E.COLOR_GRAY.." ("..E.func_GetMapName(addText.mapID)..")|r"
+							end
+							if addText.spellID then
+								Output_LEFT = Output_LEFT..E.COLOR_PINK..E.func_GetSpellName(addText.spellID).."|r"
+							end
+							if addText.text then
+								Output_LEFT = Output_LEFT..addText.text
+							end
+							if addText.itemID then
+								Output_LEFT = Output_LEFT..E.func_texturefromIcon(E.func_GetItemIcon(addText.itemID))..E.func_GetItemName(addText.itemID)
+							end
+							if addText.coords then
+								local x, y = E.func_UnpackCoordinates(addText.coords)
+								local coordsText = E.func_FormatCoordinates(x, y)
+								Output_CENT = Output_CENT..coordsText
+							end
 						end
-						if addText.mount then
-							Output_CENT = Output_CENT..E.COLOR_PURPLE.." +"..string.format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)).."|r"
+						if FactionOrClass and FactionOrClass[pd.Faction] then
+							Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(pd.Faction))..Output_LEFT
+						elseif FactionOrClass and FactionOrClass[pd.classFilename] then
+							Output_LEFT = E.func_texturefromIcon(pd.specIcon)..Output_LEFT
 						end
-						if addText.expansionText then
-							Output_CENT = Output_CENT..addText.expansionText
+						if Output_CENT ~= "" then
+							tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
+						else
+							tooltip[#tooltip+1] = {Output_LEFT, Output_RIGHT}
 						end
-						if addText.notes then
-							Output_LEFT = Output_LEFT..addText.notes
-						end
-						if addText.mapID then
-							Output_LEFT = Output_LEFT..E.COLOR_GRAY.." ("..E.func_GetMapName(addText.mapID)..")|r"
-						end
-						if addText.spellID then
-							Output_LEFT = Output_LEFT..E.COLOR_PINK..E.func_GetSpellName(addText.spellID).."|r"
-						end
-						if addText.text then
-							Output_LEFT = Output_LEFT..addText.text
-						end
-					end
-					if FactionOrClass and FactionOrClass[pd.Faction] then
-						Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(pd.Faction))..Output_LEFT
-					elseif FactionOrClass and FactionOrClass[pd.classFilename] then
-						Output_LEFT = E.func_texturefromIcon(pd.specIcon)..Output_LEFT
-					end
-					if Output_CENT ~= "" then
-						tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
-					else
-						tooltip[#tooltip+1] = {Output_LEFT, Output_RIGHT}
 					end
 				end
 			end
 		end
 	end
 	if dataType == "RaidsOrDungeons" then
-		local SI_ID = E.func_EJ_to_SI(id)
-		for k, v in next, (E.Octo_Table_SI_IDS) do
+		local EJ_ID = tonumber(id)
+		local SI_ID = E.func_EJ_to_SI(EJ_ID)
+		local instanceData = cm.journalInstance and cm.journalInstance[EJ_ID] or {}
+		local completedDiffs = {}
+		local bosses = {}
+		local resetTime
+		-- 1. получаем список всех сложностей для инстанса
+		local difficulties
+		for _, v in next, E.Octo_Table_SI_IDS do
 			if SI_ID == v.SI_ID then
-				local difficulties = v.difficulties
-				local firstDifficulty = true
-				for difficultyID, totalBosses in next, (difficulties) do
-					if not firstDifficulty then
-						tooltip[#tooltip+1] = {"", "", ""}
-					else
-						firstDifficulty = false
-					end
-					local defeatedBosses, instanceReset = 0, 0
-					local Text1 = GetDifficultyInfo(difficultyID)
-					local Text2 = E.NONE
-					local Text3 = E.COLOR_GRAY.."0/"..totalBosses.."|r"
-					local color = E.COLOR_GRAY
-					if cm.journalInstance[SI_ID] and cm.journalInstance[SI_ID][difficultyID] then
-						instanceReset = cm.journalInstance[SI_ID][difficultyID].instanceReset or 0
-						defeatedBosses = cm.journalInstance[SI_ID][difficultyID].defeatedBosses or 0
-						local lastBossDefeated = cm.journalInstance[SI_ID][difficultyID].lastBossDefeated or false
-						color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_RED)
-						if instanceReset > 0 then
-							Text2 = "|cff9999ff"..E.func_SecondsToClock(instanceReset-ServerTime).."|r"
-						end
-						Text3 = color..defeatedBosses.."/"..totalBosses.."|r"
-						tooltip[#tooltip+1] = {Text3 .." ".. Text1, {" ", "LEFT"}, Text2}
-						local bosses = cm.journalInstance[SI_ID][difficultyID].Bosses or {}
-						for bossI, w in next, (bosses) do
-							local bossName = w.bossName
-							local bossKilled = w.bossKilled
-							local bossColor = bossKilled and E.COLOR_GREEN or E.COLOR_RED
-							tooltip[#tooltip+1] = {"", {bossColor..bossName.."|r", "LEFT"},""}
-						end
-					else
-						tooltip[#tooltip+1] = {Text3 .." ".. Text1, " ", Text2}
+				difficulties = v.difficulties
+				break
+			end
+		end
+		if not difficulties then return end
+		-- 2. собираем сложности в зависимости от конфига
+		if E.Config_ShowAllDifficulties then
+			for difficultyID, totalBosses in next, difficulties do
+				local ji = instanceData[difficultyID] or {}
+				completedDiffs[#completedDiffs + 1] = {
+					difficultyID = difficultyID,
+					defeatedBosses = ji.defeatedBosses or 0,
+					totalBosses = totalBosses,
+					lastBossDefeated = ji.lastBossDefeated or false,
+					Bosses = ji.Bosses
+				}
+				if not resetTime and ji.instanceReset and ji.instanceReset > 0 then
+					resetTime = ji.instanceReset
+				end
+			end
+		else
+			for difficultyID, ji in next, instanceData do
+				if ji.defeatedBosses and ji.defeatedBosses > 0 then
+					completedDiffs[#completedDiffs + 1] = {
+						difficultyID = difficultyID,
+						defeatedBosses = ji.defeatedBosses,
+						totalBosses = ji.totalBosses,
+						lastBossDefeated = ji.lastBossDefeated,
+						Bosses = ji.Bosses
+					}
+					if not resetTime and ji.instanceReset and ji.instanceReset > 0 then
+						resetTime = ji.instanceReset
 					end
 				end
 			end
+		end
+		if #completedDiffs == 0 then return end
+		-- 3. сортировка по приоритету из OctoTable_DifficultyTable
+		table.sort(completedDiffs, function(a, b)
+				local pa = E.OctoTable_DifficultyTable[a.difficultyID] and E.OctoTable_DifficultyTable[a.difficultyID].prior or 999
+				local pb = E.OctoTable_DifficultyTable[b.difficultyID] and E.OctoTable_DifficultyTable[b.difficultyID].prior or 999
+				return pa < pb
+		end)
+		-- 4. фиксируем порядок боссов по первой доступной сложности
+		for _, diff in ipairs(completedDiffs) do
+			local ji = diff.Bosses
+			if ji and #ji > 0 then
+				for i = 1, #ji do
+					local b = ji[i]
+					bosses[i] = { name = b.bossName, kills = {} }
+				end
+				break
+			end
+		end
+		-- 5. заполняем киллы по сложностям
+		for _, diff in ipairs(completedDiffs) do
+			local ji = diff.Bosses
+			if ji and #ji > 0 then
+				for i = 1, #ji do
+					bosses[i].kills[diff.difficultyID] = ji[i].bossKilled
+				end
+			end
+		end
+		-- 6. шапка: reset + сложности
+		local header = {}
+		if resetTime then
+			header[1] = {E.COLOR_TIME..E.func_SecondsToClock(resetTime-ServerTime).."|r", "LEFT"}
+		else
+			header[1] = {" ", "LEFT"}
+		end
+		for _, diff in ipairs(completedDiffs) do
+			header[#header+1] = {E.func_GetDifficultyName(diff.difficultyID), "CENTER"}
+		end
+		tooltip[#tooltip+1] = header
+		-- 8. итоговая строка TOTAL
+		local totalRow = {{E.COLOR_GRAY..TOTAL.."|r", "LEFT"}}
+		for _, diff in ipairs(completedDiffs) do
+			local color
+			if diff.defeatedBosses == diff.totalBosses then
+				color = E.COLOR_GREEN
+			elseif diff.lastBossDefeated then
+				color = E.COLOR_YELLOW
+			else
+				color = E.COLOR_WHITE
+			end
+			totalRow[#totalRow+1] = {color..diff.defeatedBosses.."/"..diff.totalBosses.."|r", "CENTER"}
+		end
+		tooltip[#tooltip+1] = totalRow
+		-- 7. строки боссов
+		if bosses and #bosses > 0 then
+			tooltip[#tooltip+1] = {""}
+		end
+		for i = 1, #bosses do
+			local boss = bosses[i]
+			local row = {{boss.name, "LEFT"}}
+			for _, diff in ipairs(completedDiffs) do
+				if boss.kills[diff.difficultyID] then
+					row[#row+1] = {E.COLOR_GREEN..E.DONE.."|r", "CENTER"}
+				else
+					row[#row+1] = {E.COLOR_GRAY.."-|r", "CENTER"}
+				end
+			end
+			tooltip[#tooltip+1] = row
 		end
 	end
 	return tooltip

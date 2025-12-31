@@ -75,57 +75,53 @@ end
 function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local JI_ID = tonumber(id)
-	local SI_ID = E.func_EJ_to_SI(JI_ID)
-	if cm.journalInstance[SI_ID] then
-		for difficultyID, v in next, (cm.journalInstance[SI_ID]) do
-			local defeatedBosses = cm.journalInstance[SI_ID][difficultyID].defeatedBosses or 0
-			local totalBosses = cm.journalInstance[SI_ID][difficultyID].totalBosses or 0
-			local difficultyName = GetDifficultyInfo(difficultyID)
-			local lastBossDefeated = cm.journalInstance[SI_ID][difficultyID].lastBossDefeated or false
-			local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_RED)
-			if defeatedBosses > 0 then
-				TextCenter = TextCenter..color..defeatedBosses .. "/" .. totalBosses.."|r "
+	-- local SI_ID = E.func_EJ_to_SI(JI_ID)
+
+	local instanceData = cm.journalInstance[JI_ID]
+	if instanceData then
+		-- Собираем все сложности в массив для сортировки
+		local difficulties = {}
+		for difficultyID, v in next, instanceData do
+			difficulties[#difficulties+1] = {
+				difficultyID = difficultyID,
+				defeatedBosses = v.defeatedBosses or 0,
+				totalBosses = v.totalBosses or 0,
+				lastBossDefeated = v.lastBossDefeated or false
+			}
+		end
+
+		-- Сортировка по приоритету из OctoTable_DifficultyTable
+		table.sort(difficulties, function(a, b)
+			local pa = E.OctoTable_DifficultyTable[a.difficultyID] and E.OctoTable_DifficultyTable[a.difficultyID].prior or 999
+			local pb = E.OctoTable_DifficultyTable[b.difficultyID] and E.OctoTable_DifficultyTable[b.difficultyID].prior or 999
+			return pa < pb
+		end)
+
+		-- Формируем текст
+		for _, diff in ipairs(difficulties) do
+			if diff.defeatedBosses > 0 then
+				local color = diff.defeatedBosses == diff.totalBosses and E.COLOR_GREEN or (diff.lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
+				TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
 			end
 		end
 	end
+
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 end
+
 function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	if data.quests then
 		local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-		local showTooltip = data.showTooltip or false
-		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] then
-			local LeftData = CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter
-			if LeftData then
-				local totalQuest = 0
-				local forcedMaxQuest = data.forcedMaxQuest
-				for _, questData in ipairs(data.quests) do
-					local FactionOrClass = questData.FactionOrClass
-					if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
-						if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
-							totalQuest = totalQuest + 1
-						elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
-							totalQuest = forcedMaxQuest
-							break
-						else
-							totalQuest = totalQuest + 1
-						end
-					end
-				end
-				forcedMaxQuest = totalQuest
-				if type(LeftData) == "number" and forcedMaxQuest then
-					TextCenter = LeftData >= forcedMaxQuest and E.DONE or LeftData.."/"..forcedMaxQuest
-				elseif forcedMaxQuest ~= 1 then
-					TextCenter = "0/"..forcedMaxQuest
-				elseif type(LeftData) == "string" then
-					TextCenter = LeftData
-				end
+		-- local showTooltip = data.showTooltip or false
+		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter then
+			TextCenter = CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter
+			if type(TextCenter) == "boolean" then
+				TextCenter = E.DONE
 			end
 		end
 		return TextCenter, ColorCenter, FirstReputation, SecondReputation
@@ -230,13 +226,21 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 				end
 			end
 		end
-		for dungeonID, v in next, (cm.LFGInstance) do
-			if v then
-				if cm.LFGInstance[dungeonID].donetoday then
-					count = count + 1
-				end
+
+
+		if cm.LFGInstance then
+			for k, v in next, (cm.LFGInstance) do
+				count = count + 1
 			end
 		end
+
+		-- for dungeonID, v in next, (cm.LFGInstance) do
+		-- 	if v then
+		-- 		if cm.LFGInstance[dungeonID].donetoday then
+		-- 			count = count + 1
+		-- 		end
+		-- 	end
+		-- end
 		for worldBossID, v in next, (cm.SavedWorldBoss) do
 			if v then
 				count = count + 1
@@ -271,15 +275,8 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		end
 	end
 	if id == "ItemLevel" then
-		if pd.avgItemLevelEquipped and pd.avgItemLevel then
-			TextCenter = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
-			if pd.avgItemLevel > pd.avgItemLevelEquipped then
-				TextCenter = TextCenter.."/"..pd.avgItemLevel.."|r"
-			end
-			if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
-				TextCenter = TextCenter..E.COLOR_GREEN.."+|r"
-			end
-		end
+		TextCenter = E.func_CharInfo_ItemLevel(CharInfo)
+		-- .." ".. E.func_CharInfo_Durability(CharInfo, true, 41)
 	end
 	if id == "Money" then
 		if pd.Money then

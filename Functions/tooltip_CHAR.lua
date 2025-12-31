@@ -29,16 +29,18 @@ function E.func_Tooltip_Chars(CharInfo)
 	local specTexture = E.func_texturefromIcon(specIcon)
 	local durColor = E.func_GetColorGradient(PlayerDurability, 0, 100)
 
-
 	local playerNameWithLevel = E.func_CharInfo_NickName(CharInfo, true)
 	local playerServer = E.func_CharInfo_Server(CharInfo, true)
 	local guild = E.func_CharInfo_Guild(CharInfo, true)
+	local mail = E.func_CharInfo_Mail(CharInfo)
+	local durability = E.func_CharInfo_Durability(CharInfo, true)
+
 
 	if Name ~= "" and curServer ~= "" then
 		tooltip[#tooltip + 1] = {
 			specTexture..playerNameWithLevel.." "..playerServer,
 			-- specTexture..classColorHex..Name.."|r ("..curServer..")",
-			PlayerDurability < 100 and durColor..PlayerDurability.."%|r"..E.func_texturefromIcon(136241) or ""
+			mail
 		}
 	end
 	if guildName ~= "" and guildRankName ~= "" and guildRankIndex > 0 then
@@ -46,6 +48,13 @@ function E.func_Tooltip_Chars(CharInfo)
 			guild
 		}
 	end
+
+		tooltip[#tooltip + 1] = {
+			STAT_AVERAGE_ITEM_LEVEL..": "..
+			E.func_CharInfo_ItemLevel(CharInfo),
+			durability
+		}
+
 	-- if RaceLocal ~= "" then
 	-- 	if UnitLevel ~= E.currentMaxLevel and UnitXPPercent > 0 then
 	-- 		tooltip[#tooltip + 1] = {
@@ -55,49 +64,71 @@ function E.func_Tooltip_Chars(CharInfo)
 	-- 		tooltip[#tooltip + 1] = { RaceLocal, "" }
 	-- 	end
 	-- end
-	if WarMode then
-		tooltip[#tooltip + 1] = {
-			E.COLOR_SKYBLUE..ERR_PVP_WARMODE_TOGGLE_ON.."|r"
-		}
-	end
+
+
+	-- if WarMode then
+	-- 	tooltip[#tooltip + 1] = {
+	-- 		E.COLOR_SKYBLUE..ERR_PVP_WARMODE_TOGGLE_ON.."|r"
+	-- 	}
+	-- end
+
+
 	if Chromie_name ~= "" then
 		-- tooltip[#tooltip + 1] = { " ", " " }
 		tooltip[#tooltip + 1] = {
 			E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_GetNPCName(167032)..": "..E.COLOR_GREEN..Chromie_name.."|r"
 		}
 	end
-	if curLocation ~= "" then
-		-- tooltip[#tooltip + 1] = { " ", " " }
-		tooltip[#tooltip + 1] = {
-			E.func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..classColorHex..curLocation.."|r"
-		}
-	end
-	if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
-		local icon = E.func_texturefromIcon(133634)
-		local textLeft = icon..BAG_NAME_BACKPACK..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
-		if usedSlots_BANK and totalSlots_BANK then
-			textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
-		end
-		tooltip[#tooltip + 1] = { textLeft, "" }
-	end
-	if maxNumQuestsCanAccept > 0 then
-		tooltip[#tooltip + 1] = {
-			E.func_texturefromIcon(236664)..QUESTS_LABEL..": "..classColorHex..numQuests.."/"..maxNumQuestsCanAccept.."|r"
-		}
-	end
+
+
+	-- if curLocation ~= "" then
+	-- 	-- tooltip[#tooltip + 1] = { " ", " " }
+	-- 	tooltip[#tooltip + 1] = {
+	-- 		E.func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..classColorHex..curLocation.."|r"
+	-- 	}
+	-- end
+
+
+	-- if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
+	-- 	local icon = E.func_texturefromIcon(133634)
+	-- 	local textLeft = icon..BAG_NAME_BACKPACK..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
+	-- 	if usedSlots_BANK and totalSlots_BANK then
+	-- 		textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
+	-- 	end
+	-- 	tooltip[#tooltip + 1] = { textLeft, "" }
+	-- end
+
+
+	-- if maxNumQuestsCanAccept > 0 then
+	-- 	tooltip[#tooltip + 1] = {
+	-- 		E.func_texturefromIcon(236664)..QUESTS_LABEL..": "..classColorHex..numQuests.."/"..maxNumQuestsCanAccept.."|r"
+	-- 	}
+	-- end
+
+
 	if realTotalTime > 0 then
 		tooltip[#tooltip + 1] = { " ", "" }
 		tooltip[#tooltip + 1] = {
 			string.format(TIME_PLAYED_TOTAL,classColorHex..E.func_SecondsToClock(realTotalTime)).."|r"
 		}
 	end
-	if CharInfo.MASLENGO and CharInfo.MASLENGO.Items and CharInfo.MASLENGO.Items.Bags and CharInfo.MASLENGO.Items.Bags[122284] then
-		tooltip[#tooltip + 1] = { " ", "" }
-		tooltip[#tooltip + 1] = {
-			E.func_GetItemName(122284),
-			CharInfo.MASLENGO.Items.Bags[122284]
-		}
-	end
+
+
+	-- if CharInfo.MASLENGO and CharInfo.MASLENGO.Items and CharInfo.MASLENGO.Items.Bags and CharInfo.MASLENGO.Items.Bags[122284] then
+	-- 	tooltip[#tooltip + 1] = { " ", "" }
+	-- 	tooltip[#tooltip + 1] = {
+	-- 		E.func_GetItemName(122284),
+	-- 		CharInfo.MASLENGO.Items.Bags[122284]
+	-- 	}
+	-- end
+
+
+
+
+
+
+
+
 	if E.DebugCharacterInfo then
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color..E.DEVTEXT.."|r", ""}

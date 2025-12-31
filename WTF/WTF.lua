@@ -23,6 +23,7 @@ function EventFrame:func_CacheGameData()
 	local Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels
 	local ALL_Currencies = E.ALL_Currencies
 	local AllNPCs_DB = E.OctoTable_AllNPCs_DB
+	local OctoTable_Currencies = E.OctoTable_Currencies
 	----------------------------------------------------------------
 	-- Сливаем таблицы предметов и квестов
 	local itemTables = {
@@ -66,6 +67,10 @@ function EventFrame:func_CacheGameData()
 			E.OctoTable_Reputations_Paragon_Data_NEW[repID] = { paragonQuest = pq, itemCache = ic }
 			E.OctoTable_Reputations_Paragon_Data[pq] = { factionID = repID, cache = ic }
 		end
+	end
+	-- Валюта
+	for curID in next, (OctoTable_Currencies) do
+		ALL_Currencies[curID] = true
 	end
 	-- QuestLog квесты
 	local numQuests = C_QuestLog.GetNumQuestLogEntries()
@@ -291,11 +296,6 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 				cm.GARRISON[k] = type(v) == "table" and CopyTable(v) or v
 			end
 		end
-		for dungeonID, name in next, (E.OctoTable_LFGDungeons) do
-			cm.LFGInstance[dungeonID] = cm.LFGInstance[dungeonID] or {}
-			E.func_InitField(cm.LFGInstance[dungeonID], "D_name", name)
-			cm.LFGInstance[dungeonID].donetoday = cm.LFGInstance[dungeonID].donetoday or nil
-		end
 		for name, i in next, (Enum.WeeklyRewardChestThresholdType) do
 			cm.GreatVault[i] = cm.GreatVault[i] or {}
 		end
@@ -327,6 +327,8 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 		Config_CHARACTER_ALPHA = 0.1,
 		Config_MAINBACKGROUND_ALPHA = 0.8,
 		Config_UseTranslit = false,
+		Config_ShowAllDifficulties = false, -- E.Config_ShowAllDifficulties,
+		Config_DifficultyAbbreviation = true,
 	}
 	for k, v in next, (featureDefaults) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
@@ -341,7 +343,6 @@ function EventFrame:Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB.interfaceVersion = E.interfaceVersion
 	E.func_InitSubTable(Octo_Cache_DB, "AllItems")
-	E.func_InitSubTable(Octo_Cache_DB, "AllRaids")
 	E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
 	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
 	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
@@ -354,6 +355,7 @@ function EventFrame:Init_Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
 	E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
 	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
+	E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
 end
 function EventFrame:init_Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
@@ -391,10 +393,6 @@ function EventFrame:func_Daily_Reset()
 				end
 			end
 			wipe(cm.LFGInstance)
-			for _, v in ipairs (E.OctoTable_LFGDungeons) do
-				cm.LFGInstance[v] = cm.LFGInstance[v] or {}
-				cm.LFGInstance[v].donetoday = nil
-			end
 			if pd.MoneyOnDaily and pd.Money then
 				pd.MoneyOnDaily = pd.Money
 			end
@@ -505,20 +503,26 @@ function EventFrame:func_UpdateGlobals()
 		if Octo_ToDo_DB_Vars.Config_DebugID_ALL ~= nil then
 			E.Config_DebugID_ALL = Octo_ToDo_DB_Vars.Config_DebugID_ALL
 		end
-		if Octo_ToDo_DB_Vars.Config_SPAM_TIME then
+		if Octo_ToDo_DB_Vars.Config_SPAM_TIME ~= nil then
 			E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
 		end
-		if Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA then
+		if Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA ~= nil then
 			E.REPUTATION_ALPHA = Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
 		end
-		if Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA then
+		if Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA ~= nil then
 			E.CHARACTER_ALPHA = Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
 		end
-		if Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA then
+		if Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA ~= nil then
 			E.MAINBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
 		end
-		if Octo_ToDo_DB_Vars.Config_UseTranslit then
+		if Octo_ToDo_DB_Vars.Config_UseTranslit ~= nil then
 			E.Config_UseTranslit = Octo_ToDo_DB_Vars.Config_UseTranslit
+		end
+		if Octo_ToDo_DB_Vars.Config_ShowAllDifficulties ~= nil then
+			E.Config_ShowAllDifficulties = Octo_ToDo_DB_Vars.Config_ShowAllDifficulties
+		end
+		if Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation ~= nil then
+			E.Config_DifficultyAbbreviation = Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation
 		end
 	end
 	E.func_UpdateCurrentProfile()

@@ -89,8 +89,3 @@ E.OctoTable_KeystoneAbbr = {
 	-- 1216786
 	-- AATDH - raid
 }
-E.OctoTable_LFGDungeons = {
-	[286] = "Повелитель Холода Ахун",
-	[287] = "Корен Худовар",
-	[285] = "Всадник без головы",
-}

@@ -9,10 +9,17 @@ local function Collect_Mounts()
 	local GetMountIDs = C_MountJournal.GetMountIDs
 	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
 	local cache_1166 = E.func_Mounts_1166()
+	E.OctoTable_ALL_Mounts[1166] = E.OctoTable_ALL_Mounts[1166] or {}
 	local cache_3252 = E.func_Mounts_3252()
+	E.OctoTable_ALL_Mounts[3252] = E.OctoTable_ALL_Mounts[3252] or {}
+	local cache_2778 = E.func_Mounts_2778()
+	E.OctoTable_ALL_Mounts[2778] = E.OctoTable_ALL_Mounts[2778] or {}
 
 	for _, mountID in ipairs(GetMountIDs()) do
 		local _, _, source = GetMountInfoExtraByID(mountID)
+		source = source:gsub(" ", "") -- mountID == 645
+		source = source:gsub(",", "") -- mountID == 645
+		source = source:gsub(" ", "") -- mountID == 645
 		local price, currencyID = source:match("([%d %.,]+)|Hcurrency:(%d+)")
 		local curName = E.func_GetCurrencyName(currencyID)
 		local mouName = E.func_GetMountName(mountID)
@@ -28,15 +35,34 @@ local function Collect_Mounts()
 			E.OctoTable_ALL_Mounts[currencyID][mountID] = price
 		end
 		-- таймволк
-		E.OctoTable_ALL_Mounts[1166] = E.OctoTable_ALL_Mounts[1166] or {}
 		for i, v in ipairs(cache_1166) do
-			E.OctoTable_ALL_Mounts[1166][v.mountID] = v.price
+			if v.itemID then
+				local mountID = v.mountID or C_MountJournal.GetMountFromItem(v.itemID)
+				if mountID then
+					E.OctoTable_ALL_Mounts[1166][mountID] = v.price
+				end
+			end
 		end
-		-- Бронза
-		E.OctoTable_ALL_Mounts[3252] = E.OctoTable_ALL_Mounts[3252] or {}
+		-- Бронза (legion)
 		for i, v in ipairs(cache_3252) do
-			E.OctoTable_ALL_Mounts[3252][v.mountID] = v.price
+			if v.itemID then
+				local mountID = v.mountID or C_MountJournal.GetMountFromItem(v.itemID)
+				if mountID then
+					E.OctoTable_ALL_Mounts[3252][mountID] = v.price
+				end
+			end
 		end
+		-- Бронза (panda)
+		for i, v in ipairs(cache_2778) do
+			if v.itemID then
+				local mountID = v.mountID or C_MountJournal.GetMountFromItem(v.itemID)
+				if mountID then
+					E.OctoTable_ALL_Mounts[2778][mountID] = v.price
+				end
+			end
+		end
+
+
 	end
 end
 ----------------------------------------------------------------

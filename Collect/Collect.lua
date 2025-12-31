@@ -60,6 +60,7 @@ local MyEventsTable = {
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
 	"CURRENCY_TRANSFER_LOG_UPDATE",
+	"ENCOUNTER_START",
 	"ENCOUNTER_END",
 	"WEEKLY_REWARDS_UPDATE",
 	"CHALLENGE_MODE_COMPLETED",
@@ -275,10 +276,18 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 	E.Collect_Currencies()
 	E.Collect_Legion_Remix()
 	E.Collect_Quests()
+	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("PLAYER_REGEN_ENABLED")
 end
+
+function EventFrame:ENCOUNTER_START()
+	E.Collect_JournalInstance()
+	E.func_RequestUIUpdate("ENCOUNTER_START")
+end
+
 function EventFrame:ENCOUNTER_END()
 	RequestRaidInfo()
+	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("ENCOUNTER_END")
 end
 function EventFrame:UPDATE_INSTANCE_INFO()

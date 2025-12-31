@@ -60,16 +60,65 @@ function E.func_CharInfo_Mail(CharInfo)
 	if not CharInfo then return "" end
 	local pd = CharInfo.PlayerData
 	local result = ""
-	if pd.hasMail then
-		result = result..E.func_texturefromIcon("UI-HUD-Minimap-Mail-Up", 16, 10, true)
+	local hasMail = pd.hasMail or false
+	if hasMail then
+		if pd.levelCapped20 then
+			result = result..E.func_texturefromIcon(E.ATLAS_MAIL_GRAY, nil, nil, true)
+		else
+			result = result..E.func_texturefromIcon(E.ATLAS_MAIL, nil, nil, true)
+		end
 	end
 	return result
 end
 ----------------------------------------------------------------
+function E.func_CharInfo_Durability(CharInfo, showIcon, whenShow)
+	if not CharInfo then return "" end
+	local pd = CharInfo.PlayerData
+	local result = ""
+	local PlayerDurability = pd.PlayerDurability or 100
+	local durColor = E.func_GetColorGradient(PlayerDurability, 0, 100)
+	local whenShow = whenShow or 100
+
+	if PlayerDurability < whenShow then
+		result = result..durColor..PlayerDurability.."%|r"
+		if showIcon then
+			-- result = result..E.func_texturefromIcon(E.ICON_DURABILITY)
+			result = result..E.func_texturefromIcon(E.ATLAS_REPAIR, nil, nil, true)
+		end
+	end
+
+
+	return tostring(result)
+end
 ----------------------------------------------------------------
-local NickName = E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, CustomColor)
-local Server =   E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, CustomColor)
-local Guild =    E.func_CharInfo_Guild(CharInfo)
+function E.func_CharInfo_ItemLevel(CharInfo)
+	if not CharInfo then return "" end
+	local pd = CharInfo.PlayerData
+	local result = ""
+	local avgItemLevel = pd.avgItemLevel
+	local avgItemLevelEquipped = pd.avgItemLevelEquipped
+	local avgItemLevelPvp = pd.avgItemLevelPvp
+
+	if avgItemLevelEquipped and avgItemLevel then
+		result = result..E.func_GetColorGradient(avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..avgItemLevelEquipped
+		if avgItemLevel > avgItemLevelEquipped then
+			result = result.."/"..avgItemLevel.."|r"
+		end
+		if avgItemLevelPvp and avgItemLevelPvp > avgItemLevel then
+			result = result..E.COLOR_BLUE.."+|r"
+		end
+	end
+
+	return result
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+local NickName =   E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, CustomColor)
+local Server =     E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, CustomColor)
+local Guild =      E.func_CharInfo_Guild(CharInfo)
+local Mail =       E.func_CharInfo_Mail(CharInfo)
+local durability = E.func_CharInfo_Durability(CharInfo, showIcon)
+local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

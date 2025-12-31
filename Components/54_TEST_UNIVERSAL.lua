@@ -1,0 +1,1577 @@
+local GlobalAddonName, E = ...
+----------------------------------------------------------------
+local enable = false
+if not enable then return end
+----------------------------------------------------------------
+local categoryKey = 54
+----------------------------------------------------------------
+local L = E.L
+----------------------------------------------------------------
+local function tempFunction()
+	local OctoTables_DataOtrisovka = {}
+	local OctoTables_Vibor = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
+	OctoTables_Vibor[categoryKey].name = "TEST_UNIVERSAL"
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Items = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Reputations = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+		----------------------------------------------------------------------------
+		-- Из файла ringing_deeps.lua (Гулкие Глубины - редкие монстры)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
+			end,
+			name_save = "Rares2214",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{81674, forcedText = {npcID = 220265}, },
+				{80557, forcedText = {npcID = 220274}, },
+				{80505, forcedText = {npcID = 220276}, },
+				{81562, forcedText = {npcID = 220267}, },
+				{81511, forcedText = {npcID = 220266}, },
+				{80560, forcedText = {npcID = 220269}, },
+				{81566, forcedText = {npcID = 220272}, },
+				{80003, forcedText = {npcID = 218393}, },
+				{80536, forcedText = {npcID = 220286}, },
+				{81648, forcedText = {npcID = 221199}, },
+				{81485, forcedText = {npcID = 220287}, },
+				{80547, forcedText = {npcID = 220275}, },
+				{81633, forcedText = {npcID = 220285}, },
+				{81563, forcedText = {npcID = 220273}, },
+				{81652, forcedText = {npcID = 221217}, },
+				{80507, forcedText = {npcID = 220271}, },
+				{80574, forcedText = {npcID = 220268}, },
+				{80506, forcedText = {npcID = 220270}, },
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла ringing_deeps.lua (Гулкие Глубины - сокровища)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": "..L["Treasures"] -- ringing_deeps
+			end,
+			name_save = "Treasures2214",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Cursed Pickaxe"},},
+				{82239, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Discarded Toolbox"},},
+				{82820, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Dislodged Blockage"},},
+				{82464, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Dusty Prospector's Chest"},},
+				{82819, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Kaja'Cola Machine"},},
+				{80485, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Forgotten Treasure"},},
+				{82235, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Munderut's Forgotten Stash"},},
+				{82818, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Scary Dark Chest"},},
+				{83030, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Waterlogged Refuse"},},
+				{79308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Webbed Knapsack"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла ringing_deeps.lua (Гулкие Глубины - боевые питомцы)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": "..L["Pet Battles & Collections"]
+			end,
+			name_save = "RingingDeepsCollections",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(223444)}}, -- Friendhaver Grem
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(222535)}}, -- Haywire Servobot
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": "..E.func_GetQuestName(83333, false)
+			end,
+			name_save = "GearingUpforTrouble", -- Gearing Up for Trouble
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83333},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2214)..": "..E.func_GetQuestName(82946, false)
+			end,
+			name_save = "RollinDownintheDeeps",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{82946},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------------------
+		-- Из файла hallowfall.lua (Hallowfall рары) - уже есть
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
+			end,
+			name_save = "Rares2215",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{81763, forcedText = {npcID = 207802}, },
+				{82558, forcedText = {npcID = 206514}, },
+				{82560, forcedText = {npcID = 214757}, },
+				{82559, forcedText = {npcID = 206184}, },
+				{81880, forcedText = {npcID = 221753}, },
+				{80011, forcedText = {npcID = 218458}, },
+				{82562, forcedText = {npcID = 221179}, },
+				{82564, forcedText = {npcID = 207780}, },
+				{81881, forcedText = {npcID = 221767}, },
+				{81761, forcedText = {npcID = 221551}, },
+				{81836, forcedText = {npcID = 221668}, },
+				{80006, forcedText = {npcID = 218426}, },
+				{81756, forcedText = {npcID = 221534}, },
+				{82557, forcedText = {npcID = 206203}, },
+				{80010, forcedText = {npcID = 218452}, },
+				{82565, forcedText = {npcID = 220771}, },
+				{82563, forcedText = {npcID = 206977}, },
+				{81882, forcedText = {npcID = 221786}, },
+				{82566, forcedText = {npcID = 207826}, },
+				{81853, forcedText = {npcID = 221708}, },
+				{79271, forcedText = {npcID = 215805}, },
+				{81849, forcedText = {npcID = 221690}, },
+				{81791, forcedText = {npcID = 221648}, },
+				{80009, forcedText = {npcID = 218444}, },
+				{82561, forcedText = {npcID = 207803}, },
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла hallowfall.lua (Hallowfall сокровища) - уже есть
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..L["Treasures"] -- hallowfall
+			end,
+			name_save = "Treasures2215",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{83263, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{83284, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{81468, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{81971, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{81978, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{81972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{82005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{83273, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{79275, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+				{80687, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+				{81518, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Квесты питомцев и коллекционные предметы из hallowfall.lua
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..L["Pet Battles & Collections"]
+			end,
+			name_save = "HallowfallCollections",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				-- Pet Battles
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(223442)}},
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(223409)}},
+				-- Missing Lynx achievement quests
+				{79081}, -- Flamegard's Hope
+				-- Pet collection quests
+				{82006}, -- Thunder lynx pet
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..E.func_GetQuestName(76586, false)
+			end,
+			name_save = "SpreadingTheLight",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{76586},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..E.func_GetQuestName(91173, false) -- tww-nightfall-scenario
+			end,
+			name_save = "TheFlameBurnsEternal",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{91173},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..L["Incursion"] -- Daily incursions in Hollowfall or Azj-Kahet
+			end,
+			name_save = "Incursion",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{87475}, -- Sureki Incursion: Hold the Wall
+				{87477}, -- Sureki Incursion: Southern Swarm
+				{87480}, -- Sureki Incursion: The Eastern Assault
+				{nil},
+				{88711}, -- Radiant Incursion: Toxins and Pheromones
+				{88916}, -- Radiant Incursion: Sureki's End
+				{88945}, -- Radiant Incursion: Rak-Zakaz
+			},
+			forcedMaxQuest = 3, -- nadoutichnit
+		},
+		{
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..L["Major Keyflames"]
+			end,
+			name_save = "MajorKeyflames",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{79471},
+				{79470},
+				{79469},
+				{79380},
+				{79329},
+				{78657},
+				{78590},
+				{76338},
+			},
+			forcedMaxQuest = 8,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2215)..": "..L["Lesser Keyflames"] -- MinorKeyflames
+			end,
+			name_save = "LesserKeyflame",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- SAVEDINSTANCE
+				{76169}, -- Glow in the Dark
+				{76394}, -- Shadows of Flavor
+				{76600}, -- Right Between the Gyros-Optics
+				{76733}, -- Tater Trawl
+				{76997}, -- Lost in Shadows
+				{78656}, -- Hose It Down
+				{78915}, -- Squashing the Threat
+				{78933}, -- The Sweet Eclipse
+				{78972}, -- Harvest Havoc
+				{79158}, -- Seeds of Salvation
+				{79173}, -- Supply the Effort
+				{79216}, -- Web of Manipulation
+				{79346}, -- Chew On That
+				{80004}, -- Crab Grab
+				{80562}, -- Blossoming Delight
+				{81574}, -- Sporadic Growth
+				{81632}, -- Lizard Looters
+			},
+			forcedMaxQuest = 8,
+		},
+		----------------------------------------------------------------------------
+		-- Из файла isle_of_dorn.lua (Остров Дорн - редкие монстры)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
+			end,
+			name_save = "Rares2248",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{82196, forcedText = {npcID = 219281}, },
+				{81893, forcedText = {npcID = 219264}, },
+				{81920, forcedText = {npcID = 221128}, },
+				{81895, forcedText = {npcID = 219265}, },
+				{81907, forcedText = {npcID = 219266}, },
+				{81905, forcedText = {npcID = 219279}, },
+				{81899, forcedText = {npcID = 219268}, },
+				{81902, forcedText = {npcID = 219270}, },
+				{81921, forcedText = {npcID = 220890}, },
+				{81897, forcedText = {npcID = 219267}, },
+				{78619, forcedText = {npcID = 213115}, },
+				{79685, forcedText = {npcID = 217534}, },
+				{81903, forcedText = {npcID = 219278}, },
+				{81892, forcedText = {npcID = 219262}, },
+				{81922, forcedText = {npcID = 220883}, },
+				{81901, forcedText = {npcID = 219269}, },
+				{81923, forcedText = {npcID = 221126}, },
+				{81904, forcedText = {npcID = 219271}, },
+				{82203, forcedText = {npcID = 219284}, addText = {text = "Violet Hold Prisoner: Zovex"}, },
+				{82204, forcedText = {npcID = 222378}, addText = {text = "Violet Hold Prisoner: Kereke"}, },
+				{82205, forcedText = {npcID = 222380}, addText = {text = "Violet Hold Prisoner: Rotfist"}, },
+				{81894, forcedText = {npcID = 219263}, },
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла isle_of_dorn.lua (Остров Дорн - сокровища)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2248)..": "..L["Treasures"] -- isle_of_dorn
+			end,
+			name_save = "Treasures2248",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Defender's Axe"},},
+				{82714, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Infused Cinderbrew"},},
+				{82287, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Jade Pearl"},},
+				{82325, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Kobold Pickaxe"},},
+				{83243, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Magical Treasure Chest"},},
+				{83246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Mosswool Flower"},},
+				{83245, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Mushroom Cap"},},
+				{83244, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Mysterious Orb"},},
+				{82326, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Shimmering Opal Lily"},},
+				{82246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Thak's Treasure"},},
+				{83242, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Tree's Treasure"},},
+				{82716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Turtle's Thanks"},},
+				{83094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Faithful Dog"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Дополнительно: Квесты питомцев и коллекции из Isle of Dorn
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2248)..": "..L["Pet Battles & Collections"]
+			end,
+			name_save = "IsleOfDornCollections",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				-- Battle Pets
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(223446)}}, -- Collector Dyna
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(223407)}}, -- Awakened Custodian
+				-- Aradan: Stormrook Spirit Beast
+				{nil, forcedText = {text = "Hunter Pet: Aradan (Stormrook Spirit Beast)"}},
+				-- Tome of Polymorph: Mosswool
+				{84438, forcedText = {text = "Tome of Polymorph: Mosswoel (Mage Only)"}},
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2248)..": "..E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
+			end,
+			name_save = "TheTheaterTroupe", -- The Theater Troupe
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83240},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------------------
+		-- Из файла azj_kahet.lua (Aз-Кахет рары) - уже есть
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
+			end,
+			name_save = "Rares2255",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{81695, forcedText = {npcID = 216031}, },
+				{78905, forcedText = {npcID = 214151}, },
+				{81704, forcedText = {npcID = 216042}, },
+				{81634, forcedText = {npcID = 216038}, },
+				{82077, forcedText = {npcID = 222624}, },
+				{81707, forcedText = {npcID = 216045}, },
+				{81699, forcedText = {npcID = 216041}, },
+				{82036, forcedText = {npcID = 216050}, },
+				{82034, forcedText = {npcID = 216048}, },
+				{82078, forcedText = {npcID = 216052}, },
+				{81703, forcedText = {npcID = 216034}, },
+				{82037, forcedText = {npcID = 216051}, },
+				{81700, forcedText = {npcID = 216037}, },
+				{81701, forcedText = {npcID = 216039}, },
+				-- Дополнительные рары (другие)
+				{82290, forcedText = {npcID = 216047}, },
+				{82289, forcedText = {npcID = 216046}, },
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла azj_kahet.lua (Aз-Каhet сокровища) - уже есть
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2255)..": "..L["Treasures"] -- azj_kahet
+			end,
+			name_save = "Treasures2255",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+				{82718, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+				{82722, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+				{82720, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+				{82529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+				{82721, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+				{82719, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+				{82727, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+				{82527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+				{82525, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Квесты питомцев и коллекционные предметы из azj_kahet.lua
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2255)..": "..L["Pet Battles & Collections"]
+			end,
+			name_save = "AzjKahetCollections",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				-- Pet Battles
+				{nil, forcedText = {text = "Battle Pet: "..E.func_GetNPCName(223443)}},
+				-- Smelling History quests
+				{83744}, -- Another You 1
+				{83745}, -- Another You 2
+				{83746}, -- Another You 3
+				{83747}, -- Another You 4
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2255)..": "..L["Underworld Operative"] -- The Severed Threads
+			end,
+			name_save = "UnderworldOperative",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{80670}, -- Eyes of the Weaver
+				{80671}, -- Blade of the General
+				{80672}, -- Hand of the Vizier
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------------------
+		-- 2339 Дорногал
+		----------------------------------------------------------------------------
+		{ -- https://www.wowhead.com/npc=226919/archivist-frithrun
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2339)..": "..L["Weekend Event"]
+			end,
+			name_save = "ArchivistFrithrun",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{86731, addText = {expansionText = E.func_FormatExpansion(1, "LEFT")}}, -- 1 CLASSIC (An Original Path Through Time)
+				{83363, addText = {expansionText = E.func_FormatExpansion(2, "LEFT")}}, -- 2 TBC (A Burning Path Through Time)
+				{83365, addText = {expansionText = E.func_FormatExpansion(3, "LEFT")}}, -- 3 WOTLK (A Frozen Path Through Time)
+				{83359, addText = {expansionText = E.func_FormatExpansion(4, "LEFT")}}, -- 4 Cataclysm (A Shattered Path Through Time)
+				{83362, addText = {expansionText = E.func_FormatExpansion(5, "LEFT")}}, -- 5 PANDA (A Shrouded Path Through Time)
+				{83364, addText = {expansionText = E.func_FormatExpansion(6, "LEFT")}}, -- 6 DRAENOR (A Savage Path Through Time)
+				{83360, addText = {expansionText = E.func_FormatExpansion(7, "LEFT")}}, -- 7 LEGION (A Fel Path Through Time)
+				{88805, addText = {expansionText = E.func_FormatExpansion(8, "LEFT")}}, -- 8 BFA (A Scarred Path Through Time)
+				{92649, addText = {expansionText = E.func_FormatExpansion(9, "LEFT")}}, -- 9 SL (Темный путь сквозь время)
+
+				{83358}, -- The Arena Calls - Arena Skirmishes
+				{84776}, -- A Call to Delves - Delves
+				{83357}, -- AccountWeekly
+				{83366}, -- The World Awaits - World Quests
+				{83347}, -- Emissary of War - Mythic Dungeons
+				{83345}, -- A Call to Battle - Battlegrounds
+			},
+			forcedMaxQuest = 1, -- nadoutichnit
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2339)..": "..L["Worldsoul"]
+			end,
+			name_save = "TheCalloftheWorldsoul", -- The Call of the Worldsoul
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
+				{82482}, -- Worldsoul: Snuffling
+				{82516}, -- Worldsoul: Forging a Pact
+				{82483}, -- Worldsoul: Spreading the Light
+				{82453}, -- Worldsoul: Encore!
+				{82489}, -- Worldsoul: The Dawnbreaker
+				{82659}, -- Worldsoul: Nerub-ar Palace
+				{87417}, -- Worldsoul: Dungeons
+				{91052}, -- Worldsoul: Overcharged Delves
+				{87419}, -- Worldsoul: Delves
+				{82490}, -- Worldsoul: Priory of the Sacred Flame
+				{82491}, -- Worldsoul: Ara-Kara, City of Echoes
+				{82492}, -- Worldsoul: City of Threads
+				{82493}, -- Worldsoul: The Dawnbreaker
+				{82494}, -- Worldsoul: Ara-Kara, City of Echoes
+				{82496}, -- Worldsoul: City of Threads
+				{82497}, -- Worldsoul: The Stonevault
+				{82498}, -- Worldsoul: Darkflame Cleft
+				{82499}, -- Worldsoul: Priory of the Sacred Flame
+				{82500}, -- Worldsoul: The Rookery
+				{82501}, -- Worldsoul: The Dawnbreaker
+				{82502}, -- Worldsoul: Ara-Kara, City of Echoes
+				{82503}, -- Worldsoul: Cinderbrew Meadery
+				{82504}, -- Worldsoul: City of Threads
+				{82505}, -- Worldsoul: The Stonevault
+				{82506}, -- Worldsoul: Darkflame Cleft
+				{82507}, -- Worldsoul: Priory of the Sacred Flame
+				{82508}, -- Worldsoul: The Rookery
+				{82509}, -- Worldsoul: Nerub-ar Palace
+				{82510}, -- Worldsoul: Nerub-ar Palace
+				{89514}, -- Worldsoul: Horrific Visions Revisited
+				{87424}, -- Worldsoul: World Bosses
+				{82511}, -- Worldsoul: Awakening Machine
+				{82512}, -- Worldsoul: World Boss
+				{89492}, -- Worldsoul: Dastardly Duos in the Dome!
+				{87423}, -- Worldsoul: Undermine Explorer
+				{82488}, -- Worldsoul: Darkflame Cleft
+				{91855}, -- Worldsoul: K'aresh World Quests
+				{82487}, -- Worldsoul: The Stonevault
+				{82486}, -- Worldsoul: The Rookery
+				{82485}, -- Worldsoul: Cinderbrew Meadery
+				{82452}, -- Worldsoul: World Quests
+				{87422}, -- Worldsoul: Undermine World Quests
+				{82495}, -- Worldsoul: Cinderbrew Meadery
+				{89502}, -- Worldsoul: Nightfall
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2339)..": "..L["Archives"]
+			end,
+			name_save = "Archives",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
+				{82679}, -- Archives: Seeking History
+				{82678}, -- Archives: The First Disc
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2339)..": "..L["Weekly quests"].." ("..DUNGEONS..")" -- https://www.wowhead.com/npc=226623/biergoth
+			end,
+			name_save = "BiergothDungeonQuest",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83432}, -- The Rookery
+				{83436}, -- Cinderbrew Meadery
+				{83443}, -- Darkflame Cleft
+				{83457}, -- The Stonevault
+				{83458}, -- Priory of the Sacred Flame
+				{83459}, -- The Dawnbreaker
+				{83465}, -- Ara-Kara, City of Echoes
+				{83469}, -- City of Threads
+				{86203}, -- Operation: Floodgate
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2339)..": "..L["Weekly quests"].." (PVP)"
+			end,
+			name_save = "WeeklyPVP",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{80184},
+				{80185},
+				{80186},
+				{80187},
+				{80188},
+				{80189},
+				{nil},
+				{81793},
+				{81794},
+				{81795},
+				{81796},
+				{86853},
+				{90781},
+				{nil}, -- "Brawl Weekly"
+				{47148},
+			},
+			forcedMaxQuest = 3,
+		},
+		----------------------------------------------------------------------------
+		-- Из файла siren_isle.lua (Остров Сирен - редкие монстры)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
+			end,
+			name_save = "Rares2369",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{85672, forcedText = {npcID = 229982}, addText = {mapID = 2369},},
+				{85669, forcedText = {npcID = 228201}, addText = {mapID = 2369},},
+				{85437, forcedText = {npcID = 229992}, addText = {mapID = 2369},},
+				{84801, forcedText = {npcID = 228601}, addText = {mapID = 2369},},
+				{84796, forcedText = {npcID = 228155}, addText = {mapID = 2369},},
+				{86933, forcedText = {npcID = 231090}, addText = {mapID = 2369},},
+				{84794, forcedText = {npcID = 228151}, addText = {mapID = 2369},},
+				{84797, forcedText = {npcID = 228159}, addText = {mapID = 2375},},
+				{86779, forcedText = {npcID = 227550}, addText = {mapID = 2375},},
+				{84792, forcedText = {npcID = 227545}, addText = {mapID = 2369},},
+				{84805, forcedText = {npcID = 230137}, addText = {mapID = 2369},},
+				{84795, forcedText = {npcID = 228154}, addText = {mapID = 2369},},
+				{84802, forcedText = {npcID = 229852}, addText = {mapID = 2369},},
+				{84803, forcedText = {npcID = 229853}, addText = {mapID = 2369},},
+				{84800, forcedText = {npcID = 228583}, addText = {mapID = 2369},},
+				{84799, forcedText = {npcID = 228580}, addText = {mapID = 2369},},
+				{85404, forcedText = {npcID = 231356}, addText = {mapID = 2369},},
+				{85405, forcedText = {npcID = 231357}, addText = {mapID = 2369},},
+				{85406, forcedText = {npcID = 231368}, addText = {mapID = 2375},},
+				{85403, forcedText = {npcID = 231353}, addText = {mapID = 2369},},
+				{84798, forcedText = {npcID = 228547}, addText = {mapID = 2369},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла siren_isle.lua (Остров Сирен - сокровища)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2369)..": "..L["Treasures"] -- siren_isle
+			end,
+			name_save = "Treasures2369",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Iron Mining Pick"},},
+				{86764, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Kul Tiran Lumberer's Hatchet"},},
+				{86767, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Minnow's Favorite Blade"},},
+				{86766, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Ashvane Issued Workboots"},},
+				{86732, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Stone Carver's Scramseax"},},
+				{85716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Rune-Seared Spear"},},
+				{84547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Empty Kaja'Cola"},},
+				{84839, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Unsolved Amethyst Runelock"},},
+				{86765, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Barnacle-Encrusted Chest"},},
+				{84529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Bilge Rat Supply Chest"},},
+				{84527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Pilfered Earthen Chest"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла siren_isle.lua (Остров Сирен - коллекции и питомцы)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2369)..": "..L["Pet Battles & Collections"]
+			end,
+			name_save = "SirenIsleCollections",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				-- Вендор: Soweezi
+				{nil, forcedText = {text = "Vendor: "..E.func_GetNPCName(234390).." (Mounts, Toys, Pets)"}},
+				-- Питомец Marmaduke
+				{86240, forcedText = {text = "Pet: Marmaduke (Well Loved Squeaky Toy)"}},
+				-- Mount: Thrayir, Eyes of the Siren
+				{nil, forcedText = {text = "Mount: Thrayir, Eyes of the Siren (Requires Runekeys)"}},
+				-- Mount: Pristmatic Snapdragon
+				{86482, forcedText = {text = "Mount: Pristmatic Snapdragon (Day 1)"}},
+				{86483, forcedText = {text = "Mount: Pristmatic Snapdragon (Day 4)"}},
+				{86484, forcedText = {text = "Mount: Pristmatic Snapdragon (Day 7)"}},
+				{86485, forcedText = {text = "Mount: Pristmatic Snapdragon (Day 10)"}},
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2369)..": "..L["Weekly quests"]
+			end,
+			name_save = "SirenIsleWeekly", -- Siren Isle Weekly
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{nil, forcedText = {text = E.COLOR_SKYBLUE..E.TEXT_SPACE.."Vrykul invasion|r"},},
+				{84852}, -- Legacy of the Vrykul
+				{84248}, -- A Ritual of Runes
+				{83932}, -- Historical Documents
+				{84432}, -- Longship Landing
+				{84680}, -- Rock 'n Stone Revival
+				{84222}, -- Secure the Perimeter
+				{nil},
+				{nil, forcedText = {text = E.COLOR_STEELBLUE..E.TEXT_SPACE.."Pirate invasion|r"},},
+				{84851}, -- Tides of Greed
+				{83753}, -- Cannon Karma
+				{83827}, -- Silence the Song
+				{84001}, -- Cart Blanche
+				{84299}, -- Pirate Plunder
+				{84619}, -- Ooker Dooker Literature Club
+				{nil},
+				{nil, forcedText = {text = E.COLOR_SLATEGRAY..E.TEXT_SPACE.."Naga invasion|r"},},
+				{84850}, -- Serpent's Wrath
+				{84252}, -- Peak Precision
+				{84430}, -- Crystal Crusade
+				{84627}, -- Three Heads of the Deep
+				{85051}, -- Beach Comber
+				{85589}, -- Ruffled Pages
+			},
+			forcedMaxQuest = 6, -- nadoutichnit
+		},
+		----------------------------------------------------------------------------
+		-- 2346 Нижняя Шахта
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
+			end,
+			name_save = "Rares2346",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{84917, forcedText = {npcID = 230931}},
+				{84918, forcedText = {npcID = 230934}},
+				{84919, forcedText = {npcID = 230940}},
+				{84920, forcedText = {npcID = 230946}},
+				{84921, forcedText = {npcID = 230951}},
+				{84922, forcedText = {npcID = 230979}},
+				{84926, forcedText = {npcID = 230995}},
+				{84927, forcedText = {npcID = 231012}},
+				{85004, forcedText = {npcID = 231288}},
+				{84877, forcedText = {npcID = 230746}},
+				{84884, forcedText = {npcID = 230793}},
+				{84895, forcedText = {npcID = 230800}},
+				{84907, forcedText = {npcID = 230828}},
+				{84911, forcedText = {npcID = 230840}},
+				{90488, forcedText = {npcID = 234480}},
+				{90489, forcedText = {npcID = 234499}},
+				{90491, forcedText = {npcID = 233471}},
+				{90490, forcedText = {npcID = 233472}},
+				{90492, forcedText = {npcID = 231310}},
+			},
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": "..L["Treasures"] -- Undermine
+			end,
+			name_save = "Treasures2346",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{85683, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Unexploded Fireworks"}},
+				{85866, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Suspicious Book"}},
+				{85838, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Fireworks Hat"}},
+				{85698, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Plunger"}},
+				{85814, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Blackened Dice"}},
+				{85860, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Lonely Tub"}},
+				{85426, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Potent Potable"}},
+				{85422, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Abandoned Toolbox"}},
+				{85424, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Papa's Prized Putter"}},
+				{85425, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Unsupervised Takeout"}},
+				{85492, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Particularly Nice Lamp"}},
+				{85495, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Uncracked Cold Ones"}},
+				{85494, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Marooned Floatmingo"}},
+				{85496, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Trick Deck of Cards"}},
+				{86487, addText = {IconVignette = "VignetteLoot"}, forcedText = {text = L["Treasure"]..": Crumpled Schematics"}},
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": ".."Free C.H.E.T.T. List"
+			end,
+			name_save = "FreeCHETTList",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{87296},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": ".."C.H.E.T.T. List"
+			end,
+			name_save = "CHETTList",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{86915}, -- = L["Side with a Cartel"],
+				{86917}, -- = L["Ship Right"],
+				{86918}, -- = L["Reclaimed Scrap"],
+				{86919}, -- = L["Side Gig"],
+				{86920}, -- = L["War Mode Violence"],
+				{86923}, -- = L["Go Fish"],
+				{86924}, -- = L["Gotta Catch at Least a Few"],
+				{87302}, -- = L["Rare Rivals"],
+				{87303}, -- = L["Clean the Sidestreets"],
+				{87304}, -- = L["Time to Vacate"],
+				{87305}, -- = L["Desire to D.R.I.V.E."],
+				{87306}, -- = L["Kaja Cruising"],
+				{87307}, -- = L["Garbage Day"],
+			},
+			forcedMaxQuest = 4, -- nadoutichnit
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(86775, false)
+			end,
+			name_save = "UrgetoSurge",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{86775},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(85869, false)
+			end,
+			name_save = "ManyJobsHandleIt",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{85869},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(85879, false)
+			end,
+			name_save = "ReduceReuseResell",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{85879},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------------------
+		-- Из файла karesh.lua (К'ареш - редкие монстры)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
+			end,
+			name_save = "Rares2371",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
+				{91276, forcedText = {npcID = 245998}, },
+				{90596, forcedText = {npcID = 232128}, },
+				{90586, forcedText = {npcID = 232077}, },
+				{91275, forcedText = {npcID = 245997}, },
+				{90594, forcedText = {npcID = 231981}, },
+				{90588, forcedText = {npcID = 232108}, },
+				{90595, forcedText = {npcID = 232127}, },
+				{90590, forcedText = {npcID = 232182}, },
+				{90591, forcedText = {npcID = 232189}, },
+				{90585, forcedText = {npcID = 232006}, },
+				{90583, forcedText = {npcID = 232129}, },
+				{90592, forcedText = {npcID = 232193}, },
+				{91293, forcedText = {npcID = 234845}, },
+				{90589, forcedText = {npcID = 232111}, },
+				{90593, forcedText = {npcID = 232195}, },
+				{90584, forcedText = {npcID = 232199}, },
+				-- Mount: Translocated Gorger rares
+				{84993, forcedText = {npcID = 231229}, },
+				{86447, forcedText = {npcID = 234970}, },
+				{86464, forcedText = {npcID = 235087}, },
+				{86465, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
+				-- Warrant rares
+				{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
+				{90687, forcedText = {npcID = 238144}, },
+				{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
+				{90689, forcedText = {npcID = 238536}, },
+				{90692, forcedText = {npcID = 241920}, },
+				{90694, forcedText = {npcID = 238384}, addText = {mapID = 2472},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла karesh.lua (К'ареш - сокровища)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2371)..": "..L["Treasures"] -- Karesh
+			end,
+			name_save = "Treasures2371",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{85958, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Gift of the Brothers"},},
+				{86416, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Ancient Coffer"},},
+				{85837, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Forlorn Wind Chime"},},
+				{86467, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Mailroom Distribution"},},
+				{86492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Ixthar's Favorite Crystal"},},
+				{86301, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Wastelander Stash"},},
+				{86304, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Tumbled Package"},},
+				{86306, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Rashaal's Vase"},},
+				{86308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Shattered Crystals"},},
+				{86322, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Skeletal Tail Bones"},},
+				{86323, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Crudely Stitched Sack"},},
+				{92348, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Abandoned Lockbox"},},
+				{91352, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Lightly-Dented Luggage"},},
+				{85840, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Sand-Worn Coffer"},},
+				{89378, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Ethereal Voidforged Container"},},
+				{90511, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Light-Soaked Cleaver"},},
+				{90512, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Spear of Fallen Memories"},},
+				{90514, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Efrat's Forgotten Bulwark"},},
+				{90522, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Tulwar of the Golden Guard"},},
+				{90515, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Petrified Branch of Janaa"},},
+				{90527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Shadowguard Crusher"},},
+				{90521, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Sufaadi Skiff Lantern"},},
+				{90532, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Korgorath's Talon"},},
+				{91055, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Warglaive of the Audacious Hunter"},},
+				{91056, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": P.O.S.T. Master's Prototype"},},
+				{91057, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Phaseblade of the Void Marches"},},
+				{91058, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"]..": Bladed Rifle of Unfettered Momentum"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2371)..": "..E.func_GetQuestName(85460, false)
+			end,
+			name_save = "EcologicalSuccession", -- Ecological Succession
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{85460},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2371)..": "..E.func_GetQuestName(91093, false)
+			end,
+			name_save = "MoreThanJustaPhase", -- More Than Just a Phase
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{91093},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------------------
+		-- 2472 Тазавеш
+		----------------------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetMapName(2472)..": "..L["Warrant"]
+			end,
+			name_save = "KareshWarrants",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{90122}, -- Eliminate Xy'vox the Twisted
+				{90123}, -- Eliminate Hollowbane
+				{90124}, -- Eliminate Shatterpulse
+				{90125}, -- Eliminate Purple Peat
+				{90126}, -- Eliminate Grubber
+				{90127}, -- Eliminate Arcana-Monger So'zer
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------------------
+		-- Вылазки
+		----------------------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Delves"]..": "..E.func_GetQuestName(82706, false) -- DELVES_LABEL
+			end,
+			name_save = "Delves",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
+				{82706}, -- Delves: Worldwide Research
+			},
+			forcedMaxQuest = 1, -- 8? nadoutichnit
+		},
+		{ -- The War Within Season 3
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Delves"]..": "..L["Delver's Bounty"] -- (E.func_GetItemName(233071) Season 2)(E.func_GetItemName(248142) Season 3)
+			end,
+			name_save = "DelversBountySeason3",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(248142))..E.func_GetItemName(248142)},}, -- This item can be fished in Excavation Site 9
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Delves"]..": "..L["Delver's Call"]
+			end,
+			name_save = "DelversCall",
+			defS = true,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
+				{85648},
+				{83759},
+				{83758},
+				{nil},
+				{nil, addText = {mapID = 2215},}, -- Hallowfall
+				{83768},
+				{85664},
+				{83767},
+				{83769},
+				{nil},
+				{nil, addText = {mapID = 2214},}, -- The Ringing Deeps (Гулкие глубины.)
+				{85649},
+				{83766},
+				{nil},
+				{nil, addText = {mapID = 2255},}, -- Azj-Kahet
+				{83770},
+				{83771},
+				{85667},
+				{85666},
+			},
+			-- forcedMaxQuest = 13,
+		},
+		----------------------------------------------------------------------------
+		-- Delve achievements and quests from delves.lua
+		----------------------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Delves"]..": "..L["Achievements & Rewards"]
+			end,
+			name_save = "DelvesAchievements",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- Sturdy Chest quests from various delves
+				{83665}, -- Kriegval's Rest Chest 1
+				{83698}, -- Kriegval's Rest Chest 2
+				{83683}, -- Kriegval's Rest Chest 3
+				{83666}, -- Kriegval's Rest Chest 4
+				{83664}, -- The Underkeep Chest 1
+				{83682}, -- The Underkeep Chest 2
+				{83663}, -- The Underkeep Chest 3
+				{83697}, -- The Underkeep Chest 4
+				{83440}, -- Earthcrawl Mines Chest 1
+				{83438}, -- Earthcrawl Mines Chest 2
+				{83441}, -- Earthcrawl Mines Chest 3
+				{83451}, -- Earthcrawl Mines Chest 4
+				{83439}, -- Earthcrawl Mines Chest 5
+				{83652}, -- Mycomancer Cavern Chest 1
+				{83691}, -- Mycomancer Cavern Chest 2
+				{83455}, -- Mycomancer Cavern Chest 3
+				{83672}, -- Mycomancer Cavern Chest 4
+				{83677}, -- The Dread Pit Chest 1
+				{83658}, -- The Dread Pit Chest 2
+				{83678}, -- The Dread Pit Chest 3
+				{83659}, -- The Dread Pit Chest 4
+				{83684}, -- The Waterworks Chest 1
+				{83650}, -- The Waterworks Chest 2
+				{83667}, -- The Waterworks Chest 3
+				{83456}, -- The Waterworks Chest 4
+				{83649}, -- The Spiral Weave Chest 1
+				{83661}, -- The Spiral Weave Chest 2
+				{83681}, -- The Spiral Weave Chest 3
+				{83662}, -- The Spiral Weave Chest 4
+				{83453}, -- The Sinkhole Chest 1
+				{83668}, -- The Sinkhole Chest 2
+				{83700}, -- The Sinkhole Chest 3
+				{83685}, -- The Sinkhole Chest 4
+				{83702}, -- Fungal Folly Chest 1
+				{83671}, -- Fungal Folly Chest 2
+				{83689}, -- Fungal Folly Chest 3
+				{83452}, -- Fungal Folly Chest 4
+				{83690}, -- Fungal Folly Chest 5
+				{83679}, -- Skittering Breach Chest 1
+				{83660}, -- Skittering Breach Chest 2
+				{83696}, -- Skittering Breach Chest 3
+				{83680}, -- Skittering Breach Chest 4
+				{83688}, -- Nightfall Sanctum Chest 1
+				{83670}, -- Nightfall Sanctum Chest 2
+				{83454}, -- Nightfall Sanctum Chest 3
+				{83701}, -- Nightfall Sanctum Chest 4
+				{83651}, -- Tak-Rethan Abyss Chest 1
+				{83686}, -- Tak-Rethan Abyss Chest 2
+				{83687}, -- Tak-Rethan Abyss Chest 3
+				{83669}, -- Tak-Rethan Abyss Chest 4
+				{86347}, -- Excavation Site 9 Chest 1
+				{86345}, -- Excavation Site 9 Chest 2
+				{86346}, -- Excavation Site 9 Chest 3
+				{86343}, -- Excavation Site 9 Chest 4
+				{86790}, -- Sidestreet Sluice Chest 1
+				{86789}, -- Sidestreet Sluice Chest 2
+				{86787}, -- Sidestreet Sluice Chest 3
+				{86788}, -- Sidestreet Sluice Chest 4
+				{83692}, -- Archival Assault Chest 1
+				{83673}, -- Archival Assault Chest 2
+				{90839}, -- Archival Assault Chest 3
+				{92573}, -- Archival Assault Chest 4
+			},
+		},
+		----------------------------------------------------------------------------
+		-- РАЗНОЕ
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return TRADE_SKILLS..": "..L["Algari Treatise"]
+			end,
+			name_save = "AlgariTreatise",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83725, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222546))..E.func_GetItemName(222546)},}, -- = L["Algari Treatise on Alchemy"],
+				{83726, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222554))..E.func_GetItemName(222554)},}, -- = L["Algari Treatise on Blacksmithing"],
+				{83727, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222550))..E.func_GetItemName(222550)},}, -- = L["Algari Treatise on Enchanting"],
+				{83728, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222621))..E.func_GetItemName(222621)},}, -- = L["Algari Treatise on Engineering"],
+				{83729, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222552))..E.func_GetItemName(222552)},}, -- = L["Algari Treatise on Herbalism"],
+				{83730, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222548))..E.func_GetItemName(222548)},}, -- = L["Algari Treatise on Inscription"],
+				{83731, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222551))..E.func_GetItemName(222551)},}, -- = L["Algari Treatise on Jewelcrafting"],
+				{83732, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222549))..E.func_GetItemName(222549)},}, -- = L["Algari Treatise on Leatherworking"],
+				{83733, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222553))..E.func_GetItemName(222553)},}, -- = L["Algari Treatise on Mining"],
+				{83734, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222649))..E.func_GetItemName(222649)},}, -- = L["Algari Treatise on Skinning"],
+				{83735, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222547))..E.func_GetItemName(222547)},}, -- = L["Algari Treatise on Tailoring"],
+			},
+			forcedMaxQuest = 2, -- nadoutichnit
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return TRADE_SKILLS
+			end,
+			name_save = "ProfessionWeeklies",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{84127, addText = {IconVignette = "Mobile-Blacksmithing",}, }, -- Blacksmithing Services Requested
+				{84128, addText = {IconVignette = "Mobile-Enginnering",}, },  -- Engineering Services Requested
+				{84129, addText = {IconVignette = "Mobile-Inscription",}, },  -- Inscription Services Requested
+				{84130, addText = {IconVignette = "Mobile-Jewelcrafting",}, },  -- Jewelcrafting Services Requested
+				{84131, addText = {IconVignette = "Mobile-Leatherworking",}, },  -- Leatherworking Services Requested
+				{84132, addText = {IconVignette = "Mobile-Tailoring",}, },  -- Tailoring Services Requested
+				{84133, addText = {IconVignette = "Mobile-Alchemy",}, },  -- Alchemy Services Requested
+				{nil},
+
+				{83102, addText = {IconVignette = "Mobile-Mining",}, },  -- Bismuth is Business -- горняка
+				{83103, addText = {IconVignette = "Mobile-Mining",}, },  -- Acquiring Aqirite -- горняка
+				{83104, addText = {IconVignette = "Mobile-Mining",}, },  -- Identifying Ironclaw -- горняка
+				{83105, addText = {IconVignette = "Mobile-Mining",}, },  -- Rush-order Requisition -- горняка
+				{83106, addText = {IconVignette = "Mobile-Mining",}, },  -- Null Pebble Excavation -- горняка
+
+				{82992, addText = {IconVignette = "Mobile-Skinning",}, },  -- Stormcharged Goods -- шкуродера
+				{82993, addText = {IconVignette = "Mobile-Skinning",}, },  -- From Shadows -- шкуродера
+				{83097, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cinder and Storm -- шкуродера
+				{83098, addText = {IconVignette = "Mobile-Skinning",}, },  -- Snap and Crackle -- шкуродера
+				{83100, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cracking the Shell -- шкуродера
+
+				{84084, addText = {IconVignette = "Mobile-Enchanting",}, },  -- Just a Pinch -- зачаровывателя
+				{84085, addText = {IconVignette = "Mobile-Enchanting",}, },  -- The Power of Potential -- зачаровывателя
+				{84086, addText = {IconVignette = "Mobile-Enchanting",}, },  -- A Rare Necessity -- зачаровывателя
+
+				{82916, addText = {IconVignette = "Mobile-Herbalism",}, },  -- When Fungi Bloom -- травника
+				{82958, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Little Blessings -- травника
+				{82962, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Handful of Luredrops -- травника
+				{82965, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Light and Shadow -- травника
+				{82970, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Bloom and A Blossom -- травника
+			},
+			forcedMaxQuest = 2,
+		},
+		----------------------------------------------------------------------------
+		-- OTHER
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return OTHER..": "..L["Coffer Key"]
+			end,
+			name_save = "CofferKey",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(245653))..E.func_GetItemName(245653)}},
+				{84736, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
+				{84737, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
+				{84738, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
+				{84739, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
+				{nil},
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(238527))..E.func_GetItemName(238527)}},
+				{91175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
+				{91176, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
+				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
+				{91178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
+			},
+			forcedMaxQuest = 2, -- nadoutichnit
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return OTHER..": "..E.func_GetQuestName(84370, false)
+			end,
+			name_save = "TheKeytoSuccess",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{84370, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(227794))..E.func_GetItemName(227794)},},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return OTHER..": "..L["Special Assignment"]
+			end,
+			name_save = "SpecialAssignment",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{82355, addText = {mapID = 2248},}, -- Остров Дорн
+				{81647, addText = {mapID = 2248},}, -- Остров Дорн
+				{81649, addText = {mapID = 2248},}, -- Остров Дорн
+				{81650, addText = {mapID = 2248},}, -- Остров Дорн
+				{81691, addText = {mapID = 2214},}, -- Гулкие глубины
+				{83229, addText = {mapID = 2214},}, -- Гулкие глубины
+				{82787, addText = {mapID = 2215},}, -- Тайносводье
+				{82852, addText = {mapID = 2215},}, -- Тайносводье
+				{82414, addText = {mapID = 2256},}, -- Аз-Кахет
+				{82531, addText = {mapID = 2256},}, -- Аз-Кахет
+				{nil},
+				{85113, addText = {mapID = 2369},}, -- Siren Isle #2369 11.0.7
+				{nil},
+				{85487, addText = {mapID = 2346},}, -- Undermine #2346 11.1.0
+				{85488, addText = {mapID = 2346},}, -- Undermine #2346
+				{nil},
+				{89294, addText = {mapID = 2371},}, -- K'aresh #2371 11.2.0
+				{89293, addText = {mapID = 2371},}, -- K'aresh #2371
+			},
+			forcedMaxQuest = 4, -- nadoutichnit
+		},
+		----------------------------------------------------------------------------
+		-- Из файла secrets_of_azeroth.lua (Секреты Азерота - сундуки праздника)
+		----------------------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return "Secrets of Azeroth: "..L["Celebration Crates"]
+			end,
+			name_save = "SecretsOfAzerothCrates",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{83794, addText = {text = "Zuldazar (#1 Soggy Celebration Crate)"},},
+				{85574, addText = {text = "Desolace (#2 Hazy Celebration Crate)"},},
+				{84470, addText = {text = "Deadwind Pass (#3 Dirt-Caked Celebration Crate)"},},
+				{84624, addText = {text = "Azsuna (#4 Sandy Celebration Crate)"},},
+				{83931, addText = {text = "Howling Fjord (#5 Battered Celebration Crate)"},},
+				{84426, addText = {text = "Tanaris (#6 Waterlogged Celebration Crate)"},},
+				{84767, addText = {text = "Mount Hyjal (#7 Charred Celebration Crate)"},},
+				{85523, addText = {text = "Feralas (#8 Mildewed Celebration Crate)"},},
+				{84773, addText = {text = "Nagrand (#9 Crystalized Celebration Crate)"},},
+				{84625, addText = {text = "Stormheim (#10 Surprisingly Pristine Celebration Crate)"},},
+				{84909, addText = {text = "Maldraxxus (#11 Ghostly Celebration Crate)"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из файла skyriding_races.lua (Гонки на летающих средствах)
+		----------------------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Skyriding Races"]..": ".."Isle of Dorn"
+			end,
+			name_save = "SkyridingIsleOfDorn",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{80219, addText = {text = "Dornogal Drift"},},
+				{80220, addText = {text = "Storm's Watch Survey"},},
+				{80221, addText = {text = "Basin Bypass"},},
+				{80222, addText = {text = "The Wold Ways"},},
+				{80223, addText = {text = "Thunderhead Trail"},},
+				{80224, addText = {text = "Orecreg's Doglegs"},},
+			},
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Skyriding Races"]..": ".."Ringing Deeps"
+			end,
+			name_save = "SkyridingRingingDeeps",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{80237, addText = {text = "Earthenworks Weave"},},
+				{80238, addText = {text = "Ringing Deeps Ramble"},},
+				{80239, addText = {text = "Chittering Concourse"},},
+				{80240, addText = {text = "Cataract River Cruise"},},
+				{80242, addText = {text = "Taelloch Twist"},},
+				{80243, addText = {text = "Opportunity Point Amble"},},
+			},
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Skyriding Races"]..": ".."Hallowfall"
+			end,
+			name_save = "SkyridingHallowfall",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{80256, addText = {text = "Dunelle's Detour"},},
+				{80257, addText = {text = "Tenir's Traversal"},},
+				{80258, addText = {text = "Light's Redoubt Descent"},},
+				{80259, addText = {text = "Stillstone Slalom"},},
+				{80260, addText = {text = "Mereldar Meander"},},
+				{80261, addText = {text = "Velhan's Venture"},},
+			},
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Skyriding Races"]..": ".."Azj-Kahet"
+			end,
+			name_save = "SkyridingAzjKahet",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{80277, addText = {text = "City of Threads Twist"},},
+				{80278, addText = {text = "Maddening Deep Dip"},},
+				{80279, addText = {text = "The Weaver's Wing"},},
+				{80280, addText = {text = "Rak-Ahat Rush"},},
+				{80281, addText = {text = "Pit Plunge"},},
+				{80282, addText = {text = "Siegehold Scuttle"},},
+			},
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Skyriding Races"]..": ".."Undermine"
+			end,
+			name_save = "SkyridingUndermine",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{85071, addText = {text = "Skyrocketing Sprint"},},
+				{85097, addText = {text = "The Heaps Leap"},},
+				{85099, addText = {text = "Scrapshop Shot"},},
+				{85101, addText = {text = "Rags to Riches Rush"},},
+				{85900, addText = {text = "Breakneck Bolt"},},
+				{85902, addText = {text = "Junkyard Jaunt"},},
+				{85904, addText = {text = "Casino Cruise"},},
+				{85906, addText = {text = "Sandy Scuttle"},},
+			},
+		},
+		----------------------------------------------------------------------------
+		-- Из уже существующих в основном файле (оставляю как есть)
+		----------------------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
+			end,
+			name_save = "WorldBoss",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
+				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
+				{81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
+				{81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
+				{85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
+				{nil},
+				{87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
+			},
+			forcedMaxQuest = 2,
+		},
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	}
+	----------------------------------------------------------------
+	return OctoTables_Vibor, OctoTables_DataOtrisovka
+end
+table.insert(E.Components, tempFunction)

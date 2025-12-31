@@ -2,6 +2,7 @@ local GlobalAddonName, E = ...
 local INDENT_TEXT = 4
 local INDEND_SCROLL = 20
 local MIN_COLUMN_WIDTH = 30
+local MAX_COLUMN_WIDTH = 306-20-30 -- (20 иконка) (30 2ойфрейм)
 local MAX_DISPLAY_LINES = 32
 local LINES_TOTAL = math.floor(math.floor(E.PHYSICAL_SCREEN_HEIGHT/E.GLOBAL_LINE_HEIGHT)*.7)
 if MAX_DISPLAY_LINES > LINES_TOTAL then
@@ -60,47 +61,27 @@ local function UpdateColumnPositionsAndSizes(frame, columnWidths)
 		accumulatedWidth = accumulatedWidth + columnWidth
 	end
 end
-function EventFrame:Create_NameHeader()
+function EventFrame:Create_NameHeader() -- InitializePoolFrame
+	----------------------------------------------------------------
 	NameHeader:SetPoint("TOPLEFT", EquipmentsFrame, "TOPLEFT")
 	NameHeader:SetPoint("TOPRIGHT", EquipmentsFrame, "TOPRIGHT")
 	NameHeader:SetHeight((E.GLOBAL_LINE_HEIGHT*2))
+	----------------------------------------------------------------
 	NameHeader.Nickname = NameHeader:CreateFontString()
 	NameHeader.Nickname:SetFontObject(OctoFont11)
 	NameHeader.Server = NameHeader:CreateFontString()
 	NameHeader.Server:SetFontObject(OctoFont11)
-
-	NameHeader.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
-	if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
-		NameHeader.Nickname:SetPoint("CENTER")
-	end
-	NameHeader.Nickname:SetWordWrap(false)
-	NameHeader.Nickname:SetJustifyV("MIDDLE")
-	NameHeader.Nickname:SetJustifyH("CENTER")
-	NameHeader.Nickname:SetText("playerNameText")
-	NameHeader.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
-	NameHeader.Server:SetWordWrap(false)
-	NameHeader.Server:SetJustifyV("BOTTOM")
-	NameHeader.Server:SetJustifyH("CENTER")
-	NameHeader.Server:SetText("playerServerText")
-
-
+	NameHeader.Durability = NameHeader:CreateFontString()
+	NameHeader.Durability:SetFontObject(OctoFont11)
+	NameHeader.Mail = NameHeader:CreateFontString()
+	NameHeader.Mail:SetFontObject(OctoFont11)
+	NameHeader.ItemLevel = NameHeader:CreateFontString()
+	NameHeader.ItemLevel:SetFontObject(OctoFont11)
+	----------------------------------------------------------------
 	NameHeader.CharTexture = NameHeader:CreateTexture(nil, "BACKGROUND", nil, -3)
 	NameHeader.CharTexture:SetAllPoints()
 	NameHeader.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
-
-
-
-	NameHeader.DurabilityTexture = NameHeader:CreateTexture(nil, "BACKGROUND", nil, -2)
-	NameHeader.DurabilityTexture:Hide()
-	NameHeader.DurabilityTexture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-	NameHeader.DurabilityTexture:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-	-- NameHeader.DurabilityTexture:SetDrawLayer("OVERLAY", 2)
-	NameHeader.DurabilityTexture:SetPoint("TOPRIGHT")
-	NameHeader.DurabilityTexture:SetTexture(136241)
-
-
-	-- PlayerDurability < 100 and durColor..PlayerDurability.."%|r"..E.func_texturefromIcon(136241) or ""
-
+	----------------------------------------------------------------
 end
 local func_OnAcquired do
 	local function Create_Icon(frame)
@@ -212,7 +193,7 @@ function EventFrame:CalculateColumnWidths(rowData, columnMaxWidths)
 			finalWidth = math.max(finalWidth, MIN_COLUMN_WIDTH)
 		end
 		if not columnMaxWidths[i] or finalWidth > columnMaxWidths[i] then
-			columnMaxWidths[i] = finalWidth
+			columnMaxWidths[i] = math.min(finalWidth, MAX_COLUMN_WIDTH)
 		end
 	end
 	return maxColumn
@@ -261,32 +242,57 @@ function EventFrame:Octo_Frame_init(frame, node)
 		end
 	end
 end
-function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, CharInfo)
+
+
+
+
+function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInfo)
 	if not EquipmentsFrame or not EquipmentsFrame.view then
 		return
 	end
-
-
+	----------------------------------------------------------------
+	local pd = CharInfo.PlayerData
+	local faction = pd.Faction or "Neutral"
+	----------------------------------------------------------------
 
 	NameHeader.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
-
-	NameHeader.Nickname:SetText(E.func_CharInfo_NickName(CharInfo)) -- playerNameText
+	NameHeader.Nickname:SetWordWrap(false)
+	NameHeader.Nickname:SetJustifyV("MIDDLE")
+	NameHeader.Nickname:SetJustifyH("CENTER")
+	----------------------------------------------------------------
+	NameHeader.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
+	NameHeader.Server:SetWordWrap(false)
+	NameHeader.Server:SetJustifyV("MIDDLE")
+	NameHeader.Server:SetJustifyH("CENTER")
+	----------------------------------------------------------------
+	NameHeader.Mail:SetPoint("TOPRIGHT")
+	NameHeader.Mail:SetWordWrap(false)
+	NameHeader.Mail:SetJustifyV("MIDDLE")
+	NameHeader.Mail:SetJustifyH("RIGHT")
+	----------------------------------------------------------------
+	NameHeader.Durability:SetPoint("RIGHT")
+	NameHeader.Durability:SetWordWrap(false)
+	NameHeader.Durability:SetJustifyV("MIDDLE")
+	NameHeader.Durability:SetJustifyH("RIGHT")
+	----------------------------------------------------------------
+	NameHeader.ItemLevel:SetPoint("BOTTOMRIGHT")
+	NameHeader.ItemLevel:SetWordWrap(false)
+	NameHeader.ItemLevel:SetJustifyV("MIDDLE")
+	NameHeader.ItemLevel:SetJustifyH("RIGHT")
+	----------------------------------------------------------------
+	NameHeader.Nickname:SetText(E.func_CharInfo_NickName(CharInfo))
 	if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 		NameHeader.Nickname:SetPoint("CENTER")
 		NameHeader.Server:SetText("")
 	else
 		NameHeader.Server:SetText(E.func_CharInfo_Server(CharInfo)) -- playerServerText
 	end
+	----------------------------------------------------------------
+	NameHeader.Durability:SetText(E.func_CharInfo_Durability(CharInfo, true))
+	NameHeader.Mail:SetText(E.func_CharInfo_Mail(CharInfo))
+	NameHeader.ItemLevel:SetText(E.func_CharInfo_ItemLevel(CharInfo))
 
-
-
-
-
-
-
-
-	local pd = CharInfo.PlayerData
-	local faction = pd.Faction or "Neutral"
+	----------------------------------------------------------------
 
 	if faction == "Horde" then
 		charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
@@ -296,6 +302,17 @@ function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, Ch
 		charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
 	end
 	NameHeader.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
+	----------------------------------------------------------------
+end
+
+
+function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, CharInfo)
+	if not EquipmentsFrame or not EquipmentsFrame.view then
+		return
+	end
+
+	EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInfo)
+
 
 	EquipmentsFrame.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	local width = CalculateMainFrameWidth(columnWidths)

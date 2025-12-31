@@ -1,168 +1,175 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
 local L = E.L
-local HEIGHT = 20
-local WIDTH = 20
-local GetInfo = GetInfo or C_QuestLog.GetInfo
-local SetSelectedQuest = SetSelectedQuest or C_QuestLog.SetSelectedQuest
-local SetAbandonQuest = SetAbandonQuest or C_QuestLog.SetAbandonQuest
-local AbandonQuest = AbandonQuest or C_QuestLog.AbandonQuest
-local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLogEntries
-local utilityFrames = {
-	buttons = {},
-	framerate = nil
-}
-local function CreateUtilButton(name, frame, texture, size, func_onEnter, func_onClick)
-	local button = utilityFrames.buttons[name]
-	if not button then
-		button = CreateFrame("Button", E.MainAddonName..name, UIParent)
-		button:SetSize(size, size)
-		if texture then
-			button.icon = button:CreateTexture(nil, "BACKGROUND")
-			button.icon:SetTexture(texture)
-			button.icon:SetAtlas(texture)
-			button.icon:SetAllPoints()
-		end
-		button:SetScript("OnMouseDown", function(self)
-				if self.icon then
-					self.icon:SetAlpha(0.7)
-				end
-		end)
-		button:SetScript("OnMouseUp", function(self)
-				if self.icon then
-					self.icon:SetAlpha(1)
-				end
-		end)
-		button:SetScript("OnLeave", function(self)
-				if self.icon then
-					self.icon:SetAlpha(1)
-				end
-		end)
-		utilityFrames.buttons[name] = button
+
+------------------------------------------------------------
+-- constants
+------------------------------------------------------------
+local BUTTON_SIZE = 20
+local BUTTON_SPACING = 4
+
+------------------------------------------------------------
+-- helpers
+------------------------------------------------------------
+local function CreateUtilityButton(parent, name, texture, size, tooltipFunc, clickFunc)
+	local button = CreateFrame("Button", nil, parent)
+	button:SetSize(size, size)
+
+	button.icon = button:CreateTexture(nil, "BACKGROUND")
+	button.icon:SetAllPoints()
+
+	-- atlas or texture path
+	if texture:find("\\") then
+		button.icon:SetTexture(texture)
+	else
+		button.icon:SetAtlas(texture)
 	end
-	if func_onEnter then
+
+	button:SetScript("OnMouseDown", function(self)
+		self.icon:SetAlpha(0.7)
+	end)
+
+	button:SetScript("OnMouseUp", function(self)
+		self.icon:SetAlpha(1)
+	end)
+
+	button:SetScript("OnLeave", function(self)
+		self.icon:SetAlpha(1)
+		self.tooltip = nil
+	end)
+
+	if tooltipFunc then
 		button:SetScript("OnEnter", function(self)
-				button.tooltip = func_onEnter()
-				E.func_OctoTooltip_OnEnter(button, {"BOTTOMLEFT", "TOPRIGHT"})
+			self.tooltip = tooltipFunc()
+			E.func_OctoTooltip_OnEnter(self, { "BOTTOMLEFT", "TOPRIGHT" })
 		end)
 	end
-	if func_onClick then
-		button:SetScript("OnClick", function()
-				func_onClick()
-				button.tooltip = nil
+
+	if clickFunc then
+		button:SetScript("OnClick", function(self)
+			clickFunc(self)
+			self.tooltip = nil
 		end)
 	end
+
 	return button
 end
-local utilityButtonsOrder = {
-	"CloseButton",
-	"OptionsButton",
-	"GreatVaultButton"
-}
-local function AttachUtilityFrames(targetFrame)
-	local prevButton = nil
-	for i, buttonName in ipairs(utilityButtonsOrder) do
-		local button = utilityFrames.buttons[buttonName]
-		if button then
-			button:SetParent(targetFrame)
-			button:ClearAllPoints()
-			if i == 1 then
-				button:SetPoint("BOTTOMRIGHT", targetFrame, "TOPRIGHT", 0, 0)
-			else
-				button:SetPoint("RIGHT", prevButton, "LEFT", -4, 0)
-			end
-			prevButton = button
-			button:Show()
-		end
-	end
-end
-function EventFrame:Octo_CloseButton(frame)
-	local button = CreateUtilButton(
-		"CloseButton",
+
+------------------------------------------------------------
+-- buttons
+------------------------------------------------------------
+local function CreateCloseButton(frame, anchor)
+	local button = CreateUtilityButton(
 		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\Close.tga",
-		20,
-		function() return {{E.classColorHexCurrent..CLOSE.."|r"}} end,
-		nil
-	)
-	button:SetScript("OnClick", function(self)
+		"CloseButton",
+		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\Close.tga",
+		BUTTON_SIZE,
+		function()
+			return { { E.classColorHexCurrent .. CLOSE .. "|r" } }
+		end,
+		function(self)
 			local parent = self:GetParent()
 			if parent then
 				parent:Hide()
 			end
-			self.tooltip = nil
-	end)
+		end
+	)
+
+	button:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", 0, 0)
+	return button
 end
-function EventFrame:Octo_OptionsButton(frame, addonIconTexture)
-	local function func_onEnter()
-		return {{E.classColorHexCurrent..OPTIONS.."|r"}}
-	end
-	local function func_onClick()
-		local parent = self:GetParent()
-		if parent and parent:IsShown() then
-			parent:Hide()
-		end
-		if SettingsPanel:IsVisible() then
-			HideUIPanel(SettingsPanel)
-		else
-			Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
-		end
-	end
-	CreateUtilButton(
+
+local function CreateOptionsButton(frame, anchor, addonIconTexture)
+	local button = CreateUtilityButton(
+		frame,
 		"OptionsButton",
-		frame,
-		"Interface\\AddOns\\"..GlobalAddonName.."\\Media\\IconTexture\\"..addonIconTexture,
+		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\IconTexture\\" .. addonIconTexture,
 		18,
-		func_onEnter,
-		func_onClick
+		function()
+			return { { E.classColorHexCurrent .. OPTIONS .. "|r" } }
+		end,
+		function()
+			if SettingsPanel:IsVisible() then
+				HideUIPanel(SettingsPanel)
+			else
+				Settings.OpenToCategory(
+					E.func_GetAddOnMetadata(E.MainAddonName, "Title"),
+					true
+				)
+			end
+		end
 	)
+
+	button:SetPoint("RIGHT", anchor, "LEFT", -BUTTON_SPACING, 0)
+	return button
 end
-function EventFrame:Octo_GreatVaultButton(frame)
-	local function func_onEnter()
-		if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
-			C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
-		end
-		return {{E.classColorHexCurrent..RATED_PVP_WEEKLY_VAULT.."|r"}}
-	end
-	local function func_onClick()
-		if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
-			C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
-		end
-		if WeeklyRewards_ShowUI then
-			WeeklyRewards_ShowUI()
-		end
-	end
-	CreateUtilButton(
-		"GreatVaultButton",
+
+local function CreateGreatVaultButton(frame, anchor)
+	local button = CreateUtilityButton(
 		frame,
+		"GreatVaultButton",
 		"greatVault-whole-normal",
-		20,
-		func_onEnter,
-		func_onClick
+		BUTTON_SIZE,
+		function()
+			if InCombatLockdown() then
+				return { { ERR_NOT_IN_COMBAT } }
+			end
+			return { { E.classColorHexCurrent .. RATED_PVP_WEEKLY_VAULT .. "|r" } }
+		end,
+		function()
+			if InCombatLockdown() then
+				return
+			end
+
+			if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
+				C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
+			end
+
+			if WeeklyRewards_ShowUI then
+				WeeklyRewards_ShowUI()
+			end
+		end
 	)
+
+	button:SetPoint("RIGHT", anchor, "LEFT", -BUTTON_SPACING, 0)
+	return button
 end
+
+
+------------------------------------------------------------
+-- public API
+------------------------------------------------------------
 function E.func_CreateUtilsButton(frame, addonIconTexture)
-	if not utilityFrames.initialized then
-		EventFrame:Octo_CloseButton(frame)
-		EventFrame:Octo_OptionsButton(frame, addonIconTexture)
-		EventFrame:Octo_GreatVaultButton(frame)
-		utilityFrames.initialized = true
+	if frame.__OctoUtilityButtons then
+		return
 	end
-	frame:HookScript("OnShow", function()
-			AttachUtilityFrames(frame)
-	end)
-	if frame:IsShown() then
-		AttachUtilityFrames(frame)
-	end
+
+	frame.__OctoUtilityButtons = true
+
+	local closeButton = CreateCloseButton(frame, frame)
+	local optionsButton = CreateOptionsButton(frame, closeButton, addonIconTexture)
+	CreateGreatVaultButton(frame, optionsButton)
 end
+
+
+
+
+
+------------------------------------------------------------
+-- init
+------------------------------------------------------------
 local MyEventsTable = {
 	"VARIABLES_LOADED",
 }
+
 E.func_RegisterEvents(EventFrame, MyEventsTable)
+
 function EventFrame:VARIABLES_LOADED()
 	C_Timer.After(0, function()
-			for i, frame in ipairs(E.OctoTable_Frames_ICONS) do
-				E.func_CreateUtilsButton(frame, "ToDo")
-			end
+		for _, frame in ipairs(E.OctoTable_Frames_ICONS) do
+			E.func_CreateUtilsButton(frame, "ToDo")
+		end
+		CreateCloseButton(EquipmentsFrame, EquipmentsFrame)
+
 	end)
 end

@@ -42,6 +42,15 @@ local function extractItemIDs(tbl)
 	end
 	return list
 end
+-- local function extractItemIDs(tbl)
+-- 	local list = {}
+-- 	for itemID in pairs(tbl) do
+-- 		if type(itemID) == "number" then
+-- 			list[#list + 1] = itemID
+-- 		end
+-- 	end
+-- 	return list
+-- end
 ----------------------------------------------------------------
 -- Вспомогательная функция для форматирования чанков
 -- list: массив чисел или значений
@@ -99,27 +108,22 @@ function E.func_itemslistToSetText_12(tbl, val)
 		return
 	end
 	E.DEBUG_START()
-	local value = val or "true"  -- значение для каждого элемента
-	-- Извлекаем все itemID
+	local value = val or "true"
 	local list = extractItemIDs(tbl)
 	if #list == 0 then
 		E.DEBUG_STOP()
 		return
 	end
-	-- Сортировка по убыванию
 	table.sort(list, function(a, b)
-		return (tonumber(a) or a) > (tonumber(b) or b)
+		return a > b
 	end)
-	-- Форматируем чанки по 12 элементов
 	local formatter = function(item)
 		return string.format("[%d] = %s", item, value)
 	end
 	local chunks = formatChunks(list, 12, formatter)
-	-- Добавляем висячую запятую к каждой строке
 	for i = 1, #chunks do
 		chunks[i] = chunks[i] .. ","
 	end
-	-- Выводим результат в editBox с переносом строк |n
 	E.editBox:SetText(table.concat(chunks, "|n"))
 	E.editFrame:Show()
 	E.DEBUG_STOP()

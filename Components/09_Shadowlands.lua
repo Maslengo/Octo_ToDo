@@ -88,7 +88,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return L["World Boss"]
+				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
 			end,
 			name_save = "WorldBoss",
 			defS = true,
@@ -247,7 +247,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..AREA_LOOTING_UNLOCKED -- AREA_LOOTING_UNLOCKED L["Treasures"]
+				return E.func_GetMapName(1970)..": "..L["Treasures"] -- AREA_LOOTING_UNLOCKED
 			end,
 			name_save = "ZMtreasures",
 			defS = true,
@@ -570,7 +570,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".. AREA_LOOTING_UNLOCKED -- L["Mushrooms"]
+				return E.func_GetMapName(1961)..": ".. L["Treasures"] -- AREA_LOOTING_UNLOCKED
 			end,
 			name_save = "KORTHIACollectionMushrooms",
 			defS = true,

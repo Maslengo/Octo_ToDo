@@ -17,40 +17,25 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 1166, defS = true,}, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon())
-		-- {id = 3309, defS = false,}, -- Hellstone Shard
-		-- {id = 2588, defS = false,}, -- Riders of Azeroth Badge
+		-- {id = 3309, defS = true,}, -- Hellstone Shard
+		-- {id = 2588, defS = true,}, -- Riders of Azeroth Badge
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-		-- {id = 44791, defS = false,}, -- Event: Noblegarden
-		-- {id = 45072, defS = false,}, -- Event: Noblegarden
-		-- {id = 23247, defS = false,}, -- Event: Midsummer Fire Festival
+		-- {id = 44791, defS = true,}, -- Event: Noblegarden
+		-- {id = 45072, defS = true,}, -- Event: Noblegarden
+		-- {id = 23247, defS = true,}, -- Event: Midsummer Fire Festival
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		{
-			sorted = false,
+			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetEventName(141)
@@ -66,7 +51,6 @@ local function tempFunction()
 				{8803, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
 				{91041, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
 				{91042, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
-
 				{8744, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
 				{8768, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
 				{8769, addText = {mapID = 87}, FactionOrClass = {Alliance = true,}},
@@ -76,11 +60,42 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 1,
 		},
-
-
-
-
-
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetEventName(141).. " "..GARRISON_LOCATION_TOOLTIP
+			end,
+			name_save = "FeastofWinterVeil_DRAENOR", -- "Feast of Winter Veil"
+			defS = true,
+			reset = "Month",
+			desc = categoryKey,
+			quests = {
+				{39651},
+				{39668},
+				{39648},
+				{39649},
+			},
+			-- forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return "Тыквовин" --E.func_GetEventName()
+			end,
+			name_save = "HallowsEnd_DRAENOR", -- "Hallow's End"
+			defS = true,
+			reset = "Month",
+			desc = categoryKey,
+			quests = {
+				{39716},
+				{39719},
+				{39720},
+				{39721},
+			},
+			-- forcedMaxQuest = 1,
+		},
 		-- E.func_GetEventName(181) (Noblegarden) (Сад чудес)
 		{
 			sorted = false,
@@ -89,13 +104,13 @@ local function tempFunction()
 				return E.func_GetQuestName(13503, false) .. " ("..E.func_GetEventName(181)..")"
 			end,
 			name_save = "ATisketaTasketaNoblegardenBasket",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{13503},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -103,13 +118,13 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "WhattheDuck",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79575},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -117,13 +132,13 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "TheGreatEggHunt",
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{13479},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -131,13 +146,13 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "AFowlConcoction",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79576},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -145,13 +160,13 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "DuckTales",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79577},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -159,14 +174,14 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79578, faction = "Horde",}, -- Horde
 				{79331, faction = "Alliance"}, -- Alliance
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -174,13 +189,14 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "FeatheredFiend",
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79558, faction = "Horde",}, -- Horde
 				{73192, faction = "Alliance"}, -- Alliance
 			},
+			-- forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()
@@ -188,12 +204,13 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "QuackingDown",
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79135},
 			},
+			-- forcedMaxQuest = 1,
 		},
 		-- E.func_GetEventName(201) (ChildrensWeek) (Детская неделя)
 		-- orgrimmar / Stormwind
@@ -203,7 +220,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysChildrensWeek",
 			quests = {
@@ -223,6 +240,7 @@ local function tempFunction()
 				-- {29119, faction = "Alliance"}, -- Alliance, -- ДУБЛЬ
 				{171, faction = "Alliance"}, -- Alliance,
 			},
+			-- forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		{
@@ -231,7 +249,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "Shattrath", --
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysChildrensWeek",
 			quests = {
@@ -253,6 +271,7 @@ local function tempFunction()
 				-- {10968, faction = "Alliance"}, -- ЛИШНЕЕ?
 				{10966, faction = "Alliance"},
 			},
+			-- forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		{
@@ -261,7 +280,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "orgrimmarStormwindDAILY", --
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysTheSpinnerofSummerTales",
 			quests = {
@@ -270,7 +289,7 @@ local function tempFunction()
 				{82080, faction = "Alliance"},
 				{11924, faction = "Alliance"},
 			},
-			forcedMaxQuest = 2,
+			-- forcedMaxQuest = 2,
 		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -281,7 +300,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "Raid",
-			defS = false,
+			defS = true,
 			reset = "Weekly",
 			desc = categoryKey, -- "HolidaysTimewalk",
 			quests = {
@@ -290,7 +309,7 @@ local function tempFunction()
 				{47523},
 				{82817},
 			},
-			forcedMaxQuest = 1,
+			-- forcedMaxQuest = 1,
 		},
 		{
 			sorted = false,
@@ -313,7 +332,6 @@ local function tempFunction()
 				{83360, addText = {expansionText = E.func_FormatExpansion(7, "LEFT")}}, -- 7 LEGION (A Fel Path Through Time)
 				{88805, addText = {expansionText = E.func_FormatExpansion(8, "LEFT")}}, -- 8 BFA (A Scarred Path Through Time)
 				{92649, addText = {expansionText = E.func_FormatExpansion(9, "LEFT")}}, -- 9 SL (Темный путь сквозь время)
-
 				{nil},
 				{nil, addText = {IconVignette = "VignetteKillElite"}, forcedText = {text = L["Weekend Event"]},},
 				-- NORMAL TIMEWALK
@@ -326,48 +344,24 @@ local function tempFunction()
 				{86564, addText = {expansionText = E.func_FormatExpansion(7, "LEFT")}}, -- 7 LEGION
 				{88808, addText = {expansionText = E.func_FormatExpansion(8, "LEFT")}}, -- 8 BFA
 				{92647, addText = {expansionText = E.func_FormatExpansion(9, "LEFT")}}, -- 9 SL
-
-
-
-
-
-
 				-- {86731, addText = {expansionText = E.func_FormatExpansion(1)}}, -- 1 CLASSIC (An Original Path Through Time)
 				-- {85947, addText = {expansionText = E.func_FormatExpansion(1)}}, -- 1 CLASSIC
-
 				-- {83363, addText = {expansionText = E.func_FormatExpansion(2)}}, -- 2 TBC (A Burning Path Through Time)
 				-- {85948, addText = {expansionText = E.func_FormatExpansion(2)}}, -- 2 TBC
-
 				-- {83365, addText = {expansionText = E.func_FormatExpansion(3)}}, -- 3 WOTLK (A Frozen Path Through Time)
 				-- {85949, addText = {expansionText = E.func_FormatExpansion(3)}}, -- 3 WOTLK
-
 				-- {83359, addText = {expansionText = E.func_FormatExpansion(4)}}, -- 4 Cataclysm (A Shattered Path Through Time)
 				-- {86556, addText = {expansionText = E.func_FormatExpansion(4)}}, -- 4 Cataclysm
-
 				-- {83362, addText = {expansionText = E.func_FormatExpansion(5)}}, -- 5 PANDA (A Shrouded Path Through Time)
 				-- {86560, addText = {expansionText = E.func_FormatExpansion(5)}}, -- 5 PANDA
-
 				-- {83364, addText = {expansionText = E.func_FormatExpansion(6)}}, -- 6 DRAENOR (A Savage Path Through Time)
 				-- {86563, addText = {expansionText = E.func_FormatExpansion(6)}}, -- 6 DRAENOR
-
 				-- {83360, addText = {expansionText = E.func_FormatExpansion(7)}}, -- 7 LEGION (A Fel Path Through Time)
 				-- {86564, addText = {expansionText = E.func_FormatExpansion(7)}}, -- 7 LEGION
-
 				-- {88805, addText = {expansionText = E.func_FormatExpansion(8)}}, -- 8 BFA (A Scarred Path Through Time)
 				-- {88808, addText = {expansionText = E.func_FormatExpansion(8)}}, -- 8 BFA
-
 				-- {92649, addText = {expansionText = E.func_FormatExpansion(9)}}, -- 9 SL (Темный путь сквозь время)
 				-- {92647, addText = {expansionText = E.func_FormatExpansion(9)}}, -- 9 SL
-
-
-
-
-
-
-
-
-
-
 				-- {83274}, -- Празднование 20-й годовщины
 				-- {72727}, -- Пылающий путь сквозь время (Blizzard пометили это задание как устаревшее — его нельзя получить или выполнить.)
 				-- {72726}, -- Замерзший путь сквозь время (Blizzard пометили это задание как устаревшее — его нельзя получить или выполнить.)
@@ -386,7 +380,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "ProfessionMonthlies",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -405,7 +399,7 @@ local function tempFunction()
 				{29519},
 				{29520},
 			},
-			forcedMaxQuest = 14,
+			-- forcedMaxQuest = 14,
 		},
 		{
 			TextLeft = function()
@@ -413,14 +407,14 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "MonthlyQuests",
-			defS = false,
+			defS = true,
 			reset = "Month",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
 				{33354},
 				{29443},
 			},
-			forcedMaxQuest = 2,
+			-- forcedMaxQuest = 2,
 		},
 		{
 			TextLeft = function()
@@ -428,14 +422,14 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "AcountwideDailies",
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
 				{32175},
 				{36471},
 			},
-			forcedMaxQuest = 2,
+			-- forcedMaxQuest = 2,
 		},
 		{
 			TextLeft = function()
@@ -443,7 +437,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "itemturnsins",
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -457,7 +451,7 @@ local function tempFunction()
 				{29464},
 				{29451},
 			},
-			forcedMaxQuest = 9,
+			-- forcedMaxQuest = 9,
 		},
 		{
 			TextLeft = function()
@@ -465,7 +459,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "DarkmoonFaire",
-			defS = false,
+			defS = true,
 			reset = "Daily",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
@@ -479,7 +473,7 @@ local function tempFunction()
 				{29455},
 				{64783},
 			},
-			forcedMaxQuest = 9,
+			-- forcedMaxQuest = 9,
 		},
 		{
 			TextLeft = function()
@@ -487,7 +481,7 @@ local function tempFunction()
 			end,
 			showTooltip = true,
 			name_save = "GreenFire",
-			defS = false,
+			defS = true,
 			reset = "Regular",
 			desc = categoryKey, -- "Warlock",
 			quests = {
@@ -499,156 +493,153 @@ local function tempFunction()
 				{32324},
 				{32325},
 			},
-			forcedMaxQuest = 7,
+			-- forcedMaxQuest = 7,
 		},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)
 -- local function localfunc2()
-	-- local OctoTable_Otrisovka_TextCenter = {}
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- if Octo_ToDo_DB_Vars.Holidays then
-	-- if E.ActiveHoliday[181] then
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysNoblegarden")
-	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-	-- ----------------------------------------------------------------
-	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
-	-- ----------------------------------------------------------------
-	-- if CharInfo.MASLENGO.ItemsInBag[44791] then
-	-- TextCenter = CharInfo.MASLENGO.ItemsInBag[44791]
-	-- end
-	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_GetItemName(44791)
-	-- ColorLeft = E.COLOR_HOLIDAY
-	-- ----------------------------------------------------------------
-	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-	-- ----------------------------------------------------------------
-	-- end)
-	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-	-- ----------------------------------------------------------------
-	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
-	-- ----------------------------------------------------------------
-	-- if CharInfo.MASLENGO.ItemsInBag[45072] then
-	-- TextCenter = CharInfo.MASLENGO.ItemsInBag[45072]
-	-- end
-	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_GetItemName(45072)
-	-- ColorLeft = E.COLOR_HOLIDAY
-	-- ----------------------------------------------------------------
-	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-	-- ----------------------------------------------------------------
-	-- end)
-	-- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- 1583 EU classic
-	-- 1508 US classic
-	-- 1458 Бурные потоки
-	-- local TimewalkHolidayTBL = {1705, 1583, 1265, 1063, 652, 622, 1508, 1667}
-	-- for _, HolidayID in ipairs(TimewalkHolidayTBL) do
-	-- if E.ActiveHoliday[HolidayID] then
-	-- local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon()
-	-- if joinable then
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysTimewalk", E.COLOR_EVENT)
-	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-	-- ----------------------------------------------------------------
-	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
-	-- TooltipKey = "Timewalk_Mounts"
-	-- ----------------------------------------------------------------
-	-- TextCenter = E.func_TextCenter_Currency(CharInfo, 1166)
-	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_GetCurrencyName(1166)..timewalkDungeonName
-	-- ColorLeft = E.COLOR_EVENT
-	-- SettingsType = "Currencies#"..1166
-	-- ----------------------------------------------------------------
-	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-	-- ----------------------------------------------------------------
-	-- end)
-	-- end
-	-- end
-	-- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- -- if E.ActiveHoliday[201] then
-	-- -- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysChildrensWeek")
-	-- -- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- if E.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysTheSpinnerofSummerTales")
-	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-	-- ----------------------------------------------------------------
-	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
-	-- ----------------------------------------------------------------
-	-- if CharInfo.MASLENGO.LFGInstance[286] and CharInfo.MASLENGO.LFGInstance[286].donetoday then
-	-- TextCenter = CharInfo.MASLENGO.LFGInstance[286].donetoday
-	-- end
-	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_texturefromIcon(E.func_GetItemIcon(23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_GetLFGDungeonName(286)
-	-- ColorLeft = E.COLOR_HOLIDAY
-	-- ----------------------------------------------------------------
-	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-	-- ----------------------------------------------------------------
-	-- end)
-	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-	-- ----------------------------------------------------------------
-	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
-	-- ----------------------------------------------------------------
-	-- if CharInfo.MASLENGO.ItemsInBag[23247] then
-	-- TextCenter = CharInfo.MASLENGO.ItemsInBag[23247]
-	-- end
-	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_GetItemName(23247)
-	-- ColorLeft = E.COLOR_HOLIDAY
-	-- ----------------------------------------------------------------
-	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-	-- ----------------------------------------------------------------
-	-- end)
-	-- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- if E.ActiveHoliday[1691] then -- Алчный посланец
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysAGreedyEmissary", E.COLOR_RED)
-	-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-	-- ----------------------------------------------------------------
-	-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
-	-- ----------------------------------------------------------------
-	-- TextCenter = E.func_TextCenter_Currency(CharInfo, 3309)
-	-- ----------------------------------------------------------------
-	-- TextLeft = E.func_GetCurrencyName(3309)
-	-- ColorLeft = E.COLOR_RED
-	-- SettingsType = "Currencies#"..3309
-	-- ----------------------------------------------------------------
-	-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-	-- ----------------------------------------------------------------
-	-- end)
-	-- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- if E.ActiveHoliday[479] then -- Ярмарка новолунья
-	-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysDarkmoonFaire", E.COLOR_PURPLE)
-	-- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- end
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- ----------------------------------------------------------------
-	-- return OctoTable_Otrisovka_TextCenter
+-- local OctoTable_Otrisovka_TextCenter = {}
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- if Octo_ToDo_DB_Vars.Holidays then
+-- if E.ActiveHoliday[181] then
+-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysNoblegarden")
+-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+-- ----------------------------------------------------------------
+-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
+-- ----------------------------------------------------------------
+-- if CharInfo.MASLENGO.ItemsInBag[44791] then
+-- TextCenter = CharInfo.MASLENGO.ItemsInBag[44791]
 -- end
-
+-- ----------------------------------------------------------------
+-- TextLeft = E.func_GetItemName(44791)
+-- ColorLeft = E.COLOR_HOLIDAY
+-- ----------------------------------------------------------------
+-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+-- ----------------------------------------------------------------
+-- end)
+-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+-- ----------------------------------------------------------------
+-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
+-- ----------------------------------------------------------------
+-- if CharInfo.MASLENGO.ItemsInBag[45072] then
+-- TextCenter = CharInfo.MASLENGO.ItemsInBag[45072]
+-- end
+-- ----------------------------------------------------------------
+-- TextLeft = E.func_GetItemName(45072)
+-- ColorLeft = E.COLOR_HOLIDAY
+-- ----------------------------------------------------------------
+-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+-- ----------------------------------------------------------------
+-- end)
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- 1583 EU classic
+-- 1508 US classic
+-- 1458 Бурные потоки
+-- local TimewalkHolidayTBL = {1705, 1583, 1265, 1063, 652, 622, 1508, 1667}
+-- for _, HolidayID in ipairs(TimewalkHolidayTBL) do
+-- if E.ActiveHoliday[HolidayID] then
+-- local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon()
+-- if joinable then
+-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysTimewalk", E.COLOR_EVENT)
+-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+-- ----------------------------------------------------------------
+-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
+-- TooltipKey = "Timewalk_Mounts"
+-- ----------------------------------------------------------------
+-- TextCenter = E.func_TextCenter_Currency(CharInfo, 1166)
+-- ----------------------------------------------------------------
+-- TextLeft = E.func_GetCurrencyName(1166)..timewalkDungeonName
+-- ColorLeft = E.COLOR_EVENT
+-- SettingsType = "Currencies#"..1166
+-- ----------------------------------------------------------------
+-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+-- ----------------------------------------------------------------
+-- end)
+-- end
+-- end
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- -- if E.ActiveHoliday[201] then
+-- -- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysChildrensWeek")
+-- -- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- if E.ActiveHoliday[341] then -- СОЛНЦЕВОРОТ
+-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysTheSpinnerofSummerTales")
+-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+-- ----------------------------------------------------------------
+-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
+-- ----------------------------------------------------------------
+-- if CharInfo.MASLENGO.LFGInstance[286] then
+-- TextCenter = "CharInfo.MASLENGO.LFGInstance[286]"
+-- end
+-- ----------------------------------------------------------------
+-- TextLeft = E.func_texturefromIcon(E.func_GetItemIcon(23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_GetLFGDungeonName(286)
+-- ColorLeft = E.COLOR_HOLIDAY
+-- ----------------------------------------------------------------
+-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+-- ----------------------------------------------------------------
+-- end)
+-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+-- ----------------------------------------------------------------
+-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
+-- ----------------------------------------------------------------
+-- if CharInfo.MASLENGO.ItemsInBag[23247] then
+-- TextCenter = CharInfo.MASLENGO.ItemsInBag[23247]
+-- end
+-- ----------------------------------------------------------------
+-- TextLeft = E.func_GetItemName(23247)
+-- ColorLeft = E.COLOR_HOLIDAY
+-- ----------------------------------------------------------------
+-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+-- ----------------------------------------------------------------
+-- end)
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- if E.ActiveHoliday[1691] then -- Алчный посланец
+-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysAGreedyEmissary", E.COLOR_RED)
+-- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+-- ----------------------------------------------------------------
+-- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
+-- ----------------------------------------------------------------
+-- TextCenter = E.func_TextCenter_Currency(CharInfo, 3309)
+-- ----------------------------------------------------------------
+-- TextLeft = E.func_GetCurrencyName(3309)
+-- ColorLeft = E.COLOR_RED
+-- SettingsType = "Currencies#"..3309
+-- ----------------------------------------------------------------
+-- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+-- ----------------------------------------------------------------
+-- end)
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- if E.ActiveHoliday[479] then -- Ярмарка новолунья
+-- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysDarkmoonFaire", E.COLOR_PURPLE)
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- return OctoTable_Otrisovka_TextCenter
+-- end

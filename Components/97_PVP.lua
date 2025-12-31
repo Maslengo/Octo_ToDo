@@ -89,5 +89,4 @@ local function tempFunction()
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)

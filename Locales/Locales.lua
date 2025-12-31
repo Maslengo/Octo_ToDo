@@ -6,6 +6,11 @@ local DebugLocalization_Lang = false
 local color_red = E.COLOR_RED or "|cffFF0000"
 local curLocaleLang = E.curLocaleLang or "enUS"
 
+
+
+
+
+
 -- метатаблица с кешем через rawset
 local meta_table = {
 	__index = function(self, key)
@@ -22,11 +27,11 @@ local meta_table = {
 			DEFAULT_CHAT_FRAME:AddMessage(color_red..curLocaleLang..":|r "..key)
 		end
 
-		local translation
-		if E.Config_UseTranslit then
-			translation = E.func_translit(translationTable[curLocaleLang]) or E.func_translit(key)
-		else
-			translation = translationTable[curLocaleLang] or key
+		local raw = translationTable[curLocaleLang] or key
+		local translation = E.func_translit(raw)
+
+		if translation == nil or translation == "" then
+			translation = raw
 		end
 
 		rawset(self, key, translation)
@@ -35,6 +40,8 @@ local meta_table = {
 }
 
 setmetatable(L, meta_table)
+
+
 
 ----------------------------------------------------------------
 -- local L = E.L

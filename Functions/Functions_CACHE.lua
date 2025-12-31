@@ -50,7 +50,7 @@ local function func_itemName_CACHE(id, forcedQuality)
 	return output
 end
 function E.func_GetItemName(id, forcedQuality)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local name = func_itemName_CACHE(id, forcedQuality)
 	return E.func_translit(name)..E.debugInfo(id)
@@ -59,7 +59,7 @@ local function func_currencyName_CACHE(id, forcedQuality)
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		local hasMount = E.OctoTable_CurrencyMountForFuncCurName[id] or false
-		if id == 3252 or id == 1166 then
+		if id == 3252 or id == 1166 or id == 2778 then
 			hasMount = true
 		end
 		if forcedQuality then
@@ -85,7 +85,7 @@ local function func_currencyName_CACHE(id, forcedQuality)
 	return output
 end
 function E.func_GetCurrencyName(id, forcedQuality)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_currencyName_CACHE(id, forcedQuality)
 	return E.func_translit(cachedName)..E.debugInfo(id)
@@ -120,7 +120,8 @@ local function func_npcName_CACHE(id)
 	return output
 end
 function E.func_GetNPCName(id)
-	if not id then return end
+	if not id then return "no id" end
+	-- if id then return "npcid" end
 	id = tonumber(id)
 	if E.func_IsPTR() and E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id] then
 		return E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] or UNKNOWN
@@ -146,7 +147,7 @@ local function func_questName_CACHE(id)
 	return output
 end
 function E.func_GetQuestName(id, ShowIcon)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_questName_CACHE(id)
 	if ShowIcon == false then
@@ -257,7 +258,7 @@ local function func_spellName_CACHE(id)
 	return output
 end
 function E.func_GetSpellName(id)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_spellName_CACHE(id)
 	return E.func_translit(cachedName)..E.debugInfo(id)
@@ -279,7 +280,7 @@ local function func_achievementName_CACHE(id)
 	return output
 end
 function E.func_GetAchievementName(id)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_achievementName_CACHE(id)
 	return E.func_translit(cachedName)..E.debugInfo(id)
@@ -310,7 +311,7 @@ function E.func_GetMountTexture(mountID)
 	return select(3, GetMountInfoByID(mountID))
 end
 function E.func_IsMountCollected(mountID)
-	if not mountID then return end
+	if not mountID then return "no mountID" end
 	local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
 	return isCollected
 end
@@ -336,13 +337,13 @@ local function func_mapName_CACHE(id)
 	return output
 end
 function E.func_GetMapName(id)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_mapName_CACHE(id)
 	return E.func_translit(cachedName)..E.debugInfo(id)
 end
 function E.func_GetFullMapName(id)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local info = GetMapInfo(id)
 	if not info then
@@ -408,7 +409,7 @@ local function func_EventName_CACHE(id)
 	return output
 end
 function E.func_GetEventName(id)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_EventName_CACHE(id)
 	return E.func_translit(cachedName)..E.debugInfo(id)
@@ -430,11 +431,71 @@ local function func_ProfessionName_CACHE(id)
 	return output
 end
 function E.func_GetProfessionName(id)
-	if not id then return end
+	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_ProfessionName_CACHE(id)
 	return E.func_translit(cachedName)..E.debugInfo(id)
 end
 function E.func_ProfessionIcon(skillLine)
-	return skillLine and E.func_texturefromIcon(GetTradeSkillTexture(skillLine)) or ""
+	if not skillLine then return "" end
+	return E.func_texturefromIcon(GetTradeSkillTexture(skillLine))
+end
+
+
+
+
+
+
+local function func_DungeonName_CACHE(id)
+	local Cache = GetOrCreateCache("AllDungeons", id)
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		return Cache[id][E.curLocaleLang]
+	end
+	local name = EJ_GetInstanceInfo(id)
+	if name and name ~= "" then
+		Cache[id] = Cache[id] or {}
+		Cache[id][E.curLocaleLang] = name
+		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
+			E.func_PrintMessage(E.COLOR_LIME..DUNGEONS.."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+		end
+	end
+	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r"
+	return output
+end
+function E.func_GetDungeonName(id)
+	if not id then return "no id" end
+	id = tonumber(id)
+	local cachedName = func_DungeonName_CACHE(id)
+	return E.func_translit(cachedName)..E.debugInfo(id)
+end
+
+
+
+
+
+
+local function func_DifficultyName_CACHE(id)
+	local Cache = GetOrCreateCache("AllDifficulty", id)
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		return Cache[id][E.curLocaleLang]
+	end
+	local name = GetDifficultyInfo(id)
+	if name and name ~= "" then
+		Cache[id] = Cache[id] or {}
+		Cache[id][E.curLocaleLang] = name
+		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
+			E.func_PrintMessage(E.COLOR_LIME.."Difficulty".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+		end
+	end
+	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r"
+	return output
+end
+function E.func_GetDifficultyName(id)
+	if not id then return "no id" end
+	id = tonumber(id)
+	local cachedName = func_DifficultyName_CACHE(id)
+	if E.Config_DifficultyAbbreviation then
+		cachedName = E.OctoTable_DifficultyTable[id] and E.OctoTable_DifficultyTable[id].abbr or func_DifficultyName_CACHE(id)
+	end
+	return E.func_translit(cachedName)..E.debugInfo(id)
 end

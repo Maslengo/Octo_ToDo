@@ -141,17 +141,10 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 				local row = { leftText }
-				local row2Text = ""
-				local row3Text = ""
-				if pd.avgItemLevelEquipped and pd.avgItemLevel then
-					row2Text = pd.avgItemLevelEquipped
-					if pd.avgItemLevel > pd.avgItemLevelEquipped then
-						row3Text = " +"..pd.avgItemLevel-pd.avgItemLevelEquipped
-					end
-					if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
-						row2Text = row2Text..E.COLOR_BLUE.."+|r"
-					end
-				end
+				local row2Text = E.func_CharInfo_Durability(CharInfo, true)
+				local row3Text = E.func_CharInfo_ItemLevel(CharInfo)
+
+
 				avgILVL = avgILVL + pd.avgItemLevel
 				table.insert(characterData, {
 						row = row,
@@ -173,15 +166,15 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		for _, d in ipairs(characterData) do
 			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-			d.row[2] = color..d.row2Text.."|r"
+			d.row[2] = {color..d.row2Text.."|r", "RIGHT"}
 			d.row[3] = color..d.row3Text.."|r"
 			table.insert(tooltip, d.row)
 		end
 		if #characterData > 1 then
 			local header = {
 				"",
-				"avg"..": "..E.func_CompactFormatNumber(avgILVL/#characterData),
 				"",
+				"avg"..": "..E.func_CompactFormatNumber(avgILVL/#characterData),
 			}
 			table.insert(tooltip, 1, header)
 		end

@@ -53,7 +53,7 @@ function E.func_Mounts_1166() -- Timewalk
 	}
 	return tbl
 end
-function E.func_Mounts_3252() -- Bronze
+function E.func_Mounts_3252() -- Bronze (Legion)
 	local source7 = E.func_FormatExpansion(7)
 	local tbl = {
 		-- Mounts with price PRICE_10K
@@ -137,3 +137,38 @@ function E.func_Mounts_3252() -- Bronze
 	}
 	return tbl
 end
+function E.func_Mounts_2778() -- Bronze (Pandaria)
+	local source5 = E.func_FormatExpansion(5)
+	local tbl = {
+		{itemID = 213609, price = 2200, mountID = nil, source = source5},
+		{itemID = 213608, price = 2200, mountID = nil, source = source5},
+		{itemID = 213576, price = 2200, mountID = nil, source = source5},
+		{itemID = 213604, price = 2200, mountID = nil, source = source5},
+		{itemID = 213584, price = 2200, mountID = nil, source = source5},
+		{itemID = 213582, price = 2200, mountID = nil, source = source5},
+		{itemID = 213628, price = 2200, mountID = nil, source = source5},
+		{itemID = 213606, price = 2200, mountID = nil, source = source5},
+		{itemID = 213607, price = 2200, mountID = nil, source = source5},
+		{itemID = 213602, price = 2200, mountID = nil, source = source5},
+		{itemID = 213627, price = 2200, mountID = nil, source = source5},
+		{itemID = 213603, price = 2200, mountID = nil, source = source5},
+		{itemID = 213595, price = 2200, mountID = nil, source = source5},
+		{itemID = 213605, price = 2200, mountID = nil, source = source5},
+
+		{itemID = 213624, price = 4400, mountID = nil, source = source5},
+		{itemID = 213625, price = 4400, mountID = nil, source = source5},
+		{itemID = 213626, price = 4400, mountID = nil, source = source5},
+		{itemID = 213623, price = 4400, mountID = nil, source = source5},
+		{itemID = 218111, price = 4400, mountID = nil, source = source5},
+		{itemID = 213622, price = 4400, mountID = nil, source = source5},
+		{itemID = 213621, price = 4400, mountID = nil, source = source5},
+
+		{itemID = 213600, price = 6600, mountID = nil, source = source5},
+		{itemID = 213601, price = 6600, mountID = nil, source = source5},
+		{itemID = 213596, price = 6600, mountID = nil, source = source5},
+		{itemID = 213598, price = 6600, mountID = nil, source = source5},
+		{itemID = 213597, price = 6600, mountID = nil, source = source5},
+	}
+	return tbl
+end
+-- if id == 3252 or id == 1166 or id == 2778 then

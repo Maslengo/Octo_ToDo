@@ -34,7 +34,6 @@ E.OctoTable_itemID_ItemsUsable = {}
 E.OctoTable_itemID_ItemsUsable_Other = {}
 E.OctoTable_itemID_MECHAGON = {}
 E.OctoTable_KeystoneAbbr = {}
-E.OctoTable_LFGDungeons = {}
 E.OctoTable_Mounts = {}
 E.OctoTable_Portals = {}
 E.OctoTable_QuestID = {}
@@ -174,6 +173,7 @@ E.isOmniCD = select(4, C_AddOns.GetAddOnInfo("OmniCD"))
 E.isOmniCC = select(4, C_AddOns.GetAddOnInfo("OmniCC"))
 E.isParrot = select(4, C_AddOns.GetAddOnInfo("Parrot"))
 E.ALPHA_BACKGROUND = .2
+E.COLOR_TIME = "|cff9999FF"
 E.COLOR_WORLDOFWARCRAFT = "|cffD6AB7D"
 E.COLOR_THEBURNINGCRUSADE = "|cffE43E5A"
 E.COLOR_WRATHOFTHELICHKING = "|cff3FC7EB"
@@ -240,6 +240,31 @@ E.ICON_VENTHYR = 3257751 -- 3641397
 E.ICON_WORLDBOSS = 3528312
 E.ICON_RARES = 135903
 E.ICON_MONEY = 133784
+E.ICON_DURABILITY = 132281 -- 136241
+E.ATLAS_REPAIR = "Crosshair_repairnpc_32"
+E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
+E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
+E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
+
+-- E.ATLAS_RAID = "Raid"
+-- E.ATLAS_DUNGEON = "Dungeon"
+
+E.ATLAS_RAID = "questlog-questtypeicon-raid"
+E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
+
+-- E.ATLAS_RAID = "worldquest-icon-raid"
+-- E.ATLAS_DUNGEON = "worldquest-icon-dungeon"
+
+E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
+
+
+
+-- UI-HUD-Minimap-Mail-New-Flipbook-2x
+-- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
+
+E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 16)
+E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
+
 E.COLOR_HORDE = "|cffC41E3A"
 E.COLOR_ALLIANCE = "|cff0070DD"
 E.COLOR_NEUTRAL = E.Class_Monk_Color
@@ -271,8 +296,6 @@ E.NONE = E.COLOR_GRAY..NONE.."|r"
 E.TRUE = E.COLOR_GREEN.."true|r"
 E.FALSE = E.COLOR_RED.."false|r"
 E.NIL = E.COLOR_RED.."nil|r"
-E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 16)
-E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
 E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
 E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\ICON_EMPTY"
@@ -378,3 +401,6 @@ E.OctoTable_SlotMapping = {
 	[16] = {name = "MAINHANDSLOT", invslot = INVSLOT_MAINHAND, priority = 17},
 	[17] = {name = "SECONDARYHANDSLOT", invslot = INVSLOT_OFFHAND, priority = 18},
 }
+
+E.Config_ShowAllDifficulties = false
+E.Config_DifficultyAbbreviation = true
