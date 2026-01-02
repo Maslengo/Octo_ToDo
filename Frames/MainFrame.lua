@@ -787,9 +787,9 @@ function EventFrame:CreateDataProvider()
 	local totalColumns = #sortedCharacters
 	local firstChar = sortedCharacters[1]
 	local dataDisplayOrder = {
+		"Additionally",
 		"Currencies",
 		"Items",
-		"Additionally",
 		"RaidsOrDungeons",
 		"UniversalQuests",
 		"Reputations",

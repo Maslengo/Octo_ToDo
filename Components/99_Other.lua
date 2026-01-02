@@ -16,9 +16,6 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].name = OTHER
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 1166, defS = false,}, -- Timewarped Badge
-		-- {id = 3139, defS = false,}, -- Plunder
-		{id = 2032, defS = false,}, -- Trader's Tender
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {

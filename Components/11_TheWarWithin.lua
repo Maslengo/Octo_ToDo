@@ -61,6 +61,9 @@ local function tempFunction()
 		-- {id = 3109, defS = false,}, -- Runed Undermine Crest
 		-- {id = 3108, defS = false,}, -- Carved Undermine Crest
 		-- {id = 3107, defS = false,}, -- Weathered Undermine Crest
+		{id = 1166, defS = false,}, -- Timewarped Badge
+		-- {id = 3139, defS = false,}, -- Plunder
+		{id = 2032, defS = false,}, -- Trader's Tender
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -69,6 +72,7 @@ local function tempFunction()
 		-- {id = 158923, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 151086, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		{id = 246771, defS = true,},
+		{id = 137642, defS = false,}, -- Mark of Honor
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {

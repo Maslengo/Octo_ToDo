@@ -246,11 +246,11 @@ E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
 E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
 E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
 
--- E.ATLAS_RAID = "Raid"
--- E.ATLAS_DUNGEON = "Dungeon"
+E.ATLAS_RAID = "Raid"
+E.ATLAS_DUNGEON = "Dungeon"
 
-E.ATLAS_RAID = "questlog-questtypeicon-raid"
-E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
+-- E.ATLAS_RAID = "questlog-questtypeicon-raid"
+-- E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
 
 -- E.ATLAS_RAID = "worldquest-icon-raid"
 -- E.ATLAS_DUNGEON = "worldquest-icon-dungeon"

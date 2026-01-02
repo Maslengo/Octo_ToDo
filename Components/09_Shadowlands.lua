@@ -25,7 +25,7 @@ local function tempFunction()
 		{id = 2009, defS = true,},
 		{id = 1906, defS = true,},
 		{id = 1828, defS = true,},
-		{id = 1979, defS = true,},
+		{id = 1979, defS = true,}, -- > 700 qw 65219
 		{id = 1931, defS = true,},
 		{id = 1816, defS = false,},
 		{id = 1885, defS = true,},

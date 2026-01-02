@@ -83,9 +83,9 @@ local function Collect_JournalInstance()
 	collectMASLENGO.LFGInstance = {}
 	for index = 1, GetNumRandomDungeons() do
 		local dungeonID, name, typeID, _, _, _, _, _, _, _, _, textureFilename, difficultyID = GetLFGRandomDungeonInfo(index)
-		if dungeonID and OctoTable_LFGDungeons[dungeonID] then
-			local donetoday = GetLFGDungeonRewards(dungeonID)
-			if donetoday then
+		if OctoTable_LFGDungeons[dungeonID] then
+			local isAvailableForAll, isAvailableForPlayer, hideIfNotJoinable = IsLFGDungeonJoinable(dungeonID)
+			if (isAvailableForPlayer or not hideIfNotJoinable) and isAvailableForAll and GetLFGDungeonRewards(dungeonID) then
 				collectMASLENGO.LFGInstance[dungeonID] = collectMASLENGO.LFGInstance[dungeonID] or {}
 				collectMASLENGO.LFGInstance[dungeonID].name = name
 				collectMASLENGO.LFGInstance[dungeonID].typeID = typeID

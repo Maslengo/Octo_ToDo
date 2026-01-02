@@ -27,7 +27,7 @@ local function tempFunction()
 		{id = 789, defS = true,},
 		{id = 776, defS = true,}, -- Warforged Seal
 		{id = 402, defS = true,}, -- Ironpaw Token
-		-- {id = 2778, defS = false,}, -- Bronze (remix) -- https://www.wowhead.com/currency=2778/bronze#items;0-19+20
+		{id = 2778, defS = false,}, -- Bronze (remix) -- https://www.wowhead.com/currency=2778/bronze#items;0-19+20
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
