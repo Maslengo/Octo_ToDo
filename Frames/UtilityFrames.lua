@@ -12,7 +12,7 @@ local BUTTON_SPACING = 4
 -- helpers
 ------------------------------------------------------------
 local function CreateUtilityButton(parent, name, texture, size, tooltipFunc, clickFunc)
-	local button = CreateFrame("Button", nil, parent)
+	local button = CreateFrame("BUTTON", nil, parent)
 	button:SetSize(size, size)
 
 	button.icon = button:CreateTexture(nil, "BACKGROUND")
@@ -41,7 +41,7 @@ local function CreateUtilityButton(parent, name, texture, size, tooltipFunc, cli
 	if tooltipFunc then
 		button:SetScript("OnEnter", function(self)
 			self.tooltip = tooltipFunc()
-			E.func_OctoTooltip_OnEnter(self, { "BOTTOMLEFT", "TOPRIGHT" })
+			E.func_Octo_TooltipFrame_OnEnter(self, { "BOTTOMLEFT", "TOPRIGHT" })
 		end)
 	end
 
@@ -89,14 +89,7 @@ local function CreateOptionsButton(frame, anchor, addonIconTexture)
 			return { { E.classColorHexCurrent .. OPTIONS .. "|r" } }
 		end,
 		function()
-			if SettingsPanel:IsVisible() then
-				HideUIPanel(SettingsPanel)
-			else
-				Settings.OpenToCategory(
-					E.func_GetAddOnMetadata(E.MainAddonName, "Title"),
-					true
-				)
-			end
+			E.func_OpenToCategory(frame)
 		end
 	)
 
@@ -169,7 +162,7 @@ function EventFrame:VARIABLES_LOADED()
 		for _, frame in ipairs(E.OctoTable_Frames_ICONS) do
 			E.func_CreateUtilsButton(frame, "ToDo")
 		end
-		CreateCloseButton(EquipmentsFrame, EquipmentsFrame)
+		CreateCloseButton(Octo_EquipmentsFrame, Octo_EquipmentsFrame)
 
 	end)
 end

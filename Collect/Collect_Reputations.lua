@@ -8,20 +8,11 @@ local function Collect_Reputations()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	local reactionColors = {
-		[0] = E.COLOR_WHITE,
-		[1] = E.COLOR_RED,
-		[2] = E.COLOR_RED,
-		[3] = E.COLOR_ORANGE,
-		[4] = E.COLOR_YELLOW,
-		[5] = E.COLOR_YELLOW,
-		[6] = E.COLOR_GREEN,
-		[7] = E.COLOR_GREEN,
-		[8] = E.COLOR_GREEN,
-	}
+	local OctoTable_reactionColors = E.OctoTable_reactionColors
+	local gender = UnitSex("player")
 	local function func_GetReputationProgress(reputationID)
 		local FIRST, SECOND = 0, 0
-		local color = E.COLOR_WHITE
+		-- local color = E.COLOR_WHITE
 		local standingTEXT = ""
 		local reaction = 0
 		local hasValidData = false  -- Флаг наличия данных
@@ -31,19 +22,27 @@ local function Collect_Reputations()
 		local isMajor = E.func_IsMajorFaction(reputationID)
 		local isParagon = E.func_IsFactionParagon(reputationID)
 		local repType = 0
+		local renownLevel
+		local renownMaxLevel
+		local rankInfocurrentLevel
+		local rankInfomaxLevel
+		local ParagonCount
 		-- FRIENDSHIP
 		if isFriend then
 			repType = 2
 			hasValidData = true
 			reaction = friendData.reaction
-			color = reactionColors[reaction] or E.COLOR_PINK
+			-- color = OctoTable_reactionColors[repType] or E.COLOR_PINK
 			local cur = friendData.standing - friendData.reactionThreshold
 			local max = (friendData.nextThreshold or friendData.reactionThreshold) - friendData.reactionThreshold
 			if max <= 0 then cur, max = 1, 1 end
-			FIRST, SECOND = cur, max
+			FIRST = cur
+			SECOND = max
 			local rankInfo = E.func_GetFriendshipReputationRanks(friendData.friendshipFactionID)
 			if rankInfo then
 				standingTEXT = " ("..rankInfo.currentLevel.."/"..rankInfo.maxLevel..")"
+				rankInfocurrentLevel = rankInfo.currentLevel
+				rankInfomaxLevel = rankInfo.maxLevel
 			end
 			-- MAJOR FACTION (RENOWN)
 		elseif isMajor then
@@ -51,21 +50,25 @@ local function Collect_Reputations()
 			hasValidData = true
 			local m = E.func_GetMajorFactionData(reputationID)
 			if m then
-				color = E.COLOR_BLUE
-				FIRST, SECOND = m.renownReputationEarned, m.renownLevelThreshold
-				standingTEXT = " ("..m.renownLevel.."/"..E.func_GetMaxRenownLevel(reputationID)..")"
+				-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+				FIRST = m.renownReputationEarned
+				SECOND = m.renownLevelThreshold
+				renownLevel = m.renownLevel
+				renownMaxLevel = E.func_GetMaxRenownLevel(reputationID)
+				standingTEXT = " ("..renownLevel.."/"..renownMaxLevel..")"
 			end
 			-- STANDARD
 		elseif simpleData and simpleData.currentReactionThreshold then
 			repType = 1
 			hasValidData = true
 			reaction = simpleData.reaction
-			color = reactionColors[reaction] or E.COLOR_PINK
+			-- color = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
 			local cur = simpleData.currentStanding - simpleData.currentReactionThreshold
 			local max = simpleData.nextReactionThreshold - simpleData.currentReactionThreshold
 			if max <= 0 then cur, max = 1, 1 end
-			FIRST, SECOND = cur, max
-			standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
+			FIRST = cur
+			SECOND = max
+			standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, gender)
 		end
 		-- Если нет валидных данных, возвращаем nil
 		if not hasValidData then
@@ -78,11 +81,9 @@ local function Collect_Reputations()
 			if earned and threshold and threshold > 0 then
 				FIRST = earned % threshold
 				SECOND = threshold
-				color = E.COLOR_BLUE
+				-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
 			end
 		end
-		-- PARAGON COUNT (сделать отдельно, сейчас прилепает к standingTEXT)
-		local ParagonCount = ""
 		if isParagon then
 			local currentValue, threshold, _, hasRewardPending = E.func_GetFactionParagonInfo(reputationID)
 			if currentValue and threshold then
@@ -112,7 +113,27 @@ local function Collect_Reputations()
 		-- else
 		--     color = E.COLOR_GREEN
 		-- end
-		return FIRST.."#"..SECOND.."#"..ParagonCount.."#"..color.."#"..standingTEXT.."#"..repType
+		local result = nil
+		if SECOND > 0 then
+			result = {
+				FIRST = FIRST,					-- число
+				SECOND = SECOND,				-- число
+				ParagonCount = ParagonCount,	-- число
+				-- color = color,					-- строка или таблица цветов (УБРАТЬ)
+				-- standingTEXT = standingTEXT,	-- строка (УБРАТЬ)
+
+				repType = repType,				-- число
+				reaction = reaction,			-- число
+
+				renownLevel = renownLevel,
+				renownMaxLevel = renownMaxLevel,
+				rankInfocurrentLevel = rankInfocurrentLevel,
+				rankInfomaxLevel = rankInfomaxLevel,
+			}
+		end
+
+		-- local result = FIRST.."#"..SECOND.."#"..ParagonCount.."#"..color.."#"..standingTEXT.."#"..repType.."#"..reaction
+		return result
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -123,7 +144,7 @@ local function Collect_Reputations()
 	else
 		collectMASLENGO.Reputation = {}
 	end
-	for reputationID in next, (E.OctoTable_Reputations_DB) do -- E.ALL_Reputations
+	for reputationID in next, (E.TBL_validReps) do
 		local output = func_GetReputationProgress(reputationID)
 		-- if output then
 		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID)

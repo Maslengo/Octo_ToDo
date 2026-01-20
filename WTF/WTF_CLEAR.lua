@@ -4,17 +4,13 @@ local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 function E.Cleanup_Obsolete_Reputations()
 	-- E.DEBUG_START() -- 7 ms
-	local validReps = {}
-	for reputationID in next, (E.OctoTable_Reputations_DB) do
-		validReps[reputationID] = true
-	end
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
 		if cm then
 			if cm.Reputation then
 				for reputationID in next, cm.Reputation do
-					if not validReps[reputationID] then
+					if not E.TBL_validReps[reputationID] then
 						-- E.func_PrintMessage(pd.classColorHex..pd.Name.."|r", "cm.Reputation[reputationID] = nil")
 						cm.Reputation[reputationID] = nil
 					end

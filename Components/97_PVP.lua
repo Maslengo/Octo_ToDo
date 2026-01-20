@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local enable = false
-if not enable then return end
+if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 97
 ----------------------------------------------------------------

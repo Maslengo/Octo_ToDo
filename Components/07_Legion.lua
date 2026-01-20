@@ -29,29 +29,21 @@ local function tempFunction()
 		{id = 1149, defS = false,},
 		{id = 1416, defS = false,},
 		{id = 1273, defS = false,},
-		{id = 3292, defS = true,}, -- REMIX LEGION
-		{id = 3268, defS = true,}, -- REMIX LEGION
-		{id = 3252, defS = true,}, -- REMIX LEGION
+
+
+		-- {id = 3292, defS = false,}, -- REMIX LEGION
+		-- {id = 3268, defS = false,}, -- REMIX LEGION
+		-- {id = 3252, defS = false,}, -- REMIX LEGION
+
+
 		-- {id = 3293, defS = false,}, -- REMIX PANDA?
 		-- {id = 3251, defS = false,}, -- REMIX PANDA?
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
 		{id = 124124, defS = false,}, -- Blood of Sargeras
-		{id = 254267, defS = false,}, -- REMIX LEGION
-		{id = 253224, defS = false,}, -- REMIX LEGION
-		-- {id = 217956, defS = false,},
-		-- {id = 217731, defS = false,},
-		-- {id = 217929, defS = false,},
-		-- {id = 217730, defS = false,},
-		-- {id = 217928, defS = false,},
-		-- {id = 217608, defS = false,},
-		-- {id = 217605, defS = false,},
-		-- {id = 217607, defS = false,},
-		-- {id = 217606, defS = false,},
-		-- {id = 217901, defS = false,},
-		-- {id = 238727, defS = false,},
-		-- {id = 141295, defS = false,},
+		-- {id = 254267, defS = false,}, -- REMIX LEGION
+		-- {id = 253224, defS = false,}, -- REMIX LEGION
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
@@ -226,7 +218,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		{id = "LegionRemixResearch", defS = true,},
+		-- {id = "LegionRemixResearch", defS = false,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

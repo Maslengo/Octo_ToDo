@@ -8,11 +8,11 @@ EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
 EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
 EventFrame.measureText:SetFontObject(OctoFont11)
 EventFrame.measureText:SetWordWrap(false)
-local Octo_MainFrame_ToDo = CreateFrame("BUTTON", "Octo_MainFrame_ToDo", UIParent, "BackdropTemplate") -- SettingsFrameTemplate
-Octo_MainFrame_ToDo:Hide()
-E.func_RegisterFrame_ICONS(Octo_MainFrame_ToDo)
-local SearchBox = CreateFrame("EditBox", "Octo_SearchBox", Octo_MainFrame_ToDo, "SearchBoxTemplate")
-local NewSettingsButton = CreateFrame("CheckButton", "NewSettingsButton", Octo_MainFrame_ToDo, "UICheckButtonTemplate")
+local Octo_MainFrame = CreateFrame("BUTTON", "Octo_MainFrame", UIParent, "BackdropTemplate") -- SettingsFrameTemplate
+Octo_MainFrame:Hide()
+E.func_RegisterFrame_ICONS(Octo_MainFrame)
+local SearchBox = CreateFrame("EditBox", "Octo_SearchBox", Octo_MainFrame, "SearchBoxTemplate")
+local NewSettingsButton = CreateFrame("CheckButton", "NewSettingsButton", Octo_MainFrame, "UICheckButtonTemplate")
 local INDENT_LEFT = 10
 local INDENT_TEXT = 4
 local MIN_COLUMN_WIDTH_LEFT = 200
@@ -26,10 +26,11 @@ local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB = GetClassColor(E.classFilename)
 local LEFT_TEXTURE_ALPHA = .05
 local charR, charG, charB = 1, 1, 1
-local WeeklyResetFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo)
+local dataDisplayOrder = E.dataDisplayOrder
+local WeeklyResetFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame)
 local function SafeTooltipShow(frame, ...)
-	if Octo_MainFrame_ToDo:IsShown() then
-		E.func_OctoTooltip_OnEnter(frame, ...)
+	if Octo_MainFrame:IsShown() then
+		E.func_Octo_TooltipFrame_OnEnter(frame, ...)
 	end
 end
 local func_OnAcquiredLeft do
@@ -100,19 +101,8 @@ local func_OnAcquiredLeft do
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
 	local function Create_Highlight(frame, owner)
-		frame.Highlight = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
-		frame.Highlight:SetPropagateMouseClicks(true)
-		frame.Highlight:SetPropagateMouseMotion(true)
-		frame.Highlight:SetFrameLevel(frame:GetFrameLevel()+2)
-		if E.ENABLE_HIGHLIGHT_ANIMATION then
-			frame.Highlight:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
-			frame.Highlight.HighlightTexture = frame.Highlight:GetHighlightTexture()
-			frame.Highlight.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND)
-		end
-		frame.Highlight:SetPoint("LEFT", frame)
-		frame.Highlight:SetPoint("TOP", frame)
-		frame.Highlight:SetPoint("BOTTOM", frame)
-		frame.Highlight:SetPoint("RIGHT")
+		frame.Highlight = CreateFrame("BUTTON", nil, owner) -- , "OctoHighlightAnimationTemplate"
+		E.func_ApplyHighlightTemplate(frame.Highlight, frame)
 	end
 	local function AdditionalSettings(frame)
 		frame:SetPropagateMouseClicks(true)
@@ -142,7 +132,7 @@ local func_OnAcquiredCenter do
 		columnFrame.CurrentCharBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -2)
 		columnFrame.CurrentCharBackground:SetAllPoints()
 		columnFrame.CurrentCharBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
-		columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, E.CHARACTER_ALPHA)
+		columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, .1)
 		columnFrame.CurrentCharBackground:Hide()
 	end
 	local function Create_ReputationBackground(columnFrame)
@@ -150,7 +140,7 @@ local func_OnAcquiredCenter do
 		columnFrame.ReputationBackground:SetPoint("LEFT")
 		columnFrame.ReputationBackground:SetHeight(E.GLOBAL_LINE_HEIGHT)
 		columnFrame.ReputationBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
-		columnFrame.ReputationBackground:SetVertexColor(classR, classG, classB, E.REPUTATION_ALPHA)
+		columnFrame.ReputationBackground:SetVertexColor(classR, classG, classB, .1)
 		columnFrame.ReputationBackground:Hide()
 	end
 	local function Create_TextCenter(columnFrame)
@@ -278,7 +268,7 @@ function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
 	if EventFrame.columnWidthsLeft and EventFrame.columnWidthsLeft[1] then
 		local newLeftWidth = math.max(MIN_COLUMN_WIDTH_LEFT, EventFrame.columnWidthsLeft[1])
-		Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(newLeftWidth+INDENT_TEXT)
+		Octo_MainFrame.ScrollBoxLEFT:SetWidth(newLeftWidth+INDENT_TEXT)
 		SearchBox:SetSize(newLeftWidth - INDENT_TEXT - 40, 22)
 		frame.TextLeft:SetWidth(newLeftWidth)
 	end
@@ -360,7 +350,7 @@ function EventFrame:func_InitLEFT(frame, node)
 			frame.TextLeft:SetText(expansionICON..frameData.TextLeft)
 		end
 		if frameData.ColorLeft then
-			local r, g, b = E.func_Hex2RGBFloat(frameData.ColorLeft)
+			local r, g, b = E.func_Hex2RGBA(frameData.ColorLeft)
 			frame.TextureLeft:SetVertexColor(r, g, b, LEFT_TEXTURE_ALPHA)
 			frame.TextureLeft:Show()
 		else
@@ -412,9 +402,9 @@ function EventFrame:func_InitCenter(frame, node)
 				local TextCenter = frameData.TextCenter[i]
 				columnFrames.ReputationBackground:Hide()
 				if frameData.ColorCenter and frameData.ColorCenter[i] then
-					local r1, g1, b1 = E.func_Hex2RGBFloat(frameData.ColorCenter[i])
+					local r1, g1, b1, a1 = E.func_Hex2RGBA(frameData.ColorCenter[i])
 					columnFrames.ReputationBackground:Show()
-					columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1)
+					columnFrames.ReputationBackground:SetVertexColor(r1, g1, b1, a1)
 					if dataType == "Reputations" and frameData.FirstReputation and tonumber(frameData.FirstReputation[i]) ~= 0 then
 						local FirstReputation = tonumber(frameData.FirstReputation[i])
 						local SecondReputation = tonumber(frameData.SecondReputation[i])
@@ -431,13 +421,15 @@ function EventFrame:func_InitCenter(frame, node)
 				end
 				columnFrames.TextCenter:SetText(TextCenter)
 				if frameData.totalColumns > 1 and i == frameData.currentCharacterIndex then
+					local r, g, b, a = E.func_DB_CHARLINE_COLOR()
+					columnFrames.CurrentCharBackground:SetVertexColor(r, g, b, a)
 					columnFrames.CurrentCharBackground:Show()
 				else
 					columnFrames.CurrentCharBackground:Hide()
 				end
 			else
 				columnFrames.TextCenter:SetText("")
-				columnFrames.ReputationBackground:SetVertexColor(0, 0, 0)
+				columnFrames.ReputationBackground:SetVertexColor(0, 0, 0, 0)
 				columnFrames.CurrentCharBackground:Hide()
 			end
 			columnFrames:SetScript("OnEnter", function()
@@ -460,25 +452,25 @@ local function HeaderFrameLeft_OnShow(frame)
 	frame.Text1:SetText(text)
 end
 function EventFrame:func_CreateMainFrame()
-	Octo_MainFrame_ToDo:SetBackdrop(E.menuBackdrop)
-	Octo_MainFrame_ToDo:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA)
-	Octo_MainFrame_ToDo:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+	Octo_MainFrame:SetBackdrop(E.menuBackdrop)
+	Octo_MainFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
+	Octo_MainFrame:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA)
 
 
 
-	Octo_MainFrame_ToDo:SetPoint("TOP", 0, -150)
-	Octo_MainFrame_ToDo:SetScript("OnShow", function()
+	Octo_MainFrame:SetPoint("TOP", 0, -150)
+	Octo_MainFrame:SetScript("OnShow", function()
 			RequestRaidInfo()
 			E.func_Collect_All()
 			EventFrame:CreateDataProvider()
 	end)
 	local numPlayers = math.min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
-	Octo_MainFrame_ToDo:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
-	Octo_MainFrame_ToDo:SetDontSavePosition(true)
-	Octo_MainFrame_ToDo:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
-	Octo_MainFrame_ToDo:SetFrameStrata("HIGH")
-	local horizontalScrollFrame = CreateFrame("ScrollFrame", nil, Octo_MainFrame_ToDo)
-	Octo_MainFrame_ToDo.horizontalScrollFrame = horizontalScrollFrame
+	Octo_MainFrame:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
+	Octo_MainFrame:SetDontSavePosition(true)
+	Octo_MainFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
+	Octo_MainFrame:SetFrameStrata("HIGH")
+	local horizontalScrollFrame = CreateFrame("ScrollFrame", nil, Octo_MainFrame)
+	Octo_MainFrame.horizontalScrollFrame = horizontalScrollFrame
 	local function OnHorizontalScroll(self, offset)
 		local scrollRange = self:GetHorizontalScrollRange()
 		self.hBar:SetScrollPercentage(scrollRange > 0 and offset / scrollRange or 0, ScrollBoxConstants.NoScrollInterpolation)
@@ -491,7 +483,7 @@ function EventFrame:func_CreateMainFrame()
 	end
 	horizontalScrollFrame:SetScript("OnHorizontalScroll", OnHorizontalScroll)
 	horizontalScrollFrame:SetScript("OnScrollRangeChanged", OnScrollRangeChanged)
-	local horizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "OctoWowTrimhorizontalScrollBar")
+	local horizontalScrollBar = CreateFrame("EventFrame", nil, Octo_MainFrame, "OctoWowTrimhorizontalScrollBar")
 	EventFrame.horizontalScrollBar = horizontalScrollBar
 	horizontalScrollBar.Backplate = horizontalScrollBar:GetRegions()
 	horizontalScrollBar.Backplate:Hide()
@@ -516,55 +508,55 @@ function EventFrame:func_CreateMainFrame()
 	end)
 	horizontalScrollBar:SetHideIfUnscrollable(true)
 	local scrollContentFrame = CreateFrame("FRAME", "scrollContentFrame")
-	Octo_MainFrame_ToDo.scrollContentFrame = scrollContentFrame
+	Octo_MainFrame.scrollContentFrame = scrollContentFrame
 	horizontalScrollFrame:SetScrollChild(scrollContentFrame)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame_ToDo, "WowScrollBoxList")
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
-	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame_ToDo.ScrollBoxLEFT, "TOPRIGHT", 0, E.HEADER_HEIGHT)
+	Octo_MainFrame.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame, "WowScrollBoxList")
+	Octo_MainFrame.ScrollBoxLEFT:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
+	Octo_MainFrame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
+	Octo_MainFrame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
+	Octo_MainFrame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
+	Octo_MainFrame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
+	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame.ScrollBoxLEFT, "TOPRIGHT", 0, E.HEADER_HEIGHT)
 	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
-	Octo_MainFrame_ToDo.ViewLeft = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.ViewLeft:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame_ToDo.ViewLeft:SetElementInitializer("BUTTON", function(...) self:func_InitLEFT(...) end)
-	Octo_MainFrame_ToDo.ViewLeft:RegisterCallback(Octo_MainFrame_ToDo.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame_ToDo)
-	Octo_MainFrame_ToDo.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList")
-	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
-	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPoint("BOTTOMRIGHT")
-	Octo_MainFrame_ToDo.ScrollBoxCenter:SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
-	Octo_MainFrame_ToDo.ScrollBarCenter = CreateFrame("EventFrame", nil, Octo_MainFrame_ToDo, "MinimalScrollBar")
-	Octo_MainFrame_ToDo.ScrollBarCenter:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "TOPRIGHT", 6, 0)
-	Octo_MainFrame_ToDo.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo, "BOTTOMRIGHT", 6, 0)
-	Octo_MainFrame_ToDo.ViewCenter = CreateScrollBoxListTreeListView(0)
-	Octo_MainFrame_ToDo.ViewCenter:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame_ToDo.ViewCenter:SetElementInitializer("BUTTON", function(...) self:func_InitCenter(...) end)
-	Octo_MainFrame_ToDo.ViewCenter:RegisterCallback(Octo_MainFrame_ToDo.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCenter, Octo_MainFrame_ToDo)
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCenter, Octo_MainFrame_ToDo.ViewLeft)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxLEFT, Octo_MainFrame_ToDo.ScrollBarCenter)
-	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame_ToDo.ScrollBoxCenter, Octo_MainFrame_ToDo.ScrollBarCenter, Octo_MainFrame_ToDo.ViewCenter)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame_ToDo.ScrollBoxCenter, Octo_MainFrame_ToDo.ScrollBarCenter)
-	Octo_MainFrame_ToDo:EnableMouse(true)
-	Octo_MainFrame_ToDo:SetMovable(true)
-	Octo_MainFrame_ToDo:SetScript("OnMouseDown", function(_, button)
+	Octo_MainFrame.ViewLeft = CreateScrollBoxListTreeListView(0)
+	Octo_MainFrame.ViewLeft:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
+	Octo_MainFrame.ViewLeft:SetElementInitializer("BUTTON", function(...) self:func_InitLEFT(...) end)
+	Octo_MainFrame.ViewLeft:RegisterCallback(Octo_MainFrame.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame)
+	Octo_MainFrame.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList")
+	Octo_MainFrame.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
+	Octo_MainFrame.ScrollBoxCenter:SetPoint("BOTTOMRIGHT")
+	Octo_MainFrame.ScrollBoxCenter:SetPropagateMouseClicks(true)
+	Octo_MainFrame.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
+	Octo_MainFrame.ScrollBarCenter = CreateFrame("EventFrame", nil, Octo_MainFrame, "MinimalScrollBar")
+	Octo_MainFrame.ScrollBarCenter:SetPoint("TOPLEFT", Octo_MainFrame, "TOPRIGHT", 6, 0)
+	Octo_MainFrame.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame, "BOTTOMRIGHT", 6, 0)
+	Octo_MainFrame.ViewCenter = CreateScrollBoxListTreeListView(0)
+	Octo_MainFrame.ViewCenter:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
+	Octo_MainFrame.ViewCenter:SetElementInitializer("BUTTON", function(...) self:func_InitCenter(...) end)
+	Octo_MainFrame.ViewCenter:RegisterCallback(Octo_MainFrame.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCenter, Octo_MainFrame)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter, Octo_MainFrame.ViewLeft)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame.ScrollBoxCenter, Octo_MainFrame.ScrollBarCenter, Octo_MainFrame.ViewCenter)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame.ScrollBoxCenter, Octo_MainFrame.ScrollBarCenter)
+	Octo_MainFrame:EnableMouse(true)
+	Octo_MainFrame:SetMovable(true)
+	Octo_MainFrame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:StartMoving()
+				Octo_MainFrame:StartMoving()
 			end
 	end)
-	Octo_MainFrame_ToDo:SetScript("OnMouseUp", function(_, button)
+	Octo_MainFrame:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
-				Octo_MainFrame_ToDo:StopMovingOrSizing()
-				local left = Octo_MainFrame_ToDo:GetLeft()
-				local top = Octo_MainFrame_ToDo:GetTop()
-				Octo_MainFrame_ToDo:ClearAllPoints()
-				Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+				Octo_MainFrame:StopMovingOrSizing()
+				local left = Octo_MainFrame:GetLeft()
+				local top = Octo_MainFrame:GetTop()
+				Octo_MainFrame:ClearAllPoints()
+				Octo_MainFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
 			end
 	end)
-	Octo_MainFrame_ToDo:RegisterForClicks("RightButtonUp")
-	Octo_MainFrame_ToDo:SetScript("OnClick", Octo_MainFrame_ToDo.Hide)
-	WeeklyResetFrameLeft:SetPoint("TOPLEFT", Octo_MainFrame_ToDo, "BOTTOMLEFT")
+	Octo_MainFrame:RegisterForClicks("RightButtonUp")
+	Octo_MainFrame:SetScript("OnClick", Octo_MainFrame.Hide)
+	WeeklyResetFrameLeft:SetPoint("TOPLEFT", Octo_MainFrame, "BOTTOMLEFT")
 	WeeklyResetFrameLeft:SetSize(MIN_COLUMN_WIDTH_LEFT*2, E.GLOBAL_LINE_HEIGHT)
 	WeeklyResetFrameLeft.Text1 = WeeklyResetFrameLeft:CreateFontString()
 	WeeklyResetFrameLeft.Text1:SetFontObject(OctoFont11)
@@ -612,16 +604,16 @@ function EventFrame:func_CreateMainFrame()
 		self.CharTexture:SetAllPoints()
 		self.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
 	end
-	Octo_MainFrame_ToDo.pool = CreateFramePool("BUTTON", scrollContentFrame, nil, ResetPoolFrame, false, InitializePoolFrame)
+	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, nil, ResetPoolFrame, false, InitializePoolFrame)
 end
 function E.func_main_frame_toggle()
-	if Octo_MainFrame_ToDo then
-		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
+	if Octo_MainFrame then
+		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 		if not InCombatLockdown() then
-			local left = Octo_MainFrame_ToDo:GetLeft()
-			local top = Octo_MainFrame_ToDo:GetTop()
-			Octo_MainFrame_ToDo:ClearAllPoints()
-			Octo_MainFrame_ToDo:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+			local left = Octo_MainFrame:GetLeft()
+			local top = Octo_MainFrame:GetTop()
+			Octo_MainFrame:ClearAllPoints()
+			Octo_MainFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
 		end
 	end
 end
@@ -667,12 +659,12 @@ function EventFrame:func_CreateSearchBox()
 	NewSettingsButton:SetScript("OnEnter", function()
 			SafeTooltipShow(NewSettingsButton, {"RIGHT", "LEFT"})
 	end)
-	Octo_MainFrame_ToDo.SearchBox = SearchBox
+	Octo_MainFrame.SearchBox = SearchBox
 end
 function EventFrame:ApplySearchFilter(searchText)
-	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.ViewLeft then return end
+	if not Octo_MainFrame or not Octo_MainFrame.ViewLeft then return end
 	searchText = searchText and searchText:lower():trim() or ""
-	local dataProvider = Octo_MainFrame_ToDo.ViewLeft:GetDataProvider()
+	local dataProvider = Octo_MainFrame.ViewLeft:GetDataProvider()
 	if not dataProvider then return end
 	if searchText == "" then
 		EventFrame:func_ResetsearchFilter()
@@ -683,8 +675,8 @@ function EventFrame:ApplySearchFilter(searchText)
 end
 function EventFrame:func_ResetsearchFilter()
 	EventFrame.searchFilter = nil
-	if Octo_MainFrame_ToDo.SearchBox then
-		Octo_MainFrame_ToDo.SearchBox:SetText("")
+	if Octo_MainFrame.SearchBox then
+		Octo_MainFrame.SearchBox:SetText("")
 	end
 	EventFrame:CreateDataProvider()
 end
@@ -718,7 +710,7 @@ local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serv
 	return math.max(width1, width2)
 end
 local function func_UPDATE_MAINFRAME()
-	if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() and OctoTooltip and not OctoTooltip:IsShown() then
+	if Octo_MainFrame and Octo_MainFrame:IsShown() and Octo_TooltipFrame and not Octo_TooltipFrame:IsShown() then
 		EventFrame:CreateDataProvider()
 	end
 end
@@ -786,15 +778,7 @@ function EventFrame:CreateDataProvider()
 	end
 	local totalColumns = #sortedCharacters
 	local firstChar = sortedCharacters[1]
-	local dataDisplayOrder = {
-		"Additionally",
-		"Currencies",
-		"Items",
-		"RaidsOrDungeons",
-		"UniversalQuests",
-		"Reputations",
-	}
-	local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
+	local HeaderFrameCenter = Octo_MainFrame.pool:Acquire()
 	for CharIndex, CharInfo in ipairs(sortedCharacters) do
 		local nicknameTEXT = E.func_CharInfo_NickName(CharInfo)
 		local serverTEXT = ""
@@ -806,7 +790,7 @@ function EventFrame:CreateDataProvider()
 
 		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, nicknameTEXT, serverTEXT)
 	end
-	Octo_MainFrame_ToDo.pool:Release(HeaderFrameCenter)
+	Octo_MainFrame.pool:Release(HeaderFrameCenter)
 	for categoryKey in next, (E.OctoTables_Vibor) do
 		if ExpansionToShowTBL[categoryKey] then
 			for _, dataType in ipairs(dataDisplayOrder) do
@@ -890,9 +874,9 @@ function EventFrame:CreateDataProvider()
 	self:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 end
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
-	if not Octo_MainFrame_ToDo or not Octo_MainFrame_ToDo.scrollContentFrame then return end
-	Octo_MainFrame_ToDo.ViewCenter:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
-	Octo_MainFrame_ToDo.ViewLeft:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	if not Octo_MainFrame or not Octo_MainFrame.scrollContentFrame then return end
+	Octo_MainFrame.ViewCenter:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	Octo_MainFrame.ViewLeft:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	local leftColumnWidth = math.max(MIN_COLUMN_WIDTH_LEFT, columnWidthsLeft and columnWidthsLeft[1] or MIN_COLUMN_WIDTH_LEFT)
 	local maxRIGHT = MAX_FRAME_WIDTH - leftColumnWidth - INDENT_TEXT
 	if #columnWidthsCenter == 0 and totalColumns > 0 then
@@ -905,19 +889,19 @@ function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, so
 	local width = CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
 	local height, maxDisplayLines = CalculateMainFrameHeight(totalLines)
 	MAX_DISPLAY_LINES = maxDisplayLines
-	Octo_MainFrame_ToDo:SetSize(width, height)
-	Octo_MainFrame_ToDo.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
+	Octo_MainFrame:SetSize(width, height)
+	Octo_MainFrame.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
 	self:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 	self:UpdateCenterColumnPositions(columnWidthsCenter)
 end
 function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
-	Octo_MainFrame_ToDo.pool:ReleaseAll()
+	Octo_MainFrame.pool:ReleaseAll()
 	local accumulatedWidth = 0
 	for count, CharInfo in ipairs(sortedCharacters) do
 		local pd = CharInfo.PlayerData
-		local HeaderFrameCenter = Octo_MainFrame_ToDo.pool:Acquire()
+		local HeaderFrameCenter = Octo_MainFrame.pool:Acquire()
 		local columnWidth = columnWidthsCenter[count] or MIN_COLUMN_WIDTH_Center
-		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame_ToDo.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
+		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
 
@@ -961,15 +945,22 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 
 
 
-		local faction = pd.Faction or "Neutral"
-		if faction == "Horde" then
-			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
-		elseif faction == "Alliance" then
-			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_ALLIANCE)
-		elseif faction == "Neutral" then
-			charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
-		end
-		HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
+		-- local faction = pd.Faction or "Neutral"
+		-- if faction == "Horde" then
+		-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
+		-- elseif faction == "Alliance" then
+		-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
+		-- elseif faction == "Neutral" then
+		-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
+		-- end
+		-- HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
+
+
+		local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
+		HeaderFrameCenter.CharTexture:SetVertexColor(r, g, b, a)
+
+
+
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
 				HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
 				SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
@@ -977,14 +968,14 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter:SetScript("OnClick", function(self, button)
 				if button == "LeftButton" and IsShiftKeyDown() then -- IsLeftShiftKeyDown
 					local GUID = pd.GUID
-					E.Toggle_EquipmentsFrame(GUID)
+					E.Toggle_Octo_EquipmentsFrame(GUID)
 				end
 		end)
 		HeaderFrameCenter:Show()
 	end
 end
 function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
-	for _, frame in ipairs(Octo_MainFrame_ToDo.ViewCenter:GetFrames()) do
+	for _, frame in ipairs(Octo_MainFrame.ViewCenter:GetFrames()) do
 		local accumulatedWidth = 0
 		for i = 1, #columnWidthsCenter do
 			if frame.columnFrames[i] then
@@ -997,13 +988,13 @@ function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 	end
 end
 local function Toggle_Octo_MainFrame_TestFrame(frame)
-	if Octo_MainFrame_ToDo then
-		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
+	if Octo_MainFrame then
+		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 	end
 end
 function EventFrame:main_frame_toggle()
-	if Octo_MainFrame_ToDo then
-		Octo_MainFrame_ToDo:SetShown(not Octo_MainFrame_ToDo:IsShown())
+	if Octo_MainFrame then
+		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 	end
 end
 local MyEventsTable = {
@@ -1015,9 +1006,9 @@ function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CreateMainFrame()
 	EventFrame:func_CreateSearchBox()
 	E.func_CreateMenuStyle()
-	E.func_Create_DDframe_ToDo(Octo_MainFrame_ToDo, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
-	E.func_CreateMinimapButton(GlobalAddonName, Octo_ToDo_DB_Vars, Octo_MainFrame_ToDo, E.func_main_frame_toggle)
+	E.func_Create_DDframe_ToDo(Octo_MainFrame, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
+	E.func_CreateMinimapButton(GlobalAddonName, Octo_ToDo_DB_Vars, Octo_MainFrame, E.func_main_frame_toggle)
 end
 function EventFrame:PLAYER_REGEN_DISABLED()
-	Octo_MainFrame_ToDo:Hide()
+	Octo_MainFrame:Hide()
 end

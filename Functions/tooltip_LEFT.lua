@@ -23,109 +23,117 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 	local isRenown = (typeSL == 1)
 	local characterData = {}
 	local grandTotal = 0
-	local totalPossible = 0
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
-		local covData = CharInfo.MASLENGO.CovenantAndAnima
-		local curCovID = covData and covData.curCovID
+
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		local pd = CharInfo.PlayerData
+		local curCovID = pd.SL_covenantID
+
 		if curCovID then
-			local pd = CharInfo.PlayerData
 			local values = {}
 			local charTotal = 0
 			local activeValue = 0
-			for covenant = 1, 4 do
-				local value = covData[covenant] and covData[covenant][typeSL] or 0
-				values[covenant] = value
+
+			for covenantID, covenant in next, (E.OctoTable_Covenant) do
+				local key = covenant.prefix .. (isRenown and "_Renown" or "_Anima")
+				local value = pd[key] or 0
+
+				values[covenantID] = value
 				charTotal = charTotal + value
-				if covenant == curCovID then
+
+				if covenantID == curCovID then
 					activeValue = value
 				end
 			end
+
 			local hasData
 			if isRenown then
 				hasData = activeValue > 0
 			else
-				hasData = charTotal > 0 or (pd.Possible_Anima or 0) > 0
+				hasData = charTotal > 0 or (pd.SL_Possible_Anima or 0) > 0
 			end
+
 			if hasData then
 				if not isRenown then
 					grandTotal = grandTotal + charTotal
-					totalPossible = totalPossible + (pd.Possible_Anima or 0)
 				end
+
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 				local row = { leftText }
-				for covenant = 1, 4 do
-					local value = values[covenant]
+
+				for covenantID, covenant in next, (E.OctoTable_Covenant) do
+					local value = values[covenantID]
 					if value > 0 then
-						local c = covenant == curCovID
-						and E.OctoTable_Covenant[covenant].color
-						or E.COLOR_GRAY
-						row[covenant + 1] = c..E.func_CompactFormatNumber(value).."|r"
+						-- local c = covenantID == curCovID and covenant.color or E.COLOR_GRAY
+						local c = covenantID == curCovID and E.func_DB_COV_COLOR(covenantID) or E.COLOR_GRAY
+						row[covenantID + 1] = c .. E.func_CompactFormatNumber(value) .. "|r"
 					else
-						row[covenant + 1] = "-"
+						row[covenantID + 1] = "-"
 					end
 				end
-				local totalAnimaText
+
 				local sortValue
-				local Possible_Anima
+				local totalAnimaText
+				local SL_Possible_Anima
+
 				if isRenown then
 					sortValue = activeValue
 				else
 					sortValue = charTotal
-					if charTotal ~= 0 then
-						totalAnimaText = E.func_CompactFormatNumber(charTotal)
-					else
-						totalAnimaText = "-"
-					end
-					if pd.Possible_Anima and pd.Possible_Anima > 0 then
-						Possible_Anima = E.COLOR_BLUE.." +"..E.func_CompactFormatNumber(pd.Possible_Anima).."|r"
+					totalAnimaText = charTotal > 0 and E.func_CompactFormatNumber(charTotal) or "-"
+					if pd.SL_Possible_Anima and pd.SL_Possible_Anima > 0 then
+						SL_Possible_Anima = E.COLOR_BLUE .. " +" .. E.func_CompactFormatNumber(pd.SL_Possible_Anima) .. "|r"
 					end
 				end
+
 				table.insert(characterData, {
-						row = row,
-						name = pd.Name,
-						sortValue = sortValue,
-						Possible_Anima = Possible_Anima or " ",
-						totalAnimaText = totalAnimaText,
+					row = row,
+					name = pd.Name,
+					sortValue = sortValue,
+					SL_Possible_Anima = SL_Possible_Anima or " ",
+					totalAnimaText = totalAnimaText,
 				})
 			end
 		end
 	end
+
 	if #characterData > 0 then
 		table.sort(characterData, function(a, b)
-				if a.sortValue ~= b.sortValue then
-					return a.sortValue > b.sortValue
-				end
-				return a.name < b.name
+			if a.sortValue ~= b.sortValue then
+				return a.sortValue > b.sortValue
+			end
+			return a.name < b.name
 		end)
+
 		local minValue, maxValue
 		if not isRenown then
 			minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		end
+
 		for _, d in ipairs(characterData) do
 			if not isRenown then
 				local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-				d.row[6] = d.Possible_Anima
-				d.row[7] = color..d.totalAnimaText.."|r"
+				d.row[6] = d.SL_Possible_Anima
+				d.row[7] = color .. d.totalAnimaText .. "|r"
 			end
 			table.insert(tooltip, d.row)
 		end
-		if #characterData >= 1 then
-			local header = {
-				"",
-				E.func_texturefromIcon(E.ICON_KYRIAN),
-				E.func_texturefromIcon(E.ICON_VENTHYR),
-				E.func_texturefromIcon(E.ICON_NIGHTFAE),
-				E.func_texturefromIcon(E.ICON_NECROLORD),
-				""
-			}
-			if not isRenown then
-				header[#header+1] = TOTAL..": "..E.func_CompactFormatNumber(grandTotal)
-			end
-			table.insert(tooltip, 1, header)
+
+		local header = { "" }
+		for _, covenant in next, (E.OctoTable_Covenant) do
+			header[#header + 1] = E.func_texturefromIcon(covenant.icon)
 		end
+		header[#header + 1] = ""
+
+		if not isRenown then
+			header[#header + 1] = TOTAL .. ": " .. E.func_CompactFormatNumber(grandTotal)
+		end
+
+		table.insert(tooltip, 1, header)
 	end
+
 	return tooltip
 end
+
 function E.func_ItemLevelTooltipLeft(visiblePlayers)
 	local tooltip = {}
 	local characterData = {}
@@ -137,7 +145,7 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 			local avgItemLevelEquipped = pd.avgItemLevelEquipped or 0
 			local avgItemLevel = pd.avgItemLevel or 0
 			local avgItemLevelPvp = pd.avgItemLevelPvp or 0
-			local hasData = pd.avgItemLevelEquipped > 0 or pd.avgItemLevel > 0 or pd.avgItemLevelPvp > 0
+			local hasData = avgItemLevelEquipped > 0 or avgItemLevel > 0 or avgItemLevelPvp > 0
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 				local row = { leftText }
@@ -401,16 +409,20 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
-			local CurrentKeyName = pd.CurrentKeyName or ""
-			local CurrentKeyLevel = pd.CurrentKeyLevel or 0
-			local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY.."-|r"
-			local RIO_Score = pd.RIO_Score or 0
-			local keyABBR = pd.CurrentKey or ""
-			local hasData = (RIO_Score > 0) or (CurrentKeyLevel > 0)
+			local OwnedKeystoneLevel = pd.OwnedKeystoneLevel or 0
+			local OwnedKeystoneChallengeMapID = pd.OwnedKeystoneChallengeMapID or 0
+			-- local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY.."-|r"
+			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
+
+			local RIO_Score = seasonData and tonumber(seasonData.RIO_Score) or 0
+			local RIO_weeklyBest = seasonData and tonumber(seasonData.RIO_weeklyBest) or E.COLOR_GRAY.."-|r"
+			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, false)
+
+			local hasData = (RIO_Score > 0) or (OwnedKeystoneLevel > 0 and OwnedKeystoneChallengeMapID > 0)
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 				local row = { leftText }
-				local row2Text = keyABBR
+				local row2Text = keyName
 				local row3Text = RIO_weeklyBest
 				local row4Text = RIO_Score
 				table.insert(characterData, {
@@ -442,8 +454,8 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 		local heade1 = {
 			"",
 			"",
-			"Weekly Best",
-			"RIO",
+			"WeeklyBest",
+			"Score", -- "MythicPlus", PROVING_GROUNDS_SCORE
 		}
 		table.insert(tooltip, 1, heade1)
 	end
@@ -534,15 +546,15 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 end
 function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
-	if not E.OctoTable_Reputations_Paragon_Data_NEW[id] then return end
-	local questID = E.OctoTable_Reputations_Paragon_Data_NEW[id].paragonQuest
+	local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
+	if not paragonQuest then return end
 	local characterData = {}
 	local IsAccountWideReputation = C_Reputation.IsAccountWideReputation(id)
 	if IsAccountWideReputation then
 		local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
-		local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[questID] and 1 or 0
+		local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] and 1 or 0
 		local hasData = (DONEPERS > 0)
 		if hasData then
 			local leftText = pd.classColorHex..pd.Name.."|r"
@@ -560,7 +572,7 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 			if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				local pd = CharInfo.PlayerData
 				local cm = CharInfo.MASLENGO
-				local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[questID] and 1 or 0
+				local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] and 1 or 0
 				local hasData = (DONEPERS > 0)
 				if hasData then
 					local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)

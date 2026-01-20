@@ -13,20 +13,30 @@ function E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
 end
 function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
+
+
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
+
+
+
+
+
+
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	TextCenter = E.func_TextCenter_Currency(CharInfo, id)
-	if id == 1931 and CharInfo.PlayerData.Possible_CatalogedResearch then
-		TextCenter = string.format("%s%s +%d|r", TextCenter, E.COLOR_PURPLE, CharInfo.PlayerData.Possible_CatalogedResearch)
+	if id == 1931 and pd.SL_Possible_CatalogedResearch then
+		TextCenter = string.format("%s%s +%d|r", TextCenter, E.COLOR_PURPLE, pd.SL_Possible_CatalogedResearch)
 	end
 	if id == 824 then
 		local GARRISON_RESOURCE_ID = 824
 		local RESOURCE_GENERATION_INTERVAL = 600
 		local RESOURCES_PER_INTERVAL = 1
 		local MAX_CACHE_SIZE = 500
-		if CharInfo.MASLENGO.GARRISON.lastCacheTime and CharInfo.MASLENGO.GARRISON.lastCacheTime ~= 0 then
+		if cm.GARRISON.lastCacheTime and cm.GARRISON.lastCacheTime ~= 0 then
 			local color = E.COLOR_GRAY
-			local cacheSize = CharInfo.MASLENGO.GARRISON.cacheSize or MAX_CACHE_SIZE
-			local lastCacheTime = CharInfo.MASLENGO.GARRISON.lastCacheTime
+			local cacheSize = cm.GARRISON.cacheSize or MAX_CACHE_SIZE
+			local lastCacheTime = cm.GARRISON.lastCacheTime
 			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
 			local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
 			if earnedSinceLastCollect > 0 then
@@ -36,32 +46,35 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 				TextCenter = TextCenter..color.." +"..earnedSinceLastCollect.."|r"
 			end
 		end
-	elseif id == 1822 then
-		local typeSL = 1
-		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-				local color = E.OctoTable_Covenant[curCovID].color
-				ColorCenter = color
-				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL] then
-					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL].."|r"
-				end
+	elseif id == 1822 then -- RENOWN
+		local covenantID = pd.SL_covenantID
+		if covenantID then
+			local prefix = E.OctoTable_Covenant[covenantID].prefix
+			-- local color = E.OctoTable_Covenant[covenantID].color
+			local color = E.func_DB_COV_COLOR(covenantID)
+
+
+		    local renown  = pd[prefix .. "_Renown"]
+		    -- local anima   = pd[prefix .. "_Anima"]
+		    if renown then
+			    TextCenter = color..renown.."|r"
 			end
 		end
-	elseif id == 1813 then
-		local typeSL = 2
-		if CharInfo.MASLENGO.CovenantAndAnima.curCovID then
-			local curCovID = CharInfo.MASLENGO.CovenantAndAnima.curCovID
-			if CharInfo.MASLENGO.CovenantAndAnima[curCovID] then
-				local color = E.OctoTable_Covenant[curCovID].color
-				ColorCenter = color
-				if CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL] then
-					TextCenter = color..CharInfo.MASLENGO.CovenantAndAnima[curCovID][typeSL].."|r"
-				end
+	elseif id == 1813 then -- ANIMA
+		local covenantID = pd.SL_covenantID
+		if covenantID then
+			local prefix = E.OctoTable_Covenant[covenantID].prefix
+			-- local color = E.OctoTable_Covenant[covenantID].color
+			local color = E.func_DB_COV_COLOR(covenantID)
+		    -- local renown  = pd[prefix .. "_Renown"]
+		   	local anima = pd[prefix .. "_Anima"]
+		   	if anima then
+			    TextCenter = color..anima.."|r"
 			end
 		end
-		if CharInfo.PlayerData.Possible_Anima then
-			TextCenter = TextCenter..E.COLOR_BLUE.." +"..CharInfo.PlayerData.Possible_Anima.."|r"
+
+		if pd.SL_Possible_Anima then
+			TextCenter = TextCenter..E.COLOR_BLUE.." +"..pd.SL_Possible_Anima.."|r"
 		end
 	end
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
@@ -92,10 +105,10 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 			}
 		end
 
-		-- Сортировка по приоритету из OctoTable_DifficultyTable
+		-- Сортировка по приоритету из OctoTable_Difficulties
 		table.sort(difficulties, function(a, b)
-			local pa = E.OctoTable_DifficultyTable[a.difficultyID] and E.OctoTable_DifficultyTable[a.difficultyID].prior or 999
-			local pb = E.OctoTable_DifficultyTable[b.difficultyID] and E.OctoTable_DifficultyTable[b.difficultyID].prior or 999
+			local pa = E.OctoTable_Difficulties[a.difficultyID] and E.OctoTable_Difficulties[a.difficultyID].prior or 999
+			local pb = E.OctoTable_Difficulties[b.difficultyID] and E.OctoTable_Difficulties[b.difficultyID].prior or 999
 			return pa < pb
 		end)
 
@@ -130,30 +143,70 @@ end
 function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
-	local STANDINGSREP = {
-		[1] = "SIMPLE",
-		[2] = "Friend",
-		[3] = "major",
-		[4] = "paragon",
-	}
 	if not categoryKey then return end
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-	if cm.Reputation and cm.Reputation[id] and type(cm.Reputation[id]) == "string" then
-		local fir, sec, ParagonCount, col, standingTEXT, typ = ("#"):split(cm.Reputation[id])
-		FirstReputation = tonumber(fir)
-		SecondReputation = tonumber(sec)
-		ColorCenter = col
-		local repType = tonumber(typ or 0)
+	if cm.Reputation and cm.Reputation[id] and type(cm.Reputation[id]) == "table" then
+		local OctoTable_reactionColors = E.OctoTable_reactionColors
+		-- local FIRST, SECOND, ParagonCount, color, standingTEXT, repType = ("#"):split(cm.Reputation[id])
+		-- local fir, sec, ParagonCount, col, standingTEXT, typ = ("#"):split(cm.Reputation[id])
+
+		FirstReputation = cm.Reputation[id].FIRST or 0
+		SecondReputation = cm.Reputation[id].SECOND or 0
+		local ParagonCount = cm.Reputation[id].ParagonCount or 0
+		local standingTEXT = cm.Reputation[id].standingTEXT or ""
+		local repType = cm.Reputation[id].repType or 0
+		local reaction = cm.Reputation[id].reaction or 0
+		local rankInfocurrentLevel = cm.Reputation[id].rankInfocurrentLevel
+		local rankInfomaxLevel = cm.Reputation[id].rankInfomaxLevel
+		local renownLevel = cm.Reputation[id].renownLevel
+		local renownMaxLevel = cm.Reputation[id].renownMaxLevel
+
+
+
+
+		-- ColorCenter = cm.Reputation[id].color or E.COLOR_WHITE
+		-- ColorCenter = E.COLOR_BLACK
+		ColorCenter = E.func_DB_REP_COLOR(repType, reaction)
+		local standingTEXT = ""
+
+
+		if repType == 2 then -- FRIENDSHIP
+			if rankInfocurrentLevel and rankInfomaxLevel then
+				standingTEXT = rankInfocurrentLevel .. "/"..rankInfomaxLevel
+			end
+			-- ColorCenter = OctoTable_reactionColors[repType] or E.COLOR_PINK
+		elseif repType == 3 then
+			if renownLevel and renownMaxLevel then
+				standingTEXT = renownLevel .. "/" .. renownMaxLevel
+			end
+			-- ColorCenter = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+		elseif repType == 1 then
+			if reaction and gender then
+				standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, gender)
+			end
+			if reaction then
+				-- ColorCenter = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
+			end
+		elseif repType == 4 then
+			standingTEXT = L["Paragon"]
+			-- ColorCenter = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+		end
+
+
+		-- FirstReputation = tonumber(FIRST)
+		-- SecondReputation = tonumber(SECOND)
+		-- ColorCenter = color
+		-- local repType = tonumber(repType or 0)
 		TextCenter = E.func_CompactFormatNumber(FirstReputation).."/"..E.func_CompactFormatNumber(SecondReputation)
 		if TextCenter == "1/1" then
-			TextCenter = E.DONE
+			TextCenter = ColorCenter..DONE.."|r"
+			-- TextCenter = ColorCenter..standingTEXT.."|r"
 		elseif TextCenter == "0/0" then
 			TextCenter = ""
 		end
-		for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
-			if id == v.factionID and cm.ListOfParagonQuests[questID] then
-				TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"
-			end
+		local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
+		if paragonQuest and cm.ListOfParagonQuests[paragonQuest] then
+			TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"
 		end
 	end
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
@@ -182,8 +235,9 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		end
 	end
 	if id == "CurrentKey" then
-		if pd.CurrentKey then
-			TextCenter = pd.CurrentKey
+		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
+			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, false, false)
+			TextCenter = keyName
 		end
 	end
 	if id == "HeartofAzeroth" then
@@ -212,7 +266,11 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	end
 	if id == "ListOfQuests" then
 		if pd.numQuests then
-			TextCenter = pd.classColorHex..pd.numQuests.."/"..pd.maxNumQuestsCanAccept.."|r"
+			-- TextCenter = pd.classColorHex..pd.numQuests.."/"..pd.maxNumQuestsCanAccept.."|r"
+			TextCenter = pd.classColorHex..pd.numQuests.."|r"
+		end
+		if pd.numQuests_Paragon then
+			TextCenter = TextCenter ..E.COLOR_BLUE.." +"..pd.numQuests_Paragon.."|r"
 		end
 	end
 	if id == "LFGInstance" then
@@ -221,7 +279,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 			if v then
 				for difficultyID, w in next, (v) do
 					if w.instanceReset then
-						count = count + 1
+						count = count+1
 					end
 				end
 			end
@@ -230,20 +288,20 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 
 		if cm.LFGInstance then
 			for k, v in next, (cm.LFGInstance) do
-				count = count + 1
+				count = count+1
 			end
 		end
 
 		-- for dungeonID, v in next, (cm.LFGInstance) do
 		-- 	if v then
 		-- 		if cm.LFGInstance[dungeonID].donetoday then
-		-- 			count = count + 1
+		-- 			count = count+1
 		-- 		end
 		-- 	end
 		-- end
 		for worldBossID, v in next, (cm.SavedWorldBoss) do
 			if v then
-				count = count + 1
+				count = count+1
 			end
 		end
 		if count ~= 0 then
@@ -256,7 +314,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 			if tonumber(itemID) == 249400 then
 			end
 			if cm.Items.Bags[itemID] or cm.Items.Bank[itemID] then
-				count = count + 1
+				count = count+1
 				break
 			end
 		end

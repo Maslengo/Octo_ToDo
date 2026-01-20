@@ -46,9 +46,9 @@ local function Collect_JournalInstance()
 				end
 				ji.name = name
 				ji.instanceReset = instanceReset > 0 and (instanceReset + ServerTime) or 0 -- deepseek
-				ji.totalBosses = totalBosses
-				ji.defeatedBosses = defeatedBosses
-				ji.lastBossDefeated = lastBossDefeated
+				ji.totalBosses = E.func_Save(totalBosses)
+				ji.defeatedBosses = E.func_Save(defeatedBosses)
+				ji.lastBossDefeated = E.func_Save(lastBossDefeated)
 
 				-- Bosses собираем только если нужно
 				if not ji.Bosses or #ji.Bosses ~= totalBosses then
@@ -58,7 +58,7 @@ local function Collect_JournalInstance()
 					ji.Bosses[p] = ji.Bosses[p] or {}
 					local bossName, _, bossKilled = GetSavedInstanceEncounterInfo(index, p)
 					ji.Bosses[p].bossName = bossName
-					ji.Bosses[p].bossKilled = bossKilled
+					ji.Bosses[p].bossKilled = E.func_Save(bossKilled)
 				end
 			end
 		end

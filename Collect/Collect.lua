@@ -14,6 +14,7 @@ local function func_Collect_All()
 		{func = E.Collect_Holidays, name = "Collect_Holidays",},
 		{func = E.Collect_Character_ItemLevels, name = "Collect_Character_ItemLevels",},
 		{func = E.Collect_Items_BAGS, name = "Collect_Items_BAGS",},
+		{func = E.Collect_Items_MythicKeystone, name = "Collect_Items_MythicKeystone",},
 		{func = E.Collect_JournalInstance, name = "Collect_JournalInstance",},
 		{func = E.Collect_Legion_Remix, name = "Collect_Legion_Remix",},
 		{func = E.Collect_Locations, name = "Collect_Locations",},
@@ -53,6 +54,16 @@ function E.func_Collect_All()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
+
+
+"UNIT_FACTION",
+"PVP_TIMER_UPDATE",
+
+
+
+
+
+
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BARBER_SHOP_APPEARANCE_APPLIED",
@@ -66,28 +77,18 @@ local MyEventsTable = {
 	"CHALLENGE_MODE_COMPLETED",
 	"CHALLENGE_MODE_MAPS_UPDATE",
 	"ITEM_COUNT_CHANGED",
-
-
-	-- При изменениях в банке:
-	"BAG_UPDATE",                                -- (для банковских сумок) – при изменении предметов
+	"BAG_UPDATE",
 	"BAG_UPDATE_DELAYED",
-	"BANKFRAME_OPENED",                            -- инициирует полное сканирование
-	"PLAYERBANKSLOTS_CHANGED",                    -- при изменении в основной банковской ячейке
-	-- "PLAYERBANKBAGSLOTS_CHANGED",                -- при изменении банковских сумок (CLASSIS)
-	"BANK_TAB_SETTINGS_UPDATED",                -- при изменении настроек вкладок
-	"BANK_TABS_CHANGED",                        -- при покупке/изменении вкладок
-
-	-- При крафте/изменении предметов:
-	"TRADE_SKILL_ITEM_CRAFTED_RESULT",            -- с задержкой 2 секунды
-	"ITEM_CHANGED",                                -- с задержкой 1 секунда
-
-	-- Для Reagent Bank:
+	"BANKFRAME_OPENED",
+	"PLAYERBANKSLOTS_CHANGED",
+	-- "PLAYERBANKBAGSLOTS_CHANGED", -- (CLASSIS)
+	"BANK_TAB_SETTINGS_UPDATED",
+	"BANK_TABS_CHANGED",
+	"TRADE_SKILL_ITEM_CRAFTED_RESULT",
+	"ITEM_CHANGED",
 	-- "REAGENTBANK_UPDATE",
 	-- "PLAYERREAGENTBANKSLOTS_CHANGED",
-
-	-- Для Warband Bank (Account Bank):
-	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",    -- основное событие при изменении
-
+	"PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED",
 	-- "GARRISON_BUILDING_ACTIVATED",
 	-- "GARRISON_BUILDING_ERROR",
 	-- "GARRISON_BUILDING_LIST_UPDATE",
@@ -279,12 +280,10 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("PLAYER_REGEN_ENABLED")
 end
-
 function EventFrame:ENCOUNTER_START()
 	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("ENCOUNTER_START")
 end
-
 function EventFrame:ENCOUNTER_END()
 	RequestRaidInfo()
 	E.Collect_JournalInstance()
@@ -325,19 +324,30 @@ function EventFrame:PLAYER_FLAGS_CHANGED()
 	E.Collect_Character_Info()
 	E.func_RequestUIUpdate("PLAYER_FLAGS_CHANGED")
 end
+function EventFrame:UNIT_FACTION()
+	E.Collect_Character_Info()
+	E.func_RequestUIUpdate("UNIT_FACTION")
+end
+function EventFrame:PVP_TIMER_UPDATE()
+	E.Collect_Character_Info()
+	E.func_RequestUIUpdate("PVP_TIMER_UPDATE")
+end
 function EventFrame:PLAYER_UPDATE_RESTING()
 	E.Collect_Character_Info()
 	E.func_RequestUIUpdate("PLAYER_UPDATE_RESTING")
 end
 function EventFrame:WEEKLY_REWARDS_UPDATE()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_GreatVault()
 	E.func_RequestUIUpdate("WEEKLY_REWARDS_UPDATE")
 end
 function EventFrame:CHALLENGE_MODE_COMPLETED()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_GreatVault()
 	E.func_RequestUIUpdate("CHALLENGE_MODE_COMPLETED")
 end
 function EventFrame:CHALLENGE_MODE_MAPS_UPDATE()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_GreatVault()
 	E.func_RequestUIUpdate("CHALLENGE_MODE_MAPS_UPDATE")
 end
@@ -345,14 +355,6 @@ end
 -- local questID = ...
 -- E.func_GetQuestName(questID)
 -- end
-
-
-
-
-
-
-
-
 function EventFrame:BAG_UPDATE()
 	if not BankFrame or not BankFrame:IsShown() then return end
 	E.Collect_Items_BANK()
@@ -360,6 +362,7 @@ function EventFrame:BAG_UPDATE()
 	E.func_RequestUIUpdate("BAG_UPDATE")
 end
 function EventFrame:BAG_UPDATE_DELAYED()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
@@ -369,6 +372,7 @@ function EventFrame:BAG_UPDATE_DELAYED()
 	E.func_RequestUIUpdate("BAG_UPDATE_DELAYED")
 end
 function EventFrame:BANKFRAME_OPENED()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
@@ -376,6 +380,7 @@ function EventFrame:BANKFRAME_OPENED()
 end
 function EventFrame:PLAYERBANKSLOTS_CHANGED()
 	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
@@ -383,6 +388,7 @@ function EventFrame:PLAYERBANKSLOTS_CHANGED()
 end
 function EventFrame:BANK_TAB_SETTINGS_UPDATED()
 	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
@@ -390,6 +396,7 @@ function EventFrame:BANK_TAB_SETTINGS_UPDATED()
 end
 function EventFrame:BANK_TABS_CHANGED()
 	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
@@ -397,14 +404,14 @@ function EventFrame:BANK_TABS_CHANGED()
 end
 function EventFrame:PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED()
 	if not BankFrame or not BankFrame:IsShown() then return end
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
 	E.func_RequestUIUpdate("PLAYER_ACCOUNT_BANK_TAB_SLOTS_CHANGED")
 end
-
-
 function EventFrame:TRADE_SKILL_ITEM_CRAFTED_RESULT()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.func_RequestUIUpdate("TRADE_SKILL_ITEM_CRAFTED_RESULT")
 end
@@ -412,14 +419,17 @@ function EventFrame:ITEM_CHANGED(...)
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
-
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
-		E.Collect_CurrentKey_ITEM_CHANGED(arg2)
+		E.Collect_Items_MythicKeystone()
+		C_Timer.After(E.SPAM_TIME+.1, function()
+			E.Collect_Items_MythicKeystone()
+		end)
 		E.func_RequestUIUpdate("ITEM_CHANGED")
 	end
 end
 function EventFrame:ITEM_COUNT_CHANGED()
+	E.Collect_Items_MythicKeystone()
 	E.Collect_Items_BAGS()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()

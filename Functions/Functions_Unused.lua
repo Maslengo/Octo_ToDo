@@ -43,7 +43,7 @@ end
 function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType)
 	if id and type(id) == "number" then
 		local curType = curType or "spell"
-		local frame = CreateFrame("Button", nil, parent, "SecureActionButtonTemplate, BackDropTemplate")
+		local frame = CreateFrame("BUTTON", nil, parent, "SecureActionButtonTemplate, BackDropTemplate")
 		frame:Hide()
 		frame:SetPoint(point, parent, rPoint, x, y)
 		frame:SetSize(size, size)
@@ -77,7 +77,7 @@ function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType
 			frame:SetScript("OnEnter", function(self)
 					self:SetBackdropBorderColor(classR, classG, classB, edgeAlpha)
 					E.func_UpdateButtonState(self, id, curType)
-					E.func_OctoTooltip_OnEnter(frame)
+					E.func_Octo_TooltipFrame_OnEnter(frame)
 					if curType == "item" or curType == "toy" then
 						GameTooltip:AddDoubleLine(E.func_GetItemName(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
 					else

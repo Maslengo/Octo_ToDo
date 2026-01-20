@@ -128,4 +128,3 @@ function E.func_itemslistToSetText_12(tbl, val)
 	E.editFrame:Show()
 	E.DEBUG_STOP()
 end
-----------------------------------------------------------------

@@ -22,7 +22,7 @@ function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	if id == 1166 then
 		local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon()
 		if joinable then
-			TextLeft = TextLeft..timewalkDungeonName
+			TextLeft = TextLeft.." "..timewalkDungeonName
 		end
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey

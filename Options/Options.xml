@@ -1,5 +1,14 @@
 <Ui>
-	<Script file="Options\func_Octo_Options.lua"/>
+	<Include file="Options\func_Options_MAIN\func_Options_MAIN.xml"/>
+
+	<Script file="Options\03_func_Options_About.lua"/>
+	<Script file="Options\04_func_Options_Moduls.lua"/>
+	<Script file="Options\05_func_Options_DevTool.lua"/>
+	<Script file="Options\06_func_Options_QuestsChanged.lua"/>
+	<Script file="Options\07_func_Options_Achievements.lua"/>
+
+
+	<Script file="Options\Functions_LibSFDropDown.lua"/>
 	<Script file="Options\Init.lua"/>
-	<Script file="Options\91_Functions_LibSFDropDown.lua"/>
+	<Script file="Options\OctoSettings_DEBUG.lua"/>
 </Ui>

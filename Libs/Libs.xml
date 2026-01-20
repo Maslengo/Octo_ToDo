@@ -12,6 +12,7 @@
 	<Include file="LibThingsLoad\LibThingsLoad.xml"/>
 	<Include file="AceGUI-3.0\AceGUI-3.0.xml"/>
 	<Include file="AceConfig-3.0\AceConfig-3.0.xml"/>
+	<Include file="AceConfigDialog-3.0\AceConfigDialog-3.0.xml"/>
 	<Include file="AceGUI-3.0-SharedMediaWidgets\widget.xml"/>
 
 	<Include file="AceTimer-3.0\AceTimer-3.0.xml"/>

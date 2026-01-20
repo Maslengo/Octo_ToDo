@@ -4,12 +4,18 @@ local function Collect_Quests()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+
+
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
 	wipe(collectMASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.ListOfParagonQuests)
+	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.OctoTable_QuestID)
-	for _, questID in ipairs(E.OctoTable_QuestID) do
+
+
+	for questID in next,(E.OctoTable_QuestID) do
+	-- for questID in next,(E.ALL_Quests) do
 		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 			collectMASLENGO.OctoTable_QuestID[questID] = true
 		end
@@ -24,15 +30,25 @@ local function Collect_Quests()
 			collectMASLENGO.ListOfQuests[info.questID] = E.func_GetQuestStatus(info.questID)
 		end
 	end
-	local maxNumQuestsCanAccept = E.func_GetMaxNumQuestsCanAccept()
-	collectPlayerData.numQuests = numQuests > 0 and numQuests or nil
-	collectPlayerData.numShownEntries = numShownEntries > 0 and numShownEntries or nil
-	collectPlayerData.maxNumQuestsCanAccept = maxNumQuestsCanAccept > 0 and maxNumQuestsCanAccept or nil
-	-- collectPlayerData.maxNumQuestsCanAccept = maxNumQuestsCanAccept > 0 and math.max(numQuests, maxNumQuestsCanAccept) or nil
+	local maxNumQuestsCanAccept = E.func_GetMaxNumQuestsCanAccept() -- UNUSED
+	collectPlayerData.numQuests = E.func_Save(numQuests)
+	collectPlayerData.numShownEntries = E.func_Save(numShownEntries)
+	collectPlayerData.maxNumQuestsCanAccept = E.func_Save(maxNumQuestsCanAccept) -- UNUSED
+
+
+
+	local numQuests_Paragon = 0
 	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 		if E.func_IsOnQuest(questID) then
-			collectMASLENGO.ListOfParagonQuests[questID] = true
+			numQuests_Paragon = numQuests_Paragon + 1
+			-- collectMASLENGO.ListOfQuests[questID] = E.func_GetQuestStatus(questID)
+			collectMASLENGO.ListOfParagonQuests[questID] = E.func_GetQuestStatus(questID)
 		end
+	end
+	collectPlayerData.numQuests_Paragon = E.func_Save(numQuests_Paragon)
+
+	if E.func_SafeUpdate_AbandonButton then
+		E.func_SafeUpdate_AbandonButton()
 	end
 end
 -- function E.func_GetCountedQuests()
@@ -96,17 +112,17 @@ local function Collect_Quests_Universal()
 			-- Определяем максимальное количество квестов для отображения
 			local maxToShow = forcedMaxQuest ~= nil and forcedMaxQuest or totalQUEST
 			if maxToShow == 0 then
-			    -- Нет квестов с ID в группе, не записываем TextCenter
-			    questDataTable.TextCenter = nil
+				-- Нет квестов с ID в группе, не записываем TextCenter
+				questDataTable.TextCenter = nil
 			elseif count >= maxToShow then
-			    -- Все необходимые квесты выполнены, показываем DONE/Готово
-			    questDataTable.TextCenter = true -- if type(TextCenter) == "boolean" then TextCenter = E.DONE end
+				-- Все необходимые квесты выполнены, показываем DONE/Готово
+				questDataTable.TextCenter = true -- if type(TextCenter) == "boolean" then TextCenter = E.DONE end
 			elseif count > 0 then
-			    -- Часть квестов выполнена, показываем X/Y
-			    questDataTable.TextCenter = count.."/"..maxToShow
+				-- Часть квестов выполнена, показываем X/Y
+				questDataTable.TextCenter = count.."/"..maxToShow
 			elseif count == 0 then
-			    -- Квесты есть, но ни один не выполнен, не показываем TextCenter
-			    questDataTable.TextCenter = nil
+				-- Квесты есть, но ни один не выполнен, не показываем TextCenter
+				questDataTable.TextCenter = nil
 			end
 		end
 		if next(questDataTable) ~= nil then

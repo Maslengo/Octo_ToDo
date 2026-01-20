@@ -11,10 +11,10 @@ end
 local charR, charG, charB = 1, 1, 1
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local EventFrame = CreateFrame("FRAME")
-local EquipmentsFrame = CreateFrame("BUTTON", "EquipmentsFrame", UIParent, "BackDropTemplate")
-EquipmentsFrame:Hide()
-E.func_RegisterFrame_SIMPLE(EquipmentsFrame)
-local NameHeader = CreateFrame("FRAME", nil, EquipmentsFrame)
+local Octo_EquipmentsFrame = CreateFrame("BUTTON", "Octo_EquipmentsFrame", UIParent, "BackDropTemplate")
+Octo_EquipmentsFrame:Hide()
+E.func_RegisterFrame_SIMPLE(Octo_EquipmentsFrame)
+local NameHeader = CreateFrame("FRAME", nil, Octo_EquipmentsFrame)
 EventFrame.columnWidths = {}
 EventFrame.columnTypes = {}
 EventFrame.columnCount = 0
@@ -63,8 +63,8 @@ local function UpdateColumnPositionsAndSizes(frame, columnWidths)
 end
 function EventFrame:Create_NameHeader() -- InitializePoolFrame
 	----------------------------------------------------------------
-	NameHeader:SetPoint("TOPLEFT", EquipmentsFrame, "TOPLEFT")
-	NameHeader:SetPoint("TOPRIGHT", EquipmentsFrame, "TOPRIGHT")
+	NameHeader:SetPoint("TOPLEFT", Octo_EquipmentsFrame, "TOPLEFT")
+	NameHeader:SetPoint("TOPRIGHT", Octo_EquipmentsFrame, "TOPRIGHT")
 	NameHeader:SetHeight((E.GLOBAL_LINE_HEIGHT*2))
 	----------------------------------------------------------------
 	NameHeader.Nickname = NameHeader:CreateFontString()
@@ -101,19 +101,8 @@ local func_OnAcquired do
 		return text
 	end
 	local function Create_Highlight(frame, owner)
-		local Highlight = CreateFrame("BUTTON", nil, owner, "OctoHighlightAnimationTemplate")
-		Highlight:SetPropagateMouseClicks(true)
-		Highlight:SetPropagateMouseMotion(true)
-		Highlight:SetFrameLevel(frame:GetFrameLevel()+2)
-		if E.ENABLE_HIGHLIGHT_ANIMATION then
-			Highlight:SetHighlightAtlas(E.TEXTURE_HIGHLIGHT_ATLAS, "ADD")
-			Highlight.HighlightTexture = Highlight:GetHighlightTexture()
-			Highlight.HighlightTexture:SetAlpha(E.ALPHA_BACKGROUND)
-		end
-		Highlight:SetPoint("LEFT", frame)
-		Highlight:SetPoint("TOP", frame)
-		Highlight:SetPoint("BOTTOM", frame)
-		Highlight:SetPoint("RIGHT")
+		local Highlight = CreateFrame("BUTTON", nil, owner) -- , "OctoHighlightAnimationTemplate"
+		E.func_ApplyHighlightTemplate(Highlight, frame)
 		return Highlight
 	end
 
@@ -247,7 +236,7 @@ end
 
 
 function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInfo)
-	if not EquipmentsFrame or not EquipmentsFrame.view then
+	if not Octo_EquipmentsFrame or not Octo_EquipmentsFrame.view then
 		return
 	end
 	----------------------------------------------------------------
@@ -294,43 +283,46 @@ function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInf
 
 	----------------------------------------------------------------
 
-	if faction == "Horde" then
-		charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_HORDE)
-	elseif faction == "Alliance" then
-		charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_ALLIANCE)
-	elseif faction == "Neutral" then
-		charR, charG, charB = E.func_Hex2RGBFloat(E.COLOR_NEUTRAL)
-	end
-	NameHeader.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
+	-- if faction == "Horde" then
+	-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
+	-- elseif faction == "Alliance" then
+	-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
+	-- elseif faction == "Neutral" then
+	-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
+	-- end
+	-- NameHeader.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
+	local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
+	NameHeader.CharTexture:SetVertexColor(r, g, b, a)
 	----------------------------------------------------------------
 end
 
 
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, CharInfo)
-	if not EquipmentsFrame or not EquipmentsFrame.view then
+	if not Octo_EquipmentsFrame or not Octo_EquipmentsFrame.view then
 		return
 	end
 
 	EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInfo)
 
 
-	EquipmentsFrame.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	Octo_EquipmentsFrame.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	local width = CalculateMainFrameWidth(columnWidths)
 	local height, displayLines = CalculateMainFrameHeight(totalLines)
-	EquipmentsFrame:SetSize(width, height)
-	local frames = EquipmentsFrame.view:GetFrames()
+	Octo_EquipmentsFrame:SetSize(width, height)
+	local frames = Octo_EquipmentsFrame.view:GetFrames()
 	for _, frame in ipairs(frames) do
 		UpdateColumnPositionsAndSizes(frame, columnWidths)
 	end
-	EquipmentsFrame.ScrollBox:ClearAllPoints()
-	EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
-	EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
+	Octo_EquipmentsFrame.ScrollBox:ClearAllPoints()
+	Octo_EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
+	Octo_EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
 end
 function EventFrame:CreateDataProvider(GUID)
 	local GUID = GUID or E.curGUID
 	local CharInfo = Octo_ToDo_DB_Levels[GUID]
 	local pd = CharInfo.PlayerData
-	local InventoryType = pd.InventoryType or {}
+	local cm = CharInfo.MASLENGO
+	local InventoryType = cm.InventoryType or {}
 	local DataProvider = CreateTreeDataProvider()
 	local columnMaxWidths = {}
 	local totalLines = 0
@@ -406,10 +398,10 @@ function EventFrame:CreateDataProvider(GUID)
 	local displayLines = math.min(totalLines, MAX_DISPLAY_LINES)
 	if displayLines == 0 then displayLines = 1 end
 	local totalHeight = (E.GLOBAL_LINE_HEIGHT * displayLines) + (E.GLOBAL_LINE_HEIGHT*2)
-	EquipmentsFrame:SetSize(totalWidth, totalHeight)
-	EquipmentsFrame.ScrollBox:ClearAllPoints()
-	EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
-	EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
+	Octo_EquipmentsFrame:SetSize(totalWidth, totalHeight)
+	Octo_EquipmentsFrame.ScrollBox:ClearAllPoints()
+	Octo_EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
+	Octo_EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
 	DataProvider:SetSortComparator(function(a, b)
 			local aSlot = a:GetData().slotID
 			local bSlot = b:GetData().slotID
@@ -420,14 +412,14 @@ function EventFrame:CreateDataProvider(GUID)
 	DataProvider:Sort()
 	self:UpdateMainFrameUI(DataProvider, totalLines, EventFrame.columnWidths, CharInfo)
 end
-function EventFrame:Create_EquipmentsFrame()
-	EquipmentsFrame:SetBackdrop(E.menuBackdrop)
-	EquipmentsFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA)
-	EquipmentsFrame:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+function EventFrame:Create_Octo_EquipmentsFrame()
+	Octo_EquipmentsFrame:SetBackdrop(E.menuBackdrop)
+	Octo_EquipmentsFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
+	Octo_EquipmentsFrame:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA)
 
-	EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
-	EquipmentsFrame:SetScript("OnShow", function()
-			local scrollBar = EquipmentsFrame.ScrollBar
+	Octo_EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
+	Octo_EquipmentsFrame:SetScript("OnShow", function()
+			local scrollBar = Octo_EquipmentsFrame.ScrollBar
 			local shouldShow = EventFrame.shouldShowScrollBar
 			if shouldShow ~= scrollBar:IsShown() then
 				if shouldShow then
@@ -437,82 +429,82 @@ function EventFrame:Create_EquipmentsFrame()
 				end
 			end
 	end)
-	EquipmentsFrame:SetSize(1, E.GLOBAL_LINE_HEIGHT*1 + (E.GLOBAL_LINE_HEIGHT*2))
-	EquipmentsFrame:SetDontSavePosition(true)
-	EquipmentsFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
-	EquipmentsFrame:SetFrameStrata("HIGH")
-	EquipmentsFrame:SetPoint("TOPLEFT", 0, -150)
-	EquipmentsFrame:EnableMouse(true)
-	EquipmentsFrame:SetMovable(true)
-	EquipmentsFrame:SetScript("OnMouseDown", function(_, button)
+	Octo_EquipmentsFrame:SetSize(1, E.GLOBAL_LINE_HEIGHT*1 + (E.GLOBAL_LINE_HEIGHT*2))
+	Octo_EquipmentsFrame:SetDontSavePosition(true)
+	Octo_EquipmentsFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
+	Octo_EquipmentsFrame:SetFrameStrata("HIGH")
+	Octo_EquipmentsFrame:SetPoint("TOPLEFT", 0, -150)
+	Octo_EquipmentsFrame:EnableMouse(true)
+	Octo_EquipmentsFrame:SetMovable(true)
+	Octo_EquipmentsFrame:SetScript("OnMouseDown", function(_, button)
 			if button == "LeftButton" then
-				EquipmentsFrame:StartMoving()
+				Octo_EquipmentsFrame:StartMoving()
 			end
 	end)
-	EquipmentsFrame:SetScript("OnMouseUp", function(_, button)
+	Octo_EquipmentsFrame:SetScript("OnMouseUp", function(_, button)
 			if button == "LeftButton" then
-				EquipmentsFrame:StopMovingOrSizing()
-				local left = EquipmentsFrame:GetLeft()
-				local top = EquipmentsFrame:GetTop()
-				EquipmentsFrame:ClearAllPoints()
-				EquipmentsFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+				Octo_EquipmentsFrame:StopMovingOrSizing()
+				local left = Octo_EquipmentsFrame:GetLeft()
+				local top = Octo_EquipmentsFrame:GetTop()
+				Octo_EquipmentsFrame:ClearAllPoints()
+				Octo_EquipmentsFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
 			end
 	end)
-	EquipmentsFrame:RegisterForClicks("RightButtonUp")
-	EquipmentsFrame:SetScript("OnClick", function(self)
+	Octo_EquipmentsFrame:RegisterForClicks("RightButtonUp")
+	Octo_EquipmentsFrame:SetScript("OnClick", function(self)
 			self:Hide()
 	end)
-	EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, EquipmentsFrame, "WowScrollBoxList")
-	EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
-	EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
-	EquipmentsFrame.ScrollBox:SetPropagateMouseClicks(false)
-	EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-	EquipmentsFrame.ScrollBox:Layout()
-	EquipmentsFrame.ScrollBar = CreateFrame("EventFrame", nil, EquipmentsFrame, "MinimalScrollBar")
-	EquipmentsFrame.ScrollBar:SetPoint("TOPLEFT", EquipmentsFrame.ScrollBox, "TOPRIGHT", 6, 0)
-	EquipmentsFrame.ScrollBar:SetPoint("BOTTOMLEFT", EquipmentsFrame.ScrollBox, "BOTTOMRIGHT", 6, 0)
-	EquipmentsFrame.view = CreateScrollBoxListTreeListView()
-	EquipmentsFrame.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	EquipmentsFrame.view:SetElementInitializer("BUTTON",
+	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList")
+	Octo_EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
+	Octo_EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
+	Octo_EquipmentsFrame.ScrollBox:SetPropagateMouseClicks(false)
+	Octo_EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
+	Octo_EquipmentsFrame.ScrollBox:Layout()
+	Octo_EquipmentsFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_EquipmentsFrame, "MinimalScrollBar")
+	Octo_EquipmentsFrame.ScrollBar:SetPoint("TOPLEFT", Octo_EquipmentsFrame.ScrollBox, "TOPRIGHT", 6, 0)
+	Octo_EquipmentsFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_EquipmentsFrame.ScrollBox, "BOTTOMRIGHT", 6, 0)
+	Octo_EquipmentsFrame.view = CreateScrollBoxListTreeListView()
+	Octo_EquipmentsFrame.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
+	Octo_EquipmentsFrame.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
 	end)
-	EquipmentsFrame.view:RegisterCallback(EquipmentsFrame.view.Event.OnAcquiredFrame, func_OnAcquired, EquipmentsFrame)
-	ScrollUtil.InitScrollBoxListWithScrollBar(EquipmentsFrame.ScrollBox, EquipmentsFrame.ScrollBar, EquipmentsFrame.view)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(EquipmentsFrame.ScrollBox, EquipmentsFrame.ScrollBar)
+	Octo_EquipmentsFrame.view:RegisterCallback(Octo_EquipmentsFrame.view.Event.OnAcquiredFrame, func_OnAcquired, Octo_EquipmentsFrame)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_EquipmentsFrame.ScrollBox, Octo_EquipmentsFrame.ScrollBar, Octo_EquipmentsFrame.view)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_EquipmentsFrame.ScrollBox, Octo_EquipmentsFrame.ScrollBar)
 end
-EquipmentsFrame.lastGUID = nil
-function E.Toggle_EquipmentsFrame(GUID)
+Octo_EquipmentsFrame.lastGUID = nil
+function E.Toggle_Octo_EquipmentsFrame(GUID)
 	GUID = GUID or E.curGUID
-	local isSameGUID = EquipmentsFrame.lastGUID == GUID
-	if EquipmentsFrame:IsShown() then
+	local isSameGUID = Octo_EquipmentsFrame.lastGUID == GUID
+	if Octo_EquipmentsFrame:IsShown() then
 		if isSameGUID then
-			EquipmentsFrame:Hide()
-			if EquipmentsFrame.updateTimer then
-				EquipmentsFrame.updateTimer:Cancel()
-				EquipmentsFrame.updateTimer = nil
+			Octo_EquipmentsFrame:Hide()
+			if Octo_EquipmentsFrame.updateTimer then
+				Octo_EquipmentsFrame.updateTimer:Cancel()
+				Octo_EquipmentsFrame.updateTimer = nil
 			end
-			EquipmentsFrame.lastGUID = nil
+			Octo_EquipmentsFrame.lastGUID = nil
 		else
-			EquipmentsFrame.lastGUID = GUID
+			Octo_EquipmentsFrame.lastGUID = GUID
 			E.Collect_Equipments()
 			EventFrame:CreateDataProvider(GUID)
 		end
 	else
-		EquipmentsFrame:Show()
-		EquipmentsFrame.lastGUID = GUID
-		if EquipmentsFrame.updateTimer then
-			EquipmentsFrame.updateTimer:Cancel()
-			EquipmentsFrame.updateTimer = nil
+		Octo_EquipmentsFrame:Show()
+		Octo_EquipmentsFrame.lastGUID = GUID
+		if Octo_EquipmentsFrame.updateTimer then
+			Octo_EquipmentsFrame.updateTimer:Cancel()
+			Octo_EquipmentsFrame.updateTimer = nil
 		end
-		EquipmentsFrame.updateTimer = C_Timer.NewTicker(2, function()
-				if EquipmentsFrame:IsShown() then
+		Octo_EquipmentsFrame.updateTimer = C_Timer.NewTicker(2, function()
+				if Octo_EquipmentsFrame:IsShown() then
 					E.Collect_Equipments()
-					EventFrame:CreateDataProvider(EquipmentsFrame.lastGUID)
+					EventFrame:CreateDataProvider(Octo_EquipmentsFrame.lastGUID)
 				else
-					if EquipmentsFrame.updateTimer then
-						EquipmentsFrame.updateTimer:Cancel()
-						EquipmentsFrame.updateTimer = nil
+					if Octo_EquipmentsFrame.updateTimer then
+						Octo_EquipmentsFrame.updateTimer:Cancel()
+						Octo_EquipmentsFrame.updateTimer = nil
 					end
 				end
 		end)
@@ -531,13 +523,13 @@ local MyEventsTable = {
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
-	EventFrame:Create_EquipmentsFrame()
+	EventFrame:Create_Octo_EquipmentsFrame()
 	EventFrame:Create_NameHeader()
 end
 function EventFrame:PLAYER_REGEN_DISABLED()
-	EquipmentsFrame:Hide()
-	if EquipmentsFrame.updateTimer then
-		EquipmentsFrame.updateTimer:Cancel()
-		EquipmentsFrame.updateTimer = nil
+	Octo_EquipmentsFrame:Hide()
+	if Octo_EquipmentsFrame.updateTimer then
+		Octo_EquipmentsFrame.updateTimer:Cancel()
+		Octo_EquipmentsFrame.updateTimer = nil
 	end
 end

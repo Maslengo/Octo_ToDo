@@ -94,7 +94,7 @@ do
 			text:SetText("")
 		frame.text = text
 
-		local dropButton = CreateFrame("Button", nil, frame)
+		local dropButton = CreateFrame("BUTTON", nil, frame)
 			dropButton:SetWidth(24)
 			dropButton:SetHeight(24)
 			dropButton:SetPoint("TOPRIGHT", DRight, "TOPRIGHT", -16, -18)
@@ -112,7 +112,7 @@ do
 	function AGSMW:GetBaseFrameWithWindow()
 		local frame = self:GetBaseFrame()
 
-		local displayButton = CreateFrame("Button", nil, frame, BackdropTemplateMixin and "BackdropTemplate")
+		local displayButton = CreateFrame("BUTTON", nil, frame, BackdropTemplateMixin and "BackdropTemplate")
 			displayButton:SetHeight(42)
 			displayButton:SetWidth(42)
 			displayButton:SetPoint("TOPLEFT", frame, "TOPLEFT", 1, -2)

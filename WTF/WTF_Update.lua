@@ -92,6 +92,73 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	if compareVersion(110.6, DBVersion) then
+		if pd.InventoryType then
+			cm.InventoryType = E.func_CopyTableDeep(pd.InventoryType)
+			for k in next,(pd.InventoryType) do
+				pd.InventoryType[k] = nil
+			end
+			pd.InventoryType = nil
+		end
+
+		if cm.CovenantAndAnima then
+			local curCov = cm.CovenantAndAnima.curCovID
+			pd.SL_covenantID = E.func_Save(curCov)
+			-- https://warcraft.wiki.gg/wiki/API_C_Covenants.GetActiveCovenantID
+			for covenantID = 1, 4 do
+				local data = cm.CovenantAndAnima[covenantID]
+				if data then
+					local prefix = E.OctoTable_Covenant[covenantID].prefix
+					pd[prefix .. "_Anima"]  = E.func_Save(data[2])
+					pd[prefix .. "_Renown"] = E.func_Save(data[1])
+				end
+			end
+			cm.CovenantAndAnima = nil
+		end
+		if pd.Possible_Anima then
+			pd.SL_Possible_Anima = pd.Possible_Anima
+			pd.Possible_Anima = nil
+		end
+		if pd.Possible_CatalogedResearch then
+			pd.SL_Possible_CatalogedResearch = pd.Possible_CatalogedResearch
+			pd.Possible_CatalogedResearch = nil
+		end
+		if pd.RIO_Score then
+			pd.MythicPlus = pd.MythicPlus or {}
+			pd.MythicPlus[E.MythicPlus_seasonID] = pd.MythicPlus[E.MythicPlus_seasonID] or {}
+			pd.MythicPlus[E.MythicPlus_seasonID].RIO_Score = pd.RIO_Score
+			pd.RIO_Score = nil
+		end
+		if pd.RIO_weeklyBest then
+			pd.MythicPlus = pd.MythicPlus or {}
+			pd.MythicPlus[E.MythicPlus_seasonID] = pd.MythicPlus[E.MythicPlus_seasonID] or {}
+			pd.MythicPlus[E.MythicPlus_seasonID].RIO_weeklyBest = pd.RIO_weeklyBest
+			pd.RIO_weeklyBest = nil
+		end
+		if pd.CurrentKeyLevel then
+			pd.OwnedKeystoneLevel = pd.CurrentKeyLevel
+			pd.CurrentKeyLevel = nil
+		end
+
+		if cm.Reputation then
+			for reputationID, v in next, (cm.Reputation) do
+				if type(v) == "string" then
+					local FIRST, SECOND, ParagonCount, color, standingTEXT, repType = ("#"):split(v)
+
+					cm.Reputation[reputationID] = {
+						FIRST = tonumber(FIRST),
+						SECOND = tonumber(SECOND),
+						ParagonCount = tonumber(ParagonCount),
+						color = color,
+						standingTEXT = standingTEXT,
+						repType = tonumber(repType)
+					}
+				end
+			end
+		end
+
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)

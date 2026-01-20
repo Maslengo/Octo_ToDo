@@ -9,7 +9,6 @@
 	<Script file="Collect\Collect_ChromieTime.lua"/>
 	<Script file="Collect\Collect_Covenants.lua"/>
 	<Script file="Collect\Collect_Currencies.lua"/>
-	<Script file="Collect\Collect_CurrentKey_ITEM_CHANGED.lua"/>
 	<Script file="Collect\Collect_Delves.lua"/>
 	<Script file="Collect\Collect_Equipment_Durability.lua"/>
 	<Script file="Collect\Collect_Equipments.lua"/>
@@ -18,6 +17,7 @@
 	<Script file="Collect\Collect_Holidays.lua"/>
 	<Script file="Collect\Collect_Items_BAGS.lua"/>
 	<Script file="Collect\Collect_Items_BANK.lua"/>
+	<Script file="Collect\Collect_Items_MythicKeystone.lua"/>
 	<Script file="Collect\Collect_JournalInstance.lua"/>
 	<Script file="Collect\Collect_Legion_Remix.lua"/>
 	<Script file="Collect\Collect_Locations.lua"/>

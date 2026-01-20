@@ -10,7 +10,6 @@ E.L = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
-E.ALL_Reputations = {}
 E.ALL_UniversalQuests = {}
 E.ALL_Additionally = {}
 E.ALL_Quests = {}
@@ -26,18 +25,12 @@ E.OctoTable_Expansions = {}
 E.OctoTable_Frames_ICONS = {}
 E.OctoTable_Frames_SIMPLE = {}
 E.OctoTable_itemID_ALL = {}
-E.OctoTable_itemID_AutoOpen = {}
 E.OctoTable_itemID_Cataloged_Research = {}
-E.OctoTable_itemID_Ignore_List = {}
-E.OctoTable_itemID_ItemsDelete = {}
-E.OctoTable_itemID_ItemsUsable = {}
-E.OctoTable_itemID_ItemsUsable_Other = {}
 E.OctoTable_itemID_MECHAGON = {}
 E.OctoTable_KeystoneAbbr = {}
 E.OctoTable_Mounts = {}
 E.OctoTable_Portals = {}
 E.OctoTable_QuestID = {}
-E.OctoTable_QuestID_Paragon = {}
 E.OctoTable_RemixInfinityResearch = {}
 E.OctoTable_SavedVariables = {}
 E.OctoTables_DataOtrisovka = {}
@@ -55,9 +48,6 @@ E.minValue_ItemLevel = 0
 E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
-E.REPUTATION_ALPHA = .4 -- Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
-E.CHARACTER_ALPHA = .1 -- Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
-E.MAINBACKGROUND_ALPHA = .8 -- Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
 E.DataProvider_Otrisovka = {}
 E.CurrentProfile = "Default" -- profileName
 E.Config_DebugID_ALL = false
@@ -109,10 +99,20 @@ E.ICON_DAILY = "Crosshair_Recurring_64"
 E.ICON_WEEKLY = "Crosshair_Wrapper_64"
 E.ICON_MONTH = "cursor_Wrapper_64"
 E.FULL_WIDTH = 3.60
+E.FOURTH_WIDTH = E.FULL_WIDTH/4.4
+E.HALF_WIDTH = E.FULL_WIDTH/2.2
 E.backgroundColorR = .08
 E.backgroundColorG = .08
 E.backgroundColorB = .08
 E.backgroundColorA = .8
+
+E.borderColorR = 0
+E.borderColorG = 0
+E.borderColorB = 0
+E.borderColorA = 1
+
+
+
 E.edgeSize = 1
 E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
@@ -155,7 +155,7 @@ E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
 E.CURRENT_REGION_ID = GetCurrentRegion()
 E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU"
-E.ENABLE_HIGHLIGHT_ANIMATION = false
+
 if E.CURRENT_REGION_NAME == "" then E.CURRENT_REGION_NAME = "US" end
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
@@ -245,7 +245,6 @@ E.ATLAS_REPAIR = "Crosshair_repairnpc_32"
 E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
 E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
 E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
-
 E.ATLAS_RAID = "Raid"
 E.ATLAS_DUNGEON = "Dungeon"
 
@@ -313,6 +312,7 @@ E.OctoTable_Prefixes = {
 }
 E.OctoTable_Covenant = {
 	[1] = {
+		prefix = "SL_KYRIAN",
 		name = C_Covenants.GetCovenantData(1).name,
 		icon = E.ICON_KYRIAN,
 		color = E.COLOR_KYRIAN,
@@ -321,6 +321,7 @@ E.OctoTable_Covenant = {
 		b = E.COLOR_KYRIAN_B,
 	},
 	[2] = {
+		prefix = "SL_VENTHYR",
 		name = C_Covenants.GetCovenantData(2).name,
 		icon = E.ICON_VENTHYR,
 		color = E.COLOR_VENTHYR,
@@ -329,6 +330,7 @@ E.OctoTable_Covenant = {
 		b = E.COLOR_VENTHYR_B,
 	},
 	[3] = {
+		prefix = "SL_NIGHTFAE",
 		name = C_Covenants.GetCovenantData(3).name,
 		icon = E.ICON_NIGHTFAE,
 		color = E.COLOR_NIGHTFAE,
@@ -337,6 +339,7 @@ E.OctoTable_Covenant = {
 		b = E.COLOR_NIGHTFAE_B,
 	},
 	[4] = {
+		prefix = "SL_NECROLORD",
 		name = C_Covenants.GetCovenantData(4).name,
 		icon = E.ICON_NECROLORD,
 		color = E.COLOR_NECROLORD,
@@ -345,6 +348,26 @@ E.OctoTable_Covenant = {
 		b = E.COLOR_NECROLORD_B,
 	},
 }
+
+
+
+
+-- E.CovenantData = {
+--     [1] = { prefix = "SL_KYRIAN" },
+--     [2] = { prefix = "SL_VENTHYR" },
+--     [3] = { prefix = "SL_NIGHTFAE" },
+--     [4] = { prefix = "SL_NECROLORD" },
+-- }
+
+
+
+
+
+
+
+
+
+
 E.LIST_MAX_SIZE = 30
 E.DEBUG_TEXT = E.COLOR_BLUE..BINDING_HEADER_DEBUG.."|r"
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
@@ -379,6 +402,39 @@ function E.func_Is_Midnight_available() return E.interfaceVersion >= 120000 end
 function E.func_Is_TheLastTitan_available() return E.interfaceVersion >= 130000 end
 
 
+
+
+
+
+
+E.OctoTable_PlayerBags = {
+	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
+	Enum.BagIndex.Backpack, -- 0,
+	Enum.BagIndex.Bag_1, -- 1,
+	Enum.BagIndex.Bag_2, -- 2,
+	Enum.BagIndex.Bag_3, -- 3,
+	Enum.BagIndex.Bag_4, -- 4,
+	Enum.BagIndex.ReagentBag, -- 5,
+}
+E.OctoTable_bankTabs = {
+	-- Enum.BagIndex.CharacterBankTab, -- -2,  (classic)
+	Enum.BagIndex.CharacterBankTab_1, -- 6,
+	Enum.BagIndex.CharacterBankTab_2, -- 7,
+	Enum.BagIndex.CharacterBankTab_3, -- 8,
+	Enum.BagIndex.CharacterBankTab_4, -- 9,
+	Enum.BagIndex.CharacterBankTab_5, -- 10,
+	Enum.BagIndex.CharacterBankTab_6, -- 11,
+}
+E.OctoTable_Account_bankTabs = {
+	-- Enum.BagIndex.Accountbanktab, -- (такого нет, хотя есть в Enum)
+	Enum.BagIndex.AccountBankTab_1, -- 12
+	Enum.BagIndex.AccountBankTab_2, -- 13
+	Enum.BagIndex.AccountBankTab_3, -- 14
+	Enum.BagIndex.AccountBankTab_4, -- 15
+	Enum.BagIndex.AccountBankTab_5, -- 16
+}
+
+
 E.OctoTable_SlotMapping = {
 	[1] = {name = "HEADSLOT", invslot = INVSLOT_HEAD, priority = 1},
 	[2] = {name = "NECKSLOT", invslot = INVSLOT_NECK, priority = 2},
@@ -404,3 +460,38 @@ E.OctoTable_SlotMapping = {
 
 E.Config_ShowAllDifficulties = false
 E.Config_DifficultyAbbreviation = true
+
+E.dataDisplayOrder = {
+	"Additionally",
+	"Currencies",
+	"Items",
+	"RaidsOrDungeons",
+	"UniversalQuests",
+	"Reputations",
+}
+
+
+local season = C_MythicPlus and C_MythicPlus.GetCurrentSeason()
+if season == nil or season == false or season == 0 or season == -1 then
+	E.MythicPlus_seasonID = 1
+else
+	E.MythicPlus_seasonID = season
+end
+
+
+E.OctoTable_reactionColors = {
+	[1] = {
+		[0] = E.COLOR_WHITE, -- (NO REACTION)
+		[1] = E.COLOR_RED, -- Hated
+		[2] = E.COLOR_RED, -- Hostile
+		[3] = E.COLOR_ORANGE, -- Unfriendly
+		[4] = E.COLOR_YELLOW, -- Neutral
+		[5] = E.COLOR_YELLOW, -- Friendly
+		[6] = E.COLOR_GREEN, -- Honored
+		[7] = E.COLOR_GREEN, -- Revered
+		[8] = E.COLOR_GREEN, -- Exalted
+	},
+    [2] = E.COLOR_PINK,
+    [3] = E.COLOR_BLUE,
+    [4] = E.COLOR_BLUE,
+}

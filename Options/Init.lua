@@ -1,12 +1,64 @@
 local GlobalAddonName, E = ...
+
 local EventFrame = CreateFrame("FRAME")
 -------------------------------------------------------------------------
 function EventFrame:func_InitOptions()
-	if not E.func_Octo_Options then return end
-	local name = E.func_AddonNameForOptionsInit(GlobalAddonName)
+	if not E.func_Options_MAIN then return end
 	local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
-	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(name, E.func_Octo_Options(EventFrame.savedVars))
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions(name, parent)
+
+	if E.func_Options_MAIN then
+		local leftText = E.func_AddonNameForOptionsInit(GlobalAddonName) -- ICON, NAME
+		local rightText = E.func_AddonNameForOptionsFunc(GlobalAddonName) -- ICON, NAME, VERSION
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(rightText, E.func_Options_MAIN(rightText))
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(rightText, parent)
+	end
+
+	if E.func_Options_About then
+		local leftText = "About"
+		local rightText = "About"
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(leftText, E.func_Options_About(rightText))
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
+	end
+
+	if E.func_Options_Moduls and Octo_Moduls_DB then
+		local leftText = "Moduls"
+		local rightText = "Moduls"
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(leftText, E.func_Options_Moduls(rightText, Octo_Moduls_DB))
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
+	end
+
+
+	if E.func_Options_DevTool and Octo_DevTool_DB then
+		local leftText = "DevTool"
+		local rightText = "DevTool"
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(leftText, E.func_Options_DevTool(rightText, Octo_DevTool_DB))
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
+	end
+
+	if E.func_Options_QuestsChanged and Octo_QuestsChanged_DB then
+		local leftText = "QuestsChanged"
+		local rightText = "QuestsChanged"
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(leftText, E.func_Options_QuestsChanged(rightText, Octo_QuestsChanged_DB))
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
+	end
+
+	if E.func_Options_Achievements and Octo_Achievements_DB then
+		local leftText = "Achievements"
+		local rightText = "Achievements"
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(leftText, E.func_Options_Achievements(rightText, Octo_Achievements_DB))
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
+	end
+
+	local i = 1
+	while true do
+		local cat = Settings.GetCategory(i)
+		if not cat then break end
+		if cat.name == E.func_AddonNameForOptionsInit(GlobalAddonName) then
+			E.SettingsCategoryID = cat.ID
+		end
+		i = i + 1
+	end
+
 end
 ----------------------------------------------------------------
 local MyEventsTable = {

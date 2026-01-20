@@ -37,7 +37,7 @@ do
 		if next(contentFrameCache) then
 			frame = table.remove(contentFrameCache)
 		else
-			frame = CreateFrame("Button", nil, UIParent)
+			frame = CreateFrame("BUTTON", nil, UIParent)
 				--frame:SetWidth(200)
 				frame:SetHeight(18)
 				frame:SetHighlightTexture([[Interface\QuestFrame\UI-QuestTitleHighlight]], "ADD")
@@ -50,7 +50,7 @@ do
 				check:Hide()
 			frame.check = check
 
-			local soundbutton = CreateFrame("Button", nil, frame)
+			local soundbutton = CreateFrame("BUTTON", nil, frame)
 				soundbutton:SetWidth(16)
 				soundbutton:SetHeight(16)
 				soundbutton:SetPoint("RIGHT",frame,"RIGHT",-1,0)
@@ -218,7 +218,7 @@ do
 		frame:SetScript("OnHide", OnHide)
 
 
-		local soundbutton = CreateFrame("Button", nil, frame)
+		local soundbutton = CreateFrame("BUTTON", nil, frame)
 			soundbutton:SetWidth(16)
 			soundbutton:SetHeight(16)
 			soundbutton:SetPoint("LEFT",frame.DLeft,"LEFT",26,1)

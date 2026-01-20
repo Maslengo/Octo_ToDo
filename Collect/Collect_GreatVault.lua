@@ -3,11 +3,32 @@ local GlobalAddonName, E = ...
 E.Enum_Activities_table = {}
 E.GW_Start = true
 ----------------------------------------------------------------
+
+local GetMapTable = GetMapTable or C_ChallengeMode.GetMapTable
+local GetWeeklyChestRewardLevel = GetWeeklyChestRewardLevel or C_MythicPlus.GetWeeklyChestRewardLevel
+local GetWeeklyBestForMap = GetWeeklyBestForMap or C_MythicPlus.GetWeeklyBestForMap
+local HasAvailableRewards = HasAvailableRewards or C_WeeklyRewards.HasAvailableRewards
+local HasGeneratedRewards = HasGeneratedRewards or C_WeeklyRewards.HasGeneratedRewards
+
+
+local affixIDs = C_MythicPlus.GetCurrentAffixes() -- tbl
+local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
+local seasonID = C_MythicPlus.GetCurrentUIDisplaySeason()
+local challengeMapId, level = C_MythicPlus.GetLastWeeklyBestInformation()
+-- local sequenceLevel = C_MythicPlus.GetEndOfRunGearSequenceLevel(keystoneLevel)
+
 local function Collect_GreatVault()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	----------------------------------------------------------------
+	local season = C_MythicPlus and C_MythicPlus.GetCurrentSeason()
+	if season == nil or season == false or season == 0 or season == -1 then
+	    E.MythicPlus_seasonID = 1
+	else
+	    E.MythicPlus_seasonID = season
+	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	E.name_activities = setmetatable({
@@ -30,38 +51,34 @@ local function Collect_GreatVault()
 			end
 	})
 	-- local numHeroic, numMythic, numMythicPlus = C_WeeklyRewards.GetNumCompletedDungeonRuns()
-	-- local hasGeneratedRewards = C_WeeklyRewards.HasGeneratedRewards()
-	-- local hasAvailableRewards = C_WeeklyRewards.HasAvailableRewards()
 	----------------------------------------------------------------
-	collectMASLENGO.GreatVault = collectMASLENGO.GreatVault or {}
-	wipe(collectMASLENGO.GreatVault)
-	-- collectPlayerData.RIO_Score = nil
-	-- collectPlayerData.RIO_weeklyBest = nil
-	-- collectPlayerData.HasAvailableRewards = nil
-	-- local canClaimRewards = C_WeeklyRewards.CanClaimRewards()
-	-- if not canClaimRewards then return end
-	-- C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
-	-- if WeeklyRewardsFrame then
-	-- WeeklyRewardsFrame:Show()
-	-- WeeklyRewardsFrame:Hide()
-	-- end
 	C_WeeklyRewards.OnUIInteract()
 	C_MythicPlus.RequestRewards()
 	C_MythicPlus.RequestMapInfo()
-	local mapChallengeModeIDs = C_ChallengeMode.GetMapTable()
-	local currentWeekBestLevel = C_MythicPlus.GetWeeklyChestRewardLevel() or 0
+	local mapChallengeModeIDs = GetMapTable()
+	local currentWeekBestLevel = GetWeeklyChestRewardLevel()
 	for i = 1, #mapChallengeModeIDs do
-		local _, level = C_MythicPlus.GetWeeklyBestForMap(mapChallengeModeIDs[i])
+		local _, level = GetWeeklyBestForMap(mapChallengeModeIDs[i])
 		if level and level > currentWeekBestLevel then
 			currentWeekBestLevel = level
 		end
 	end
 	local overallScore = C_ChallengeMode.GetOverallDungeonScore()
-	collectPlayerData.RIO_Score = (overallScore and overallScore ~= 0) and overallScore or nil
-	collectPlayerData.RIO_weeklyBest = (currentWeekBestLevel and currentWeekBestLevel ~= 0) and currentWeekBestLevel or nil
+
+
+	----------------------------------------------------------------
+	collectMASLENGO.GreatVault = collectMASLENGO.GreatVault or {}
+	wipe(collectMASLENGO.GreatVault)
+	collectPlayerData.MythicPlus = collectPlayerData.MythicPlus or {}
+	collectPlayerData.MythicPlus[E.MythicPlus_seasonID] = collectPlayerData.MythicPlus[E.MythicPlus_seasonID] or {}
+	collectPlayerData.MythicPlus[E.MythicPlus_seasonID].RIO_Score = E.func_Save(overallScore)
+	collectPlayerData.MythicPlus[E.MythicPlus_seasonID].RIO_weeklyBest = E.func_Save(currentWeekBestLevel)
+
+	-- collectPlayerData.RIO_Score = E.func_Save(overallScore)
+	-- collectPlayerData.RIO_weeklyBest = E.func_Save(currentWeekBestLevel)
 		----------------------------------------------------------------
 		if E.GW_Start then
-			 -- /run C_AddOns.LoadAddOn("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
+			-- /run C_AddOns.LoadAddOn("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
 			for name, ID in next, (Enum.WeeklyRewardChestThresholdType) do
 				local activities = C_WeeklyRewards.GetActivities(ID)
 				if activities[1] then
@@ -109,8 +126,9 @@ local function Collect_GreatVault()
 			end
 		end
 		----------------------------------------------------------------
-	local OwnedKeystoneLevel = C_MythicPlus.GetOwnedKeystoneLevel()
-	collectPlayerData.HasAvailableRewards = C_WeeklyRewards.HasAvailableRewards() or nil
+	collectPlayerData.HasAvailableRewards = E.func_Save(HasAvailableRewards())
+	collectPlayerData.HasGeneratedRewards = E.func_Save(HasGeneratedRewards())
+
 	--opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GreatVault)
 end
 ----------------------------------------------------------------

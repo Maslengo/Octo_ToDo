@@ -28,6 +28,10 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 -- },
 ----------------------------------------------------------------
+local OctoTable_bankTabs = E.OctoTable_bankTabs
+local OctoTable_Account_bankTabs = E.OctoTable_Account_bankTabs
+
+
 local function Collect_Items_BANK()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
@@ -37,25 +41,16 @@ local function Collect_Items_BANK()
 	C_Timer.After(0, function()
 			if not BankFrame or not BankFrame:IsShown() then return end
 			local usedSlots_BANK, totalSlots_BANK = 0, 0
-			local usedSlots_AccountBank, totalSlots_AccountBank = 0, 0
-			local keystoneFound = false
-			local ItemCounts_BANK = {}
+			----------------------------------------------------------------
+			collectMASLENGO.Items = collectMASLENGO.Items or {}
+			collectMASLENGO.Items.Bank = {}
 			----------------------------------------------------------------
 			-- ПРОВЕРКА
 			----------------------------------------------------------------
 			if not Enum.BagIndex or not Enum.BagIndex.CharacterBankTab_1 then return end
 			----------------------------------------------------------------
-			local bankTabs = {
-				-- Enum.BagIndex.CharacterBankTab, -- -2,  (classic?)
-				Enum.BagIndex.CharacterBankTab_1, -- 6,
-				Enum.BagIndex.CharacterBankTab_2, -- 7,
-				Enum.BagIndex.CharacterBankTab_3, -- 8,
-				Enum.BagIndex.CharacterBankTab_4, -- 9,
-				Enum.BagIndex.CharacterBankTab_5, -- 10,
-				Enum.BagIndex.CharacterBankTab_6, -- 11,
-			}
 			-- BANK
-			for _, bagID in next, (bankTabs) do
+			for _, bagID in next, (OctoTable_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
 					totalSlots_BANK = totalSlots_BANK + numSlots
@@ -66,29 +61,14 @@ local function Collect_Items_BANK()
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1
-							ItemCounts_BANK[itemID] = (ItemCounts_BANK[itemID] or 0) + stack
-							-- Keystone (по itemID, без строк)
-							if not keystoneFound and E.KeyStoneTBL[itemID] then
-								local link = info.hyperlink
-								if link then
-									local _, _, _, dungeonID, lvl = strsplit(":", link)
-									dungeonID = tonumber(dungeonID)
-									collectPlayerData.CurrentKeyLevel = tonumber(lvl)
-									collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungeonID)
-									keystoneFound = true
-								end
-							end
+							collectMASLENGO.Items.Bank[itemID] = (collectMASLENGO.Items.Bank[itemID] or 0) + stack
 						end
 					end
 				end
 			end
 			----------------------------------------------------------------
-			collectMASLENGO.Items = collectMASLENGO.Items or {}
-			collectMASLENGO.Items.Bank = {}
-			----------------------------------------------------------------
-			collectMASLENGO.Items.Bank = ItemCounts_BANK
-			collectPlayerData.usedSlots_BANK = usedSlots_BANK and usedSlots_BANK > 0 and usedSlots_BANK or nil
-			collectPlayerData.totalSlots_BANK = totalSlots_BANK and totalSlots_BANK > 0 and totalSlots_BANK or nil
+			collectPlayerData.usedSlots_BANK = E.func_Save(usedSlots_BANK)
+			collectPlayerData.totalSlots_BANK = E.func_Save(totalSlots_BANK)
 			----------------------------------------------------------------
 			-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Items)
 			----------------------------------------------------------------
@@ -102,25 +82,19 @@ local function Collect_Items_AccountBank()
 	----------------------------------------------------------------
 	C_Timer.After(0, function()
 			if not BankFrame or not BankFrame:IsShown() then return end
-			local usedSlots_BANK, totalSlots_BANK = 0, 0
 			local usedSlots_AccountBank, totalSlots_AccountBank = 0, 0
-			local keystoneFound = false
-			local ItemCounts_ACCOUNTBANK = {}
+			----------------------------------------------------------------
+			Octo_ToDo_DB_AccountData = Octo_ToDo_DB_AccountData or {}
+			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME]or {}
+			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = {}
 			----------------------------------------------------------------
 			-- ПРОВЕРКА
 			----------------------------------------------------------------
 			if C_Bank and C_Bank.FetchBankLockedReason and C_Bank.FetchBankLockedReason(Enum.BankType.Account) ~= nil then return end -- Банк заблокирован, не обрабатываем
 			----------------------------------------------------------------
 			-- ACCOUNT BANK
-			local Account_bankTabs = {
-				-- Enum.BagIndex.Accountbanktab, -- (такого нет? хотя есть в Enum)
-				Enum.BagIndex.AccountBankTab_1, -- 12
-				Enum.BagIndex.AccountBankTab_2, -- 13
-				Enum.BagIndex.AccountBankTab_3, -- 14
-				Enum.BagIndex.AccountBankTab_4, -- 15
-				Enum.BagIndex.AccountBankTab_5, -- 16
-			}
-			for _, bagID in next, (Account_bankTabs) do
+
+			for _, bagID in next, (OctoTable_Account_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
 					totalSlots_AccountBank = totalSlots_AccountBank + numSlots
@@ -131,19 +105,14 @@ local function Collect_Items_AccountBank()
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1
-							ItemCounts_ACCOUNTBANK[itemID] = (ItemCounts_ACCOUNTBANK[itemID] or 0) + stack
+							Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank[itemID] = (Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank[itemID] or 0) + stack
 						end
 					end
 				end
 			end
 			----------------------------------------------------------------
-			Octo_ToDo_DB_AccountData = Octo_ToDo_DB_AccountData or {}
-			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME]or {}
-			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = {}
-			----------------------------------------------------------------
-			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = ItemCounts_ACCOUNTBANK
-			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].usedSlots_AccountBank = usedSlots_AccountBank and usedSlots_AccountBank > 0 and usedSlots_AccountBank or nil
-			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].totalSlots_AccountBank = totalSlots_AccountBank and totalSlots_AccountBank > 0 and totalSlots_AccountBank or nil
+			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].usedSlots_AccountBank = E.func_Save(usedSlots_AccountBank)
+			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].totalSlots_AccountBank = E.func_Save(totalSlots_AccountBank)
 			----------------------------------------------------------------
 			-- opde(Octo_ToDo_DB_AccountData)
 			----------------------------------------------------------------

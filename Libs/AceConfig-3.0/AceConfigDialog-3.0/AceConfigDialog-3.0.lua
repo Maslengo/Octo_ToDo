@@ -581,7 +581,7 @@ do
 		frame.text = text
 
 		local function newButton(newText)
-			local button = CreateFrame("Button", nil, frame)
+			local button = CreateFrame("BUTTON", nil, frame)
 			button:SetSize(128, 21)
 			button:SetNormalFontObject(GameFontNormal)
 			button:SetHighlightFontObject(GameFontHighlight)

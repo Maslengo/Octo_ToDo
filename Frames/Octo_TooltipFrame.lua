@@ -1,8 +1,8 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
-local OctoTooltip = CreateFrame("BUTTON", "OctoTooltip", UIParent, "BackdropTemplate")
-OctoTooltip:Hide()
-E.func_RegisterFrame_SIMPLE(OctoTooltip)
+local Octo_TooltipFrame = CreateFrame("BUTTON", "Octo_TooltipFrame", UIParent, "BackdropTemplate")
+Octo_TooltipFrame:Hide()
+E.func_RegisterFrame_SIMPLE(Octo_TooltipFrame)
 EventFrame.measureFrame = CreateFrame("Frame")
 EventFrame.measureFrame:SetParent(UIParent)
 EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
@@ -35,10 +35,8 @@ local func_OnAcquired do
 		end
 	end
 	local function func_Create_highlightFrame(frame)
-		local highlightFrame = CreateFrame("Button", nil, OctoTooltip, "OctoHighlightAnimationTemplate")
-		highlightFrame:SetPropagateMouseClicks(true)
-		highlightFrame:SetPropagateMouseMotion(true)
-		highlightFrame:SetFrameLevel(frame:GetFrameLevel()+2)
+		local highlightFrame = CreateFrame("BUTTON", nil, Octo_TooltipFrame) -- , "OctoHighlightAnimationTemplate"
+		E.func_ApplyHighlightTemplate(highlightFrame, frame)
 		highlightFrame:SetHighlightAtlas("auctionhouse-ui-row-highlight", "ADD")
 		highlightFrame.TEXTURE_HIGHLIGHT = highlightFrame:GetHighlightTexture()
 		highlightFrame.TEXTURE_HIGHLIGHT:SetAlpha(.2)
@@ -175,27 +173,27 @@ function EventFrame:func_SmartAnchorTo(frame, point)
 	if not frame then
 		return error("Invalid frame provided.", 2)
 	end
-	OctoTooltip:ClearAllPoints()
+	Octo_TooltipFrame:ClearAllPoints()
 	if point then
 		local left, right = unpack(point)
-		OctoTooltip:SetPoint(left, frame, right)
+		Octo_TooltipFrame:SetPoint(left, frame, right)
 	else
-		OctoTooltip:SetPoint("TOPLEFT", frame, "TOPRIGHT")
+		Octo_TooltipFrame:SetPoint("TOPLEFT", frame, "TOPRIGHT")
 	end
 end
 local function TooltipOnEnter()
 	if EventFrame.shouldShowScrollBar then
-		OctoTooltip:Show()
-		OctoTooltip:SetPropagateMouseMotion(false)
+		Octo_TooltipFrame:Show()
+		Octo_TooltipFrame:SetPropagateMouseMotion(false)
 	else
-		OctoTooltip:SetPropagateMouseMotion(true)
+		Octo_TooltipFrame:SetPropagateMouseMotion(true)
 	end
 end
 local function TooltipOnLeave()
-	OctoTooltip:Hide()
+	Octo_TooltipFrame:Hide()
 end
 local function TooltipOnShow()
-	local scrollBar = OctoTooltip.ScrollBar
+	local scrollBar = Octo_TooltipFrame.ScrollBar
 	local shouldShow = EventFrame.shouldShowScrollBar
 	if shouldShow ~= scrollBar:IsShown() then
 		if shouldShow then
@@ -205,46 +203,46 @@ local function TooltipOnShow()
 		end
 	end
 end
-function EventFrame:Create_OctoTooltip()
-	OctoTooltip:SetBackdrop(E.menuBackdrop)
-	OctoTooltip:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA)
-	OctoTooltip:SetBackdropBorderColor(borderColorR, borderColorG, borderColorB, borderColorA)
+function EventFrame:Create_Octo_TooltipFrame()
+	Octo_TooltipFrame:SetBackdrop(E.menuBackdrop)
+	Octo_TooltipFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
+	Octo_TooltipFrame:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA)
 
 
-	OctoTooltip:SetPropagateMouseClicks(true)
-	OctoTooltip:SetPropagateMouseMotion(false)
-	OctoTooltip:SetHitRectInsets(-1, -1, -1, -1)
-	OctoTooltip:SetScript("OnEnter", TooltipOnEnter)
-	OctoTooltip:SetScript("OnLeave", TooltipOnLeave)
-	OctoTooltip:SetScript("OnShow", TooltipOnShow)
-	OctoTooltip:SetPoint("CENTER")
-	OctoTooltip:SetSize(SEPARATOR_HEIGHT, E.GLOBAL_LINE_HEIGHT)
-	OctoTooltip:SetClampedToScreen(true)
-	OctoTooltip:SetFrameStrata("TOOLTIP")
-	OctoTooltip.ScrollBox = CreateFrame("FRAME", nil, OctoTooltip, "WowScrollBoxList")
-	OctoTooltip.ScrollBox:SetAllPoints()
-	OctoTooltip.ScrollBox:SetPropagateMouseClicks(true)
-	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-	OctoTooltip.ScrollBox:SetPropagateMouseMotion(true)
-	OctoTooltip.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
-	OctoTooltip.ScrollBox:Layout()
-	OctoTooltip.ScrollBar = CreateFrame("EventFrame", nil, OctoTooltip, "MinimalScrollBar")
-	OctoTooltip.ScrollBar:SetPoint("TOPLEFT", OctoTooltip.ScrollBox, "TOPRIGHT", -15, -3)
-	OctoTooltip.ScrollBar:SetPoint("BOTTOMLEFT", OctoTooltip.ScrollBox, "BOTTOMRIGHT", -15, 3)
-	OctoTooltip.ScrollBar:SetPropagateMouseMotion(true)
-	OctoTooltip.ScrollBar.Back:SetPropagateMouseMotion(true)
-	OctoTooltip.ScrollBar.Forward:SetPropagateMouseMotion(true)
-	OctoTooltip.ScrollBar.Track:SetPropagateMouseMotion(true)
-	OctoTooltip.ScrollBar.Track.Thumb:SetPropagateMouseMotion(true)
-	OctoTooltip.view = CreateScrollBoxListTreeListView()
-	OctoTooltip.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	OctoTooltip.view:SetElementInitializer("BUTTON",
+	Octo_TooltipFrame:SetPropagateMouseClicks(true)
+	Octo_TooltipFrame:SetPropagateMouseMotion(false)
+	Octo_TooltipFrame:SetHitRectInsets(-1, -1, -1, -1)
+	Octo_TooltipFrame:SetScript("OnEnter", TooltipOnEnter)
+	Octo_TooltipFrame:SetScript("OnLeave", TooltipOnLeave)
+	Octo_TooltipFrame:SetScript("OnShow", TooltipOnShow)
+	Octo_TooltipFrame:SetPoint("CENTER")
+	Octo_TooltipFrame:SetSize(SEPARATOR_HEIGHT, E.GLOBAL_LINE_HEIGHT)
+	Octo_TooltipFrame:SetClampedToScreen(true)
+	Octo_TooltipFrame:SetFrameStrata("TOOLTIP")
+	Octo_TooltipFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_TooltipFrame, "WowScrollBoxList")
+	Octo_TooltipFrame.ScrollBox:SetAllPoints()
+	Octo_TooltipFrame.ScrollBox:SetPropagateMouseClicks(true)
+	Octo_TooltipFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
+	Octo_TooltipFrame.ScrollBox:SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.ScrollBox:Layout()
+	Octo_TooltipFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_TooltipFrame, "MinimalScrollBar")
+	Octo_TooltipFrame.ScrollBar:SetPoint("TOPLEFT", Octo_TooltipFrame.ScrollBox, "TOPRIGHT", -15, -3)
+	Octo_TooltipFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_TooltipFrame.ScrollBox, "BOTTOMRIGHT", -15, 3)
+	Octo_TooltipFrame.ScrollBar:SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.ScrollBar.Back:SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.ScrollBar.Forward:SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.ScrollBar.Track:SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.ScrollBar.Track.Thumb:SetPropagateMouseMotion(true)
+	Octo_TooltipFrame.view = CreateScrollBoxListTreeListView()
+	Octo_TooltipFrame.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
+	Octo_TooltipFrame.view:SetElementInitializer("BUTTON",
 		function(...)
 			self:Octo_Frame_init(...)
 	end)
-	OctoTooltip.view:RegisterCallback(OctoTooltip.view.Event.OnAcquiredFrame, func_OnAcquired, OctoTooltip)
-	ScrollUtil.InitScrollBoxListWithScrollBar(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar, OctoTooltip.view)
-	ScrollUtil.AddManagedScrollBarVisibilityBehavior(OctoTooltip.ScrollBox, OctoTooltip.ScrollBar)
+	Octo_TooltipFrame.view:RegisterCallback(Octo_TooltipFrame.view.Event.OnAcquiredFrame, func_OnAcquired, Octo_TooltipFrame)
+	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_TooltipFrame.ScrollBox, Octo_TooltipFrame.ScrollBar, Octo_TooltipFrame.view)
+	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_TooltipFrame.ScrollBox, Octo_TooltipFrame.ScrollBar)
 end
 local function calculateColumnWidths(node)
 	local frameData = node:GetData()
@@ -328,36 +326,36 @@ function EventFrame:CreateDataProvider(tbl)
 	if shouldShowScrollBar then
 		total_width = total_width + INDENT_SCROLL
 	end
-	OctoTooltip.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
+	Octo_TooltipFrame.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	local totalHeight = lines * E.GLOBAL_LINE_HEIGHT
 	if lines > MAX_DISPLAY_LINES then
 		totalHeight = E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES
 	elseif lines == 0 then
 		totalHeight = E.GLOBAL_LINE_HEIGHT
 	end
-	OctoTooltip:SetSize(total_width, totalHeight)
+	Octo_TooltipFrame:SetSize(total_width, totalHeight)
 end
-function E.func_OctoTooltip_OnEnter(frame, point, allwaysLeft)
+function E.func_Octo_TooltipFrame_OnEnter(frame, point, allwaysLeft)
 	if not frame.tooltip or #frame.tooltip == 0 then return end
 	if type(point) == "table" then
 		EventFrame:func_SmartAnchorTo(frame, point)
 	else
 		EventFrame:func_SmartAnchorTo(frame)
 	end
-	E.OctoTooltip_GLOBAL_TABLE = frame.tooltip
+	E.Octo_TooltipFrame_GLOBAL_TABLE = frame.tooltip
 	EventFrame:CreateDataProvider(frame.tooltip)
-	OctoTooltip:Show()
+	Octo_TooltipFrame:Show()
 	if not frame.initScripts then
 		frame.initScripts = true
 		frame:SetScript("OnLeave", function()
-				if not EventFrame.shouldShowScrollBar or not OctoTooltip:IsMouseOver() then
-					OctoTooltip:Hide()
-					E.OctoTooltip_GLOBAL_TABLE = nil
+				if not EventFrame.shouldShowScrollBar or not Octo_TooltipFrame:IsMouseOver() then
+					Octo_TooltipFrame:Hide()
+					E.Octo_TooltipFrame_GLOBAL_TABLE = nil
 				end
 		end)
 		frame:SetScript("OnHide", function()
-				OctoTooltip:Hide()
-				E.OctoTooltip_GLOBAL_TABLE = nil
+				Octo_TooltipFrame:Hide()
+				E.Octo_TooltipFrame_GLOBAL_TABLE = nil
 		end)
 	end
 end
@@ -369,8 +367,8 @@ E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	self:UnregisterEvent("VARIABLES_LOADED")
 	self.VARIABLES_LOADED = nil
-	self:Create_OctoTooltip()
+	self:Create_Octo_TooltipFrame()
 end
 function EventFrame:PLAYER_REGEN_DISABLED()
-	OctoTooltip:Hide()
+	Octo_TooltipFrame:Hide()
 end

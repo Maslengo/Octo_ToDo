@@ -14,7 +14,7 @@ function E.func_CreateMenuStyle()
 			frame:SetBackdrop(E.menuBackdrop)
 			frame:SetPoint("TOPLEFT", 8, -2)
 			frame:SetPoint("BOTTOMRIGHT", -8, 2)
-			frame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA) -- E.MAINBACKGROUND_ALPHA ПОФИКСИТЬ
+			frame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 			frame:SetBackdropBorderColor(0, 0, 0, 1)
 			return frame
 	end)
@@ -24,10 +24,11 @@ function E.func_SetBackdropStyle(frame, hex)
 	if not frame then return end
 	if not frame.isInit then
 		frame.isInit = true
-		local bgCr, bgCg, bgCb, bgCa = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.MAINBACKGROUND_ALPHA
-		local R1, G1, B1, A1 = E.func_Hex2RGBFloat(E.COLOR_FACTION)
+		tinsert(E.OctoFrames_Dropdowns, DropDown)
+		local bgCr, bgCg, bgCb, bgCa = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
+		local R1, G1, B1, A1 = E.func_Hex2RGBA(E.COLOR_FACTION)
 		if hex then
-			R1, G1, B1, A1 = E.func_Hex2RGBFloat(hex)
+			R1, G1, B1, A1 = E.func_Hex2RGBA(hex)
 		end
 		-- local R1, G1, B1, A1 = GetClassColor(E.classFilename)
 		frame:SetBackdrop(E.menuBackdrop)
@@ -35,15 +36,15 @@ function E.func_SetBackdropStyle(frame, hex)
 		-- frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
 		-- frame:SetBackdropBorderColor(0, 0, 0, 1)
 		frame:HookScript("OnEnter", function(self)
-				self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 				self:SetBackdropBorderColor(R1, G1, G1, 1)
 		end)
 		frame:HookScript("OnLeave", function(self)
-				self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 				self:SetBackdropBorderColor(0, 0, 0, 1)
 		end)
 		frame:SetScript("OnShow", function(self)
-				self:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
+				self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 				self:SetBackdropBorderColor(0, 0, 0, 1)
 		end)
 	end
@@ -51,9 +52,13 @@ end
 ----------------------------------------------------------------
 -- Общие функции
 ----------------------------------------------------------------
+E.OctoFrames_Dropdowns = {}
 local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2
 local function CreateBaseDropDown(frame, hex, providerfunc)
-	local DropDown = CreateFrame("Button", nil, frame, "BackDropTemplate")
+	local DropDown = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
+
+
+
 	DropDown:SetSize(LINE_WIDTH_LEFT, E.GLOBAL_LINE_HEIGHT)
 	E.func_SetBackdropStyle(DropDown, hex)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
@@ -682,24 +687,6 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 			ShowCreateProfileDialog(true)
 		end
 		self:ddAddButton(info, level)
-		-- self:ddAddSeparator(level)
-		-- info = {}
-		-- info.fontObject = OctoFont11
-		-- info.keepShownOnClick = false
-		-- info.notCheckable = true
-		-- info.text = E.DEBUG_TEXT.." Удалить Octo_profileKeys" -- ОТЛАДКА
-		-- info.func = function()
-		--     wipe(Octo_profileKeys)
-		--     Octo_profileKeys = {}
-		--     Octo_profileKeys.CurrentProfile = "Default"
-		--     Octo_profileKeys.isSettingsEnabled = false
-		--     Octo_profileKeys.useGlobalProfile = false
-		--     E.func_CreateNewProfile("Default")
-		--     C_Timer.After(1, function()
-		--             providerfunc()
-		--     end)
-		-- end
-		-- self:ddAddButton(info, level)
 	end
 end
 ----------------------------------------------------------------
@@ -732,22 +719,6 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.text = L["Profiles"]
 				info.value = L["Profiles"]
 				self:ddAddButton(info, level)
-				-- self:ddAddSeparator(level)
-				-- isSettingsEnabled
-				-- local info = {}
-				-- info.fontObject = OctoFont11
-				-- info.hasArrow = nil
-				-- info.hasArrowUp = nil
-				-- info.keepShownOnClick = true
-				-- info.notCheckable = false
-				-- info.isNotRadio = false
-				-- info.text = L["Settings mode"] -- "isSettingsEnabled"
-				-- info.checked = Octo_profileKeys.isSettingsEnabled
-				-- info.func = function(_, _, _, checked)
-				--     Octo_profileKeys.isSettingsEnabled = checked
-				--     providerfunc()
-				-- end
-				-- self:ddAddButton(info, level)
 			elseif level == 2 then
 				-- Роутинг на соответствующие меню
 				if value == L["Characters"] then

@@ -23,7 +23,6 @@ function E.func_Tooltip_Chars(CharInfo)
 	local usedSlots_BANK = pd.usedSlots_BANK
 	local totalSlots_BANK = pd.totalSlots_BANK
 	local numQuests = pd.numQuests or 0
-	local maxNumQuestsCanAccept = pd.maxNumQuestsCanAccept or 0
 	local realTotalTime = pd.realTotalTime or 0
 	local specIcon = pd.specIcon or 0
 	local specTexture = E.func_texturefromIcon(specIcon)
@@ -96,13 +95,6 @@ function E.func_Tooltip_Chars(CharInfo)
 	-- 		textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
 	-- 	end
 	-- 	tooltip[#tooltip + 1] = { textLeft, "" }
-	-- end
-
-
-	-- if maxNumQuestsCanAccept > 0 then
-	-- 	tooltip[#tooltip + 1] = {
-	-- 		E.func_texturefromIcon(236664)..QUESTS_LABEL..": "..classColorHex..numQuests.."/"..maxNumQuestsCanAccept.."|r"
-	-- 	}
 	-- end
 
 

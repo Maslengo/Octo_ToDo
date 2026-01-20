@@ -1,7 +1,12 @@
 local GlobalAddonName, E = ...
+
+
+
+
+
+
 ----------------------------------------------------------------
-local enable = false
-if not enable then return end
+if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 51
 ----------------------------------------------------------------
@@ -44,6 +49,4 @@ local function tempFunction()
 	end
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-C_Timer.After(1, function()
-	table.insert(E.Components, tempFunction)
-end)
+table.insert(E.Components, tempFunction)

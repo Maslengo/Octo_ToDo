@@ -3,27 +3,11 @@ local EventFrame = CreateFrame("FRAME")
 local funcName = GlobalAddonName.."WTF"
 local L = E.L
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
-E.OctoTable_Reputations_Paragon_Data_NEW = {}
-E.OctoTable_Reputations_Paragon_Data = {}
--- local function mergeTableIntoSet(tbl1, tbl2)
--- 	for itemID in next, (tbl2) do
--- 		tbl1[itemID] = true
--- 	end
--- end
 function EventFrame:func_CacheGameData()
 	----------------------------------------------------------------
 	-- E.DEBUG_START()
 	----------------------------------------------------------------
-	local E = E
-	local ALL_Items = E.ALL_Items
-	local ALL_Quests = E.ALL_Quests
-	local ALL_Reputations = E.ALL_Reputations
-	local OctoTable_Reputations_DB = E.OctoTable_Reputations_DB
-	local OctoTable_SlotMapping = E.OctoTable_SlotMapping
-	local Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels
 	local ALL_Currencies = E.ALL_Currencies
-	local AllNPCs_DB = E.OctoTable_AllNPCs_DB
-	local OctoTable_Currencies = E.OctoTable_Currencies
 	----------------------------------------------------------------
 	-- Сливаем таблицы предметов и квестов
 	local itemTables = {
@@ -31,71 +15,45 @@ function EventFrame:func_CacheGameData()
 		E.OctoTable_itemID_MECHAGON,
 		E.OctoTable_itemID_ALL,
 		E.OctoTable_itemID_Ignore_List,
-		E.OctoTable_itemID_ItemsDelete,
 		E.OctoTable_itemID_Cataloged_Research,
 		Octo_Cache_DB and Octo_Cache_DB.AllItems,
-	}
-	local questTables = {
-		E.OctoTable_QuestID_Paragon,
-		E.OctoTable_QuestID,
-		E.OctoTable_RemixInfinityResearch
 	}
 	-- Проход по предметам и квестам из таблиц
 	for i = 1, #itemTables do
 		local tbl = itemTables[i]
 		if tbl then
 			for id in next, tbl do
-				ALL_Items[id] = true
+				E.ALL_Items[id] = true
 			end
 		end
 	end
-	for i = 1, #questTables do
-		local tbl = questTables[i]
-		if tbl then
-			for qid in next, tbl do
-				ALL_Quests[qid] = true
-			end
-		end
-	end
-	-- Репутации и связанные квесты/предметы
-	for repID, data in next, OctoTable_Reputations_DB do
-		ALL_Reputations[repID] = true
-		if data.paragonQuest and data.itemCache then
-			local pq, ic = data.paragonQuest, data.itemCache
-			ALL_Quests[pq] = true
-			ALL_Items[ic] = true
-			E.OctoTable_Reputations_Paragon_Data_NEW[repID] = { paragonQuest = pq, itemCache = ic }
-			E.OctoTable_Reputations_Paragon_Data[pq] = { factionID = repID, cache = ic }
-		end
-	end
-	-- Валюта
-	for curID in next, (OctoTable_Currencies) do
-		ALL_Currencies[curID] = true
+	for questID in next, (E.OctoTable_QuestID) do
+		E.ALL_Quests[questID] = true
 	end
 	-- QuestLog квесты
 	local numQuests = C_QuestLog.GetNumQuestLogEntries()
 	for i = 1, numQuests do
 		local info = C_QuestLog.GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
-			ALL_Quests[info.questID] = true
+			E.ALL_Quests[info.questID] = true
 		end
 	end
 	-- Проход по персонажам и их инвентарю/квестам
-	for _, CharInfo in next, Octo_ToDo_DB_Levels do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo then
 			local pd = CharInfo.PlayerData
 			local cm = CharInfo.MASLENGO
 			if cm and cm.ListOfQuests then
 				for qid in next, cm.ListOfQuests do
-					ALL_Quests[qid] = true
+					E.ALL_Quests[qid] = true
 				end
 			end
-			if pd and pd.InventoryType then
-				local inv = pd.InventoryType
-				for slotID in next, OctoTable_SlotMapping do
+			if cm and cm.InventoryType then
+				local inv = cm.InventoryType
+				for slotID in next, (E.OctoTable_SlotMapping) do
 					local slot = inv[slotID]
 					if slot and slot.ItemID then
-						ALL_Items[slot.ItemID] = true
+						E.ALL_Items[slot.ItemID] = true
 					end
 				end
 			end
@@ -103,15 +61,15 @@ function EventFrame:func_CacheGameData()
 	end
 	----------------------------------------------------------------
 	-- Асинхронная загрузка
-	local promise = LibThingsLoad:QuestsByKey(ALL_Quests)
-	promise:AddItemsByKey(ALL_Items)
+	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
+	promise:AddItemsByKey(E.ALL_Items)
 	:ThenForAllWithCached(function(_, ID, type)
-		if type == "quest" then
-			E.func_GetQuestName(ID)
-		elseif type == "item" then
-			E.func_GetItemName(ID)
-			-- C_Item.GetItemQualityByID(ID)
-		end
+			if type == "quest" then
+				E.func_GetQuestName(ID)
+			elseif type == "item" then
+				E.func_GetItemName(ID)
+				-- C_Item.GetItemQualityByID(ID)
+			end
 	end)
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("func_CacheGameData")
@@ -123,7 +81,7 @@ function EventFrame:func_RemoveDuplicateCharacters()
 	local currentName = E.curCharName
 	local currentRealm = E.func_GetPlayerRealm()
 	local foundDuplicates = false
-	for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo and CharInfo.PlayerData
 		local cm = CharInfo and CharInfo.MASLENGO
 		if pd then
@@ -138,7 +96,7 @@ function EventFrame:func_RemoveDuplicateCharacters()
 		end
 	end
 	if foundDuplicates then
-		for GUID, CharInfo in pairs(Octo_ToDo_DB_Levels) do
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 			local pd = CharInfo and CharInfo.PlayerData
 			local cm = CharInfo and CharInfo.MASLENGO
 			if pd then
@@ -230,14 +188,9 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		loginHour = currentTime,
 		Name = "WTF:"..E.curCharName,
 		PlayerDurability = 100,
+		UnitSex = 1,
 	}
 	local MASLENGO_DEFAULTS = {
-		CovenantAndAnima = {
-			[1] = {},
-			[2] = {},
-			[3] = {},
-			[4] = {},
-		},
 		Currency = {},
 		GARRISON = {},
 		LegionRemixData = {},
@@ -266,7 +219,6 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 			inProgress = {},
 		},
 	}
-	MASLENGO_DEFAULTS.CovenantAndAnima.curCovID = nil
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		CharInfo.MASLENGO = CharInfo.MASLENGO or {}
 		CharInfo.PlayerData = CharInfo.PlayerData or {}
@@ -323,9 +275,6 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 		isOnlyCurrentServer = false,
 		Config_DebugID_ALL = false,
 		GlobalDBVersion = 0,
-		Config_REPUTATION_ALPHA = 0.4,
-		Config_CHARACTER_ALPHA = 0.1,
-		Config_MAINBACKGROUND_ALPHA = 0.8,
 		Config_UseTranslit = false,
 		Config_ShowAllDifficulties = false, -- E.Config_ShowAllDifficulties,
 		Config_DifficultyAbbreviation = true,
@@ -333,12 +282,177 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	for k, v in next, (featureDefaults) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
 	end
+	--------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors = Octo_ToDo_DB_Vars.Colors or {}
+	--------------------------------------------------------------------------------
+	-- ФРЕЙМ АДДОНА
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame = Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame or {r = 0.08, g = 0.08, b = 0.08, a = 0.8} -- Фон (Основной цвет фона интерфейса)
+	if Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG = false
+	end -- фон персонажа (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG = false
+	end -- фон персонажа (ПО КЛАССУ)
+
+
+
+
+
+
+
+
+	Octo_ToDo_DB_Vars.Colors.MAIN_Border = Octo_ToDo_DB_Vars.Colors.MAIN_Border or {r = 0, g = 0, b = 0, a = 1} -- Граница (Основной цвет границ интерфейса)
+	if Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG = false
+	end -- фон персонажа (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG = false
+	end -- фон персонажа (ПО КЛАССУ)
+
+
+
+
+
+
+
+	--------------------------------------------------------------------------------
+	-- TOOLTIP
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame = Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame or {r = 0.08, g = 0.08, b = 0.08, a = 1} -- Тултип (Основной цвет фона тултипа)
+	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG = false
+	end -- фон персонажа (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG = false
+	end -- ф
+
+
+
+
+
+	Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border = Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border or {r = 0, g = 0, b = 0, a = 1} -- Граница (Основной цвет границ интерфейса)
+	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG = false
+	end -- фон персонажа (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG = false
+	end -- фон персонажа (ПО КЛАССУ)
+
+
+
+
+
+
+
+
+
+
+	--------------------------------------------------------------------------------
+	-- ГРАДИЕНТ ЗНАЧЕНИЙ
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.TOOLTIP_min_RGBA = Octo_ToDo_DB_Vars.Colors.TOOLTIP_min_RGBA or E.func_Hex2ColorTable(E.COLOR_RED, 1)
+	Octo_ToDo_DB_Vars.Colors.TOOLTIP_mid_RGBA = Octo_ToDo_DB_Vars.Colors.TOOLTIP_mid_RGBA or E.func_Hex2ColorTable(E.COLOR_ORANGE, 1)
+	Octo_ToDo_DB_Vars.Colors.TOOLTIP_max_RGBA = Octo_ToDo_DB_Vars.Colors.TOOLTIP_max_RGBA or E.func_Hex2ColorTable(E.COLOR_GREEN, 1)
+
+	if Octo_ToDo_DB_Vars.TOOLTIP_usegradient == nil then
+		Octo_ToDo_DB_Vars.TOOLTIP_usegradient = true
+	end
+
+
+	--------------------------------------------------------------------------------
+	-- ПЕРСОНАЖ
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.CharLines = Octo_ToDo_DB_Vars.Colors.CharLines or {r = .5, g = .5, b = .5, a = .2} -- LINES персонажа
+	if Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG = false
+	end -- фон персонажа (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG = true
+	end -- фон персонажа (ПО КЛАССУ)
+
+	-- Octo_ToDo_DB_Vars.Colors.CharLines_Alpha = Octo_ToDo_DB_Vars.Colors.CharLines_Alpha or .2
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.CharHeader = Octo_ToDo_DB_Vars.Colors.CharHeader or {r = .5, g = .5, b = .5, a = .2} -- CharHeader персонажа
+
+	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG = true
+	end -- фон персонажа (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG = false
+	end -- фон персонажа (ПО КЛАССУ)
+
+	-- Octo_ToDo_DB_Vars.Colors.CharHeader_Alpha = Octo_ToDo_DB_Vars.Colors.CharHeader_Alpha or .2
+	--------------------------------------------------------------------------------
+	-- ХАЙЛАЙТ ТЕКСТУРА(текстура при mouseover)
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.Highlight = Octo_ToDo_DB_Vars.Colors.Highlight or {r = .5, g = .5, b = .5, a = .2} -- цвет хайлайта
+
+	if Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG = false
+	end -- цвет хайлайта (ПО ФРАКЦИИ)
+
+	if Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG == nil then
+	    Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG = false
+	end -- цвет хайлайта (ПО КЛАССУ)
+	-- Octo_ToDo_DB_Vars.Colors.Highlight_Alpha = Octo_ToDo_DB_Vars.Colors.Highlight_Alpha or .2
+	--------------------------------------------------------------------------------
+	-- РЕПУТАЦИЯ -- фон репутации
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard = Octo_ToDo_DB_Vars.Colors.Rep_Standard or {}
+	--------------------------------------------------------------------------------
+	-- Rep_Standard
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[1] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[1] or E.func_Hex2ColorTable(E.COLOR_RED, .5)
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[2] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[2] or E.func_Hex2ColorTable(E.COLOR_RED, .5)
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[3] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[3] or E.func_Hex2ColorTable(E.COLOR_ORANGE, .5)
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[4] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[4] or E.func_Hex2ColorTable(E.COLOR_YELLOW, .5) -- Разнодушие
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[5] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[5] or E.func_Hex2ColorTable(E.COLOR_YELLOW, .5)
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[6] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[6] or E.func_Hex2ColorTable(E.COLOR_GREEN, .5)
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[7] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[7] or E.func_Hex2ColorTable(E.COLOR_GREEN, .5)
+	Octo_ToDo_DB_Vars.Colors.Rep_Standard[8] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[8] or E.func_Hex2ColorTable(E.COLOR_GREEN, .5)
+	-- repType 2 isFriend -- FRIENDSHIP
+	Octo_ToDo_DB_Vars.Colors.Rep_Friend = Octo_ToDo_DB_Vars.Colors.Rep_Friend or E.func_Hex2ColorTable(E.COLOR_PINK, .5)
+	-- repType 3 isMajor -- MAJOR FACTION (RENOWN)
+	Octo_ToDo_DB_Vars.Colors.Rep_Major = Octo_ToDo_DB_Vars.Colors.Rep_Major or E.func_Hex2ColorTable(E.COLOR_BLUE, .5)
+	-- repType 4 isParagon -- PARAGON OVERLAY
+	Octo_ToDo_DB_Vars.Colors.Rep_Paragon = Octo_ToDo_DB_Vars.Colors.Rep_Paragon or E.func_Hex2ColorTable(E.COLOR_BLUE, .5)
+	--------------------------------------------------------------------------------
+	-- КОВЕНАНТ
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.KYRIAN = Octo_ToDo_DB_Vars.Colors.KYRIAN or E.func_Hex2ColorTable(E.COLOR_KYRIAN, 1)
+	Octo_ToDo_DB_Vars.Colors.VENTHYR = Octo_ToDo_DB_Vars.Colors.VENTHYR or E.func_Hex2ColorTable(E.COLOR_VENTHYR, 1)
+	Octo_ToDo_DB_Vars.Colors.NIGHTFAE = Octo_ToDo_DB_Vars.Colors.NIGHTFAE or E.func_Hex2ColorTable(E.COLOR_NIGHTFAE, 1)
+	Octo_ToDo_DB_Vars.Colors.NECROLORD = Octo_ToDo_DB_Vars.Colors.NECROLORD or E.func_Hex2ColorTable(E.COLOR_NECROLORD, 1)
+	--------------------------------------------------------------------------------
+	-- FACTION COLOR
+	--------------------------------------------------------------------------------
+	Octo_ToDo_DB_Vars.Colors.faction_Horde = Octo_ToDo_DB_Vars.Colors.faction_Horde or E.func_Hex2ColorTable("|cffC41E3A", 1)
+	Octo_ToDo_DB_Vars.Colors.faction_Alliance = Octo_ToDo_DB_Vars.Colors.faction_Alliance or E.func_Hex2ColorTable("|cff0070DD", 1)
+	Octo_ToDo_DB_Vars.Colors.faction_Neutral = Octo_ToDo_DB_Vars.Colors.faction_Neutral or E.func_Hex2ColorTable(E.Class_Monk_Color, 1)
+	--------------------------------------------------------------------------------
+	-- opde(Octo_ToDo_DB_Vars)
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffd177ffE|r|cffcb7afdx|r|cffc47cfbp|r|cffbe7ffar|r|cffb782f8e|r|cffb184f6s|r|cffaa87f4s|r|cffa48af2w|r|cff9d8cf0a|r|cff978fefy|r|cff9091ed |r|cff8a94ebR|r|cff8397e9g|r|cff7d99e7 |r|cff769ce5B|r|cff709fe4o|r|cff69a1e2l|r|cff63A4E0d|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
+
+function E.init_Octo_ToDo_DB_Vars()
+	EventFrame:init_Octo_ToDo_DB_Vars()
+	return
+end
+
+
+
 function EventFrame:Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB.interfaceVersion = E.interfaceVersion
@@ -416,9 +530,8 @@ function EventFrame:func_Weekly_Reset()
 				if cm.GreatVault and cm.GreatVault.NextWeekReward then
 					pd.HasAvailableRewards = true
 				end
-				pd.CurrentKey = nil
-				pd.CurrentKeyName = nil
-				pd.CurrentKeyLevel = nil
+				pd.OwnedKeystoneLevel = nil
+				pd.OwnedKeystoneChallengeMapID = nil
 				pd.RIO_weeklyBest = nil
 				cm.journalInstance = {}
 				cm.SavedWorldBoss = {}
@@ -487,46 +600,6 @@ function EventFrame:func_ScheduleResetTimer()
 		end)
 	end
 end
-function EventFrame:func_UpdateGlobals()
-	if Octo_ToDo_DB_Vars then
-		if Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT then
-			E.GLOBAL_LINE_HEIGHT = Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
-			E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
-			E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
-			E.ddMenuButtonHeight = E.GLOBAL_LINE_HEIGHT
-		end
-		Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
-		Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-		if Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle then
-			E.func_UpdateFont()
-		end
-		if Octo_ToDo_DB_Vars.Config_DebugID_ALL ~= nil then
-			E.Config_DebugID_ALL = Octo_ToDo_DB_Vars.Config_DebugID_ALL
-		end
-		if Octo_ToDo_DB_Vars.Config_SPAM_TIME ~= nil then
-			E.SPAM_TIME = Octo_ToDo_DB_Vars.Config_SPAM_TIME
-		end
-		if Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA ~= nil then
-			E.REPUTATION_ALPHA = Octo_ToDo_DB_Vars.Config_REPUTATION_ALPHA
-		end
-		if Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA ~= nil then
-			E.CHARACTER_ALPHA = Octo_ToDo_DB_Vars.Config_CHARACTER_ALPHA
-		end
-		if Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA ~= nil then
-			E.MAINBACKGROUND_ALPHA = Octo_ToDo_DB_Vars.Config_MAINBACKGROUND_ALPHA
-		end
-		if Octo_ToDo_DB_Vars.Config_UseTranslit ~= nil then
-			E.Config_UseTranslit = Octo_ToDo_DB_Vars.Config_UseTranslit
-		end
-		if Octo_ToDo_DB_Vars.Config_ShowAllDifficulties ~= nil then
-			E.Config_ShowAllDifficulties = Octo_ToDo_DB_Vars.Config_ShowAllDifficulties
-		end
-		if Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation ~= nil then
-			E.Config_DifficultyAbbreviation = Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation
-		end
-	end
-	E.func_UpdateCurrentProfile()
-end
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"VARIABLES_LOADED",
@@ -547,7 +620,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	EventFrame:init_Octo_profileKeys()
-	EventFrame:func_UpdateGlobals()
+	E.func_UpdateGlobals()
 end
 function EventFrame:VARIABLES_LOADED()
 	EventFrame:func_CheckAll()
@@ -556,8 +629,7 @@ function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CacheGameData()
 	self:func_ScheduleResetTimer()
 	E.Cache_All_EventNames_Year()
-	C_Timer.After(1, E.func_UpdateFont)
-	EventFrame:func_UpdateGlobals()
+	C_Timer.After(1, E.func_UpdateGlobals)
 end
 local function Reset_JournalInstance()
 	local ServerTime = GetServerTime()

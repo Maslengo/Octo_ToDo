@@ -28,7 +28,11 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 -- },
 ----------------------------------------------------------------
-E.ItemInfoCache_BAGS = E.ItemInfoCache_BAGS or {}
+-- local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
+local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
+local OctoTable_PlayerBags = E.OctoTable_PlayerBags
+
+
 local function Collect_Items_BAGS()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
@@ -37,89 +41,67 @@ local function Collect_Items_BAGS()
 	----------------------------------------------------------------
 	if not collectPlayerData or not collectMASLENGO then return end
 	local usedSlots_BAGS, totalSlots_BAGS = 0, 0
-	local Possible_Anima, Possible_CatalogedResearch = 0, 0
-	local keystoneFound = false
-	local ItemCounts_BAGS = {}
-	local PlayerBags = {
-		Enum.BagIndex.Keyring, -- -1, (no need in retail?)
-		Enum.BagIndex.Backpack, -- 0,
-		Enum.BagIndex.Bag_1, -- 1,
-		Enum.BagIndex.Bag_2, -- 2,
-		Enum.BagIndex.Bag_3, -- 3,
-		Enum.BagIndex.Bag_4, -- 4,
-		Enum.BagIndex.ReagentBag, -- 5,
-	}
-	for _, bagID in next, (PlayerBags) do
+	local SL_Possible_Anima, SL_Possible_CatalogedResearch = 0, 0
+	collectMASLENGO.Items = collectMASLENGO.Items or {}
+	collectMASLENGO.Items.Bags = {}
+
+	local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
+
+
+
+	for _, bagID in next, (OctoTable_PlayerBags) do
 	-- for bagID = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = C_Container.GetContainerNumSlots(bagID)
 		if numSlots > 0 then
-			totalSlots_BAGS = totalSlots_BAGS + numSlots
+			totalSlots_BAGS = totalSlots_BAGS+numSlots
 			local free, bagType = C_Container.GetContainerNumFreeSlots(bagID)
 			if bagType == 0 then
-				usedSlots_BAGS = usedSlots_BAGS + (numSlots - free)
+				usedSlots_BAGS = usedSlots_BAGS+(numSlots - free)
 			end
 			for slot = 1, numSlots do
 				local info = C_Container.GetContainerItemInfo(bagID, slot)
 				if info then
 					local itemID = info.itemID
 					local stack = info.stackCount or 1
-					ItemCounts_BAGS[itemID] = (ItemCounts_BAGS[itemID] or 0) + stack
-					-- Keystone (по itemID, без строк)
-					if not keystoneFound and E.KeyStoneTBL[itemID] then
-						local link = info.hyperlink
-						if link then
-							local _, _, _, dungeonID, lvl = strsplit(":", link)
-							local dungID = tonumber(dungeonID)
-							collectPlayerData.CurrentKeyLevel = tonumber(lvl)
-							collectPlayerData.CurrentKeyName = C_ChallengeMode.GetMapUIInfo(dungID)
-							keystoneFound = true
-						end
-					end
+					collectMASLENGO.Items.Bags[itemID] = (collectMASLENGO.Items.Bags[itemID] or 0)+stack
 					-- Cataloged Research
 					local researchValue = E.OctoTable_itemID_Cataloged_Research[itemID]
 					if researchValue then
-						Possible_CatalogedResearch = Possible_CatalogedResearch + (researchValue * stack)
+						SL_Possible_CatalogedResearch = SL_Possible_CatalogedResearch+(researchValue*stack)
 					end
 					-- Anima
 					if E.func_IsAnimaItemByID(itemID) then
 						local quality = info.quality
 						if itemID == 183727 then
-							Possible_Anima = Possible_Anima + (3 * stack)
+							SL_Possible_Anima = SL_Possible_Anima+(3*stack)
 						elseif quality == 2 then
-							Possible_Anima = Possible_Anima + (5 * stack)
+							SL_Possible_Anima = SL_Possible_Anima+(5*stack)
 						elseif quality == 3 then
-							Possible_Anima = Possible_Anima + (35 * stack)
+							SL_Possible_Anima = SL_Possible_Anima+(35*stack)
 						elseif quality == 4 then
-							Possible_Anima = Possible_Anima + (250 * stack)
+							SL_Possible_Anima = SL_Possible_Anima+(250*stack)
 						end
 					end
 					-- Usable items cache
-					if not E.OctoTable_itemID_ItemsUsable[itemID] then
-						local cached = E.ItemInfoCache_BAGS[itemID]
-						if not cached then
-							local _, _, _, _, _, itemType, subType = C_Item.GetItemInfo(itemID)
-							cached = { itemType, subType }
-							E.ItemInfoCache_BAGS[itemID] = cached
-						end
-						local itemType, subType = cached[1], cached[2]
+					if OctoTable_itemID_ItemsUsable and not OctoTable_itemID_ItemsUsable[itemID] then
+						-- local _, _, _, _, _, itemType, itemSubType = GetItemInfo(itemID)
+						local _, itemType, itemSubType = GetItemInfoInstant(itemID)
 						if itemType == AUCTION_CATEGORY_HOUSING
 						or itemType == BINDING_HEADER_HOUSING_SYSTEM
-						or subType == HOUSING_ITEM_TOAST_TYPE_DECOR
-						or subType == CATALOG_SHOP_TYPE_DECOR
-						or subType == MOUNTS then
-							E.OctoTable_itemID_ItemsUsable[itemID] = 1
+						or itemSubType == HOUSING_ITEM_TOAST_TYPE_DECOR
+						or itemSubType == CATALOG_SHOP_TYPE_DECOR
+						or itemSubType == MOUNTS then
+							OctoTable_itemID_ItemsUsable[itemID] = 1
 						end
 					end
 				end
 			end
 		end
 	end
-	-- collectMASLENGO.Items = collectMASLENGO.Items or {}
-	-- collectMASLENGO.Items.Bags = {}
-	wipe(collectMASLENGO.Items.Bags or {})
-	collectMASLENGO.Items.Bags = ItemCounts_BAGS
-	collectPlayerData.Possible_Anima = Possible_Anima ~= 0 and Possible_Anima or nil
-	collectPlayerData.Possible_CatalogedResearch = Possible_CatalogedResearch ~= 0 and Possible_CatalogedResearch or nil
+
+	-- wipe(collectMASLENGO.Items.Bags or {})
+	collectPlayerData.SL_Possible_Anima = SL_Possible_Anima ~= 0 and SL_Possible_Anima or nil
+	collectPlayerData.SL_Possible_CatalogedResearch = SL_Possible_CatalogedResearch ~= 0 and SL_Possible_CatalogedResearch or nil
 	collectPlayerData.usedSlots_BAGS = usedSlots_BAGS
 	collectPlayerData.totalSlots_BAGS = totalSlots_BAGS
 	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Items)

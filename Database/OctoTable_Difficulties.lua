@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 -- https://warcraft.wiki.gg/wiki/DifficultyID
 ----------------------------------------------------------------
-E.OctoTable_DifficultyTable = {
+E.OctoTable_Difficulties = {
 	-- 1. Looking For Raid / Story
 	[151] = {prior = 1, abbr = "LFR"}, -- Looking For Raid (Timewalking)
 	[17] = {prior = 2, abbr = "LFR"}, -- Looking For Raid
@@ -55,13 +55,13 @@ E.OctoTable_DifficultyTable = {
 	[19] = {prior = 35, abbr = "E"}, -- Event (party)
 
 	-- 9. Other scenarios / dungeons
-	[152] = {prior = 36, abbr = "V"}, -- Visions of N'Zoth
+	[152] = {prior = 36, abbr = "VoN"}, -- Visions of N'Zoth
 	[153] = {prior = 37, abbr = "TI"}, -- Teeming Island
-	[167] = {prior = 38, abbr = "T"}, -- Torghast
-	[168] = {prior = 39, abbr = "PoA"}, -- Path of Ascension: Courage
-	[169] = {prior = 40, abbr = "PoA"}, -- Path of Ascension: Loyalty
-	[170] = {prior = 41, abbr = "PoA"}, -- Path of Ascension: Wisdom
-	[171] = {prior = 42, abbr = "PoA"}, -- Path of Ascension: Humility
+	[167] = {prior = 38, abbr = "Torg"}, -- Torghast
+	[168] = {prior = 39, abbr = "PoA:C"}, -- Path of Ascension: Courage
+	[169] = {prior = 40, abbr = "PoA:L"}, -- Path of Ascension: Loyalty
+	[170] = {prior = 41, abbr = "PoA:W"}, -- Path of Ascension: Wisdom
+	[171] = {prior = 42, abbr = "PoA:H"}, -- Path of Ascension: Humility
 	[208] = {prior = 43, abbr = "D"}, -- Delves
 	[172] = {prior = 44, abbr = "WB"}, -- World Boss
 	[192] = {prior = 45, abbr = "CL1"}, -- Challenge Level 1

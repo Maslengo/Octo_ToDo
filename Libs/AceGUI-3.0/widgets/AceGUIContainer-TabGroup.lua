@@ -236,7 +236,7 @@ local methods = {
 
 	["CreateTab"] = function(self, id)
 		local tabname = ("AceGUITabGroup%dTab%d"):format(self.num, id)
-		local tab = CreateFrame("Button", tabname, self.border)
+		local tab = CreateFrame("BUTTON", tabname, self.border)
 		tab:SetSize(115, 24)
 		tab.deselectedTextY = -3
 		tab.selectedTextY = -2

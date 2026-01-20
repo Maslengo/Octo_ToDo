@@ -1,7 +1,12 @@
 local GlobalAddonName, E = ...
+
+
+
+
+
+
 ----------------------------------------------------------------
-local enable = false
-if not enable then return end
+if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 52
 ----------------------------------------------------------------
@@ -35,6 +40,7 @@ local function tempFunction()
 	----------------------------------------------------------------
 	local sorted = {}
 	for id in next, (E.OctoTable_Reputations_DB) do
+	-- for id in next, (E.OctoTable_itemID_ALL) do
 		tinsert(sorted, id)
 	end
 	table.sort(sorted, E.func_ReversSort)
@@ -43,5 +49,4 @@ local function tempFunction()
 	end
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
-
 table.insert(E.Components, tempFunction)

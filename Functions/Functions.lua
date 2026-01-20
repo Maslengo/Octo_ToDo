@@ -84,6 +84,28 @@ local GetMountInfoByID = C_MountJournal.GetMountInfoByID
 local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
 local GetMountFromItem = C_MountJournal.GetMountFromItem
 ----------------------------------------------------------------
+local GetCurrentAffixes = GetCurrentAffixes or C_MythicPlus.GetCurrentAffixes
+local GetCurrentSeason = GetCurrentSeason or C_MythicPlus.GetCurrentSeason
+local GetCurrentSeasonValues = GetCurrentSeasonValues or C_MythicPlus.GetCurrentSeasonValues
+local GetCurrentUIDisplaySeason = GetCurrentUIDisplaySeason or C_MythicPlus.GetCurrentUIDisplaySeason
+local GetEndOfRunGearSequenceLevel = GetEndOfRunGearSequenceLevel or C_MythicPlus.GetEndOfRunGearSequenceLevel
+local GetLastWeeklyBestInformation = GetLastWeeklyBestInformation or C_MythicPlus.GetLastWeeklyBestInformation
+local GetOwnedKeystoneChallengeMapID = GetOwnedKeystoneChallengeMapID or C_MythicPlus.GetOwnedKeystoneChallengeMapID
+local GetOwnedKeystoneLevel = GetOwnedKeystoneLevel or C_MythicPlus.GetOwnedKeystoneLevel
+local GetOwnedKeystoneMapID = GetOwnedKeystoneMapID or C_MythicPlus.GetOwnedKeystoneMapID
+local GetRewardLevelForDifficultyLevel = GetRewardLevelForDifficultyLevel or C_MythicPlus.GetRewardLevelForDifficultyLevel
+local GetRewardLevelFromKeystoneLevel = GetRewardLevelFromKeystoneLevel or C_MythicPlus.GetRewardLevelFromKeystoneLevel
+local GetRunHistory = GetRunHistory or C_MythicPlus.GetRunHistory
+local GetSeasonBestAffixScoreInfoForMap = GetSeasonBestAffixScoreInfoForMap or C_MythicPlus.GetSeasonBestAffixScoreInfoForMap
+local GetSeasonBestForMap = GetSeasonBestForMap or C_MythicPlus.GetSeasonBestForMap
+local GetSeasonBestMythicRatingFromThisExpansion = GetSeasonBestMythicRatingFromThisExpansion or C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion
+local GetWeeklyBestForMap = GetWeeklyBestForMap or C_MythicPlus.GetWeeklyBestForMap
+local GetWeeklyChestRewardLevel = GetWeeklyChestRewardLevel or C_MythicPlus.GetWeeklyChestRewardLevel
+local IsMythicPlusActive = IsMythicPlusActive or C_MythicPlus.IsMythicPlusActive
+local RequestCurrentAffixes = RequestCurrentAffixes or C_MythicPlus.RequestCurrentAffixes
+local RequestMapInfo = RequestMapInfo or C_MythicPlus.RequestMapInfo
+local RequestRewards = RequestRewards or C_MythicPlus.RequestRewards
+----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
@@ -168,18 +190,6 @@ function E.func_GetSpellCooldown(spellID)
 	end
 	return E.func_CompactRoundNumber(result)
 end
-function E.func_Hex2RGB(hex)
-	hex = hex:gsub("|cff", "")
-	return tonumber("0x"..hex:sub(1, 2)), tonumber("0x"..hex:sub(3, 4)), tonumber("0x"..hex:sub(5, 6))
-end
-function E.func_Hex2RGBFloat(hex)
-	if hex and hex ~= "" then
-		hex = hex:gsub("|cff", "")
-		return tonumber("0x"..hex:sub(1, 2))/255, tonumber("0x"..hex:sub(3, 4))/255, tonumber("0x"..hex:sub(5, 6))/255, 1
-	else
-		return 1, 1, 1
-	end
-end
 function E.func_RGB2Hex(r, g, b, a)
 	local r = r or 1
 	local g = g or 1
@@ -189,6 +199,22 @@ function E.func_RGB2Hex(r, g, b, a)
 		a = 1
 	end
 	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+end
+function E.func_Hex2RGBA(hex)
+	if not hex or hex == "" or not hex:match("^|c") or #hex < 10 then
+		return 1, 1, 1, 1
+	end
+	-- Формат: |cAARRGGBB
+	-- Берем только hex часть после |c (10 символов всего)
+	local a = tonumber(hex:sub(3, 4), 16) or 255  -- AA
+	local r = tonumber(hex:sub(5, 6), 16) or 255  -- RR
+	local g = tonumber(hex:sub(7, 8), 16) or 255  -- GG
+	local b = tonumber(hex:sub(9, 10), 16) or 255 -- BB
+	return r/255, g/255, b/255, a/255
+end
+function E.func_Hex2ColorTable(hex, forcedAlpha)
+	local r, g, b, a = E.func_Hex2RGBA(hex)
+	return {r = r, g = g, b = b, a = forcedAlpha or a}
 end
 function E.func_RGB2HexString(r, g, b, a)
 	local r, g, b, a = r, g, b, a
@@ -227,26 +253,18 @@ function E.func_FormatCoordinates(x, y)
 	end
 	return string.format("%.1f / %.1f", x * 100, y * 100)
 end
-
-
 function E.func_UnpackCoordinates(packed)
-    if not packed or packed == 0 then
-        return nil, nil
-    end
-
-    local packedStr = tostring(packed)
-    if #packedStr ~= 8 then
-        return nil, nil
-    end
-
-    local x = tonumber(packedStr:sub(1, 4)) / 10000
-    local y = tonumber(packedStr:sub(5, 8)) / 10000
-
-    return x, y  -- Возвращаем ДВА ЧИСЛА
+	if not packed or packed == 0 then
+		return nil, nil
+	end
+	local packedStr = tostring(packed)
+	if #packedStr ~= 8 then
+		return nil, nil
+	end
+	local x = tonumber(packedStr:sub(1, 4)) / 10000
+	local y = tonumber(packedStr:sub(5, 8)) / 10000
+	return x, y  -- Возвращаем ДВА ЧИСЛА
 end
-
-
-
 function E.func_ReversSort(a, b)
 	return b < a
 end
@@ -326,11 +344,6 @@ function E.func_TableConcat(table1, table2) -- func_ArrayConcatUnsafe
 	end
 	return table1
 end
-
-
-
-
-
 function E.func_MergeTables(table1, table2)
 	for k, v in next, (table2) do
 		table1[k] = v
@@ -423,7 +436,7 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					if not InCombatLockdown() then
-						Octo_profileKeys.isSettingsEnabled = false
+						Octo_profileKeys.isSettingsEnabled = nil
 						if frame then
 							if func then
 								func()
@@ -441,14 +454,7 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 						end
 					end
 				elseif button == "RightButton" then
-					if frame and frame:IsShown() then
-						frame:Hide()
-					end
-					if SettingsPanel:IsVisible() then
-						HideUIPanel(SettingsPanel)
-					else
-						Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
-					end
+					E.func_OpenToCategory(frame)
 				end
 			end,
 			OnTooltipShow = function(tooltip)
@@ -471,20 +477,20 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, Saved_Variables.LibDataBroker)
 end
 function E.func_Gradient(text, firstColor, secondColor)
-	if not firstColor then firstColor = "|cffD177FF" end
-	if not secondColor then secondColor = "|cff63A4E0" end
+	if not firstColor then firstColor = E.COLOR_ADDON_LEFT or "|cffD177FF" end
+	if not secondColor then secondColor = E.COLOR_ADDON_RIGHT or "|cff63A4E0" end
 	local result = ""
 	local str = ""
 	local total = utf8len(text)-1
 	if total > 0 then
-		local r1, g1, b1 = E.func_Hex2RGB(firstColor)
-		local r2, g2, b2 = E.func_Hex2RGB(secondColor)
+		local r1, g1, b1 = E.func_Hex2RGBA(firstColor)
+		local r2, g2, b2 = E.func_Hex2RGBA(secondColor)
 		local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
 		local r3 = r1
 		local g3 = g1
 		local b3 = b1
 		for i = 1, total do
-			str = str..("|cff%02x%02x%02x%s|r"):format(math.floor(r3+.5), math.floor(g3+.5), math.floor(b3+.5), utf8sub(text, i, i))
+			str = str..E.func_RGB2Hex(r3, g3, b3)..utf8sub(text, i, i).."|r"
 			r3 = r3 + rdelta
 			g3 = g3 + gdelta
 			b3 = b3 + bdelta
@@ -589,42 +595,55 @@ function E.func_SortCharacters()
 	return sorted
 end
 ----------------------------------------------------------------
-function E.func_GetColorGradient(value, minValue, maxValue, minHex, midHex, maxHex)
-	local UseOnlyTwoColor = false -- (min and max)
-	-- дефолты на случай кривых рук
-	minHex = minHex or E.COLOR_RED
-	midHex = midHex or E.COLOR_YELLOW
-	maxHex = maxHex or E.COLOR_GREEN -- or E.COLOR_WHITE
-	if not value or not minValue or not maxValue or minValue >= maxValue then
-		return maxHex
+function E.func_GetColorGradient(value, minValue, maxValue)
+	if Octo_ToDo_DB_Vars.TOOLTIP_usegradient == nil or Octo_ToDo_DB_Vars.TOOLTIP_usegradient == false then
+		return E.COLOR_WHITE
 	end
+	-- Проверяем, что цвета есть в БД
+	local colors = Octo_ToDo_DB_Vars.Colors
+	if not value
+		or not minValue
+		or not maxValue
+		or not colors
+		or not colors.TOOLTIP_min_RGBA
+		or not colors.TOOLTIP_mid_RGBA
+		or not colors.TOOLTIP_max_RGBA
+		then
+			return E.COLOR_GREEN
+		end
+	if minValue >= maxValue then
+		return E.func_RGB2Hex(colors.TOOLTIP_max_RGBA.r, colors.TOOLTIP_max_RGBA.g, colors.TOOLTIP_max_RGBA.b, colors.TOOLTIP_max_RGBA.a)
+	end
+	-- Нормализуем значение
 	local p = (value - minValue) / (maxValue - minValue)
 	if p < 0 then p = 0 end
 	if p > 1 then p = 1 end
-	local r1, g1, b1
-	local r2, g2, b2
-	local t
+	local UseOnlyTwoColor = false
+	local r1, g1, b1, r2, g2, b2, t
 	if UseOnlyTwoColor then
-		-- Используем только начальный и конечный цвета
-		r1, g1, b1 = E.func_Hex2RGB(minHex)
-		r2, g2, b2 = E.func_Hex2RGB(maxHex)
-		t = p -- используем полный диапазон от 0 до 1
+		-- Два цвета: min -> max
+		r1, g1, b1 = colors.TOOLTIP_min_RGBA.r, colors.TOOLTIP_min_RGBA.g, colors.TOOLTIP_min_RGBA.b
+		r2, g2, b2 = colors.TOOLTIP_max_RGBA.r, colors.TOOLTIP_max_RGBA.g, colors.TOOLTIP_max_RGBA.b
+		t = p
 	else
-		-- Оригинальная логика с тремя цветами
+		-- Три цвета: min -> mid -> max
 		if p < 0.5 then
-			r1, g1, b1 = E.func_Hex2RGB(minHex)
-			r2, g2, b2 = E.func_Hex2RGB(midHex)
+			r1, g1, b1 = colors.TOOLTIP_min_RGBA.r, colors.TOOLTIP_min_RGBA.g, colors.TOOLTIP_min_RGBA.b
+			r2, g2, b2 = colors.TOOLTIP_mid_RGBA.r, colors.TOOLTIP_mid_RGBA.g, colors.TOOLTIP_mid_RGBA.b
 			t = p * 2
 		else
-			r1, g1, b1 = E.func_Hex2RGB(midHex)
-			r2, g2, b2 = E.func_Hex2RGB(maxHex)
+			r1, g1, b1 = colors.TOOLTIP_mid_RGBA.r, colors.TOOLTIP_mid_RGBA.g, colors.TOOLTIP_mid_RGBA.b
+			r2, g2, b2 = colors.TOOLTIP_max_RGBA.r, colors.TOOLTIP_max_RGBA.g, colors.TOOLTIP_max_RGBA.b
 			t = (p - 0.5) * 2
 		end
 	end
-	local r = math.floor(Lerp(r1, r2, t))
-	local g = math.floor(Lerp(g1, g2, t))
-	local b = math.floor(Lerp(b1, b2, t))
-	return string.format("|cff%02x%02x%02x", r, g, b)
+	-- Интерполяция и конвертация в 0-255
+	local r = math.floor(Lerp(r1, r2, t) * 255 + 0.5)
+	local g = math.floor(Lerp(g1, g2, t) * 255 + 0.5)
+	local b = math.floor(Lerp(b1, b2, t) * 255 + 0.5)
+	-- return string.format("|cff%02x%02x%02x", r, g, b)
+	local result = E.func_RGB2Hex(r/255, g/255, b/255, 1)
+	return result
 end
 ----------------------------------------------------------------
 function E.func_CleanTable(tbl)
@@ -688,7 +707,6 @@ function E.func_CleanDeepTable(t, rules)
 	return next(t) == nil
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
 function E.func_SetOrNil(tbl, key, val)
 	tbl[key] = (val and val ~= 0) and val or nil
 end
@@ -743,11 +761,12 @@ function E.func_RemoveZeroValues(tbl, smth)
 		return tbl
 	end
 end
+----------------------------------------------------------------
 -- Функция глубокого копирования таблицы
 function E.func_CopyTableDeep(orig)
 	local orig_type = type(orig)
 	local copy
-	if orig_type == 'table' then
+	if orig_type == "table" then
 		copy = {}
 		for orig_key, orig_value in next, orig, nil do
 			copy[E.func_CopyTableDeep(orig_key)] = E.func_CopyTableDeep(orig_value)
@@ -758,11 +777,14 @@ function E.func_CopyTableDeep(orig)
 	end
 	return copy
 end
+----------------------------------------------------------------
+function E.func_AddonNameForOptionsInit(addonName)
+	-- return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title")
+	return E.func_GetAddOnMetadata(addonName, "Title")
+end
+----------------------------------------------------------------
 function E.func_AddonNameForOptionsFunc(addonName)
 	return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title").." "..E.COLOR_GRAY..E.func_GetAddOnMetadata(addonName, "Version").."|r"
-end
-function E.func_AddonNameForOptionsInit(addonName)
-	return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title")
 end
 ----------------------------------------------------------------
 local countSavedVars = 0
@@ -776,13 +798,13 @@ end
 ----------------------------------------------------------------
 function E.func_RequestUIUpdate(event_name)
 	if not E.DebugEvent then return end
-	local isMainFrameVisible = Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown()
+	local isMainFrameVisible = Octo_MainFrame and Octo_MainFrame:IsShown()
 	if isMainFrameVisible then
 		if not E.updateScheduledFlag then
 			E.updateScheduledFlag = true
 			C_Timer.After(0.1, function()
 					E.updateScheduledFlag = false
-					if Octo_MainFrame_ToDo and Octo_MainFrame_ToDo:IsShown() then
+					if Octo_MainFrame and Octo_MainFrame:IsShown() then
 						-- E.func_TODO_CreateDataProvider()
 						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_GREEN, E.COLOR_YELLOW)..event_name)
 					end
@@ -840,13 +862,13 @@ function E.func_RegisterFrame_ICONS(frame)
 					end
 			end)
 			frame:HookScript("OnHide", function()
-				if E.OctoTable_Frames_SIMPLE then
-					for i, other in ipairs(E.OctoTable_Frames_SIMPLE) do
-						if other:IsShown() then
-							other:Hide()
+					if E.OctoTable_Frames_SIMPLE then
+						for i, other in ipairs(E.OctoTable_Frames_SIMPLE) do
+							if other:IsShown() then
+								other:Hide()
+							end
 						end
 					end
-				end
 			end)
 	end)
 end
@@ -1226,7 +1248,7 @@ function E.func_CompactFormatNumber(num)
 			i = i + 1
 		end
 		local rounded = math.floor(num + 0.5) * sign
-		return tostring(rounded) .. suffixes[i]
+		return tostring(rounded)..suffixes[i]
 	end
 	----------------------------------------------------------------
 	local i = 1
@@ -1246,7 +1268,7 @@ function E.func_CompactFormatNumber(num)
 	end
 	rounded = rounded * sign
 	local s = tostring(rounded):gsub("%.0$", "")
-	return s .. suffixes[i]
+	return s..suffixes[i]
 end
 ----------------------------------------------------------------
 function E.func_GetFactionDataByID(id)
@@ -1332,49 +1354,475 @@ function E.func_translit(text)
 	if not E.Config_UseTranslit then
 		return text
 	end
-
 	if type(text) ~= "string" or text == "" then
 		return text
 	end
-
 	-- нет кириллицы → не трогаем
 	if not text:find("[А-Яа-яЁё]") then
 		return text
 	end
-
 	local result = LibTranslit:Transliterate(text)
-
 	-- защита от пустых строк
 	if not result or result == "" then
 		return text
 	end
 	return result
 end
-
 ----------------------------------------------------------------
 function E:func_CanCollectData()
-    local db = Octo_ToDo_DB_Levels
-    if not db then return false end
-
-    local char = db[self.curGUID]
-    if not char then return false end
-
-    return char.MASLENGO ~= nil and char.PlayerData ~= nil
+	local db = Octo_ToDo_DB_Levels
+	if not db then return false end
+	local char = db[self.curGUID]
+	if not char then return false end
+	return char.MASLENGO ~= nil and char.PlayerData ~= nil
 end
 ----------------------------------------------------------------
 function E.func_RefreshTranslations()
 	wipe(E.L)
 end
 ----------------------------------------------------------------
+function E.func_Save(v)
+	if v == false or v == 0 then
+		return nil
+	end
+	return v
+end
 ----------------------------------------------------------------
+function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needIcon, fullName)
+	if not keyStoneLevel or not OwnedKeystoneChallengeMapID then return "" end
+	local levelPart = keyStoneLevel
+	local namePart = ""
+	local iconPart = ""
+	local colorPart = E.COLOR_PURPLE
+	-- pd.CurrentKey
+	local name, id, timeLimit, texture, backgroundTexture, mapID = C_ChallengeMode.GetMapUIInfo(OwnedKeystoneChallengeMapID)
+	if fullName then
+		namePart = name
+	elseif not fullName and E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID] then -- dungeonID
+		namePart = E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID].abbreviation
+	else
+		namePart = name or UNKNOWN
+	end
+	if needIcon and texture then
+		iconPart = E.func_texturefromIcon(texture)
+	end
+	local result = iconPart..colorPart..levelPart .." ".. namePart.."|r"
+	return result
+end
+
+function E.func_DB_FRAME_Color(frame, Type, color, UseFaction, UseClass)
+	if not frame then return end
+
+	local r, g, b, a = 1, 1, 1, 1
+
+	if color then
+		a = color.a or a
+	end
+
+	if UseClass then
+		r, g, b = E.func_Hex2RGBA(E.classColorHexCurrent)
+	elseif UseFaction then
+		r, g, b = E.func_Hex2RGBA(E.COLOR_FACTION)
+	elseif color then
+		r, g, b = color.r, color.g, color.b
+	end
+
+	if Type == "frame" then
+		frame:SetBackdropColor(r, g, b, a)
+	elseif Type == "border" then
+		frame:SetBackdropBorderColor(r, g, b, a)
+	end
+end
+
+
+
+
+
+
+local function func_UpdateGlobals()
+	local db = Octo_ToDo_DB_Vars
+	if db then
+
+
+		if db.Config_ADDON_HEIGHT then
+			E.GLOBAL_LINE_HEIGHT = db.Config_ADDON_HEIGHT
+			E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
+			E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
+			E.ddMenuButtonHeight = E.GLOBAL_LINE_HEIGHT
+		end
+		db.FontOption = db.FontOption or {}
+		db.FontOption[E.curLocaleLang] = db.FontOption[E.curLocaleLang] or {}
+		if db.FontOption[E.curLocaleLang].Config_FontStyle then
+			E.func_UpdateFont()
+		end
+		if db.Config_DebugID_ALL ~= nil then
+			E.Config_DebugID_ALL = db.Config_DebugID_ALL
+		end
+		if db.Config_SPAM_TIME ~= nil then
+			E.SPAM_TIME = db.Config_SPAM_TIME
+		end
+		if db.Config_UseTranslit ~= nil then
+			E.Config_UseTranslit = db.Config_UseTranslit
+		end
+		if db.Config_ShowAllDifficulties ~= nil then
+			E.Config_ShowAllDifficulties = db.Config_ShowAllDifficulties
+		end
+		if db.Config_DifficultyAbbreviation ~= nil then
+			E.Config_DifficultyAbbreviation = db.Config_DifficultyAbbreviation
+		end
+		if db.Config_ClampedToScreen ~= nil then
+			E.Config_ClampedToScreen = db.Config_ClampedToScreen
+			if Octo_MainFrame then
+				Octo_MainFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			end
+			if Octo_EquipmentsFrame then
+				Octo_EquipmentsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			end
+			-- if Octo_TooltipFrame then
+			--     Octo_TooltipFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- end
+			if Octo_MainFrame_QuestsChanged then
+				Octo_MainFrame_QuestsChanged:SetClampedToScreen(E.Config_ClampedToScreen)
+			end
+			if Octo_MainFrame_Achievements then
+				Octo_MainFrame_Achievements:SetClampedToScreen(E.Config_ClampedToScreen)
+			end
+		end
+
+
+		----------------------------------------------------------------
+		if db.Colors then
+
+			local color = db.Colors.faction_Horde
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
+
+			local color = db.Colors.faction_Alliance
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			E.COLOR_ALLIANCE = E.func_RGB2Hex(r, g, b, a)
+
+			local color = db.Colors.faction_Neutral
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			E.COLOR_NEUTRAL = E.func_RGB2Hex(r, g, b, a)
+
+			E.COLOR_FACTION = E.FACTION_CURRENT == "Horde" and E.COLOR_HORDE or E.FACTION_CURRENT == "Alliance" and E.COLOR_ALLIANCE or E.Class_Monk_Color
+
+
+
+			local color = db.Colors.MAIN_MainFrame
+			local UseFaction = db.Colors.MAIN_MainFrame_UseFaction_CONFIG
+			local UseClass = db.Colors.MAIN_MainFrame_UseClass_CONFIG
+
+
+
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			E.backgroundColorR = r
+			E.backgroundColorG = g
+			E.backgroundColorB = b
+			E.backgroundColorA = a
+
+			E.func_DB_FRAME_Color(Octo_MainFrame, "frame", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "frame", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "frame", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "frame", color, UseFaction, UseClass)
+
+			for k, frame in next, (E.OctoFrames_Dropdowns) do
+				E.func_DB_FRAME_Color(frame, "frame", color, UseFaction, UseClass)
+			end
+
+			local color = db.Colors.MAIN_Border
+			local UseFaction = db.Colors.MAIN_Border_UseFaction_CONFIG
+			local UseClass = db.Colors.MAIN_Border_UseClass_CONFIG
+			E.func_DB_FRAME_Color(Octo_MainFrame, "border", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "border", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "border", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "border", color, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_TooltipFrame, "border", color, UseFaction, UseClass)
+
+			for k, frame in next, (E.OctoFrames_Dropdowns) do
+				E.func_DB_FRAME_Color(frame, "border", color, UseFaction, UseClass)
+			end
+
+
+			local color = db.Colors.TOOLTIP_TooltipFrame
+			local UseFaction = db.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG
+			local UseClass = db.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG
+			E.func_DB_FRAME_Color(Octo_TooltipFrame, "frame", color, UseFaction, UseClass)
+			-- local color = db.Colors.TOOLTIP_Border
+			-- local UseFaction = db.Colors.TOOLTIP_Border_UseFaction_CONFIG
+			-- local UseClass = db.Colors.TOOLTIP_Border_UseClass_CONFIG
+			-- E.func_DB_FRAME_Color(Octo_TooltipFrame, "border", color, UseFaction, UseClass)
+
+
+
+		end
+		----------------------------------------------------------------
+	end
+	E.func_UpdateCurrentProfile()
+end
+
+
+
+function E.func_UpdateGlobals()
+	E.func_SpamBlock(func_UpdateGlobals, true, 1)
+end
 ----------------------------------------------------------------
+function E.func_DB_REP_COLOR(repType, reaction)
+	local result = E.COLOR_WHITE
+	if not repType then return result end
+	if not Octo_ToDo_DB_Vars.Colors then return result end
+	local OctoTable_reactionColors = E.OctoTable_reactionColors
+		-- if repType == 2 then
+		--     color = OctoTable_reactionColors[repType] or E.COLOR_PINK
+		-- elseif repType == 3 then
+		--     color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+		-- elseif repType == 1 and reaction then
+		--     color = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
+		-- elseif repType == 4 then
+		--     color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+		-- end
+	if repType == 1 and reaction and type(reaction) == "number" and reaction > 1 then
+		local color = Octo_ToDo_DB_Vars.Colors.Rep_Standard[reaction]
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif repType == 2 then
+		local color = Octo_ToDo_DB_Vars.Colors.Rep_Friend
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif repType == 3 then
+		local color = Octo_ToDo_DB_Vars.Colors.Rep_Major
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif repType == 4 then
+		local color = Octo_ToDo_DB_Vars.Colors.Rep_Paragon
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	end
+	return result
+end
 ----------------------------------------------------------------
+function E.func_DB_COV_COLOR(covenantID)
+	local result = E.COLOR_WHITE
+		if not Octo_ToDo_DB_Vars.Colors then return result end
+		if covenantID == 1 then
+			local color = Octo_ToDo_DB_Vars.Colors.KYRIAN
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			result = E.func_RGB2Hex(r, g, b, a)
+		elseif covenantID == 2 then
+			local color = Octo_ToDo_DB_Vars.Colors.VENTHYR
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			result = E.func_RGB2Hex(r, g, b, a)
+		elseif covenantID == 3 then
+			local color = Octo_ToDo_DB_Vars.Colors.NECROLORD
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			result = E.func_RGB2Hex(r, g, b, a)
+		elseif covenantID == 4 then
+			local color = Octo_ToDo_DB_Vars.Colors.NIGHTFAE
+			local r, g, b, a = color.r, color.g, color.b, color.a
+			result = E.func_RGB2Hex(r, g, b, a)
+		end
+	return result
+end
 ----------------------------------------------------------------
+function E.func_DB_FACTION_COLOR(CharInfo)
+	local r, g, b, a = 1, 1, 1, 1
+	if not CharInfo or not Octo_ToDo_DB_Vars.Colors then return r, g, b, a end
+	local pd = CharInfo.PlayerData
+	local faction = pd.Faction or "Neutral"
+	local result = E.Class_Monk_Color
+	if faction == "Horde" then
+		local color = Octo_ToDo_DB_Vars.Colors.faction_Horde
+		r, g, b, a = color.r, color.g, color.b, color.a
+	elseif faction == "Alliance" then
+		local color = Octo_ToDo_DB_Vars.Colors.faction_Alliance
+		r, g, b, a = color.r, color.g, color.b, color.a
+	elseif faction == "Neutral" then
+		local color = Octo_ToDo_DB_Vars.Colors.faction_Neutral
+		r, g, b, a = color.r, color.g, color.b, color.a
+	end
+	return r, g, b, a
+end
 ----------------------------------------------------------------
+function E.func_DB_HEADER_COLOR(CharInfo)
+	local r, g, b, a = 1, 1, 1, 1
+	if not CharInfo then return r, g, b, a end
+	local pd = CharInfo.PlayerData
+	local classColorHex = pd.classColorHex or E.COLOR_WHITE
+	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG then
+		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
+		a = Octo_ToDo_DB_Vars.Colors.CharHeader.a
+	elseif  Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG then
+		r, g, b = E.func_Hex2RGBA(classColorHex)
+		a = Octo_ToDo_DB_Vars.Colors.CharHeader.a
+	else
+		local color = Octo_ToDo_DB_Vars.Colors.CharHeader
+		r, g, b, a = color.r, color.g, color.b, color.a
+		a = Octo_ToDo_DB_Vars.Colors.CharHeader.a
+	end
+	return r, g, b, a
+end
 ----------------------------------------------------------------
+function E.func_DB_CHARLINE_COLOR()
+	local r, g, b, a = 1, 1, 1, 1
+	local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+	local pd = CharInfo.PlayerData
+	local classColorHex = pd.classColorHex or E.COLOR_WHITE
+	if Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG then
+		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
+		a = Octo_ToDo_DB_Vars.Colors.CharLines.a
+	elseif  Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG then
+		r, g, b = E.func_Hex2RGBA(classColorHex)
+		a = Octo_ToDo_DB_Vars.Colors.CharLines.a
+	else
+		local color = Octo_ToDo_DB_Vars.Colors.CharLines
+		r, g, b, a = color.r, color.g, color.b, color.a
+		a = Octo_ToDo_DB_Vars.Colors.CharLines.a
+	end
+	return r, g, b, a
+end
 ----------------------------------------------------------------
+function E.func_DB_HIGHLIGHT_COLOR()
+	local r, g, b, a = 1, 1, 1, 1
+	return r, g, b, a
+end
 ----------------------------------------------------------------
+
+
+local function ResetHighlightState(frame)
+	if frame.highlightLeave then
+		frame.highlightLeave:Stop()
+	end
+
+	if frame.highlight then
+		frame.highlight:SetAlpha(0)
+	end
+
+	if frame.HighlightTexture then
+		frame.HighlightTexture:SetAlpha(0)
+	end
+end
+
+
+E.ENABLE_HIGHLIGHT_ANIMATION = true
+function E.func_ApplyHighlightTemplate(frame, anchorFrame)
+	if not frame or not anchorFrame or frame.highlight then
+		return
+	end
+
+	frame:SetPropagateMouseClicks(true)
+	frame:SetPropagateMouseMotion(true)
+
+	if anchorFrame then
+		frame:SetFrameLevel(anchorFrame:GetFrameLevel() + 2)
+		frame:SetPoint("LEFT", anchorFrame)
+		frame:SetPoint("TOP", anchorFrame)
+		frame:SetPoint("BOTTOM", anchorFrame)
+		frame:SetPoint("RIGHT")
+	end
+
+	-- =========================
+	-- Overlay Texture
+	-- =========================
+	local bg = frame:CreateTexture(nil, "BACKGROUND")
+	bg:SetAtlas(E.TEXTURE_HIGHLIGHT_ATLAS)
+	bg:SetAlpha(0)
+	bg:SetBlendMode("ADD")
+	bg:SetAllPoints(frame)
+	frame.highlight = bg
+
+	-- =========================
+	-- Animation (fade-out)
+	-- =========================
+	local ag = bg:CreateAnimationGroup()
+	ag:SetToFinalAlpha(true)
+	local alpha = ag:CreateAnimation("Alpha")
+	alpha:SetOrder(1)
+	alpha:SetDuration(0.3)
+	alpha:SetSmoothing("IN_OUT")
+	alpha:SetFromAlpha(0.3)
+	alpha:SetToAlpha(0)
+	ag.alpha = alpha
+	frame.highlightLeave = ag
+
+	-- =========================
+	-- Scripts
+	-- =========================
+	local function ResetHighlightState(self)
+		if self.highlightLeave then
+			self.highlightLeave:Stop()
+		end
+		if self.highlight then
+			self.highlight:SetAlpha(0)
+		end
+	end
+
+	frame:SetScript("OnEnter", function(self)
+		ResetHighlightState(self)
+		self.highlight:SetAlpha(0.3)
+	end)
+
+
+	frame:SetScript("OnLeave", function(self)
+		ResetHighlightState(self)
+
+		if not E.ENABLE_HIGHLIGHT_ANIMATION then
+			-- При выключенном флаге, используем fade
+			self.highlightLeave:Restart()
+		end
+
+		GameTooltip:Hide()
+	end)
+
+	frame:SetScript("OnShow", function(self)
+		ResetHighlightState(self)
+	end)
+end
+
+
 ----------------------------------------------------------------
+
+-- function E.func_OpenToCategory(frame)
+
+-- 	if frame and frame:IsShown() then
+-- 		frame:Hide()
+-- 	end
+
+-- 	if SettingsPanel:IsVisible() then
+-- 		HideUIPanel(SettingsPanel)
+-- 	else
+-- 		Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+-- 		-- Settings.OpenToCategory(category:GetID(), E.func_GetAddOnMetadata(E.MainAddonName, "Title"))
+-- 		-- Settings.OpenToCategory(category:GetID(), addon)
+-- 	end
+-- end
+
+
+function E.func_OpenToCategory(frame)
+
+	if frame and frame:IsShown() then
+		frame:Hide()
+	end
+
+	if SettingsPanel:IsVisible() then
+		HideUIPanel(SettingsPanel)
+	else
+		if C_SettingsUtil and E.SettingsCategoryID then
+			C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
+		elseif Settings then
+			Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+		end
+	end
+end
+----------------------------------------------------------------
+local order_index = 0
+function E.func_GetOrder()
+	order_index = order_index + 1
+	return order_index
+end
+----------------------------------------------------------------
+function E.func_AutoKey()
+	return tostring("key_"..E.func_GetOrder())
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -84,7 +84,9 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = GARRISON_LOCATION_TOOLTIP,
+			TextLeft = function()
+				return GARRISON_LOCATION_TOOLTIP
+			end,
 			name_save = "GarrisonLevel",
 			defS = true,
 			reset = "Regular",
@@ -99,6 +101,55 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 3,
 		},
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(39246, false) -- Владычество над морями
+			end,
+			name_save = "Garrison_NavalDomination",
+			defS = false,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{39246, FactionOrClass = {Horde = true,},},
+				{39068, FactionOrClass = {Alliance = true,},},
+			},
+			-- forcedMaxQuest = 3,
+		},
+
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetQuestName(38242, false) -- Раскопанная магия
+			end,
+			name_save = "Garrison_UnearthedMagic",
+			defS = false,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{38242, FactionOrClass = {Horde = true,},},
+				{38241, FactionOrClass = {Alliance = true,},},
+			},
+			-- forcedMaxQuest = 3,
+		},
+
+
+
+
+
+
+
+
+
+
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
