@@ -291,11 +291,11 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	--------------------------------------------------------------------------------
 	Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame = Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame or {r = 0.08, g = 0.08, b = 0.08, a = 0.8} -- Фон (Основной цвет фона интерфейса)
 	if Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG = false
 	end -- фон персонажа (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG = false
 	end -- фон персонажа (ПО КЛАССУ)
 
 
@@ -307,11 +307,11 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 
 	Octo_ToDo_DB_Vars.Colors.MAIN_Border = Octo_ToDo_DB_Vars.Colors.MAIN_Border or {r = 0, g = 0, b = 0, a = 1} -- Граница (Основной цвет границ интерфейса)
 	if Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG = false
 	end -- фон персонажа (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG = false
 	end -- фон персонажа (ПО КЛАССУ)
 
 
@@ -325,11 +325,11 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	--------------------------------------------------------------------------------
 	Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame = Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame or {r = 0.08, g = 0.08, b = 0.08, a = 1} -- Тултип (Основной цвет фона тултипа)
 	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG = false
 	end -- фон персонажа (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG = false
 	end -- ф
 
 
@@ -338,11 +338,11 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 
 	Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border = Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border or {r = 0, g = 0, b = 0, a = 1} -- Граница (Основной цвет границ интерфейса)
 	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG = false
 	end -- фон персонажа (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG = false
 	end -- фон персонажа (ПО КЛАССУ)
 
 
@@ -371,11 +371,11 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	--------------------------------------------------------------------------------
 	Octo_ToDo_DB_Vars.Colors.CharLines = Octo_ToDo_DB_Vars.Colors.CharLines or {r = .5, g = .5, b = .5, a = .2} -- LINES персонажа
 	if Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG = false
 	end -- фон персонажа (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG = true
+		Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG = true
 	end -- фон персонажа (ПО КЛАССУ)
 
 	-- Octo_ToDo_DB_Vars.Colors.CharLines_Alpha = Octo_ToDo_DB_Vars.Colors.CharLines_Alpha or .2
@@ -383,27 +383,28 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars.Colors.CharHeader = Octo_ToDo_DB_Vars.Colors.CharHeader or {r = .5, g = .5, b = .5, a = .2} -- CharHeader персонажа
 
 	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG = true
+		Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG = true
 	end -- фон персонажа (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG = false
 	end -- фон персонажа (ПО КЛАССУ)
 
 	-- Octo_ToDo_DB_Vars.Colors.CharHeader_Alpha = Octo_ToDo_DB_Vars.Colors.CharHeader_Alpha or .2
 	--------------------------------------------------------------------------------
 	-- ХАЙЛАЙТ ТЕКСТУРА(текстура при mouseover)
 	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.Highlight = Octo_ToDo_DB_Vars.Colors.Highlight or {r = .5, g = .5, b = .5, a = .2} -- цвет хайлайта
+	Octo_ToDo_DB_Vars.Colors.Highlight = Octo_ToDo_DB_Vars.Colors.Highlight or {r = .5, g = .5, b = .5, a = .1} -- цвет хайлайта
 
 	if Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG = false
 	end -- цвет хайлайта (ПО ФРАКЦИИ)
 
 	if Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG == nil then
-	    Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG = false
+		Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG = true
 	end -- цвет хайлайта (ПО КЛАССУ)
-	-- Octo_ToDo_DB_Vars.Colors.Highlight_Alpha = Octo_ToDo_DB_Vars.Colors.Highlight_Alpha or .2
+	-- Octo_ToDo_DB_Vars.Colors.Highlight_Alpha = Octo_ToDo_DB_Vars.Colors.Highlight_Alpha or .2\
+	Octo_ToDo_DB_Vars.ENABLE_HIGHLIGHT_ANIMATION = false
 	--------------------------------------------------------------------------------
 	-- РЕПУТАЦИЯ -- фон репутации
 	--------------------------------------------------------------------------------

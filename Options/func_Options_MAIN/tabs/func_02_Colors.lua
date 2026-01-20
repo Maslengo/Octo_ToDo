@@ -404,6 +404,21 @@ function E.func_02_Colors(width, tabName)
 						order = E.func_GetOrder(),
 					},
 					-------------------------------------------------
+					[E.func_AutoKey()] = {
+						type = "toggle",
+						name = L["Smooth Animation"],
+						desc = CURSOR_SIZE_DEFAULT..": "..NO,
+						get = function()
+							return Octo_ToDo_DB_Vars.ENABLE_HIGHLIGHT_ANIMATION
+						end,
+						set = function(_, value)
+							Octo_ToDo_DB_Vars.ENABLE_HIGHLIGHT_ANIMATION = value
+							-- E.func_UpdateGlobals()
+						end,
+						width = width,
+						order = E.func_GetOrder(),
+					},
+					-------------------------------------------------
 				}
 			},
 			-------------------------------------------------

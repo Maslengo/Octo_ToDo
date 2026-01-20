@@ -159,6 +159,16 @@ local function updateChars(pd, cm, DBVersion)
 
 	end
 	----------------------------------------------------------------
+	if compareVersion(110.7, DBVersion) then
+		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Colors then
+			if Octo_ToDo_DB_Vars.Colors.Highlight then
+				Octo_ToDo_DB_Vars.Colors.Highlight.a = .1
+			end
+			Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG = true
+			Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG = false
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)

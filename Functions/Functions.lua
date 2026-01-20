@@ -159,16 +159,20 @@ function E.func_GetQualityHexColor(quality)
 	end
 	return E.COLOR_WHITE
 end
+----------------------------------------------------------------
 function E.func_GetQualityColorRGB(quality)
 	local r, g, b = GetItemQualityColor(quality)
 	return r, g, b
 end
+----------------------------------------------------------------
 function E.func_IsAnimaItemByID(itemID)
 	return IsAnimaItemByID(itemID)
 end
+----------------------------------------------------------------
 function E.func_GetItemLevelDetails(itemID)
 	return GetDetailedItemLevelInfo(itemID)
 end
+----------------------------------------------------------------
 function E.func_GetItemCooldown(itemID)
 	local start, duration = GetItemCooldown(itemID)
 	local result = 0
@@ -177,10 +181,12 @@ function E.func_GetItemCooldown(itemID)
 	end
 	return E.func_CompactRoundNumber(result)
 end
+----------------------------------------------------------------
 function E.func_GetSpellDescription(spellID)
 	local result = GetSpellSubtext(spellID)
 	return result
 end
+----------------------------------------------------------------
 function E.func_GetSpellCooldown(spellID)
 	local start = GetSpellCooldown(spellID).startTime
 	local duration = GetSpellCooldown(spellID).duration
@@ -190,6 +196,7 @@ function E.func_GetSpellCooldown(spellID)
 	end
 	return E.func_CompactRoundNumber(result)
 end
+----------------------------------------------------------------
 function E.func_RGB2Hex(r, g, b, a)
 	local r = r or 1
 	local g = g or 1
@@ -200,22 +207,25 @@ function E.func_RGB2Hex(r, g, b, a)
 	end
 	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
+----------------------------------------------------------------
 function E.func_Hex2RGBA(hex)
 	if not hex or hex == "" or not hex:match("^|c") or #hex < 10 then
 		return 1, 1, 1, 1
 	end
 	-- Формат: |cAARRGGBB
 	-- Берем только hex часть после |c (10 символов всего)
-	local a = tonumber(hex:sub(3, 4), 16) or 255  -- AA
-	local r = tonumber(hex:sub(5, 6), 16) or 255  -- RR
-	local g = tonumber(hex:sub(7, 8), 16) or 255  -- GG
+	local a = tonumber(hex:sub(3, 4), 16) or 255 -- AA
+	local r = tonumber(hex:sub(5, 6), 16) or 255 -- RR
+	local g = tonumber(hex:sub(7, 8), 16) or 255 -- GG
 	local b = tonumber(hex:sub(9, 10), 16) or 255 -- BB
 	return r/255, g/255, b/255, a/255
 end
+----------------------------------------------------------------
 function E.func_Hex2ColorTable(hex, forcedAlpha)
 	local r, g, b, a = E.func_Hex2RGBA(hex)
 	return {r = r, g = g, b = b, a = forcedAlpha or a}
 end
+----------------------------------------------------------------
 function E.func_RGB2HexString(r, g, b, a)
 	local r, g, b, a = r, g, b, a
 	if not a then
@@ -263,7 +273,7 @@ function E.func_UnpackCoordinates(packed)
 	end
 	local x = tonumber(packedStr:sub(1, 4)) / 10000
 	local y = tonumber(packedStr:sub(5, 8)) / 10000
-	return x, y  -- Возвращаем ДВА ЧИСЛА
+	return x, y -- Возвращаем ДВА ЧИСЛА
 end
 function E.func_ReversSort(a, b)
 	return b < a
@@ -602,15 +612,15 @@ function E.func_GetColorGradient(value, minValue, maxValue)
 	-- Проверяем, что цвета есть в БД
 	local colors = Octo_ToDo_DB_Vars.Colors
 	if not value
-		or not minValue
-		or not maxValue
-		or not colors
-		or not colors.TOOLTIP_min_RGBA
-		or not colors.TOOLTIP_mid_RGBA
-		or not colors.TOOLTIP_max_RGBA
-		then
-			return E.COLOR_GREEN
-		end
+	or not minValue
+	or not maxValue
+	or not colors
+	or not colors.TOOLTIP_min_RGBA
+	or not colors.TOOLTIP_mid_RGBA
+	or not colors.TOOLTIP_max_RGBA
+	then
+		return E.COLOR_GREEN
+	end
 	if minValue >= maxValue then
 		return E.func_RGB2Hex(colors.TOOLTIP_max_RGBA.r, colors.TOOLTIP_max_RGBA.g, colors.TOOLTIP_max_RGBA.b, colors.TOOLTIP_max_RGBA.a)
 	end
@@ -1409,16 +1419,12 @@ function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needI
 	local result = iconPart..colorPart..levelPart .." ".. namePart.."|r"
 	return result
 end
-
 function E.func_DB_FRAME_Color(frame, Type, color, UseFaction, UseClass)
 	if not frame then return end
-
 	local r, g, b, a = 1, 1, 1, 1
-
 	if color then
 		a = color.a or a
 	end
-
 	if UseClass then
 		r, g, b = E.func_Hex2RGBA(E.classColorHexCurrent)
 	elseif UseFaction then
@@ -1426,24 +1432,17 @@ function E.func_DB_FRAME_Color(frame, Type, color, UseFaction, UseClass)
 	elseif color then
 		r, g, b = color.r, color.g, color.b
 	end
-
 	if Type == "frame" then
 		frame:SetBackdropColor(r, g, b, a)
 	elseif Type == "border" then
 		frame:SetBackdropBorderColor(r, g, b, a)
+	elseif Type == "highlight" then
+		frame.highlight:SetVertexColor(r, g, b)
 	end
 end
-
-
-
-
-
-
 local function func_UpdateGlobals()
 	local db = Octo_ToDo_DB_Vars
 	if db then
-
-
 		if db.Config_ADDON_HEIGHT then
 			E.GLOBAL_LINE_HEIGHT = db.Config_ADDON_HEIGHT
 			E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
@@ -1479,7 +1478,7 @@ local function func_UpdateGlobals()
 				Octo_EquipmentsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
 			end
 			-- if Octo_TooltipFrame then
-			--     Octo_TooltipFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- Octo_TooltipFrame:SetClampedToScreen(E.Config_ClampedToScreen)
 			-- end
 			if Octo_MainFrame_QuestsChanged then
 				Octo_MainFrame_QuestsChanged:SetClampedToScreen(E.Config_ClampedToScreen)
@@ -1488,48 +1487,33 @@ local function func_UpdateGlobals()
 				Octo_MainFrame_Achievements:SetClampedToScreen(E.Config_ClampedToScreen)
 			end
 		end
-
-
 		----------------------------------------------------------------
 		if db.Colors then
-
 			local color = db.Colors.faction_Horde
 			local r, g, b, a = color.r, color.g, color.b, color.a
 			E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
-
 			local color = db.Colors.faction_Alliance
 			local r, g, b, a = color.r, color.g, color.b, color.a
 			E.COLOR_ALLIANCE = E.func_RGB2Hex(r, g, b, a)
-
 			local color = db.Colors.faction_Neutral
 			local r, g, b, a = color.r, color.g, color.b, color.a
 			E.COLOR_NEUTRAL = E.func_RGB2Hex(r, g, b, a)
-
 			E.COLOR_FACTION = E.FACTION_CURRENT == "Horde" and E.COLOR_HORDE or E.FACTION_CURRENT == "Alliance" and E.COLOR_ALLIANCE or E.Class_Monk_Color
-
-
-
 			local color = db.Colors.MAIN_MainFrame
 			local UseFaction = db.Colors.MAIN_MainFrame_UseFaction_CONFIG
 			local UseClass = db.Colors.MAIN_MainFrame_UseClass_CONFIG
-
-
-
 			local r, g, b, a = color.r, color.g, color.b, color.a
 			E.backgroundColorR = r
 			E.backgroundColorG = g
 			E.backgroundColorB = b
 			E.backgroundColorA = a
-
 			E.func_DB_FRAME_Color(Octo_MainFrame, "frame", color, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "frame", color, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "frame", color, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "frame", color, UseFaction, UseClass)
-
 			for k, frame in next, (E.OctoFrames_Dropdowns) do
 				E.func_DB_FRAME_Color(frame, "frame", color, UseFaction, UseClass)
 			end
-
 			local color = db.Colors.MAIN_Border
 			local UseFaction = db.Colors.MAIN_Border_UseFaction_CONFIG
 			local UseClass = db.Colors.MAIN_Border_UseClass_CONFIG
@@ -1538,12 +1522,9 @@ local function func_UpdateGlobals()
 			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "border", color, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "border", color, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_TooltipFrame, "border", color, UseFaction, UseClass)
-
 			for k, frame in next, (E.OctoFrames_Dropdowns) do
 				E.func_DB_FRAME_Color(frame, "border", color, UseFaction, UseClass)
 			end
-
-
 			local color = db.Colors.TOOLTIP_TooltipFrame
 			local UseFaction = db.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG
 			local UseClass = db.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG
@@ -1552,17 +1533,11 @@ local function func_UpdateGlobals()
 			-- local UseFaction = db.Colors.TOOLTIP_Border_UseFaction_CONFIG
 			-- local UseClass = db.Colors.TOOLTIP_Border_UseClass_CONFIG
 			-- E.func_DB_FRAME_Color(Octo_TooltipFrame, "border", color, UseFaction, UseClass)
-
-
-
 		end
 		----------------------------------------------------------------
 	end
 	E.func_UpdateCurrentProfile()
 end
-
-
-
 function E.func_UpdateGlobals()
 	E.func_SpamBlock(func_UpdateGlobals, true, 1)
 end
@@ -1572,15 +1547,15 @@ function E.func_DB_REP_COLOR(repType, reaction)
 	if not repType then return result end
 	if not Octo_ToDo_DB_Vars.Colors then return result end
 	local OctoTable_reactionColors = E.OctoTable_reactionColors
-		-- if repType == 2 then
-		--     color = OctoTable_reactionColors[repType] or E.COLOR_PINK
-		-- elseif repType == 3 then
-		--     color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
-		-- elseif repType == 1 and reaction then
-		--     color = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
-		-- elseif repType == 4 then
-		--     color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
-		-- end
+	-- if repType == 2 then
+	-- color = OctoTable_reactionColors[repType] or E.COLOR_PINK
+	-- elseif repType == 3 then
+	-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+	-- elseif repType == 1 and reaction then
+	-- color = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
+	-- elseif repType == 4 then
+	-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
+	-- end
 	if repType == 1 and reaction and type(reaction) == "number" and reaction > 1 then
 		local color = Octo_ToDo_DB_Vars.Colors.Rep_Standard[reaction]
 		local r, g, b, a = color.r, color.g, color.b, color.a
@@ -1603,24 +1578,24 @@ end
 ----------------------------------------------------------------
 function E.func_DB_COV_COLOR(covenantID)
 	local result = E.COLOR_WHITE
-		if not Octo_ToDo_DB_Vars.Colors then return result end
-		if covenantID == 1 then
-			local color = Octo_ToDo_DB_Vars.Colors.KYRIAN
-			local r, g, b, a = color.r, color.g, color.b, color.a
-			result = E.func_RGB2Hex(r, g, b, a)
-		elseif covenantID == 2 then
-			local color = Octo_ToDo_DB_Vars.Colors.VENTHYR
-			local r, g, b, a = color.r, color.g, color.b, color.a
-			result = E.func_RGB2Hex(r, g, b, a)
-		elseif covenantID == 3 then
-			local color = Octo_ToDo_DB_Vars.Colors.NECROLORD
-			local r, g, b, a = color.r, color.g, color.b, color.a
-			result = E.func_RGB2Hex(r, g, b, a)
-		elseif covenantID == 4 then
-			local color = Octo_ToDo_DB_Vars.Colors.NIGHTFAE
-			local r, g, b, a = color.r, color.g, color.b, color.a
-			result = E.func_RGB2Hex(r, g, b, a)
-		end
+	if not Octo_ToDo_DB_Vars.Colors then return result end
+	if covenantID == 1 then
+		local color = Octo_ToDo_DB_Vars.Colors.KYRIAN
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif covenantID == 2 then
+		local color = Octo_ToDo_DB_Vars.Colors.VENTHYR
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif covenantID == 3 then
+		local color = Octo_ToDo_DB_Vars.Colors.NECROLORD
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif covenantID == 4 then
+		local color = Octo_ToDo_DB_Vars.Colors.NIGHTFAE
+		local r, g, b, a = color.r, color.g, color.b, color.a
+		result = E.func_RGB2Hex(r, g, b, a)
+	end
 	return result
 end
 ----------------------------------------------------------------
@@ -1651,7 +1626,7 @@ function E.func_DB_HEADER_COLOR(CharInfo)
 	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG then
 		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
 		a = Octo_ToDo_DB_Vars.Colors.CharHeader.a
-	elseif  Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG then
+	elseif Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG then
 		r, g, b = E.func_Hex2RGBA(classColorHex)
 		a = Octo_ToDo_DB_Vars.Colors.CharHeader.a
 	else
@@ -1670,7 +1645,7 @@ function E.func_DB_CHARLINE_COLOR()
 	if Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG then
 		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
 		a = Octo_ToDo_DB_Vars.Colors.CharLines.a
-	elseif  Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG then
+	elseif Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG then
 		r, g, b = E.func_Hex2RGBA(classColorHex)
 		a = Octo_ToDo_DB_Vars.Colors.CharLines.a
 	else
@@ -1681,37 +1656,29 @@ function E.func_DB_CHARLINE_COLOR()
 	return r, g, b, a
 end
 ----------------------------------------------------------------
-function E.func_DB_HIGHLIGHT_COLOR()
-	local r, g, b, a = 1, 1, 1, 1
-	return r, g, b, a
-end
+-- function E.func_DB_HIGHLIGHT_COLOR()
+-- local r, g, b, a = 1, 1, 1, 1
+-- return r, g, b, a
+-- end
 ----------------------------------------------------------------
-
-
 local function ResetHighlightState(frame)
 	if frame.highlightLeave then
 		frame.highlightLeave:Stop()
 	end
-
 	if frame.highlight then
 		frame.highlight:SetAlpha(0)
 	end
-
 	if frame.HighlightTexture then
 		frame.HighlightTexture:SetAlpha(0)
 	end
 end
-
-
-E.ENABLE_HIGHLIGHT_ANIMATION = true
+----------------------------------------------------------------
 function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	if not frame or not anchorFrame or frame.highlight then
 		return
 	end
-
 	frame:SetPropagateMouseClicks(true)
 	frame:SetPropagateMouseMotion(true)
-
 	if anchorFrame then
 		frame:SetFrameLevel(anchorFrame:GetFrameLevel() + 2)
 		frame:SetPoint("LEFT", anchorFrame)
@@ -1719,17 +1686,20 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 		frame:SetPoint("BOTTOM", anchorFrame)
 		frame:SetPoint("RIGHT")
 	end
-
 	-- =========================
 	-- Overlay Texture
 	-- =========================
-	local bg = frame:CreateTexture(nil, "BACKGROUND")
-	bg:SetAtlas(E.TEXTURE_HIGHLIGHT_ATLAS)
+	-- local bg = frame:CreateTexture(nil, "BACKGROUND")
+	-- bg:SetAtlas(E.TEXTURE_HIGHLIGHT_ATLAS)
+	-- bg:SetAlpha(0)
+	-- bg:SetBlendMode("ADD")
+	-- bg:SetAllPoints(frame)
+	-- frame.highlight = bg
+	local bg = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
+	bg:SetTexture(E.TEXTURE_CHAR_PATH) --E.TEXTURE_HIGHLIGHT_PATH
 	bg:SetAlpha(0)
-	bg:SetBlendMode("ADD")
 	bg:SetAllPoints(frame)
 	frame.highlight = bg
-
 	-- =========================
 	-- Animation (fade-out)
 	-- =========================
@@ -1739,11 +1709,10 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	alpha:SetOrder(1)
 	alpha:SetDuration(0.3)
 	alpha:SetSmoothing("IN_OUT")
-	alpha:SetFromAlpha(0.3)
+	alpha:SetFromAlpha(Octo_ToDo_DB_Vars.Colors.Highlight.a or .2)
 	alpha:SetToAlpha(0)
 	ag.alpha = alpha
 	frame.highlightLeave = ag
-
 	-- =========================
 	-- Scripts
 	-- =========================
@@ -1755,54 +1724,43 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 			self.highlight:SetAlpha(0)
 		end
 	end
-
 	frame:SetScript("OnEnter", function(self)
-		ResetHighlightState(self)
-		self.highlight:SetAlpha(0.3)
+			ResetHighlightState(self)
+			self.highlight:SetAlpha(Octo_ToDo_DB_Vars.Colors.Highlight.a or .2)
 	end)
-
-
 	frame:SetScript("OnLeave", function(self)
-		ResetHighlightState(self)
-
-		if not E.ENABLE_HIGHLIGHT_ANIMATION then
-			-- При выключенном флаге, используем fade
-			self.highlightLeave:Restart()
-		end
-
-		GameTooltip:Hide()
+			ResetHighlightState(self)
+			if Octo_ToDo_DB_Vars.ENABLE_HIGHLIGHT_ANIMATION then
+				-- При выключенном флаге, используем fade
+				self.highlightLeave:Restart()
+			end
+			GameTooltip:Hide()
 	end)
-
 	frame:SetScript("OnShow", function(self)
-		ResetHighlightState(self)
+			local color = Octo_ToDo_DB_Vars.Colors.Highlight
+			local UseFaction = Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG
+			local UseClass = Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG
+			E.func_DB_FRAME_Color(frame, "highlight", color, UseFaction, UseClass)
+			ResetHighlightState(self)
 	end)
 end
-
-
 ----------------------------------------------------------------
-
 -- function E.func_OpenToCategory(frame)
-
--- 	if frame and frame:IsShown() then
--- 		frame:Hide()
--- 	end
-
--- 	if SettingsPanel:IsVisible() then
--- 		HideUIPanel(SettingsPanel)
--- 	else
--- 		Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
--- 		-- Settings.OpenToCategory(category:GetID(), E.func_GetAddOnMetadata(E.MainAddonName, "Title"))
--- 		-- Settings.OpenToCategory(category:GetID(), addon)
--- 	end
+-- if frame and frame:IsShown() then
+-- frame:Hide()
 -- end
-
-
+-- if SettingsPanel:IsVisible() then
+-- HideUIPanel(SettingsPanel)
+-- else
+-- Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+-- -- Settings.OpenToCategory(category:GetID(), E.func_GetAddOnMetadata(E.MainAddonName, "Title"))
+-- -- Settings.OpenToCategory(category:GetID(), addon)
+-- end
+-- end
 function E.func_OpenToCategory(frame)
-
 	if frame and frame:IsShown() then
 		frame:Hide()
 	end
-
 	if SettingsPanel:IsVisible() then
 		HideUIPanel(SettingsPanel)
 	else

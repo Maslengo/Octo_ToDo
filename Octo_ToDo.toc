@@ -1,6 +1,6 @@
 ## Interface: 120000, 110207
-## Version: v110.6
-# (12.0.0)(20.01.2026)
+## Version: v110.7
+# (12.0.0)(21.01.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 ## Author: Octo

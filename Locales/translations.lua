@@ -40,6 +40,18 @@ E.translations = {
 	--     ["zhTW"] = "視窗背景",
 	-- },
 
+	["Smooth Animation"] = {
+		["ruRU"] = "Плавная анимация",
+		["deDE"] = "Sanfte Animation",
+		["esES"] = "Animación suave",
+		["esMX"] = "Animación suave",
+		["frFR"] = "Animation fluide",
+		["itIT"] = "Animazione fluida",
+		["ptBR"] = "Animação suave",
+		["koKR"] = "부드러운 애니메이션",
+		["zhCN"] = "平滑动画",
+		["zhTW"] = "平滑動畫",
+	},
 
 
 
