@@ -371,7 +371,7 @@ local function tempFunction()
 				-- {39021}, -- Замерзший путь сквозь время
 				-- {39020}, -- Пылающий путь сквозь время
 			},
-			forcedMaxQuest = 2,
+			forcedMaxQuest = 1,
 		},
 		{
 			TextLeft = function()

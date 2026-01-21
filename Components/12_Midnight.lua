@@ -73,6 +73,7 @@ local function tempFunction()
 
 		{id = 2770, defS = false,}, -- Slayer's Duellum
 		{id = 2744, defS = false,}, -- Valeera Sanguinar
+
 		{id = 2714, defS = false,}, -- Shades of the Row
 			{id = 2712, defS = false,}, -- Blood Knights
 		{id = 2711, defS = false,}, -- Magisters

@@ -1543,7 +1543,7 @@ function E.func_UpdateGlobals()
 end
 ----------------------------------------------------------------
 function E.func_DB_REP_COLOR(repType, reaction)
-	local result = E.COLOR_WHITE
+	local result = E.COLOR_GRAY
 	if not repType then return result end
 	if not Octo_ToDo_DB_Vars.Colors then return result end
 	local OctoTable_reactionColors = E.OctoTable_reactionColors
@@ -1556,7 +1556,7 @@ function E.func_DB_REP_COLOR(repType, reaction)
 	-- elseif repType == 4 then
 	-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
 	-- end
-	if repType == 1 and reaction and type(reaction) == "number" and reaction > 1 then
+	if repType == 1 and reaction and type(reaction) == "number" and reaction > 0 then
 		local color = Octo_ToDo_DB_Vars.Colors.Rep_Standard[reaction]
 		local r, g, b, a = color.r, color.g, color.b, color.a
 		result = E.func_RGB2Hex(r, g, b, a)
