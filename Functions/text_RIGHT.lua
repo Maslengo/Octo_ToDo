@@ -311,8 +311,8 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 	if id == "AllItems" then
 		local count = 0
 		for itemID in next, (E.OctoTable_itemID_ALL) do
-			if tonumber(itemID) == 249400 then
-			end
+			-- if tonumber(itemID) == 249400 then
+			-- end
 			if cm.Items.Bags[itemID] or cm.Items.Bank[itemID] then
 				count = count+1
 				break

@@ -90,54 +90,76 @@ function E.func_GetCurrencyName(id, forcedQuality)
 	local cachedName = func_currencyName_CACHE(id, forcedQuality)
 	return E.func_translit(cachedName)..E.debugInfo(id)
 end
--- local function func_npcName_CACHE(id)
--- 	local Cache = GetOrCreateCache("AllNPCs", id)
--- 	if Cache[id] and Cache[id][E.curLocaleLang] then
--- 		return Cache[id][E.curLocaleLang]
--- 	end
+local function func_npcName_CACHE(id)
+	local Cache = GetOrCreateCache("AllNPCs", id)
+	if Cache[id] and Cache[id][E.curLocaleLang] then
+		return Cache[id][E.curLocaleLang]
+	end
+	if E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
+		return E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
+	end
 
-
--- 	if E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
--- 		return E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
--- 	end
-
--- 	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
--- 	local tooltip = E.ScanningTooltipFUNC
--- 	tooltip:Hide()
--- 	tooltip:SetOwner(UIParent, "ANCHOR_NONE")
--- 	tooltip:ClearLines()
--- 	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..id)
--- 	local name
--- 	if tooltip:NumLines() > 0 then
--- 		for i = 1, tooltip:NumLines() do
--- 			if i == 1 then
--- 				name = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
--- 			end
--- 		end
--- 	end
--- 	if name and name ~= "" then
--- 		Cache[id] = Cache[id] or {}
--- 		Cache[id][E.curLocaleLang] = name
--- 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
--- 			E.func_PrintMessage(E.COLOR_LIME.."NPC".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
--- 		end
--- 	end
--- 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r"
--- 	return output
--- end
+	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
+	local tooltip = E.ScanningTooltipFUNC
+	tooltip:Hide()
+	tooltip:SetOwner(UIParent, "ANCHOR_NONE")
+	tooltip:ClearLines()
+	tooltip:SetHyperlink("unit:Creature-0-0-0-0-"..id)
+	local name
+	if tooltip:NumLines() > 0 then
+		for i = 1, tooltip:NumLines() do
+			if i == 1 then
+				name = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
+			end
+		end
+	end
+	if name and name ~= "" then
+		Cache[id] = Cache[id] or {}
+		Cache[id][E.curLocaleLang] = name
+		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
+			E.func_PrintMessage(E.COLOR_LIME.."NPC".."|r", E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r", Cache[id][E.curLocaleLang], E.COLOR_ADDON_RIGHT..id.."|r")
+		end
+	end
+	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r"
+	return output
+end
 function E.func_GetNPCName(id)
 	if not id then return "no id" end
-	-- if E.func_IsPTR() and E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] then
-	-- local cachedName = func_npcName_CACHE(id)
-	-- return E.func_translit(cachedName)..E.debugInfo(id)
-	local name = UNKNOWN
-	if E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
-		name = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
-	else
-		name = E.COLOR_RED..name.."|r"
-	end
-	return name..E.debugInfo(id)
+	local cachedName = func_npcName_CACHE(id)
+	return E.func_translit(cachedName)..E.debugInfo(id)
+	-- local name = UNKNOWN
+	-- if E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
+	-- 	name = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
+	-- else
+	-- 	name = E.COLOR_RED..name.."|r"
+	-- end
+	-- return name..E.debugInfo(id)
 end
+
+
+
+
+
+
+-- function E.func_GetNPCName(id)
+-- 	if not id then return "no id" end
+-- 	local name = UNKNOWN
+-- 	if E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
+-- 		name = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
+-- 	else
+-- 		name = E.COLOR_RED..name.."|r"
+-- 	end
+-- 	return name..E.debugInfo(id)
+-- end
+
+
+
+
+
+
+
+
+
 local function func_questName_CACHE(id)
 	local Cache = GetOrCreateCache("AllQuests", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then

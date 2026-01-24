@@ -1,15 +1,16 @@
-## Interface: 120000
-## Version: v110.8
-# (12.0.0)(21.01.2026)
+## Interface: 120001, 120000, 110207
+## Version: v110.9
+# (12.0.1)(24.01.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 ## Author: Octo
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\IconTexture\ToDo.tga
 
+## SavedVariables: Octo_profileColors, Octo_profileKeys
+## SavedVariables: Octo_ToDo_DB_Levels, Octo_ToDo_DB_Vars, Octo_Cache_DB
+
 ## SavedVariables: Octo_ToDo_DB_AccountData
 ## SavedVariables: Octo_Options
-## SavedVariables: Octo_profileKeys
-## SavedVariables: Octo_ToDo_DB_Levels, Octo_ToDo_DB_Vars, Octo_Cache_DB
 
 ## X-Wago-ID: 4N2mBVGL
 ## X-Curse-Project-ID: 1405495

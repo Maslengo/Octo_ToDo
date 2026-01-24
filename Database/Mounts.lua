@@ -55,15 +55,10 @@ function E.func_Mounts_1166() -- Timewalk
 		-- https://www.wowhead.com/achievement=61394/
 		-- https://www.wowhead.com/quest=92857/
 
-		-- {itemID = 257511, price = PRICE_5K, mountID = 2795,  source = SOURCE_ALWAYS},
-		-- {itemID = 257513, price = PRICE_5K, mountID = 2796,  source = SOURCE_ALWAYS},
-		-- {itemID = 257514, price = PRICE_5K, mountID = 2797,  source = SOURCE_ALWAYS},
-		-- {itemID = 257516, price = PRICE_5K, mountID = 2798,  source = SOURCE_ALWAYS},
-
-
-
-
-
+		{itemID = 257511, price = PRICE_5K, mountID = 2795,  source = SOURCE_ALWAYS},
+		{itemID = 257513, price = PRICE_5K, mountID = 2796,  source = SOURCE_ALWAYS},
+		{itemID = 257514, price = PRICE_5K, mountID = 2797,  source = SOURCE_ALWAYS},
+		{itemID = 257516, price = PRICE_5K, mountID = 2798,  source = SOURCE_ALWAYS},
 	}
 	return tbl
 end

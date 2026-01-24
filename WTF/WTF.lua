@@ -149,6 +149,7 @@ function EventFrame:func_DatabaseClear()
 		}
 	}
 	E.func_CleanDeepTable(Octo_profileKeys, rules)
+	E.func_CleanDeepTable(Octo_profileColors, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_Levels, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_Vars, rules)
 	E.func_CleanDeepTable(Octo_Cache_DB, rules)
@@ -276,7 +277,7 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 		Config_DebugID_ALL = false,
 		GlobalDBVersion = 0,
 		Config_UseTranslit = false,
-		Config_ShowAllDifficulties = false, -- E.Config_ShowAllDifficulties,
+		Config_ShowAllDifficulties = true, -- E.Config_ShowAllDifficulties,
 		Config_DifficultyAbbreviation = true,
 	}
 	for k, v in next, (featureDefaults) do
@@ -285,159 +286,7 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	--------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors = Octo_ToDo_DB_Vars.Colors or {}
-	--------------------------------------------------------------------------------
-	-- ФРЕЙМ АДДОНА
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame = Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame or {r = 0.08, g = 0.08, b = 0.08, a = 0.8} -- Фон (Основной цвет фона интерфейса)
-	if Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseFaction_CONFIG = false
-	end -- фон персонажа (ПО ФРАКЦИИ)
 
-	if Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.MAIN_MainFrame_UseClass_CONFIG = false
-	end -- фон персонажа (ПО КЛАССУ)
-
-
-
-
-
-
-
-
-	Octo_ToDo_DB_Vars.Colors.MAIN_Border = Octo_ToDo_DB_Vars.Colors.MAIN_Border or {r = 0, g = 0, b = 0, a = 1} -- Граница (Основной цвет границ интерфейса)
-	if Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseFaction_CONFIG = false
-	end -- фон персонажа (ПО ФРАКЦИИ)
-
-	if Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.MAIN_Border_UseClass_CONFIG = false
-	end -- фон персонажа (ПО КЛАССУ)
-
-
-
-
-
-
-
-	--------------------------------------------------------------------------------
-	-- TOOLTIP
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame = Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame or {r = 0.08, g = 0.08, b = 0.08, a = 1} -- Тултип (Основной цвет фона тултипа)
-	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseFaction_CONFIG = false
-	end -- фон персонажа (ПО ФРАКЦИИ)
-
-	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.TOOLTIP_TooltipFrame_UseClass_CONFIG = false
-	end -- ф
-
-
-
-
-
-	Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border = Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border or {r = 0, g = 0, b = 0, a = 1} -- Граница (Основной цвет границ интерфейса)
-	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseFaction_CONFIG = false
-	end -- фон персонажа (ПО ФРАКЦИИ)
-
-	if Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.TOOLTIP_Border_UseClass_CONFIG = false
-	end -- фон персонажа (ПО КЛАССУ)
-
-
-
-
-
-
-
-
-
-
-	--------------------------------------------------------------------------------
-	-- ГРАДИЕНТ ЗНАЧЕНИЙ
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.TOOLTIP_min_RGBA = Octo_ToDo_DB_Vars.Colors.TOOLTIP_min_RGBA or E.func_Hex2ColorTable(E.COLOR_RED, 1)
-	Octo_ToDo_DB_Vars.Colors.TOOLTIP_mid_RGBA = Octo_ToDo_DB_Vars.Colors.TOOLTIP_mid_RGBA or E.func_Hex2ColorTable(E.COLOR_ORANGE, 1)
-	Octo_ToDo_DB_Vars.Colors.TOOLTIP_max_RGBA = Octo_ToDo_DB_Vars.Colors.TOOLTIP_max_RGBA or E.func_Hex2ColorTable(E.COLOR_GREEN, 1)
-
-	if Octo_ToDo_DB_Vars.TOOLTIP_usegradient == nil then
-		Octo_ToDo_DB_Vars.TOOLTIP_usegradient = true
-	end
-
-
-	--------------------------------------------------------------------------------
-	-- ПЕРСОНАЖ
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.CharLines = Octo_ToDo_DB_Vars.Colors.CharLines or {r = .5, g = .5, b = .5, a = .2} -- LINES персонажа
-	if Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.CharLines_UseFaction_CONFIG = false
-	end -- фон персонажа (ПО ФРАКЦИИ)
-
-	if Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.CharLines_UseClass_CONFIG = true
-	end -- фон персонажа (ПО КЛАССУ)
-
-	-- Octo_ToDo_DB_Vars.Colors.CharLines_Alpha = Octo_ToDo_DB_Vars.Colors.CharLines_Alpha or .2
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.CharHeader = Octo_ToDo_DB_Vars.Colors.CharHeader or {r = .5, g = .5, b = .5, a = .2} -- CharHeader персонажа
-
-	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.CharHeader_UseFaction_CONFIG = true
-	end -- фон персонажа (ПО ФРАКЦИИ)
-
-	if Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.CharHeader_UseClass_CONFIG = false
-	end -- фон персонажа (ПО КЛАССУ)
-
-	-- Octo_ToDo_DB_Vars.Colors.CharHeader_Alpha = Octo_ToDo_DB_Vars.Colors.CharHeader_Alpha or .2
-	--------------------------------------------------------------------------------
-	-- ХАЙЛАЙТ ТЕКСТУРА(текстура при mouseover)
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.Highlight = Octo_ToDo_DB_Vars.Colors.Highlight or {r = .5, g = .5, b = .5, a = .1} -- цвет хайлайта
-
-	if Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.Highlight_UseFaction_CONFIG = false
-	end -- цвет хайлайта (ПО ФРАКЦИИ)
-
-	if Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG == nil then
-		Octo_ToDo_DB_Vars.Colors.Highlight_UseClass_CONFIG = true
-	end -- цвет хайлайта (ПО КЛАССУ)
-	-- Octo_ToDo_DB_Vars.Colors.Highlight_Alpha = Octo_ToDo_DB_Vars.Colors.Highlight_Alpha or .2\
-	Octo_ToDo_DB_Vars.ENABLE_HIGHLIGHT_ANIMATION = false
-	--------------------------------------------------------------------------------
-	-- РЕПУТАЦИЯ -- фон репутации
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard = Octo_ToDo_DB_Vars.Colors.Rep_Standard or {}
-	--------------------------------------------------------------------------------
-	-- Rep_Standard
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[1] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[1] or E.func_Hex2ColorTable(E.COLOR_RED, .5)
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[2] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[2] or E.func_Hex2ColorTable(E.COLOR_RED, .5)
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[3] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[3] or E.func_Hex2ColorTable(E.COLOR_ORANGE, .5)
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[4] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[4] or E.func_Hex2ColorTable(E.COLOR_YELLOW, .5) -- Разнодушие
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[5] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[5] or E.func_Hex2ColorTable(E.COLOR_YELLOW, .5)
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[6] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[6] or E.func_Hex2ColorTable(E.COLOR_GREEN, .5)
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[7] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[7] or E.func_Hex2ColorTable(E.COLOR_GREEN, .5)
-	Octo_ToDo_DB_Vars.Colors.Rep_Standard[8] = Octo_ToDo_DB_Vars.Colors.Rep_Standard[8] or E.func_Hex2ColorTable(E.COLOR_GREEN, .5)
-	-- repType 2 isFriend -- FRIENDSHIP
-	Octo_ToDo_DB_Vars.Colors.Rep_Friend = Octo_ToDo_DB_Vars.Colors.Rep_Friend or E.func_Hex2ColorTable(E.COLOR_PINK, .5)
-	-- repType 3 isMajor -- MAJOR FACTION (RENOWN)
-	Octo_ToDo_DB_Vars.Colors.Rep_Major = Octo_ToDo_DB_Vars.Colors.Rep_Major or E.func_Hex2ColorTable(E.COLOR_BLUE, .5)
-	-- repType 4 isParagon -- PARAGON OVERLAY
-	Octo_ToDo_DB_Vars.Colors.Rep_Paragon = Octo_ToDo_DB_Vars.Colors.Rep_Paragon or E.func_Hex2ColorTable(E.COLOR_BLUE, .5)
-	--------------------------------------------------------------------------------
-	-- КОВЕНАНТ
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.KYRIAN = Octo_ToDo_DB_Vars.Colors.KYRIAN or E.func_Hex2ColorTable(E.COLOR_KYRIAN, 1)
-	Octo_ToDo_DB_Vars.Colors.VENTHYR = Octo_ToDo_DB_Vars.Colors.VENTHYR or E.func_Hex2ColorTable(E.COLOR_VENTHYR, 1)
-	Octo_ToDo_DB_Vars.Colors.NIGHTFAE = Octo_ToDo_DB_Vars.Colors.NIGHTFAE or E.func_Hex2ColorTable(E.COLOR_NIGHTFAE, 1)
-	Octo_ToDo_DB_Vars.Colors.NECROLORD = Octo_ToDo_DB_Vars.Colors.NECROLORD or E.func_Hex2ColorTable(E.COLOR_NECROLORD, 1)
-	--------------------------------------------------------------------------------
-	-- FACTION COLOR
-	--------------------------------------------------------------------------------
-	Octo_ToDo_DB_Vars.Colors.faction_Horde = Octo_ToDo_DB_Vars.Colors.faction_Horde or E.func_Hex2ColorTable("|cffC41E3A", 1)
-	Octo_ToDo_DB_Vars.Colors.faction_Alliance = Octo_ToDo_DB_Vars.Colors.faction_Alliance or E.func_Hex2ColorTable("|cff0070DD", 1)
-	Octo_ToDo_DB_Vars.Colors.faction_Neutral = Octo_ToDo_DB_Vars.Colors.faction_Neutral or E.func_Hex2ColorTable(E.Class_Monk_Color, 1)
 	--------------------------------------------------------------------------------
 	-- opde(Octo_ToDo_DB_Vars)
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
@@ -472,14 +321,40 @@ function EventFrame:Init_Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
 	E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
 end
+function EventFrame:init_Octo_profileColors()
+	Octo_profileColors = Octo_profileColors or {}
+	local db = Octo_profileColors
+	db.profiles = db.profiles or {}
+	E.func_CreateNew_profileColors("Default")
+
+	if Octo_profileColors and Octo_profileColors.profiles then
+		for profileName in next, (Octo_profileColors.profiles) do
+			if profileName ~= "Default" then
+				E.func_CreateNew_profileColors("Default")
+			end
+		end
+	end
+	E.func_CheckALL_profileColors()
+	-- C_Timer.After(1, function()
+	-- 	opde(db)
+	-- end)
+end
+
+function E.init_Octo_profileColors()
+	EventFrame:init_Octo_profileColors()
+	return
+end
+
+
 function EventFrame:init_Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
-	E.func_CreateNewProfile("Default")
+	E.func_CreateNew_profileKeys("Default")
+
 	if Octo_profileKeys and Octo_profileKeys.profiles then
 		for profileName in next, (Octo_profileKeys.profiles) do
 			if profileName ~= "Default" then
-				E.func_CreateNewProfile(profileName)
+				E.func_CreateNew_profileKeys(profileName)
 			end
 		end
 	end
@@ -492,6 +367,13 @@ function EventFrame:init_Octo_profileKeys()
 		end
 	end
 end
+
+
+
+
+
+
+
 function EventFrame:func_Daily_Reset()
 	local ServerTime = GetServerTime()
 	E.Reset_JournalInstance()
@@ -621,6 +503,7 @@ function EventFrame:ADDON_LOADED(addonName)
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	EventFrame:init_Octo_profileKeys()
+	EventFrame:init_Octo_profileColors()
 	E.func_UpdateGlobals()
 end
 function EventFrame:VARIABLES_LOADED()

@@ -33,12 +33,12 @@ local function SafeTooltipShow(frame, ...)
 		E.func_Octo_TooltipFrame_OnEnter(frame, ...)
 	end
 end
+
+
 local func_OnAcquiredLeft do
 	local function Create_SettingsButton(frame)
-		frame.SettingsButton = CreateFrame("BUTTON", nil, frame)
+		frame.SettingsButton = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
 		frame.SettingsButton:Hide()
-		frame.SettingsButton:SetPropagateMouseClicks(true)
-		frame.SettingsButton:SetPropagateMouseMotion(true)
 		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 		frame.SettingsButton:SetPoint("LEFT", 1, -1)
 		frame.SettingsButton:RegisterForClicks("LeftButtonUp")
@@ -100,15 +100,6 @@ local func_OnAcquiredLeft do
 		frame.TextureLeft:SetAllPoints()
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
-	local function Create_Highlight(frame, owner)
-		frame.Highlight = CreateFrame("BUTTON", nil, owner) -- , "OctoHighlightAnimationTemplate"
-		E.func_ApplyHighlightTemplate(frame.Highlight, frame)
-	end
-	local function AdditionalSettings(frame)
-		frame:SetPropagateMouseClicks(true)
-		frame:SetPropagateMouseMotion(true)
-		frame:SetHitRectInsets(1, 1, 1, 1)
-	end
 	function func_OnAcquiredLeft(owner, frame, node, new)
 		if not C_AddOns.IsAddOnLoaded("Blizzard_CurrencyTransfer") then
 			C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
@@ -121,15 +112,15 @@ local func_OnAcquiredLeft do
 		Create_icon3frame(frame)
 		Create_TextLeft(frame)
 		Create_TextureLeft(frame)
-		Create_Highlight(frame, owner)
-		AdditionalSettings(frame)
+		E.func_Create_Highlight(frame, owner)
+		-- AdditionalSettings(frame, "func_OnAcquiredLeft")
 		frame:SetScript("OnHide", function() frame.Highlight:Hide() end)
 		frame:SetScript("OnShow", function() frame.Highlight:Show() end)
 	end
 end
 local func_OnAcquiredCenter do
 	local function Create_CurrentCharBackground(columnFrame)
-		columnFrame.CurrentCharBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -2)
+		columnFrame.CurrentCharBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
 		columnFrame.CurrentCharBackground:SetAllPoints()
 		columnFrame.CurrentCharBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
 		columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, .1)
@@ -152,26 +143,27 @@ local func_OnAcquiredCenter do
 		columnFrame.TextCenter:SetJustifyH("CENTER")
 		columnFrame.TextCenter:SetTextColor(textR, textG, textB, textA)
 	end
-	local function AdditionalSettings(columnFrame, frame)
-		columnFrame:SetPropagateMouseClicks(true)
-		columnFrame:SetPropagateMouseMotion(true)
-		columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
-		columnFrame:SetHitRectInsets(1, 1, 1, 1)
-		columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
-	end
 	function func_OnAcquiredCenter(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-		frame:SetPropagateMouseClicks(true)
+
+		-- AdditionalSettings(frame, "func_OnAcquiredCenter")
+
 		frame.columnFrames = setmetatable({}, {
 				__index = function(self, key)
 					if key then
-						local columnFrame = CreateFrame("BUTTON", nil, frame)
+						local columnFrame = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
 						columnFrame:Hide()
 						Create_CurrentCharBackground(columnFrame)
 						Create_ReputationBackground(columnFrame)
 						Create_TextCenter(columnFrame)
-						AdditionalSettings(columnFrame, frame)
+						-- AdditionalSettings(columnFrame, "func_OnAcquiredCenter METATABLE")
+
+
+
+						columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
+						columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
+
 						columnFrame:SetScript("OnHide", function()
 								columnFrame:Hide()
 						end)
@@ -188,10 +180,10 @@ local function func_SettingsButton_OnClick(button, frameData)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
-	if not Octo_profileKeys.profiles[E.CurrentProfile][dataType] then
-		Octo_profileKeys.profiles[E.CurrentProfile][dataType] = {}
+	if not Octo_profileKeys.profiles[E.Current_profileKeys][dataType] then
+		Octo_profileKeys.profiles[E.Current_profileKeys][dataType] = {}
 	end
-	local settingsTable = Octo_profileKeys.profiles[E.CurrentProfile][dataType]
+	local settingsTable = Octo_profileKeys.profiles[E.Current_profileKeys][dataType]
 	local newValue = not (settingsTable[id] or false)
 	settingsTable[id] = newValue
 	local texture = newValue and "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
@@ -328,8 +320,8 @@ function EventFrame:func_InitLEFT(frame, node)
 		end
 		if Octo_profileKeys.isSettingsEnabled then
 			local texture = E.ICON_EMPTY
-			if Octo_profileKeys.profiles[E.CurrentProfile][dataType] and Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] ~= nil then
-				if Octo_profileKeys.profiles[E.CurrentProfile][dataType][id] or Octo_profileKeys.profiles[E.CurrentProfile][dataType][tonumber(id)] then
+			if Octo_profileKeys.profiles[E.Current_profileKeys][dataType] and Octo_profileKeys.profiles[E.Current_profileKeys][dataType][id] ~= nil then
+				if Octo_profileKeys.profiles[E.Current_profileKeys][dataType][id] or Octo_profileKeys.profiles[E.Current_profileKeys][dataType][tonumber(id)] then
 					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen"
 				else
 					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
@@ -510,29 +502,33 @@ function EventFrame:func_CreateMainFrame()
 	local scrollContentFrame = CreateFrame("FRAME", "scrollContentFrame")
 	Octo_MainFrame.scrollContentFrame = scrollContentFrame
 	horizontalScrollFrame:SetScrollChild(scrollContentFrame)
-	Octo_MainFrame.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame, "WowScrollBoxList")
+	Octo_MainFrame.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame, "WowScrollBoxList,OctoPropagateTemplate")
 	Octo_MainFrame.ScrollBoxLEFT:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
 	Octo_MainFrame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
-	Octo_MainFrame.ScrollBoxLEFT:SetPropagateMouseClicks(true)
-	Octo_MainFrame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
+
+
+	Octo_MainFrame.ScrollBoxLEFT:SetFrameLevel(Octo_MainFrame.ScrollBoxLEFT:GetFrameLevel() + 1)
+
+
+
+	-- Octo_MainFrame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
 	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame.ScrollBoxLEFT, "TOPRIGHT", 0, E.HEADER_HEIGHT)
 	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
 	Octo_MainFrame.ViewLeft = CreateScrollBoxListTreeListView(0)
 	Octo_MainFrame.ViewLeft:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame.ViewLeft:SetElementInitializer("BUTTON", function(...) self:func_InitLEFT(...) end)
+	Octo_MainFrame.ViewLeft:SetElementInitializer("OctoPropagateTemplate", function(...) self:func_InitLEFT(...) end)
 	Octo_MainFrame.ViewLeft:RegisterCallback(Octo_MainFrame.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame)
-	Octo_MainFrame.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList")
+	Octo_MainFrame.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList,OctoPropagateTemplate")
 	Octo_MainFrame.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame.ScrollBoxCenter:SetPoint("BOTTOMRIGHT")
-	Octo_MainFrame.ScrollBoxCenter:SetPropagateMouseClicks(true)
-	Octo_MainFrame.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
+	-- Octo_MainFrame.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
 	Octo_MainFrame.ScrollBarCenter = CreateFrame("EventFrame", nil, Octo_MainFrame, "MinimalScrollBar")
 	Octo_MainFrame.ScrollBarCenter:SetPoint("TOPLEFT", Octo_MainFrame, "TOPRIGHT", 6, 0)
 	Octo_MainFrame.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame, "BOTTOMRIGHT", 6, 0)
 	Octo_MainFrame.ViewCenter = CreateScrollBoxListTreeListView(0)
 	Octo_MainFrame.ViewCenter:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame.ViewCenter:SetElementInitializer("BUTTON", function(...) self:func_InitCenter(...) end)
+	Octo_MainFrame.ViewCenter:SetElementInitializer("OctoPropagateTemplate", function(...) self:func_InitCenter(...) end)
 	Octo_MainFrame.ViewCenter:RegisterCallback(Octo_MainFrame.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCenter, Octo_MainFrame)
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter, Octo_MainFrame.ViewLeft)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter)
@@ -582,14 +578,11 @@ function EventFrame:func_CreateMainFrame()
 		self.Nickname = self:CreateFontString()
 		self.Nickname:SetFontObject(OctoFont11)
 
-
 		self.Server = self:CreateFontString()
 		self.Server:SetFontObject(OctoFont10)
 
-
 		self.Mail = self:CreateFontString()
 		self.Mail:SetFontObject(OctoFont10)
-
 
 		self.Durability = self:CreateFontString()
 		self.Durability:SetFontObject(OctoFont10)
@@ -604,17 +597,18 @@ function EventFrame:func_CreateMainFrame()
 		self.CharTexture:SetAllPoints()
 		self.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
 	end
-	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, nil, ResetPoolFrame, false, InitializePoolFrame)
+	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, "OctoPropagateTemplate", ResetPoolFrame, false, InitializePoolFrame)
 end
 function E.func_main_frame_toggle()
 	if Octo_MainFrame then
 		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
-		if not InCombatLockdown() then
+		-- if not InCombatLockdown() then
 			local left = Octo_MainFrame:GetLeft()
 			local top = Octo_MainFrame:GetTop()
+
 			Octo_MainFrame:ClearAllPoints()
 			Octo_MainFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
-		end
+		-- end
 	end
 end
 function EventFrame:func_CreateSearchBox()
@@ -766,8 +760,8 @@ function EventFrame:CreateDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
 	local columnWidthsCenter = {}
-	E.func_UpdateCurrentProfile()
-	local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
+	E.func_UpdateCurrent_profileKeys()
+	local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 	local sortedCharacters = E.func_SortCharacters()
 	local currentCharacterIndex
 	for CharIndex, CharInfo in ipairs(sortedCharacters) do
@@ -801,9 +795,9 @@ function EventFrame:CreateDataProvider()
 					end
 					local canDraw = false
 					if dataType ~= "UniversalQuests" then
-						canDraw = E.func_ShouldShow(id, dataType, E.CurrentProfile)
+						canDraw = E.func_ShouldShow(id, dataType, E.Current_profileKeys)
 					else
-						canDraw = E.func_ShouldShow(questKey, dataType, E.CurrentProfile)
+						canDraw = E.func_ShouldShow(questKey, dataType, E.Current_profileKeys)
 					end
 					if canDraw then
 						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey =
@@ -923,9 +917,6 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		else
 			HeaderFrameCenter.Server:SetText(E.func_CharInfo_Server(CharInfo))
 		end
-		HeaderFrameCenter:SetPropagateMouseClicks(true)
-		HeaderFrameCenter:SetPropagateMouseMotion(true)
-		HeaderFrameCenter:SetHitRectInsets(1, 1, 1, 1)
 
 
 		HeaderFrameCenter.Mail:SetPoint("TOPRIGHT")

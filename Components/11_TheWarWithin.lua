@@ -61,9 +61,6 @@ local function tempFunction()
 		-- {id = 3109, defS = false,}, -- Runed Undermine Crest
 		-- {id = 3108, defS = false,}, -- Carved Undermine Crest
 		-- {id = 3107, defS = false,}, -- Weathered Undermine Crest
-		{id = 1166, defS = false,}, -- Timewarped Badge
-		-- {id = 3139, defS = false,}, -- Plunder
-		{id = 2032, defS = false,}, -- Trader's Tender
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -182,49 +179,49 @@ local function tempFunction()
 		-- 2255 Аз-Кахет
 		----------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
-		-- 	end,
-		-- 	name_save = "Rares2255",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{81695, forcedText = {npcID = 216031}, },
-		-- 		{78905, forcedText = {npcID = 214151}, },
-		-- 		{81704, forcedText = {npcID = 216042}, },
-		-- 		{81634, forcedText = {npcID = 216038}, },
-		-- 		{82077, forcedText = {npcID = 222624}, },
-		-- 		{81707, forcedText = {npcID = 216045}, },
-		-- 		{81699, forcedText = {npcID = 216041}, },
-		-- 		{82036, forcedText = {npcID = 216050}, },
-		-- 		{82034, forcedText = {npcID = 216048}, },
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
+		--     end,
+		--     name_save = "Rares2255",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {81695, forcedText = {npcID = 216031}, },
+		--         {78905, forcedText = {npcID = 214151}, },
+		--         {81704, forcedText = {npcID = 216042}, },
+		--         {81634, forcedText = {npcID = 216038}, },
+		--         {82077, forcedText = {npcID = 222624}, },
+		--         {81707, forcedText = {npcID = 216045}, },
+		--         {81699, forcedText = {npcID = 216041}, },
+		--         {82036, forcedText = {npcID = 216050}, },
+		--         {82034, forcedText = {npcID = 216048}, },
+		--     },
 		-- },
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2255)..": "..L["Treasures"] -- azj_kahet
-		-- 	end,
-		-- 	name_save = "Treasures2255",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{82718, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{82722, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{82720, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{82529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{82721, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{82719, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{82727, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{82527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{82525, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2255)..": "..L["Treasures"] -- azj_kahet
+		--     end,
+		--     name_save = "Treasures2255",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {82718, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		--         {82722, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		--         {82720, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		--         {82529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		--         {82721, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		--         {82719, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		--         {82727, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		--         {82527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		--         {82525, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		--     },
 		-- },
 		{
 			sorted = true,
@@ -247,53 +244,53 @@ local function tempFunction()
 		-- 2248 Остров Дорн
 		----------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
-		-- 	end,
-		-- 	name_save = "Rares2248",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82196, forcedText = {npcID = 219281}, },
-		-- 		{81893, forcedText = {npcID = 219264}, },
-		-- 		{81920, forcedText = {npcID = 221128}, },
-		-- 		{81895, forcedText = {npcID = 219265}, },
-		-- 		{81907, forcedText = {npcID = 219266}, },
-		-- 		{81905, forcedText = {npcID = 219279}, },
-		-- 		{81899, forcedText = {npcID = 219268}, },
-		-- 		{81902, forcedText = {npcID = 219270}, },
-		-- 		{81921, forcedText = {npcID = 220890}, },
-		-- 		{81897, forcedText = {npcID = 219267}, },
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
+		--     end,
+		--     name_save = "Rares2248",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {82196, forcedText = {npcID = 219281}, },
+		--         {81893, forcedText = {npcID = 219264}, },
+		--         {81920, forcedText = {npcID = 221128}, },
+		--         {81895, forcedText = {npcID = 219265}, },
+		--         {81907, forcedText = {npcID = 219266}, },
+		--         {81905, forcedText = {npcID = 219279}, },
+		--         {81899, forcedText = {npcID = 219268}, },
+		--         {81902, forcedText = {npcID = 219270}, },
+		--         {81921, forcedText = {npcID = 220890}, },
+		--         {81897, forcedText = {npcID = 219267}, },
+		--     },
 		-- },
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2248)..": "..L["Treasures"] -- isle_of_dorn
-		-- 	end,
-		-- 	name_save = "Treasures2248",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{82714, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{82287, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{82325, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{83243, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{83246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{83245, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{83244, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{82326, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{82246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{83242, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{83094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 		{83840, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2248)..": "..L["Treasures"] -- isle_of_dorn
+		--     end,
+		--     name_save = "Treasures2248",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {82714, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		--         {82287, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		--         {82325, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		--         {83243, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		--         {83246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		--         {83245, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		--         {83244, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		--         {82326, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		--         {82246, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		--         {83242, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		--         {83094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+		--         {83840, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
+		--     },
 		-- },
 		{
 			sorted = false,
@@ -314,51 +311,51 @@ local function tempFunction()
 		-- 2214 Гулкие Глубины
 		----------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
-		-- 	end,
-		-- 	name_save = "Rares2214",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{81674, forcedText = {npcID = 220265}, },
-		-- 		{80557, forcedText = {npcID = 220274}, },
-		-- 		{80505, forcedText = {npcID = 220276}, },
-		-- 		{81562, forcedText = {npcID = 220267}, },
-		-- 		{81511, forcedText = {npcID = 220266}, },
-		-- 		{80560, forcedText = {npcID = 220269}, },
-		-- 		{81566, forcedText = {npcID = 220272}, },
-		-- 		{80003, forcedText = {npcID = 218393}, },
-		-- 		{80536, forcedText = {npcID = 220286}, },
-		-- 		{81648, forcedText = {npcID = 221199}, },
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
+		--     end,
+		--     name_save = "Rares2214",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {81674, forcedText = {npcID = 220265}, },
+		--         {80557, forcedText = {npcID = 220274}, },
+		--         {80505, forcedText = {npcID = 220276}, },
+		--         {81562, forcedText = {npcID = 220267}, },
+		--         {81511, forcedText = {npcID = 220266}, },
+		--         {80560, forcedText = {npcID = 220269}, },
+		--         {81566, forcedText = {npcID = 220272}, },
+		--         {80003, forcedText = {npcID = 218393}, },
+		--         {80536, forcedText = {npcID = 220286}, },
+		--         {81648, forcedText = {npcID = 221199}, },
+		--     },
 		-- },
 		-- --------------------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2214)..": "..L["Treasures"] -- ringing_deeps
-		-- 	end,
-		-- 	name_save = "Treasures2214",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{82239, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{82820, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{82464, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{82819, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{80485, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{82235, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{82818, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{83030, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{79308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2214)..": "..L["Treasures"] -- ringing_deeps
+		--     end,
+		--     name_save = "Treasures2214",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {82239, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		--         {82820, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		--         {82464, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		--         {82819, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		--         {80485, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		--         {82235, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		--         {82818, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		--         {83030, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		--         {79308, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		--     },
 		-- },
 		{
 			sorted = false,
@@ -408,8 +405,6 @@ local function tempFunction()
 				-- {83366}, -- (Мир ждет) Выполните 10 локальных заданий в Каз Алгаре.
 				-- {83347}, -- (Посланник войны) Пройдите 4 подземелья в эпохальном режиме.
 				-- {83345}, -- (Призыв к бою) Одержите победу на 4 полях боя.
-
-
 				{86731, addText = {expansionText = E.func_FormatExpansion(1, "LEFT")}}, -- 1 CLASSIC (An Original Path Through Time)
 				{83363, addText = {expansionText = E.func_FormatExpansion(2, "LEFT")}}, -- 2 TBC (A Burning Path Through Time)
 				{83365, addText = {expansionText = E.func_FormatExpansion(3, "LEFT")}}, -- 3 WOTLK (A Frozen Path Through Time)
@@ -419,7 +414,6 @@ local function tempFunction()
 				{83360, addText = {expansionText = E.func_FormatExpansion(7, "LEFT")}}, -- 7 LEGION (A Fel Path Through Time)
 				{88805, addText = {expansionText = E.func_FormatExpansion(8, "LEFT")}}, -- 8 BFA (A Scarred Path Through Time)
 				{92649, addText = {expansionText = E.func_FormatExpansion(9, "LEFT")}}, -- 9 SL (Темный путь сквозь время)
-
 				{83358}, -- The Arena Calls - Arena Skirmishes
 				{84776}, -- A Call to Delves - Delves
 				{83357}, -- AccountWeekly
@@ -564,49 +558,49 @@ local function tempFunction()
 		-- 2369 Siren Isle
 		----------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
-		-- 	end,
-		-- 	name_save = "Rares2369",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{85672, forcedText = {npcID = 229982}, },
-		-- 		{85669, forcedText = {npcID = 228201}, },
-		-- 		{85437, forcedText = {npcID = 229992}, },
-		-- 		{84801, forcedText = {npcID = 228601}, },
-		-- 		{84807, forcedText = {npcID = 228605}, },
-		-- 		{84804, forcedText = {npcID = 228603}, },
-		-- 		{84810, forcedText = {npcID = 228609}, },
-		-- 		{84813, forcedText = {npcID = 228612}, },
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
+		--     end,
+		--     name_save = "Rares2369",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {85672, forcedText = {npcID = 229982}, },
+		--         {85669, forcedText = {npcID = 228201}, },
+		--         {85437, forcedText = {npcID = 229992}, },
+		--         {84801, forcedText = {npcID = 228601}, },
+		--         {84807, forcedText = {npcID = 228605}, },
+		--         {84804, forcedText = {npcID = 228603}, },
+		--         {84810, forcedText = {npcID = 228609}, },
+		--         {84813, forcedText = {npcID = 228612}, },
+		--     },
 		-- },
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2369)..": "..L["Treasures"]
-		-- 	end,
-		-- 	name_save = "Treasures2369",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{86764, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{86767, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{86766, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{86732, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{85716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{84547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{84839, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{86765, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{84529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{84527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2369)..": "..L["Treasures"]
+		--     end,
+		--     name_save = "Treasures2369",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {86764, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		--         {86767, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		--         {86766, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		--         {86732, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		--         {85716, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		--         {84547, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		--         {84839, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		--         {86765, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		--         {84529, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		--         {84527, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		--     },
 		-- },
 		{
 			sorted = false,
@@ -649,66 +643,66 @@ local function tempFunction()
 		-- 2346 Нижняя Шахта
 		----------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
-		-- 	end,
-		-- 	name_save = "Rares2346",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{84917, forcedText = {npcID = 230931}, },
-		-- 		{84918, forcedText = {npcID = 230934}, },
-		-- 		{84919, forcedText = {npcID = 230940}, },
-		-- 		{84920, forcedText = {npcID = 230946}, },
-		-- 		{84921, forcedText = {npcID = 230951}, },
-		-- 		{84922, forcedText = {npcID = 230979}, },
-		-- 		{84926, forcedText = {npcID = 230995}, },
-		-- 		{84927, forcedText = {npcID = 231012}, },
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
+		--     end,
+		--     name_save = "Rares2346",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {84917, forcedText = {npcID = 230931}, },
+		--         {84918, forcedText = {npcID = 230934}, },
+		--         {84919, forcedText = {npcID = 230940}, },
+		--         {84920, forcedText = {npcID = 230946}, },
+		--         {84921, forcedText = {npcID = 230951}, },
+		--         {84922, forcedText = {npcID = 230979}, },
+		--         {84926, forcedText = {npcID = 230995}, },
+		--         {84927, forcedText = {npcID = 231012}, },
+		--     },
 		-- },
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2346)..": "..L["Treasures"] -- undermine
-		-- 	end,
-		-- 	name_save = "Treasure2346",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 		{86630, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-		-- 		{85781, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
-		-- 		{85785, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
-		-- 		{86773, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
-		-- 		{85787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
-		-- 		{86772, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
-		-- 		{85786, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
-		-- 		{86771, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
-		-- 		{85788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
-		-- 		{86774, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
-		-- 		{87007, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
-		-- 		{85072, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
-		-- 		{85116, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
-		-- 		{85117, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
-		-- 		{85114, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 27"},},
-		-- 		{85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2346)..": "..L["Treasures"] -- undermine
+		--     end,
+		--     name_save = "Treasure2346",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		--         {85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		--         {85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		--         {85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		--         {85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		--         {85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		--         {85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		--         {85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		--         {85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		--         {85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		--         {86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+		--         {86630, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
+		--         {85781, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
+		--         {85785, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
+		--         {86773, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
+		--         {85787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
+		--         {86772, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
+		--         {85786, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
+		--         {86771, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
+		--         {85788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
+		--         {86774, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
+		--         {87007, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
+		--         {85072, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
+		--         {85116, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
+		--         {85117, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
+		--         {85114, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 27"},},
+		--         {85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
+		--     },
 		-- },
 		{
 			sorted = false,
@@ -924,97 +918,97 @@ local function tempFunction()
 			forcedMaxQuest = 8,
 		},
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
-		-- 	end,
-		-- 	name_save = "Rares2215",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{81763, forcedText = {npcID = 207802}, },
-		-- 		{82558, forcedText = {npcID = 206514}, },
-		-- 		{82560, forcedText = {npcID = 214757}, },
-		-- 		{82559, forcedText = {npcID = 206184}, },
-		-- 		{81880, forcedText = {npcID = 221753}, },
-		-- 		{80011, forcedText = {npcID = 218458}, },
-		-- 		{82562, forcedText = {npcID = 221179}, },
-		-- 		{82564, forcedText = {npcID = 207780}, },
-		-- 		{81881, forcedText = {npcID = 221767}, },
-		-- 		{81761, forcedText = {npcID = 221551}, },
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
+		--     end,
+		--     name_save = "Rares2215",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {81763, forcedText = {npcID = 207802}, },
+		--         {82558, forcedText = {npcID = 206514}, },
+		--         {82560, forcedText = {npcID = 214757}, },
+		--         {82559, forcedText = {npcID = 206184}, },
+		--         {81880, forcedText = {npcID = 221753}, },
+		--         {80011, forcedText = {npcID = 218458}, },
+		--         {82562, forcedText = {npcID = 221179}, },
+		--         {82564, forcedText = {npcID = 207780}, },
+		--         {81881, forcedText = {npcID = 221767}, },
+		--         {81761, forcedText = {npcID = 221551}, },
+		--     },
 		-- },
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2215)..": "..L["Treasures"] -- hallowfall
-		-- 	end,
-		-- 	name_save = "Treasures2215",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		-- 		{83263, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		-- 		{83284, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		-- 		{81468, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		-- 		{81971, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		-- 		{81978, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		-- 		{81972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		-- 		{82005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		-- 		{83273, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		-- 		{79275, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		-- 		{80687, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		-- 		{81518, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		-- 	},
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2215)..": "..L["Treasures"] -- hallowfall
+		--     end,
+		--     name_save = "Treasures2215",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {83263, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
+		--         {83284, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
+		--         {81468, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
+		--         {81971, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
+		--         {81978, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
+		--         {81972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
+		--         {82005, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
+		--         {83273, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
+		--         {79275, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
+		--         {80687, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
+		--         {81518, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
+		--     },
 		-- },
 		----------------------------------------------------------------
 		-- 2371 К'ареш
 		----------------------------------------------------------------
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
-		-- 	end,
-		-- 	name_save = "Rares2371",
-		-- 	defS = false,
-		-- 	reset = "Regular", -- "Daily",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
-		-- 		{90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
-		-- 		{90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
-		-- 		{nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
-		-- 		{86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
-		-- 		{nil},
-		-- 		{91276, forcedText = {npcID = 245998}, },
-		-- 		{91275, forcedText = {npcID = 245997}, },
-		-- 		{90687, forcedText = {npcID = 238144}, },
-		-- 		{90689, forcedText = {npcID = 238536}, },
-		-- 		{90692, forcedText = {npcID = 241920}, },
-		-- 		{90694, forcedText = {npcID = 238384}, },
-		-- 		{nil},
-		-- 		{nil, addText = {spellID = 1214374},},
-		-- 		{90596, forcedText = {npcID = 232128}, },
-		-- 		{90586, forcedText = {npcID = 232077}, },
-		-- 		{90594, forcedText = {npcID = 231981}, },
-		-- 		{90588, forcedText = {npcID = 232108}, },
-		-- 		{90595, forcedText = {npcID = 232127}, },
-		-- 		{90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
-		-- 		{90591, forcedText = {npcID = 232189}, },
-		-- 		{90585, forcedText = {npcID = 232006}, },
-		-- 		{90583, forcedText = {npcID = 232129}, },
-		-- 		{90592, forcedText = {npcID = 232193}, },
-		-- 		{91293, forcedText = {npcID = 234845}, },
-		-- 		{90589, forcedText = {npcID = 232111}, },
-		-- 		{90593, forcedText = {npcID = 232195}, },
-		-- 		{90584, forcedText = {npcID = 232199}, },
-		-- 	},
-		-- 	-- forcedMaxQuest = 3,
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
+		--     end,
+		--     name_save = "Rares2371",
+		--     defS = false,
+		--     reset = "Regular", -- "Daily",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
+		--         {90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
+		--         {90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
+		--         {nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
+		--         {86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
+		--         {nil},
+		--         {91276, forcedText = {npcID = 245998}, },
+		--         {91275, forcedText = {npcID = 245997}, },
+		--         {90687, forcedText = {npcID = 238144}, },
+		--         {90689, forcedText = {npcID = 238536}, },
+		--         {90692, forcedText = {npcID = 241920}, },
+		--         {90694, forcedText = {npcID = 238384}, },
+		--         {nil},
+		--         {nil, addText = {spellID = 1214374},},
+		--         {90596, forcedText = {npcID = 232128}, },
+		--         {90586, forcedText = {npcID = 232077}, },
+		--         {90594, forcedText = {npcID = 231981}, },
+		--         {90588, forcedText = {npcID = 232108}, },
+		--         {90595, forcedText = {npcID = 232127}, },
+		--         {90590, forcedText = {npcID = 232182}, }, -- 90679 вместе с ним
+		--         {90591, forcedText = {npcID = 232189}, },
+		--         {90585, forcedText = {npcID = 232006}, },
+		--         {90583, forcedText = {npcID = 232129}, },
+		--         {90592, forcedText = {npcID = 232193}, },
+		--         {91293, forcedText = {npcID = 234845}, },
+		--         {90589, forcedText = {npcID = 232111}, },
+		--         {90593, forcedText = {npcID = 232195}, },
+		--         {90584, forcedText = {npcID = 232199}, },
+		--     },
+		--     -- forcedMaxQuest = 3,
 		-- },
 		{
 			sorted = false,
@@ -1084,9 +1078,9 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				-- https://wago.tools/db2/QuestLineXQuest?filter[QuestLineID]=5572&page=1&sort[OrderIndex]=asc
+				{82706}, -- Delves: Worldwide Research
 				-- {82708}, -- Delves: Nerubian Menace (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
 				-- {82707}, -- Delves: Earthen Defense (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
-				{82706}, -- Delves: Worldwide Research
 				-- {82709}, -- Delves: Percussive Archaeology (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
 				-- {82710}, -- Delves: Empire-ical Exploration (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
 				-- {82711}, -- Delves: Lost and Found (This quest was marked obsolete by Blizzard and cannot be obtained or completed.)
@@ -1191,23 +1185,19 @@ local function tempFunction()
 				{84132, addText = {IconVignette = "Mobile-Tailoring",}, },  -- Tailoring Services Requested
 				{84133, addText = {IconVignette = "Mobile-Alchemy",}, },  -- Alchemy Services Requested
 				{nil},
-
 				{83102, addText = {IconVignette = "Mobile-Mining",}, },  -- Bismuth is Business -- горняка
 				{83103, addText = {IconVignette = "Mobile-Mining",}, },  -- Acquiring Aqirite -- горняка
 				{83104, addText = {IconVignette = "Mobile-Mining",}, },  -- Identifying Ironclaw -- горняка
 				{83105, addText = {IconVignette = "Mobile-Mining",}, },  -- Rush-order Requisition -- горняка
 				{83106, addText = {IconVignette = "Mobile-Mining",}, },  -- Null Pebble Excavation -- горняка
-
 				{82992, addText = {IconVignette = "Mobile-Skinning",}, },  -- Stormcharged Goods -- шкуродера
 				{82993, addText = {IconVignette = "Mobile-Skinning",}, },  -- From Shadows -- шкуродера
 				{83097, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cinder and Storm -- шкуродера
 				{83098, addText = {IconVignette = "Mobile-Skinning",}, },  -- Snap and Crackle -- шкуродера
 				{83100, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cracking the Shell -- шкуродера
-
 				{84084, addText = {IconVignette = "Mobile-Enchanting",}, },  -- Just a Pinch -- зачаровывателя
 				{84085, addText = {IconVignette = "Mobile-Enchanting",}, },  -- The Power of Potential -- зачаровывателя
 				{84086, addText = {IconVignette = "Mobile-Enchanting",}, },  -- A Rare Necessity -- зачаровывателя
-
 				{82916, addText = {IconVignette = "Mobile-Herbalism",}, },  -- When Fungi Bloom -- травника
 				{82958, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Little Blessings -- травника
 				{82962, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Handful of Luredrops -- травника
@@ -1293,8 +1283,6 @@ local function tempFunction()
 		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-
-
 		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------

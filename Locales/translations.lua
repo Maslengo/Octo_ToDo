@@ -39,7 +39,60 @@ E.translations = {
 	--     ["zhCN"] = "窗口背景",
 	--     ["zhTW"] = "視窗背景",
 	-- },
+	["In Development"] = {
+		["ruRU"] = "В разработке",
+		["deDE"] = "In Entwicklung",
+		["frFR"] = "En développement",
+		["esES"] = "En desarrollo",
+		["esMX"] = "En desarrollo",
+		["itIT"] = "In sviluppo",
+		["ptBR"] = "Em desenvolvimento",
+		["koKR"] = "개발 중",
+		["zhCN"] = "开发中",
+		["zhTW"] = "開發中",
+	},
 
+
+	["Rename"] = {
+		["ruRU"] = "Переименовать",
+		["deDE"] = "Umbenennen",
+		["esES"] = "Renombrar",
+		["esMX"] = "Renombrar",
+		["frFR"] = "Renommer",
+		["itIT"] = "Rinomina",
+		["ptBR"] = "Renomear",
+		["koKR"] = "이름 변경",
+		["zhCN"] = "重命名",
+		["zhTW"] = "重新命名",
+	},
+
+
+
+
+	["Variant"] = {
+		["ruRU"] = "Вариант",
+		["deDE"] = "Variante",
+		["esES"] = "Variante",
+		["esMX"] = "Variante",
+		["frFR"] = "Variante",
+		["itIT"] = "Variante",
+		["ptBR"] = "Variante",
+		["koKR"] = "변형",
+		["zhCN"] = "变体",
+		["zhTW"] = "變體",
+	},
+	["Preset"] = {
+		["ruRU"] = "Предустановка",
+		["deDE"] = "Voreinstellung",
+		["esES"] = "Preajuste",
+		["esMX"] = "Preajuste",
+		["frFR"] = "Préréglage",
+		["itIT"] = "Impostazione predefinita",
+		["ptBR"] = "Predefinição",
+		["koKR"] = "기본 설정",
+		["zhCN"] = "预设",
+		["zhTW"] = "預設",
+	},
 	["Smooth Animation"] = {
 		["ruRU"] = "Плавная анимация",
 		["deDE"] = "Sanfte Animation",

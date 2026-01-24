@@ -385,12 +385,12 @@ end
 local function CreateExpansionsMenu(dropdown, providerfunc)
 	----------------------------------------------------------------
 	local function selectFunctionExpansion(menuButton, _, _, checked)
-		local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
+		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 		ExpansionToShowTBL[menuButton.value] = checked or nil
 		providerfunc()
 	end
 	return function(self, level, value)
-		local ExpansionToShowTBL = E.func_GetProfileData("ExpansionToShow")
+		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 		local info = {}
 		info.fontObject = OctoFont11
 		info.widgets = {{
@@ -455,15 +455,15 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		local profileName = menuButton.value
 		if profileName == "Default" then
 			Octo_profileKeys.profiles[profileName] = nil
-			E.func_CreateNewProfile(profileName)
-			if Octo_profileKeys.CurrentProfile == profileName then
-				Octo_profileKeys.CurrentProfile = "Default"
+			E.func_CreateNew_profileKeys(profileName)
+			if Octo_profileKeys.Current_profileKeys == profileName then
+				Octo_profileKeys.Current_profileKeys = "Default"
 			end
 			return
 		end
 		Octo_profileKeys.profiles[profileName] = nil
-		if Octo_profileKeys.CurrentProfile == profileName then
-			Octo_profileKeys.CurrentProfile = "Default"
+		if Octo_profileKeys.Current_profileKeys == profileName then
+			Octo_profileKeys.Current_profileKeys = "Default"
 		end
 		C_Timer.After(1, providerfunc)
 		E.func_PrintMessage(L["Profile successfully deleted"])
@@ -472,7 +472,7 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		local profileName = menuButton.value
 		StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
 			text = "Введите новое название для профиля '"..profileName.."':",
-			button1 = RENAME_GUILD,
+			button1 = L["Rename"],
 			button2 = CANCEL,
 			hasEditBox = true,
 			editBoxWidth = 260,
@@ -486,9 +486,9 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 					end
 					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
 					Octo_profileKeys.profiles[profileName] = nil
-					if Octo_profileKeys.CurrentProfile == profileName then
-						-- Octo_profileKeys.CurrentProfile = newName
-						E.func_UpdateCurrentProfile(newName)
+					if Octo_profileKeys.Current_profileKeys == profileName then
+						-- Octo_profileKeys.Current_profileKeys = newName
+						E.func_UpdateCurrent_profileKeys(newName)
 					end
 					dropdown:ddCloseMenus()
 					providerfunc()
@@ -510,9 +510,9 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 					end
 					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
 					Octo_profileKeys.profiles[profileName] = nil
-					if Octo_profileKeys.CurrentProfile == profileName then
-						E.func_UpdateCurrentProfile(newName)
-						-- Octo_profileKeys.CurrentProfile = newName
+					if Octo_profileKeys.Current_profileKeys == profileName then
+						E.func_UpdateCurrent_profileKeys(newName)
+						-- Octo_profileKeys.Current_profileKeys = newName
 					end
 					dialog:Hide()
 					providerfunc()
@@ -532,17 +532,17 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 				E.func_PrintMessage(L["A profile with the same name exists"])
 				return false
 			end
-			if copyFromCurrent and Octo_profileKeys.CurrentProfile then
-				local currentProfileData = Octo_profileKeys.profiles[Octo_profileKeys.CurrentProfile]
-				if currentProfileData then
-					Octo_profileKeys.profiles[profileName] = E.func_CopyTableDeep(currentProfileData)
+			if copyFromCurrent and Octo_profileKeys.Current_profileKeys then
+				local Current_profileKeysData = Octo_profileKeys.profiles[Octo_profileKeys.Current_profileKeys]
+				if Current_profileKeysData then
+					Octo_profileKeys.profiles[profileName] = E.func_CopyTableDeep(Current_profileKeysData)
 				else
 					Octo_profileKeys.profiles[profileName] = {}
 				end
 			else
-				E.func_CreateNewProfile(profileName)
+				E.func_CreateNew_profileKeys(profileName)
 			end
-			Octo_profileKeys.CurrentProfile = profileName
+			Octo_profileKeys.Current_profileKeys = profileName
 			dropdown:ddCloseMenus()
 			providerfunc()
 			E.func_PrintMessage(L["Profile successfully created"])
@@ -613,7 +613,7 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 				dropdown:ddCloseMenus()
 			end,
 			OnTooltipShow = function(btn, tooltip)
-				tooltip:AddLine(RENAME_GUILD, nil, nil, nil, true)
+				tooltip:AddLine(L["Rename"], nil, nil, nil, true)
 			end,
 		}
 	end
@@ -645,9 +645,9 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 			info.notCheckable = false
 			info.isNotRadio = false
 			info.value = profileName
-			info.checked = function(btn) return Octo_profileKeys.CurrentProfile == profileName end
+			info.checked = function(btn) return Octo_profileKeys.Current_profileKeys == profileName end
 			info.func = function(menuButton, _, _, checked)
-				Octo_profileKeys.CurrentProfile = menuButton.value
+				Octo_profileKeys.Current_profileKeys = menuButton.value
 				self:ddRefresh(level)
 				providerfunc()
 			end
@@ -682,7 +682,7 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		info.keepShownOnClick = false
 		info.notCheckable = true
 		info.text = L["Copy current"]
-		info.disabled = not Octo_profileKeys.CurrentProfile or not profiles[Octo_profileKeys.CurrentProfile]
+		info.disabled = not Octo_profileKeys.Current_profileKeys or not profiles[Octo_profileKeys.Current_profileKeys]
 		info.func = function()
 			ShowCreateProfileDialog(true)
 		end

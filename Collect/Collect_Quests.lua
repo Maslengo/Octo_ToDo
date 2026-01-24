@@ -79,9 +79,11 @@ local function Collect_Quests_Universal()
 	if not collectMASLENGO then return end
 	local hasDataToSave = false
 	local tempUniversalQuest = {}
+	local reset = ""
 	for _, data in ipairs(E.ALL_UniversalQuests) do
 		if not data.quests then break end
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+		reset = data.reset
 		local questDataTable = {}
 		local count = 0
 		local totalQUEST = 0
@@ -130,10 +132,12 @@ local function Collect_Quests_Universal()
 			hasDataToSave = true
 		end
 	end
-	if hasDataToSave then
-		collectMASLENGO.UniversalQuest = tempUniversalQuest
-	elseif collectMASLENGO.UniversalQuest then
-		collectMASLENGO.UniversalQuest = nil
+	if reset == "Regular" or reset == "Daily" or reset == "Weekly" or reset == "Month" then
+		if hasDataToSave then
+			collectMASLENGO.UniversalQuest = tempUniversalQuest
+		elseif collectMASLENGO.UniversalQuest then
+			collectMASLENGO.UniversalQuest = nil
+		end
 	end
 end
 ----------------------------------------------------------------

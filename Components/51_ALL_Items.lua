@@ -40,7 +40,6 @@ local function tempFunction()
 	----------------------------------------------------------------
 	local sorted = {}
 	for id in next, (E.ALL_Items) do
-	-- for id in next, (E.OctoTable_itemID_ALL) do
 		tinsert(sorted, id)
 	end
 	table.sort(sorted, E.func_ReversSort)

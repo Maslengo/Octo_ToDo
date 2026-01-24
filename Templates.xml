@@ -160,4 +160,31 @@
 		</Scripts>
 	</EditBox>
 
+
+
+
+
+	<Button name="OctoPropagateTemplate" propagateMouseInput="Both" virtual="true">
+	</Button>
+
+
+	<Button name="OctoRectTemplate" inherits="OctoPropagateTemplate" virtual="true">
+		<HitRectInsets>
+			<AbsInset left="1" right="1" top="1" bottom="1"/>
+		</HitRectInsets>
+	</Button>
+
+
+	<Button name="OctoTooltipTemplate" propagateMouseInput="Clicks" virtual="true">
+
+
+	</Button>
+
+
+
+
+
+
+
+
 </Ui>

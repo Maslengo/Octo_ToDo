@@ -49,7 +49,7 @@ E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
 E.DataProvider_Otrisovka = {}
-E.CurrentProfile = "Default" -- profileName
+E.Current_profileKeys = "Default" -- profileName
 E.Config_DebugID_ALL = false
 -- E.Config_DebugID_Achievements = false
 -- E.Config_DebugID_Currencies = false
@@ -112,8 +112,6 @@ E.borderColorG = 0
 E.borderColorB = 0
 E.borderColorA = 1
 
-
-
 E.edgeSize = 1
 E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
@@ -175,19 +173,39 @@ E.isOmniCC = select(4, C_AddOns.GetAddOnInfo("OmniCC"))
 E.isParrot = select(4, C_AddOns.GetAddOnInfo("Parrot"))
 E.ALPHA_BACKGROUND = .2
 E.COLOR_TIME = "|cff9999FF"
-E.COLOR_WORLDOFWARCRAFT = "|cffD6AB7D"
-E.COLOR_THEBURNINGCRUSADE = "|cffE43E5A"
-E.COLOR_WRATHOFTHELICHKING = "|cff3FC7EB"
-E.COLOR_CATACLYSM = "|cffFF7C0A"
-E.COLOR_MISTSOFPANDARIA = "|cff00EF88"
-E.COLOR_WARLORDSOFDRAENOR = "|cffF48CBA"
-E.COLOR_LEGION = "|cffAAD372"
-E.COLOR_BATTLEFORAZEROTH = "|cffFFF468"
-E.COLOR_SHADOWLANDS = "|cff9798FE"
-E.COLOR_DRAGONFLIGHT = "|cff53B39F"
-E.COLOR_THEWARWITHIN = "|cff90CCDD"
-E.COLOR_MIDNIGHT = "|cff7B69FF"
-E.COLOR_THELASTTITAN = "|cffF4C263"
+-- E.COLOR_WORLDOFWARCRAFT = "|cffD6AB7D"
+-- E.COLOR_THEBURNINGCRUSADE = "|cffE43E5A"
+-- E.COLOR_WRATHOFTHELICHKING = "|cff3FC7EB"
+-- E.COLOR_CATACLYSM = "|cffFF7C0A"
+-- E.COLOR_MISTSOFPANDARIA = "|cff00EF88"
+-- E.COLOR_WARLORDSOFDRAENOR = "|cffF48CBA"
+-- E.COLOR_LEGION = "|cffAAD372"
+-- E.COLOR_BATTLEFORAZEROTH = "|cffFFF468"
+-- E.COLOR_SHADOWLANDS = "|cff9798FE"
+-- E.COLOR_DRAGONFLIGHT = "|cff53B39F"
+-- E.COLOR_THEWARWITHIN = "|cff90CCDD"
+-- E.COLOR_MIDNIGHT = "|cffB580FF"
+-- E.COLOR_THELASTTITAN = "|cffF4C263"
+
+
+E.COLOR_WORLDOFWARCRAFT = "|cffD0B070"
+E.COLOR_THEBURNINGCRUSADE = "|cffD45565"
+E.COLOR_WRATHOFTHELICHKING = "|cff6CB8D8"
+E.COLOR_CATACLYSM = "|cffE07835"
+E.COLOR_MISTSOFPANDARIA = "|cff5FD4B0"
+E.COLOR_WARLORDSOFDRAENOR = "|cffB06578"
+E.COLOR_LEGION = "|cff8FD060"
+E.COLOR_BATTLEFORAZEROTH = "|cffE4C860"
+E.COLOR_SHADOWLANDS = "|cffb2a4ed"
+E.COLOR_DRAGONFLIGHT = "|cff6BC8A8"
+E.COLOR_THEWARWITHIN = "|cff9CB4C8"
+E.COLOR_MIDNIGHT = "|cff7a91ff"
+E.COLOR_THELASTTITAN = "|cffE0C880"
+
+
+
+
+
 E.COLOR_WOW_POOR = "|cff9D9D9D"
 E.COLOR_WOW_COMMON = "|cffFFFFFF"
 E.COLOR_WOW_UNCOMMON = "|cff1EFF00"
@@ -496,3 +514,5 @@ E.OctoTable_reactionColors = {
     [3] = E.COLOR_BLUE,
     [4] = E.COLOR_BLUE,
 }
+
+E.TEXT_INDEV = E.COLOR_RED..">>> ".."In Development".." <<<|r"

@@ -2,7 +2,8 @@
 	<Script file="Functions\Functions.lua"/>
 	<Script file="Functions\Functions_CACHE.lua"/>
 	<Script file="Functions\Functions_DEBUG.lua"/>
-	<Script file="Functions\Functions_Profile.lua"/>
+	<Script file="Functions\Functions_profileColors.lua"/>
+	<Script file="Functions\Functions_profileKeys.lua"/>
 	<Script file="Functions\Functions_Unused.lua"/>
 
 	<Script file="Functions\tooltip_LEFT.lua"/>

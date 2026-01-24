@@ -27,7 +27,6 @@ function EventFrame:func_InitOptions()
 		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
 	end
 
-
 	if E.func_Options_DevTool and Octo_DevTool_DB then
 		local leftText = "DevTool"
 		local rightText = "DevTool"
@@ -49,14 +48,15 @@ function EventFrame:func_InitOptions()
 		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(leftText, leftText, parent)
 	end
 
-	local i = 1
-	while true do
+	E.SettingsCategoryID = 1
+	local MyCategoryName = E.func_AddonNameForOptionsInit(GlobalAddonName)
+	for i = 1, 100 do -- ПОФИКСИТЬ
 		local cat = Settings.GetCategory(i)
-		if not cat then break end
-		if cat.name == E.func_AddonNameForOptionsInit(GlobalAddonName) then
-			E.SettingsCategoryID = cat.ID
+		if cat then
+			if cat.name == MyCategoryName then
+				E.SettingsCategoryID = cat.ID
+			end
 		end
-		i = i + 1
 	end
 
 end

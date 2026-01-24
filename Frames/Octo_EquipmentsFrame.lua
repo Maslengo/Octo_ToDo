@@ -100,24 +100,14 @@ local func_OnAcquired do
 		text:SetJustifyH(justifyH or "LEFT")
 		return text
 	end
-	local function Create_Highlight(frame, owner)
-		local Highlight = CreateFrame("BUTTON", nil, owner) -- , "OctoHighlightAnimationTemplate"
-		E.func_ApplyHighlightTemplate(Highlight, frame)
-		return Highlight
-	end
 
 	function func_OnAcquired(owner, frame, node, new)
 		if new then
-			frame:SetPropagateMouseClicks(true)
-			frame:SetPropagateMouseMotion(true)
-			frame:SetHitRectInsets(1, 1, 1, 1)
 			frame.columnFrames = setmetatable({}, {
 					__index = function(self, key)
 						if key then
-							local columnFrame = CreateFrame("BUTTON", "columnFrame"..key, frame)
+							local columnFrame = CreateFrame("BUTTON", "columnFrame"..key, frame, "OctoPropagateTemplate")
 							columnFrame:Hide()
-							columnFrame:SetPropagateMouseClicks(true)
-							columnFrame:SetPropagateMouseMotion(true)
 							columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
 							local colType = EventFrame.columnTypes[key]
 							if colType == "icon" then
@@ -132,7 +122,6 @@ local func_OnAcquired do
 								else
 									columnFrame.text = Create_Text(columnFrame, "LEFT")
 								end
-								-- AdditionalSettings(columnFrame)
 								columnFrame.text:SetAllPoints()
 								columnFrame:SetWidth(MIN_COLUMN_WIDTH)
 							end
@@ -142,17 +131,9 @@ local func_OnAcquired do
 						return nil
 					end
 			})
-			frame.Highlight = Create_Highlight(frame, owner)
-			frame:SetScript("OnHide", function()
-					if frame.Highlight then
-						frame.Highlight:Hide()
-					end
-			end)
-			frame:SetScript("OnShow", function()
-					if frame.Highlight then
-						frame.Highlight:Show()
-					end
-			end)
+			E.func_Create_Highlight(frame, owner)
+			frame:SetScript("OnHide", function() frame.Highlight:Hide() end)
+			frame:SetScript("OnShow", function() frame.Highlight:Show() end)
 		end
 	end
 end
@@ -417,7 +398,7 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	Octo_EquipmentsFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 	Octo_EquipmentsFrame:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA)
 
-	Octo_EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
+	-- Octo_EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
 	Octo_EquipmentsFrame:SetScript("OnShow", function()
 			local scrollBar = Octo_EquipmentsFrame.ScrollBar
 			local shouldShow = EventFrame.shouldShowScrollBar
@@ -454,18 +435,28 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	Octo_EquipmentsFrame:SetScript("OnClick", function(self)
 			self:Hide()
 	end)
-	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList")
+	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList") -- OctoPropagateTemplate
 	Octo_EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
 	Octo_EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
-	Octo_EquipmentsFrame.ScrollBox:SetPropagateMouseClicks(false)
-	Octo_EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-	Octo_EquipmentsFrame.ScrollBox:Layout()
+	-- Octo_EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
+	-- Octo_EquipmentsFrame.ScrollBox:Layout()
+	Octo_EquipmentsFrame.ScrollBox:SetFrameLevel(Octo_EquipmentsFrame.ScrollBox:GetFrameLevel() + 1)
+
+
+
+
+
+
+
+
+
+
 	Octo_EquipmentsFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_EquipmentsFrame, "MinimalScrollBar")
 	Octo_EquipmentsFrame.ScrollBar:SetPoint("TOPLEFT", Octo_EquipmentsFrame.ScrollBox, "TOPRIGHT", 6, 0)
 	Octo_EquipmentsFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_EquipmentsFrame.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	Octo_EquipmentsFrame.view = CreateScrollBoxListTreeListView()
 	Octo_EquipmentsFrame.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_EquipmentsFrame.view:SetElementInitializer("BUTTON",
+	Octo_EquipmentsFrame.view:SetElementInitializer("OctoPropagateTemplate",
 		function(...)
 			self:Octo_Frame_init(...)
 	end)
