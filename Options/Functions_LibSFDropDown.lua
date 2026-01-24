@@ -10,67 +10,43 @@ local LibIndentation = LibStub("LibIndentation-1.0")
 ----------------------------------------------------------------
 function E.func_CreateMenuStyle()
 	LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-			local frame = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
-			frame:SetBackdrop(E.menuBackdrop)
-			frame:SetPoint("TOPLEFT", 8, -2)
-			frame:SetPoint("BOTTOMRIGHT", -8, 2)
-			frame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-			frame:SetBackdropBorderColor(0, 0, 0, 1)
-			return frame
+		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+		f:SetPoint("TOPLEFT", 8, -2)
+		f:SetPoint("BOTTOMRIGHT", -8, 2)
+		f:SetScript("OnShow", function(self)
+			f:SetBackdrop(E.menuBackdrop)
+			self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
+			self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
+		end)
+		return f
 	end)
 end
 ----------------------------------------------------------------
-function E.func_SetBackdropStyle(frame, hex)
-	if not frame then return end
-	if not frame.isInit then
-		frame.isInit = true
-		tinsert(E.OctoFrames_Dropdowns, DropDown)
-		local bgCr, bgCg, bgCb, bgCa = E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA
-		local R1, G1, B1, A1 = E.func_Hex2RGBA(E.COLOR_FACTION)
-		if hex then
-			R1, G1, B1, A1 = E.func_Hex2RGBA(hex)
-		end
-		-- local R1, G1, B1, A1 = GetClassColor(E.classFilename)
-		frame:SetBackdrop(E.menuBackdrop)
-		-- frame.r, frame.g, frame.b, frame.a = bgCr, bgCg, bgCb, bgCa
-		-- frame:SetBackdropColor(bgCr, bgCg, bgCb, bgCa)
-		-- frame:SetBackdropBorderColor(0, 0, 0, 1)
-		frame:HookScript("OnEnter", function(self)
-				self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-				self:SetBackdropBorderColor(R1, G1, G1, 1)
-		end)
-		frame:HookScript("OnLeave", function(self)
-				self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-				self:SetBackdropBorderColor(0, 0, 0, 1)
-		end)
-		frame:SetScript("OnShow", function(self)
-				self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-				self:SetBackdropBorderColor(0, 0, 0, 1)
-		end)
-	end
+local function BaseDropDown_OnShow(DropDown, text)
+	DropDown.text:SetText(E.COLOR_FACTION..text.."|r")
+	DropDown:SetBackdrop(E.menuBackdrop)
+	DropDown:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
+	DropDown:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
 end
 ----------------------------------------------------------------
 -- Общие функции
 ----------------------------------------------------------------
 E.OctoFrames_Dropdowns = {}
-local LINE_WIDTH_LEFT = E.GLOBAL_LINE_WIDTH_LEFT/2
-local function CreateBaseDropDown(frame, hex, providerfunc)
+local function CreateBaseDropDown(frame, providerfunc)
 	local DropDown = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
 
-
-
-	DropDown:SetSize(LINE_WIDTH_LEFT, E.GLOBAL_LINE_HEIGHT)
-	E.func_SetBackdropStyle(DropDown, hex)
+	DropDown:SetSize(E.GLOBAL_LINE_WIDTH_LEFT/2, E.GLOBAL_LINE_HEIGHT)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
 	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
-	DropDown.ExpandArrow:SetPoint("RIGHT", -4, 0)
+	DropDown.ExpandArrow:SetPoint("RIGHT", 0, 0)
 	DropDown.text = DropDown:CreateFontString()
 	DropDown.text:SetFontObject(OctoFont11)
 	DropDown.text:SetAllPoints()
 	DropDown.text:SetJustifyV("MIDDLE")
 	DropDown.text:SetJustifyH("CENTER")
-	DropDown.text:SetTextColor(1, 1, 1, 1)
-	DropDown.text:SetText(hex..GAMEMENU_OPTIONS.."|r")
+	-- DropDown.text:SetTextColor(1, 1, 1, 1)
+	local text = GAMEMENU_OPTIONS
+	DropDown.text:SetText(text)
 	local width = math.max(math.ceil(DropDown.text:GetStringWidth())+50, 90)
 	if width % 2 == 1 then
 		width = width + 1
@@ -94,6 +70,13 @@ local function CreateBaseDropDown(frame, hex, providerfunc)
 			self.text:SetAllPoints()
 			self.text:AdjustPointsOffset(-1, 1)
 	end)
+
+	DropDown:SetScript("OnShow", function(self)
+			BaseDropDown_OnShow(self, text)
+	end)
+
+
+
 	DropDown:ddSetOpenMenuUp(true)
 	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight-4)
 	return DropDown
@@ -693,7 +676,7 @@ end
 -- Основная функция меню ToDo
 ----------------------------------------------------------------
 function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
+	local DropDown = CreateBaseDropDown(frame, providerfunc)
 	-- Создаем обработчики для каждого типа меню
 	local charactersMenu = CreateCharactersMenu(DropDown, providerfunc)
 	local expansionsMenu = CreateExpansionsMenu(DropDown, providerfunc)
@@ -745,7 +728,7 @@ end
 -- Меню Achievements
 ----------------------------------------------------------------
 function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
+	local DropDown = CreateBaseDropDown(frame, providerfunc)
 	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
 		Octo_Achievements_DB.Config_Achievements.AchievementToShow[menuButton.value] = checked or nil
 		if arg2 == 2 then
@@ -833,7 +816,7 @@ end
 -- Меню QuestsChanged
 ----------------------------------------------------------------
 function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
+	local DropDown = CreateBaseDropDown(frame, providerfunc)
 	DropDown:ddSetInitFunc(function(self, level, value)
 			local info, list = {}, {}
 			if level == 1 then
@@ -879,7 +862,7 @@ end
 -- Меню editFrame
 ----------------------------------------------------------------
 function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, hex, providerfunc)
+	local DropDown = CreateBaseDropDown(frame, providerfunc)
 	local editBox = frame.editFrame:GetEditBox()
 	local handlerCache = setmetatable({}, { __mode = "kv" }) -- (ПОФИКСИТЬ) Weak table с __mode = "v" работает только со значениями, но ключи могут накапливаться. Лучше использовать __mode = "kv" или очищать периодически.
 	local function makeThemeHandler(themeName)

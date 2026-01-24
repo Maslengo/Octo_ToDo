@@ -327,7 +327,7 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
 				if i == 1 or i == 2 then
-					TextCenter = TextCenter..E.func_ProfessionIcon(charProf[i].skillLine).." "
+					TextCenter = TextCenter..E.func_ProfessionIcon(charProf[i].skillLine) -- .." "
 				end
 			end
 		end

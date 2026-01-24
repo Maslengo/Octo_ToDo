@@ -144,7 +144,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..E.func_GetQuestName(66042, true)
+				return E.func_GetMapName(1970)..": "..E.func_GetQuestName(66042, false)
 			end,
 			name_save = "ZMpatternswithinpatterns",
 			defS = true,
@@ -372,7 +372,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": "..E.func_GetQuestName(63949, true)
+				return E.func_GetMapName(1961)..": "..E.func_GetQuestName(63949, false)
 			end,
 			name_save = "KORTHIAweekly",
 			defS = true,

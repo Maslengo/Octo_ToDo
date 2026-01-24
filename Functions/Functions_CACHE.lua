@@ -471,11 +471,6 @@ function E.func_ProfessionIcon(skillLine)
 	return E.func_texturefromIcon(GetTradeSkillTexture(skillLine))
 end
 
-
-
-
-
-
 local function func_DungeonName_CACHE(id)
 	local Cache = GetOrCreateCache("AllDungeons", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
