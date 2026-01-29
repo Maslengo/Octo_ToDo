@@ -133,115 +133,115 @@ local function tempFunction()
 
 
 
-		-- MIDNIGHT PREPATCH (27 JANUARY)
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(241)..": "..E.func_GetQuestName(87308, false) -- Twilight Highlands -- "PREPATCH: "..
-			end,
-			name_save = "TwilightsDawn",
-			defS = true,
-			reset = "Weekly",
-			isAccount = true,
-			desc = categoryKey,
-			quests = {
-				{87308},
-			},
-			-- forcedMaxQuest = 1,
-		},
+		-- -- MIDNIGHT PREPATCH (27 JANUARY)
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(241)..": "..E.func_GetQuestName(87308, false) -- Twilight Highlands -- "PREPATCH: "..
+		-- 	end,
+		-- 	name_save = "TwilightsDawn",
+		-- 	defS = true,
+		-- 	reset = "Weekly",
+		-- 	isAccount = true,
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{87308},
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
 
-		-- MIDNIGHT PREPATCH (27 JANUARY)
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(241)..": "..E.func_GetQuestName(91795, false) -- Twilight Highlands -- "PREPATCH: "..
-			end,
-			name_save = "DisrupttheCall",
-			defS = true,
-			reset = "Weekly",
-			isAccount = true,
-			desc = categoryKey,
-			quests = {
-				{91795},
-			},
-			-- forcedMaxQuest = 1,
-		},
-		-- MIDNIGHT PREPATCH (27 JANUARY)
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetMapName(241)..": ".."Rares" -- Twilight Highlands -- "PREPATCH: "..
-			end,
-			name_save = "THRares",
-			defS = true,
-			reset = "Daily", -- Daily !ПОФИКСИТЬ
-			isAccount = false,
-			desc = categoryKey,
-			quests = {
+		-- -- MIDNIGHT PREPATCH (27 JANUARY)
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(241)..": "..E.func_GetQuestName(91795, false) -- Twilight Highlands -- "PREPATCH: "..
+		-- 	end,
+		-- 	name_save = "DisrupttheCall",
+		-- 	defS = true,
+		-- 	reset = "Weekly",
+		-- 	isAccount = true,
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{91795},
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
+		-- -- MIDNIGHT PREPATCH (27 JANUARY)
+		-- {
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetMapName(241)..": ".."Rares" -- Twilight Highlands -- "PREPATCH: "..
+		-- 	end,
+		-- 	name_save = "THRares",
+		-- 	defS = true,
+		-- 	reset = "Daily", -- Daily !ПОФИКСИТЬ
+		-- 	isAccount = false,
+		-- 	desc = categoryKey,
+		-- 	quests = {
 
-				--
-				{86695, FactionOrClass = {Horde = true,}, forcedText = {npcID = 237853,}, }, -- 49507, 93476, 91468, 93481,      (СКОРЕЙ ВСЕГО 49507)
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 237853,}, }, -- 49507, 93476, 91468, 93481,
+		-- 		--
+		-- 		{86695, FactionOrClass = {Horde = true,}, forcedText = {npcID = 237853,}, }, -- 49507, 93476, 91468, 93481,      (СКОРЕЙ ВСЕГО 49507)
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 237853,}, }, -- 49507, 93476, 91468, 93481,
 
-				{91470, FactionOrClass = {Horde = true,}, forcedText = {npcID = 237997,}, }, -- корла
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 237997,}, },
+		-- 		{91470, FactionOrClass = {Horde = true,}, forcedText = {npcID = 237997,}, }, -- корла
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 237997,}, },
 
-				{91471, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246272,}, }, -- ПРАВИЛЬНО Horde
-				{91471, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246272,}, }, -- ПРАВИЛЬНО Alliance
+		-- 		{91471, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246272,}, }, -- ПРАВИЛЬНО Horde
+		-- 		{91471, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246272,}, }, -- ПРАВИЛЬНО Alliance
 
-				{94506, FactionOrClass = {Horde = true,}, forcedText = {npcID = 253378,}, }, -- Глас Затмения 91468 94505почему было? 94506
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 253378,}, }, -- Глас Затмения 91468
+		-- 		{94506, FactionOrClass = {Horde = true,}, forcedText = {npcID = 253378,}, }, -- Глас Затмения 91468 94505почему было? 94506
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 253378,}, }, -- Глас Затмения 91468
 
-				{94509, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246565,}, }, -- Густаван
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246565,}, }, -- Густаван
+		-- 		{94509, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246565,}, }, -- Густаван
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246565,}, }, -- Густаван
 
-				{94510, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246578,}, }, -- Коготь
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246578,}, }, -- Коготь
+		-- 		{94510, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246578,}, }, -- Коготь
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246578,}, }, -- Коготь
 
-				{94511, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246566,}, }, -- Зеркалвайз
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246566,}, }, -- Зеркалвайз
+		-- 		{94511, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246566,}, }, -- Зеркалвайз
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246566,}, }, -- Зеркалвайз
 
-				{94512, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246558,}, }, -- Салигрум
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246558,}, }, -- Салигрум
+		-- 		{94512, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246558,}, }, -- Салигрум
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246558,}, }, -- Салигрум
 
-				{94513, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246572,}, }, -- Красноглаз
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246572,}, }, -- Красноглаз
+		-- 		{94513, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246572,}, }, -- Красноглаз
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246572,}, }, -- Красноглаз
 
-				{94514, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246844,}, }, -- Таавихан
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246844,}, }, -- Таавихан
+		-- 		{94514, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246844,}, }, -- Таавихан
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246844,}, }, -- Таавихан
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246462,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246462,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246462,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246462,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246343,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246343,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246343,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246343,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246460,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246460,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246460,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246460,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246471,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246471,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246471,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246471,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246840,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246840,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246840,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246840,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246478,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246478,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246478,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246478,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246577,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246577,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246577,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246577,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246549,}, },
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246549,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246549,}, },
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246549,}, },
 
-				{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246559,}, }, -- 94729, 95166, 94714
-				{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246559,}, },
+		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246559,}, }, -- 94729, 95166, 94714
+		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246559,}, },
 
-			},
-			forcedMaxQuest = 19,
-		},
+		-- 	},
+		-- 	forcedMaxQuest = 19,
+		-- },
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Additionally = {
