@@ -11,7 +11,7 @@ end
 local charR, charG, charB = 1, 1, 1
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local EventFrame = CreateFrame("FRAME")
-local Octo_EquipmentsFrame = CreateFrame("BUTTON", "Octo_EquipmentsFrame", UIParent, "BackDropTemplate")
+local Octo_EquipmentsFrame = CreateFrame("BUTTON", "Octo_EquipmentsFrame", UIParent, "OctoBackdropTemplate")
 Octo_EquipmentsFrame:Hide()
 E.func_RegisterFrame_SIMPLE(Octo_EquipmentsFrame)
 local NameHeader = CreateFrame("FRAME", nil, Octo_EquipmentsFrame)
@@ -314,16 +314,20 @@ function EventFrame:CreateDataProvider(GUID)
 	local specTexture = E.func_texturefromIcon(specIcon)
 	local curServer = pd.curServer or ""
 	local resultName = specTexture..classColorHex..Name.."|r"
-	local PlayerItemLevel = ""
-	if pd.avgItemLevelEquipped and pd.avgItemLevel then
-		PlayerItemLevel = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
-		if pd.avgItemLevel > pd.avgItemLevelEquipped then
-			PlayerItemLevel = PlayerItemLevel.."/"..pd.avgItemLevel.."|r"
-		end
-		if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
-			PlayerItemLevel = PlayerItemLevel..E.COLOR_GREEN.."+|r"
-		end
-	end
+
+	-- local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
+
+
+	-- local PlayerItemLevel = ""
+	-- if pd.avgItemLevelEquipped and pd.avgItemLevel then
+	-- 	PlayerItemLevel = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
+	-- 	if pd.avgItemLevel > pd.avgItemLevelEquipped then
+	-- 		PlayerItemLevel = PlayerItemLevel.."/"..pd.avgItemLevel.."|r"
+	-- 	end
+	-- 	if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
+	-- 		PlayerItemLevel = PlayerItemLevel..E.COLOR_GREEN.."+|r"
+	-- 	end
+	-- end
 
 
 	for slotID in next, E.OctoTable_SlotMapping do
@@ -394,12 +398,9 @@ function EventFrame:CreateDataProvider(GUID)
 	self:UpdateMainFrameUI(DataProvider, totalLines, EventFrame.columnWidths, CharInfo)
 end
 function EventFrame:Create_Octo_EquipmentsFrame()
-	Octo_EquipmentsFrame:SetBackdrop(E.menuBackdrop)
-	Octo_EquipmentsFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-	Octo_EquipmentsFrame:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA)
 
 	-- Octo_EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
-	Octo_EquipmentsFrame:SetScript("OnShow", function()
+	Octo_EquipmentsFrame:HookScript("OnShow", function()
 			local scrollBar = Octo_EquipmentsFrame.ScrollBar
 			local shouldShow = EventFrame.shouldShowScrollBar
 			if shouldShow ~= scrollBar:IsShown() then

@@ -39,6 +39,116 @@ E.translations = {
 	--     ["zhCN"] = "窗口背景",
 	--     ["zhTW"] = "視窗背景",
 	-- },
+	["Per Session"] = {
+		["ruRU"] = "За сеанс",
+		["deDE"] = "Pro Sitzung",
+		["esES"] = "Por sesión",
+		["esMX"] = "Por sesión",
+		["frFR"] = "Par session",
+		["itIT"] = "Per sessione",
+		["ptBR"] = "Por sessão",
+		["koKR"] = "세션 기준",
+		["zhCN"] = "本次会话",
+		["zhTW"] = "本次工作階段",
+	},
+
+	["Per Day"] = {
+		["ruRU"] = "За день",
+		["deDE"] = "Pro Tag",
+		["esES"] = "Por día",
+		["esMX"] = "Por día",
+		["frFR"] = "Par jour",
+		["itIT"] = "Al giorno",
+		["ptBR"] = "Por dia",
+		["koKR"] = "일일",
+		["zhCN"] = "今日",
+		["zhTW"] = "今日",
+	},
+
+	["Per Week"] = {
+		["ruRU"] = "За неделю",
+		["deDE"] = "Pro Woche",
+		["esES"] = "Por semana",
+		["esMX"] = "Por semana",
+		["frFR"] = "Par semaine",
+		["itIT"] = "A settimana",
+		["ptBR"] = "Por semana",
+		["koKR"] = "주간",
+		["zhCN"] = "本周",
+		["zhTW"] = "本週",
+	},
+
+	["Per Month"] = {
+		["ruRU"] = "За месяц",
+		["deDE"] = "Pro Monat",
+		["esES"] = "Por mes",
+		["esMX"] = "Por mes",
+		["frFR"] = "Par mois",
+		["itIT"] = "Al mese",
+		["ptBR"] = "Por mês",
+		["koKR"] = "월간",
+		["zhCN"] = "本月",
+		["zhTW"] = "本月",
+	},
+
+
+
+
+
+
+	["Session"] = {
+		["ruRU"] = "Сеанс",
+		["deDE"] = "Sitzung",
+		["esES"] = "Sesión",
+		["esMX"] = "Sesión",
+		["frFR"] = "Session",
+		["itIT"] = "Sessione",
+		["ptBR"] = "Sessão",
+		["koKR"] = "세션",
+		["zhCN"] = "会话",
+		["zhTW"] = "工作階段",
+	},
+
+	["Day"] = {
+		["ruRU"] = "День",
+		["deDE"] = "Tag",
+		["esES"] = "Día",
+		["esMX"] = "Día",
+		["frFR"] = "Jour",
+		["itIT"] = "Giorno",
+		["ptBR"] = "Dia",
+		["koKR"] = "일",
+		["zhCN"] = "日",
+		["zhTW"] = "日",
+	},
+
+	["Week"] = {
+		["ruRU"] = "Неделя",
+		["deDE"] = "Woche",
+		["esES"] = "Semana",
+		["esMX"] = "Semana",
+		["frFR"] = "Semaine",
+		["itIT"] = "Settimana",
+		["ptBR"] = "Semana",
+		["koKR"] = "주",
+		["zhCN"] = "周",
+		["zhTW"] = "週",
+	},
+
+	["Month"] = {
+		["ruRU"] = "Месяц",
+		["deDE"] = "Monat",
+		["esES"] = "Mes",
+		["esMX"] = "Mes",
+		["frFR"] = "Mois",
+		["itIT"] = "Mese",
+		["ptBR"] = "Mês",
+		["koKR"] = "월",
+		["zhCN"] = "月",
+		["zhTW"] = "月",
+	},
+
+
 	["In Development"] = {
 		["ruRU"] = "В разработке",
 		["deDE"] = "In Entwicklung",

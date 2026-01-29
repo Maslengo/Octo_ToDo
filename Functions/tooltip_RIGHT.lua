@@ -6,6 +6,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	local ServerTime = GetServerTime()
 	local tooltip = {}
 	local CharInfo = Octo_ToDo_DB_Levels[GUID]
+	if not CharInfo then
+		E.WTF_func_CheckAll()
+		return
+	end
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local dataType, id = ("#"):split(SettingsType)
@@ -115,12 +119,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				E.name_activities[ID] or "?",
 				" ",
 				" ",
-				(vaultMin >= max and E.COLOR_GREEN or vaultMin > 0 and E.COLOR_YELLOW or E.COLOR_GRAY)..vaultMin.."/"..max.."|r",
+				(vaultMin >= max and E.COLOR_WHITE or vaultMin > 0 and E.COLOR_YELLOW or E.COLOR_GRAY)..vaultMin.."/"..max.."|r",
 				" ",
 				" ",
-				rewards[1] and E.COLOR_GREEN..rewards[1].."|r" or E.COLOR_GRAY.."-|r",
-				rewards[2] and E.COLOR_GREEN..rewards[2].."|r" or E.COLOR_GRAY.."-|r",
-				rewards[3] and E.COLOR_GREEN..rewards[3].."|r" or E.COLOR_GRAY.."-|r"
+				rewards[1] and E.COLOR_WHITE..rewards[1].."|r" or E.COLOR_GRAY.."-|r",
+				rewards[2] and E.COLOR_WHITE..rewards[2].."|r" or E.COLOR_GRAY.."-|r",
+				rewards[3] and E.COLOR_WHITE..rewards[3].."|r" or E.COLOR_GRAY.."-|r"
 			}
 		end
 	end
@@ -344,9 +348,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local result = E.func_FormatMoney(math.abs(diff))
 				tooltip[#tooltip+1] = {label, color..result.."|r"}
 			end
-			addMoneyDiff("SESSION", pd.MoneyOnLogin)
-			addMoneyDiff("DAILY", pd.MoneyOnDaily)
-			addMoneyDiff("WEEKLY", pd.MoneyOnWeekly)
+			addMoneyDiff(L["Per Session"], pd.MoneyOnLogin)
+			addMoneyDiff(L["Per Day"], pd.MoneyOnDaily)
+			addMoneyDiff(L["Per Week"], pd.MoneyOnWeekly)
 		end
 	end
 	if SettingsType == "Additionally#LastOnline" then

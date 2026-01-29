@@ -20,7 +20,7 @@ local function Collect_Reputations()
 		local friendData = E.func_GetFriendshipReputation(reputationID)
 		local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
 		local isMajor = E.func_IsMajorFaction(reputationID)
-		local isParagon = E.func_IsFactionParagon(reputationID)
+		local isParagon = E.func_IsFactionParagonForCurrentPlayer(reputationID)
 		local repType = 0
 		local renownLevel
 		local renownMaxLevel
@@ -77,17 +77,11 @@ local function Collect_Reputations()
 		-- PARAGON OVERLAY
 		if isParagon then
 			repType = 4
-			local earned, threshold = E.func_GetFactionParagonInfo(reputationID)
-			if earned and threshold and threshold > 0 then
-				FIRST = earned % threshold
+			local currentValue, threshold, _, hasRewardPending = E.func_GetFactionParagonInfo(reputationID)
+			if currentValue and threshold and threshold > 0 then
+				FIRST = currentValue % threshold
 				SECOND = threshold
 				-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
-			end
-		end
-		if isParagon then
-			local currentValue, threshold, _, hasRewardPending = E.func_GetFactionParagonInfo(reputationID)
-			if currentValue and threshold then
-				-- local level = math.floor(earned / threshold)
 				local level = math.floor(currentValue/threshold)-(hasRewardPending and 1 or 0)
 				if level > 0 then
 					ParagonCount = level

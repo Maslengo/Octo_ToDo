@@ -2,15 +2,16 @@
 -----------------------------------------------------------
 -- LibSFDropDown - DropDown menu for non-Blizzard addons --
 -----------------------------------------------------------
-local MAJOR_VERSION, MINOR_VERSION = "LibSFDropDown-1.5", 31
+local MAJOR_VERSION, MINOR_VERSION = "LibSFDropDown-1.5", 32
 local lib, oldminor = LibStub:NewLibrary(MAJOR_VERSION, MINOR_VERSION)
 if not lib then return end
 oldminor = oldminor or 0
 
 
 local math, next, ipairs, rawget, type, wipe = math, next, ipairs, rawget, type, wipe
-local CreateFrame, GetBindingKey, PlaySound, SOUNDKIT, GameTooltip, GetScreenWidth, UIParent, GetCursorPosition, InCombatLockdown = CreateFrame, GetBindingKey, PlaySound, SOUNDKIT, GameTooltip, GetScreenWidth, UIParent, GetCursorPosition, InCombatLockdown
+local CreateFrame, CreateFont, GetBindingKey, PlaySound, SOUNDKIT, GameTooltip, GetScreenWidth, UIParent, GetCursorPosition, InCombatLockdown = CreateFrame, CreateFont, GetBindingKey, PlaySound, SOUNDKIT, GameTooltip, GetScreenWidth, UIParent, GetCursorPosition, InCombatLockdown
 local SearchBoxTemplate_OnTextChanged, CreateScrollBoxListLinearView, ScrollBoxConstants, ScrollUtil, CreateDataProvider, GetAtlasInfo = SearchBoxTemplate_OnTextChanged, CreateScrollBoxListLinearView, ScrollBoxConstants, ScrollUtil, CreateDataProvider, C_Texture.GetAtlasInfo
+local GameFontHighlightLeft, GameFontNormalLeft, GameFontDisableLeft, GameFontHighlightRight, GameFontHighlightSmall, GameFontHighlight = GameFontHighlightLeft, GameFontNormalLeft, GameFontDisableLeft, GameFontHighlightRight, GameFontHighlightSmall, GameFontHighlight
 
 if oldminor < 1 then
 	lib._v = {
@@ -40,7 +41,7 @@ end
 
 if oldminor < 12 then
 	lib._v.dropDownMenuButtonHeight = 20
-	lib._v.dropDownSearchLIST_MAX_SIZE = 20
+	lib._v.dropDownSearchListMaxSize = 20
 end
 
 if oldminor < 19 then
@@ -135,7 +136,7 @@ info.OnLoad = [function(customFrame)] -- Function called when the custom frame i
 info.search = [function(searchString, infoText, infoRightText, btnInfo, highlightColorCode, defaultFunc)] -- Optional custom search function, must return true/false, textHighlighted/nil, rightTextHighlighted/nil
 info.highlightColor = [nil, hex color] -- A color for highlighted found text, default ffd200
 info.hideSearch = [nil, true] -- Remove SearchBox if info.list displays as scroll menu
-info.LIST_MAX_SIZE = [number] -- Number of max size info.list, after a scroll frame is added
+info.listMaxSize = [number] -- Number of max size info.list, after a scroll frame is added
 info.list = [table] -- The table of info buttons, if there are more than 20 (default) buttons, a scroll frame is added. Available attributes in table "dropDownOptions".
 ]]
 v.dropDownOptions = {
@@ -246,9 +247,9 @@ end
 function v.getFontObject(self, font, fontObject)
 	if not self._fontObject then
 		self._fontObject = CreateFont(v.getNextWidgetName("font"))
-		self._fontObject:CopyFontObject(GameFontHighlightLeft)
 	end
-	local _, size, outline = (fontObject or GameFontHighlightLeft):GetFont()
+	self._fontObject:CopyFontObject(fontObject or GameFontHighlightLeft)
+	local _, size, outline = self._fontObject:GetFont()
 	self._fontObject:SetFont(font, size, outline)
 	return self._fontObject
 end
@@ -1018,7 +1019,7 @@ function DropDownMenuSearchMixin:init(menu, info)
 	local menuButtonHeight = v.DROPDOWNBUTTON.ddMenuButtonHeight or v.dropDownMenuButtonHeight
 	self.view:SetElementExtent(menuButtonHeight)
 
-	local height = menuButtonHeight * (info.LIST_MAX_SIZE or v.dropDownSearchLIST_MAX_SIZE)
+	local height = menuButtonHeight * (info.listMaxSize or v.dropDownSearchListMaxSize)
 	self.scrollBox:SetHeight(height)
 
 	if info.hideSearch then
@@ -1732,7 +1733,7 @@ function DropDownButtonMixin:ddAddButton(info, level)
 	local menu = dropDownMenusList[level]
 
 	if info.list then
-		if #info.list > (info.LIST_MAX_SIZE or v.dropDownSearchLIST_MAX_SIZE) then
+		if #info.list > (info.listMaxSize or v.dropDownSearchListMaxSize) then
 			local searchFrame = GetDropDownSearchFrame()
 			local width, height = searchFrame:init(menu, info)
 

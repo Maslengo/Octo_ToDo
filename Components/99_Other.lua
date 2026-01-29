@@ -19,7 +19,6 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-		-- {id = 137642, defS = false,}, -- Mark of Honor
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {

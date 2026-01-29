@@ -1,4 +1,6 @@
 <Ui>
+
+
 	<EventFrame name="OctoWowTrimhorizontalScrollBar" inherits="horizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
 		<Size x="560" y="8"/>
 		<KeyValues>
@@ -144,6 +146,8 @@
 			<OnLoad method="OnLoad"/>
 		</Scripts>
 	</EventFrame>
+
+
 	<EditBox name="OCTOEditBoxTemplate" inherits="InputBoxScriptTemplate,BackdropTemplate" multiLine="false" autoFocus="false" virtual="true">
 		<FontString inherits="GameFontHighlightSmall" justifyH="Center"/>
 		<Scripts>
@@ -161,9 +165,6 @@
 	</EditBox>
 
 
-
-
-
 	<Button name="OctoPropagateTemplate" propagateMouseInput="Both" virtual="true">
 	</Button>
 
@@ -174,14 +175,46 @@
 		</HitRectInsets>
 	</Button>
 
-
-	<Button name="OctoTooltipTemplate" propagateMouseInput="Clicks" virtual="true">
-
-
-	</Button>
+	<Frame name="OctoBackdropTemplate" inherits="BackdropTemplate" virtual="true">
+		<Scripts>
 
 
+			<OnShow>
+				local E = OctoEngine
+				if E and E.PROFTBL then
+<!-- 					self:SetBackdrop(E.menuBackdrop)
+					self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
+					self:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA) -->
 
+
+					self:SetBackdrop(E.menuBackdrop)
+					self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
+					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
+
+					self:SetClampedToScreen(E.Config_ClampedToScreen)
+				end
+			</OnShow>
+		</Scripts>
+	</Frame>
+
+
+
+
+
+	<Frame name="OctoTooltipBackdropTemplate" propagateMouseInput="Clicks" inherits="BackdropTemplate" virtual="true">
+		<Scripts>
+
+
+			<OnShow>
+				local E = OctoEngine
+				if E and E.PROFTBL then
+					self:SetBackdrop(E.menuBackdrop)
+					self:SetBackdropColor(E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a)
+					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
+				end
+			</OnShow>
+		</Scripts>
+	</Frame>
 
 
 

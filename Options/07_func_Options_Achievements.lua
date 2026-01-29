@@ -307,17 +307,9 @@ function E.func_Options_Achievements(name, savedVars)
 						name = "Открыть тестовое окно",
 						func = function()
 							-- Создание тестового окна
-							local frame = CreateFrame("Frame", "OctoTestFrame", UIParent, "BackdropTemplate")
+							local frame = CreateFrame("Frame", "OctoTestFrame", UIParent, "OctoBackdropTemplate")
 							frame:SetSize(300, 200)
 							frame:SetPoint("CENTER")
-							frame:SetBackdrop({
-								bgFile = "Interface\\DialogFrame\\UI-DialogBox-Background",
-								edgeFile = "Interface\\DialogFrame\\UI-DialogBox-Border",
-								tile = true,
-								tileSize = 32,
-								edgeSize = 32,
-								insets = { left = 11, right = 12, top = 12, bottom = 11 }
-							})
 
 							local text = frame:CreateFontString(nil, "OVERLAY", "GameFontNormal")
 							text:SetPoint("CENTER")

@@ -7,8 +7,6 @@
 	<Script file="Options\06_func_Options_QuestsChanged.lua"/>
 	<Script file="Options\07_func_Options_Achievements.lua"/>
 
-
 	<Script file="Options\Functions_LibSFDropDown.lua"/>
 	<Script file="Options\Init.lua"/>
-	<Script file="Options\OctoSettings_DEBUG.lua"/>
 </Ui>

@@ -8,10 +8,10 @@
 -- :IterateOptionsTables() (and :GetOptionsTable() if only given one argument) return a function reference that the requesting config handling addon must call with valid "uiType", "uiName".
 -- @class file
 -- @name AceConfigRegistry-3.0
--- @release $Id: AceConfigRegistry-3.0.lua 1296 2022-11-04 18:50:10Z nevcairiel $
+-- @release $Id: AceConfigRegistry-3.0.lua 1385 2025-12-06 11:26:20Z nevcairiel $
 local CallbackHandler = LibStub("CallbackHandler-1.0")
 
-local MAJOR, MINOR = "AceConfigRegistry-3.0", 21
+local MAJOR, MINOR = "AceConfigRegistry-3.0", 22
 local AceConfigRegistry = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfigRegistry then return end
@@ -53,19 +53,19 @@ end
 
 local isstring={["string"]=true, _="string"}
 local isstringfunc={["string"]=true,["function"]=true, _="string or funcref"}
-local istable={["table"]=true, _="table"}
-local ismethodtable={["table"]=true,["string"]=true,["function"]=true, _="methodname, funcref or table"}
+local istable={["table"]=true,   _="table"}
+local ismethodtable={["table"]=true,["string"]=true,["function"]=true,   _="methodname, funcref or table"}
 local optstring={["nil"]=true,["string"]=true, _="string"}
 local optstringfunc={["nil"]=true,["string"]=true,["function"]=true, _="string or funcref"}
 local optstringnumberfunc={["nil"]=true,["string"]=true,["number"]=true,["function"]=true, _="string, number or funcref"}
 local optnumber={["nil"]=true,["number"]=true, _="number"}
-local optmethodfalse={["nil"]=true,["string"]=true,["function"]=true,["boolean"]={[false]=true}, _="methodname, funcref or false"}
-local optmethodnumber={["nil"]=true,["string"]=true,["function"]=true,["number"]=true, _="methodname, funcref or number"}
-local optmethodtable={["nil"]=true,["string"]=true,["function"]=true,["table"]=true, _="methodname, funcref or table"}
-local optmethodbool={["nil"]=true,["string"]=true,["function"]=true,["boolean"]=true, _="methodname, funcref or boolean"}
-local opttable={["nil"]=true,["table"]=true, _="table"}
-local optbool={["nil"]=true,["boolean"]=true, _="boolean"}
-local optboolnumber={["nil"]=true,["boolean"]=true,["number"]=true, _="boolean or number"}
+local optmethodfalse={["nil"]=true,["string"]=true,["function"]=true,["boolean"]={[false]=true},  _="methodname, funcref or false"}
+local optmethodnumber={["nil"]=true,["string"]=true,["function"]=true,["number"]=true,  _="methodname, funcref or number"}
+local optmethodtable={["nil"]=true,["string"]=true,["function"]=true,["table"]=true,  _="methodname, funcref or table"}
+local optmethodbool={["nil"]=true,["string"]=true,["function"]=true,["boolean"]=true,  _="methodname, funcref or boolean"}
+local opttable={["nil"]=true,["table"]=true,  _="table"}
+local optbool={["nil"]=true,["boolean"]=true,  _="boolean"}
+local optboolnumber={["nil"]=true,["boolean"]=true,["number"]=true,  _="boolean or number"}
 local optstringnumber={["nil"]=true,["string"]=true,["number"]=true, _="string or number"}
 
 local basekeys={
@@ -92,6 +92,7 @@ local basekeys={
 	func=optmethodfalse,
 	arg={["*"]=true},
 	width=optstringnumber,
+	relWidth=optnumber,
 }
 
 local typedkeys={

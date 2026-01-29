@@ -4,18 +4,14 @@ local function Collect_Quests()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-
-
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
 	wipe(collectMASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.ListOfParagonQuests)
 	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.OctoTable_QuestID)
-
-
 	for questID in next,(E.OctoTable_QuestID) do
-	-- for questID in next,(E.ALL_Quests) do
+		-- for questID in next,(E.ALL_Quests) do
 		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
 			collectMASLENGO.OctoTable_QuestID[questID] = true
 		end
@@ -34,9 +30,6 @@ local function Collect_Quests()
 	collectPlayerData.numQuests = E.func_Save(numQuests)
 	collectPlayerData.numShownEntries = E.func_Save(numShownEntries)
 	collectPlayerData.maxNumQuestsCanAccept = E.func_Save(maxNumQuestsCanAccept) -- UNUSED
-
-
-
 	local numQuests_Paragon = 0
 	for questID, v in next, (E.OctoTable_Reputations_Paragon_Data) do
 		if E.func_IsOnQuest(questID) then
@@ -46,7 +39,6 @@ local function Collect_Quests()
 		end
 	end
 	collectPlayerData.numQuests_Paragon = E.func_Save(numQuests_Paragon)
-
 	if E.func_SafeUpdate_AbandonButton then
 		E.func_SafeUpdate_AbandonButton()
 	end
@@ -71,29 +63,28 @@ end
 --     return counted
 -- end
 local function Collect_Quests_Universal()
-	--------------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
-	--------------------------------------------------------------------
-	if not collectMASLENGO then return end
-	local hasDataToSave = false
-	local tempUniversalQuest = {}
-	local reset = ""
+	local curCharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+	if not curCharInfo or not curCharInfo.MASLENGO then return end
+	local collectPlayerData = curCharInfo.PlayerData
+	-- Два пула
+	local tempUniversalChar = {}
+	local tempUniversalAccount = {}
 	for _, data in ipairs(E.ALL_UniversalQuests) do
 		if not data.quests then break end
 		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-		reset = data.reset
+		local forcedMaxQuest = data.forcedMaxQuest
 		local questDataTable = {}
 		local count = 0
 		local totalQUEST = 0
-		local forcedMaxQuest = data.forcedMaxQuest
 		local hasSingleQuestOutput = false
 		for _, questData in ipairs(data.quests) do
 			if type(questData[1]) == "number" then
 				local questID = questData[1]
 				local FactionOrClass = questData.FactionOrClass
-				if not FactionOrClass or (FactionOrClass[collectPlayerData.Faction] or FactionOrClass[collectPlayerData.classFilename]) then
+				if not FactionOrClass
+				or (FactionOrClass[collectPlayerData.Faction]
+					or  FactionOrClass[collectPlayerData.classFilename]) then
 					local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
 					local status = E.func_GetQuestStatus(questID, true)
 					totalQUEST = totalQUEST + 1
@@ -101,7 +92,6 @@ local function Collect_Quests_Universal()
 					if isCompleted then
 						count = count + 1
 					end
-					-- Для одиночных квестов
 					if (forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
 						questDataTable.TextCenter = status
 						hasSingleQuestOutput = true
@@ -109,36 +99,49 @@ local function Collect_Quests_Universal()
 				end
 			end
 		end
-		-- Если не нашли одиночный активный квест
 		if not hasSingleQuestOutput then
-			-- Определяем максимальное количество квестов для отображения
 			local maxToShow = forcedMaxQuest ~= nil and forcedMaxQuest or totalQUEST
 			if maxToShow == 0 then
-				-- Нет квестов с ID в группе, не записываем TextCenter
 				questDataTable.TextCenter = nil
 			elseif count >= maxToShow then
-				-- Все необходимые квесты выполнены, показываем DONE/Готово
-				questDataTable.TextCenter = true -- if type(TextCenter) == "boolean" then TextCenter = E.DONE end
+				questDataTable.TextCenter = true
 			elseif count > 0 then
-				-- Часть квестов выполнена, показываем X/Y
 				questDataTable.TextCenter = count.."/"..maxToShow
-			elseif count == 0 then
-				-- Квесты есть, но ни один не выполнен, не показываем TextCenter
+			else
 				questDataTable.TextCenter = nil
 			end
 		end
-		if next(questDataTable) ~= nil then
-			tempUniversalQuest[questKey] = questDataTable
-			hasDataToSave = true
+		-- if next(questDataTable) ~= nil then
+			if data.isAccount then
+				tempUniversalAccount[questKey] = questDataTable
+			else
+				tempUniversalChar[questKey] = questDataTable
+			end
+		-- end
+	end
+	-- opde(tempUniversalAccount)
+	local currentRegion = collectPlayerData.CurrentRegionName or E.CurrentRegionName
+	-- Распространение по базе
+	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
+		if CharInfo and CharInfo.MASLENGO then
+			local charRegion = CharInfo.PlayerData.CurrentRegionName or E.CurrentRegionName
+			if charRegion == currentRegion then
+				CharInfo.MASLENGO.UniversalQuest = CharInfo.MASLENGO.UniversalQuest or {}
+				-- Персонажные только текущему
+				if GUID == E.curGUID then
+					for questKey, v in next, tempUniversalChar do
+						CharInfo.MASLENGO.UniversalQuest[questKey] = v
+					end
+				end
+				-- Аккаунтные всем
+				for questKey, v in next, tempUniversalAccount do
+					CharInfo.MASLENGO.UniversalQuest[questKey] = v
+				end
+			end
 		end
 	end
-	if reset == "Regular" or reset == "Daily" or reset == "Weekly" or reset == "Month" then
-		if hasDataToSave then
-			collectMASLENGO.UniversalQuest = tempUniversalQuest
-		elseif collectMASLENGO.UniversalQuest then
-			collectMASLENGO.UniversalQuest = nil
-		end
-	end
+	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.UniversalQuest)
+	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.UniversalQuest)
 end
 ----------------------------------------------------------------
 function E.Collect_Quests()

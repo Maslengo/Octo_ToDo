@@ -6,7 +6,7 @@ local HEIGHT = 724
 local WIDTH = 920
 -- local HEIGHT = 600 -- ВЫСОТА
 -- local WIDTH = math.floor(E.func_goldenWidth(HEIGHT)) -- ШИРИНА
--- /dump OctoSettings:GetSize()
+-- /dump Octo_SettingsFrame:GetSize()
 ----------------------------------------------------------------
 local LibStub = LibStub
 local L = E.L
@@ -14,40 +14,88 @@ local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
-EventFrame.searchFilter = nil
-local OctoSettings = CreateFrame("BUTTON", "OctoSettings", UIParent, "BackdropTemplate")
-OctoSettings:Hide()
-E.func_RegisterFrame_ICONS(OctoSettings)
-local OctoSettings_Background = CreateFrame("FRAME", "OctoSettings_Background", OctoSettings, "BackdropTemplate")
+EventFrame:Hide()
 ----------------------------------------------------------------
-local parentFrame = OctoSettings
+EventFrame.searchFilter = nil
+local Octo_SettingsFrame = CreateFrame("BUTTON", "Octo_SettingsFrame", UIParent, "OctoBackdropTemplate")
+Octo_SettingsFrame:Hide()
+E.func_RegisterFrame_ICONS(Octo_SettingsFrame)
+----------------------------------------------------------------
+local parentFrame = Octo_SettingsFrame
 ----------------------------------------------------------------
 local btn = CreateFrame("BUTTON", nil, UIParent, "UIPanelButtonTemplate")
 btn:SetPoint("TOPLEFT")
-btn:SetSize(100, 32)
-btn:SetText("OctoSettings")
+btn:SetSize(128, 24)
+btn:SetText("Octo_SettingsFrame")
 btn:SetScript("OnClick", function(self, button, down)
-		OctoSettings:SetShown(not OctoSettings:IsShown())
+		Octo_SettingsFrame:SetShown(not Octo_SettingsFrame:IsShown())
 end)
 btn:RegisterForClicks("LeftButtonUp")
 ----------------------------------------------------------------
-function EventFrame:func_CreateOctoSettings()
-	OctoSettings:SetSize(WIDTH, HEIGHT)
-	OctoSettings:SetPoint("CENTER", 0, 0)
-	OctoSettings_Background:SetAllPoints()
-	OctoSettings_Background:SetFrameLevel(OctoSettings:GetFrameLevel() - 1) -- Ниже основного фрейма
-	OctoSettings_Background:SetBackdrop(E.menuBackdrop)
-	OctoSettings_Background:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-	OctoSettings_Background:SetBackdropBorderColor(0, 0, 0, 1)
-	OctoSettings:SetDontSavePosition(true)
-	OctoSettings:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
-	OctoSettings:SetFrameStrata("HIGH")
-	local CENTRALFRAME = CreateFrame("BUTTON", nil, OctoSettings, "BackdropTemplate")
-	CENTRALFRAME:SetPoint("CENTER")
-	CENTRALFRAME:SetSize(HEIGHT, HEIGHT)
-	CENTRALFRAME:SetBackdrop(E.menuBackdrop)
-	CENTRALFRAME:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-	CENTRALFRAME:SetBackdropBorderColor(0, 0, 0, 1)
+function EventFrame:func_CreateOcto_SettingsFrame()
+	----------------------------------------------------------------
+	Octo_SettingsFrame:SetSize(WIDTH, HEIGHT)
+	Octo_SettingsFrame:SetPoint("CENTER", 0, 0)
+	Octo_SettingsFrame:SetDontSavePosition(true)
+	Octo_SettingsFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
+	Octo_SettingsFrame:SetFrameStrata("HIGH")
+	----------------------------------------------------------------
+	Octo_SettingsFrame:EnableMouse(true)
+	Octo_SettingsFrame:SetMovable(true)
+	Octo_SettingsFrame:SetScript("OnMouseDown", function(_, button)
+			if button == "LeftButton" then
+				Octo_SettingsFrame:StartMoving()
+			end
+	end)
+	Octo_SettingsFrame:SetScript("OnMouseUp", function(_, button)
+			if button == "LeftButton" then
+				Octo_SettingsFrame:StopMovingOrSizing()
+				local left = Octo_SettingsFrame:GetLeft()
+				local top = Octo_SettingsFrame:GetTop()
+				Octo_SettingsFrame:ClearAllPoints()
+				Octo_SettingsFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+			end
+	end)
+	Octo_SettingsFrame:RegisterForClicks("RightButtonUp")
+	Octo_SettingsFrame:SetScript("OnClick", Octo_SettingsFrame.Hide)
+	----------------------------------------------------------------
+	local HEIGHT = 724
+	local WIDTH = 920
+	local LEFT_WIDTH = 256
+	local RIGHT_WIDTH = WIDTH - LEFT_WIDTH
+	local LEFT_HEIGHT = HEIGHT - E.HEADER_HEIGHT
+	local RIGHT_HEIGHT = HEIGHT - E.HEADER_HEIGHT
+	----------------------------------------------------------------
+	local HEADER = CreateFrame("FRAME", nil, Octo_SettingsFrame)
+	HEADER:SetSize(WIDTH, E.HEADER_HEIGHT)
+	HEADER:SetPoint("TOPLEFT")
+	HEADER.TEXTURE = HEADER:CreateTexture(nil, "BACKGROUND", nil, -3)
+	HEADER.TEXTURE:SetAllPoints()
+	HEADER.TEXTURE:SetTexture(E.TEXTURE_CHAR_PATH)
+	----------------------------------------------------------------
+	local LEFTFRAME = CreateFrame("FRAME", nil, Octo_SettingsFrame, "OctoBackdropTemplate")
+	LEFTFRAME:SetSize(LEFT_WIDTH, LEFT_HEIGHT)
+	LEFTFRAME:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
+	-- LEFTFRAME.TEXTURE = LEFTFRAME:CreateTexture(nil, "BACKGROUND", nil, -3)
+	-- LEFTFRAME.TEXTURE:SetAllPoints()
+	-- LEFTFRAME.TEXTURE:SetTexture(E.TEXTURE_CHAR_PATH)
+	-- LEFTFRAME.TEXTURE:SetVertexColor(1, 0, 0, .1)
+	----------------------------------------------------------------
+	local RIGHTFRAME = CreateFrame("FRAME", nil, Octo_SettingsFrame, "OctoBackdropTemplate")
+	RIGHTFRAME:SetSize(RIGHT_WIDTH, RIGHT_HEIGHT)
+	RIGHTFRAME:SetPoint("TOPLEFT", LEFT_WIDTH, -E.HEADER_HEIGHT)
+	-- RIGHTFRAME.TEXTURE = RIGHTFRAME:CreateTexture(nil, "BACKGROUND", nil, -3)
+	-- RIGHTFRAME.TEXTURE:SetAllPoints()
+	-- RIGHTFRAME.TEXTURE:SetTexture(E.TEXTURE_CHAR_PATH)
+	-- RIGHTFRAME.TEXTURE:SetVertexColor(0, 1, 0, .1)
+	----------------------------------------------------------------
+	local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+	Octo_SettingsFrame:HookScript("OnShow", function()
+			local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
+			HEADER:SetSize(WIDTH, E.HEADER_HEIGHT)
+			HEADER.TEXTURE:SetVertexColor(r, g, b, a)
+	end)
+	----------------------------------------------------------------
 end
 function EventFrame:func_Octo_Options()
 	Octo_Options = Octo_Options or {}
@@ -55,24 +103,17 @@ function EventFrame:func_Octo_Options()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
-	"ADDON_LOADED",
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
-function EventFrame:ADDON_LOADED(addonName)
-	if addonName ~= GlobalAddonName then return end
-	self:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
-end
-----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
-	EventFrame:func_CreateOctoSettings()
+	EventFrame:func_CreateOcto_SettingsFrame()
 end
 ----------------------------------------------------------------
 function EventFrame:PLAYER_REGEN_DISABLED()
-	OctoSettings:Hide()
+	Octo_SettingsFrame:Hide()
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -209,26 +250,26 @@ end)
 -- local menuListFunc = function(btn) check = btn.value end
 -- local menuListChecked = function(btn) return check == btn.value end
 -- for i = 1, 10 do
--- 	menuList[i] = {
--- 		text = "test text "..i,
--- 		value = i,
--- 		checked = menuListChecked,
--- 		func = menuListFunc,
--- 	}
+--     menuList[i] = {
+--         text = "test text "..i,
+--         value = i,
+--         checked = menuListChecked,
+--         func = menuListFunc,
+--     }
 -- end
 -- menuList[11] = {
--- 	text = "test",
--- 	menuList = {
--- 		{
--- 			notCheckable = true,
--- 			text = "wow",
--- 			func = function() E.func_PrintMessage("wow") end,
--- 		},
--- 	},
+--     text = "test",
+--     menuList = {
+--         {
+--             notCheckable = true,
+--             text = "wow",
+--             func = function() E.func_PrintMessage("wow") end,
+--         },
+--     },
 -- }
 -- parentFrame:SetScript("OnMouseDown", function(self, button)
--- 		if button ~= "RightButton" then return end
--- 		menu:ddEasyMenu(menuList, "cursor", nil, nil, "menu")
+--         if button ~= "RightButton" then return end
+--         menu:ddEasyMenu(menuList, "cursor", nil, nil, "menu")
 -- end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -236,7 +236,7 @@ local methods = {
 
 	["CreateTab"] = function(self, id)
 		local tabname = ("AceGUITabGroup%dTab%d"):format(self.num, id)
-		local tab = CreateFrame("BUTTON", tabname, self.border)
+		local tab = CreateFrame("Button", tabname, self.border)
 		tab:SetSize(115, 24)
 		tab.deselectedTextY = -3
 		tab.selectedTextY = -2
@@ -481,7 +481,7 @@ local methods = {
 --[[-----------------------------------------------------------------------------
 Constructor
 -------------------------------------------------------------------------------]]
-local PaneBackdrop = {
+local PaneBackdrop  = {
 	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true, tileSize = 16, edgeSize = 16,
@@ -514,16 +514,16 @@ local function Constructor()
 	content:SetPoint("BOTTOMRIGHT", -10, 7)
 
 	local widget = {
-		num = num,
-		frame = frame,
-		localstatus = {},
-		alignoffset = 18,
-		titletext = titletext,
-		border = border,
+		num          = num,
+		frame        = frame,
+		localstatus  = {},
+		alignoffset  = 18,
+		titletext    = titletext,
+		border       = border,
 		borderoffset = 27,
-		tabs = {},
-		content = content,
-		type = Type
+		tabs         = {},
+		content      = content,
+		type         = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

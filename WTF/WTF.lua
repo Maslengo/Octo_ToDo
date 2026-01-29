@@ -176,10 +176,10 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		CurrentRegion = GetCurrentRegion(),
 		CurrentRegionName = E.CurrentRegionName,
 		curServer = E.func_GetPlayerRealm(),
-		curServerShort = E.curServerShort,
+		curServerShort = E.curServerShort, -- E.func_GetRealmShortName(GetRealmName())
 		currentTier = E.currentTier,
-		Faction = "Horde",
-		GUID = "curGUID",
+		Faction = "Neutral",
+		GUID = curGUID,
 		guildName = "",
 		guildRankName = "",
 		interfaceVersion = E.interfaceVersion,
@@ -190,6 +190,53 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		Name = "WTF:"..E.curCharName,
 		PlayerDurability = 100,
 		UnitSex = 1,
+		-- Money = 0,
+		realTotalTime = 1,
+
+		levelCapped20 = false,
+		GameLimitedMode_IsActive = false,
+		specName = E.NONE,
+		IsRestrictedAccount = false,
+		specPrimaryStat = 0, -- НЕ ТАК
+		MythicPlus = {
+			[C_MythicPlus.GetCurrentSeason()] = {
+			},
+		},
+		currentXP = 0,
+		specId = 0, -- НЕ ТАК
+		numShownEntries = 0,
+		usedSlots_BAGS = 1,
+		SL_Possible_Anima = 0,
+		totalSlots_BAGS = 16,
+		UnitXPMax = 0,
+		specIcon = E.ICON_QUESTION_MARK,
+		RaceID = 0,  -- НЕ ТАК
+		PVP_timer = 0,
+		LuaVersion = _VERSION,
+		BindLocation = E.NONE,
+		UnitXPPercent = 0,
+		GetRestrictedAccountData_rMoney = 0,
+		MythicPlus_seasonID = C_MythicPlus.GetCurrentSeason(), -- 0
+		GetRestrictedAccountData_rLevel = 0,
+		specRole = "DAMAGER", -- не так
+		classId = 0, -- не так
+		UnitLevel = 1,
+		IsVeteranTrialAccount = false,
+		curLocation = E.NONE,
+		IsPublicBuild = true,
+		realLevelTime = 0,
+		maxNumQuestsCanAccept = 0,
+		HasAvailableRewards = false,
+		-- avgItemLevel = 0,
+		-- avgItemLevelPvp = 0,
+		-- avgItemLevelEquipped = 0,
+		Chromie_inChromieTime = false,
+		Chromie_UnitChromieTimeID = 0,
+		Chromie_name = "",
+		Chromie_canEnter = false,
+		tmstp_Daily = 0, -- C_DateAndTime.GetSecondsUntilDailyReset() + GetServerTime(),
+		tmstp_Weekly = 0, -- C_DateAndTime.GetSecondsUntilWeeklyReset() + GetServerTime(),
+		time = GetServerTime(), -- GetServerTime()
 	}
 	local MASLENGO_DEFAULTS = {
 		Currency = {},
@@ -463,6 +510,14 @@ function EventFrame:func_CheckAll()
 	EventFrame:func_Weekly_Reset()
 	EventFrame:func_Month_Reset()
 end
+
+
+function E.WTF_func_CheckAll()
+	EventFrame:func_CheckAll()
+end
+
+
+
 function EventFrame:func_ScheduleResetTimer()
 	local function func_GetTimeToReset()
 		if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then

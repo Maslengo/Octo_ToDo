@@ -58,7 +58,7 @@ local methods = {
 --[[-----------------------------------------------------------------------------
 Constructor
 -------------------------------------------------------------------------------]]
-local PaneBackdrop = {
+local PaneBackdrop  = {
 	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true, tileSize = 16, edgeSize = 16,
@@ -88,10 +88,10 @@ local function Constructor()
 	content:SetPoint("BOTTOMRIGHT", -10, 10)
 
 	local widget = {
-		frame = frame,
-		content = content,
+		frame     = frame,
+		content   = content,
 		titletext = titletext,
-		type = Type
+		type      = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

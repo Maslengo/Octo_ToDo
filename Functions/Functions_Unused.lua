@@ -43,7 +43,7 @@ end
 function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType)
 	if id and type(id) == "number" then
 		local curType = curType or "spell"
-		local frame = CreateFrame("BUTTON", nil, parent, "SecureActionButtonTemplate, BackDropTemplate")
+		local frame = CreateFrame("BUTTON", nil, parent, "SecureActionButtonTemplate, OctoBackdropTemplate")
 		frame:Hide()
 		frame:SetPoint(point, parent, rPoint, x, y)
 		frame:SetSize(size, size)
@@ -70,7 +70,7 @@ function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType
 		end
 		if not frame.isInit then
 			frame.isInit = true
-			frame:SetScript("OnShow", function(self)
+			frame:HookScript("OnShow", function(self)
 					self:SetBackdropBorderColor(0, 0, 0, edgeAlpha)
 					E.func_UpdateButtonState(self, id, curType)
 			end)

@@ -10,30 +10,22 @@ local LibIndentation = LibStub("LibIndentation-1.0")
 ----------------------------------------------------------------
 function E.func_CreateMenuStyle()
 	LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-		local f = CreateFrame("FRAME", nil, parent, "BackdropTemplate")
+		local f = CreateFrame("FRAME", nil, parent, "OctoBackdropTemplate")
 		f:SetPoint("TOPLEFT", 8, -2)
 		f:SetPoint("BOTTOMRIGHT", -8, 2)
-		f:SetScript("OnShow", function(self)
-			f:SetBackdrop(E.menuBackdrop)
-			self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
-			self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
-		end)
 		return f
 	end)
 end
 ----------------------------------------------------------------
 local function BaseDropDown_OnShow(DropDown, text)
 	DropDown.text:SetText(E.COLOR_FACTION..text.."|r")
-	DropDown:SetBackdrop(E.menuBackdrop)
-	DropDown:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
-	DropDown:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
 end
 ----------------------------------------------------------------
 -- Общие функции
 ----------------------------------------------------------------
 E.OctoFrames_Dropdowns = {}
 local function CreateBaseDropDown(frame, providerfunc)
-	local DropDown = CreateFrame("BUTTON", nil, frame, "BackDropTemplate")
+	local DropDown = CreateFrame("BUTTON", nil, frame, "OctoBackdropTemplate")
 
 	DropDown:SetSize(E.GLOBAL_LINE_WIDTH_LEFT/2, E.GLOBAL_LINE_HEIGHT)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
@@ -71,7 +63,7 @@ local function CreateBaseDropDown(frame, providerfunc)
 			self.text:AdjustPointsOffset(-1, 1)
 	end)
 
-	DropDown:SetScript("OnShow", function(self)
+	DropDown:HookScript("OnShow", function(self)
 			BaseDropDown_OnShow(self, text)
 	end)
 

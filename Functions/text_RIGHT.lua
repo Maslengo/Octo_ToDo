@@ -53,11 +53,10 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			-- local color = E.OctoTable_Covenant[covenantID].color
 			local color = E.func_DB_COV_COLOR(covenantID)
 
-
-		    local renown  = pd[prefix .. "_Renown"]
-		    -- local anima   = pd[prefix .. "_Anima"]
-		    if renown then
-			    TextCenter = color..renown.."|r"
+			local renown  = pd[prefix .. "_Renown"]
+			-- local anima   = pd[prefix .. "_Anima"]
+			if renown then
+				TextCenter = color..renown.."|r"
 			end
 		end
 	elseif id == 1813 then -- ANIMA
@@ -66,14 +65,14 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			local prefix = E.OctoTable_Covenant[covenantID].prefix
 			-- local color = E.OctoTable_Covenant[covenantID].color
 			local color = E.func_DB_COV_COLOR(covenantID)
-		    -- local renown  = pd[prefix .. "_Renown"]
-		   	local anima = pd[prefix .. "_Anima"]
-		   	if anima then
-			    TextCenter = color..anima.."|r"
+			-- local renown  = pd[prefix .. "_Renown"]
+			local anima = pd[prefix .. "_Anima"]
+			if anima then
+				TextCenter = color..anima.."|r"
 			end
 		end
 
-		if pd.SL_Possible_Anima then
+		if pd.SL_Possible_Anima and type(pd.SL_Possible_Anima) == "number" and pd.SL_Possible_Anima > 0 then
 			TextCenter = TextCenter..E.COLOR_BLUE.." +"..pd.SL_Possible_Anima.."|r"
 		end
 	end

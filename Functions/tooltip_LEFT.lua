@@ -86,11 +86,11 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 				end
 
 				table.insert(characterData, {
-					row = row,
-					name = pd.Name,
-					sortValue = sortValue,
-					SL_Possible_Anima = SL_Possible_Anima or " ",
-					totalAnimaText = totalAnimaText,
+						row = row,
+						name = pd.Name,
+						sortValue = sortValue,
+						SL_Possible_Anima = SL_Possible_Anima or " ",
+						totalAnimaText = totalAnimaText,
 				})
 			end
 		end
@@ -98,10 +98,10 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 
 	if #characterData > 0 then
 		table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
-			end
-			return a.name < b.name
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
 		end)
 
 		local minValue, maxValue
@@ -247,6 +247,19 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local characterData = {}
 	local total = 0
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	-- 2032
+	local IsAccountWide = C_CurrencyInfo.IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
+	local IsAccountTransferable = C_CurrencyInfo.IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
+	local REGION = {}
+
+
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		REGION[CharInfo.PlayerData.CurrentRegionName] = true
+	end
+
+
+
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
@@ -255,19 +268,26 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 			local curmaxQuantity = cm.Currency[id] and cm.Currency[id].maxQuantity or 0
 			local hasData = curquantity > 0
 			if hasData then
-				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
-				local row = { leftText }
-				local row2Text = E.func_CompactFormatNumber(curquantity)
-				if curmaxQuantity > 0 then
-					row2Text = row2Text.."/"..E.func_CompactFormatNumber(curmaxQuantity)
+				if IsAccountWide and GUID == E.curGUID then
+					tooltip[#tooltip+1] = {E.COLOR_CYAN..ACCOUNT_LEVEL_CURRENCY.."|r"}
+					tooltip[#tooltip+1] = {TOTAL..": "..E.func_CompactFormatNumber(curquantity)}
+					return tooltip
+				else
+					local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
+					local row = { leftText }
+					local row2Text = E.func_CompactFormatNumber(curquantity)
+					if curmaxQuantity > 0 then
+						row2Text = row2Text.."/"..E.func_CompactFormatNumber(curmaxQuantity)
+					end
+					total = total + curquantity
+					table.insert(characterData, {
+							row = row,
+							name = pd.Name,
+							sortValue = curquantity,
+							row2Text = row2Text,
+					})
 				end
-				total = total + curquantity
-				table.insert(characterData, {
-						row = row,
-						name = pd.Name,
-						sortValue = curquantity,
-						row2Text = row2Text,
-				})
+
 			end
 		end
 	end
@@ -302,7 +322,7 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
-			local curMoney = pd.Money
+			local curMoney = pd.Money or 0
 			local hasData = curMoney > 0
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
@@ -365,7 +385,7 @@ function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
-			local curTime = pd.realTotalTime
+			local curTime = pd.realTotalTime or 0
 			local hasData = curTime > 0
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
@@ -381,19 +401,19 @@ function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 			end
 		end
 	end
-	table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
-			end
-			return a.name < b.name
-	end)
-	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-	for _, d in ipairs(characterData) do
-		local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-		d.row[2] = color..d.row2Text.."|r"
-		table.insert(tooltip, d.row)
-	end
-	if #characterData > 1 then
+	if #characterData > 0 then
+		table.sort(characterData, function(a, b)
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
+		end)
+		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+		for _, d in ipairs(characterData) do
+			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
+			d.row[2] = color..d.row2Text.."|r"
+			table.insert(tooltip, d.row)
+		end
 		local heade1 = {
 			"",
 			TOTAL..": "..E.func_SecondsToClock(total),
@@ -436,21 +456,23 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 			end
 		end
 	end
-	table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
-			end
-			return a.name < b.name
-	end)
-	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-	for _, d in ipairs(characterData) do
-		local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-		d.row[2] = {d.row2Text, "LEFT"}
-		d.row[3] = d.row3Text
-		d.row[4] = color..d.row4Text.."|r"
-		table.insert(tooltip, d.row)
-	end
-	if #characterData > 1 then
+	if #characterData > 0 then
+		table.sort(characterData, function(a, b)
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
+		end)
+		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+
+		for _, d in ipairs(characterData) do
+			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
+			d.row[2] = {d.row2Text, "LEFT"}
+			d.row[3] = d.row3Text
+			d.row[4] = color..d.row4Text.."|r"
+			table.insert(tooltip, d.row)
+		end
+
 		local heade1 = {
 			"",
 			"",
@@ -517,22 +539,22 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 			end
 		end
 	end
-	table.sort(characterData, function(a, b)
-			if a.sortValue ~= b.sortValue then
-				return a.sortValue > b.sortValue
-			end
-			return a.name < b.name
-	end)
-	local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-	for _, d in ipairs(characterData) do
-		local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-		d.row[2] = d.row2Text
-		d.row[3] = d.row3Text
-		d.row[4] = d.row4Text
-		d.row[5] = d.row5Text
-		table.insert(tooltip, d.row)
-	end
-	if #characterData > 1 then
+	if #characterData > 0 then
+		table.sort(characterData, function(a, b)
+				if a.sortValue ~= b.sortValue then
+					return a.sortValue > b.sortValue
+				end
+				return a.name < b.name
+		end)
+		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+		for _, d in ipairs(characterData) do
+			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
+			d.row[2] = d.row2Text
+			d.row[3] = d.row3Text
+			d.row[4] = d.row4Text
+			d.row[5] = d.row5Text
+			table.insert(tooltip, d.row)
+		end
 		local heade1 = {
 			"",
 			"",
@@ -552,6 +574,9 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	local IsAccountWideReputation = C_Reputation.IsAccountWideReputation(id)
 	if IsAccountWideReputation then
 		local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+		if not CharInfo then
+			E.WTF_func_CheckAll()
+		end
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
 		local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] and 1 or 0
@@ -695,6 +720,7 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	end
 	if dataType == "UniversalQuests" then
 		local reset = id:match("_([^_]+)$")
+		-- if data.isAccount then
 		tooltip[#tooltip+1] = {reset}
 	elseif dataType == "Currencies" and id == 1822 then
 		tooltip = E.func_CovenantCurrencyTooltip(1822, visiblePlayers, 1)

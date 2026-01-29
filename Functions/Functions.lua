@@ -54,6 +54,7 @@ local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLog
 local GetMaxNumQuestsCanAccept = GetMaxNumQuestsCanAccept or C_QuestLog.GetMaxNumQuestsCanAccept
 local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
 local IsFactionParagon = IsFactionParagon or C_Reputation.IsFactionParagon
+local IsFactionParagonForCurrentPlayer = IsFactionParagonForCurrentPlayer or C_Reputation.IsFactionParagonForCurrentPlayer
 local GetFactionParagonInfo = GetFactionParagonInfo or C_Reputation.GetFactionParagonInfo
 local IsAccountWideReputation = IsAccountWideReputation or C_Reputation.IsAccountWideReputation
 local IsMajorFaction = IsMajorFaction or C_Reputation.IsMajorFaction
@@ -1311,6 +1312,14 @@ end
 function E.func_IsFactionParagon(id)
 	return IsFactionParagon(id)
 end
+function E.func_IsFactionParagonForCurrentPlayer(id)
+	if IsFactionParagonForCurrentPlayer then
+		return IsFactionParagonForCurrentPlayer(id)
+	else
+		return IsFactionParagon(id)
+	end
+end
+
 function E.func_GetFriendshipReputation(id)
 	return GetFriendshipReputation(id)
 end
@@ -1354,13 +1363,9 @@ function E.func_UpdateFont()
 	local Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
 	local fontPath = LibSharedMedia:Fetch("font", Config_FontStyle)
 
-
-
 	E.OctoFont10:CopyFontObject(GameTooltipText)
 	E.OctoFont11:CopyFontObject(GameTooltipText)
 	E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
-
-
 
 	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
 	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
@@ -1386,7 +1391,7 @@ function E.func_GetEmptySlotIcon(slotID)
 end
 ----------------------------------------------------------------
 function E.func_translit(text)
-	if not E.Config_UseTranslit then
+	if not Octo_ToDo_DB_Vars or not Octo_ToDo_DB_Vars.Config_UseTranslit then
 		return text
 	end
 	if type(text) ~= "string" or text == "" then
@@ -1479,9 +1484,6 @@ local function func_UpdateGlobals()
 		if db.Config_SPAM_TIME ~= nil then
 			E.SPAM_TIME = db.Config_SPAM_TIME
 		end
-		if db.Config_UseTranslit ~= nil then
-			E.Config_UseTranslit = db.Config_UseTranslit
-		end
 		if db.Config_ShowAllDifficulties ~= nil then
 			E.Config_ShowAllDifficulties = db.Config_ShowAllDifficulties
 		end
@@ -1490,21 +1492,24 @@ local function func_UpdateGlobals()
 		end
 		if db.Config_ClampedToScreen ~= nil then
 			E.Config_ClampedToScreen = db.Config_ClampedToScreen
-			if Octo_MainFrame then
-				Octo_MainFrame:SetClampedToScreen(E.Config_ClampedToScreen)
-			end
-			if Octo_EquipmentsFrame then
-				Octo_EquipmentsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
-			end
-			-- if Octo_TooltipFrame then
-			-- Octo_TooltipFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- if Octo_MainFrame then
+			-- 	Octo_MainFrame:SetClampedToScreen(E.Config_ClampedToScreen)
 			-- end
-			if Octo_MainFrame_QuestsChanged then
-				Octo_MainFrame_QuestsChanged:SetClampedToScreen(E.Config_ClampedToScreen)
-			end
-			if Octo_MainFrame_Achievements then
-				Octo_MainFrame_Achievements:SetClampedToScreen(E.Config_ClampedToScreen)
-			end
+			-- if Octo_SettingsFrame then
+			-- 	Octo_SettingsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- end
+			-- if Octo_EquipmentsFrame then
+			-- 	Octo_EquipmentsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- end
+			-- -- if Octo_TooltipFrame then
+			-- -- Octo_TooltipFrame:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- -- end
+			-- if Octo_MainFrame_QuestsChanged then
+			-- 	Octo_MainFrame_QuestsChanged:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- end
+			-- if Octo_MainFrame_Achievements then
+			-- 	Octo_MainFrame_Achievements:SetClampedToScreen(E.Config_ClampedToScreen)
+			-- end
 		end
 		----------------------------------------------------------------
 		if E.PROFTBL then
@@ -1514,12 +1519,7 @@ local function func_UpdateGlobals()
 			local b = E.PROFTBL.ConfigColor_faction_Horde_b
 			local a = E.PROFTBL.ConfigColor_faction_Horde_a
 			E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
-
-
 			----------------------------------------------------------------
-
-
-
 			local r = E.PROFTBL.ConfigColor_faction_Alliance_r
 			local g = E.PROFTBL.ConfigColor_faction_Alliance_g
 			local b = E.PROFTBL.ConfigColor_faction_Alliance_b
@@ -1552,10 +1552,11 @@ local function func_UpdateGlobals()
 			E.backgroundColorG = g
 			E.backgroundColorB = b
 			E.backgroundColorA = a
-			E.func_DB_FRAME_Color(Octo_MainFrame, "frame", r, g, b, a, UseFaction, UseClass)
+			-- E.func_DB_FRAME_Color(Octo_MainFrame, "frame", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "frame", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "frame", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "frame", r, g, b, a, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_SettingsFrame, "frame", r, g, b, a, UseFaction, UseClass)
 			for k, frame in next, (E.OctoFrames_Dropdowns) do
 				E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
 			end
@@ -1567,11 +1568,12 @@ local function func_UpdateGlobals()
 			local a = E.PROFTBL.ConfigColor_MAIN_Border_a
 			local UseFaction = E.PROFTBL.ConfigColor_MAIN_Border_UseFaction_CONFIG
 			local UseClass = E.PROFTBL.ConfigColor_MAIN_Border_UseClass_CONFIG
-			E.func_DB_FRAME_Color(Octo_MainFrame, "border", r, g, b, a, UseFaction, UseClass)
+			-- E.func_DB_FRAME_Color(Octo_MainFrame, "border", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "border", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "border", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "border", r, g, b, a, UseFaction, UseClass)
 			E.func_DB_FRAME_Color(Octo_TooltipFrame, "border", r, g, b, a, UseFaction, UseClass)
+			E.func_DB_FRAME_Color(Octo_SettingsFrame, "border", r, g, b, a, UseFaction, UseClass)
 			for k, frame in next, (E.OctoFrames_Dropdowns) do
 				E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
 			end
@@ -1899,6 +1901,35 @@ function E.func_AutoKey()
 	return tostring("key_"..E.func_GetOrder())
 end
 ----------------------------------------------------------------
+local soundFile_OnEnter = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\OnEnter.ogg"
+function E.sound_OnEnter()
+	PlaySoundFile(soundFile_OnEnter, "Master")
+end
+----------------------------------------------------------------
+local soundFile_OnClick = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\OnClick.ogg"
+function E.sound_OnClick()
+	PlaySoundFile(soundFile_OnClick, "Master")
+end
+----------------------------------------------------------------
+local soundFile_Slider_OnValueChanged = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Slider_OnValueChanged.ogg"
+function E.sound_Slider_OnValueChanged()
+	PlaySoundFile(soundFile_Slider_OnValueChanged, "Master")
+end
+----------------------------------------------------------------
+local soundFile_DropDown_Close = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\DropDown_Close.ogg"
+function E.sound_DropDown_Close()
+	PlaySoundFile(soundFile_DropDown_Close, "Master")
+end
+----------------------------------------------------------------
+local soundFile_DropDown_Open = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\DropDown_Open.ogg"
+function E.sound_DropDown_Open()
+	PlaySoundFile(soundFile_DropDown_Open, "Master")
+end
+----------------------------------------------------------------
+local soundFile_DropDown_Select = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\DropDown_Select.ogg"
+function E.sound_DropDown_Select()
+	PlaySoundFile(soundFile_DropDown_Select, "Master")
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

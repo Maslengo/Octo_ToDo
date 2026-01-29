@@ -72,6 +72,7 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetQuestName(24748, false)

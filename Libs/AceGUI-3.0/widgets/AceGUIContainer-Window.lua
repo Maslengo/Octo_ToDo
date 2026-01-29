@@ -157,7 +157,7 @@ do
 
 		self.Hide = Hide
 		self.Show = Show
-		self.SetTitle = SetTitle
+		self.SetTitle =  SetTitle
 		self.OnRelease = OnRelease
 		self.OnAcquire = OnAcquire
 		self.SetStatusText = SetStatusText
@@ -256,7 +256,7 @@ do
 		right:SetPoint("BOTTOMRIGHT", bottomright, "TOPRIGHT")
 		right:SetTexCoord(0.1171875, 0.2421875, 0, 1)
 
-		local close = CreateFrame("BUTTON", nil, frame, "UIPanelCloseButton")
+		local close = CreateFrame("Button", nil, frame, "UIPanelCloseButton")
 		close:SetPoint("TOPRIGHT", 2, 1)
 		close:SetScript("OnClick", closeOnClick)
 		self.closebutton = close
@@ -268,7 +268,7 @@ do
 		titletext:SetPoint("TOPRIGHT", -32, -8)
 		self.titletext = titletext
 
-		local title = CreateFrame("BUTTON", nil, frame)
+		local title = CreateFrame("Button", nil, frame)
 		title:SetPoint("TOPLEFT", titlebg)
 		title:SetPoint("BOTTOMRIGHT", titlebg)
 		title:EnableMouse()

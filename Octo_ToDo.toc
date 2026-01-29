@@ -1,6 +1,6 @@
 ## Interface: 120001, 120000, 110207
-## Version: v111.0
-# (12.0.1)(24.01.2026)
+## Version: v111.1
+# (12.0.1)(30.01.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 ## Author: Octo
@@ -29,3 +29,4 @@ Components\Components.xml
 Collect\Collect.xml
 Frames\Frames.xml
 Options\Options.xml
+OptionsNEW\OptionsNEW.xml

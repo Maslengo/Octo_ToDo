@@ -169,7 +169,7 @@ local methods = {
 Constructor
 -------------------------------------------------------------------------------]]
 local function Constructor()
-	local frame = CreateFrame("BUTTON", nil, UIParent)
+	local frame = CreateFrame("Button", nil, UIParent)
 	frame:Hide()
 
 	frame:EnableMouse(true)
@@ -216,9 +216,9 @@ local function Constructor()
 
 	local widget = {
 		colorSwatch = colorSwatch,
-		text = text,
-		frame = frame,
-		type = Type
+		text        = text,
+		frame       = frame,
+		type        = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

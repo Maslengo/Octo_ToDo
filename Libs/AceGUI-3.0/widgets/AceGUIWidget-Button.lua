@@ -74,7 +74,7 @@ Constructor
 -------------------------------------------------------------------------------]]
 local function Constructor()
 	local name = "AceGUI30Button" .. AceGUI:GetNextWidgetNum(Type)
-	local frame = CreateFrame("BUTTON", name, UIParent, "UIPanelButtonTemplate")
+	local frame = CreateFrame("Button", name, UIParent, "UIPanelButtonTemplate")
 	frame:Hide()
 
 	frame:EnableMouse(true)
@@ -89,9 +89,9 @@ local function Constructor()
 	text:SetJustifyV("MIDDLE")
 
 	local widget = {
-		text = text,
+		text  = text,
 		frame = frame,
-		type = Type
+		type  = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

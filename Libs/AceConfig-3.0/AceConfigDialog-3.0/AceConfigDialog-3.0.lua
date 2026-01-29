@@ -1,13 +1,13 @@
 --- AceConfigDialog-3.0 generates AceGUI-3.0 based windows based on option tables.
 -- @class file
 -- @name AceConfigDialog-3.0
--- @release $Id: AceConfigDialog-3.0.lua 1351 2024-07-24 18:23:24Z funkehdude $
+-- @release $Id: AceConfigDialog-3.0.lua 1386 2025-12-11 18:25:02Z nevcairiel $
 
 local LibStub = LibStub
 local gui = LibStub("AceGUI-3.0")
 local reg = LibStub("AceConfigRegistry-3.0")
 
-local MAJOR, MINOR = "AceConfigDialog-3.0", 87
+local MAJOR, MINOR = "AceConfigDialog-3.0", 92
 local AceConfigDialog, oldminor = LibStub:NewLibrary(MAJOR, MINOR)
 
 if not AceConfigDialog then return end
@@ -50,19 +50,19 @@ local width_multiplier = 170
 
 --[[
 Group Types
- Tree 	- All Descendant Groups will all become nodes on the tree, direct child options will appear above the tree
- - Descendant Groups with inline=true and thier children will not become nodes
+  Tree 	- All Descendant Groups will all become nodes on the tree, direct child options will appear above the tree
+        - Descendant Groups with inline=true and thier children will not become nodes
 
- Tab	- Direct Child Groups will become tabs, direct child options will appear above the tab control
- - Grandchild groups will default to inline unless specified otherwise
+  Tab	- Direct Child Groups will become tabs, direct child options will appear above the tab control
+        - Grandchild groups will default to inline unless specified otherwise
 
- Select- Same as Tab but with entries in a dropdown rather than tabs
+  Select- Same as Tab but with entries in a dropdown rather than tabs
 
 
- Inline Groups
- - Will not become nodes of a select group, they will be effectivly part of thier parent group seperated by a border
- - If declared on a direct child of a root node of a select group, they will appear above the group container control
- - When a group is displayed inline, all descendants will also be inline members of the group
+  Inline Groups
+    - Will not become nodes of a select group, they will be effectivly part of thier parent group seperated by a border
+    - If declared on a direct child of a root node of a select group, they will appear above the group container control
+    - When a group is displayed inline, all descendants will also be inline members of the group
 
 ]]
 
@@ -105,11 +105,11 @@ end
 
 -- picks the first non-nil value and returns it
 local function pickfirstset(...)
- for i=1,select("#",...) do
- if select(i,...)~=nil then
- return select(i,...)
- end
- end
+  for i=1,select("#",...) do
+    if select(i,...)~=nil then
+      return select(i,...)
+    end
+  end
 end
 
 --gets an option from a given group, checking plugins
@@ -248,7 +248,7 @@ local function CallOptionsFunction(funcname ,option, options, path, appName, ...
 		group = GetSubOption(group, v)
 		info[i] = v
 		if group[funcname] ~= nil then
-			func = group[funcname]
+			func =  group[funcname]
 		end
 		handler = group.handler or handler
 	end
@@ -517,7 +517,7 @@ local function OptionOnMouseOver(widget, event)
 
 	if descStyle and descStyle ~= "tooltip" then return end
 
-	tooltip:SetText(name, 1, .82, 0, true)
+	tooltip:SetText(name, 1, .82, 0, 1, true)
 
 	if opt.type == "multiselect" then
 		tooltip:AddLine(user.text, 0.5, 0.5, 0.8, true)
@@ -526,7 +526,7 @@ local function OptionOnMouseOver(widget, event)
 		tooltip:AddLine(desc, 1, 1, 1, true)
 	end
 	if type(usage) == "string" then
-		tooltip:AddLine("Usage: "..usage, NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b, true)
+		tooltip:AddLine(usage, NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b, true)
 	end
 
 	tooltip:Show()
@@ -581,7 +581,7 @@ do
 		frame.text = text
 
 		local function newButton(newText)
-			local button = CreateFrame("BUTTON", nil, frame)
+			local button = CreateFrame("Button", nil, frame)
 			button:SetSize(128, 21)
 			button:SetNormalFontObject(GameFontNormal)
 			button:SetHighlightFontObject(GameFontHighlight)
@@ -676,7 +676,7 @@ local function ActivateControl(widget, event, ...)
 	--build the info table containing the path
 	-- pick up functions while traversing the tree
 	if group[funcname] ~= nil then
-		func = group[funcname]
+		func =  group[funcname]
 	end
 	handler = group.handler
 	confirm = group.confirm
@@ -686,7 +686,7 @@ local function ActivateControl(widget, event, ...)
 		group = GetSubOption(group, v)
 		info[i] = v
 		if group[funcname] ~= nil then
-			func = group[funcname]
+			func =  group[funcname]
 		end
 		handler = group.handler or handler
 		if group.confirm ~= nil then
@@ -1083,6 +1083,11 @@ local function InjectInfo(control, options, option, path, rootframe, appName)
 	control:SetCallback("OnRelease", CleanUserData)
 	control:SetCallback("OnLeave", OptionOnMouseLeave)
 	control:SetCallback("OnEnter", OptionOnMouseOver)
+
+	-- forward custom arg data directly
+	if control.SetCustomData and option.arg then
+		safecall(control.SetCustomData, control, option.arg)
+	end
 end
 
 local function CreateControl(userControlType, fallbackControlType)
@@ -1436,12 +1441,15 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 				if control then
 					if control.width ~= "fill" then
 						local width = GetOptionsMemberValue("width",v,options,path,appName)
+						local relWidth = GetOptionsMemberValue("relWidth",v,options,path,appName)
 						if width == "double" then
 							control:SetWidth(width_multiplier * 2)
 						elseif width == "half" then
 							control:SetWidth(width_multiplier / 2)
 						elseif (type(width) == "number") then
 							control:SetWidth(width_multiplier * width)
+						elseif width == "relative" and relWidth then
+							control:SetRelativeWidth(relWidth)
 						elseif width == "full" then
 							control.width = "fill"
 						else
@@ -1468,7 +1476,7 @@ local function FeedOptions(appName, options,container,rootframe,path,group,inlin
 end
 
 local function BuildPath(path, ...)
-	for i = 1, select("#",...) do
+	for i = 1, select("#",...)  do
 		tinsert(path, (select(i,...)))
 	end
 end
@@ -1506,7 +1514,7 @@ local function TreeOnButtonEnter(widget, event, uniquevalue, button)
 		tooltip:SetPoint("LEFT",button,"RIGHT")
 	end
 
-	tooltip:SetText(name, 1, .82, 0, true)
+	tooltip:SetText(name, 1, .82, 0, 1, true)
 
 	if type(desc) == "string" then
 		tooltip:AddLine(desc, 1, 1, 1, true)
@@ -1583,7 +1591,7 @@ Rules:
 
 	If the group is a tab or select group, FeedOptions then add the Group Control
 	If the group is a tree group FeedOptions then
-		its parent isnt a tree group: then add the tree control containing this and all child tree groups
+		its parent isnt a tree group:  then add the tree control containing this and all child tree groups
 		if its parent is a tree group, its already a node on a tree
 --]]
 
@@ -1890,7 +1898,7 @@ function AceConfigDialog:Open(appName, container, ...)
 		end
 		local status = AceConfigDialog:GetStatusTable(appName)
 		if not status.width then
-			status.width = 700
+			status.width =  700
 		end
 		if not status.height then
 			status.height = 500
@@ -1945,6 +1953,8 @@ else
 	AceConfigDialog.BlizOptions = AceConfigDialog.BlizOptions or {}
 end
 
+AceConfigDialog.BlizOptionsIDMap = AceConfigDialog.BlizOptionsIDMap or {}
+
 local function FeedToBlizPanel(widget, event)
 	local path = widget:GetUserData("path")
 	AceConfigDialog:Open(widget:GetUserData("appName"), widget, unpack(path or emptyTbl))
@@ -1966,16 +1976,17 @@ end
 -- has to be a head-level note.
 --
 -- This function returns a reference to the container frame registered with the Interface
--- Options. You can use this reference to open the options with the API function
--- `InterfaceOptionsFrame_OpenToCategory`.
+-- Options, as well as the registered ID. You can use the ID to open the options with
+-- the API function `Settings.OpenToCategory`.
 -- @param appName The application name as given to `:RegisterOptionsTable()`
 -- @param name A descriptive name to display in the options tree (defaults to appName)
 -- @param parent The parent to use in the interface options tree.
 -- @param ... The path in the options table to feed into the interface options panel.
 -- @return The reference to the frame registered into the Interface Options.
--- @return The category ID to pass to Settings.OpenToCategory (or InterfaceOptionsFrame_OpenToCategory)
+-- @return The category ID to pass to Settings.OpenToCategory
 function AceConfigDialog:AddToBlizOptions(appName, name, parent, ...)
 	local BlizOptions = AceConfigDialog.BlizOptions
+	local BlizOptionsIDMap = AceConfigDialog.BlizOptionsIDMap
 
 	local key = appName
 	for n = 1, select("#", ...) do
@@ -2001,29 +2012,32 @@ function AceConfigDialog:AddToBlizOptions(appName, name, parent, ...)
 		end
 		group:SetCallback("OnShow", FeedToBlizPanel)
 		group:SetCallback("OnHide", ClearBlizPanel)
-		if Settings and Settings.RegisterCanvasLayoutCategory then
-			local categoryName = name or appName
-			if parent then
-				local category = Settings.GetCategory(parent)
-				if not category then
-					error(("The parent category '%s' was not found"):format(parent), 2)
-				end
-				local subcategory = Settings.RegisterCanvasLayoutSubcategory(category, group.frame, categoryName)
 
-				-- force the generated ID to be used for subcategories, as these can have very simple names like "Profiles"
-				group:SetName(subcategory.ID, parent)
-			else
-				local category = Settings.RegisterCanvasLayoutCategory(group.frame, categoryName)
-				-- using appName here would be cleaner, but would not be 100% compatible
-				-- but for top-level categories it should be fine, as these are typically addon names
-				category.ID = categoryName
-				group:SetName(categoryName, parent)
-				Settings.RegisterAddOnCategory(category)
+		local categoryName = name or appName
+		if parent then
+			local parentID = BlizOptionsIDMap[parent] or parent
+			local category = Settings.GetCategory(parentID)
+			if not category then
+				error(("The parent category '%s' was not found"):format(parent), 2)
 			end
+			local subcategory = Settings.RegisterCanvasLayoutSubcategory(category, group.frame, categoryName)
+			group:SetName(subcategory.ID, parentID)
 		else
-			group:SetName(name or appName, parent)
-			InterfaceOptions_AddCategory(group.frame)
+			if BlizOptionsIDMap[categoryName] then
+				error(("%s has already been added to the Blizzard Options Window with the given name: %s"):format(appName, categoryName), 2)
+			end
+
+			local category = Settings.RegisterCanvasLayoutCategory(group.frame, categoryName)
+			if not (C_SettingsUtil and C_SettingsUtil.OpenSettingsPanel) then
+				-- override the ID so the name can be used in Settings.OpenToCategory
+				-- unfortunately with incoming API changes in 12.0 (and likely classic at some point) this override is no longer possible
+				category.ID = categoryName
+			end
+			group:SetName(category.ID)
+			BlizOptionsIDMap[categoryName] = category.ID
+			Settings.RegisterAddOnCategory(category)
 		end
+
 		return group.frame, group.frame.name
 	else
 		error(("%s has already been added to the Blizzard Options Window with the given path"):format(appName), 2)

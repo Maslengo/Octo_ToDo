@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
-local Octo_TooltipFrame = CreateFrame("BUTTON", "Octo_TooltipFrame", UIParent, "BackdropTemplate,OctoTooltipTemplate")
+local Octo_TooltipFrame = CreateFrame("BUTTON", "Octo_TooltipFrame", UIParent, "OctoTooltipBackdropTemplate")
 Octo_TooltipFrame:Hide()
 E.func_RegisterFrame_SIMPLE(Octo_TooltipFrame)
 EventFrame.measureFrame = CreateFrame("Frame")
@@ -175,14 +175,11 @@ local function TooltipOnShow()
 	end
 end
 function EventFrame:Create_Octo_TooltipFrame()
-	Octo_TooltipFrame:SetBackdrop(E.menuBackdrop)
-	Octo_TooltipFrame:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-	Octo_TooltipFrame:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA)
 
 
 	Octo_TooltipFrame:SetScript("OnEnter", TooltipOnEnter)
 	Octo_TooltipFrame:SetScript("OnLeave", TooltipOnLeave)
-	Octo_TooltipFrame:SetScript("OnShow", TooltipOnShow)
+	Octo_TooltipFrame:HookScript("OnShow", TooltipOnShow)
 	Octo_TooltipFrame:SetPoint("CENTER")
 	Octo_TooltipFrame:SetSize(SEPARATOR_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 	Octo_TooltipFrame:SetClampedToScreen(true)
@@ -208,10 +205,7 @@ function EventFrame:Create_Octo_TooltipFrame()
 	end
 	Octo_TooltipFrame.view = CreateScrollBoxListTreeListView()
 	Octo_TooltipFrame.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_TooltipFrame.view:SetElementInitializer("OctoPropagateTemplate",
-		function(...)
-			self:Octo_Frame_init(...)
-	end)
+	Octo_TooltipFrame.view:SetElementInitializer("OctoPropagateTemplate", function(...) self:Octo_Frame_init(...) end)
 	Octo_TooltipFrame.view:RegisterCallback(Octo_TooltipFrame.view.Event.OnAcquiredFrame, func_OnAcquired, Octo_TooltipFrame)
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_TooltipFrame.ScrollBox, Octo_TooltipFrame.ScrollBar, Octo_TooltipFrame.view)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_TooltipFrame.ScrollBox, Octo_TooltipFrame.ScrollBar)

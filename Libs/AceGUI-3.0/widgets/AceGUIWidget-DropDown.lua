@@ -47,7 +47,7 @@ do
 		tile = true,
 		insets = { left = 11, right = 12, top = 12, bottom = 11 },
 	}
-	local sliderBackdrop = {
+	local sliderBackdrop  = {
 		bgFile = "Interface\\Buttons\\UI-SliderBar-Background",
 		edgeFile = "Interface\\Buttons\\UI-SliderBar-Border",
 		tile = true, tileSize = 8, edgeSize = 8,
@@ -60,8 +60,8 @@ do
 	--[[ UI Event Handlers ]]--
 
 	-- HACK: This should be no part of the pullout, but there
-	-- is no other 'clean' way to response to any item-OnEnter
-	-- Used to close Submenus when an other item is entered
+	--       is no other 'clean' way to response to any item-OnEnter
+	--       Used to close Submenus when an other item is entered
 	local function OnEnter(item)
 		local self = item.pullout
 		for k, v in ipairs(self.items) do
@@ -260,15 +260,15 @@ do
 		self.OnRelease = OnRelease
 
 		self.AddItem = AddItem
-		self.Open = Open
-		self.Close = Close
-		self.Clear = Clear
+		self.Open    = Open
+		self.Close   = Close
+		self.Clear   = Clear
 		self.IterateItems = IterateItems
 		self.SetHideOnLeave = SetHideOnLeave
 
-		self.SetScroll = SetScroll
+		self.SetScroll  = SetScroll
 		self.MoveScroll = MoveScroll
-		self.FixScroll = FixScroll
+		self.FixScroll  = FixScroll
 
 		self.SetMaxHeight = SetMaxHeight
 		self.GetRightBorderWidth = GetRightBorderWidth
@@ -655,18 +655,18 @@ do
 		frame.obj = self
 		dropdown.obj = self
 
-		self.OnRelease = OnRelease
-		self.OnAcquire = OnAcquire
+		self.OnRelease   = OnRelease
+		self.OnAcquire   = OnAcquire
 
-		self.ClearFocus = ClearFocus
+		self.ClearFocus  = ClearFocus
 
-		self.SetText = SetText
-		self.SetValue = SetValue
-		self.GetValue = GetValue
-		self.SetList = SetList
-		self.SetLabel = SetLabel
+		self.SetText     = SetText
+		self.SetValue    = SetValue
+		self.GetValue    = GetValue
+		self.SetList     = SetList
+		self.SetLabel    = SetLabel
 		self.SetDisabled = SetDisabled
-		self.AddItem = AddItem
+		self.AddItem     = AddItem
 		self.SetMultiselect = SetMultiselect
 		self.GetMultiselect = GetMultiselect
 		self.SetItemValue = SetItemValue

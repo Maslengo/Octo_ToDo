@@ -1,4 +1,7 @@
 local GlobalAddonName, E = ...
+
+
+
 ----------------------------------------------------------------
 local function Collect_Currencies()
 	----------------------------------------------------------------
@@ -9,6 +12,9 @@ local function Collect_Currencies()
 	local currencyCache = {}
 	for currencyID in next, (E.ALL_Currencies) do
 		local isAccountWideCurrency = C_CurrencyInfo.IsAccountWideCurrency(currencyID)
+
+
+
 		local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
 		if not data then
 			collectMASLENGO.Currency[currencyID] = nil
@@ -150,4 +156,101 @@ function E.Collect_Currencies()
 end
 function E.Collect_Currencies_Account()
 	E.func_SpamBlock(Collect_Currencies_Account, true)
+end
+
+local result = {}
+
+
+
+local function GetClassColorData(englishClass)
+	if not englishClass then
+		return "|cffffffff", "ffffff"
+	end
+	local c = C_ClassColor.GetClassColor(englishClass)
+	if not c then
+		return "|cffffffff", "ffffff"
+	end
+	local hex = c:GenerateHexColor()      -- AARRGGBB
+	local rgb = hex:sub(3)                -- RRGGBB
+
+	return rgb, "|cff" .. rgb
+end
+
+
+
+local function GetRaceIDByEnglishRace(englishRace)
+	for raceID = 1, 100 do
+		local info = C_CreatureInfo.GetRaceInfo(raceID)
+		if info and info.clientFileString == englishRace then
+			return raceID
+		end
+	end
+end
+
+
+-- ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED
+function E.func_DEBUG_CURRENCY_TRANSFER()
+	if not E.DEBUG then return end
+	local foundNewCharacter = false
+	-- local numTokenTypes = C_CurrencyInfo.GetCurrencyListSize();
+	-- local currencyDataReady = not C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData() or C_CurrencyInfo.IsAccountCharacterCurrencyDataReady();
+	-- if not currencyDataReady then
+	-- 	return;
+	-- end
+
+	for currencyID in next, (E.ALL_Currencies) do
+		local IsAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID)
+		if IsAccountTransferableCurrency then
+			local accountCurrencyData = C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters(currencyID)
+			if accountCurrencyData then
+
+				for q, v in ipairs(accountCurrencyData) do
+					local characterGUID = v.characterGUID or "NONE"
+					-- local characterName = v.characterName or "NONE"
+					local fullCharacterName = v.fullCharacterName or "NONE-PIZDA"
+					local quantity = v.quantity or 0
+					-- local Server = fullCharacterName:gsub("-", "")
+					-- local part1, Server = fullCharacterName:match("([^-]+)-([^-]+)")
+
+					if characterGUID and not Octo_ToDo_DB_Levels[characterGUID] then
+					-- if characterGUID then
+						Octo_ToDo_DB_Levels[characterGUID] = Octo_ToDo_DB_Levels[characterGUID] or {}
+						Octo_ToDo_DB_Levels[characterGUID].PlayerData = Octo_ToDo_DB_Levels[characterGUID].PlayerData or {}
+						Octo_ToDo_DB_Levels[characterGUID].MASLENGO = Octo_ToDo_DB_Levels[characterGUID].MASLENGO or {}
+						local pd = Octo_ToDo_DB_Levels[characterGUID].PlayerData
+						local cm = Octo_ToDo_DB_Levels[characterGUID].MASLENGO
+						local localizedClass, englishClass, localizedRace, englishRace, sex, name, realmName = GetPlayerInfoByGUID(characterGUID)
+						if realmName == "" then
+							realmName = E.func_GetPlayerRealm()
+						end
+
+						pd.Name = name -- characterName
+						-- pd.curServer = Server
+						pd.curServer = realmName
+						pd.className = localizedClass
+						pd.classFilename = englishClass
+						pd.RaceLocal = localizedRace -- эльфийка крови
+						pd.RaceEnglish = englishRace -- BloodElf
+						pd.UnitSex = sex -- 3
+						local classColor, classColorHex = GetClassColorData(englishClass)
+						pd.classColor = classColor
+						pd.classColorHex = classColorHex
+						pd.GUID = characterGUID
+						pd.realTotalTime = 0
+						pd.RaceID = GetRaceIDByEnglishRace(englishRace)
+
+						pd.curServerShort = E.func_GetRealmShortName(realmName)
+
+						print ("ADD NEW CHARACTER:", classColorHex..fullCharacterName.."|r")
+						foundNewCharacter = true
+						result[characterGUID] = fullCharacterName
+					end
+				end
+			end
+		end
+	end
+	if foundNewCharacter then
+		E.WTF_func_CheckAll()
+	end
+	-- opde(result)
 end

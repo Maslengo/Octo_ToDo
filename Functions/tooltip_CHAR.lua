@@ -1,9 +1,9 @@
 local GlobalAddonName, E = ...
 local L = E.L
-
 function E.func_Tooltip_Chars(CharInfo)
 	local tooltip = {}
 	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
 	local color = E.COLOR_SKYBLUE
 	local classColorHex = pd.classColorHex or E.COLOR_GREEN
 	local Name = pd.Name or ""
@@ -25,16 +25,14 @@ function E.func_Tooltip_Chars(CharInfo)
 	local numQuests = pd.numQuests or 0
 	local realTotalTime = pd.realTotalTime or 0
 	local specIcon = pd.specIcon or 0
+	local Chromie_inChromieTime = pd.Chromie_inChromieTime or false
 	local specTexture = E.func_texturefromIcon(specIcon)
 	local durColor = E.func_GetColorGradient(PlayerDurability, 0, 100)
-
 	local playerNameWithLevel = E.func_CharInfo_NickName(CharInfo, true)
 	local playerServer = E.func_CharInfo_Server(CharInfo, true)
 	local guild = E.func_CharInfo_Guild(CharInfo, true)
 	local mail = E.func_CharInfo_Mail(CharInfo)
 	local durability = E.func_CharInfo_Durability(CharInfo, true)
-
-
 	if Name ~= "" and curServer ~= "" then
 		tooltip[#tooltip + 1] = {
 			specTexture..playerNameWithLevel.." "..playerServer,
@@ -47,80 +45,65 @@ function E.func_Tooltip_Chars(CharInfo)
 			guild
 		}
 	end
-
+	local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
+	if ItemLevel ~= "" then
 		tooltip[#tooltip + 1] = {
 			STAT_AVERAGE_ITEM_LEVEL..": "..
-			E.func_CharInfo_ItemLevel(CharInfo),
+			ItemLevel,
 			durability
 		}
-
+	end
 	-- if RaceLocal ~= "" then
-	-- 	if UnitLevel ~= E.currentMaxLevel and UnitXPPercent > 0 then
-	-- 		tooltip[#tooltip + 1] = {
-	-- 			format(TOOLTIP_UNIT_LEVEL_RACE, UnitLevel, RaceLocal)
-	-- 		}
-	-- 	else
-	-- 		tooltip[#tooltip + 1] = { RaceLocal, "" }
-	-- 	end
+	--     if UnitLevel ~= E.currentMaxLevel and UnitXPPercent > 0 then
+	--         tooltip[#tooltip + 1] = {
+	--             format(TOOLTIP_UNIT_LEVEL_RACE, UnitLevel, RaceLocal)
+	--         }
+	--     else
+	--         tooltip[#tooltip + 1] = { RaceLocal, "" }
+	--     end
 	-- end
-
-
 	-- if WarMode then
-	-- 	tooltip[#tooltip + 1] = {
-	-- 		E.COLOR_SKYBLUE..ERR_PVP_WARMODE_TOGGLE_ON.."|r"
-	-- 	}
+	--     tooltip[#tooltip + 1] = {
+	--         E.COLOR_SKYBLUE..ERR_PVP_WARMODE_TOGGLE_ON.."|r"
+	--     }
 	-- end
-
-
-	if Chromie_name ~= "" then
+	if Chromie_inChromieTime and Chromie_name ~= "" then
 		-- tooltip[#tooltip + 1] = { " ", " " }
 		tooltip[#tooltip + 1] = {
 			E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_GetNPCName(167032)..": "..E.COLOR_GREEN..Chromie_name.."|r"
 		}
 	end
-
-
 	-- if curLocation ~= "" then
-	-- 	-- tooltip[#tooltip + 1] = { " ", " " }
-	-- 	tooltip[#tooltip + 1] = {
-	-- 		E.func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..classColorHex..curLocation.."|r"
-	-- 	}
+	--     -- tooltip[#tooltip + 1] = { " ", " " }
+	--     tooltip[#tooltip + 1] = {
+	--         E.func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..classColorHex..curLocation.."|r"
+	--     }
 	-- end
-
-
 	-- if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
-	-- 	local icon = E.func_texturefromIcon(133634)
-	-- 	local textLeft = icon..BAG_NAME_BACKPACK..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
-	-- 	if usedSlots_BANK and totalSlots_BANK then
-	-- 		textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
-	-- 	end
-	-- 	tooltip[#tooltip + 1] = { textLeft, "" }
+	--     local icon = E.func_texturefromIcon(133634)
+	--     local textLeft = icon..BAG_NAME_BACKPACK..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
+	--     if usedSlots_BANK and totalSlots_BANK then
+	--         textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
+	--     end
+	--     tooltip[#tooltip + 1] = { textLeft, "" }
 	-- end
-
-
 	if realTotalTime > 0 then
 		tooltip[#tooltip + 1] = { " ", "" }
 		tooltip[#tooltip + 1] = {
 			string.format(TIME_PLAYED_TOTAL,classColorHex..E.func_SecondsToClock(realTotalTime)).."|r"
 		}
 	end
-
-
 	-- if CharInfo.MASLENGO and CharInfo.MASLENGO.Items and CharInfo.MASLENGO.Items.Bags and CharInfo.MASLENGO.Items.Bags[122284] then
-	-- 	tooltip[#tooltip + 1] = { " ", "" }
-	-- 	tooltip[#tooltip + 1] = {
-	-- 		E.func_GetItemName(122284),
-	-- 		CharInfo.MASLENGO.Items.Bags[122284]
-	-- 	}
+	--     tooltip[#tooltip + 1] = { " ", "" }
+	--     tooltip[#tooltip + 1] = {
+	--         E.func_GetItemName(122284),
+	--         CharInfo.MASLENGO.Items.Bags[122284]
+	--     }
 	-- end
-
-
-
-
-
-
-
-
+	-- tooltip[#tooltip+1] = {"---"}
+	if cm.InventoryType then
+		tooltip[#tooltip+1] = {"Shift +"..E.LEFT_MOUSE_ICON..L["LMB"]}
+	end
 	if E.DebugCharacterInfo then
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color..E.DEVTEXT.."|r", ""}
@@ -232,7 +215,5 @@ function E.func_Tooltip_Chars(CharInfo)
 			color..tostring(pd.CurrentRegionName or "").."|r"
 		}
 	end
-	-- tooltip[#tooltip+1] = {"---"}
-	tooltip[#tooltip+1] = {"Shift +"..E.LEFT_MOUSE_ICON..L["LMB"]}
 	return tooltip
 end

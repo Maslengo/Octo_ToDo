@@ -19,7 +19,11 @@ Support functions
 -------------------------------------------------------------------------------]]
 if not AceGUIEditBoxInsertLink then
 	-- upgradeable hook
-	hooksecurefunc("ChatEdit_InsertLink", function(...) return _G.AceGUIEditBoxInsertLink(...) end)
+	if ChatFrameUtil and ChatFrameUtil.InsertLink then
+		hooksecurefunc(ChatFrameUtil, "InsertLink", function(...) return _G.AceGUIEditBoxInsertLink(...) end)
+	elseif ChatEdit_InsertLink then
+		hooksecurefunc("ChatEdit_InsertLink", function(...) return _G.AceGUIEditBoxInsertLink(...) end)
+	end
 end
 
 function _G.AceGUIEditBoxInsertLink(text)
@@ -209,7 +213,7 @@ local methods = {
 Constructor
 -------------------------------------------------------------------------------]]
 local function Constructor()
-	local num = AceGUI:GetNextWidgetNum(Type)
+	local num  = AceGUI:GetNextWidgetNum(Type)
 	local frame = CreateFrame("Frame", nil, UIParent)
 	frame:Hide()
 
@@ -236,7 +240,7 @@ local function Constructor()
 	label:SetJustifyH("LEFT")
 	label:SetHeight(18)
 
-	local button = CreateFrame("BUTTON", nil, editbox, "UIPanelButtonTemplate")
+	local button = CreateFrame("Button", nil, editbox, "UIPanelButtonTemplate")
 	button:SetWidth(40)
 	button:SetHeight(20)
 	button:SetPoint("RIGHT", -2, 0)
@@ -246,11 +250,11 @@ local function Constructor()
 
 	local widget = {
 		alignoffset = 30,
-		editbox = editbox,
-		label = label,
-		button = button,
-		frame = frame,
-		type = Type
+		editbox     = editbox,
+		label       = label,
+		button      = button,
+		frame       = frame,
+		type        = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func

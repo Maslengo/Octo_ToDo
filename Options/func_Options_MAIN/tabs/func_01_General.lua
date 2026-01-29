@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 function E.func_01_General(width, tabName)
 	-------------------------------------------------

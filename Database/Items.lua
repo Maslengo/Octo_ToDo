@@ -10,6 +10,20 @@ E.OctoTable_itemID_MECHAGON = {
 ----------------------------------------------------------------
 -- 44922, 77101, 136780, 136781, 188152, 226037, 250316, 253574, 254320, 265922, 265923,
 E.OctoTable_itemID_ALL = {
+	[235911] = true,
+	[235054] = true,
+	[245586] = true, -- ironwood-lumber
+	[242691] = true, -- olemba-lumber
+	[251762] = true, -- coldwind-lumber
+	[251764] = true, -- ashwood-lumber
+	[251763] = true, -- bamboo-lumber
+	[251766] = true, -- shadowmoon-lumber
+	[251767] = true, -- fel-touched-lumber
+	[251768] = true, -- darkpine-lumber
+	[251772] = true, -- arden-lumber
+	[251773] = true, -- dragonpine-lumber
+	[248012] = true, -- dornic-fir-lumber
+
 	[248142] = true,
 	[127759] = true,
 	[254849] = true,

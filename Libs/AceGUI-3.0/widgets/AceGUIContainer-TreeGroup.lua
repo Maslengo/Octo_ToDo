@@ -2,7 +2,7 @@
 TreeGroup Container
 Container that uses a tree control to switch between groups.
 -------------------------------------------------------------------------------]]
-local Type, Version = "TreeGroup", 48
+local Type, Version = "TreeGroup", 49
 local AceGUI = LibStub and LibStub("AceGUI-3.0", true)
 if not AceGUI or (AceGUI:GetWidgetVersion(Type) or 0) >= Version then return end
 
@@ -206,7 +206,7 @@ local function Button_OnEnter(frame)
 		tooltip:SetOwner(frame, "ANCHOR_NONE")
 		tooltip:ClearAllPoints()
 		tooltip:SetPoint("LEFT",frame,"RIGHT")
-		tooltip:SetText(frame.text:GetText() or "", 1, .82, 0, true)
+		tooltip:SetText(frame.text:GetText() or "", 1, .82, 0, 1, true)
 
 		tooltip:Show()
 	end
@@ -317,7 +317,7 @@ local methods = {
 
 	["CreateButton"] = function(self)
 		local num = AceGUI:GetNextWidgetNum("TreeGroupButton")
-		local button = CreateFrame("BUTTON", ("AceGUI30TreeButton%d"):format(num), self.treeframe, "OptionsListButtonTemplate")
+		local button = CreateFrame("Button", ("AceGUI30TreeButton%d"):format(num), self.treeframe, "OptionsListButtonTemplate")
 		button.obj = self
 
 		local icon = button:CreateTexture(nil, "OVERLAY")
@@ -619,14 +619,14 @@ local methods = {
 --[[-----------------------------------------------------------------------------
 Constructor
 -------------------------------------------------------------------------------]]
-local PaneBackdrop = {
+local PaneBackdrop  = {
 	bgFile = "Interface\\ChatFrame\\ChatFrameBackground",
 	edgeFile = "Interface\\Tooltips\\UI-Tooltip-Border",
 	tile = true, tileSize = 16, edgeSize = 16,
 	insets = { left = 3, right = 3, top = 5, bottom = 3 }
 }
 
-local DraggerBackdrop = {
+local DraggerBackdrop  = {
 	bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",
 	edgeFile = nil,
 	tile = true, tileSize = 16, edgeSize = 1,
@@ -694,19 +694,19 @@ local function Constructor()
 	content:SetPoint("BOTTOMRIGHT", -10, 10)
 
 	local widget = {
-		frame = frame,
-		lines = {},
-		levels = {},
-		buttons = {},
-		hasChildren = {},
-		localstatus = { groups = {}, scrollvalue = 0 },
-		filter = false,
-		treeframe = treeframe,
-		dragger = dragger,
-		scrollbar = scrollbar,
-		border = border,
-		content = content,
-		type = Type
+		frame        = frame,
+		lines        = {},
+		levels       = {},
+		buttons      = {},
+		hasChildren  = {},
+		localstatus  = { groups = {}, scrollvalue = 0 },
+		filter       = false,
+		treeframe    = treeframe,
+		dragger      = dragger,
+		scrollbar    = scrollbar,
+		border       = border,
+		content      = content,
+		type         = Type
 	}
 	for method, func in pairs(methods) do
 		widget[method] = func
