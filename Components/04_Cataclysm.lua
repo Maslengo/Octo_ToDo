@@ -49,11 +49,11 @@ local function tempFunction()
 		{id = 1158, defS = true,}, --name = "Стражи Хиджала", side = "-", category = "Cataclysm", }, --[faction=1158]
 		{id = 1135, defS = true,}, --name = "Служители Земли", side = "-", category = "Cataclysm", }, --[faction=1135]
 		----------------------------------------------------------------
-		{id = 1178, defS = true,}, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
-		{id = 1172, defS = true,}, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]
+		{id = 1178, defS = false,}, --name = "Батальон Адского Крика", side = "Horde", category = "Cataclysm", }, --[faction=1178]
+		{id = 1172, defS = false,}, --name = "Клан Драконьей Пасти", side = "Horde", category = "Cataclysm", }, --[faction=1172]
 		----------------------------------------------------------------
-		{id = 1177, defS = true,}, --name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, --[faction=1177]
-		{id = 1174, defS = true,}, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
+		{id = 1177, defS = false,}, --name = "Защитники Тол Барада", side = "Alliance", category = "Cataclysm", }, --[faction=1177]
+		{id = 1174, defS = false,}, --name = "Клан Громового Молота", side = "Alliance", category = "Cataclysm", }, --[faction=1174]
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {

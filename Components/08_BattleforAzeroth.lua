@@ -60,9 +60,10 @@ local function tempFunction()
 		{id = 2156, defS = false,}, --name = "Экспедиция Таланджи", side = "-", category = "Battle for Azeroth", }, --[faction=2156]
 		-- {id = 2233, defS = false,}, --name = "Dino Training - Pterrodax", side = "Horde", category = "Battle for Azeroth", }, --[faction=2233]
 		-- {id = 2370, defS = false,}, --name = "Обучение динозавров – Дикорог", side = "-", category = "Battle for Azeroth", }, --[faction=2370]
-		{id = 2390, defS = true,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
-		{id = 2389, defS = true,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
-		{id = 2388, defS = true,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+		{id = 2390, defS = false,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
+		{id = 2389, defS = false,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
+		{id = 2388, defS = false,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
+
 		{id = 2159, defS = false,}, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
 		{id = 2160, defS = false,}, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
 		{id = 2400, defS = false,}, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
@@ -72,9 +73,10 @@ local function tempFunction()
 		{id = 2398, defS = false,}, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
 		{id = 2397, defS = false,}, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
 		{id = 2396, defS = false,}, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
-		{id = 2376, defS = true,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
-		{id = 2375, defS = true,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
-		{id = 2377, defS = true,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
+
+		{id = 2376, defS = false,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
+		{id = 2375, defS = false,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
+		{id = 2377, defS = false,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {

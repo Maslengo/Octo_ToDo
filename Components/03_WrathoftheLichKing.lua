@@ -55,19 +55,19 @@ local function tempFunction()
 		{id = 1105, defS = true,}, --name = "Оракулы", side = "-", category = "Низина Шолазар", }, --[faction=1105]
 		{id = 1104, defS = true,}, --name = "Племя Бешеного Сердца", side = "-", category = "Низина Шолазар", }, --[faction=1104]
 		----------------------------------------------------------------
-		{id = 1052, defS = true,}, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052] -- ОРДА
+		{id = 1052, defS = false,}, --name = "Экспедиция Орды", side = "-", category = "Wrath of the Lich King", }, --[faction=1052] -- ОРДА
 		----------------------------------------------------------------
-		{id = 1124, defS = true,}, --name = "Похитители Солнца", side = "-", category = "Экспедиция Орды", }, --[faction=1124]
-		{id = 1085, defS = true,}, --name = "Армия Песни Войны", side = "-", category = "Экспедиция Орды", }, --[faction=1085]
-		{id = 1067, defS = true,}, --name = "Карающая Длань", side = "-", category = "Экспедиция Орды", }, --[faction=1067]
-		{id = 1064, defS = true,}, --name = "Таунка", side = "-", category = "Экспедиция Орды", }, --[faction=1064]
+		{id = 1124, defS = false,}, --name = "Похитители Солнца", side = "-", category = "Экспедиция Орды", }, --[faction=1124]
+		{id = 1085, defS = false,}, --name = "Армия Песни Войны", side = "-", category = "Экспедиция Орды", }, --[faction=1085]
+		{id = 1067, defS = false,}, --name = "Карающая Длань", side = "-", category = "Экспедиция Орды", }, --[faction=1067]
+		{id = 1064, defS = false,}, --name = "Таунка", side = "-", category = "Экспедиция Орды", }, --[faction=1064]
 		----------------------------------------------------------------
-		{id = 1037, defS = true,}, --name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", }, --[faction=1037] -- АЛЬЯНС
+		{id = 1037, defS = false,}, --name = "Авангард Альянса", side = "-", category = "Wrath of the Lich King", }, --[faction=1037] -- АЛЬЯНС
 		----------------------------------------------------------------
-		{id = 1094, defS = true,}, --name = "Серебряный Союз", side = "-", category = "Авангард Альянса", }, --[faction=1094]
-		{id = 1126, defS = true,}, --name = "Зиморожденные", side = "-", category = "Авангард Альянса", }, --[faction=1126]
-		{id = 1068, defS = true,}, --name = "Лига исследователей", side = "-", category = "Авангард Альянса", }, --[faction=1068]
-		{id = 1050, defS = true,}, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
+		{id = 1094, defS = false,}, --name = "Серебряный Союз", side = "-", category = "Авангард Альянса", }, --[faction=1094]
+		{id = 1126, defS = false,}, --name = "Зиморожденные", side = "-", category = "Авангард Альянса", }, --[faction=1126]
+		{id = 1068, defS = false,}, --name = "Лига исследователей", side = "-", category = "Авангард Альянса", }, --[faction=1068]
+		{id = 1050, defS = false,}, --name = "Экспедиция Отважных", side = "-", category = "Авангард Альянса", }, --[faction=1050]
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
@@ -75,7 +75,8 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(24748, false)
+				-- return E.func_GetQuestName(24748, false)
+				return E.func_GetItemName(49623)
 			end,
 			name_save = "Shadowmourne",
 			defS = true,

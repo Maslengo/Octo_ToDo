@@ -45,13 +45,13 @@ local function tempFunction()
 		{id = 1711, defS = true,}, --name = "Археологическое общество Хитрой Шестеренки", side = "-", category = "Warlords of Draenor", }, --[faction=1711]
 		{id = 1515, defS = true,}, --name = "Араккоа-изгои", side = "-", category = "Warlords of Draenor", }, --[faction=1515]
 		----------------------------------------------------------------
-		{id = 1708, defS = true,}, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
-		{id = 1445, defS = true,}, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
-		{id = 1848, defS = true,}, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
+		{id = 1708, defS = false,}, --name = "Клан Веселого Черепа", side = "-", category = "Warlords of Draenor", }, --[faction=1708] -- ОРДА
+		{id = 1445, defS = false,}, --name = "Клан Северного Волка", side = "-", category = "Warlords of Draenor", }, --[faction=1445] -- ОРДА
+		{id = 1848, defS = false,}, --name = "Охотники за головами", side = "-", category = "Warlords of Draenor", }, --[faction=1848] -- ОРДА
 		----------------------------------------------------------------
-		{id = 1731, defS = true,}, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
-		{id = 1710, defS = true,}, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
-		{id = 1847, defS = true,}, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
+		{id = 1731, defS = false,}, --name = "Совет экзархов", side = "-", category = "Warlords of Draenor", }, --[faction=1731] -- АЛЬЯНС
+		{id = 1710, defS = false,}, --name = "Защитники Ша'тар", side = "-", category = "Warlords of Draenor", }, --[faction=1710] -- АЛЬЯНС
+		{id = 1847, defS = false,}, --name = "Длань Пророка", side = "-", category = "Warlords of Draenor", }, --[faction=1847] -- АЛЬЯНС
 		----------------------------------------------------------------
 		{id = 1741, defS = false,}, --name = "Леорадж", side = "-", category = "Телохранители из казарм", }, --[faction=1741]
 		{id = 1740, defS = false,}, --name = "Аеда Ясная Заря", side = "-", category = "Телохранители из казарм", }, --[faction=1740]

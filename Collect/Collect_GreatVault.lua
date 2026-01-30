@@ -94,6 +94,7 @@ local function Collect_GreatVault()
 		if #E.Enum_Activities_table > 0 then
 			for j = 1, #E.Enum_Activities_table do
 				local ID = E.Enum_Activities_table[j]
+				-- /dump C_WeeklyRewards.GetActivities(6) 1 3 6
 				local activityInfo = C_WeeklyRewards.GetActivities(ID)
 				if activityInfo then
 					local tbl = {}
@@ -102,7 +103,7 @@ local function Collect_GreatVault()
 					for i = 1, #activityInfo do
 						if activityInfo[i].progress and activityInfo[i].progress ~= 0 then
 							tbl.min = activityInfo[i].progress
-							break -- берём только первый ненулевой progress
+							-- break -- берём только первый ненулевой progress
 						end
 					end
 					-- Rewards
@@ -129,7 +130,7 @@ local function Collect_GreatVault()
 	collectPlayerData.HasAvailableRewards = E.func_Save(HasAvailableRewards())
 	collectPlayerData.HasGeneratedRewards = E.func_Save(HasGeneratedRewards())
 
-	--opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GreatVault)
+	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GreatVault)
 end
 ----------------------------------------------------------------
 function E.Collect_GreatVault()
