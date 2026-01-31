@@ -68,7 +68,8 @@ local function tempFunction()
 		-- {id = 138019, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 158923, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 151086, defS = true,}, -- СТАРЫЕ КЛЮЧИ
-		{id = 246771, defS = true,},
+		{id = 246727, defS = true,}, -- Ethereal Essence Sliver
+		{id = 246771, defS = false,}, -- Radiant Echo
 		{id = 137642, defS = false,}, -- Mark of Honor
 	}
 	----------------------------------------------------------------
@@ -407,7 +408,7 @@ local function tempFunction()
 				-- {83345}, -- (Призыв к бою) Одержите победу на 4 полях боя.
 				{86731, addText = {expansionText = E.func_FormatExpansion(1, "LEFT")}}, -- 1 CLASSIC (An Original Path Through Time)
 				{83363, addText = {expansionText = E.func_FormatExpansion(2, "LEFT")}}, -- 2 TBC (A Burning Path Through Time)
-				{83365, addText = {expansionText = E.func_FormatExpansion(3, "LEFT")}}, -- 3 WOTLK (A Frozen Path Through Time)
+				{83365, addText = {expansionText = E.func_FormatExpansion(3, "LEFT")}}, -- 3 WOTLK (A Frozen Path Through Time) 40173 (500 баджей)
 				{83359, addText = {expansionText = E.func_FormatExpansion(4, "LEFT")}}, -- 4 Cataclysm (A Shattered Path Through Time)
 				{83362, addText = {expansionText = E.func_FormatExpansion(5, "LEFT")}}, -- 5 PANDA (A Shrouded Path Through Time)
 				{83364, addText = {expansionText = E.func_FormatExpansion(6, "LEFT")}}, -- 6 DRAENOR (A Savage Path Through Time)

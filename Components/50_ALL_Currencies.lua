@@ -39,13 +39,26 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	local sorted = {}
-	for id in next, (E.ALL_Currencies) do
-		tinsert(sorted, id)
+
+
+	-- for id in next, (E.ALL_Currencies) do
+	-- 	tinsert(sorted, id)
+	-- end
+
+
+	for id = 1, 4000 do
+		if E.func_GetCurrencyName(id) ~= E.COLOR_RED..UNKNOWN.."|r" then
+			tinsert(sorted, id)
+		end
 	end
+
+
 	table.sort(sorted, E.func_ReversSort)
 	for i, id in ipairs(sorted) do
 		tinsert(OctoTables_DataOtrisovka[categoryKey].Currencies, {id = id, defS = true,})
 	end
+
+
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
