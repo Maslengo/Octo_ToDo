@@ -52,6 +52,7 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			local prefix = E.OctoTable_Covenant[covenantID].prefix
 			-- local color = E.OctoTable_Covenant[covenantID].color
 			local color = E.func_DB_COV_COLOR(covenantID)
+			-- local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
 
 			local renown  = pd[prefix .. "_Renown"]
 			-- local anima   = pd[prefix .. "_Anima"]

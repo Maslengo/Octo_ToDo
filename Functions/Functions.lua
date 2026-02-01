@@ -1677,16 +1677,16 @@ function E.func_DB_COV_COLOR(covenantID)
 							local a = E.PROFTBL.ConfigColor_VENTHYR_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif covenantID == 3 then
-							local r = E.PROFTBL.ConfigColor_NECROLORD_r
-							local g = E.PROFTBL.ConfigColor_NECROLORD_g
-							local b = E.PROFTBL.ConfigColor_NECROLORD_b
-							local a = E.PROFTBL.ConfigColor_NECROLORD_a
-		result = E.func_RGB2Hex(r, g, b, a)
-	elseif covenantID == 4 then
 							local r = E.PROFTBL.ConfigColor_NIGHTFAE_r
 							local g = E.PROFTBL.ConfigColor_NIGHTFAE_g
 							local b = E.PROFTBL.ConfigColor_NIGHTFAE_b
 							local a = E.PROFTBL.ConfigColor_NIGHTFAE_a
+		result = E.func_RGB2Hex(r, g, b, a)
+	elseif covenantID == 4 then
+							local r = E.PROFTBL.ConfigColor_NECROLORD_r
+							local g = E.PROFTBL.ConfigColor_NECROLORD_g
+							local b = E.PROFTBL.ConfigColor_NECROLORD_b
+							local a = E.PROFTBL.ConfigColor_NECROLORD_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	end
 	return result

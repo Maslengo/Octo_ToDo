@@ -186,14 +186,19 @@
 					self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
 					self:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA) -->
 
-
 					self:SetBackdrop(E.menuBackdrop)
 					self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
 					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
+					if E.Config_ClampedToScreen then
+						self:SetClampedToScreen(E.Config_ClampedToScreen)
+					else
+						self:SetClampedToScreen(false)
+					end
 
-					self:SetClampedToScreen(E.Config_ClampedToScreen)
+
 				end
 			</OnShow>
+
 		</Scripts>
 	</Frame>
 
@@ -204,7 +209,6 @@
 	<Frame name="OctoTooltipBackdropTemplate" propagateMouseInput="Clicks" inherits="BackdropTemplate" virtual="true">
 		<Scripts>
 
-
 			<OnShow>
 				local E = OctoEngine
 				if E and E.PROFTBL then
@@ -213,6 +217,7 @@
 					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
 				end
 			</OnShow>
+
 		</Scripts>
 	</Frame>
 

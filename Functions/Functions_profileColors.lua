@@ -74,7 +74,7 @@ local function defaults_tbl()
 	local RS6r, RS6g, RS6b, RS6a = E.func_Hex2RGBA(E.COLOR_GREEN, .5)
 	local RS7r, RS7g, RS7b, RS7a = E.func_Hex2RGBA(E.COLOR_GREEN, .5)
 	local RS8r, RS8g, RS8b, RS8a = E.func_Hex2RGBA(E.COLOR_GREEN, .5)
-	local RFr, RFg, RFb, RFa = E.func_Hex2RGBA(E.COLOR_PINK, .5)
+	local RFr, RFg, RFb, RFa = E.func_Hex2RGBA(E.COLOR_REPFRIEND, .5)
 	local RMr, RMg, RMb, RMa = E.func_Hex2RGBA(E.COLOR_BLUE, .5)
 	local RPr, RPg, RPb, RPa = E.func_Hex2RGBA(E.COLOR_BLUE, .5)
 	local tbl = {
@@ -167,10 +167,12 @@ local function defaults_tbl()
 		ConfigColor_Rep_Standard_8_g = RS8g,
 		ConfigColor_Rep_Standard_8_b = RS8b,
 		ConfigColor_Rep_Standard_8_a = RS8a,
+
 		ConfigColor_Rep_Friend_r = RFr,
 		ConfigColor_Rep_Friend_g = RFg,
 		ConfigColor_Rep_Friend_b = RFb,
 		ConfigColor_Rep_Friend_a = RFa,
+
 		ConfigColor_Rep_Major_r = RMr,
 		ConfigColor_Rep_Major_g = RMg,
 		ConfigColor_Rep_Major_b = RMb,

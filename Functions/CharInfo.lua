@@ -1,7 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
+local count = 0
 function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, CustomColor, markPlayer)
 	if not CharInfo then return "" end
+
 	local pd = CharInfo.PlayerData
 	local result = ""
 	local color = CustomColor or pd.classColorHex
@@ -10,15 +12,22 @@ function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, Cus
 		local curPers = pd.GUID == E.curGUID and E.COLOR_GREEN.."->|r" or ""
 		result = curPers..result
 	end
+	local name = pd.Name
 
-	if pd.Name and color then
-		result = result .. color..pd.Name.."|r"
+	if E.DEBUG_NAME then
+		count = count + 1
+		name = "Name_"..count
 	end
-	if not forceHideLevel and pd.UnitLevel then
+
+	if name and color then
+		result = result .. color..name.."|r"
+	end
+	if not forceHideLevel and pd.UnitLevel > 100 then
 		if alwaysShowLevel or (not alwaysShowLevel and not pd.levelCapped20 and pd.UnitLevel ~= E.currentMaxLevel) then
 			result = result.." "..levelColor..pd.UnitLevel.."|r"
 		end
 	end
+
 
 	return E.func_translit(result)
 end
@@ -30,6 +39,10 @@ function E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, Cust
 	local curServer = pd.curServer
 	local curServerShort = pd.curServerShort
 	local color = CustomColor or E.COLOR_SKYBLUE
+
+	if E.DEBUG_NAME then
+		curServer = "Server"
+	end
 	if curServer and curServerShort then
 		if alwaysShowServer or (not alwaysShowServer and E.curServerShort ~= curServer) then
 			local serverName = useShortServer and curServerShort or curServer

@@ -5,6 +5,7 @@ OctoEngine = E -- в других аддонах
 -- CreateFrame
 ----------------------------------------------------------------
 E.DEBUG = false
+E.DEBUG_NAME = false
 ----------------------------------------------------------------
 E.L = {}
 E.OctoTables_Vibor = {}
@@ -202,10 +203,6 @@ E.COLOR_THEWARWITHIN = "|cff9CB4C8"
 E.COLOR_MIDNIGHT = "|cff7a91ff"
 E.COLOR_THELASTTITAN = "|cffE0C880"
 
-
-
-
-
 E.COLOR_WOW_POOR = "|cff9D9D9D"
 E.COLOR_WOW_COMMON = "|cffFFFFFF"
 E.COLOR_WOW_UNCOMMON = "|cff1EFF00"
@@ -239,6 +236,9 @@ E.COLOR_PURPLE = "|cffAF61FF"
 E.COLOR_INDIGO = "|cff4B0082"
 E.COLOR_MAGENTA = "|cffFF00FF"
 E.COLOR_PINK = "|cffFF69B3"
+E.COLOR_REPFRIEND = "|cff9F7CFF" -- "|cffD064FF"
+
+
 E.COLOR_SKYBLUE = "|cff87CDEB"
 E.COLOR_STEELBLUE = "|cff4682B3"
 E.COLOR_SLATEGRAY = "|cff708090"

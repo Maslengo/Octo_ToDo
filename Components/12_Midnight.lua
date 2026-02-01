@@ -53,6 +53,19 @@ local function tempFunction()
 		{id = 1166, defS = false,}, -- Timewarped Badge
 		-- {id = 3139, defS = false,}, -- Plunder
 		{id = 2032, defS = false,}, -- Trader's Tender
+
+
+
+		-- PVP
+		{id = 1602, defS = false,}, -- Conquest
+		{id = 1792, defS = false,}, -- Honor
+		{id = 2123, defS = false,},	-- Bloody Tokens
+		-- {id = 391, defS = false,}, -- Tol Barad Commendation
+		-- {id = 2797, defS = false,}, -- Trophy of Strife
+
+
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {

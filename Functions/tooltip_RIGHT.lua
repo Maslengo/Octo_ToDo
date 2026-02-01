@@ -45,7 +45,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		for covenant = 1, 4 do
 			local cov = E.OctoTable_Covenant[covenant]
 			if cov then
-				local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
+				-- local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
+				local color = (curCovID == covenant) and E.func_DB_COV_COLOR(curCovID) or E.COLOR_GRAY
 				local leftText = color..E.func_texturefromIcon(cov.icon)..cov.name.."|r"
 				local value = pd[cov.prefix.."_Renown"] or 0
 				local rightText = color..value.."|r"
