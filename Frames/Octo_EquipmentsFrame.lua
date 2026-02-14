@@ -345,7 +345,7 @@ function EventFrame:CreateDataProvider(GUID)
 		local slotName = E.func_GetSlotNameForEmptySlot(slotID)
 		local current_Durability = v.current_Durability or 0
 		local maximum_Durability = v.maximum_Durability or 0
-		local ItemName = v.ItemName and E.func_GetItemName(ItemID, Quality) or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
+		local ItemName = ItemID and E.func_GetItemName(ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
 		local rowData = {
 			ItemLink = v.ItemLink,
 			slotID = slotID,
