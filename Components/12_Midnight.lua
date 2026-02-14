@@ -18,13 +18,15 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 3028, defS = true,}, -- season 1
 		-- фиол
 		{id = 3400, defS = true,},
 		{id = 3379, defS = true,},
 		-- синий
-		{id = 3394, defS = true,},
+		-- {id = 3394, defS = true,}, -- УДАЛЁН
 		{id = 3392, defS = true,},
 		{id = 3376, defS = true,},
 		{id = 3352, defS = true,},
@@ -47,31 +49,9 @@ local function tempFunction()
 		-- {id = 3258, defS = true,},
 		-- {id = 3257, defS = true,},
 		-- {id = 3256, defS = true,},
-
-
-
-		{id = 1166, defS = false,}, -- Timewarped Badge
-		-- {id = 3139, defS = false,}, -- Plunder
-		{id = 2032, defS = false,}, -- Trader's Tender
-
-
-
-		-- PVP
-		{id = 1602, defS = false,}, -- Conquest
-		{id = 1792, defS = false,}, -- Honor
-		{id = 2123, defS = false,},	-- Bloody Tokens
-		-- {id = 391, defS = false,}, -- Tol Barad Commendation
-		-- {id = 2797, defS = false,}, -- Trophy of Strife
-
-
-
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-		{id = 137642, defS = false,}, -- Mark of Honor
-
-
 		-- {id = 245586, defS = false,}, -- ironwood-lumber
 		-- {id = 242691, defS = false,}, -- olemba-lumber
 		-- {id = 251762, defS = false,}, -- coldwind-lumber
@@ -86,10 +66,23 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		{id = 1308, defS = true,}, -- March on Quel'Danas
-		{id = 1307, defS = true,}, -- The Voidspire
-		{id = 1314, defS = true,}, -- The Dreamrift
-		-- {id = 1312, defS = true,}, -- Midnight -- WB
+		-- Raid
+		{id = 2913, defS = true,}, -- March on Quel'Danas
+		{id = 2912, defS = true,}, -- The Voidspire
+		{id = 2939, defS = true,}, -- The Dreamrift
+		-- Dungeon
+		-- {id = 2874, defS = true,}, -- Maisara Caverns
+		-- {id = 1209, defS = true,}, -- Skyreach
+		-- {id = 1753, defS = true,}, -- Seat of the Triumvirate
+		-- {id = 2526, defS = true,}, -- Algeth'ar Academy
+		-- {id = 2825, defS = true,}, -- Den of Nalorakk
+		-- {id = 2923, defS = true,}, -- Voidscar Arena
+		-- {id = 2811, defS = true,}, -- Magisters' Terrace
+		-- {id = 2859, defS = true,}, -- The Blinding Vale
+		-- {id = 658, defS = true,}, -- Pit of Saron
+		-- {id = 2805, defS = true,}, -- Windrunner Spire
+		-- {id = 2813, defS = true,}, -- Murder Row
+		-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -103,7 +96,9 @@ local function tempFunction()
 		{id = 2712, defS = false,}, -- Blood Knights
 		{id = 2711, defS = false,}, -- Magisters
 		{id = 2713, defS = false,}, -- Farstriders
-		{id = 2742, defS = false,}, -- Delves: Season 1
+		{id = 2742, defS = true,}, -- Delves: Season 1
+		{id = 2764, defS = true,}, -- Prey: Season 1
+		-- {id = 2722, defS = true,}, -- C_DelvesUI.GetDelvesFactionForSeason() для миднайта криво работает
 		-- {id = 2764, defS = false,}, -- Preyseeker's Journey
 		-- {id = 2700, defS = false,}, -- DEPRECATED Fungarian Fighting Ring
 		-- {id = 2774, defS = false,}, -- Slayer's Duellum (Paragon)
@@ -114,152 +109,68 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		-- MIDNIGHT PREPATCH (27 JANUARY)
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(241)..": "..E.func_GetQuestName(90764, false) -- Twilight Highlands -- "PREPATCH: "..
-		-- 	end,
-		-- 	name_save = "TheCultWithin",
-		-- 	defS = true,
-		-- 	reset = "Regular",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{90759, FactionOrClass = {Alliance = true,}, }, -- The Cult Within
-		-- 		{90764, FactionOrClass = {Horde = true,}, }, -- The Cult Within
-		-- 		{90760, FactionOrClass = {Alliance = true,}, },
-		-- 		{90761, FactionOrClass = {Horde = true,}, },
-		-- 		{90762, FactionOrClass = {Alliance = true,}, },
-		-- 		{90763, FactionOrClass = {Horde = true,}, },
-		-- 		{90765},
-		-- 		{90766},
-		-- 		{90767},
-		-- 		{90768},
-		-- 	},
-		-- 	-- forcedMaxQuest = 1,
+		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(241)..": "..E.func_GetQuestName(90764, false) -- Twilight Highlands -- "PREPATCH: "..
+		--     end,
+		--     name_save = "TheCultWithin",
+		--     defS = true,
+		--     reset = "Regular",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {90759, FactionOrClass = {Alliance = true,}, }, -- The Cult Within
+		--         {90764, FactionOrClass = {Horde = true,}, }, -- The Cult Within
+		--         {90760, FactionOrClass = {Alliance = true,}, },
+		--         {90761, FactionOrClass = {Horde = true,}, },
+		--         {90762, FactionOrClass = {Alliance = true,}, },
+		--         {90763, FactionOrClass = {Horde = true,}, },
+		--         {90765},
+		--         {90766},
+		--         {90767},
+		--         {90768},
+		--     },
+		--     -- forcedMaxQuest = 1,
 		-- },
-
-
-
-
-
-
-
-		-- -- MIDNIGHT PREPATCH (27 JANUARY)
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(241)..": "..E.func_GetQuestName(87308, false) -- Twilight Highlands -- "PREPATCH: "..
-		-- 	end,
-		-- 	name_save = "TwilightsDawn",
-		-- 	defS = true,
-		-- 	reset = "Weekly",
-		-- 	isAccount = true,
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{87308},
-		-- 	},
-		-- 	-- forcedMaxQuest = 1,
+		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(241)..": "..E.func_GetQuestName(87308, false) -- Twilight Highlands -- "PREPATCH: "..
+		--     end,
+		--     name_save = "TwilightsDawn",
+		--     defS = true,
+		--     reset = "Weekly",
+		--     isAccount = false,
+		--     desc = categoryKey,
+		--     quests = {
+		--         {87308},
+		--     },
+		--     -- forcedMaxQuest = 1,
 		-- },
-
-		-- -- MIDNIGHT PREPATCH (27 JANUARY)
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(241)..": "..E.func_GetQuestName(91795, false) -- Twilight Highlands -- "PREPATCH: "..
-		-- 	end,
-		-- 	name_save = "DisrupttheCall",
-		-- 	defS = true,
-		-- 	reset = "Weekly",
-		-- 	isAccount = true,
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{91795},
-		-- 	},
-		-- 	-- forcedMaxQuest = 1,
-		-- },
-		-- -- MIDNIGHT PREPATCH (27 JANUARY)
-		-- {
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(241)..": ".."Rares" -- Twilight Highlands -- "PREPATCH: "..
-		-- 	end,
-		-- 	name_save = "THRares",
-		-- 	defS = true,
-		-- 	reset = "Daily", -- Daily !ПОФИКСИТЬ
-		-- 	isAccount = false,
-		-- 	desc = categoryKey,
-		-- 	quests = {
-
-		-- 		--
-		-- 		{86695, FactionOrClass = {Horde = true,}, forcedText = {npcID = 237853,}, }, -- 49507, 93476, 91468, 93481,      (СКОРЕЙ ВСЕГО 49507)
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 237853,}, }, -- 49507, 93476, 91468, 93481,
-
-		-- 		{91470, FactionOrClass = {Horde = true,}, forcedText = {npcID = 237997,}, }, -- корла
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 237997,}, },
-
-		-- 		{91471, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246272,}, }, -- ПРАВИЛЬНО Horde
-		-- 		{91471, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246272,}, }, -- ПРАВИЛЬНО Alliance
-
-		-- 		{94506, FactionOrClass = {Horde = true,}, forcedText = {npcID = 253378,}, }, -- Глас Затмения 91468 94505почему было? 94506
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 253378,}, }, -- Глас Затмения 91468
-
-		-- 		{94509, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246565,}, }, -- Густаван
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246565,}, }, -- Густаван
-
-		-- 		{94510, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246578,}, }, -- Коготь
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246578,}, }, -- Коготь
-
-		-- 		{94511, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246566,}, }, -- Зеркалвайз
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246566,}, }, -- Зеркалвайз
-
-		-- 		{94512, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246558,}, }, -- Салигрум
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246558,}, }, -- Салигрум
-
-		-- 		{94513, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246572,}, }, -- Красноглаз
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246572,}, }, -- Красноглаз
-
-		-- 		{94514, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246844,}, }, -- Таавихан
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246844,}, }, -- Таавихан
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246462,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246462,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246343,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246343,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246460,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246460,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246471,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246471,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246840,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246840,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246478,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246478,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246577,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246577,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246549,}, },
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246549,}, },
-
-		-- 		{nil, FactionOrClass = {Horde = true,}, forcedText = {npcID = 246559,}, }, -- 94729, 95166, 94714
-		-- 		{nil, FactionOrClass = {Alliance = true,}, forcedText = {npcID = 246559,}, },
-
-		-- 	},
-		-- 	forcedMaxQuest = 19,
+		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(241)..": "..E.func_GetQuestName(91795, false) -- Twilight Highlands -- "PREPATCH: "..
+		--     end,
+		--     name_save = "DisrupttheCall",
+		--     defS = true,
+		--     reset = "Weekly",
+		--     isAccount = false,
+		--     desc = categoryKey,
+		--     quests = {
+		--         {91795},
+		--     },
+		--     -- forcedMaxQuest = 1,
 		-- },
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		{id = "CurrentKey", defS = true,},
-		{id = "GreatVault", defS = true,},
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

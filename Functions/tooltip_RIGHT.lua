@@ -70,7 +70,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				tooltip[#tooltip+1] = { leftText, centText, rightText }
 			end
 		end
-		E.func_AddTooltipSeparator(tooltip)
+		if Octo_ToDo_DB_Vars.Config_MountsInTooltip then
+			E.func_AddTooltipSeparator(tooltip)
+		end
 	end
 	if dataType == "Currencies" and id == 824 then
 		local GARRISON_RESOURCE_ID = 824
@@ -98,7 +100,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			tooltip[#tooltip+1] = {"Was earned: ", E.func_SecondsToClock(ServerTime-(cm.GARRISON.lastCacheTime or time()))}
 		end
 	end
-	if dataType == "Currencies" and id == 1166 then
+	if dataType == "Currencies" and id == 1166 and Octo_ToDo_DB_Vars.Config_MountsInTooltip then
 		local icon = E.func_texturefromIcon(E.func_GetCurrencyIcon(1166))
 		local cache_1166 = E.func_Mounts_1166()
 		for i, v in ipairs(cache_1166) do
@@ -147,18 +149,11 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
-	if id == "LegionRemixResearch" then
-		for questID in next, (E.OctoTable_RemixInfinityResearch) do
-			if cm.ListOfQuests[questID] then
-				tooltip[#tooltip+1] = {E.func_GetQuestName(questID), cm.ListOfQuests[questID]}
-			end
-		end
-	end
-	if dataType == "Currencies" then
-		for currencyID, dataTBL in pairs(E.OctoTable_ALL_Mounts) do
+	if dataType == "Currencies" and Octo_ToDo_DB_Vars.Config_MountsInTooltip then
+		for currencyID, dataTBL in next, (E.OctoTable_ALL_Mounts) do
 			if id == tonumber(currencyID) and id ~= 1166 then
 				local mounts = {}
-				for mountID, price in pairs(dataTBL) do
+				for mountID, price in next, (dataTBL) do
 					local mountIconNumber = E.func_GetMountTexture(mountID)
 					local mountIcon = E.func_texturefromIcon(mountIconNumber)
 					local mountName = E.func_GetMountName(mountID)
@@ -307,10 +302,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 		end
 	end
-	if SettingsType == "Additionally#AllItems" then
+	if SettingsType == "AdditionallyBOTTOM#AllItems" then
 		tooltip = E.func_BuildItemTooltip(CharInfo, E.OctoTable_itemID_ALL, false)
 	end
-	if SettingsType == "Additionally#Professions" then
+	if SettingsType == "AdditionallyBOTTOM#Professions" then
 		local charProf = cm.professions
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
@@ -332,14 +327,14 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
-	if SettingsType == "Additionally#ItemLevel" then
+	if SettingsType == "AdditionallyBOTTOM#ItemLevel" then
 		if pd.avgItemLevelEquipped and pd.avgItemLevel then
 			if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
 				tooltip[#tooltip+1] = {string.format(LFG_LIST_ITEM_LEVEL_CURRENT_PVP, pd.avgItemLevelPvp)}
 			end
 		end
 	end
-	if SettingsType == "Additionally#Money" then
+	if SettingsType == "AdditionallyBOTTOM#Money" then
 		if pd.Money then
 			local function addMoneyDiff(label, oldValue)
 				if not oldValue then return end
@@ -354,7 +349,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			addMoneyDiff(L["Per Week"], pd.MoneyOnWeekly)
 		end
 	end
-	if SettingsType == "Additionally#LastOnline" then
+	if SettingsType == "AdditionallyBOTTOM#LastOnline" then
 		local color = "|cffFFFFFF"
 		if pd.loginHour and pd.loginDay then
 			if pd.GUID == E.curGUID then
@@ -372,7 +367,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
-	if SettingsType == "Additionally#ListOfQuests" then
+	if SettingsType == "AdditionallyBOTTOM#ListOfQuests" then
 		if pd.numQuests_Paragon and cm.ListOfParagonQuests then
 			tooltip[#tooltip+1] = {E.COLOR_BLUE..L["Paragon"]..":|r"}
 			local questIDs = {}
@@ -400,9 +395,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
-	if SettingsType == "Additionally#LFGInstance" then
+	if SettingsType == "AdditionallyBOTTOM#LFGInstance" then
 		local combinedTooltip = {}
-		for EJ_ID, v in next, (cm.journalInstance) do
+		-- for EJ_ID, v in next, (cm.journalInstance) do
+		for SI_ID, v in next, (cm.journalInstance) do
 			for difficultyID, w in next, (v) do
 				local instanceReset = w.instanceReset
 				if instanceReset then
@@ -412,8 +408,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
 					local difficultyName = E.func_GetDifficultyName(difficultyID)
 					-- local name = w.name
-					-- local EJ_ID = w.EJ_ID
-					local name = E.func_GetDungeonName(EJ_ID)
+					local name = E.func_GetDungeonName(SI_ID)
+					local EJ_ID = E.func_SI_to_EJ(SI_ID)
 					local _, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
 					local icon
 					if isRaid then
@@ -630,23 +626,28 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if dataType == "RaidsOrDungeons" then
-		local EJ_ID = tonumber(id)
-		local SI_ID = E.func_EJ_to_SI(EJ_ID)
-		local instanceData = cm.journalInstance and cm.journalInstance[EJ_ID] or {}
+		if not Octo_Cache_DB and not Octo_Cache_DB.Octo_Table_SI_IDS then return end
+		-- local EJ_ID = tonumber(id)
+		-- local SI_ID = E.func_EJ_to_SI(EJ_ID)
+		-- local instanceData = cm.journalInstance and cm.journalInstance[EJ_ID] or {}
+		local SI_ID = tonumber(id)
+		local instanceData = cm.journalInstance and cm.journalInstance[SI_ID] or {}
 		local completedDiffs = {}
 		local bosses = {}
 		local resetTime
 		-- 1. получаем список всех сложностей для инстанса
 		local difficulties
-		for _, v in next, E.Octo_Table_SI_IDS do
-			if SI_ID == v.SI_ID then
+		for idQWE, v in next, (Octo_Cache_DB.Octo_Table_SI_IDS) do -- E.Octo_Table_SI_IDS
+
+			-- if SI_ID == v.SI_ID then
+			if SI_ID == idQWE then
 				difficulties = v.difficulties
 				break
 			end
 		end
 		if not difficulties then return end
 		-- 2. собираем сложности в зависимости от конфига
-		if E.Config_ShowAllDifficulties then
+		if Octo_ToDo_DB_Vars.Config_ShowAllDifficulties then
 			for difficultyID, totalBosses in next, difficulties do
 				local ji = instanceData[difficultyID] or {}
 				completedDiffs[#completedDiffs+1] = {

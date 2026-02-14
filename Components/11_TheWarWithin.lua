@@ -18,28 +18,29 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		-- https://warcraft.wiki.gg/wiki/Catalyst
 		-- The War Within
 		-- (Season 4)
-		{id = 3278, defS = true,}, -- Астальные нити
+		{id = 3278, defS = true,}, -- Ethereal Strands
 		{id = 3141, defS = true,}, -- Starlight Spark Dust
-		{id = 3290, defS = true,}, -- Gilded Ethereal Crest -- 3-й сезон
-		{id = 3288, defS = true,}, -- Runed Ethereal Crest -- 3-й сезон
-		{id = 3286, defS = false,}, -- Carved Ethereal Crest -- 3-й сезон
-		{id = 3284, defS = false,}, -- Weathered Ethereal Crest -- 3-й сезон
+		{id = 3290, defS = true,}, -- Gilded Ethereal Crest (Season 3)
+		{id = 3288, defS = true,}, -- Runed Ethereal Crest (Season 3)
+		{id = 3286, defS = false,}, -- Carved Ethereal Crest (Season 3)
+		{id = 3284, defS = false,}, -- Weathered Ethereal Crest (Season 3)
 		{id = 3008, defS = true,}, -- Valorstones
-		{id = 3269, defS = true,}, -- (Season 3)
-		{id = 3028, defS = true,}, -- Restored Coffer Key
-		{id = 3310, defS = false,}, -- SEASON 2
+		{id = 3269, defS = true,}, -- Ethereal Voidsplinter (Season 3)
+		-- {id = 3028, defS = true,}, -- (Restored Coffer Key -> Midnight)
+		-- {id = 3310, defS = false,}, -- SEASON 2
 		{id = 2815, defS = false,}, -- Resonance Crystals
 		{id = 3218, defS = false,}, -- Empty Kaja'Cola Can
 		{id = 3090, defS = false,}, -- Flame-Blessed Iron
 		{id = 3056, defS = false,}, -- Kej
 		{id = 2803, defS = false,}, -- Undercoin
-		{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
-		{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
+		-- {id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
+		-- {id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
 		{id = 1191, defS = false,},
 		{id = 3226, defS = false,}, -- Market Research
 		{id = 3303, defS = false,}, --
@@ -64,20 +65,36 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 245653, defS = true,}, -- Coffer Key Shard (Season 3)
+		-- {id = 238527, defS = true,}, -- Restored Coffer Key
 		-- {id = 180653, defS = true,}, -- НОВЫЙ КЛЮЧ
 		-- {id = 138019, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 158923, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		-- {id = 151086, defS = true,}, -- СТАРЫЕ КЛЮЧИ
 		{id = 246727, defS = true,}, -- Ethereal Essence Sliver
 		{id = 246771, defS = false,}, -- Radiant Echo
-		{id = 137642, defS = false,}, -- Mark of Honor
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		{id = 1302, defS = true,}, -- Manaforge Omega
-		{id = 1296, defS = false,}, -- Liberation of Undermine
-		{id = 1273, defS = false,}, -- Nerub-ar Palace
-		-- {id = 1278, defS = true,}, -- Khaz Algar -- WB
+		-- Raid
+		{id = 2810, defS = true,}, -- Manaforge Omega
+		{id = 2769, defS = true,}, -- Liberation of Undermine
+		{id = 2657, defS = true,}, -- Nerub-ar Palace
+		-- Dungeon
+		-- {id = 670, defS = true,}, -- Grim Batol
+		-- {id = 2830, defS = true,}, -- Eco-Dome Al'dani
+		-- {id = 2286, defS = true,}, -- The Necrotic Wake
+		-- {id = 2651, defS = true,}, -- Darkflame Cleft
+		-- {id = 2649, defS = true,}, -- Priory of the Sacred Flame
+		-- {id = 2652, defS = true,}, -- The Stonevault
+		-- {id = 2660, defS = true,}, -- Ara-Kara, City of Echoes
+		-- {id = 2773, defS = true,}, -- Operation: Floodgate
+		-- {id = 2661, defS = true,}, -- Cinderbrew Meadery
+		-- {id = 2669, defS = true,}, -- City of Threads
+		-- {id = 2662, defS = true,}, -- The Dawnbreaker
+		-- {id = 1822, defS = true,}, -- Siege of Boralus
+		-- {id = 2648, defS = true,}, -- The Rookery
+		-- {id = 2290, defS = true,}, -- Mists of Tirna Scithe
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -120,6 +137,7 @@ local function tempFunction()
 		-- { id = 2647,},
 		-- { id = 2648,},
 		-- { id = 2649,},
+		{id = 2722, defS = false,}, -- C_DelvesUI.GetDelvesFactionForSeason()
 		----------------------------------------------------------------
 		{id = 2736, defS = true,},
 		{id = 2658, defS = true,},
@@ -170,11 +188,12 @@ local function tempFunction()
 				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
 				{81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
 				{81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
+				{nil},
 				{85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
 				{nil},
 				{87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
 			},
-			forcedMaxQuest = 2,
+			forcedMaxQuest = 3,
 		},
 		----------------------------------------------------------------
 		-- 2255 Аз-Кахет
@@ -498,7 +517,7 @@ local function tempFunction()
 				{82679}, -- Archives: Seeking History
 				{82678}, -- Archives: The First Disc
 			},
-			forcedMaxQuest = 1,
+			forcedMaxQuest = 2,
 		},
 		{
 			sorted = true,
@@ -654,14 +673,25 @@ local function tempFunction()
 		--     reset = "Regular", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
-		--         {84917, forcedText = {npcID = 230931}, },
-		--         {84918, forcedText = {npcID = 230934}, },
-		--         {84919, forcedText = {npcID = 230940}, },
-		--         {84920, forcedText = {npcID = 230946}, },
-		--         {84921, forcedText = {npcID = 230951}, },
-		--         {84922, forcedText = {npcID = 230979}, },
-		--         {84926, forcedText = {npcID = 230995}, },
-		--         {84927, forcedText = {npcID = 231012}, },
+		--         {84917, forcedText = {npcID = 230931}},
+		--         {84918, forcedText = {npcID = 230934}},
+		--         {84919, forcedText = {npcID = 230940}},
+		--         {84920, forcedText = {npcID = 230946}},
+		--         {84921, forcedText = {npcID = 230951}},
+		--         {84922, forcedText = {npcID = 230979}},
+		--         {84926, forcedText = {npcID = 230995}},
+		--         {84927, forcedText = {npcID = 231012}},
+		--         {85004, forcedText = {npcID = 231288}},
+		--         {84877, forcedText = {npcID = 230746}},
+		--         {84884, forcedText = {npcID = 230793}},
+		--         {84895, forcedText = {npcID = 230800}},
+		--         {84907, forcedText = {npcID = 230828}},
+		--         {84911, forcedText = {npcID = 230840}},
+		--         {90488, forcedText = {npcID = 234480}},
+		--         {90489, forcedText = {npcID = 234499}},
+		--         {90491, forcedText = {npcID = 233471}},
+		--         {90490, forcedText = {npcID = 233472}},
+		--         {90492, forcedText = {npcID = 231310}},
 		--     },
 		-- },
 		-- {
@@ -675,34 +705,36 @@ local function tempFunction()
 		--     reset = "Regular", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
-		--         {85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-		--         {85698, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-		--         {85814, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-		--         {85426, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-		--         {85422, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-		--         {85424, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-		--         {85425, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-		--         {85492, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-		--         {85495, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-		--         {85494, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-		--         {85496, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-		--         {86487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-		--         {86630, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-		--         {85781, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
-		--         {85785, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
-		--         {86773, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
-		--         {85787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
-		--         {86772, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
-		--         {85786, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
-		--         {86771, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
-		--         {85788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
-		--         {86774, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
-		--         {87007, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
-		--         {85072, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
-		--         {85116, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
-		--         {85117, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
-		--         {85114, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 27"},},
-		--         {85115, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 28"},},
+		--         -- {85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
+		--         {85683, forcedText = {text = L["Treasure"].." 1"},},
+		--         {85698, forcedText = {text = L["Treasure"].." 2"},},
+		--         {85814, forcedText = {text = L["Treasure"].." 3"},},
+		--         {85426, forcedText = {text = L["Treasure"].." 4"},},
+		--         {85422, forcedText = {text = L["Treasure"].." 5"},},
+		--         {85424, forcedText = {text = L["Treasure"].." 6"},},
+		--         {85425, forcedText = {text = L["Treasure"].." 7"},},
+		--         {85492, forcedText = {text = L["Treasure"].." 8"},},
+		--         {85495, forcedText = {text = L["Treasure"].." 9"},},
+		--         {85494, forcedText = {text = L["Treasure"].." 10"},},
+		--         {85496, forcedText = {text = L["Treasure"].." 11"},},
+		--         {86487, forcedText = {text = L["Treasure"].." 12"},},
+		--         {86630, forcedText = {itemID = 235037},}, -- profession = 202
+		--         {85781, forcedText = {itemID = 232986},}, -- count = 2000
+		--         {85785, forcedText = {itemID = 236672},},
+		--         {86773, forcedText = {itemID = 235388},},
+		--         {85787, forcedText = {itemID = 236670},},
+		--         {86772, forcedText = {itemID = 235389},},
+		--         {85786, forcedText = {itemID = 236671},},
+		--         {86771, forcedText = {itemID = 235390},},
+		--         {85788, forcedText = {itemID = 236669},},
+		--         {86774, forcedText = {itemID = 235391},},
+		--         {87007, forcedText = {text = L["Treasure"].." 23"},}, -- REPUTATION 2653 gain = 20
+		--         -- 235220 85839  85856
+		--         {85072, forcedText = {itemID = 234427},},
+		--         {85116, forcedText = {itemID = 234432},},
+		--         {85117, forcedText = {itemID = 234433},},
+		--         {85114, forcedText = {itemID = 234430},},
+		--         {85115, forcedText = {itemID = 234431},},
 		--     },
 		-- },
 		{
@@ -1139,6 +1171,24 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 13,
 		},
+		-- {
+		--     sorted = false,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return L["Delves"]..": "..L["TEST"]
+		--     end,
+		--     name_save = "DelversTEST",
+		--     defS = true,
+		--     reset = "Regular",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {83318, forcedText = {text = E.func_GetReputationName(2594) },},
+		--         {83317, forcedText = {text = E.func_GetReputationName(2590) },}, -- L["Council"]
+		--         {83319, forcedText = {text = E.func_GetReputationName(2600) },}, -- L["Spooders"]
+		--         {83320, forcedText = {text = E.func_GetReputationName(2570) },}, -- L["Hallowfall"]
+		--     },
+		--     -- forcedMaxQuest = 4,
+		-- },
 		----------------------------------------------------------------
 		-- РАЗНОЕ
 		----------------------------------------------------------------
@@ -1233,7 +1283,7 @@ local function tempFunction()
 				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
 				{91178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
 			},
-			forcedMaxQuest = 2, -- nadoutichnit
+			forcedMaxQuest = 8, -- nadoutichnit
 		},
 		{
 			sorted = false,
@@ -1287,9 +1337,12 @@ local function tempFunction()
 		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		{id = "CurrentKey", defS = true,},
-		{id = "GreatVault", defS = true,},
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+		-- {id = "CurrentKey", defS = true,},
+		-- {id = "GreatVault", defS = true,},
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

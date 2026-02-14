@@ -56,11 +56,25 @@ local function Collect_Items_BANK()
 					totalSlots_BANK = totalSlots_BANK + numSlots
 					local free = C_Container.GetContainerNumFreeSlots(bagID)
 					usedSlots_BANK = usedSlots_BANK + (numSlots - free)
-					for slot = 1, numSlots do
-						local info = C_Container.GetContainerItemInfo(bagID, slot)
+					for slotIndex = 1, numSlots do
+						local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1
+
+
+							if itemID == 169223 then
+								local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
+								if itemLocation:IsValid() and C_Item.DoesItemExist(itemLocation) then
+									local itemLink = C_Item.GetItemLink(itemLocation)
+									local rank = E.GetItemRankFromLink(itemLink)
+									collectPlayerData.cloak_lvl = rank
+								end
+							end
+
+
+
+
 							collectMASLENGO.Items.Bank[itemID] = (collectMASLENGO.Items.Bank[itemID] or 0) + stack
 						end
 					end
@@ -100,8 +114,8 @@ local function Collect_Items_AccountBank()
 					totalSlots_AccountBank = totalSlots_AccountBank + numSlots
 					local free = C_Container.GetContainerNumFreeSlots(bagID)
 					usedSlots_AccountBank = usedSlots_AccountBank + (numSlots - free)
-					for slot = 1, numSlots do
-						local info = C_Container.GetContainerItemInfo(bagID, slot)
+					for slotIndex = 1, numSlots do
+						local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1

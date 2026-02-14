@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 241, defS = true,}, -- Champion's Seal
@@ -31,15 +32,33 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 761, defS = true,}, -- The Ruby Sanctum
-			{id = 758, defS = true,}, -- Icecrown Citadel
-			{id = 760, defS = true,}, -- Onyxia's Lair
-			{id = 757, defS = true,}, -- Trial of the Crusader
-			{id = 759, defS = true,}, -- Ulduar
-			{id = 756, defS = true,}, -- The Eye of Eternity
-			{id = 755, defS = true,}, -- The Obsidian Sanctum
-			{id = 754, defS = true,}, -- Naxxramas
-			{id = 753, defS = true,}, -- Vault of Archavon
+		-- Raid
+		{id = 724, defS = true,}, -- The Ruby Sanctum
+		{id = 631, defS = true,}, -- Icecrown Citadel
+		{id = 249, defS = true,}, -- Onyxia's Lair
+		{id = 649, defS = true,}, -- Trial of the Crusader
+		{id = 603, defS = true,}, -- Ulduar
+		{id = 616, defS = true,}, -- The Eye of Eternity
+		{id = 615, defS = true,}, -- The Obsidian Sanctum
+		{id = 533, defS = true,}, -- Naxxramas
+		{id = 624, defS = true,}, -- Vault of Archavon
+		-- Dungeon
+		-- {id = 668, defS = true,}, -- Halls of Reflection
+		-- {id = 595, defS = true,}, -- The Culling of Stratholme
+		-- {id = 608, defS = true,}, -- Violet Hold
+		-- {id = 599, defS = true,}, -- Halls of Stone
+		-- {id = 601, defS = true,}, -- Azjol-Nerub
+		-- {id = 575, defS = true,}, -- Utgarde Pinnacle
+		-- {id = 650, defS = true,}, -- Trial of the Champion
+		-- {id = 574, defS = true,}, -- Utgarde Keep
+		-- {id = 578, defS = true,}, -- The Oculus
+		-- {id = 632, defS = true,}, -- The Forge of Souls
+		-- {id = 658, defS = true,}, -- Pit of Saron
+		-- {id = 600, defS = true,}, -- Drak'Tharon Keep
+		-- {id = 602, defS = true,}, -- Halls of Lightning
+		-- {id = 619, defS = true,}, -- Ahn'kahet: The Old Kingdom
+		-- {id = 576, defS = true,}, -- The Nexus
+		-- {id = 604, defS = true,}, -- Gundrak
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -97,7 +116,10 @@ local function tempFunction()
 		},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 824, defS = true,},
@@ -31,10 +32,19 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 669, defS = true,}, -- Hellfire Citadel
-			{id = 457, defS = true,}, -- Blackrock Foundry
-			{id = 477, defS = true,}, -- Highmaul
-			-- {id = 557, defS = true,}, -- Draenor
+		-- Raid
+		{id = 1448, defS = true,}, -- Hellfire Citadel
+		{id = 1205, defS = true,}, -- Blackrock Foundry
+		{id = 1228, defS = true,}, -- Highmaul
+		-- Dungeon
+		-- {id = 1358, defS = true,}, -- Upper Blackrock Spire
+		-- {id = 1195, defS = true,}, -- Iron Docks
+		-- {id = 1279, defS = true,}, -- The Everbloom
+		-- {id = 1175, defS = true,}, -- Bloodmaul Slag Mines
+		-- {id = 1209, defS = true,}, -- Skyreach
+		-- {id = 1176, defS = true,}, -- Shadowmoon Burial Grounds
+		-- {id = 1208, defS = true,}, -- Grimrail Depot
+		-- {id = 1182, defS = true,}, -- Auchindoun
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -101,8 +111,6 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 3,
 		},
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -119,9 +127,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 3,
 		},
-
-
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -138,21 +143,12 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 3,
 		},
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 1822, defS = true,}, -- Renown
@@ -41,10 +42,21 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 1195, defS = true,}, -- Sepulcher of the First Ones
-			{id = 1193, defS = true,}, -- Sanctum of Domination
-			{id = 1190, defS = true,}, -- Castle Nathria
-			-- {id = 1192, defS = true,}, -- Shadowlands
+		-- Raid
+		{id = 2481, defS = true,}, -- Sepulcher of the First Ones
+		{id = 2450, defS = true,}, -- Sanctum of Domination
+		{id = 2296, defS = true,}, -- Castle Nathria
+		-- Dungeon
+		-- {id = 2289, defS = true,}, -- Plaguefall
+		-- {id = 2290, defS = true,}, -- Mists of Tirna Scithe
+		-- {id = 2291, defS = true,}, -- De Other Side
+		-- {id = 2284, defS = true,}, -- Sanguine Depths
+		-- {id = 2285, defS = true,}, -- Spires of Ascension
+		-- {id = 2293, defS = true,}, -- Theater of Pain
+		-- {id = 2286, defS = true,}, -- The Necrotic Wake
+		-- {id = 2287, defS = true,}, -- Halls of Atonement
+		-- {id = 2451, defS = true,}, -- Uldaman: Legacy of Tyr
+		-- {id = 2441, defS = true,}, -- Tazavesh, the Veiled Market
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -902,7 +914,10 @@ local function tempFunction()
 		},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

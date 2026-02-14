@@ -13,6 +13,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
 	OctoTables_Vibor[categoryKey].name = "TEST_UNIVERSAL"
+	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
@@ -45,26 +46,21 @@ local function tempFunction()
 				{92352, addText = {IconVignette = "VignetteLoot", coords = 61315823, }, forcedText = {text = L["Treasure"].." 5"}, },
 				{92553, addText = {IconVignette = "VignetteLoot", coords = 39688083, }, forcedText = {text = L["Treasure"].." 6"}, },
 				{92354, addText = {IconVignette = "VignetteLoot", coords = 36575489, }, forcedText = {text = L["Treasure"].." 7"}, },
-
 				{92355, addText = {IconVignette = "VignetteLoot", coords = 61875110, }, forcedText = {text = L["Treasure"].." 8"}, },
 				{92356, addText = {IconVignette = "VignetteLoot", coords = 33621257, }, forcedText = {text = L["Treasure"].." 9"}, },
 				{32957, addText = {IconVignette = "VignetteLoot", coords = 74746281, }, forcedText = {text = L["Treasure"].." 10"}, },
-
 				{92358, addText = {IconVignette = "VignetteLoot", coords = 54494478, }, forcedText = {text = L["Treasure"].." 11"}, },
 				{92359, addText = {IconVignette = "VignetteLoot", coords = 42224258, }, forcedText = {text = L["Treasure"].." 12"}, },
 				{92360, addText = {IconVignette = "VignetteLoot", coords = 79124579, }, forcedText = {text = L["Treasure"].." 13"}, },
-
 				{92361, addText = {IconVignette = "VignetteLoot", coords = 35467845, }, forcedText = {text = L["Treasure"].." 14"}, },
 				{92362, addText = {IconVignette = "VignetteLoot", coords = 35343007, }, forcedText = {text = L["Treasure"].." 15"}, },
 				{92363, addText = {IconVignette = "VignetteLoot", coords = 68055216, }, forcedText = {text = L["Treasure"].." 16"}, },
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------ THE SHADOW ENCLAVE -----------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -83,11 +79,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------- PARHELION PLAZA -------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -106,11 +100,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		----------------------------- COLLEGIATE CALAMITY -----------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -129,11 +121,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		--------------------------------- THE DARKWAY ---------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -152,11 +142,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------- TWILIGHT CRYPTS -------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -175,11 +163,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		-------------------------------- THE GRUDGE PIT -------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -198,11 +184,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------ THE GULF OF MEMORY -----------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -221,11 +205,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------ SUNKILLER SANCTUM ------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -244,11 +226,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------ SHADOWGUARD POINT ------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -267,11 +247,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		---------------------------------- ATAL'AMAN ----------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -290,11 +268,9 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 19,
 		},
-
 		-------------------------------------------------------------------------------
 		--------------------------------- RARES SECTION -------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -323,7 +299,6 @@ local function tempFunction()
 				{93561, addText = {IconVignette = "VignetteKill", coords = 44993855, }, forcedText = {text = L["Rare"].." 15"}, },
 			},
 		},
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -352,7 +327,6 @@ local function tempFunction()
 				{92194, addText = {IconVignette = "VignetteKill", coords = 44201658, }, forcedText = {text = L["Rare"].." 15"}, },
 			},
 		},
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -380,7 +354,6 @@ local function tempFunction()
 				{93896, addText = {IconVignette = "VignetteKill", coords = 53946272, }, forcedText = {text = L["Rare"].." 14"}, },
 			},
 		},
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -409,11 +382,9 @@ local function tempFunction()
 				{91073, addText = {IconVignette = "VignetteKill", coords = 45294170, }, forcedText = {text = L["Rare"].." 15"}, },
 			},
 		},
-
 		-------------------------------------------------------------------------------
 		-------------------------------- TREASURES SECTION ----------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -437,7 +408,6 @@ local function tempFunction()
 				{93458, addText = {IconVignette = "VignetteLoot", coords = 37805238, }, forcedText = {text = L["Treasure"].." 10"}, },
 			},
 		},
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -460,7 +430,6 @@ local function tempFunction()
 				{93587, addText = {IconVignette = "VignetteLoot", coords = 40642802, }, forcedText = {text = L["Treasure"].." 9"}, },
 			},
 		},
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -487,7 +456,6 @@ local function tempFunction()
 				{93467, addText = {IconVignette = "VignetteLoot", coords = 37696976, }, forcedText = {text = L["Treasure"].." 13"}, },
 			},
 		},
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -509,11 +477,9 @@ local function tempFunction()
 				{90799, addText = {IconVignette = "VignetteLoot", coords = 42645243, }, forcedText = {text = L["Treasure"].." 8"}, },
 			},
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------- ACHIEVEMENTS ---------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -532,11 +498,9 @@ local function tempFunction()
 				{62125, addText = {IconVignette = "VignetteLoot", coords = 62736680, }, forcedText = {text = L["Achievement"]..": "..L["Treasures of Zul'Aman"]}, },
 			},
 		},
-
 		-------------------------------------------------------------------------------
 		------------------------------- GLOWING MOTHS --------------------------------
 		-------------------------------------------------------------------------------
-
 		{
 			sorted = false,
 			showTooltip = true,
@@ -614,7 +578,10 @@ local function tempFunction()
 		},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

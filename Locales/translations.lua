@@ -39,6 +39,26 @@ E.translations = {
 	--     ["zhCN"] = "窗口背景",
 	--     ["zhTW"] = "視窗背景",
 	-- },
+
+
+
+	["Shows mounts available for this currency in the tooltip"] = {
+		["ruRU"] = "Отображает средства передвижения, доступные за эту валюту, в тултипе",
+		["deDE"] = "Zeigt im Tooltip verfügbare Reittiere für diese Währung an",
+		["esES"] = "Muestra en el tooltip las monturas disponibles por esta moneda",
+		["esMX"] = "Muestra en el tooltip las monturas disponibles por esta moneda",
+		["frFR"] = "Affiche dans l’infobulle les montures disponibles contre cette monnaie",
+		["itIT"] = "Mostra nel tooltip le cavalcature disponibili per questa valuta",
+		["ptBR"] = "Mostra no tooltip as montarias disponíveis por esta moeda",
+		["koKR"] = "해당 화폐로 구매 가능한 탈것을 툴팁에 표시합니다",
+		["zhCN"] = "在提示信息中显示可用该货币购买的坐骑。",
+		["zhTW"] = "在提示資訊中顯示可使用此貨幣購買的坐騎。",
+	},
+
+
+
+
+
 	["Per Session"] = {
 		["ruRU"] = "За сеанс",
 		["deDE"] = "Pro Sitzung",
@@ -807,18 +827,6 @@ E.translations = {
 		["koKR"] = "구렁 탐험가의 은혜",
 		["zhCN"] = "地下堡行者的奖赏",
 		["zhTW"] = "探究者的獎賞",
-	},
-	["Infinite Research"] = { -- https://www.wowhead.com/quest=89476/infinite-research
-		["ruRU"] = "Бесконечные исследования",
-		["deDE"] = "Ewige Forschung",
-		["esES"] = "Investigación infinita",
-		["esMX"] = "Investigación infinita",
-		["frFR"] = "Recherches infinies",
-		["itIT"] = "Ricerca Infinita",
-		["ptBR"] = "Pesquisa infinita",
-		["koKR"] = "무한의 연구",
-		["zhCN"] = "永恒研究",
-		["zhTW"] = "恆龍研究",
 	},
 	["Prying Eye Discovery"] = { -- https://www.wowhead.com/object=373579/prying-eye-discovery
 		["ruRU"] = "Находка любопытных",

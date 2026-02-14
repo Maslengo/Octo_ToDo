@@ -11,6 +11,8 @@ EventFrame.measureText:SetWordWrap(false)
 local Octo_MainFrame = CreateFrame("BUTTON", "Octo_MainFrame", UIParent, "OctoBackdropTemplate") -- SettingsFrameTemplate
 Octo_MainFrame:Hide()
 E.func_RegisterFrame_ICONS(Octo_MainFrame)
+table.insert(E.OctoTable_ColoredFrames, Octo_MainFrame)
+
 local SearchBox = CreateFrame("EditBox", "Octo_SearchBox", Octo_MainFrame, "SearchBoxTemplate")
 local NewSettingsButton = CreateFrame("CheckButton", "NewSettingsButton", Octo_MainFrame, "UICheckButtonTemplate")
 local INDENT_LEFT = 10
@@ -24,7 +26,7 @@ EventFrame.MAX_COLUMN_COUNT = 113
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB = GetClassColor(E.classFilename)
-local LEFT_TEXTURE_ALPHA = .05
+local LEFT_TEXTURE_ALPHA = .05 -- 0.1
 local charR, charG, charB = 1, 1, 1
 local dataDisplayOrder = E.dataDisplayOrder
 local WeeklyResetFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame)
@@ -180,10 +182,10 @@ local function func_SettingsButton_OnClick(button, frameData)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
-	if not Octo_profileKeys.profiles[E.Current_profileKeys][dataType] then
-		Octo_profileKeys.profiles[E.Current_profileKeys][dataType] = {}
+	if not Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType] then
+		Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType] = {}
 	end
-	local settingsTable = Octo_profileKeys.profiles[E.Current_profileKeys][dataType]
+	local settingsTable = Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType]
 	local newValue = not (settingsTable[id] or false)
 	settingsTable[id] = newValue
 	local texture = newValue and "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
@@ -305,7 +307,8 @@ function EventFrame:func_InitLEFT(frame, node)
 			func_Setup_Reputations(frame, id)
 		end
 		if dataType == "RaidsOrDungeons" then
-			local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(id)
+			local EJ_ID = E.func_SI_to_EJ(id) -- SI_ID
+			local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
 			if isRaid then
 				frame.icon2frame:Show()
 				frame.icon2texture:SetAtlas(E.ATLAS_RAID)
@@ -320,8 +323,8 @@ function EventFrame:func_InitLEFT(frame, node)
 		end
 		if Octo_profileKeys.isSettingsEnabled then
 			local texture = E.ICON_EMPTY
-			if Octo_profileKeys.profiles[E.Current_profileKeys][dataType] and Octo_profileKeys.profiles[E.Current_profileKeys][dataType][id] ~= nil then
-				if Octo_profileKeys.profiles[E.Current_profileKeys][dataType][id] or Octo_profileKeys.profiles[E.Current_profileKeys][dataType][tonumber(id)] then
+			if Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType] and Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType][id] ~= nil then
+				if Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType][id] or Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType][tonumber(id)] then
 					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen"
 				else
 					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
@@ -752,12 +755,12 @@ local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 	end
 	return totalRightWidth
 end
+
 function EventFrame:CreateDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
 	local columnWidthsCenter = {}
-	E.func_UpdateCurrent_profileKeys()
 	local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 	local sortedCharacters = E.func_SortCharacters()
 	local currentCharacterIndex
@@ -782,67 +785,103 @@ function EventFrame:CreateDataProvider()
 		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, nicknameTEXT, serverTEXT)
 	end
 	Octo_MainFrame.pool:Release(HeaderFrameCenter)
-	for categoryKey in next, (E.OctoTables_Vibor) do
-		if ExpansionToShowTBL[categoryKey] then
-			for _, dataType in ipairs(dataDisplayOrder) do
-				for i, id in next, (E.DataProvider_Otrisovka[categoryKey][dataType]) do
-					local questKey
-					if dataType == "UniversalQuests" then
-						questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
+
+
+
+
+
+	-- Локальная функция для обработки данных (чтобы избежать дублирования кода)
+	local function processData(categoryKey, dataType, dataList)
+		for i, id in next, (dataList) do
+			local questKey
+			if dataType == "UniversalQuests" then
+				questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
+			end
+			local canDraw = false
+			if dataType ~= "UniversalQuests" then
+				canDraw = E.func_ShouldShow(id, dataType, Octo_profileKeys.Current_profile)
+			else
+				canDraw = E.func_ShouldShow(questKey, dataType, Octo_profileKeys.Current_profile)
+			end
+			if canDraw then
+				local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey =
+				E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
+				canDraw = PassSearchFilter(TextLeft, EventFrame.searchFilter)
+				if canDraw then
+					totalLines = totalLines + 1
+					local rowData = {
+						TextLeft = TextLeft or E.NONE or NONE or "None",
+						IconLeft = IconLeft,
+						-- ColorLeft = E.OctoTable_Expansions[categoryKey]
+						-- and E.OctoTable_Expansions[categoryKey].color
+						-- or E.COLOR_BLACK,
+						ColorLeft = E.OctoTables_Vibor[categoryKey] and E.OctoTables_Vibor[categoryKey].color or E.COLOR_BLACK,
+						SettingsType = SettingsType,
+						categoryKey = categoryKey,
+						TextCenter = {},
+						ColorCenter = {},
+						FirstReputation = {},
+						SecondReputation = {},
+						GUID = {},
+						currentCharacterIndex = currentCharacterIndex,
+						totalColumns = totalColumns,
+					}
+					for CharIndex, CharInfo in ipairs(sortedCharacters) do
+						local TextCenter, ColorCenter, FIRST, SECOND = E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
+						rowData.TextCenter[CharIndex] = TextCenter
+						rowData.ColorCenter[CharIndex] = ColorCenter
+						rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
+						rowData.FirstReputation[CharIndex] = FIRST or 0
+						rowData.SecondReputation[CharIndex] = SECOND or 0
 					end
-					local canDraw = false
-					if dataType ~= "UniversalQuests" then
-						canDraw = E.func_ShouldShow(id, dataType, E.Current_profileKeys)
-					else
-						canDraw = E.func_ShouldShow(questKey, dataType, E.Current_profileKeys)
+					local node = DataProvider:Insert(rowData)
+					for j, w in ipairs(func_calculateColumnWidthsLEFT(node)) do
+						columnWidthsLeft[j] = math.max(MIN_COLUMN_WIDTH_LEFT, w, columnWidthsLeft[j] or 0)
 					end
-					if canDraw then
-						local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey =
-						E.func_Otrisovka_LEFT_Dispatcher(categoryKey, firstChar, dataType, id)
-						canDraw = PassSearchFilter(TextLeft, EventFrame.searchFilter)
-						if canDraw then
-							totalLines = totalLines + 1
-							local rowData = {
-								TextLeft = TextLeft or "NONE",
-								IconLeft = IconLeft,
-								ColorLeft = E.OctoTable_Expansions[categoryKey]
-								and E.OctoTable_Expansions[categoryKey].color
-								or E.COLOR_BLACK,
-								SettingsType = SettingsType,
-								categoryKey = categoryKey,
-								TextCenter = {},
-								ColorCenter = {},
-								FirstReputation = {},
-								SecondReputation = {},
-								GUID = {},
-								currentCharacterIndex = currentCharacterIndex,
-								totalColumns = totalColumns,
-							}
-							for CharIndex, CharInfo in ipairs(sortedCharacters) do
-								local TextCenter, ColorCenter, FIRST, SECOND = E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
-								rowData.TextCenter[CharIndex] = TextCenter
-								rowData.ColorCenter[CharIndex] = ColorCenter
-								rowData.GUID[CharIndex] = CharInfo.PlayerData.GUID
-								rowData.FirstReputation[CharIndex] = FIRST or 0
-								rowData.SecondReputation[CharIndex] = SECOND or 0
-							end
-							local node = DataProvider:Insert(rowData)
-							for j, w in ipairs(func_calculateColumnWidthsLEFT(node)) do
-								columnWidthsLeft[j] = math.max(MIN_COLUMN_WIDTH_LEFT, w, columnWidthsLeft[j] or 0)
-							end
-							for j, w in ipairs(func_calculateColumnWidthsCenter(node)) do
-								columnWidthsCenter[j] = math.max(MIN_COLUMN_WIDTH_Center, w, columnWidthsCenter[j] or MIN_COLUMN_WIDTH_Center)
-							end
-						end
+					for j, w in ipairs(func_calculateColumnWidthsCenter(node)) do
+						columnWidthsCenter[j] = math.max(MIN_COLUMN_WIDTH_Center, w, columnWidthsCenter[j] or MIN_COLUMN_WIDTH_Center)
 					end
 				end
 			end
 		end
 	end
+
+
+
+
+
+
+	-- Получаем настройку режима отображения
+	-- Предположим, что она хранится в базе под ключом "DisplayByType" (true = по типу, false = по экспаншену)
+	-- local displayByType = E.func_GetData_profileKeys("DisplayByType") or false
+	local displayByType = true
+
+	if displayByType then
+		-- Режим: сначала по типу данных, потом по дополнениям
+		for _, dataType in ipairs(dataDisplayOrder) do
+			for categoryKey in next, (E.OctoTables_Vibor) do
+				if ExpansionToShowTBL[categoryKey] and E.DataProvider_Otrisovka[categoryKey] and E.DataProvider_Otrisovka[categoryKey][dataType] then
+					processData(categoryKey, dataType, E.DataProvider_Otrisovka[categoryKey][dataType])
+				end
+			end
+		end
+	else
+		-- Режим: сначала по дополнениям, потом по типам данных
+		for categoryKey in next, (E.OctoTables_Vibor) do
+			if ExpansionToShowTBL[categoryKey] then
+				for _, dataType in ipairs(dataDisplayOrder) do
+					if E.DataProvider_Otrisovka[categoryKey] and E.DataProvider_Otrisovka[categoryKey][dataType] then
+						processData(categoryKey, dataType, E.DataProvider_Otrisovka[categoryKey][dataType])
+					end
+				end
+			end
+		end
+	end
+
 	if totalLines == 0 then
 		totalLines = 1
 		local rowData = {
-			TextLeft = "qwe",
+			TextLeft = E.NONE or NONE or "None",
 			IconLeft = {},
 			ColorLeft = {},
 			categoryKey = {},
@@ -863,6 +902,7 @@ function EventFrame:CreateDataProvider()
 	EventFrame.columnWidthsLeft = columnWidthsLeft
 	EventFrame.columnWidthsCenter = columnWidthsCenter
 	self:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
+
 end
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 	if not Octo_MainFrame or not Octo_MainFrame.scrollContentFrame then return end

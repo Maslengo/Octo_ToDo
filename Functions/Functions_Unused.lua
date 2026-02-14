@@ -144,7 +144,7 @@ function E.func_ResetOtrisovkaTables(categoryKey)
 	E.OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {}
 	E.OctoTables_DataOtrisovka[categoryKey].Reputations = {}
 	E.OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {}
-	E.OctoTables_DataOtrisovka[categoryKey].Additionally = {}
+	E.OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {}
 end
 function E.func_GetLFGDungeonName(dID)
 	for i = 1, GetNumRandomDungeons() do

@@ -20,6 +20,7 @@ EventFrame.searchFilter = nil
 local Octo_SettingsFrame = CreateFrame("BUTTON", "Octo_SettingsFrame", UIParent, "OctoBackdropTemplate")
 Octo_SettingsFrame:Hide()
 E.func_RegisterFrame_ICONS(Octo_SettingsFrame)
+table.insert(E.OctoTable_ColoredFrames, Octo_SettingsFrame)
 ----------------------------------------------------------------
 local parentFrame = Octo_SettingsFrame
 ----------------------------------------------------------------
@@ -250,26 +251,26 @@ end)
 -- local menuListFunc = function(btn) check = btn.value end
 -- local menuListChecked = function(btn) return check == btn.value end
 -- for i = 1, 10 do
---     menuList[i] = {
---         text = "test text "..i,
---         value = i,
---         checked = menuListChecked,
---         func = menuListFunc,
---     }
+-- menuList[i] = {
+-- text = "test text "..i,
+-- value = i,
+-- checked = menuListChecked,
+-- func = menuListFunc,
+-- }
 -- end
 -- menuList[11] = {
---     text = "test",
---     menuList = {
---         {
---             notCheckable = true,
---             text = "wow",
---             func = function() E.func_PrintMessage("wow") end,
---         },
---     },
+-- text = "test",
+-- menuList = {
+-- {
+-- notCheckable = true,
+-- text = "wow",
+-- func = function() E.func_PrintMessage("wow") end,
+-- },
+-- },
 -- }
 -- parentFrame:SetScript("OnMouseDown", function(self, button)
---         if button ~= "RightButton" then return end
---         menu:ddEasyMenu(menuList, "cursor", nil, nil, "menu")
+-- if button ~= "RightButton" then return end
+-- menu:ddEasyMenu(menuList, "cursor", nil, nil, "menu")
 -- end)
 ----------------------------------------------------------------
 ----------------------------------------------------------------

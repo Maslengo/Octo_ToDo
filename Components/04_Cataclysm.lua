@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 361, defS = true,}, --
@@ -34,12 +35,28 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 187, defS = true,}, -- Dragon Soul
-			{id = 78, defS = true,}, -- Firelands
-			{id = 74, defS = true,}, -- Throne of the Four Winds
-			{id = 72, defS = true,}, -- The Bastion of Twilight
-			{id = 73, defS = true,}, -- Blackwing Descent
-			{id = 75, defS = true,}, -- Baradin Hold
+		-- Raid
+		{id = 967, defS = true,}, -- Dragon Soul
+		{id = 720, defS = true,}, -- Firelands
+		{id = 754, defS = true,}, -- Throne of the Four Winds
+		{id = 671, defS = true,}, -- The Bastion of Twilight
+		{id = 669, defS = true,}, -- Blackwing Descent
+		{id = 757, defS = true,}, -- Baradin Hold
+		-- Dungeon
+		-- {id = 938, defS = true,}, -- End Time
+		-- {id = 33, defS = true,}, -- Shadowfang Keep
+		-- {id = 657, defS = true,}, -- The Vortex Pinnacle
+		-- {id = 644, defS = true,}, -- Halls of Origination
+		-- {id = 755, defS = true,}, -- Lost City of the Tol'vir
+		-- {id = 725, defS = true,}, -- The Stonecore
+		-- {id = 939, defS = true,}, -- Well of Eternity
+		-- {id = 568, defS = true,}, -- Zul'Aman
+		-- {id = 36, defS = true,}, -- Deadmines
+		-- {id = 645, defS = true,}, -- Blackrock Caverns
+		-- {id = 643, defS = true,}, -- Throne of the Tides
+		-- {id = 859, defS = true,}, -- Zul'Gurub
+		-- {id = 670, defS = true,}, -- Grim Batol
+		-- {id = 940, defS = true,}, -- Hour of Twilight
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -59,7 +76,10 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

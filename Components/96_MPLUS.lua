@@ -1,8 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-if not E.DEBUG then return end
+local enable = true
+if not enable then return end
 ----------------------------------------------------------------
-local categoryKey = 52
+local categoryKey = 96
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -12,8 +13,8 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
-	OctoTables_Vibor[categoryKey].name = REPUTATION
-	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
+	OctoTables_Vibor[categoryKey].name = WEEKLY_REWARDS_MYTHIC_KEYSTONE -- "MPLUS"
+	OctoTables_Vibor[categoryKey].color = E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
@@ -31,19 +32,13 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+		{id = "CurrentKey", defS = true,},
+		{id = "GreatVault", defS = true,},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
-	local sorted = {}
-	for id in next, (E.OctoTable_Reputations_DB) do
-		tinsert(sorted, id)
-	end
-	table.sort(sorted, E.func_ReversSort)
-	for i, id in ipairs(sorted) do
-		tinsert(OctoTables_DataOtrisovka[categoryKey].Reputations, {id = id, defS = true,})
-	end
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)

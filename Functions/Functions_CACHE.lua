@@ -58,7 +58,7 @@ end
 local function func_currencyName_CACHE(id, forcedQuality)
 	local Cache = GetOrCreateCache("AllCurrencies", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
-		local hasMount = E.OctoTable_CurrencyMountForFuncCurName[id] or false
+		local hasMount = Octo_ToDo_DB_Vars.Config_MountsInTooltip and E.OctoTable_CurrencyMountForFuncCurName[id] or false
 		if id == 3252 or id == 1166 or id == 2778 then
 			hasMount = true
 		end
@@ -98,7 +98,6 @@ local function func_npcName_CACHE(id)
 	if E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
 		return E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
 	end
-
 	E.ScanningTooltipFUNC = E.ScanningTooltipFUNC or CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", nil, "GameTooltipTemplate")
 	local tooltip = E.ScanningTooltipFUNC
 	tooltip:Hide()
@@ -135,12 +134,6 @@ function E.func_GetNPCName(id)
 	-- end
 	-- return name..E.debugInfo(id)
 end
-
-
-
-
-
-
 -- function E.func_GetNPCName(id)
 -- 	if not id then return "no id" end
 -- 	local name = UNKNOWN
@@ -151,15 +144,6 @@ end
 -- 	end
 -- 	return name..E.debugInfo(id)
 -- end
-
-
-
-
-
-
-
-
-
 local function func_questName_CACHE(id)
 	local Cache = GetOrCreateCache("AllQuests", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -470,13 +454,13 @@ function E.func_ProfessionIcon(skillLine)
 	if not skillLine then return "" end
 	return E.func_texturefromIcon(GetTradeSkillTexture(skillLine))
 end
-
 local function func_DungeonName_CACHE(id)
 	local Cache = GetOrCreateCache("AllDungeons", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
 		return Cache[id][E.curLocaleLang]
 	end
-	local name = EJ_GetInstanceInfo(id)
+	-- local name = EJ_GetInstanceInfo(id) -- JI_ID
+	local name = GetRealZoneText(id) -- SI_ID
 	if name and name ~= "" then
 		Cache[id] = Cache[id] or {}
 		Cache[id][E.curLocaleLang] = name
@@ -487,18 +471,12 @@ local function func_DungeonName_CACHE(id)
 	local output = Cache[id] and Cache[id][E.curLocaleLang] or E.COLOR_RED..UNKNOWN.."|r"
 	return output
 end
-function E.func_GetDungeonName(id)
+function E.func_GetDungeonName(id) -- > COLLECT_ALL_RAIDS.lua
 	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_DungeonName_CACHE(id)
 	return E.func_translit(cachedName)..E.debugInfo(id)
 end
-
-
-
-
-
-
 local function func_DifficultyName_CACHE(id)
 	local Cache = GetOrCreateCache("AllDifficulty", id)
 	if Cache[id] and Cache[id][E.curLocaleLang] then
@@ -519,27 +497,14 @@ function E.func_GetDifficultyName(id)
 	if not id then return "no id" end
 	id = tonumber(id)
 	local cachedName = func_DifficultyName_CACHE(id)
-	if E.Config_DifficultyAbbreviation then
+	if Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation then
 		cachedName = E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_DifficultyName_CACHE(id)
 	end
 	return E.func_translit(cachedName)..E.debugInfo(id)
 end
-
-
-
-
-
-
-
-
-
-
-
 function E.func_CovenantName(covID)
 	return E.OctoTable_Covenant[covID].name
 end
-
 function E.func_CovenantIcon(covID)
 	return E.OctoTable_Covenant[covID].icon
 end
-

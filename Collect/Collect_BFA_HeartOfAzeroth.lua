@@ -10,12 +10,17 @@ local function Collect_BFA_HeartOfAzeroth()
 	if not azeriteItemLocation then return end
 	local xp, totalLevelXP = C_AzeriteItem.GetAzeriteItemXPInfo(azeriteItemLocation)
 	if not totalLevelXP or totalLevelXP == 0 then return end
-	local currentLevel = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
-	collectPlayerData.azeriteLVL = currentLevel
+	local azeriteLVL = C_AzeriteItem.GetPowerLevel(azeriteItemLocation)
+	collectPlayerData.azeriteLVL = azeriteLVL
 	collectPlayerData.azeriteEXP = ("%d%%, -%s"):format(
 		floor(xp / totalLevelXP * 100),
 		E.func_CompactFormatNumber(totalLevelXP - xp)
 		)
+
+
+
+	collectPlayerData.azerite_xp = xp
+	collectPlayerData.azerite_totalLevelXP = totalLevelXP
 end
 ----------------------------------------------------------------
 function E.Collect_BFA_HeartOfAzeroth()

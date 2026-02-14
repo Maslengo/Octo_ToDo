@@ -1,12 +1,15 @@
 <Ui>
-	<Include file="Options\func_Options_MAIN\func_Options_MAIN.xml"/>
-
-	<Script file="Options\03_func_Options_About.lua"/>
-	<Script file="Options\04_func_Options_Moduls.lua"/>
-	<Script file="Options\05_func_Options_DevTool.lua"/>
-	<Script file="Options\06_func_Options_QuestsChanged.lua"/>
-	<Script file="Options\07_func_Options_Achievements.lua"/>
-
-	<Script file="Options\Functions_LibSFDropDown.lua"/>
 	<Script file="Options\Init.lua"/>
+
+	<Script file="Options\1\func_option_CHARACTER.lua"/>
+	<Script file="Options\1\func_option_DEBUG.lua"/>
+	<Script file="Options\1\func_option_FONT.lua"/>
+	<Script file="Options\1\func_option_OTHER.lua"/>
+	<Script file="Options\1\func_option_TOOLTIP.lua"/>
+
+	<Script file="Options\2\func_option_2_COLOR.lua"/>
+
+	<Script file="Options\3\func_option_COLOR_MAIN.lua"/>
+	<Script file="Options\3\func_option_COLOR_PROFILE.lua"/>
+
 </Ui>

@@ -18,7 +18,7 @@ local function Collect_Equipments()
 			local ItemName = C_Item.GetItemName(itemLocation)
 			if ItemName then
 				local current_Durability, maximum_Durability = GetInventoryItemDurability(slotID)
-				local ItemID = C_Item.GetItemID(itemLocation)
+				local itemID = C_Item.GetItemID(itemLocation)
 				local Icon = C_Item.GetItemIcon(itemLocation)
 				local ItemLink = C_Item.GetItemLink(itemLocation)
 				local Quality = C_Item.GetItemQuality(itemLocation)
@@ -26,12 +26,18 @@ local function Collect_Equipments()
 				local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
 				local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
 				-- local ItemDataCached = C_Item.IsItemDataCached(itemLocation) -- or false
-				if ItemID then
-					local cacheName = E.func_GetItemName(ItemID)
-					E.ALL_Items[ItemID] = true
+				if itemID then
+					local cacheName = E.func_GetItemName(itemID)
+					E.ALL_Items[itemID] = true
 				end
+
+				if itemID == 169223 then
+					local rank = E.GetItemRankFromLink(ItemLink)
+					collectPlayerData.cloak_lvl = rank
+				end
+
 				collectMASLENGO.InventoryType[slotID] = {
-					ItemID = ItemID,
+					itemID = itemID,
 					ItemName = ItemName,
 					Icon = Icon,
 					ItemLink = ItemLink,

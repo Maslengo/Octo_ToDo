@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 1508, defS = false,},
@@ -29,15 +30,9 @@ local function tempFunction()
 		{id = 1149, defS = false,},
 		{id = 1416, defS = false,},
 		{id = 1273, defS = false,},
-
-
 		-- {id = 3292, defS = false,}, -- REMIX LEGION
 		-- {id = 3268, defS = false,}, -- REMIX LEGION
-		-- {id = 3252, defS = false,}, -- REMIX LEGION
-
-
-		-- {id = 3293, defS = false,}, -- REMIX PANDA?
-		-- {id = 3251, defS = false,}, -- REMIX PANDA?
+		{id = 3252, defS = false,}, -- Bronze (remix) LEGION
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -47,13 +42,26 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			-- {id = 959, defS = true,}, -- Invasion Points
-			{id = 946, defS = true,}, -- Antorus, the Burning Throne
-			{id = 875, defS = true,}, -- Tomb of Sargeras
-			{id = 786, defS = true,}, -- The Nighthold
-			{id = 861, defS = true,}, -- Trial of Valor
-			{id = 768, defS = true,}, -- The Emerald Nightmare
-			-- {id = 822, defS = true,}, -- Broken Isles
+		-- Raid
+		{id = 1712, defS = true,}, -- Antorus, the Burning Throne
+		{id = 1676, defS = true,}, -- Tomb of Sargeras
+		{id = 1530, defS = true,}, -- The Nighthold
+		{id = 1648, defS = true,}, -- Trial of Valor
+		{id = 1520, defS = true,}, -- The Emerald Nightmare
+		-- Dungeon
+		-- {id = 1677, defS = true,}, -- Cathedral of Eternal Night
+		-- {id = 1501, defS = true,}, -- Black Rook Hold
+		-- {id = 1753, defS = true,}, -- Seat of the Triumvirate
+		-- {id = 1651, defS = true,}, -- Return to Karazhan
+		-- {id = 1516, defS = true,}, -- The Arcway
+		-- {id = 1544, defS = true,}, -- Assault on Violet Hold
+		-- {id = 1458, defS = true,}, -- Neltharion's Lair
+		-- {id = 1477, defS = true,}, -- Halls of Valor
+		-- {id = 1571, defS = true,}, -- Court of Stars
+		-- {id = 1492, defS = true,}, -- Maw of Souls
+		-- {id = 1466, defS = true,}, -- Darkheart Thicket
+		-- {id = 1493, defS = true,}, -- Vault of the Wardens
+		-- {id = 1456, defS = true,}, -- Eye of Azshara
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -203,9 +211,9 @@ local function tempFunction()
 		},
 		-- {
 		-- showTooltip = true,
-			-- TextLeft = function()
-			-- 	return E.func_GetQuestName(92855, false)
-			-- end,
+		-- TextLeft = function()
+		--     return E.func_GetQuestName(92855, false)
+		-- end,
 		-- defS = true,
 		-- name_save = "MakeHasteNotWaste",
 		-- reset = "Daily",
@@ -217,8 +225,10 @@ local function tempFunction()
 		-- },
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
-		-- {id = "LegionRemixResearch", defS = false,},
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

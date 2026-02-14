@@ -1,10 +1,4 @@
 local GlobalAddonName, E = ...
-
-
-
-
-
-
 ----------------------------------------------------------------
 if not E.DEBUG then return end
 ----------------------------------------------------------------
@@ -19,6 +13,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
 	OctoTables_Vibor[categoryKey].name = ITEMS
+	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
@@ -35,7 +30,10 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	local sorted = {}

@@ -11,7 +11,7 @@ function E.DEBUG_STOP(funcName)
 	return DEFAULT_CHAT_FRAME:AddMessage(result.."|cff63A4E0 ms.|r")
 end
 function E.debugInfo(id)
-	local result = E.Config_DebugID_ALL and (E.COLOR_GRAY.." id:"..id.."|r") or ""
+	local result = Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_DebugID_ALL and (E.COLOR_GRAY.." id:"..id.."|r") or ""
 	return result
 end
 function E.func_goldenHeight(width)

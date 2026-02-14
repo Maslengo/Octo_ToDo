@@ -22,7 +22,7 @@ local function Collect_Mounts()
 		source = source:gsub(" ", "") -- mountID == 645
 		local price, currencyID = source:match("([%d %.,]+)|Hcurrency:(%d+)")
 		local curName = E.func_GetCurrencyName(currencyID)
-		local mouName = E.func_GetMountName(mountID)
+		-- local mouName = E.func_GetMountName(mountID)
 		if price and currencyID then
 			if type(price) == "string" then
 				price = price:gsub("[%s%.]", "")

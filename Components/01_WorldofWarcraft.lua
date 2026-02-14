@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
@@ -26,11 +27,34 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-		{id = 1301, defS = true,}, -- Blackrock Depths
-		{id = 744, defS = true,}, -- Temple of Ahn'Qiraj
-		{id = 743, defS = true,}, -- Ruins of Ahn'Qiraj
-		{id = 742, defS = true,}, -- Blackwing Lair
-		{id = 741, defS = true,}, -- Molten Core
+		-- Raid
+		{id = 2792, defS = true,}, -- Blackrock Depths
+		{id = 531, defS = true,}, -- Ahn'Qiraj Temple
+		{id = 509, defS = true,}, -- Ruins of Ahn'Qiraj
+		{id = 469, defS = true,}, -- Blackwing Lair
+		{id = 409, defS = true,}, -- Molten Core
+		-- Dungeon
+		-- {id = 1004, defS = true,}, -- Scarlet Monastery
+		-- {id = 209, defS = true,}, -- Zul'Farrak
+		-- {id = 33, defS = true,}, -- Shadowfang Keep
+		-- {id = 1007, defS = true,}, -- Scholomance
+		-- {id = 349, defS = true,}, -- Maraudon
+		-- {id = 36, defS = true,}, -- Deadmines
+		-- {id = 389, defS = true,}, -- Ragefire Chasm
+		-- {id = 129, defS = true,}, -- Razorfen Downs
+		-- {id = 43, defS = true,}, -- Wailing Caverns
+		-- {id = 230, defS = true,}, -- Blackrock Depths
+		-- {id = 429, defS = true,}, -- Dire Maul
+		-- {id = 90, defS = true,}, -- Gnomeregan
+		-- {id = 47, defS = true,}, -- Razorfen Kraul
+		-- {id = 48, defS = true,}, -- Blackfathom Deeps
+		-- {id = 70, defS = true,}, -- Uldaman
+		-- {id = 1001, defS = true,}, -- Scarlet Halls
+		-- {id = 547, defS = true,}, -- Coilfang: The Slave Pens
+		-- {id = 109, defS = true,}, -- Sunken Temple
+		-- {id = 329, defS = true,}, -- Stratholme
+		-- {id = 34, defS = true,}, -- Stormwind Stockade
+		-- {id = 229, defS = true,}, -- Lower Blackrock Spire
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -55,7 +79,7 @@ local function tempFunction()
 		{id = 369, defS = false,}, --name = "Прибамбасск", side = "-", category = "Картель Хитрой Шестеренки", }, --[faction=369]
 		{id = 21, defS = false,}, --name = "Пиратская Бухта", side = "-", category = "Картель Хитрой Шестеренки", }, --[faction=21]
 		----------------------------------------------------------------
-				{id = 67, defS = false,}, --name = "Орда", side = "Horde", category = "World of Warcraft", }, --[faction=67]
+		{id = 67, defS = false,}, --name = "Орда", side = "Horde", category = "World of Warcraft", }, --[faction=67]
 		{id = 2523, defS = true,}, --name = "Темные Когти", side = "Horde", category = "Орда", }, --[faction=2523]
 		{id = 1352, defS = true,}, --name = "Пандарены Хоцзинь", side = "Horde", category = "Орда", }, --[faction=1352]
 		{id = 1133, defS = true,}, --name = "Картель Трюмных Вод", side = "Horde", category = "Орда", }, --[faction=1133]
@@ -74,7 +98,7 @@ local function tempFunction()
 		{id = 729, defS = false,}, --name = "Азеротский клан Северного Волка", side = "Horde", category = "Силы Орды", }, --[faction=729]
 		{id = 510, defS = false,}, --name = "Осквернители", side = "Horde", category = "Силы Орды", }, --[faction=510]
 		----------------------------------------------------------------
-				{id = 469, defS = false,}, --name = "Альянс", side = "Alliance", category = "World of Warcraft", }, --[faction=469]
+		{id = 469, defS = false,}, --name = "Альянс", side = "Alliance", category = "World of Warcraft", }, --[faction=469]
 		{id = 2524, defS = true,}, --name = "Обсидиановые Хранители", side = "Alliance", category = "Альянс", }, --[faction=2524]
 		{id = 1353, defS = true,}, --name = "Пандарены Тушуй", side = "Alliance", category = "Альянс", }, --[faction=1353]
 		{id = 1134, defS = true,}, --name = "Гилнеас", side = "Alliance", category = "Альянс", }, --[faction=1134]
@@ -98,7 +122,10 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

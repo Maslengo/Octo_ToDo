@@ -22,6 +22,7 @@ local function tempFunction()
 	-- wipe(OctoTables_Vibor[categoryKey])
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 2122, defS = true,},
@@ -51,10 +52,21 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 1207, defS = true,}, -- Amirdrassil, the Dream's Hope
-			{id = 1208, defS = true,}, -- Aberrus, the Shadowed Crucible
-			{id = 1200, defS = true,}, -- Vault of the Incarnates
-			-- {id = 1205, defS = true,}, -- Dragon Isles -- WB
+		-- Raid
+		{id = 2549, defS = true,}, -- Amirdrassil, the Dream's Hope
+		{id = 2569, defS = true,}, -- Aberrus, the Shadowed Crucible
+		{id = 2522, defS = true,}, -- Vault of the Incarnates
+		-- Dungeon
+		-- {id = 2521, defS = true,}, -- Ruby Life Pools
+		-- {id = 2515, defS = true,}, -- The Azure Vault
+		-- {id = 2516, defS = true,}, -- The Nokhud Offensive
+		-- {id = 2451, defS = true,}, -- Uldaman: Legacy of Tyr
+		-- {id = 2526, defS = true,}, -- Algeth'ar Academy
+		-- {id = 2519, defS = true,}, -- Neltharus
+		-- {id = 2527, defS = true,}, -- Halls of Infusion
+		-- {id = 2520, defS = true,}, -- Brackenhide Hollow
+		-- {id = 2662, defS = true,}, -- The Dawnbreaker
+		-- {id = 2579, defS = true,}, -- Dawn of the Infinite
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -285,7 +297,6 @@ local function tempFunction()
 			quests = {
 				{77872, forcedText = {itemID = 208067}, addText = {coords = 34105633}, }, -- Item -- quest = {77855, 77857, 77860, 77872},
 				{78006, forcedText = {itemID = 208067}, addText = {coords = 55275726}, }, -- item
-
 				{77950, forcedText = {itemID = 208047}, addText = {coords = 39146553}, },
 				{78005, forcedText = {itemID = 208047}, addText = {coords = 61625960}, },
 				{78107, forcedText = {itemID = 210434}, addText = {coords = 47055309}, }, -- Transmog
@@ -299,7 +310,6 @@ local function tempFunction()
 				{78547, forcedText = {itemID = 210675}, addText = {coords = 55672258}, }, -- Transmog
 				{78552, forcedText = {itemID = 210682}, addText = {coords = 46408615}, }, -- Transmog
 				{78831, forcedText = {itemID = 210049}, addText = {coords = 49816171}, }, -- Book
-
 				{78911, forcedText = {itemID = 210737}, addText = {coords = 60834489}, }, -- Book
 				{78833, forcedText = {itemID = 208649}, addText = {coords = 54462464}, }, -- Book
 				{78834, forcedText = {itemID = 210346}, addText = {coords = 59641910}, }, -- Book
@@ -364,11 +374,6 @@ local function tempFunction()
 		-- },
 		-- forcedMaxQuest = 13,
 		-- },
-
-
-
-
-
 		{
 			sorted = true,
 			showTooltip = true,
@@ -391,7 +396,6 @@ local function tempFunction()
 				-- {82828, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213006}, forcedText = {text = L["Treasure"].." 9"},}, -- 79498, 58465190
 				-- {82822, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213003}, forcedText = {text = L["Treasure"].." 10"},}, -- 79473, 54697720
 				-- {82825, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213005}, forcedText = {text = L["Treasure"].." 11"},}, -- 79494, 52541771
-
 				{82823, forcedText = {itemID = 213012}, addText = {coords = 53475574}, }, -- 79490,
 				{82826, forcedText = {itemID = 213008}, addText = {coords = 31311613}, }, -- 79496,
 				{82831, forcedText = {itemID = 213160}, addText = {coords = 29042885}, }, -- 79520,
@@ -403,16 +407,9 @@ local function tempFunction()
 				{82828, forcedText = {itemID = 213006}, addText = {coords = 58465190}, }, -- 79498,
 				{82822, forcedText = {itemID = 213003}, addText = {coords = 54697720}, }, -- 79473,
 				{82825, forcedText = {itemID = 213005}, addText = {coords = 52541771}, }, -- 79494,
-
 			},
 			-- forcedMaxQuest = 11,
 		},
-
-
-
-
-
-
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -639,9 +636,6 @@ local function tempFunction()
 			TextLeft = function()
 				return L["Fyrakk Assaults"] -- 7432 AREA POI ID
 			end,
-
-
-
 			name_save = "FyrakkAssaults",
 			defS = false,
 			reset = "Weekly",
@@ -752,7 +746,10 @@ local function tempFunction()
 		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

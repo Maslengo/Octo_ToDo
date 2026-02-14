@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 1560, defS = true,},
@@ -36,12 +37,24 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 1180, defS = true,}, -- Ny'alotha, the Waking City
-			{id = 1179, defS = true,}, -- The Eternal Palace
-			{id = 1177, defS = true,}, -- Crucible of Storms
-			{id = 1176, defS = true,}, -- Battle of Dazar'alor
-			{id = 1031, defS = true,}, -- Uldir
-			-- {id = 1028, defS = true,}, -- Azeroth
+		-- Raid
+		{id = 2217, defS = true,}, -- Ny'alotha, the Waking City
+		{id = 2164, defS = true,}, -- The Eternal Palace
+		{id = 2096, defS = true,}, -- Crucible of Storms
+		{id = 2070, defS = true,}, -- Battle of Dazar'alor
+		{id = 1861, defS = true,}, -- Uldir
+		-- Dungeon
+		-- {id = 1771, defS = true,}, -- Tol Dagor
+		-- {id = 1877, defS = true,}, -- Temple of Sethraliss
+		-- {id = 2097, defS = true,}, -- Operation: Mechagon
+		-- {id = 1754, defS = true,}, -- Freehold
+		-- {id = 1862, defS = true,}, -- Waycrest Manor
+		-- {id = 1822, defS = true,}, -- Siege of Boralus
+		-- {id = 1841, defS = true,}, -- The Underrot
+		-- {id = 1762, defS = true,}, -- Kings' Rest
+		-- {id = 1594, defS = true,}, -- The MOTHERLODE!!
+		-- {id = 1763, defS = true,}, -- Atal'Dazar
+		-- {id = 1864, defS = true,}, -- Shrine of the Storm
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -63,7 +76,6 @@ local function tempFunction()
 		{id = 2390, defS = false,}, --name = "Вим Соленодух", side = "Horde", category = "Battle for Azeroth", }, --[faction=2390]
 		{id = 2389, defS = false,}, --name = "Нери Остроерш", side = "Horde", category = "Battle for Azeroth", }, --[faction=2389]
 		{id = 2388, defS = false,}, --name = "Поэн Солежабрик", side = "Horde", category = "Battle for Azeroth", }, --[faction=2388]
-
 		{id = 2159, defS = false,}, --name = "7-й легион", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2159]
 		{id = 2160, defS = false,}, --name = "Адмиралтейство Праудмуров", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2160]
 		{id = 2400, defS = false,}, --name = "Клинки Волн", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2400]
@@ -73,7 +85,6 @@ local function tempFunction()
 		{id = 2398, defS = false,}, --name = "Фуражир из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2398]
 		{id = 2397, defS = false,}, --name = "Пчеломатка улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2397]
 		{id = 2396, defS = false,}, --name = "Трутень из улья Медокрылов", side = "Alliance", category = "Другое", }, --[faction=2396]
-
 		{id = 2376, defS = false,}, --name = "Оракул Ори", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2376]
 		{id = 2375, defS = false,}, --name = "Мастер охоты Акана", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2375]
 		{id = 2377, defS = false,}, --name = "Мастер клинка Иновари", side = "Alliance", category = "Battle for Azeroth", }, --[faction=2377]
@@ -329,45 +340,45 @@ local function tempFunction()
 			-- forcedMaxQuest = 25,
 		},
 		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-			-- TextLeft = function()
-			-- 	return E.func_GetMapName(1462)..": "..E.func_GetQuestName(54088, false)
-			-- end,
-		-- 	name_save = "TheMechagonianThreat",
+		--     sorted = false,
+		--     showTooltip = true,
+		-- TextLeft = function()
+		--     return E.func_GetMapName(1462)..": "..E.func_GetQuestName(54088, false)
+		-- end,
+		--     name_save = "TheMechagonianThreat",
 		-- defS = true,
-		-- 	reset = "Regular",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		-- Только для Альянса
-		-- 		{54088, FactionOrClass = {Alliance = true,}},
-		-- 		{55040, FactionOrClass = {Alliance = true,}},
-		-- 		{54945, FactionOrClass = {Alliance = true,}},
-		-- 		{54087, FactionOrClass = {Alliance = true,}},
-		-- 		{54946, FactionOrClass = {Alliance = true,}},
-		-- 		{54947, FactionOrClass = {Alliance = true,}},
-		-- 		{54992, FactionOrClass = {Alliance = true,}},
-		-- 		{55645, FactionOrClass = {Alliance = true,}},
-		-- 		-- Только для Орды
-		-- 		{55646, FactionOrClass = {Horde = true,}},
-		-- 		{55647, FactionOrClass = {Horde = true,}},
-		-- 		{55648, FactionOrClass = {Horde = true,}},
-		-- 		{55630, FactionOrClass = {Horde = true,}},
-		-- 		{55632, FactionOrClass = {Horde = true,}},
-		-- 		{55649, FactionOrClass = {Horde = true,}},
-		-- 		{55650, FactionOrClass = {Horde = true,}},
-		-- 		{55651, FactionOrClass = {Horde = true,}},
-		-- 		{55652, FactionOrClass = {Horde = true,}},
-		-- 		{55685, FactionOrClass = {Horde = true,}},
-		-- 		-- Общие квесты
-		-- 		{55730},
-		-- 		{55731},
-		-- 		{55995},
-		-- 		{55734},
-		-- 		{55096},
-		-- 		{55736},
-		-- 		-- {55609}, -- Операция мехагон
-		-- 	},
+		--     reset = "Regular",
+		--     desc = categoryKey,
+		--     quests = {
+		--         -- Только для Альянса
+		--         {54088, FactionOrClass = {Alliance = true,}},
+		--         {55040, FactionOrClass = {Alliance = true,}},
+		--         {54945, FactionOrClass = {Alliance = true,}},
+		--         {54087, FactionOrClass = {Alliance = true,}},
+		--         {54946, FactionOrClass = {Alliance = true,}},
+		--         {54947, FactionOrClass = {Alliance = true,}},
+		--         {54992, FactionOrClass = {Alliance = true,}},
+		--         {55645, FactionOrClass = {Alliance = true,}},
+		--         -- Только для Орды
+		--         {55646, FactionOrClass = {Horde = true,}},
+		--         {55647, FactionOrClass = {Horde = true,}},
+		--         {55648, FactionOrClass = {Horde = true,}},
+		--         {55630, FactionOrClass = {Horde = true,}},
+		--         {55632, FactionOrClass = {Horde = true,}},
+		--         {55649, FactionOrClass = {Horde = true,}},
+		--         {55650, FactionOrClass = {Horde = true,}},
+		--         {55651, FactionOrClass = {Horde = true,}},
+		--         {55652, FactionOrClass = {Horde = true,}},
+		--         {55685, FactionOrClass = {Horde = true,}},
+		--         -- Общие квесты
+		--         {55730},
+		--         {55731},
+		--         {55995},
+		--         {55734},
+		--         {55096},
+		--         {55736},
+		--         -- {55609}, -- Операция мехагон
+		--     },
 		-- },
 		{
 			sorted = true,
@@ -663,36 +674,35 @@ local function tempFunction()
 		},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
 		{id = "HeartofAzeroth", defS = true,}, -- https://www.wowhead.com/item=158075/heart-of-azeroth
 		{id = "Ashjrakamas", defS = true,}, -- https://www.wowhead.com/item=169223/ashjrakamas-shroud-of-resolve
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
-
-
-
-
 local function localfunc2()
 	local OctoTable_Otrisovka_TextCenter = {}
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-		if Octo_ToDo_DB_Vars.Items then
-			table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-					----------------------------------------------------------------
-					local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil
-					TooltipKey = "BfA_mechagonItems"
-					TextCenter = E.COLOR_GRAY..ITEMS.."|r"
-					----------------------------------------------------------------
-					TextLeft = "МЕХАГОН"
-					ColorLeft = E.OctoTable_Expansions[categoryKey].color
-					----------------------------------------------------------------
-					return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-					----------------------------------------------------------------
-			end)
-		end
+	if Octo_ToDo_DB_Vars.Items then
+		table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
+				----------------------------------------------------------------
+				local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil
+				TooltipKey = "BfA_mechagonItems"
+				TextCenter = E.COLOR_GRAY..ITEMS.."|r"
+				----------------------------------------------------------------
+				TextLeft = "МЕХАГОН"
+				ColorLeft = E.OctoTable_Expansions[categoryKey].color
+				----------------------------------------------------------------
+				return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
+				----------------------------------------------------------------
+		end)
+	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------

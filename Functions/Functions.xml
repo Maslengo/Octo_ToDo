@@ -14,4 +14,8 @@
 	<Script file="Functions\text_RIGHT.lua"/>
 
 	<Script file="Functions\CharInfo.lua"/>
+
+
+
+	<Script file="Functions\Functions_LibSFDropDown.lua"/>
 </Ui>

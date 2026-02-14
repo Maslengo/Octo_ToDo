@@ -10,10 +10,10 @@ local LibIndentation = LibStub("LibIndentation-1.0")
 ----------------------------------------------------------------
 function E.func_CreateMenuStyle()
 	LibSFDropDown:CreateMenuStyle(GlobalAddonName, function(parent)
-		local f = CreateFrame("FRAME", nil, parent, "OctoBackdropTemplate")
-		f:SetPoint("TOPLEFT", 8, -2)
-		f:SetPoint("BOTTOMRIGHT", -8, 2)
-		return f
+			local f = CreateFrame("FRAME", nil, parent, "OctoBackdropTemplate")
+			f:SetPoint("TOPLEFT", 8, -2)
+			f:SetPoint("BOTTOMRIGHT", -8, 2)
+			return f
 	end)
 end
 ----------------------------------------------------------------
@@ -26,7 +26,7 @@ end
 E.OctoFrames_Dropdowns = {}
 local function CreateBaseDropDown(frame, providerfunc)
 	local DropDown = CreateFrame("BUTTON", nil, frame, "OctoBackdropTemplate")
-
+	table.insert(E.OctoTable_ColoredFrames, DropDown)
 	DropDown:SetSize(E.GLOBAL_LINE_WIDTH_LEFT/2, E.GLOBAL_LINE_HEIGHT)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
 	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
@@ -62,15 +62,11 @@ local function CreateBaseDropDown(frame, providerfunc)
 			self.text:SetAllPoints()
 			self.text:AdjustPointsOffset(-1, 1)
 	end)
-
 	DropDown:HookScript("OnShow", function(self)
 			BaseDropDown_OnShow(self, text)
 	end)
-
-
-
 	DropDown:ddSetOpenMenuUp(true)
-	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight-4)
+	DropDown:ddSetMenuButtonHeight(E.ddMenuButtonHeight)
 	return DropDown
 end
 ----------------------------------------------------------------
@@ -232,6 +228,11 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			info.keepShownOnClick = true
 			info.notCheckable = false
 			info.isNotRadio = true
+
+
+
+
+
 			-- Только текущий сервер
 			info.text = L["Only Current Server"]
 			info.checked = Octo_ToDo_DB_Vars.isOnlyCurrentServer
@@ -240,16 +241,9 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
-			-- Только текущий регион
-			if countRegions > 1 then
-				info.text = L["Only Current Region"]
-				info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-				info.func = function(_, _, _, checked)
-					Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = checked
-					providerfunc()
-				end
-				self:ddAddButton(info, level)
-			end
+
+
+
 			-- Только текущая фракция
 			if E.FACTION_CURRENT == "Horde" then
 				info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
@@ -262,6 +256,31 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
+
+
+
+			-- Только текущий регион
+			if countRegions > 1 then
+				info.text = L["Only Current Region"]
+				info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+				info.func = function(_, _, _, checked)
+					Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = checked
+					providerfunc()
+				end
+				self:ddAddButton(info, level)
+			end
+
+
+
+
+
+
+
+
+
+
+
+
 		elseif level == 3 then
 			if type(value) == "string" then
 				-- Третий уровень: сервера региона
@@ -298,10 +317,10 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					info.isNotRadio = true
 					-- local output = char.classColorHex..char.Name.."|r"
 					-- if char.UnitLevel ~= E.currentMaxLevel then
-					-- 	output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
+					--     output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
 					-- end
 					-- if char.Name == E.curCharName then
-					-- 	output = output..E.COLOR_GREEN.."*|r"
+					--     output = output..E.COLOR_GREEN.."*|r"
 					-- end
 					-- info.text = output
 					info.text = char.Name
@@ -331,10 +350,10 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					info.isNotRadio = true
 					-- local output = char.classColorHex..char.Name.."|r"
 					-- if char.UnitLevel ~= E.currentMaxLevel then
-					-- 	output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
+					--     output = output.." "..E.COLOR_YELLOW..(char.UnitLevel or 0).."|r"
 					-- end
 					-- if char.Name == E.curCharName then
-					-- 	output = output..E.COLOR_GREEN.."*|r"
+					--     output = output..E.COLOR_GREEN.."*|r"
 					-- end
 					-- info.text = output
 					info.text = char.Name
@@ -425,22 +444,36 @@ end
 ----------------------------------------------------------------
 -- Функции меню профилей
 ----------------------------------------------------------------
-local function CreateProfilesMenu(dropdown, providerfunc)
+function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
+	if not db then return end
+	local function func()
+		if E.func_UpdateGlobals then
+			E.func_UpdateGlobals()
+		end
+		if providerfunc then
+			providerfunc()
+		end
+	end
 	local function func_remove_Profile(menuButton, arg1)
 		local profileName = menuButton.value
-		if profileName == "Default" then
-			Octo_profileKeys.profiles[profileName] = nil
-			E.func_CreateNew_profileKeys(profileName)
-			if Octo_profileKeys.Current_profileKeys == profileName then
-				Octo_profileKeys.Current_profileKeys = "Default"
+		if profileName == E.TEXT_DEFAULT then
+			db.profiles[profileName] = nil
+			if Type == "Keys" then
+				E.func_CreateNew_profileKeys(profileName)
+			end
+			if Type == "Colors" then
+				E.func_CreateNew_profileColors(profileName)
+			end
+			if db.Current_profile == profileName then
+				db.Current_profile = E.TEXT_DEFAULT
 			end
 			return
 		end
-		Octo_profileKeys.profiles[profileName] = nil
-		if Octo_profileKeys.Current_profileKeys == profileName then
-			Octo_profileKeys.Current_profileKeys = "Default"
+		db.profiles[profileName] = nil
+		if db.Current_profile == profileName then
+			db.Current_profile = E.TEXT_DEFAULT
 		end
-		C_Timer.After(1, providerfunc)
+		C_Timer.After(1, func)
 		E.func_PrintMessage(L["Profile successfully deleted"])
 	end
 	local function func_rename_Profile(menuButton, arg1)
@@ -455,18 +488,14 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 			OnAccept = function(dialog)
 				local newName = dialog.EditBox:GetText():trim()
 				if newName and newName ~= "" and newName ~= profileName then
-					if Octo_profileKeys.profiles[newName] then
+					if db.profiles[newName] then
 						E.func_PrintMessage(L["A profile with the same name exists"])
 						return
 					end
-					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
-					Octo_profileKeys.profiles[profileName] = nil
-					if Octo_profileKeys.Current_profileKeys == profileName then
-						-- Octo_profileKeys.Current_profileKeys = newName
-						E.func_UpdateCurrent_profileKeys(newName)
-					end
+					db.profiles[newName] = db.profiles[profileName]
+					db.profiles[profileName] = nil
 					dropdown:ddCloseMenus()
-					providerfunc()
+					func()
 					E.func_PrintMessage(L["Profile successfully renamed"])
 				end
 			end,
@@ -479,18 +508,14 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 				local dialog = editBox:GetParent()
 				local newName = editBox:GetText():trim()
 				if newName and newName ~= "" and newName ~= profileName then
-					if Octo_profileKeys.profiles[newName] then
+					if db.profiles[newName] then
 						E.func_PrintMessage(L["A profile with the same name exists"])
 						return
 					end
-					Octo_profileKeys.profiles[newName] = Octo_profileKeys.profiles[profileName]
-					Octo_profileKeys.profiles[profileName] = nil
-					if Octo_profileKeys.Current_profileKeys == profileName then
-						E.func_UpdateCurrent_profileKeys(newName)
-						-- Octo_profileKeys.Current_profileKeys = newName
-					end
+					db.profiles[newName] = db.profiles[profileName]
+					db.profiles[profileName] = nil
 					dialog:Hide()
-					providerfunc()
+					func()
 					E.func_PrintMessage(L["Profile successfully renamed"])
 				end
 			end,
@@ -503,23 +528,28 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 	end
 	local function CreateNewProfile(profileName, copyFromCurrent)
 		if profileName and profileName:trim() ~= "" then
-			if Octo_profileKeys.profiles[profileName] then
+			if db.profiles[profileName] then
 				E.func_PrintMessage(L["A profile with the same name exists"])
 				return false
 			end
-			if copyFromCurrent and Octo_profileKeys.Current_profileKeys then
-				local Current_profileKeysData = Octo_profileKeys.profiles[Octo_profileKeys.Current_profileKeys]
-				if Current_profileKeysData then
-					Octo_profileKeys.profiles[profileName] = E.func_CopyTableDeep(Current_profileKeysData)
+			if copyFromCurrent and db.Current_profile then
+				local Current_profile_Data = db.profiles[db.Current_profile]
+				if Current_profile_Data then
+					db.profiles[profileName] = E.func_CopyTableDeep(Current_profile_Data)
 				else
-					Octo_profileKeys.profiles[profileName] = {}
+					db.profiles[profileName] = {}
 				end
 			else
-				E.func_CreateNew_profileKeys(profileName)
+				if Type == "Keys" then
+					E.func_CreateNew_profileKeys(profileName)
+				end
+				if Type == "Colors" then
+					E.func_CreateNew_profileColors(profileName)
+				end
 			end
-			Octo_profileKeys.Current_profileKeys = profileName
+			db.Current_profile = profileName
 			dropdown:ddCloseMenus()
-			providerfunc()
+			func()
 			E.func_PrintMessage(L["Profile successfully created"])
 			return true
 		end
@@ -607,42 +637,48 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 		}
 	end
 	return function(self, level, value)
-		local profiles = Octo_profileKeys.profiles
 		local profileNames = {}
-		for profileName, _ in next, profiles do
+		for profileName in next, (db.profiles) do
 			tinsert(profileNames, profileName)
 		end
 		sort(profileNames)
 		for _, profileName in ipairs(profileNames) do
 			local info = {}
 			info.fontObject = OctoFont11
-			info.keepShownOnClick = true
+			info.keepShownOnClick = false
 			info.notCheckable = false
 			info.isNotRadio = false
 			info.value = profileName
-			info.checked = function(btn) return Octo_profileKeys.Current_profileKeys == profileName end
+			info.checked = function(btn)
+				return db.Current_profile == profileName
+			end
 			info.func = function(menuButton, _, _, checked)
-				Octo_profileKeys.Current_profileKeys = menuButton.value
+				db.Current_profile = menuButton.value
 				self:ddRefresh(level)
-				providerfunc()
+				func()
 			end
 			info.arg1 = {self, level, value}
-			if profileName ~= "Default" then
+			if profileName ~= E.TEXT_DEFAULT then
 				info.widgets = {} -- Виджеты
 				tinsert(info.widgets, createDeleteWidget(profileName)) -- Кнопка удаления
 				tinsert(info.widgets, createRenameWidget(profileName)) -- Кнопка ренейма
 				info.text = profileName
-			elseif profileName == "Default" then
+			end
+			if profileName == E.TEXT_DEFAULT then
 				info.widgets = {}
 				tinsert(info.widgets, createResetWidget(profileName))
 				info.text = DEFAULT
-				-- else
-				--     info.widgets = nil -- Для профиля Default
-				--     info.text = DEFAULT
+			end
+			if profileName == E.TEXT_DEFAULT_DARK then
+				info.widgets = {}
+				tinsert(info.widgets, createResetWidget(profileName))
+				info.text = DEFAULT.." (Dark)"
 			end
 			self:ddAddButton(info, level)
 		end
+		----------------------------------------------------------------
 		self:ddAddSeparator(level)
+		----------------------------------------------------------------
 		local info = {}
 		info.fontObject = OctoFont11
 		info.keepShownOnClick = false
@@ -652,16 +688,18 @@ local function CreateProfilesMenu(dropdown, providerfunc)
 			ShowCreateProfileDialog(false)
 		end
 		self:ddAddButton(info, level)
-		info = {}
+		----------------------------------------------------------------
+		local info = {}
 		info.fontObject = OctoFont11
 		info.keepShownOnClick = false
 		info.notCheckable = true
 		info.text = L["Copy current"]
-		info.disabled = not Octo_profileKeys.Current_profileKeys or not profiles[Octo_profileKeys.Current_profileKeys]
+		info.disabled = not db.Current_profile or not db.profiles[db.Current_profile]
 		info.func = function()
 			ShowCreateProfileDialog(true)
 		end
 		self:ddAddButton(info, level)
+		----------------------------------------------------------------
 	end
 end
 ----------------------------------------------------------------
@@ -672,7 +710,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 	-- Создаем обработчики для каждого типа меню
 	local charactersMenu = CreateCharactersMenu(DropDown, providerfunc)
 	local expansionsMenu = CreateExpansionsMenu(DropDown, providerfunc)
-	local profilesMenu = CreateProfilesMenu(DropDown, providerfunc)
+	local profilesMenu1 = E.CreateProfilesMenu(DropDown, providerfunc, Octo_profileKeys, "Keys")
+	local profilesMenu2 = E.CreateProfilesMenu(DropDown, providerfunc, Octo_profileColors, "Colors")
 	DropDown:ddSetInitFunc(function(self, level, value)
 			if level == 1 then
 				-- Основное меню первого уровня
@@ -694,6 +733,10 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.text = L["Profiles"]
 				info.value = L["Profiles"]
 				self:ddAddButton(info, level)
+				-- Меню профилей цвета
+				-- info.text = COLORS
+				-- info.value = COLORS
+				-- self:ddAddButton(info, level)
 			elseif level == 2 then
 				-- Роутинг на соответствующие меню
 				if value == L["Characters"] then
@@ -701,14 +744,18 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				elseif value == "expansions" then
 					return expansionsMenu(self, level, value)
 				elseif value == L["Profiles"] then
-					return profilesMenu(self, level, value)
+					return profilesMenu1(self, level, value)
+				elseif value == COLORS then
+					return profilesMenu2(self, level, value)
 				end
 			elseif level >= 3 then
 				-- Определяем тип меню по значению
 				if value == EXPANSION_FILTER_TEXT or (type(value) == "number" and E.OctoTables_Vibor[value]) then
 					return expansionsMenu(self, level, value)
 				elseif value == L["Profiles"] then
-					return profilesMenu(self, level, value)
+					return profilesMenu1(self, level, value)
+				elseif value == COLORS then
+					return profilesMenu2(self, level, value)
 				else
 					return charactersMenu(self, level, value)
 				end
@@ -741,10 +788,13 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 		return arg1.name..arg1.output
 	end
 	DropDown:ddSetInitFunc(function(self, level, value)
-			local info, list = {}, {}
+			local info = {}
+			info.fontObject = OctoFont11
+			local list = {}
 			local categories = GetCategoryList()
 			for i = 1, #categories do
 				local info = {}
+				info.fontObject = OctoFont11
 				local categoryID = categories[i]
 				local name, parentCategoryID = GetCategoryInfo(categoryID)
 				local total, completed = GetCategoryNumAchievements(categoryID, true)
@@ -759,7 +809,6 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 					end
 				end
 				if parentCategoryID == value or parentCategoryID == -1 and not value then
-					info.fontObject = OctoFont11
 					info.hasArrow = parentCategoryID == -1 and categoryID ~= 92
 					info.keepShownOnClick = true
 					info.notCheckable = false
@@ -810,9 +859,10 @@ end
 function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, providerfunc)
 	DropDown:ddSetInitFunc(function(self, level, value)
-			local info, list = {}, {}
+			local info = {}
+			info.fontObject = OctoFont11
+			local list = {}
 			if level == 1 then
-				info.fontObject = OctoFont11
 				info.keepShownOnClick = true
 				info.notCheckable = false
 				info.isNotRadio = true
@@ -884,6 +934,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	end
 	DropDown:ddSetInitFunc(function(dd, level, value)
 			local info = {}
+			info.fontObject = OctoFont11
 			info.keepShownOnClick = true
 			if level == 1 then
 				for name in next, E.editorThemes do

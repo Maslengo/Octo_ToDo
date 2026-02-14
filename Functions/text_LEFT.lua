@@ -67,37 +67,57 @@ function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id)
 	TooltipKey = "Reputation_"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
-function E.func_Otrisovka_LEFT_Additionally(categoryKey, CharInfo, dataType, id)
+
+
+
+function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
-	if id == "LegionRemixResearch" then
-		TextLeft = L["Infinite Research"]
-	elseif id == "ListOfQuests" then
-		TextLeft = QUESTS_LABEL
-	elseif id == "LFGInstance" then
-		TextLeft = DUNGEONS
-	elseif id == "AllItems" then
-		TextLeft = ITEMS
-	elseif id == "Professions" then
-		TextLeft = PROFESSIONS_BUTTON
-	elseif id == "ItemLevel" then
-		TextLeft = STAT_AVERAGE_ITEM_LEVEL
-	elseif id == "Money" then
-		TextLeft = BONUS_ROLL_REWARD_MONEY
-	elseif id == "LastOnline" then
-		TextLeft = L["Last online"]
-	elseif id == "GreatVault" then
+	if id == "GreatVault" then
 		TextLeft = RATED_PVP_WEEKLY_VAULT
 		IconLeft = "greatVault-whole-normal"
-	elseif id == "CurrentKey" then
+	end
+	if id == "CurrentKey" then
 		TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
 		IconLeft = 4352494
-	elseif id == "HeartofAzeroth" then
+	end
+	if id == "HeartofAzeroth" then
 		TextLeft = E.func_GetItemName(158075)
 		IconLeft = E.func_GetItemIcon(158075)
-	elseif id == "Ashjrakamas" then
+	end
+	if id == "Ashjrakamas" then
 		TextLeft = E.func_GetItemName(169223)
 		IconLeft = E.func_GetItemIcon(169223)
+	end
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
+end
+
+
+
+function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
+
+	if id == "ListOfQuests" then
+		TextLeft = QUESTS_LABEL
+	end
+	if id == "LFGInstance" then
+		TextLeft = DUNGEONS
+	end
+	if id == "AllItems" then
+		TextLeft = ITEMS
+	end
+	if id == "Professions" then
+		TextLeft = PROFESSIONS_BUTTON
+	end
+	if id == "ItemLevel" then
+		TextLeft = STAT_AVERAGE_ITEM_LEVEL
+	end
+	if id == "Money" then
+		TextLeft = BONUS_ROLL_REWARD_MONEY
+	end
+	if id == "LastOnline" then
+		TextLeft = L["Last online"]
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end

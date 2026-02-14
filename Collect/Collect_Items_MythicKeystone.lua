@@ -17,14 +17,14 @@ local GetOwnedKeystoneLevel = GetOwnedKeystoneLevel or C_MythicPlus.GetOwnedKeys
 -- local GetSeasonBestMythicRatingFromThisExpansion = GetSeasonBestMythicRatingFromThisExpansion or C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion
 -- local GetWeeklyBestForMap = GetWeeklyBestForMap or C_MythicPlus.GetWeeklyBestForMap
 -- local GetWeeklyChestRewardLevel = GetWeeklyChestRewardLevel or C_MythicPlus.GetWeeklyChestRewardLevel
--- local IsMythicPlusActive = IsMythicPlusActive or C_MythicPlus.IsMythicPlusActive
+local IsMythicPlusActive = IsMythicPlusActive or C_MythicPlus.IsMythicPlusActive
 -- local RequestCurrentAffixes = RequestCurrentAffixes or C_MythicPlus.RequestCurrentAffixes
 -- local RequestMapInfo = RequestMapInfo or C_MythicPlus.RequestMapInfo
 -- local RequestRewards = RequestRewards or C_MythicPlus.RequestRewards
 ----------------------------------------------------------------
 local function Collect_Items_MythicKeystone()
 	if not E:func_CanCollectData() then return end
-	local isMythicPlusActive = C_MythicPlus.IsMythicPlusActive()
+	local isMythicPlusActive = IsMythicPlusActive()
 	if not isMythicPlusActive then return end
 	-- local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
@@ -33,6 +33,12 @@ local function Collect_Items_MythicKeystone()
 	local OwnedKeystoneChallengeMapID = GetOwnedKeystoneChallengeMapID() -- 542
 	collectPlayerData.OwnedKeystoneLevel = E.func_Save(OwnedKeystoneLevel)
 	collectPlayerData.OwnedKeystoneChallengeMapID = E.func_Save(OwnedKeystoneChallengeMapID)
+
+	-- 180653 НОВЫЙ КЛЮЧ
+	-- 138019 СТАРЫЕ КЛЮЧИ
+	-- 158923 СТАРЫЕ КЛЮЧИ
+	-- 151086 СТАРЫЕ КЛЮЧИ
+
 	-- local affixIDs = GetCurrentAffixes()
 	-- local seasonID1 = GetCurrentSeason() -- 15
 	-- local displaySeasonID, milestoneSeasonID, rewardSeasonID = GetCurrentSeasonValues() -- 15, 102, 108

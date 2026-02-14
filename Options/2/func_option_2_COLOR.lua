@@ -1,9 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
 
-E.TEXT_INDEV = E.COLOR_RED..">>> "..L["In Development"].." <<<|r"
 ----------------------------------------------------------------
-function E.func_02_Colors(width, tabName)
+function E.func_option_2_COLOR(width, tabName)
 	-------------------------------------------------
 	-- Вкладка: Цвета
 	-------------------------------------------------
@@ -32,16 +31,11 @@ function E.func_02_Colors(width, tabName)
 					return t
 				end,
 				get = function()
-					return Octo_profileColors.Current_profileColors
+					return Octo_profileColors.Current_profile
 				end,
 				set = function(_, value)
-					Octo_profileColors.Current_profileColors = value
-					E.Current_profileColors = value
-					E.func_CreateNew_profileColors(value)
-					E.PROFTBL = Octo_profileColors.profiles[E.Current_profileColors]
+					Octo_profileColors.Current_profile = value
 					E.func_UpdateGlobals()
-					-- local profileName = Octo_profileColors.Current_profileColors
-					-- local profile = Octo_profileColors.profiles[profileName]
 				end,
 				width = width,
 				order = E.func_GetOrder(),

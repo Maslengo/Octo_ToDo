@@ -726,19 +726,19 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		tooltip = E.func_CovenantCurrencyTooltip(1822, visiblePlayers, 1)
 	elseif dataType == "Currencies" and id == 1813 then
 		tooltip = E.func_CovenantCurrencyTooltip(1813, visiblePlayers, 2)
-	elseif SettingsType == "Additionally#Professions" then
+	elseif SettingsType == "AdditionallyBOTTOM#Professions" then
 		tooltip = E.func_ProfessionsTooltipLeft(visiblePlayers)
-	elseif SettingsType == "Additionally#ItemLevel" then
+	elseif SettingsType == "AdditionallyBOTTOM#ItemLevel" then
 		tooltip = E.func_ItemLevelTooltipLeft(visiblePlayers)
 	elseif dataType == "Currencies" then
 		tooltip = E.func_CurrenciesTooltipLeft(visiblePlayers, id)
-	elseif SettingsType == "Additionally#Money" then
+	elseif SettingsType == "AdditionallyBOTTOM#Money" then
 		tooltip = E.func_MoneyTooltipLeft(visiblePlayers)
-	elseif SettingsType == "Additionally#LastOnline" then
+	elseif SettingsType == "AdditionallyBOTTOM#LastOnline" then
 		tooltip = E.func_LastOnlineTooltipLeft(visiblePlayers)
-	elseif SettingsType == "Additionally#GreatVault" then
+	elseif SettingsType == "AdditionallyTOP#GreatVault" then
 		tooltip = E.func_GreatVaultTooltipLeft(visiblePlayers)
-	elseif SettingsType == "Additionally#CurrentKey" then
+	elseif SettingsType == "AdditionallyTOP#CurrentKey" then
 		tooltip = E.func_CurrentKeyTooltipLeft(visiblePlayers)
 	elseif dataType == "Reputations" then
 		tooltip = E.func_ReputationsTooltipLeft(visiblePlayers, id)

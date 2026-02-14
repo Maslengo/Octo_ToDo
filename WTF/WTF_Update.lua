@@ -157,7 +157,13 @@ local function updateChars(pd, cm, DBVersion)
 			end
 		end
 	end
+
 	----------------------------------------------------------------
+	if compareVersion(111.6, DBVersion) then
+		if cm.LegionRemixData then
+			wipe(cm.LegionRemixData)
+		end
+	end
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -174,6 +180,11 @@ local function updateGlobal(DBVersion)
 	----------------------------------------------------------------
 	if compareVersion(110.4, DBVersion) then
 		Octo_ToDo_DB_Vars.Config_UseTranslit = false
+	end
+	----------------------------------------------------------------
+	if compareVersion(111.6, DBVersion) then
+		Octo_Cache_DB = {}
+		E.Init_Octo_Cache_DB()
 	end
 	----------------------------------------------------------------
 end

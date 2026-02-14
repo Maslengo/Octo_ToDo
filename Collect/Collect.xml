@@ -2,7 +2,6 @@
 	<Script file="Collect\Collect.lua"/>
 
 	<Script file="Collect\Collect_BFA_HeartOfAzeroth.lua"/>
-	<Script file="Collect\Collect_BFA_LegendaryCloak.lua"/>
 	<Script file="Collect\Collect_Character_Info.lua"/>
 	<Script file="Collect\Collect_Character_ItemLevels.lua"/>
 	<Script file="Collect\Collect_Character_TimePlayed.lua"/>
@@ -19,7 +18,6 @@
 	<Script file="Collect\Collect_Items_BANK.lua"/>
 	<Script file="Collect\Collect_Items_MythicKeystone.lua"/>
 	<Script file="Collect\Collect_JournalInstance.lua"/>
-	<Script file="Collect\Collect_Legion_Remix.lua"/>
 	<Script file="Collect\Collect_Locations.lua"/>
 	<Script file="Collect\Collect_LoginTime.lua"/>
 	<Script file="Collect\Collect_Mail.lua"/>

@@ -182,15 +182,12 @@
 			<OnShow>
 				local E = OctoEngine
 				if E and E.PROFTBL then
-<!-- 					self:SetBackdrop(E.menuBackdrop)
-					self:SetBackdropColor(E.backgroundColorR, E.backgroundColorG, E.backgroundColorB, E.backgroundColorA)
-					self:SetBackdropBorderColor(E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA) -->
 
 					self:SetBackdrop(E.menuBackdrop)
 					self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
 					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
-					if E.Config_ClampedToScreen then
-						self:SetClampedToScreen(E.Config_ClampedToScreen)
+					if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_ClampedToScreen then
+						self:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 					else
 						self:SetClampedToScreen(false)
 					end
@@ -220,6 +217,50 @@
 
 		</Scripts>
 	</Frame>
+
+
+
+
+
+	<Frame name="OctoSettingsDropdownControlTemplate" inherits="SettingsDropdownControlTemplate" virtual="true">
+		<Scripts>
+			<OnLoad inherit="prepend">
+					local LibSFDropDown = LibStub("LibSFDropDown-1.5")
+
+					local Center = self.Control.Dropdown
+					LibSFDropDown:SetMixin(Center)
+
+					Center:ddSetDisplayMode("menu")
+					Center:ddHideWhenButtonHidden()
+					Center:ddSetNoGlobalMouseEvent(true)
+					Center:ddSetMinMenuWidth(Center:GetWidth()-24)
+
+					Center:SetScript("OnClick", function(dd)
+						if E and E.sound_OnClick then
+							E.sound_OnClick()
+						end
+						dd:ddToggle(1, nil, dd, -2, 0)
+					end)
+
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+
+
+
+
+
+	<!-- Наш фрейм с миксином, который наследует от ColorOverrideTemplate -->
+	<Frame name="ColorOverride" mixin="ColorOverrideMixin" inherits="ColorOverrideTemplate" virtual="true">
+		<Scripts>
+			<OnLoad>
+			</OnLoad>
+		</Scripts>
+	</Frame>
+
+
+
 
 
 

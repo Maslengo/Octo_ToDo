@@ -4,7 +4,6 @@ local ENABLE_DEBUG_TIMER = false
 local function func_Collect_All()
 	local allFunctions = {
 		{func = E.Collect_BFA_HeartOfAzeroth, name = "Collect_BFA_HeartOfAzeroth",},
-		{func = E.Collect_BFA_LegendaryCloak, name = "Collect_BFA_LegendaryCloak",},
 		{func = E.Collect_ChromieTime, name = "Collect_ChromieTime",},
 		{func = E.Collect_Covenants, name = "Collect_Covenants",},
 		{func = E.Collect_Currencies, name = "Collect_Currencies",},
@@ -16,7 +15,6 @@ local function func_Collect_All()
 		{func = E.Collect_Items_BAGS, name = "Collect_Items_BAGS",},
 		{func = E.Collect_Items_MythicKeystone, name = "Collect_Items_MythicKeystone",},
 		{func = E.Collect_JournalInstance, name = "Collect_JournalInstance",},
-		{func = E.Collect_Legion_Remix, name = "Collect_Legion_Remix",},
 		{func = E.Collect_Locations, name = "Collect_Locations",},
 		{func = E.Collect_LoginTime, name = "Collect_LoginTime",},
 		{func = E.Collect_Mail, name = "Collect_Mail",},
@@ -181,7 +179,6 @@ function EventFrame:QUEST_LOG_UPDATE()
 	E.Collect_Garrison()
 	E.Collect_ChromieTime()
 	-- E.Collect_GreatVault()
-	E.Collect_Legion_Remix()
 	E.Collect_Quests()
 	E.func_RequestUIUpdate("QUEST_LOG_UPDATE")
 end
@@ -214,7 +211,6 @@ end
 function EventFrame:PLAYER_EQUIPMENT_CHANGED()
 	E.Collect_Character_ItemLevels()
 	E.Collect_BFA_HeartOfAzeroth()
-	E.Collect_BFA_LegendaryCloak()
 	E.Collect_Equipments()
 	E.func_RequestUIUpdate("PLAYER_EQUIPMENT_CHANGED")
 end
@@ -227,9 +223,7 @@ function EventFrame:PLAYER_LEAVING_WORLD()
 end
 function EventFrame:AZERITE_ITEM_EXPERIENCE_CHANGED()
 	E.Collect_BFA_HeartOfAzeroth()
-	E.Collect_BFA_LegendaryCloak()
 	E.func_RequestUIUpdate("AZERITE_ITEM_EXPERIENCE_CHANGED")
-	E.OBROBOTCHIT(Collect_BFA_LegendaryCloak)
 end
 function EventFrame:COVENANT_CHOSEN(...)
 	local id = ...
@@ -286,7 +280,6 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 	E.Collect_Garrison()
 	E.Collect_Reputations()
 	E.Collect_Currencies()
-	E.Collect_Legion_Remix()
 	E.Collect_Quests()
 	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("PLAYER_REGEN_ENABLED")
@@ -315,7 +308,6 @@ function EventFrame:QUEST_POI_UPDATE()
 	E.func_RequestUIUpdate("QUEST_POI_UPDATE")
 end
 function EventFrame:QUEST_REMOVED()
-	E.Collect_Legion_Remix()
 	E.Collect_Quests()
 	E.func_RequestUIUpdate("QUEST_REMOVED")
 end
@@ -378,7 +370,6 @@ function EventFrame:BAG_UPDATE_DELAYED()
 	E.Collect_Items_BANK()
 	E.Collect_Items_AccountBank()
 	E.Collect_BFA_HeartOfAzeroth()
-	E.Collect_BFA_LegendaryCloak()
 	-- E.Collect_GreatVault()
 	E.func_RequestUIUpdate("BAG_UPDATE_DELAYED")
 end
@@ -433,7 +424,7 @@ function EventFrame:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
 		E.Collect_Items_MythicKeystone()
-		C_Timer.After(E.SPAM_TIME+.1, function()
+		C_Timer.After(Octo_ToDo_DB_Vars.Config_SPAM_TIME+.1, function()
 			E.Collect_Items_MythicKeystone()
 		end)
 		E.func_RequestUIUpdate("ITEM_CHANGED")

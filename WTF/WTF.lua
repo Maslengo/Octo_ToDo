@@ -159,7 +159,7 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 	if not curGUID then return end
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	Octo_ToDo_DB_Levels[curGUID] = Octo_ToDo_DB_Levels[curGUID] or {}
-	local ServerTime = GetServerTime()
+	local serverTime = GetServerTime()
 	local currentDate = date("%d.%m.%Y")
 	local currentTime = date("%H:%M")
 	local currentDateTime = date("%d.%m.%Y %H:%M:%S")
@@ -241,7 +241,6 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 	local MASLENGO_DEFAULTS = {
 		Currency = {},
 		GARRISON = {},
-		LegionRemixData = {},
 		GreatVault = {},
 		Items = {},
 		journalInstance = {},
@@ -287,7 +286,7 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		for k, v in next, (GARRISON_default) do
 			E.func_InitField(cm.GARRISON, k, v)
 		end
-		pd.time = pd.time or pd.tmstp_Daily or ServerTime
+		pd.time = pd.time or pd.tmstp_Daily or serverTime
 		pd.MoneyOnLogin = pd.MoneyOnLogin or pd.Money
 		pd.MoneyOnDaily = pd.MoneyOnDaily or pd.Money
 		pd.MoneyOnWeekly = pd.MoneyOnWeekly or pd.Money
@@ -309,23 +308,33 @@ end
 function EventFrame:init_Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	local featureDefaults = {
-		Config_SPAM_TIME = 2,
-		Config_ADDON_HEIGHT = 20,
-		Config_AchievementShowCompleted = true,
-		Config_ClampedToScreen = false,
 		Config_LevelToShow = 1,
 		Config_LevelToShowMAX = 90,
-		Config_numberFormatMode = 1,
-		Currencies = true,
-		Config_Texture = "Blizzard Raid Bar",
+		isOnlyCurrentServer = false,
 		isOnlyCurrentFaction = false,
 		ShowOnlyCurrentRegion = true,
-		isOnlyCurrentServer = false,
+
 		Config_DebugID_ALL = false,
+
+		Config_numberFormatMode = 1,
+		Config_ADDON_HEIGHT = 20,
+		Config_ClampedToScreen = false,
+
+		Config_ShowAllDifficulties = true,
+		Config_DifficultyAbbreviation = true,
+		Config_MountsInTooltip = false,
+
+
+
+
+
+
+		Config_SPAM_TIME = 2,
+		Config_AchievementShowCompleted = true,
+		Currencies = true,
+		Config_Texture = "Blizzard Raid Bar",
 		GlobalDBVersion = 0,
 		Config_UseTranslit = false,
-		Config_ShowAllDifficulties = true, -- E.Config_ShowAllDifficulties,
-		Config_DifficultyAbbreviation = true,
 	}
 	for k, v in next, (featureDefaults) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
@@ -338,7 +347,9 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	-- opde(Octo_ToDo_DB_Vars)
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
+	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or E.DefaultFont
+
+
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
@@ -367,24 +378,43 @@ function EventFrame:Init_Octo_Cache_DB()
 	E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
 	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
 	E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
+
+	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
+	E.func_BUILD_DUNG_DB()
 end
+
+function E.Init_Octo_Cache_DB()
+	EventFrame:Init_Octo_Cache_DB()
+end
+
+
+
 function EventFrame:init_Octo_profileColors()
 	Octo_profileColors = Octo_profileColors or {}
 	local db = Octo_profileColors
 	db.profiles = db.profiles or {}
-	E.func_CreateNew_profileColors("Default")
+	db.Current_profile = db.Current_profile or E.TEXT_DEFAULT
+	E.func_CreateNew_profileColors(E.TEXT_DEFAULT)
 
-	if Octo_profileColors and Octo_profileColors.profiles then
-		for profileName in next, (Octo_profileColors.profiles) do
-			if profileName ~= "Default" then
-				E.func_CreateNew_profileColors("Default")
+	if db and db.profiles then
+		for profileName in next, (db.profiles) do
+			if profileName ~= E.TEXT_DEFAULT then
+				E.func_CreateNew_profileColors(E.TEXT_DEFAULT)
 			end
 		end
 	end
+
+
 	E.func_CheckALL_profileColors()
 	-- C_Timer.After(1, function()
 	-- 	opde(db)
 	-- end)
+
+
+	E.PROFTBL = db.profiles[db.Current_profile]
+
+
+
 end
 
 function E.init_Octo_profileColors()
@@ -396,11 +426,11 @@ end
 function EventFrame:init_Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
-	E.func_CreateNew_profileKeys("Default")
+	E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
 
 	if Octo_profileKeys and Octo_profileKeys.profiles then
 		for profileName in next, (Octo_profileKeys.profiles) do
-			if profileName ~= "Default" then
+			if profileName ~= E.TEXT_DEFAULT then
 				E.func_CreateNew_profileKeys(profileName)
 			end
 		end
@@ -410,24 +440,19 @@ function EventFrame:init_Octo_profileKeys()
 		local pd = CharInfo and CharInfo.PlayerData
 		if pd and pd.Name and pd.curServer then
 			local key = pd.Name .. " - " .. pd.curServer
-			db.profileKeys[key] = db.profileKeys[key] or "Default"
+			db.profileKeys[key] = db.profileKeys[key] or E.TEXT_DEFAULT
 		end
 	end
 end
 
 
-
-
-
-
-
 function EventFrame:func_Daily_Reset()
-	local ServerTime = GetServerTime()
+	local serverTime = GetServerTime()
 	E.Reset_JournalInstance()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
-		if pd.tmstp_Daily and pd.tmstp_Daily < ServerTime then
+		if pd.tmstp_Daily and pd.tmstp_Daily < serverTime then
 			pd.tmstp_Daily = pd.tmstp_Daily + 86400
 			pd.needResetDaily = true
 			for _, data in next, (E.ALL_UniversalQuests) do
@@ -440,21 +465,16 @@ function EventFrame:func_Daily_Reset()
 			if pd.MoneyOnDaily and pd.Money then
 				pd.MoneyOnDaily = pd.Money
 			end
-			if cm.LegionRemixData and cm.LegionRemixData.barValue and cm.LegionRemixData.barMax then
-				if cm.LegionRemixData.barValue > 3 then
-					cm.LegionRemixData.barValue = cm.LegionRemixData.barValue - 3
-				end
-			end
 		end
 	end
 end
 function EventFrame:func_Weekly_Reset()
-	local ServerTime = GetServerTime()
+	local serverTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo and CharInfo.PlayerData
 		local cm = CharInfo and CharInfo.MASLENGO
 		if pd and cm then
-			if pd.tmstp_Weekly and pd.tmstp_Weekly < ServerTime then
+			if pd.tmstp_Weekly and pd.tmstp_Weekly < serverTime then
 				pd.tmstp_Weekly = pd.tmstp_Weekly + 86400*7
 				pd.needResetWeekly = true
 				if cm.GreatVault and cm.GreatVault.NextWeekReward then
@@ -463,6 +483,10 @@ function EventFrame:func_Weekly_Reset()
 				pd.OwnedKeystoneLevel = nil
 				pd.OwnedKeystoneChallengeMapID = nil
 				pd.RIO_weeklyBest = nil
+
+				if pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID] then
+					pd.MythicPlus[E.MythicPlus_seasonID].RIO_weeklyBest = nil
+				end
 				cm.journalInstance = {}
 				cm.SavedWorldBoss = {}
 				cm.LFGInstance = {}
@@ -543,7 +567,6 @@ local MyEventsTable = {
 	"VARIABLES_LOADED",
 	"PLAYER_LOGIN",
 	"UPDATE_INSTANCE_INFO",
-	"PLAYER_ENTERING_WORLD",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:ADDON_LOADED(addonName)
@@ -571,14 +594,14 @@ function EventFrame:PLAYER_LOGIN()
 	C_Timer.After(1, E.func_UpdateGlobals)
 end
 local function Reset_JournalInstance()
-	local ServerTime = GetServerTime()
+	local serverTime = GetServerTime()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
 		for instanceID, v in next, (cm.journalInstance) do
 			if v then
 				for difficultyID, w in next, (v) do
-					if w and w.instanceReset and w.instanceReset < ServerTime then
+					if w and w.instanceReset and w.instanceReset < serverTime then
 						cm.journalInstance[instanceID][difficultyID] = nil
 					end
 				end
@@ -592,41 +615,4 @@ end
 function EventFrame:UPDATE_INSTANCE_INFO()
 	E.Reset_JournalInstance()
 	E.func_RequestUIUpdate("UPDATE_INSTANCE_INFO")
-end
-function EventFrame:PLAYER_ENTERING_WORLD()
-	local tbl1 = {}
-	local tbl2 = {}
-	local allDifficultyIDs = {
-	}
-	local function setActualInstances()
-		local numTiers = EJ_GetNumTiers()
-		if numTiers < 1 then
-			return
-		end
-		local backupTier = EJ_GetCurrentTier()
-		for tier = 1, numTiers do
-			EJ_SelectTier(tier)
-			for j = 1, 2 do
-				local isRaid = j == 2
-				local index = 1
-				local jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
-				while jInstanceID do
-					local name, _, _, _, _, _, _, _, _, instanceID = EJ_GetInstanceInfo(jInstanceID)
-					tbl1[instanceID] = jInstanceID
-					tbl2[jInstanceID] = instanceID
-					index = index + 1
-					jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
-				end
-			end
-		end
-		EJ_SelectTier(backupTier)
-		return tbl1, tbl2
-	end
-	if Octo_Cache_DB.SavedInstanceID_to_EJInstance then
-		wipe(Octo_Cache_DB.SavedInstanceID_to_EJInstance)
-	end
-	if Octo_Cache_DB.EJInstance_to_SavedInstanceID then
-		wipe(Octo_Cache_DB.EJInstance_to_SavedInstanceID)
-	end
-	Octo_Cache_DB.SavedInstanceID_to_EJInstance, Octo_Cache_DB.EJInstance_to_SavedInstanceID = setActualInstances()
 end

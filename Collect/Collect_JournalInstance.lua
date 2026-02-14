@@ -34,9 +34,9 @@ local function Collect_JournalInstance()
 			local name, _, instanceReset, instanceDifficulty, locked, _, _, _, _, _, totalBosses, defeatedBosses, _, SI_ID = GetSavedInstanceInfo(index)
 			if locked then
 				local EJ_ID = E.func_SI_to_EJ(SI_ID)
-				collectMASLENGO.journalInstance[EJ_ID] = collectMASLENGO.journalInstance[EJ_ID] or {}
-				collectMASLENGO.journalInstance[EJ_ID][instanceDifficulty] = collectMASLENGO.journalInstance[EJ_ID][instanceDifficulty] or {}
-				local ji = collectMASLENGO.journalInstance[EJ_ID][instanceDifficulty]
+				collectMASLENGO.journalInstance[SI_ID] = collectMASLENGO.journalInstance[SI_ID] or {}
+				collectMASLENGO.journalInstance[SI_ID][instanceDifficulty] = collectMASLENGO.journalInstance[SI_ID][instanceDifficulty] or {}
+				local ji = collectMASLENGO.journalInstance[SI_ID][instanceDifficulty]
 				ji.EJ_ID = EJ_ID
 				ji.SI_ID = SI_ID
 				-- wipe(ji)
@@ -106,6 +106,6 @@ local function Collect_JournalInstance()
 end
 ----------------------------------------------------------------
 function E.Collect_JournalInstance()
-	E.func_SpamBlock(Collect_JournalInstance, true)
+	E.func_SpamBlock(Collect_JournalInstance, false)
 end
 ----------------------------------------------------------------

@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 738, defS = true,}, -- Lesser Charm of Good Fortune
@@ -28,6 +29,8 @@ local function tempFunction()
 		{id = 776, defS = true,}, -- Warforged Seal
 		{id = 402, defS = true,}, -- Ironpaw Token
 		{id = 2778, defS = false,}, -- Bronze (remix) -- https://www.wowhead.com/currency=2778/bronze#items;0-19+20
+		-- {id = 3251, defS = false,}, -- REMIX PANDA?
+		-- {id = 3293, defS = false,}, -- REMIX PANDA?
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -35,12 +38,24 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 369, defS = true,}, -- Siege of Orgrimmar
-			{id = 362, defS = true,}, -- Throne of Thunder
-			{id = 320, defS = true,}, -- Terrace of Endless Spring
-			{id = 330, defS = true,}, -- Heart of Fear
-			{id = 317, defS = true,}, -- Mogu'shan Vaults
-			-- {id = 322, defS = true,}, -- Pandaria
+		-- Raid
+		-- {id = 870, defS = true,}, -- Pandaria
+		{id = 1136, defS = true,}, -- Siege of Orgrimmar
+		{id = 1098, defS = true,}, -- Throne of Thunder
+		{id = 996, defS = true,}, -- Terrace of Endless Spring
+		{id = 1009, defS = true,}, -- Heart of Fear
+		{id = 1008, defS = true,}, -- Mogu'shan Vaults
+		-- Dungeon
+		-- {id = 1004, defS = true,}, -- Scarlet Monastery
+		-- {id = 961, defS = true,}, -- Stormstout Brewery
+		-- {id = 1358, defS = true,}, -- Upper Blackrock Spire
+		-- {id = 1001, defS = true,}, -- Scarlet Halls
+		-- {id = 959, defS = true,}, -- Shado-Pan Monastery
+		-- {id = 960, defS = true,}, -- Temple of the Jade Serpent
+		-- {id = 962, defS = true,}, -- Gate of the Setting Sun
+		-- {id = 994, defS = true,}, -- Mogu'shan Palace
+		-- {id = 1011, defS = true,}, -- Siege of Niuzao Temple
+		-- {id = 1007, defS = true,}, -- Scholomance
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -102,10 +117,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 6,
 		},
-
-
-
-
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -121,27 +132,21 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 1,
 		},
-
-
-
 		-- { -- no longer weekly
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(390)..": "..E.func_GetQuestName(32641, false)
-		-- 	end,
-		-- 	name_save = "WarforgedSeals",
-		-- 	defS = true,
-		-- 	reset = "Weekly",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 		{33133, FactionOrClass = {Horde = true,}},
-		-- 		{33134, FactionOrClass = {Alliance = true,}},
-		-- 	},
-		-- 	-- forcedMaxQuest = 1,
+		--     showTooltip = true,
+		--     TextLeft = function()
+		--         return E.func_GetMapName(390)..": "..E.func_GetQuestName(32641, false)
+		--     end,
+		--     name_save = "WarforgedSeals",
+		--     defS = true,
+		--     reset = "Weekly",
+		--     desc = categoryKey,
+		--     quests = {
+		--         {33133, FactionOrClass = {Horde = true,}},
+		--         {33134, FactionOrClass = {Alliance = true,}},
+		--     },
+		--     -- forcedMaxQuest = 1,
 		-- },
-
-
-
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -156,11 +161,6 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 1,
 		},
-
-
-
-
-
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -175,14 +175,12 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 1,
 		},
-
-
-
-
-
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

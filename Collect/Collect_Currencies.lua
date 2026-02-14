@@ -241,7 +241,7 @@ function E.func_DEBUG_CURRENCY_TRANSFER()
 
 						pd.curServerShort = E.func_GetRealmShortName(realmName)
 
-						print ("ADD NEW CHARACTER:", classColorHex..fullCharacterName.."|r")
+						E.func_PrintMessage("ADD NEW CHARACTER: "..classColorHex..fullCharacterName.."|r")
 						foundNewCharacter = true
 						result[characterGUID] = fullCharacterName
 					end

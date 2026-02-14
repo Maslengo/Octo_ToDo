@@ -1,9 +1,0 @@
-<Ui>
-	<Script file="func_Options_MAIN.lua"/>
-
-	<Script file="tabs\func_01_General.lua"/>
-	<Script file="tabs\func_02_Colors.lua"/>
-	<Script file="tabs\func_03_Tooltip.lua"/>
-	<Script file="tabs\func_04_Characters.lua"/>
-	<Script file="tabs\func_05_Other.lua"/>
-</Ui>

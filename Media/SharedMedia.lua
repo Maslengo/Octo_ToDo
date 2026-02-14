@@ -7,7 +7,7 @@ local function RegisterMyTables(dataType, value, number, index, path)
 	if dataType == "sound" then
 		LibSharedMedia:Register(dataType, leftText.." "..E.func_Gradient(value), path..value..[[.ogg]])
 	elseif dataType == "font" then
-		LibSharedMedia:Register(dataType, E.func_Gradient(value), path..value..[[.TTF]], LibSharedMedia.LOCALE_BIT_ruRU+LibSharedMedia.LOCALE_BIT_western)
+		LibSharedMedia:Register(dataType, E.func_Gradient(value), path..value..[[.TTF]], LibSharedMedia.LOCALE_BIT_ruRU + LibSharedMedia.LOCALE_BIT_western)
 	elseif dataType == "border" then
 		LibSharedMedia:Register(dataType, E.func_Gradient(value), path..value..[[.tga]])
 	elseif dataType == "statusbar" then
@@ -18,6 +18,8 @@ end
 do
 	local font_tbl = {
 		"Expressway Rg Bold",
+		-- "Fira Code Regular",
+		-- "wqy-zenhei",
 	}
 	local path = [[Interface\Addons\]]..GlobalAddonName..[[\Media\Fonts\]]
 	for index, value in ipairs(font_tbl) do

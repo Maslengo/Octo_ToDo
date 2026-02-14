@@ -216,11 +216,9 @@ function E.func_Hex2RGBA(hex, forcedAlpha)
 	-- Формат: |cAARRGGBB
 	-- Берем только hex часть после |c (10 символов всего)
 	local a = tonumber(hex:sub(3, 4), 16) or 255 -- AA
-
 	local r = tonumber(hex:sub(5, 6), 16) or 255 -- RR
 	local g = tonumber(hex:sub(7, 8), 16) or 255 -- GG
 	local b = tonumber(hex:sub(9, 10), 16) or 255 -- BB
-
 	return r/255, g/255, b/255, forcedAlpha or a/255
 end
 ----------------------------------------------------------------
@@ -408,7 +406,7 @@ function E.func_SpamBlock(...)
 	local key = (""):join(tostringall(...))
 	local func, needCheckCombat, newSpamTimer = ...
 	if type(func) ~= "function" then return end
-	local SPAM_TIME = newSpamTimer and newSpamTimer or E.SPAM_TIME
+	local SPAM_TIME = newSpamTimer and newSpamTimer or Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_SPAM_TIME or 2
 	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
 		E._inCombats[key] = true
 		return true -- заблочена и добавлена в выполнение после сброса комбата
@@ -449,22 +447,22 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					-- if not InCombatLockdown() then
-						Octo_profileKeys.isSettingsEnabled = nil
-						if frame then
-							if func then
-								func()
-							else
-								frame:SetShown(not frame:IsShown())
+					Octo_profileKeys.isSettingsEnabled = nil
+					if frame then
+						if func then
+							func()
+						else
+							frame:SetShown(not frame:IsShown())
+						end
+						if frame:IsShown() then
+							if SettingsPanel:IsVisible() then
+								HideUIPanel(SettingsPanel)
 							end
-							if frame:IsShown() then
-								if SettingsPanel:IsVisible() then
-									HideUIPanel(SettingsPanel)
-								end
-								if GameMenuFrame:IsVisible() then
-									HideUIPanel(GameMenuFrame)
-								end
+							if GameMenuFrame:IsVisible() then
+								HideUIPanel(GameMenuFrame)
 							end
 						end
+					end
 					-- end
 				elseif button == "RightButton" then
 					E.func_OpenToCategory(frame)
@@ -619,24 +617,18 @@ function E.func_GetColorGradient(value, minValue, maxValue)
 	then
 		return E.COLOR_GREEN
 	end
-
 	local r_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_r
 	local g_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_g
 	local b_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_b
 	local a_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_a
-
 	local r_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_r
 	local g_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_g
 	local b_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_b
 	local a_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_a
-
 	local r_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_r
 	local g_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_g
 	local b_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_b
 	local a_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_a
-
-
-
 	if minValue >= maxValue then
 		return E.func_RGB2Hex(r_max, g_max, b_max, a_max)
 	end
@@ -914,7 +906,7 @@ function E.func_GetPlayerRealm()
 	return result
 end
 function E.SafeCall(func, ...)
-	local success, result = pcall(func,...)
+	local success, result = pcall(func, ...)
 	if not success then
 		-- Логирование ошибки
 		return nil
@@ -1319,7 +1311,6 @@ function E.func_IsFactionParagonForCurrentPlayer(id)
 		return IsFactionParagon(id)
 	end
 end
-
 function E.func_GetFriendshipReputation(id)
 	return GetFriendshipReputation(id)
 end
@@ -1362,11 +1353,9 @@ function E.func_UpdateFont()
 	local Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
 	local Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
 	local fontPath = LibSharedMedia:Fetch("font", Config_FontStyle)
-
 	E.OctoFont10:CopyFontObject(GameTooltipText)
 	E.OctoFont11:CopyFontObject(GameTooltipText)
 	E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
-
 	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
 	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
 	E.OctoFont22:SetFont(fontPath, 22, Config_FontFlags)
@@ -1471,131 +1460,86 @@ local function func_UpdateGlobals()
 			E.GLOBAL_LINE_HEIGHT = db.Config_ADDON_HEIGHT
 			E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
 			E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
-			E.ddMenuButtonHeight = E.GLOBAL_LINE_HEIGHT
 		end
 		db.FontOption = db.FontOption or {}
 		db.FontOption[E.curLocaleLang] = db.FontOption[E.curLocaleLang] or {}
 		if db.FontOption[E.curLocaleLang].Config_FontStyle then
 			E.func_UpdateFont()
 		end
-		if db.Config_DebugID_ALL ~= nil then
-			E.Config_DebugID_ALL = db.Config_DebugID_ALL
-		end
-		if db.Config_SPAM_TIME ~= nil then
-			E.SPAM_TIME = db.Config_SPAM_TIME
-		end
-		if db.Config_ShowAllDifficulties ~= nil then
-			E.Config_ShowAllDifficulties = db.Config_ShowAllDifficulties
-		end
-		if db.Config_DifficultyAbbreviation ~= nil then
-			E.Config_DifficultyAbbreviation = db.Config_DifficultyAbbreviation
-		end
-		if db.Config_ClampedToScreen ~= nil then
-			E.Config_ClampedToScreen = db.Config_ClampedToScreen
-			-- if Octo_MainFrame then
-			-- 	Octo_MainFrame:SetClampedToScreen(E.Config_ClampedToScreen)
-			-- end
-			-- if Octo_SettingsFrame then
-			-- 	Octo_SettingsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
-			-- end
-			-- if Octo_EquipmentsFrame then
-			-- 	Octo_EquipmentsFrame:SetClampedToScreen(E.Config_ClampedToScreen)
-			-- end
-			-- -- if Octo_TooltipFrame then
-			-- -- Octo_TooltipFrame:SetClampedToScreen(E.Config_ClampedToScreen)
-			-- -- end
-			-- if Octo_MainFrame_QuestsChanged then
-			-- 	Octo_MainFrame_QuestsChanged:SetClampedToScreen(E.Config_ClampedToScreen)
-			-- end
-			-- if Octo_MainFrame_Achievements then
-			-- 	Octo_MainFrame_Achievements:SetClampedToScreen(E.Config_ClampedToScreen)
-			-- end
+		if Octo_profileColors and Octo_profileColors.profiles and Octo_profileColors.Current_profile then
+			E.func_CreateNew_profileColors(Octo_profileColors.Current_profile)
 		end
 		----------------------------------------------------------------
 		if E.PROFTBL then
 			----------------------------------------------------------------
-			local r = E.PROFTBL.ConfigColor_faction_Horde_r
-			local g = E.PROFTBL.ConfigColor_faction_Horde_g
-			local b = E.PROFTBL.ConfigColor_faction_Horde_b
-			local a = E.PROFTBL.ConfigColor_faction_Horde_a
-			E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
-			----------------------------------------------------------------
-			local r = E.PROFTBL.ConfigColor_faction_Alliance_r
-			local g = E.PROFTBL.ConfigColor_faction_Alliance_g
-			local b = E.PROFTBL.ConfigColor_faction_Alliance_b
-			local a = E.PROFTBL.ConfigColor_faction_Alliance_a
-			E.COLOR_ALLIANCE = E.func_RGB2Hex(r, g, b, a)
-			----------------------------------------------------------------
-
-
-
-
-
-			local r = E.PROFTBL.ConfigColor_faction_Neutral_r
-			local g = E.PROFTBL.ConfigColor_faction_Neutral_g
-			local b = E.PROFTBL.ConfigColor_faction_Neutral_b
-			local a = E.PROFTBL.ConfigColor_faction_Neutral_a
-			E.COLOR_NEUTRAL = E.func_RGB2Hex(r, g, b, a)
-			E.COLOR_FACTION = E.FACTION_CURRENT == "Horde" and E.COLOR_HORDE or E.FACTION_CURRENT == "Alliance" and E.COLOR_ALLIANCE or E.Class_Monk_Color
-
-
-
-			----------------------------------------------------------------
-			local r = E.PROFTBL.ConfigColor_MAIN_MainFrame_r
-			local g = E.PROFTBL.ConfigColor_MAIN_MainFrame_g
-			local b = E.PROFTBL.ConfigColor_MAIN_MainFrame_b
-			local a = E.PROFTBL.ConfigColor_MAIN_MainFrame_a
-
-			local UseFaction = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseFaction_CONFIG
-			local UseClass = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseClass_CONFIG
-			E.backgroundColorR = r
-			E.backgroundColorG = g
-			E.backgroundColorB = b
-			E.backgroundColorA = a
-			-- E.func_DB_FRAME_Color(Octo_MainFrame, "frame", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "frame", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "frame", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "frame", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_SettingsFrame, "frame", r, g, b, a, UseFaction, UseClass)
-			for k, frame in next, (E.OctoFrames_Dropdowns) do
-				E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
+			do
+				local r = E.PROFTBL.ConfigColor_faction_Horde_r
+				local g = E.PROFTBL.ConfigColor_faction_Horde_g
+				local b = E.PROFTBL.ConfigColor_faction_Horde_b
+				local a = E.PROFTBL.ConfigColor_faction_Horde_a
+				E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
 			end
 			----------------------------------------------------------------
-
-			local r = E.PROFTBL.ConfigColor_MAIN_Border_r
-			local g = E.PROFTBL.ConfigColor_MAIN_Border_g
-			local b = E.PROFTBL.ConfigColor_MAIN_Border_b
-			local a = E.PROFTBL.ConfigColor_MAIN_Border_a
-			local UseFaction = E.PROFTBL.ConfigColor_MAIN_Border_UseFaction_CONFIG
-			local UseClass = E.PROFTBL.ConfigColor_MAIN_Border_UseClass_CONFIG
-			-- E.func_DB_FRAME_Color(Octo_MainFrame, "border", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_EquipmentsFrame, "border", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_MainFrame_QuestsChanged, "border", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_MainFrame_Achievements, "border", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_TooltipFrame, "border", r, g, b, a, UseFaction, UseClass)
-			E.func_DB_FRAME_Color(Octo_SettingsFrame, "border", r, g, b, a, UseFaction, UseClass)
-			for k, frame in next, (E.OctoFrames_Dropdowns) do
-				E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
+			do
+				local r = E.PROFTBL.ConfigColor_faction_Alliance_r
+				local g = E.PROFTBL.ConfigColor_faction_Alliance_g
+				local b = E.PROFTBL.ConfigColor_faction_Alliance_b
+				local a = E.PROFTBL.ConfigColor_faction_Alliance_a
+				E.COLOR_ALLIANCE = E.func_RGB2Hex(r, g, b, a)
 			end
-
-
-		----------------------------------------------------------------
-
-
-			local r = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r
-			local g = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g
-			local b = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b
-			local a = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a
-			local UseFaction = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseFaction_CONFIG
-			local UseClass = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseClass_CONFIG
-
-
-			E.func_DB_FRAME_Color(Octo_TooltipFrame, "frame", r, g, b, a, UseFaction, UseClass)
-		----------------------------------------------------------------
+			----------------------------------------------------------------
+			do
+				local r = E.PROFTBL.ConfigColor_faction_Neutral_r
+				local g = E.PROFTBL.ConfigColor_faction_Neutral_g
+				local b = E.PROFTBL.ConfigColor_faction_Neutral_b
+				local a = E.PROFTBL.ConfigColor_faction_Neutral_a
+				E.COLOR_NEUTRAL = E.func_RGB2Hex(r, g, b, a)
+				E.COLOR_FACTION = E.FACTION_CURRENT == "Horde" and E.COLOR_HORDE or E.FACTION_CURRENT == "Alliance" and E.COLOR_ALLIANCE or E.Class_Monk_Color
+			end
+			----------------------------------------------------------------
+			do
+				local r = E.PROFTBL.ConfigColor_MAIN_MainFrame_r
+				local g = E.PROFTBL.ConfigColor_MAIN_MainFrame_g
+				local b = E.PROFTBL.ConfigColor_MAIN_MainFrame_b
+				local a = E.PROFTBL.ConfigColor_MAIN_MainFrame_a
+				local UseFaction = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseFaction_CONFIG
+				local UseClass = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseClass_CONFIG
+				for k, frame in next, (E.OctoTable_ColoredFrames) do
+					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
+				end
+				for k, frame in next, (E.OctoFrames_Dropdowns) do
+					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
+				end
+			end
+			----------------------------------------------------------------
+			do
+				local r = E.PROFTBL.ConfigColor_MAIN_Border_r
+				local g = E.PROFTBL.ConfigColor_MAIN_Border_g
+				local b = E.PROFTBL.ConfigColor_MAIN_Border_b
+				local a = E.PROFTBL.ConfigColor_MAIN_Border_a
+				local UseFaction = E.PROFTBL.ConfigColor_MAIN_Border_UseFaction_CONFIG
+				local UseClass = E.PROFTBL.ConfigColor_MAIN_Border_UseClass_CONFIG
+				for k, frame in next, (E.OctoTable_ColoredFrames) do
+					E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
+				end
+				for k, frame in next, (E.OctoFrames_Dropdowns) do
+					E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
+				end
+			end
+			----------------------------------------------------------------
+			do
+				local r = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r
+				local g = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g
+				local b = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b
+				local a = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a
+				local UseFaction = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseFaction_CONFIG
+				local UseClass = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseClass_CONFIG
+				E.func_DB_FRAME_Color(Octo_TooltipFrame, "frame", r, g, b, a, UseFaction, UseClass)
+			end
+			----------------------------------------------------------------
 		end
 		----------------------------------------------------------------
 	end
-	E.func_UpdateCurrent_profileKeys()
 end
 function E.func_UpdateGlobals()
 	E.func_SpamBlock(func_UpdateGlobals, true, 1)
@@ -1616,46 +1560,44 @@ function E.func_DB_REP_COLOR(repType, reaction)
 	-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
 	-- end
 	if repType == 1 and reaction and type(reaction) == "number" and reaction > 0 then
-	    -- local colorKeys = {
-	    --     [1] = "ConfigColor_Rep_Standard_1",
-	    --     [2] = "ConfigColor_Rep_Standard_2",
-	    --     [3] = "ConfigColor_Rep_Standard_3",
-	    --     [4] = "ConfigColor_Rep_Standard_4",
-	    --     [5] = "ConfigColor_Rep_Standard_5",
-	    --     [6] = "ConfigColor_Rep_Standard_6",
-	    --     [7] = "ConfigColor_Rep_Standard_7",
-	    --     [8] = "ConfigColor_Rep_Standard_8",
-	    -- }
-
-	    -- local key = colorKeys[reaction]
-        -- local r = E.PROFTBL[key .. "_r"]
-        -- local g = E.PROFTBL[key .. "_g"]
-        -- local b = E.PROFTBL[key .. "_b"]
-        -- local a = E.PROFTBL[key .. "_a"]
-
-	    local baseKey = string.format("ConfigColor_Rep_Standard_%d", reaction)
-	    local r = E.PROFTBL[baseKey .. "_r"]
-	    local g = E.PROFTBL[baseKey .. "_g"]
-	    local b = E.PROFTBL[baseKey .. "_b"]
-	    local a = E.PROFTBL[baseKey .. "_a"]
+		-- local colorKeys = {
+		-- [1] = "ConfigColor_Rep_Standard_1",
+		-- [2] = "ConfigColor_Rep_Standard_2",
+		-- [3] = "ConfigColor_Rep_Standard_3",
+		-- [4] = "ConfigColor_Rep_Standard_4",
+		-- [5] = "ConfigColor_Rep_Standard_5",
+		-- [6] = "ConfigColor_Rep_Standard_6",
+		-- [7] = "ConfigColor_Rep_Standard_7",
+		-- [8] = "ConfigColor_Rep_Standard_8",
+		-- }
+		-- local key = colorKeys[reaction]
+		-- local r = E.PROFTBL[key.."_r"]
+		-- local g = E.PROFTBL[key.."_g"]
+		-- local b = E.PROFTBL[key.."_b"]
+		-- local a = E.PROFTBL[key.."_a"]
+		local baseKey = string.format("ConfigColor_Rep_Standard_%d", reaction)
+		local r = E.PROFTBL[baseKey.."_r"]
+		local g = E.PROFTBL[baseKey.."_g"]
+		local b = E.PROFTBL[baseKey.."_b"]
+		local a = E.PROFTBL[baseKey.."_a"]
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif repType == 2 then
-							local r = E.PROFTBL.ConfigColor_Rep_Friend_r
-							local g = E.PROFTBL.ConfigColor_Rep_Friend_g
-							local b = E.PROFTBL.ConfigColor_Rep_Friend_b
-							local a = E.PROFTBL.ConfigColor_Rep_Friend_a
+		local r = E.PROFTBL.ConfigColor_Rep_Friend_r
+		local g = E.PROFTBL.ConfigColor_Rep_Friend_g
+		local b = E.PROFTBL.ConfigColor_Rep_Friend_b
+		local a = E.PROFTBL.ConfigColor_Rep_Friend_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif repType == 3 then
-							local r = E.PROFTBL.ConfigColor_Rep_Major_r
-							local g = E.PROFTBL.ConfigColor_Rep_Major_g
-							local b = E.PROFTBL.ConfigColor_Rep_Major_b
-							local a = E.PROFTBL.ConfigColor_Rep_Major_a
+		local r = E.PROFTBL.ConfigColor_Rep_Major_r
+		local g = E.PROFTBL.ConfigColor_Rep_Major_g
+		local b = E.PROFTBL.ConfigColor_Rep_Major_b
+		local a = E.PROFTBL.ConfigColor_Rep_Major_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif repType == 4 then
-							local r = E.PROFTBL.ConfigColor_Rep_Paragon_r
-							local g = E.PROFTBL.ConfigColor_Rep_Paragon_g
-							local b = E.PROFTBL.ConfigColor_Rep_Paragon_b
-							local a = E.PROFTBL.ConfigColor_Rep_Paragon_a
+		local r = E.PROFTBL.ConfigColor_Rep_Paragon_r
+		local g = E.PROFTBL.ConfigColor_Rep_Paragon_g
+		local b = E.PROFTBL.ConfigColor_Rep_Paragon_b
+		local a = E.PROFTBL.ConfigColor_Rep_Paragon_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	end
 	return result
@@ -1665,28 +1607,28 @@ function E.func_DB_COV_COLOR(covenantID)
 	local result = E.COLOR_WHITE
 	if not E.PROFTBL then return result end
 	if covenantID == 1 then
-							local r = E.PROFTBL.ConfigColor_KYRIAN_r
-							local g = E.PROFTBL.ConfigColor_KYRIAN_g
-							local b = E.PROFTBL.ConfigColor_KYRIAN_b
-							local a = E.PROFTBL.ConfigColor_KYRIAN_a
+		local r = E.PROFTBL.ConfigColor_KYRIAN_r
+		local g = E.PROFTBL.ConfigColor_KYRIAN_g
+		local b = E.PROFTBL.ConfigColor_KYRIAN_b
+		local a = E.PROFTBL.ConfigColor_KYRIAN_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif covenantID == 2 then
-							local r = E.PROFTBL.ConfigColor_VENTHYR_r
-							local g = E.PROFTBL.ConfigColor_VENTHYR_g
-							local b = E.PROFTBL.ConfigColor_VENTHYR_b
-							local a = E.PROFTBL.ConfigColor_VENTHYR_a
+		local r = E.PROFTBL.ConfigColor_VENTHYR_r
+		local g = E.PROFTBL.ConfigColor_VENTHYR_g
+		local b = E.PROFTBL.ConfigColor_VENTHYR_b
+		local a = E.PROFTBL.ConfigColor_VENTHYR_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif covenantID == 3 then
-							local r = E.PROFTBL.ConfigColor_NIGHTFAE_r
-							local g = E.PROFTBL.ConfigColor_NIGHTFAE_g
-							local b = E.PROFTBL.ConfigColor_NIGHTFAE_b
-							local a = E.PROFTBL.ConfigColor_NIGHTFAE_a
+		local r = E.PROFTBL.ConfigColor_NIGHTFAE_r
+		local g = E.PROFTBL.ConfigColor_NIGHTFAE_g
+		local b = E.PROFTBL.ConfigColor_NIGHTFAE_b
+		local a = E.PROFTBL.ConfigColor_NIGHTFAE_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	elseif covenantID == 4 then
-							local r = E.PROFTBL.ConfigColor_NECROLORD_r
-							local g = E.PROFTBL.ConfigColor_NECROLORD_g
-							local b = E.PROFTBL.ConfigColor_NECROLORD_b
-							local a = E.PROFTBL.ConfigColor_NECROLORD_a
+		local r = E.PROFTBL.ConfigColor_NECROLORD_r
+		local g = E.PROFTBL.ConfigColor_NECROLORD_g
+		local b = E.PROFTBL.ConfigColor_NECROLORD_b
+		local a = E.PROFTBL.ConfigColor_NECROLORD_a
 		result = E.func_RGB2Hex(r, g, b, a)
 	end
 	return result
@@ -1796,8 +1738,8 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	bg:SetTexture(E.TEXTURE_CHAR_PATH) --E.TEXTURE_HIGHLIGHT_PATH
 	bg:SetAlpha(0)
 	-- bg:SetAllPoints(frame)
-	bg:SetPoint("TOPLEFT", frame, "TOPLEFT", 1, 0)  -- отступ слева 1 пиксель
-	bg:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -1, 0)  -- отступ справа 1 пиксель
+	bg:SetPoint("TOPLEFT", frame, "TOPLEFT", 1, 0) -- отступ слева 1 пиксель
+	bg:SetPoint("BOTTOMRIGHT", frame, "BOTTOMRIGHT", -1, 0) -- отступ справа 1 пиксель
 	frame.highlight = bg
 	-- =========================
 	-- Animation (fade-out)
@@ -1808,7 +1750,6 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	alpha:SetOrder(1)
 	alpha:SetDuration(0.3)
 	alpha:SetSmoothing("IN_OUT")
-
 	alpha:SetToAlpha(0)
 	ag.alpha = alpha
 	frame.highlightLeave = ag
@@ -1825,7 +1766,6 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	end
 	frame:SetScript("OnEnter", function(self)
 			frame.highlight:Show()
-
 			ResetHighlightState(self)
 			self.highlight:SetAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
 	end)
@@ -1843,15 +1783,12 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 			local g = E.PROFTBL.ConfigColor_Highlight_g
 			local b = E.PROFTBL.ConfigColor_Highlight_b
 			local a = E.PROFTBL.ConfigColor_Highlight_a
-
-
 			local UseFaction = E.PROFTBL.ConfigColor_Highlight_UseFaction_CONFIG
 			local UseClass = E.PROFTBL.ConfigColor_Highlight_UseClass_CONFIG
 			alpha:SetFromAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
 			E.func_DB_FRAME_Color(frame, "highlight", r, g, b, a, UseFaction, UseClass)
 			ResetHighlightState(self)
 	end)
-
 	frame:GetScript("OnShow")(frame)
 end
 ----------------------------------------------------------------
@@ -1867,14 +1804,10 @@ end
 -- -- Settings.OpenToCategory(category:GetID(), addon)
 -- end
 -- end
-
-
 function E.func_Create_Highlight(frame, owner)
 	frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoPropagateTemplate")
 	E.func_ApplyHighlightTemplate(frame.Highlight, frame)
 end
-
-
 function E.func_OpenToCategory(frame)
 	if InCombatLockdown() then return end
 	if frame and frame:IsShown() then
@@ -1883,11 +1816,12 @@ function E.func_OpenToCategory(frame)
 	if SettingsPanel:IsVisible() then
 		HideUIPanel(SettingsPanel)
 	else
-		if C_SettingsUtil and E.SettingsCategoryID then
-			C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
-		elseif Settings then
-			Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
-		end
+		E.openConfig()
+	-- 	if C_SettingsUtil and E.SettingsCategoryID then
+	-- 		C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
+	-- 	elseif Settings then
+	-- 		Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+	-- 	end
 	end
 end
 ----------------------------------------------------------------
@@ -1908,7 +1842,8 @@ end
 ----------------------------------------------------------------
 local soundFile_OnClick = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\OnClick.ogg"
 function E.sound_OnClick()
-	PlaySoundFile(soundFile_OnClick, "Master")
+	PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+	-- PlaySoundFile(soundFile_OnClick, "Master")
 end
 ----------------------------------------------------------------
 local soundFile_Slider_OnValueChanged = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Slider_OnValueChanged.ogg"
@@ -1931,8 +1866,289 @@ function E.sound_DropDown_Select()
 	PlaySoundFile(soundFile_DropDown_Select, "Master")
 end
 ----------------------------------------------------------------
+local counter = 0
+local chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+local charLen = #chars
+local function RandomString(len)
+	local t = {}
+	for i = 1, len do
+		local r = math.random(charLen)
+		t[i] = chars:sub(r, r)
+	end
+	return table.concat(t)
+end
+function E.func_GenerateID()
+	counter = counter + 1
+	local result = GlobalAddonName.."_"..RandomString(8).."_"..counter
+	return result
+end
 ----------------------------------------------------------------
+-- local allRanks = {}
+-- for i = 1, 15 do
+-- local text = AZERITE_ESSENCE_RANK:format(i)
+-- allRanks[text] = true
+-- end
+-- local removePatter = AZERITE_ESSENCE_RANK:format(9999)
+-- removePatter = removePatter:gsub("9999", "")
+local scanner = CreateFrame("GameTooltip", "RankScannerTooltip", nil, "GameTooltipTemplate")
+scanner:SetOwner(UIParent, "ANCHOR_NONE")
+function E.GetItemRankFromLink(ItemLink)
+	if not ItemLink then
+		return nil
+	end
+	-- "15 rank" ENG
+	-- "15-й уровень" RU
+	-- "|cFF 0FFFF15-й уровень|r"
+	local newPattern = AZERITE_ESSENCE_RANK:gsub("%%d", "^.-(%%d+).*")
+	scanner:SetHyperlink(ItemLink)
+	-- Проходим строки тултипа
+	for i = 1, scanner:NumLines() do
+		-- if i == 2 then
+		local line = _G["RankScannerTooltipTextLeft"..i]
+		if line then
+			local text = line:GetText()
+			if text then
+				local rank = text:gsub("|[Cc][%x ][%x ][%x ][%x ][%x ][%x ][%x ][%x ]", ""):match("%d+")
+				rank = tonumber(rank)
+				if rank then
+					return rank
+				end
+				-- text = text:gsub("|r", "")
+				-- text = text:gsub("|cFF 0FFFF", "")
+				-- if allRanks[text] then
+				-- text = text:gsub(removePatter, "")
+				-- return tonumber(text)
+				-- end
+			end
+		end
+		-- end
+	end
+	return nil
+end
 ----------------------------------------------------------------
+-- 4592 ms
+-- function E.func_BUILD_DUNG_DB_OLD()
+-- local serverTime = GetServerTime()
+-- -- if Octo_Cache_DB and Octo_Cache_DB.LastUpdateDB then
+-- -- if Octo_Cache_DB.LastUpdateDB > serverTime then
+-- -- return
+-- -- else
+-- -- end
+-- -- end
+-- -- E.DEBUG_START()
+-- local allDifficultyIDs = {}
+-- for diffID, v in next, (E.OctoTable_Difficulties) do
+-- table.insert(allDifficultyIDs, diffID)
+-- end
+-- -- local allDifficultyIDs = {
+-- -- 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20,
+-- -- 23, 24, 33, 34, 150, 151, 205, 216, 220
+-- -- }
+-- -- SEARCH_DB_LOADED <- этот ивент?
+-- local function CollectAllInstancesWithDifficultiesAsync(callback)
+-- local result = {}
+-- local backupTier = EJ_GetCurrentTier()
+-- local backupDifficulty = EJ_GetDifficulty()
+-- local numTiers = EJ_GetNumTiers()
+-- if not numTiers or numTiers < 1 then
+-- callback(result)
+-- return
+-- end
+-- -- Создаем очередь задач
+-- local tasks = {}
+-- local currentTask = 1
+-- ----------------------------------------------------------------
+-- -- Генерируем все задачи
+-- ----------------------------------------------------------------
+-- for tier = 1, numTiers do
+-- for j = 1, 2 do
+-- local isRaid = j == 2
+-- -- local isRaid = true -- Только рейды
+-- -- local isRaid = false -- Только подземелья
+-- local index = 1
+-- EJ_SelectTier(tier)
+-- local jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+-- while jInstanceID do
+-- table.insert(tasks, {
+-- tier = tier,
+-- isRaid = isRaid,
+-- jInstanceID = jInstanceID
+-- })
+-- index = index + 1
+-- jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+-- end
+-- end
+-- end
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- ----------------------------------------------------------------
+-- -- Функция для подсчета боссов на определенной сложности
+-- local function CountBossesForDifficulty(difficultyID)
+-- local count = 0
+-- local encounterIndex = 1
+-- local encounterID = EJ_GetEncounterInfoByIndex(encounterIndex)
+-- while encounterID do
+-- count = count + 1
+-- encounterIndex = encounterIndex + 1
+-- encounterID = EJ_GetEncounterInfoByIndex(encounterIndex)
+-- end
+-- return count
+-- end
+-- -- Функция для обработки одной задачи
+-- local function ProcessNextTask()
+-- if currentTask > #tasks then
+-- -- Завершаем
+-- EJ_SetDifficulty(backupDifficulty)
+-- EJ_SelectTier(backupTier)
+-- -- E.DEBUG_STOP()
+-- callback(result)
+-- return
+-- end
+-- local task = tasks[currentTask]
+-- currentTask = currentTask + 1
+-- -- Обрабатываем одну инстанцию
+-- EJ_SelectTier(task.tier)
+-- EJ_SelectInstance(task.jInstanceID)
+-- local name, _, _, _, _, _, _, _, _, instanceID, _, isRaid = EJ_GetInstanceInfo()
+-- local difficulties = {}
+-- -- Для каждой сложности считаем боссов
+-- for diffID, v in next, (E.OctoTable_Difficulties) do
+-- -- for _, diffID in ipairs(allDifficultyIDs) do
+-- EJ_SetDifficulty(diffID)
+-- if EJ_IsValidInstanceDifficulty(diffID) then
+-- local bossCount = CountBossesForDifficulty(diffID)
+-- if bossCount > 0 then
+-- difficulties[diffID] = bossCount
+-- end
+-- end
+-- end
+-- result[instanceID] = {
+-- -- SI_ID = instanceID,
+-- -- JI_ID = task.jInstanceID,
+-- -- name = name,
+-- -- tier = task.tier,
+-- -- isRaid = isRaid,
+-- difficulties = difficulties, -- diffID -> количество боссов
+-- }
+-- -- Планируем следующую задачу на следующий кадр
+-- C_Timer.After(0, ProcessNextTask)
+-- end
+-- -- Начинаем обработку
+-- ProcessNextTask()
+-- end
+-- local tbl1 = {}
+-- local tbl2 = {}
+-- local function setActualInstances()
+-- local numTiers = EJ_GetNumTiers()
+-- if numTiers < 1 then
+-- return
+-- end
+-- local backupTier = EJ_GetCurrentTier()
+-- for tier = 1, numTiers do
+-- EJ_SelectTier(tier)
+-- for j = 1, 2 do
+-- local isRaid = j == 2
+-- local index = 1
+-- local jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+-- while jInstanceID do
+-- local name, _, _, _, _, _, _, _, _, instanceID = EJ_GetInstanceInfo(jInstanceID)
+-- tbl1[instanceID] = jInstanceID
+-- tbl2[jInstanceID] = instanceID
+-- index = index + 1
+-- jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+-- end
+-- end
+-- end
+-- EJ_SelectTier(backupTier)
+-- return tbl1, tbl2
+-- end
+-- if Octo_Cache_DB.SavedInstanceID_to_EJInstance then
+-- wipe(Octo_Cache_DB.SavedInstanceID_to_EJInstance)
+-- end
+-- if Octo_Cache_DB.EJInstance_to_SavedInstanceID then
+-- wipe(Octo_Cache_DB.EJInstance_to_SavedInstanceID)
+-- end
+-- Octo_Cache_DB.SavedInstanceID_to_EJInstance, Octo_Cache_DB.EJInstance_to_SavedInstanceID = setActualInstances()
+-- -- Пример использования:
+-- CollectAllInstancesWithDifficultiesAsync(function(result)
+-- Octo_Cache_DB.Octo_Table_SI_IDS = result
+-- -- E.Octo_Table_SI_IDS = result
+-- Octo_Cache_DB.LastUpdateDB = C_DateAndTime.GetSecondsUntilDailyReset() + serverTime
+-- -- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
+-- end)
+-- end
+----------------------------------------------------------------
+-- 38 ms
+function E.func_BUILD_DUNG_DB()
+	-- local serverTime = GetServerTime()
+	-- if Octo_Cache_DB.LastUpdateDB and Octo_Cache_DB.LastUpdateDB > serverTime then
+	-- return
+	-- end
+	-- E.DEBUG_START()
+	-- wipe(Octo_Cache_DB.Octo_Table_SI_IDS)
+	-- wipe(Octo_Cache_DB.SavedInstanceID_to_EJInstance)
+	-- wipe(Octo_Cache_DB.EJInstance_to_SavedInstanceID)
+	-- Octo_Cache_DB.LastUpdateDB = nil
+	local backupTier = EJ_GetCurrentTier()
+	local backupDifficulty = EJ_GetDifficulty()
+	local numTiers = EJ_GetNumTiers()
+	if not numTiers or numTiers < 1 then return end
+	local SI_to_EJ = {}
+	local EJ_to_SI = {}
+	local result = {}
+	local function CountEncounters()
+		local i = 1
+		while EJ_GetEncounterInfoByIndex(i) do
+			i = i + 1
+		end
+		return i - 1
+	end
+	for tier = 1, numTiers do
+		EJ_SelectTier(tier)
+		for pass = 1, 2 do
+			local isRaid = (pass == 2)
+			-- local isRaid = true -- Только рейды 38 ms
+			-- local isRaid = false -- Только подземелья 70 ms
+			local index = 1
+			local ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+			while ejInstanceID do
+				EJ_SelectInstance(ejInstanceID)
+				local _, _, _, _, _, _, _, _, _, savedInstanceID = EJ_GetInstanceInfo(ejInstanceID)
+				if savedInstanceID then
+					SI_to_EJ[savedInstanceID] = ejInstanceID
+					EJ_to_SI[ejInstanceID] = savedInstanceID
+				end
+				local diffTable = nil
+				for diffID in next, (E.OctoTable_Difficulties) do
+					if EJ_IsValidInstanceDifficulty(diffID) then
+						EJ_SetDifficulty(diffID)
+						local bossCount = CountEncounters()
+						if bossCount > 0 then
+							diffTable = diffTable or {}
+							diffTable[diffID] = bossCount
+						end
+					end
+				end
+				if diffTable then
+					result[savedInstanceID] = {
+						difficulties = diffTable,
+						isRaid = isRaid
+					}
+				end
+				index = index + 1
+				ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+			end
+		end
+	end
+	EJ_SetDifficulty(backupDifficulty)
+	EJ_SelectTier(backupTier)
+	Octo_Cache_DB.Octo_Table_SI_IDS = result
+	Octo_Cache_DB.SavedInstanceID_to_EJInstance = SI_to_EJ
+	Octo_Cache_DB.EJInstance_to_SavedInstanceID = EJ_to_SI
+	-- Octo_Cache_DB.LastUpdateDB = serverTime + C_DateAndTime.GetSecondsUntilDailyReset()
+	-- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
+	-- E.DEBUG_STOP()
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -1959,9 +2175,9 @@ function E.func_RegisterEvents(frame, MyEventsTable)
 	local DebugPath = STR:gsub("]", "")
 	for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
 	frame:SetScript("OnEvent",
-		function(self, event,...)
+		function(self, event, ...)
 			if self[event] then
-				self[event](self,...)
+				self[event](self, ...)
 			else
 				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
 				self:UnregisterEvent(event)

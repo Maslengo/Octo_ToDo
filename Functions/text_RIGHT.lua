@@ -211,7 +211,11 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 	end
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 end
-function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, id)
+
+
+
+
+function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	local pd = CharInfo.PlayerData
@@ -241,29 +245,40 @@ function E.func_Otrisovka_Center_Additionally(categoryKey, CharInfo, dataType, i
 		end
 	end
 	if id == "HeartofAzeroth" then
-		if cm.Items.Bags[158075] or cm.Items.Bank[158075] then
-			TextCenter = pd.azeriteLVL and E.COLOR_GREEN..pd.azeriteLVL.."|r".."+"..E.COLOR_GRAY..pd.azeriteEXP.."|r" or E.COLOR_ORANGE.."in bank|r"
-		end
+
+			if pd.azeriteLVL and pd.azeriteEXP then
+				TextCenter = E.COLOR_GREEN..pd.azeriteLVL.."|r".."+"..E.COLOR_GRAY..pd.azeriteEXP.."|r"
+			else
+				if cm.Items.Bank[158075] then
+					TextCenter = E.COLOR_ORANGE.."in bank|r"
+				end
+			end
 	end
 	if id == "Ashjrakamas" then
-		if cm.Items.Bags[169223] or cm.Items.Bank[169223] then
+
+
+
+
 			if pd.cloak_lvl then
 				TextCenter = E.COLOR_CYAN..AZERITE_ESSENCE_RANK:format(pd.cloak_lvl).."|r"
 			else
-				TextCenter = E.COLOR_ORANGE.."in bank|r"
+				if cm.Items.Bank[169223] then
+					TextCenter = E.COLOR_ORANGE.."in bank|r"
+					-- elseif cm.Items.Bags[169223] then
+				end
 			end
-		end
 	end
-	if id == "LegionRemixResearch" then
-		if cm.LegionRemixData and cm.LegionRemixData.barValue and cm.LegionRemixData.barMax then
-			local barValue = cm.LegionRemixData.barValue
-			local barMax = cm.LegionRemixData.barMax
-			TextCenter = barValue.."/"..barMax
-			if cm.LegionRemixData.TotalInfinityResearchQuests then
-				TextCenter = barValue..E.COLOR_BLUE.."("..cm.LegionRemixData.TotalInfinityResearchQuests..")|r".."/"..barMax
-			end
-		end
-	end
+	return TextCenter, ColorCenter, FirstReputation, SecondReputation
+end
+
+
+
+
+function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
 	if id == "ListOfQuests" then
 		if pd.numQuests then
 			-- TextCenter = pd.classColorHex..pd.numQuests.."/"..pd.maxNumQuestsCanAccept.."|r"

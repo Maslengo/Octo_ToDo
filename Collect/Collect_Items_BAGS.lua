@@ -58,8 +58,8 @@ local function Collect_Items_BAGS()
 			if bagType == 0 then
 				usedSlots_BAGS = usedSlots_BAGS+(numSlots - free)
 			end
-			for slot = 1, numSlots do
-				local info = C_Container.GetContainerItemInfo(bagID, slot)
+			for slotIndex = 1, numSlots do
+				local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
 				if info then
 					local itemID = info.itemID
 					local stack = info.stackCount or 1
@@ -69,6 +69,19 @@ local function Collect_Items_BAGS()
 					if researchValue then
 						SL_Possible_CatalogedResearch = SL_Possible_CatalogedResearch+(researchValue*stack)
 					end
+
+					if itemID == 169223 then
+						local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
+						if itemLocation:IsValid() and C_Item.DoesItemExist(itemLocation) then
+							local itemLink = C_Item.GetItemLink(itemLocation)
+							local rank = E.GetItemRankFromLink(itemLink)
+							collectPlayerData.cloak_lvl = rank
+						end
+					end
+
+
+
+
 					-- Anima
 					if E.func_IsAnimaItemByID(itemID) then
 						local quality = info.quality

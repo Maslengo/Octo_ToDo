@@ -2,17 +2,35 @@ local GlobalAddonName, E = ... -- ns
 ----------------------------------------------------------------
 E.MainAddonName = GlobalAddonName
 OctoEngine = E -- в других аддонах
--- CreateFrame
+-- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
+E.curLocaleLang = GetLocale() or "enUS"
+
+
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+E.DefaultFont = LibSharedMedia:GetDefault("font")
+
+if E.curLocaleLang == "ruRU" or E.curLocaleLang == "enUS" then
+	E.DefaultFont = "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
+end
+
 ----------------------------------------------------------------
 E.DEBUG = false
 E.DEBUG_NAME = false
+E.DEBUG_OPTIONS = false
 ----------------------------------------------------------------
+
+
+
+E.OctoTable_ColoredFrames = {}
+
+
 E.L = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
 E.ALL_UniversalQuests = {}
-E.ALL_Additionally = {}
+E.ALL_AdditionallyTOP = {}
+E.ALL_AdditionallyBOTTOM = {}
 E.ALL_Quests = {}
 E.ALL_RaidsOrDungeons = {}
 E.First_Option = {}
@@ -32,7 +50,6 @@ E.OctoTable_KeystoneAbbr = {}
 E.OctoTable_Mounts = {}
 E.OctoTable_Portals = {}
 E.OctoTable_QuestID = {}
-E.OctoTable_RemixInfinityResearch = {}
 E.OctoTable_SavedVariables = {}
 E.OctoTables_DataOtrisovka = {}
 E.Octo_ProfessionsskillLine = {}
@@ -50,8 +67,8 @@ E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
 E.DataProvider_Otrisovka = {}
-E.Current_profileKeys = "Default" -- profileName
-E.Config_DebugID_ALL = false
+E.TEXT_DEFAULT = "Default" -- DEFAULT
+E.TEXT_DEFAULT_DARK = "Default (Dark)" -- DEFAULT
 -- E.Config_DebugID_Achievements = false
 -- E.Config_DebugID_Currencies = false
 -- E.Config_DebugID_worldBossID = false
@@ -75,7 +92,6 @@ E.TEXTURE_HIGHLIGHT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Tex
 E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
-E.curLocaleLang = GetLocale() or "enUS"
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
@@ -94,7 +110,6 @@ E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHe
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup()
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
 E.TEXT_SPACE = " "
-E.SPAM_TIME = 3
 E.Config_UseTranslit = false
 E.ICON_REGULAR = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
@@ -103,10 +118,6 @@ E.ICON_MONTH = "cursor_Wrapper_64"
 E.FULL_WIDTH = 3.60
 E.FOURTH_WIDTH = E.FULL_WIDTH/4.4
 E.HALF_WIDTH = E.FULL_WIDTH/2.2
-E.backgroundColorR = .08
-E.backgroundColorG = .08
-E.backgroundColorB = .08
-E.backgroundColorA = .8
 
 E.borderColorR = 0
 E.borderColorG = 0
@@ -123,7 +134,7 @@ E.menuBackdrop = {
 	insets = {left = E.edgeSize, right = E.edgeSize, top = E.edgeSize, bottom = E.edgeSize}
 }
 E.MAX_DISPLAY_LINES = 30
-E.ddMenuButtonHeight = 16
+E.ddMenuButtonHeight = 18
 E.GLOBAL_LINE_HEIGHT = 20
 E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2 -- Высота заголовка
 E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
@@ -477,16 +488,15 @@ E.OctoTable_SlotMapping = {
 	[17] = {name = "SECONDARYHANDSLOT", invslot = INVSLOT_OFFHAND, priority = 18},
 }
 
-E.Config_ShowAllDifficulties = false
-E.Config_DifficultyAbbreviation = true
 
 E.dataDisplayOrder = {
-	"Additionally",
+	"AdditionallyTOP",
 	"Currencies",
 	"Items",
 	"RaidsOrDungeons",
 	"UniversalQuests",
 	"Reputations",
+	"AdditionallyBOTTOM",
 }
 
 
@@ -510,9 +520,9 @@ E.OctoTable_reactionColors = {
 		[7] = E.COLOR_GREEN, -- Revered
 		[8] = E.COLOR_GREEN, -- Exalted
 	},
-    [2] = E.COLOR_PINK,
-    [3] = E.COLOR_BLUE,
-    [4] = E.COLOR_BLUE,
+	[2] = E.COLOR_PINK,
+	[3] = E.COLOR_BLUE,
+	[4] = E.COLOR_BLUE,
 }
 
 E.TEXT_INDEV = E.COLOR_RED..">>> ".."In Development".." <<<|r"

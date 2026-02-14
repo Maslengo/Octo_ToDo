@@ -18,6 +18,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 	}
@@ -32,14 +33,32 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-			{id = 752, defS = true,}, -- Sunwell Plateau
-			{id = 751, defS = true,}, -- Black Temple
-			{id = 750, defS = true,}, -- The Battle for Mount Hyjal
-			{id = 749, defS = true,}, -- The Eye
-			{id = 748, defS = true,}, -- Serpentshrine Cavern
-			{id = 747, defS = true,}, -- Magtheridon's Lair
-			{id = 746, defS = true,}, -- Gruul's Lair
-			{id = 745, defS = true,}, -- Karazhan
+		-- Raid
+		{id = 580, defS = true,}, -- The Sunwell
+		{id = 564, defS = true,}, -- Black Temple
+		{id = 534, defS = true,}, -- The Battle for Mount Hyjal
+		{id = 550, defS = true,}, -- Tempest Keep
+		{id = 548, defS = true,}, -- Coilfang: Serpentshrine Cavern
+		{id = 544, defS = true,}, -- Magtheridon's Lair
+		{id = 565, defS = true,}, -- Gruul's Lair
+		{id = 532, defS = true,}, -- Karazhan
+		-- Dungeon
+		-- {id = 555, defS = true,}, -- Auchindoun: Shadow Labyrinth
+		-- {id = 545, defS = true,}, -- Coilfang: The Steamvault
+		-- {id = 552, defS = true,}, -- Tempest Keep: The Arcatraz
+		-- {id = 554, defS = true,}, -- Tempest Keep: The Mechanar
+		-- {id = 556, defS = true,}, -- Auchindoun: Sethekk Halls
+		-- {id = 543, defS = true,}, -- Hellfire Citadel: Ramparts
+		-- {id = 560, defS = true,}, -- The Escape from Durnholde
+		-- {id = 547, defS = true,}, -- Coilfang: The Slave Pens
+		-- {id = 540, defS = true,}, -- Hellfire Citadel: The Shattered Halls
+		-- {id = 269, defS = true,}, -- Opening of the Dark Portal
+		-- {id = 553, defS = true,}, -- Tempest Keep: The Botanica
+		-- {id = 585, defS = true,}, -- Magisters' Terrace
+		-- {id = 542, defS = true,}, -- Hellfire Citadel: The Blood Furnace
+		-- {id = 558, defS = true,}, -- Auchindoun: Auchenai Crypts
+		-- {id = 546, defS = true,}, -- Coilfang: The Underbog
+		-- {id = 557, defS = true,}, -- Auchindoun: Mana-Tombs
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -73,7 +92,10 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Additionally = {
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

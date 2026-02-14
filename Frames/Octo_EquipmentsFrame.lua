@@ -14,6 +14,8 @@ local EventFrame = CreateFrame("FRAME")
 local Octo_EquipmentsFrame = CreateFrame("BUTTON", "Octo_EquipmentsFrame", UIParent, "OctoBackdropTemplate")
 Octo_EquipmentsFrame:Hide()
 E.func_RegisterFrame_SIMPLE(Octo_EquipmentsFrame)
+table.insert(E.OctoTable_ColoredFrames, Octo_EquipmentsFrame)
+
 local NameHeader = CreateFrame("FRAME", nil, Octo_EquipmentsFrame)
 EventFrame.columnWidths = {}
 EventFrame.columnTypes = {}
@@ -315,7 +317,7 @@ function EventFrame:CreateDataProvider(GUID)
 	local curServer = pd.curServer or ""
 	local resultName = specTexture..classColorHex..Name.."|r"
 
-	-- local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
+	-- local ItemLevel = E.func_CharInfo_ItemLevel(CharInfo)
 
 
 	-- local PlayerItemLevel = ""
@@ -330,10 +332,10 @@ function EventFrame:CreateDataProvider(GUID)
 	-- end
 
 
-	for slotID in next, E.OctoTable_SlotMapping do
+	for slotID in next, (E.OctoTable_SlotMapping) do
 		totalLines = totalLines + 1
 		local v = InventoryType[slotID] or {}
-		local ItemID = v.ItemID or 0
+		local ItemID = v.itemID
 		local Icon = v.Icon or E.func_GetEmptySlotIcon(slotID) or 134400
 		local ItemLink = v.ItemLink or ""
 		local Quality = v.Quality or 0
