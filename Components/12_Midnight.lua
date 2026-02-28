@@ -35,7 +35,7 @@ local function tempFunction()
 		{id = 3385, defS = true,},
 		{id = 3377, defS = true,},
 		{id = 3373, defS = true,},
-		{id = 3319, defS = true,}, -- MIDNIGHT PREPATCH
+		-- {id = 3319, defS = true,}, -- MIDNIGHT PREPATCH
 		-- белый
 		{id = 3316, defS = true,},
 		-- {id = 3349, defS = true,},
@@ -52,17 +52,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-		-- {id = 245586, defS = false,}, -- ironwood-lumber
-		-- {id = 242691, defS = false,}, -- olemba-lumber
-		-- {id = 251762, defS = false,}, -- coldwind-lumber
-		-- {id = 251764, defS = false,}, -- ashwood-lumber
-		-- {id = 251763, defS = false,}, -- bamboo-lumber
-		-- {id = 251766, defS = false,}, -- shadowmoon-lumber
-		-- {id = 251767, defS = false,}, -- fel-touched-lumber
-		-- {id = 251768, defS = false,}, -- darkpine-lumber
-		-- {id = 251772, defS = false,}, -- arden-lumber
-		-- {id = 251773, defS = false,}, -- dragonpine-lumber
-		-- {id = 248012, defS = false,}, -- dornic-fir-lumber
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {

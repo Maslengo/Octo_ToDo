@@ -6,11 +6,6 @@ local DebugLocalization_Lang = false
 local color_red = E.COLOR_RED or "|cffFF0000"
 local curLocaleLang = E.curLocaleLang or "enUS"
 
-
-
-
-
-
 -- метатаблица с кешем через rawset
 local meta_table = {
 	__index = function(self, key)
