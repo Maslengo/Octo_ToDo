@@ -35,7 +35,6 @@ local function tempFunction()
 		{id = 3385, defS = true,},
 		{id = 3377, defS = true,},
 		{id = 3373, defS = true,},
-		-- {id = 3319, defS = true,}, -- MIDNIGHT PREPATCH
 		-- белый
 		{id = 3316, defS = true,},
 		-- {id = 3349, defS = true,},
@@ -49,6 +48,23 @@ local function tempFunction()
 		-- {id = 3258, defS = true,},
 		-- {id = 3257, defS = true,},
 		-- {id = 3256, defS = true,},
+
+		-- https://www.wowhead.com/currencies/season-1#0+1+3
+
+		{id = 3347, defS = true,}, --  276-289
+		{id = 3345, defS = true,}, --  263-276
+		{id = 3343, defS = true,}, --  250-263
+		{id = 3341, defS = true,}, --  237-250
+		{id = 3383, defS = true,}, --  224-237
+
+		{id = 3212, defS = false,},
+		{id = 3378, defS = false,},
+		{id = 3310, defS = false,},
+
+		{id = 3319, defS = false,}, -- MIDNIGHT PREPATCH
+		-- {id = 3356, defS = false,},
+		-- {id = 3028, defS = false,},
+		-- {id = 2803, defS = false,},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -99,6 +115,52 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				-- Луносвет
+				-- return E.func_GetMapName(241)..": "..E.func_GetQuestName(95245, false) -- Луносвет
+				return E.func_GetQuestName(95245, false) -- Луносвет
+			end,
+			name_save = "MidnightWorldTour",
+			defS = false,
+			reset = "Regular",
+			desc = categoryKey,
+			quests = {
+				{95245},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				-- Луносвет
+				-- return E.func_GetMapName(241)..": "..E.func_GetQuestName(93744, false) -- Луносвет
+				return E.func_GetQuestName(93744, false) -- Луносвет
+			end,
+			name_save = "UnityAgainsttheVoid",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93744},
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+		-- https://www.wowhead.com/quest=89507/
+
+
+
+
+
+
+
+
 		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
 		--     sorted = false,
 		--     showTooltip = true,
