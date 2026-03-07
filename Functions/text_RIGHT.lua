@@ -268,9 +268,16 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 				end
 			end
 	end
+
+
+
+
+
+
+
+
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 end
-
 
 
 
@@ -279,6 +286,54 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
+
+
+
+
+
+
+	if id == "MythicZero" then
+		local countMZ = 0
+		local totalInstances = 0
+
+		-- Считаем общее количество инстансов в OT_curMapTable
+		for SI_ID, _ in pairs(E.OT_curMapTable) do
+			totalInstances = totalInstances + 1
+		end
+
+		-- Проверяем каждый инстанс из OT_curMapTable
+		for SI_ID, _ in pairs(E.OT_curMapTable) do
+			if cm.journalInstance and cm.journalInstance[SI_ID] then
+				local instanceData = cm.journalInstance[SI_ID]
+				-- Проверяем сложность 23 (Mythic)
+				if instanceData[23] and type(instanceData[23]) == "table" then
+					local mythicData = instanceData[23]
+					-- Считаем инстанс пройденным, если убиты все боссы
+					if mythicData.defeatedBosses and mythicData.totalBosses
+					   and mythicData.defeatedBosses == mythicData.totalBosses
+					   and mythicData.totalBosses > 0 then
+						countMZ = countMZ + 1
+					end
+				end
+			end
+		end
+
+		-- Формируем текст с цветом
+		if countMZ == totalInstances then
+			TextCenter = E.DONE
+			-- TextCenter = E.COLOR_GREEN..countMZ.."/"..totalInstances.."|r"  -- Все пройдены
+		elseif countMZ > 0 then
+			TextCenter = E.COLOR_YELLOW..countMZ.."/"..totalInstances.."|r"  -- Частично
+		else
+			TextCenter = E.COLOR_RED..countMZ.."/"..totalInstances.."|r"     -- Ни одного
+		end
+	end
+
+
+
+
+
+
 	if id == "ListOfQuests" then
 		if pd.numQuests then
 			-- TextCenter = pd.classColorHex..pd.numQuests.."/"..pd.maxNumQuestsCanAccept.."|r"
@@ -371,6 +426,13 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 			end
 		end
 	end
+
+
+
+
+
+
+
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 end
 function E.func_TextCenter_Items(CharInfo, itemID)

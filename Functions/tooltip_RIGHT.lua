@@ -1,6 +1,9 @@
 local GlobalAddonName, E = ...
 local L = E.L
 
+
+
+
 function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if not GUID or not SettingsType then return end
 	local ServerTime = GetServerTime()
@@ -367,6 +370,63 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
+
+
+	if SettingsType == "AdditionallyBOTTOM#MythicZero" then
+		-- Проходим по всем инстансам из OT_curMapTable
+		for SI_ID, _ in pairs(E.OT_curMapTable) do
+			local name = E.func_GetDungeonName(SI_ID)
+			local defeatedBosses = 0
+			local totalBosses = 0
+			local hasData = false
+			local EJ_ID = E.func_SI_to_EJ(SI_ID)
+
+			-- Получаем иконку инстанса
+			local _, _, _, _, _, buttonImage2 = EJ_GetInstanceInfo(EJ_ID)
+			local icon = E.func_texturefromIcon(buttonImage2) or ""
+
+			-- Проверяем, есть ли данные по этому инстансу
+			if cm.journalInstance and cm.journalInstance[SI_ID] then
+				local v = cm.journalInstance[SI_ID]
+				-- Ищем данные для сложности 23 (Mythic)
+				if v[23] and type(v[23]) == "table" then
+					local difficultyData = v[23]
+					defeatedBosses = difficultyData.defeatedBosses or 0
+					totalBosses = difficultyData.totalBosses or 0
+					hasData = true
+				end
+			end
+
+			local color
+			if not hasData then
+				-- Нет данных об инстансе
+				color = E.COLOR_GRAY
+			elseif defeatedBosses == totalBosses and totalBosses > 0 then
+				color = E.COLOR_GREEN      -- Полностью пройдено
+			elseif defeatedBosses > 0 then
+				color = E.COLOR_YELLOW     -- Частично пройдено
+			else
+				color = E.COLOR_RED        -- Не пройдено (есть данные, но боссы не убиты)
+			end
+
+			-- Формируем строку с прогрессом боссов
+			local bossProgress = color..defeatedBosses.."/"..totalBosses.."|r"
+
+			-- Добавляем информацию в тултип (как в LFGInstance)
+			tooltip[#tooltip+1] = {icon..name, color..bossProgress.."|r"}
+		end
+	end
+
+
+
+
+
+
+
+
+
+
+
 	if SettingsType == "AdditionallyBOTTOM#ListOfQuests" then
 		if pd.numQuests_Paragon and cm.ListOfParagonQuests then
 			tooltip[#tooltip+1] = {E.COLOR_BLUE..L["Paragon"]..":|r"}

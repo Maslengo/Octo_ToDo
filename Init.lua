@@ -19,11 +19,18 @@ E.DEBUG_NAME = false
 E.DEBUG_OPTIONS = false
 ----------------------------------------------------------------
 
-
+E.OT_curMapTable = {
+	[2805] = true,
+	[2915] = true,
+	[2859] = true,
+	[2811] = true,
+	[2874] = true,
+	[2813] = true,
+	[2923] = true,
+	[2825] = true,
+}
 
 E.OctoTable_ColoredFrames = {}
-
-
 E.L = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}

@@ -119,5 +119,9 @@ function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataTyp
 	if id == "LastOnline" then
 		TextLeft = L["Last online"]
 	end
-	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
+	if id == "MythicZero" then
+		-- TextLeft = DUNGEONS .. " (M+0)"
+		TextLeft = DUNGEONS .." (".. E.func_GetDifficultyName(23).."+0)"
+	end
+ 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end

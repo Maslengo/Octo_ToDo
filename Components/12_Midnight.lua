@@ -21,33 +21,33 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 3028, defS = true,}, -- season 1
+		{id = 3028, defS = false,}, -- season 1
 		-- фиол
-		{id = 3400, defS = true,},
+		{id = 3400, defS = false,},
 		{id = 3379, defS = true,},
 		-- синий
-		-- {id = 3394, defS = true,}, -- УДАЛЁН
-		{id = 3392, defS = true,},
+		-- {id = 3394, defS = false,}, -- УДАЛЁН
+		{id = 3392, defS = false,},
 		{id = 3376, defS = true,},
-		{id = 3352, defS = true,},
-		{id = 3265, defS = true,},
+		{id = 3352, defS = false,},
+		{id = 3265, defS = false,},
 		-- зелень
-		{id = 3385, defS = true,},
-		{id = 3377, defS = true,},
-		{id = 3373, defS = true,},
+		{id = 3385, defS = false,},
+		{id = 3377, defS = false,},
+		{id = 3373, defS = false,},
 		-- белый
 		{id = 3316, defS = true,},
-		-- {id = 3349, defS = true,},
-		-- {id = 3266, defS = true,},
-		-- {id = 3264, defS = true,},
-		-- {id = 3263, defS = true,},
-		-- {id = 3262, defS = true,},
-		-- {id = 3261, defS = true,},
-		-- {id = 3260, defS = true,},
-		-- {id = 3259, defS = true,},
-		-- {id = 3258, defS = true,},
-		-- {id = 3257, defS = true,},
-		-- {id = 3256, defS = true,},
+		-- {id = 3349, defS = false,},
+		-- {id = 3266, defS = false,},
+		-- {id = 3264, defS = false,},
+		-- {id = 3263, defS = false,},
+		-- {id = 3262, defS = false,},
+		-- {id = 3261, defS = false,},
+		-- {id = 3260, defS = false,},
+		-- {id = 3259, defS = false,},
+		-- {id = 3258, defS = false,},
+		-- {id = 3257, defS = false,},
+		-- {id = 3256, defS = false,},
 
 		-- https://www.wowhead.com/currencies/season-1#0+1+3
 
@@ -57,7 +57,7 @@ local function tempFunction()
 		{id = 3341, defS = true,}, --  237-250
 		{id = 3383, defS = true,}, --  224-237
 
-		{id = 3212, defS = false,},
+		{id = 3212, defS = true,},
 		{id = 3378, defS = false,},
 		{id = 3310, defS = false,},
 
@@ -154,13 +154,6 @@ local function tempFunction()
 
 		-- https://www.wowhead.com/quest=89507/
 
-
-
-
-
-
-
-
 		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
 		--     sorted = false,
 		--     showTooltip = true,
@@ -223,6 +216,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
+		{id = "MythicZero", defS = false,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
