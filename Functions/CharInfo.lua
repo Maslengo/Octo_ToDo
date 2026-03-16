@@ -7,7 +7,7 @@ function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, Cus
 	local pd = CharInfo.PlayerData
 	local result = ""
 	local color = CustomColor or pd.classColorHex
-	local levelColor = CustomColor or E.COLOR_YELLOW
+	local levelColor = CustomColor or E.COLOR_GRAY or E.COLOR_YELLOW
 	if markPlayer then
 		local curPers = pd.GUID == E.curGUID and E.COLOR_GREEN.."->|r" or ""
 		result = curPers..result
@@ -22,7 +22,8 @@ function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, Cus
 	if name and color then
 		result = result .. color..name.."|r"
 	end
-	if not forceHideLevel and pd.UnitLevel > 100 then
+	-- if not forceHideLevel and pd.UnitLevel > 90 then
+	if not forceHideLevel then
 		if alwaysShowLevel or (not alwaysShowLevel and not pd.levelCapped20 and pd.UnitLevel ~= E.currentMaxLevel) then
 			result = result.." "..levelColor..pd.UnitLevel.."|r"
 		end

@@ -86,9 +86,9 @@ end
 -- 	for index, zone in ipairs(ZONE_CYCLE) do
 -- 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(zone.poiID)
 -- 		if sec and sec > 0 then
--- 			local currentName = E.func_GetMapName(zone.mapID) or "???"
+-- 			local currentName = E.func_GetName("map", zone.mapID) or "???"
 -- 			local nextIndex = index % #ZONE_CYCLE + 1
--- 			local nextName = E.func_GetMapName(ZONE_CYCLE[nextIndex].mapID) or "???"
+-- 			local nextName = E.func_GetName("map", ZONE_CYCLE[nextIndex].mapID) or "???"
 -- 			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..currentName..E.COLOR_GRAY.." -> "..nextName.."|r"
 -- 		end
 -- 	end
@@ -101,8 +101,8 @@ end
 -- 	local nextZoneIndex = cyclesCompleted % #ZONE_CYCLE + 1
 -- 	local afterNextIndex = nextZoneIndex % #ZONE_CYCLE + 1
 -- 	local nextTime = baseTime + (cyclesCompleted + 1) * INTERVAL
--- 	local nextZoneName = E.func_GetMapName(ZONE_CYCLE[nextZoneIndex].mapID) or "???"
--- 	local afterNextName = E.func_GetMapName(ZONE_CYCLE[afterNextIndex].mapID) or "???"
+-- 	local nextZoneName = E.func_GetName("map", ZONE_CYCLE[nextZoneIndex].mapID) or "???"
+-- 	local afterNextName = E.func_GetName("map", ZONE_CYCLE[afterNextIndex].mapID) or "???"
 -- 	return E.COLOR_RED..E.func_SecondsToClock(nextTime - now).."|r "..L["Legion Invasion"]..E.COLOR_GRAY.." -> "..afterNextName.."|r"
 -- end
 function E.Timers.Legion_Invasion()
@@ -121,7 +121,7 @@ function E.Timers.Legion_Invasion()
 	for i = 1, #ZONE_DATA do
 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(ZONE_DATA[i].poiID)
 		if sec then
-			local zoneName = E.func_GetMapName(ZONE_DATA[i].mapID)
+			local zoneName = E.func_GetName("map", ZONE_DATA[i].mapID)
 			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..zoneName
 		end
 	end
@@ -158,10 +158,10 @@ function E.Timers.BfA_Invasion()
 	for index, zone in ipairs(ZONE_CYCLE) do
 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(zone.poiID)
 		if sec and sec > 0 and sec <= DURATION then
-			local currentName = E.func_GetMapName(zone.mapID) or "???"
+			local currentName = E.func_GetName("map", zone.mapID) or "???"
 			local nextIndex = index % #ZONE_CYCLE + 1
 			local nextZone = ZONE_CYCLE[nextIndex]
-			local nextName = E.func_GetMapName(nextZone.mapID) or "???"
+			local nextName = E.func_GetName("map", nextZone.mapID) or "???"
 			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..currentName..E.COLOR_GRAY.." -> "..nextName.."|r"
 		end
 	end
@@ -177,7 +177,7 @@ function E.Timers.BfA_Invasion()
 	local timeToNext = nextTime - now
 	local nextZone = ZONE_CYCLE[nextZoneIndex]
 	local afterNextZone = ZONE_CYCLE[afterNextIndex]
-	local nextZoneName = nextZone.name or E.func_GetMapName(nextZone.mapID) or "???"
-	local afterNextName = afterNextZone.name or E.func_GetMapName(afterNextZone.mapID) or "???"
+	local nextZoneName = nextZone.name or E.func_GetName("map", nextZone.mapID) or "???"
+	local afterNextName = afterNextZone.name or E.func_GetName("map", afterNextZone.mapID) or "???"
 	return E.COLOR_RED..E.func_SecondsToClock(timeToNext).."|r "..L["Faction Assault"]..E.COLOR_GRAY.." -> "..afterNextName.."|r"
 end

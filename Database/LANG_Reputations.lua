@@ -10,13 +10,9 @@ local ICON_FISH = 1053367 -- https://www.wowhead.com/item = 133755/ (Underlight 
 local ICON_PVP = 1455894
 ----------------------------------------------------------------
 E.OctoTable_Reputations_DB = {
-	[999999] = {
-		paragonQuest = nil,
-	},
 	[2774] = {
 		["enUS"] = "Slayer's Duellum (Paragon)",
 		["ruRU"] = "Дуэлянты Зубца убийцы (идеал)",
-		paragonQuest = nil,
 	},
 	[2770] = {
 		["enUS"] = "Slayer's Duellum",
@@ -32,21 +28,20 @@ E.OctoTable_Reputations_DB = {
 		["zhTW"] = "殺戮者決鬥會",
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
-		paragonQuest = nil,
+		itemCache = 267299,
+		paragonQuest = 94492,
 	},
 	[2767] = {
 		["enUS"] = "Bizmo's Brawlpub",
 		["ruRU"] = "Потасовочная \"У Бизмо\"",
 		side = "Alliance",
 		icon1 = ICON_ALLIANCE,
-		paragonQuest = nil,
 	},
 	[2766] = {
 		["enUS"] = "Brawl'gar Arena",
 		["ruRU"] = "Арена \"Морд'Бой\"",
 		side = "Horde",
 		icon1 = ICON_HORDE,
-		paragonQuest = nil,
 	},
 	[2764] = {
 		["enUS"] = "Prey: Season 1",
@@ -62,12 +57,10 @@ E.OctoTable_Reputations_DB = {
 		["zhTW"] = "狩獵：第1賽季",
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
-		paragonQuest = nil,
 	},
 	[2744] = {
 		["enUS"] = "Valeera Sanguinar",
 		["ruRU"] = "Валира Сангвинар",
-		paragonQuest = nil,
 	},
 	[2742] = {
 		["enUS"] = "Delves: Season 1",
@@ -83,43 +76,35 @@ E.OctoTable_Reputations_DB = {
 		["zhTW"] = "探究：第1賽季",
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
-		paragonQuest = nil,
 	},
 	[2739] = {
 		["enUS"] = "Delves: Coffer Key Shards Conversion",
 		["ruRU"] = "Вылазки: обмен осколков ключа от сундука",
-		paragonQuest = nil,
 	},
 	[2736] = {
 		["enUS"] = "Manaforge Vandals",
 		["ruRU"] = "Крушители манагорнов",
 		atlas = "majorfactions_icons_ManaforgeVandals512",
-		paragonQuest = nil,
 	},
 	[2727] = {
 		["enUS"] = "Silvermoon Court (Paragon)",
 		["ruRU"] = "Двор Луносвета (идеал)",
-		paragonQuest = nil,
 	},
 	[2726] = {
 		["enUS"] = "Hara'ti (Paragon)",
 		["ruRU"] = "Хара'ти (идеал)",
-		paragonQuest = nil,
 	},
 	[2725] = {
 		["enUS"] = "The Singularity (Paragon)",
 		["ruRU"] = "Сингулярность (идеал)",
-		paragonQuest = nil,
 	},
 	[2722] = {
 		["enUS"] = "Delves: Season 3",
 		["ruRU"] = "Вылазки: 3-й сезон",
-		paragonQuest = nil,
 	},
 	[2714] = {
 		["enUS"] = "Shades of the Row",
 		["ruRU"] = "Тени Закоулка",
-		paragonQuest = nil,
 	},
 	[2713] = {
 		["enUS"] = "Farstriders",
@@ -135,7 +120,6 @@ E.OctoTable_Reputations_DB = {
 		["zhTW"] = "遠行者",
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
-		paragonQuest = nil,
 	},
 	[2712] = {
 		["enUS"] = "Blood Knights",
@@ -151,12 +135,10 @@ E.OctoTable_Reputations_DB = {
 		["zhTW"] = "血騎士",
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
-		paragonQuest = nil,
 	},
 	[2711] = {
 		["enUS"] = "Magisters",
 		["ruRU"] = "Магистры",
-		paragonQuest = nil,
 	},
 	[2710] = {
 		["enUS"] = "Silvermoon Court",
@@ -173,12 +155,12 @@ E.OctoTable_Reputations_DB = {
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
 		atlas = "majorfactions_icons_light512",
-		paragonQuest = nil,
+		itemCache = 263433,
+		paragonQuest = 93811,
 	},
 	[2705] = {
 		["enUS"] = "Amani Tribe (Paragon)",
 		["ruRU"] = "Племя Амани (идеал)",
-		paragonQuest = nil,
 	},
 	[2704] = {
 		["enUS"] = "Hara'ti",
@@ -193,11 +175,11 @@ E.OctoTable_Reputations_DB = {
 		["zhCN"] = "哈籁提",
 		["zhTW"] = "哈拉提",
 		atlas = "majorfactions_icons_root512",
-		paragonQuest = nil,
+		itemCache = 256055,
+		paragonQuest = 89035,
 	},
 	[2700] = {
 		["enUS"] = "DEPRECATED Fungarian Fighting Ring",
-		paragonQuest = nil,
 	},
 	[2699] = {
 		["enUS"] = "The Singularity",
@@ -214,12 +196,12 @@ E.OctoTable_Reputations_DB = {
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
 		atlas = "majorfactions_icons_sky512",
-		paragonQuest = nil,
+		itemCache = 259334,
+		paragonQuest = 89032,
 	},
 	[2697] = {
 		["enUS"] = "Chase's test faction (DNT)",
 		["ruRU"] = "Chase's test faction (DNT)",
-		paragonQuest = nil,
 	},
 	[2696] = {
 		["enUS"] = "Amani Tribe",
@@ -236,24 +218,22 @@ E.OctoTable_Reputations_DB = {
 		expansion = "Midnight",
 		AddedInPatch = "12.0.0.65390",
 		atlas = "majorfactions_icons_origin512",
-		paragonQuest = nil,
+		itemCache = 251970,
+		paragonQuest = 93566,
 	},
 	[2695] = {
 		["enUS"] = "Test Account Wide Stormwind (DNT)",
 		["ruRU"] = "Test Account Wide Stormwind (DNT)",
 		side = "Alliance",
 		icon1 = ICON_ALLIANCE,
-		paragonQuest = nil,
 	},
 	[2693] = {
 		["enUS"] = "Delver's Journey (Season 1)",
 		["ruRU"] = "Путь участника вылазки (1-й сезон)",
-		paragonQuest = nil,
 	},
 	[2689] = {
 		["enUS"] = "Flame's Radiance (Paragon)",
 		["ruRU"] = "Сияние Пламени (идеал)",
-		paragonQuest = nil,
 	},
 	[2688] = {
 		["enUS"] = "Flame's Radiance",
@@ -272,12 +252,10 @@ E.OctoTable_Reputations_DB = {
 	[2684] = {
 		["enUS"] = "Gallagio Loyalty Rewards Club (Paragon)",
 		["ruRU"] = "Клуб лояльности Галаджио (идеал)",
-		paragonQuest = nil,
 	},
 	[2683] = {
 		["enUS"] = "Delves: Season 2",
 		["ruRU"] = "Вылазки: 2-й сезон",
-		paragonQuest = nil,
 	},
 	[2677] = {
 		["enUS"] = "Steamwheedle Cartel",
@@ -288,7 +266,6 @@ E.OctoTable_Reputations_DB = {
 	[2676] = {
 		["enUS"] = "Steamwheedle Cartel (Paragon)",
 		["ruRU"] = "Картель Хитрой Шестеренки (идеал)",
-		paragonQuest = nil,
 	},
 	[2675] = {
 		["enUS"] = "Blackwater Cartel",
@@ -299,7 +276,6 @@ E.OctoTable_Reputations_DB = {
 	[2674] = {
 		["enUS"] = "Blackwater Cartel (Paragon)",
 		["ruRU"] = "Картель Черноводья (идеал)",
-		paragonQuest = nil,
 	},
 	[2673] = {
 		["enUS"] = "Bilgewater Cartel",
@@ -310,7 +286,6 @@ E.OctoTable_Reputations_DB = {
 	[2672] = {
 		["enUS"] = "Bilgewater Cartel (Paragon)",
 		["ruRU"] = "Картель Трюмных Вод (идеал)",
-		paragonQuest = nil,
 	},
 	[2671] = {
 		["enUS"] = "Venture Company",
@@ -321,7 +296,6 @@ E.OctoTable_Reputations_DB = {
 	[2670] = {
 		["enUS"] = "Venture Company (Paragon)",
 		["ruRU"] = "Торговая компания (идеал)",
-		paragonQuest = nil,
 	},
 	[2669] = {
 		["enUS"] = "Darkfuse Solutions",
@@ -332,42 +306,34 @@ E.OctoTable_Reputations_DB = {
 	[2668] = {
 		["enUS"] = "Darkfuse Solutions (Paragon)",
 		["ruRU"] = "Мрачные Решалы (идеал)",
-		paragonQuest = nil,
 	},
 	[2667] = {
 		["enUS"] = "The Cartels of Undermine (Paragon)",
 		["ruRU"] = "Картели Нижней Шахты (идеал)",
-		paragonQuest = nil,
 	},
 	[2666] = {
 		["enUS"] = "Roasts and Boasts",
 		["ruRU"] = "Байки за чашкой",
-		paragonQuest = nil,
 	},
 	[2665] = {
 		["enUS"] = "Lillistrasza",
 		["ruRU"] = "Лиллистраза",
-		paragonQuest = nil,
 	},
 	[2664] = {
 		["enUS"] = "Flynn Fairwind",
 		["ruRU"] = "Флинн Фэйрвинд",
-		paragonQuest = nil,
 	},
 	[2663] = {
 		["enUS"] = "Meerah",
 		["ruRU"] = "Миира",
-		paragonQuest = nil,
 	},
 	[2662] = {
 		["enUS"] = "[PH] The Power of Friendship",
 		["ruRU"] = "[PH] The Power of Friendship",
-		paragonQuest = nil,
 	},
 	[2659] = {
 		["enUS"] = "The K'aresh Trust (Paragon)",
 		["ruRU"] = "Концерн К'ареша (идеал)",
-		paragonQuest = nil,
 	},
 	[2658] = {
 		["enUS"] = "The K'aresh Trust",
@@ -386,7 +352,6 @@ E.OctoTable_Reputations_DB = {
 	[2649] = {
 		["enUS"] = "The General (Paragon)",
 		["ruRU"] = "Генерал (идеал)",
-		paragonQuest = nil,
 	},
 	[2648] = {
 		["enUS"] = "The Weaver (Paragon)",
@@ -2086,6 +2051,7 @@ E.OctoTable_Reputations_DB = {
 		["enUS"] = "Booty Bay",
 		["ruRU"] = "Пиратская Бухта",
 	},
+
 }
 E.TBL_validReps = {}
 E.TBL_paragonQuests = {}

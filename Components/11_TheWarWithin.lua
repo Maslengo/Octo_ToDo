@@ -202,7 +202,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2255)..": ".."Rares" -- Azj-Kahet
+		--         return E.func_GetName("map", 2255)..": ".."Rares" -- Azj-Kahet
 		--     end,
 		--     name_save = "Rares2255",
 		--     defS = false,
@@ -224,7 +224,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2255)..": "..L["Treasures"] -- azj_kahet
+		--         return E.func_GetName("map", 2255)..": "..L["Treasures"] -- azj_kahet
 		--     end,
 		--     name_save = "Treasures2255",
 		--     defS = false,
@@ -247,7 +247,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2255)..": "..L["Underworld Operative"] -- The Severed Threads
+				return E.func_GetName("map", 2255)..": "..L["Underworld Operative"] -- The Severed Threads
 			end,
 			name_save = "UnderworldOperative",
 			defS = false,
@@ -267,7 +267,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2248)..": ".."Rares" -- Isle of Dorn
+		--         return E.func_GetName("map", 2248)..": ".."Rares" -- Isle of Dorn
 		--     end,
 		--     name_save = "Rares2248",
 		--     defS = false,
@@ -290,7 +290,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2248)..": "..L["Treasures"] -- isle_of_dorn
+		--         return E.func_GetName("map", 2248)..": "..L["Treasures"] -- isle_of_dorn
 		--     end,
 		--     name_save = "Treasures2248",
 		--     defS = false,
@@ -316,7 +316,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2248)..": "..E.Timers.TWW_BeledarCycle()..E.func_GetQuestName(83240, false)
+				return E.func_GetName("map", 2248)..": "..E.Timers.TWW_BeledarCycle()..E.func_GetName("quest", 83240, false)
 			end,
 			name_save = "TheTheaterTroupe", -- The Theater Troupe
 			defS = false,
@@ -334,7 +334,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2214)..": ".."Rares" -- Ringing Deeps
+		--         return E.func_GetName("map", 2214)..": ".."Rares" -- Ringing Deeps
 		--     end,
 		--     name_save = "Rares2214",
 		--     defS = false,
@@ -358,7 +358,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2214)..": "..L["Treasures"] -- ringing_deeps
+		--         return E.func_GetName("map", 2214)..": "..L["Treasures"] -- ringing_deeps
 		--     end,
 		--     name_save = "Treasures2214",
 		--     defS = false,
@@ -381,7 +381,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2214)..": "..E.func_GetQuestName(83333, false)
+				return E.func_GetName("map", 2214)..": "..E.func_GetName("quest", 83333, false)
 			end,
 			name_save = "GearingUpforTrouble", -- Gearing Up for Trouble
 			defS = false,
@@ -396,7 +396,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2214)..": "..E.func_GetQuestName(82946, false)
+				return E.func_GetName("map", 2214)..": "..E.func_GetName("quest", 82946, false)
 			end,
 			name_save = "RollinDownintheDeeps",
 			defS = false,
@@ -414,7 +414,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2339)..": "..L["Weekend Event"]
+				return E.func_GetName("map", 2339)..": "..L["Weekend Event"]
 			end,
 			name_save = "ArchivistFrithrun",
 			defS = false,
@@ -447,7 +447,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2339)..": "..L["Worldsoul"]
+				return E.func_GetName("map", 2339)..": "..L["Worldsoul"]
 			end,
 			name_save = "TheCalloftheWorldsoul", -- The Call of the Worldsoul
 			defS = false,
@@ -506,7 +506,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2339)..": "..L["Archives"]
+				return E.func_GetName("map", 2339)..": "..L["Archives"]
 			end,
 			name_save = "Archives",
 			defS = false,
@@ -523,7 +523,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2339)..": "..L["Weekly quests"].." ("..DUNGEONS..")" -- https://www.wowhead.com/npc=226623/biergoth
+				return E.func_GetName("map", 2339)..": "..L["Weekly quests"].." ("..DUNGEONS..")" -- https://www.wowhead.com/npc=226623/biergoth
 			end,
 			name_save = "BiergothDungeonQuest",
 			defS = false,
@@ -547,7 +547,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2339)..": "..L["Weekly quests"].." (PVP)"
+				return E.func_GetName("map", 2339)..": "..L["Weekly quests"].." (PVP)"
 			end,
 			name_save = "WeeklyPVP",
 			defS = false,
@@ -581,7 +581,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2369)..": ".."Rares" -- Siren Isle
+		--         return E.func_GetName("map", 2369)..": ".."Rares" -- Siren Isle
 		--     end,
 		--     name_save = "Rares2369",
 		--     defS = false,
@@ -602,7 +602,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2369)..": "..L["Treasures"]
+		--         return E.func_GetName("map", 2369)..": "..L["Treasures"]
 		--     end,
 		--     name_save = "Treasures2369",
 		--     defS = false,
@@ -626,7 +626,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2369)..": "..L["Weekly quests"]
+				return E.func_GetName("map", 2369)..": "..L["Weekly quests"]
 			end,
 			name_save = "SirenIsleWeekly", -- Siren Isle Weekly
 			defS = false,
@@ -666,7 +666,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2346)..": ".."Rares" -- Undermine
+		--         return E.func_GetName("map", 2346)..": ".."Rares" -- Undermine
 		--     end,
 		--     name_save = "Rares2346",
 		--     defS = false,
@@ -698,7 +698,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2346)..": "..L["Treasures"] -- undermine
+		--         return E.func_GetName("map", 2346)..": "..L["Treasures"] -- undermine
 		--     end,
 		--     name_save = "Treasure2346",
 		--     defS = false,
@@ -741,7 +741,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2346)..": ".."Free C.H.E.T.T. List"
+				return E.func_GetName("map", 2346)..": ".."Free C.H.E.T.T. List"
 			end,
 			name_save = "FreeCHETTList",
 			defS = false,
@@ -756,7 +756,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2346)..": ".."C.H.E.T.T. List"
+				return E.func_GetName("map", 2346)..": ".."C.H.E.T.T. List"
 			end,
 			name_save = "CHETTList",
 			defS = false,
@@ -783,7 +783,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(86775, false)
+				return E.func_GetName("map", 2346)..": "..E.func_GetName("quest", 86775, false)
 			end,
 			name_save = "UrgetoSurge",
 			defS = false,
@@ -798,7 +798,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(85869, false)
+				return E.func_GetName("map", 2346)..": "..E.func_GetName("quest", 85869, false)
 			end,
 			name_save = "ManyJobsHandleIt",
 			defS = false,
@@ -813,7 +813,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2346)..": "..E.func_GetQuestName(85879, false)
+				return E.func_GetName("map", 2346)..": "..E.func_GetName("quest", 85879, false)
 			end,
 			name_save = "ReduceReuseResell",
 			defS = false,
@@ -831,7 +831,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2215)..": "..E.func_GetQuestName(76586, false)
+				return E.func_GetName("map", 2215)..": "..E.func_GetName("quest", 76586, false)
 			end,
 			name_save = "SpreadingTheLight",
 			defS = false,
@@ -846,7 +846,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2215)..": "..E.func_GetQuestName(91173, false) -- tww-nightfall-scenario
+				return E.func_GetName("map", 2215)..": "..E.func_GetName("quest", 91173, false) -- tww-nightfall-scenario
 			end,
 			name_save = "TheFlameBurnsEternal",
 			defS = false,
@@ -861,7 +861,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2215)..": "..L["Incursion"] -- Daily incursions in Hollowfall or Azj-Kahet
+				return E.func_GetName("map", 2215)..": "..L["Incursion"] -- Daily incursions in Hollowfall or Azj-Kahet
 			end,
 			name_save = "Incursion",
 			defS = false,
@@ -881,7 +881,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2215)..": "..L["Major Keyflames"]
+				return E.func_GetName("map", 2215)..": "..L["Major Keyflames"]
 			end,
 			name_save = "MajorKeyflames",
 			defS = false,
@@ -903,7 +903,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2215)..": "..L["Lesser Keyflames"] -- MinorKeyflames
+				return E.func_GetName("map", 2215)..": "..L["Lesser Keyflames"] -- MinorKeyflames
 			end,
 			name_save = "LesserKeyflame",
 			defS = false,
@@ -954,7 +954,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2215)..": ".."Rares" -- Hallowfall
+		--         return E.func_GetName("map", 2215)..": ".."Rares" -- Hallowfall
 		--     end,
 		--     name_save = "Rares2215",
 		--     defS = false,
@@ -977,7 +977,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2215)..": "..L["Treasures"] -- hallowfall
+		--         return E.func_GetName("map", 2215)..": "..L["Treasures"] -- hallowfall
 		--     end,
 		--     name_save = "Treasures2215",
 		--     defS = false,
@@ -1005,7 +1005,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(2371)..": ".."Rares" -- Karesh
+		--         return E.func_GetName("map", 2371)..": ".."Rares" -- Karesh
 		--     end,
 		--     name_save = "Rares2371",
 		--     defS = false,
@@ -1047,7 +1047,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2371)..": "..E.func_GetQuestName(85460, false)
+				return E.func_GetName("map", 2371)..": "..E.func_GetName("quest", 85460, false)
 			end,
 			name_save = "EcologicalSuccession", -- Ecological Succession
 			defS = false,
@@ -1062,7 +1062,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2371)..": "..E.func_GetQuestName(91093, false)
+				return E.func_GetName("map", 2371)..": "..E.func_GetName("quest", 91093, false)
 			end,
 			name_save = "MoreThanJustaPhase", -- More Than Just a Phase
 			defS = false,
@@ -1080,7 +1080,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2472)..": "..L["Warrant"]
+				return E.func_GetName("map", 2472)..": "..L["Warrant"]
 			end,
 			name_save = "KareshWarrants",
 			defS = false,
@@ -1103,7 +1103,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Delves"]..": "..E.func_GetQuestName(82706, false) -- DELVES_LABEL
+				return L["Delves"]..": "..E.func_GetName("quest", 82706, false) -- DELVES_LABEL
 			end,
 			name_save = "Delves",
 			defS = false,
@@ -1126,14 +1126,14 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Delves"]..": "..L["Delver's Bounty"] -- (E.func_GetItemName(233071) Season 2)(E.func_GetItemName(248142) Season 3)
+				return L["Delves"]..": "..L["Delver's Bounty"] -- (E.func_GetName("item", 233071) Season 2)(E.func_GetName("item", 248142) Season 3)
 			end,
 			name_save = "DelversBountySeason3",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(248142))..E.func_GetItemName(248142)},}, -- This item can be fished in Excavation Site 9
+				{86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(248142))..E.func_GetName("item", 248142)},}, -- This item can be fished in Excavation Site 9
 			},
 			forcedMaxQuest = 1,
 		},
@@ -1182,10 +1182,10 @@ local function tempFunction()
 		--     reset = "Regular",
 		--     desc = categoryKey,
 		--     quests = {
-		--         {83318, forcedText = {text = E.func_GetReputationName(2594) },},
-		--         {83317, forcedText = {text = E.func_GetReputationName(2590) },}, -- L["Council"]
-		--         {83319, forcedText = {text = E.func_GetReputationName(2600) },}, -- L["Spooders"]
-		--         {83320, forcedText = {text = E.func_GetReputationName(2570) },}, -- L["Hallowfall"]
+		--         {83318, forcedText = {text = E.func_GetName("reputation", 2594) },},
+		--         {83317, forcedText = {text = E.func_GetName("reputation", 2590) },}, -- L["Council"]
+		--         {83319, forcedText = {text = E.func_GetName("reputation", 2600) },}, -- L["Spooders"]
+		--         {83320, forcedText = {text = E.func_GetName("reputation", 2570) },}, -- L["Hallowfall"]
 		--     },
 		--     -- forcedMaxQuest = 4,
 		-- },
@@ -1203,17 +1203,17 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{83725, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222546))..E.func_GetItemName(222546)},}, -- = L["Algari Treatise on Alchemy"],
-				{83726, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222554))..E.func_GetItemName(222554)},}, -- = L["Algari Treatise on Blacksmithing"],
-				{83727, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222550))..E.func_GetItemName(222550)},}, -- = L["Algari Treatise on Enchanting"],
-				{83728, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222621))..E.func_GetItemName(222621)},}, -- = L["Algari Treatise on Engineering"],
-				{83729, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222552))..E.func_GetItemName(222552)},}, -- = L["Algari Treatise on Herbalism"],
-				{83730, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222548))..E.func_GetItemName(222548)},}, -- = L["Algari Treatise on Inscription"],
-				{83731, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222551))..E.func_GetItemName(222551)},}, -- = L["Algari Treatise on Jewelcrafting"],
-				{83732, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222549))..E.func_GetItemName(222549)},}, -- = L["Algari Treatise on Leatherworking"],
-				{83733, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222553))..E.func_GetItemName(222553)},}, -- = L["Algari Treatise on Mining"],
-				{83734, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222649))..E.func_GetItemName(222649)},}, -- = L["Algari Treatise on Skinning"],
-				{83735, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222547))..E.func_GetItemName(222547)},}, -- = L["Algari Treatise on Tailoring"],
+				{83725, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222546))..E.func_GetName("item", 222546)},}, -- = L["Algari Treatise on Alchemy"],
+				{83726, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222554))..E.func_GetName("item", 222554)},}, -- = L["Algari Treatise on Blacksmithing"],
+				{83727, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222550))..E.func_GetName("item", 222550)},}, -- = L["Algari Treatise on Enchanting"],
+				{83728, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222621))..E.func_GetName("item", 222621)},}, -- = L["Algari Treatise on Engineering"],
+				{83729, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222552))..E.func_GetName("item", 222552)},}, -- = L["Algari Treatise on Herbalism"],
+				{83730, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222548))..E.func_GetName("item", 222548)},}, -- = L["Algari Treatise on Inscription"],
+				{83731, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222551))..E.func_GetName("item", 222551)},}, -- = L["Algari Treatise on Jewelcrafting"],
+				{83732, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222549))..E.func_GetName("item", 222549)},}, -- = L["Algari Treatise on Leatherworking"],
+				{83733, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222553))..E.func_GetName("item", 222553)},}, -- = L["Algari Treatise on Mining"],
+				{83734, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222649))..E.func_GetName("item", 222649)},}, -- = L["Algari Treatise on Skinning"],
+				{83735, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222547))..E.func_GetName("item", 222547)},}, -- = L["Algari Treatise on Tailoring"],
 			},
 			forcedMaxQuest = 2, -- nadoutichnit
 		},
@@ -1221,7 +1221,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return TRADE_SKILLS
+				return E.func_GetName("map", 2339)..": "..TRADE_SKILLS
 			end,
 			name_save = "ProfessionWeeklies",
 			defS = false,
@@ -1271,13 +1271,13 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(245653))..E.func_GetItemName(245653)}},
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(245653))..E.func_GetName("item", 245653)}},
 				{84736, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
 				{84737, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
 				{84738, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
 				{84739, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
 				{nil},
-				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(238527))..E.func_GetItemName(238527)}},
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(238527))..E.func_GetName("item", 238527)}},
 				{91175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
 				{91176, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
 				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
@@ -1289,14 +1289,14 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return OTHER..": "..E.func_GetQuestName(84370, false)
+				return OTHER..": "..E.func_GetName("quest", 84370, false)
 			end,
 			name_save = "TheKeytoSuccess",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{84370, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(227794))..E.func_GetItemName(227794)},},
+				{84370, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(227794))..E.func_GetName("item", 227794)},},
 			},
 			forcedMaxQuest = 1,
 		},

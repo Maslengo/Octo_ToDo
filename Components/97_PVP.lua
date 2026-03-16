@@ -40,7 +40,7 @@ local function tempFunction()
 		-- 	sorted = false,
 		-- 	showTooltip = true,
 		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2339)..": "..E.func_GetQuestName(47148, false)
+		-- 		return E.func_GetName("map", 2339)..": "..E.func_GetName("quest", 47148, false)
 		-- 	end,
 		-- 	name_save = "SomethingDifferent",
 		-- 	defS = true,
@@ -55,7 +55,7 @@ local function tempFunction()
 		-- 	sorted = false,
 		-- 	showTooltip = true,
 		-- 	TextLeft = function()
-		-- 		return E.func_GetMapName(2339)..": "..E.func_GetNPCName(219260) -- "Ruffious"
+		-- 		return E.func_GetName("map", 2339)..": "..E.func_GetName("npc", 219260) -- "Ruffious"
 		-- 	end,
 		-- 	name_save = "Ruffious",
 		-- 	defS = true,

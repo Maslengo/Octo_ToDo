@@ -115,7 +115,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(39246, false) -- Владычество над морями
+				return E.func_GetName("quest", 39246, false) -- Владычество над морями
 			end,
 			name_save = "Garrison_NavalDomination",
 			defS = false,
@@ -131,7 +131,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(38242, false) -- Раскопанная магия
+				return E.func_GetName("quest", 38242, false) -- Раскопанная магия
 			end,
 			name_save = "Garrison_UnearthedMagic",
 			defS = false,

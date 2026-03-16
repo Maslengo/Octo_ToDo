@@ -352,7 +352,7 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 			if price and price > 0 then
 				table.insert(tooltip, {
 						"",
-						E.func_GetItemName(122284)..": "..E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
+						E.func_GetName("item", 122284)..": "..E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
 				})
 			end
 		end

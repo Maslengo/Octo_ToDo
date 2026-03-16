@@ -120,7 +120,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(504)..": "..E.func_GetQuestName(32641, false)
+				return E.func_GetName("map", 504)..": "..E.func_GetName("quest", 32641, false)
 			end,
 			name_save = "ChampionsoftheThunderKing",
 			defS = true,
@@ -135,7 +135,7 @@ local function tempFunction()
 		-- { -- no longer weekly
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetMapName(390)..": "..E.func_GetQuestName(32641, false)
+		--         return E.func_GetName("map", 390)..": "..E.func_GetName("quest", 32641, false)
 		--     end,
 		--     name_save = "WarforgedSeals",
 		--     defS = true,
@@ -150,7 +150,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(554)..": "..E.func_GetQuestName(33338, false)
+				return E.func_GetName("map", 554)..": "..E.func_GetName("quest", 33338, false)
 			end,
 			name_save = "EmpoweringtheHourglass",
 			defS = true,
@@ -164,7 +164,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(554)..": "..E.func_GetQuestName(33334, false)
+				return E.func_GetName("map", 554)..": "..E.func_GetName("quest", 33334, false)
 			end,
 			name_save = "StrongEnoughToSurvive",
 			defS = true,

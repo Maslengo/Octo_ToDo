@@ -124,7 +124,7 @@ local function tempFunction()
 		-- {
 		-- sorted = false,
 		-- showTooltip = true,
-		-- TextLeft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_GetQuestName(61981, false),
+		-- TextLeft = L["Replenish the Reservoir"],-- "1000 anima", -- E.func_GetName("quest", 61981, false),
 		-- name_save = "anima1k",
 		-- defS = true,
 		-- reset = "Weekly",
@@ -140,7 +140,7 @@ local function tempFunction()
 		-- {
 		-- sorted = false,
 		-- showTooltip = true,
-		-- TextLeft = L["Troubles at Home"], -- E.func_GetQuestName(60425, false),
+		-- TextLeft = L["Troubles at Home"], -- E.func_GetName("quest", 60425, false),
 		-- name_save = "TroublesatHome",
 		-- defS = true,
 		-- reset = "Weekly",
@@ -156,7 +156,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..E.func_GetQuestName(66042, false)
+				return E.func_GetName("map", 1970)..": "..E.func_GetName("quest", 66042, false)
 			end,
 			name_save = "ZMpatternswithinpatterns",
 			defS = true,
@@ -170,7 +170,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": ".."Rares"
+				return E.func_GetName("map", 1970)..": ".."Rares"
 			end,
 			name_save = "ZMRares",
 			defS = true,
@@ -215,7 +215,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": ".."WorldQuests"
+				return E.func_GetName("map", 1970)..": ".."WorldQuests"
 			end,
 			name_save = "ZMWorldQuests",
 			defS = false,
@@ -259,7 +259,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..L["Treasures"] -- AREA_LOOTING_UNLOCKED
+				return E.func_GetName("map", 1970)..": "..L["Treasures"] -- AREA_LOOTING_UNLOCKED
 			end,
 			name_save = "ZMtreasures",
 			defS = true,
@@ -298,7 +298,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..L["Undulating Foliage"]
+				return E.func_GetName("map", 1970)..": "..L["Undulating Foliage"]
 			end,
 			name_save = "ZMUndulatingFoliage",
 			defS = false,
@@ -312,7 +312,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": "..L["Prying Eye Discovery"]
+				return E.func_GetName("map", 1970)..": "..L["Prying Eye Discovery"]
 			end,
 			name_save = "ZMPryingEyeDiscovery",
 			defS = false,
@@ -329,7 +329,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": ".."Puzzle caches"
+				return E.func_GetName("map", 1970)..": ".."Puzzle caches"
 			end,
 			name_save = "Puzzle caches",
 			defS = false,
@@ -359,7 +359,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1970)..": ".."Concordance"
+				return E.func_GetName("map", 1970)..": ".."Concordance"
 			end,
 			name_save = "Concordance",
 			defS = false,
@@ -384,7 +384,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": "..E.func_GetQuestName(63949, false)
+				return E.func_GetName("map", 1961)..": "..E.func_GetName("quest", 63949, false)
 			end,
 			name_save = "KORTHIAweekly",
 			defS = true,
@@ -398,7 +398,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": "..E.func_GetQuestName(65266, false)
+				return E.func_GetName("map", 1961)..": "..E.func_GetName("quest", 65266, false)
 			end,
 			name_save = "KORTHIAlostresearch",
 			defS = true,
@@ -413,7 +413,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": "..E.func_GetQuestName(64552, false)
+				return E.func_GetName("map", 1961)..": "..E.func_GetName("quest", 64552, false)
 			end,
 			name_save = "KORTHIAanimatablemission",
 			defS = false,
@@ -430,7 +430,7 @@ local function tempFunction()
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetMapName(1961)..": ".. E.func_GetQuestName(64522, false)
+		-- return E.func_GetName("map", 1961)..": ".. E.func_GetName("quest", 64522, false)
 		-- end,
 		-- name_save = "KORTHIAStolenKorthianSupplies",
 		-- defS = true,
@@ -445,7 +445,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".."Rares"
+				return E.func_GetName("map", 1961)..": ".."Rares"
 			end,
 			name_save = "KORTHIARares",
 			defS = true,
@@ -481,7 +481,7 @@ local function tempFunction()
 		-- sorted = true,
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetMapName(1961)..": ".. L["Daily quests"]
+		-- return E.func_GetName("map", 1961)..": ".. L["Daily quests"]
 		-- end,
 		-- name_save = "KORTHIADailyQuest",
 		-- defS = false,
@@ -516,7 +516,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".. E.func_GetQuestName(63777, false)
+				return E.func_GetName("map", 1961)..": ".. E.func_GetName("quest", 63777, false)
 			end,
 			name_save = "SealedSecrets",
 			defS = false,
@@ -535,7 +535,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".. L["Purple Mobs"]
+				return E.func_GetName("map", 1961)..": ".. L["Purple Mobs"]
 			end,
 			name_save = "KORTHIAPurpleMobs",
 			defS = false,
@@ -564,7 +564,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".. L["Relic Gorger"]
+				return E.func_GetName("map", 1961)..": ".. L["Relic Gorger"]
 			end,
 			name_save = "KORTHIARelicGorgers",
 			defS = false,
@@ -582,7 +582,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1961)..": ".. L["Treasures"] -- AREA_LOOTING_UNLOCKED
+				return E.func_GetName("map", 1961)..": ".. L["Treasures"] -- AREA_LOOTING_UNLOCKED
 			end,
 			name_save = "KORTHIACollectionMushrooms",
 			defS = true,
@@ -630,7 +630,7 @@ local function tempFunction()
 		-- sorted = false,
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetMapName(1961)..": ".."Items"
+		-- return E.func_GetName("map", 1961)..": ".."Items"
 		-- end,
 		-- name_save = "KORTHIAitems",
 		-- defS = true,
@@ -654,7 +654,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["Covenant Assault"]
+				return E.func_GetName("map", 1543)..": "..L["Covenant Assault"]
 			end,
 			name_save = "MAWassault",
 			defS = false,
@@ -671,7 +671,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["The Hunt"]
+				return E.func_GetName("map", 1543)..": "..L["The Hunt"]
 			end,
 			name_save = "MAWhunt",
 			defS = false,
@@ -688,7 +688,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["Wrath of the Jailer"]
+				return E.func_GetName("map", 1543)..": "..L["Wrath of the Jailer"]
 			end,
 			name_save = "MAWwrathofthejailer",
 			defS = false,
@@ -702,7 +702,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast()
+				return E.func_GetName("map", 1543)..": "..L["Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast()
 			end,
 			name_save = "MAWtormentor",
 			defS = false,
@@ -716,7 +716,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["Helsworn Chest"]
+				return E.func_GetName("map", 1543)..": "..L["Helsworn Chest"]
 			end,
 			name_save = "MAWHelswornChest",
 			defS = false,
@@ -730,7 +730,7 @@ local function tempFunction()
 		{ -- ПОФИКСИТЬ доступно только во время найт фей ассаулта
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": "..L["Stolen Anima Vessel"]..E.RIFT
+				return E.func_GetName("map", 1543)..": "..L["Stolen Anima Vessel"]..E.RIFT
 			end,
 			name_save = "MAWStolenAnimaVesselRIFT",
 			defS = false,
@@ -746,7 +746,7 @@ local function tempFunction()
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetMapName(1543)..": "..L["Daily quests"],--E.func_GetCurrencyName(1880)
+		-- return E.func_GetName("map", 1543)..": "..L["Daily quests"],--E.func_GetName("currency", 1880)
 		-- end,
 		-- name_save = "MAWdailyQuests",
 		-- defS = false,
@@ -770,7 +770,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1543)..": ".."Rares"
+				return E.func_GetName("map", 1543)..": ".."Rares"
 			end,
 			name_save = "MAWRares",
 			defS = true,
@@ -854,7 +854,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1670)..": "..DUNGEONS
+				return E.func_GetName("map", 1670)..": "..DUNGEONS
 			end,
 			name_save = "DUNGEONS",
 			defS = false,
@@ -887,7 +887,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(62863, false)
+				return E.func_GetName("quest", 62863, false)
 			end,
 			name_save = "ReturnLostSouls",
 			defS = false,

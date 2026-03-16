@@ -11,7 +11,7 @@ local function tempFunction()
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
-	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
+	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = "RaidsOrDungeons"
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
@@ -80,18 +80,18 @@ table.insert(E.Components, tempFunction)
 -- simpleIds[expansionLevel] = simpleIds[expansionLevel] or {}
 -- simpleIds[expansionLevel][Field] = simpleIds[expansionLevel][Field] or {}
 -- -- simpleIds[Field][mapId] = title
--- -- simpleIds[Field][mapId] = E.func_GetDungeonName(mapId)
--- local text = "{id = "..mapId..", defS = true,}, -- "..E.func_GetDungeonName(mapId)
+-- -- simpleIds[Field][mapId] = E.func_GetName("dungeon", mapId)
+-- local text = "{id = "..mapId..", defS = true,}, -- "..E.func_GetName("dungeon", mapId)
 -- simpleIds[expansionLevel][Field][mapId] = text
 -- local SI_ID = mapId
 -- local EJ_ID = E.func_SI_to_EJ(SI_ID)
 -- local EJ_name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
--- -- local name = E.func_GetDungeonName(mapId) -- GetRealZoneText(mapId)
+-- -- local name = E.func_GetName("dungeon", mapId) -- GetRealZoneText(mapId)
 -- local name = GetRealZoneText(mapId)
 -- if EJ_name ~= name then
 -- tbl[mapId] = tbl[mapId] or {}
 -- -- tbl[mapId].diff = tbl[mapId].diff or {}
--- -- tbl[mapId].diff[difficultyId] = tbl[mapId].diff[difficultyId] or E.func_GetDifficultyName(difficultyId) -- GetDifficultyInfo(difficultyId)
+-- -- tbl[mapId].diff[difficultyId] = tbl[mapId].diff[difficultyId] or E.func_GetName("difficulty", difficultyId) -- GetDifficultyInfo(difficultyId)
 -- -- tbl[mapId].expansionLevel = expansionLevel
 -- -- tbl[mapId].iconTexture = iconTexture
 -- tbl[mapId].RealZoneText = name

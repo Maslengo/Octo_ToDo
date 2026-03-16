@@ -11,7 +11,7 @@ local function tempFunction()
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
-	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
+	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = CURRENCY
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
@@ -40,8 +40,11 @@ local function tempFunction()
 	-- for id in next, (E.ALL_Currencies) do
 	-- 	tinsert(sorted, id)
 	-- end
-	for id = 1, 4000 do
-		if E.func_GetCurrencyName(id) ~= E.COLOR_RED..UNKNOWN.."|r" then
+	local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
+	for id = 1, 3474 do
+		local info = GetCurrencyInfo(id)
+		-- if E.func_GetName("currency", id) ~= E.COLOR_RED..UNKNOWN.."|r" then
+		if info and info.name then
 			tinsert(sorted, id)
 		end
 	end

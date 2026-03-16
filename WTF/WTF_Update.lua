@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------
+local addonName = E.func_AddonNameForOptionsFunc(GlobalAddonName)
 ----------------------------------------------------------------
 local function compareVersion(v1, v2)
 	return v1 > (v2 or 0)
@@ -157,12 +157,21 @@ local function updateChars(pd, cm, DBVersion)
 			end
 		end
 	end
-
 	----------------------------------------------------------------
 	if compareVersion(111.6, DBVersion) then
 		if cm.LegionRemixData then
 			wipe(cm.LegionRemixData)
 		end
+	end
+	----------------------------------------------------------------
+	if compareVersion(112.1, DBVersion) then
+		if cm.GreatVault then
+			wipe(cm.GreatVault)
+		end
+		if pd.MythicPlus then
+			wipe(pd.MythicPlus)
+		end
+		pd.HasAvailableRewards = nil
 	end
 	----------------------------------------------------------------
 end
@@ -182,9 +191,15 @@ local function updateGlobal(DBVersion)
 		Octo_ToDo_DB_Vars.Config_UseTranslit = false
 	end
 	----------------------------------------------------------------
-	if compareVersion(111.6, DBVersion) then
+	if compareVersion(112.1, DBVersion) then
 		Octo_Cache_DB = {}
 		E.Init_Octo_Cache_DB()
+		if Octo_profileKeys and Octo_profileKeys.profiles and Octo_profileKeys.profiles.Default then
+			wipe(Octo_profileKeys.profiles.Default)
+			E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
+			print (addonName, "reset profile:", DEFAULT)
+		end
+
 	end
 	----------------------------------------------------------------
 end

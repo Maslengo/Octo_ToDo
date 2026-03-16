@@ -19,10 +19,6 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 	local cm = CharInfo.MASLENGO
 
 
-
-
-
-
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	TextCenter = E.func_TextCenter_Currency(CharInfo, id)
 	if id == 1931 and pd.SL_Possible_CatalogedResearch then

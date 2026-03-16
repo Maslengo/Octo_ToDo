@@ -79,9 +79,9 @@ function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType
 					E.func_UpdateButtonState(self, id, curType)
 					E.func_Octo_TooltipFrame_OnEnter(frame)
 					if curType == "item" or curType == "toy" then
-						GameTooltip:AddDoubleLine(E.func_GetItemName(id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
+						GameTooltip:AddDoubleLine(E.func_GetName("item", id), E.func_SecondsToClock(E.func_GetItemCooldown(id)))
 					else
-						GameTooltip:AddDoubleLine(E.func_GetSpellName(id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
+						GameTooltip:AddDoubleLine(E.func_GetName("spell", id), E.func_SecondsToClock(E.func_GetSpellCooldown(id)))
 						GameTooltip:AddDoubleLine(E.func_GetSpellDescription(id))
 					end
 			end)

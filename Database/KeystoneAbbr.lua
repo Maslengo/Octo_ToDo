@@ -1,6 +1,8 @@
 local GlobalAddonName, E = ...
 --------------------------------------------------------------------------------
 E.OctoTable_KeystoneAbbr = {
+	-- Wrath of the Lich King
+	[556] = {abbreviation = "POS", portal = 000000}, -- Pit of Saron
 	-- Cataclysm
 	[438] = {abbreviation = "VP", portal = 410080}, -- The Vortex Pinnacle
 	[456] = {abbreviation = "TOTT", portal = 424142}, -- Throne of the Tides (Cataclysm)
@@ -8,6 +10,7 @@ E.OctoTable_KeystoneAbbr = {
 	-- Mists of Pandaria
 	[2] = {abbreviation = "TJS", portal = 131204}, -- Temple of the Jade Serpent
 	-- Warlords of Draenor
+	[161] = {abbreviation = "SR", portal = 159898}, -- Skyreach
 	[165] = {abbreviation = "SBG", portal = 159899}, -- Shadowmoon Burial Grounds
 	[166] = {abbreviation = "GD", portal = 159900}, -- Grimrail Depot
 	[168] = {abbreviation = "EB", portal = 159901}, -- "TE"}, -- The Everbloom
@@ -82,10 +85,19 @@ E.OctoTable_KeystoneAbbr = {
 	[76] = {abbreviation = "Scho", portal = 131232}, -- Scholomance
 	[77] = {abbreviation = "SH", portal = 131231}, -- Scarlet Halls
 	[78] = {abbreviation = "SM", portal = 131229}, -- Scarlet Monastery
-	[161] = {abbreviation = "Sky", portal = 159898}, -- Skyreach
 	[163] = {abbreviation = "BSM", portal = 159895}, -- Bloodmaul Slag Mines
 	[164] = {abbreviation = "Auch", portal = 159897}, -- Auchindoun
 	[167] = {abbreviation = "UBS", portal = 159902}, -- Upper Blackrock Spire
 	-- 1216786
 	-- AATDH - raid
+
+
+
+	-- Midnight
+	[557] = {abbreviation = "WS", portal = 000000}, -- Windrunner Spire
+	[558] = {abbreviation = "MT", portal = 000000}, -- Magisters' Terrace
+	[559] = {abbreviation = "NPX", portal = 000000}, -- Nexus-Point Xenas
+	[560] = {abbreviation = "MC", portal = 000000}, -- Maisara Caverns
+
+
 }

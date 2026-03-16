@@ -57,19 +57,63 @@ function EventFrame:func_CacheGameData()
 					end
 				end
 			end
+
+
+			if cm and cm.Items then
+				if cm.Items.Bags then
+					for itemID in next,(cm.Items.Bags) do
+						if itemID then
+							E.ALL_Items[itemID] = true
+						end
+					end
+				end
+				if cm.Items.Bags_FULL then
+					for itemID in next,(cm.Items.Bags_FULL) do
+						if itemID then
+							E.ALL_Items[itemID] = true
+						end
+					end
+				end
+
+				if cm.Items.Bank then
+					for itemID in next,(cm.Items.Bank) do
+						if itemID then
+							E.ALL_Items[itemID] = true
+						end
+					end
+				end
+				if cm.Items.Bank_FULL then
+					for itemID in next,(cm.Items.Bank_FULL) do
+						if itemID then
+							E.ALL_Items[itemID] = true
+						end
+					end
+				end
+			end
+
+
+
 		end
 	end
+
+	-- for itemID, v in next,(E.ALL_Items) do
+		-- print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityLevel(itemID))
+	-- end
 	----------------------------------------------------------------
 	-- Асинхронная загрузка
 	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
 	promise:AddItemsByKey(E.ALL_Items)
-	:ThenForAllWithCached(function(_, ID, type)
-			if type == "quest" then
-				E.func_GetQuestName(ID)
-			elseif type == "item" then
-				E.func_GetItemName(ID)
-				-- C_Item.GetItemQualityByID(ID)
+	:ThenForAllWithCached(function(_, ID, TYPE)
+			E.func_GetName(TYPE, ID)
+			if TYPE == "item" then
+				E.func_GetItemQualityLevel(ID)
 			end
+			-- if TYPE == "quest" then
+			-- 	E.func_GetName("quest", ID)
+			-- elseif TYPE == "item" then
+			-- 	E.func_GetName("item", ID)
+			-- 	-- C_Item.GetItemQualityByID(ID)
+			-- end
 	end)
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("func_CacheGameData")
@@ -363,23 +407,25 @@ end
 
 function EventFrame:Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
-	Octo_Cache_DB.interfaceVersion = E.interfaceVersion
-	E.func_InitSubTable(Octo_Cache_DB, "AllItems")
-	E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
+	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
+
 	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
 	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
-	E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
-	E.func_InitSubTable(Octo_Cache_DB, "AllNPCs")
-	E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
-	E.func_InitSubTable(Octo_Cache_DB, "AllReputations")
-	E.func_InitSubTable(Octo_Cache_DB, "AllSpells")
-	E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
-	E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
-	E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
-	E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
-	E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
-
 	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
+
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllItems")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllNPCs")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllReputations")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllSpells")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
+	-- E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
+
 	E.func_BUILD_DUNG_DB()
 end
 
@@ -409,8 +455,6 @@ function EventFrame:init_Octo_profileColors()
 	-- C_Timer.After(1, function()
 	-- 	opde(db)
 	-- end)
-
-
 	E.PROFTBL = db.profiles[db.Current_profile]
 
 
@@ -574,10 +618,10 @@ function EventFrame:ADDON_LOADED(addonName)
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	Octo_Cache_DB = Octo_Cache_DB or {}
-	if Octo_Cache_DB.interfaceVersion ~= E.interfaceVersion then
+	if Octo_Cache_DB.interfaceVersionForReset ~= E.interfaceVersion then
 		Octo_Cache_DB = {}
 	end
-	Octo_Cache_DB.interfaceVersion = E.interfaceVersion
+	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	EventFrame:init_Octo_profileKeys()
@@ -590,7 +634,6 @@ end
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CacheGameData()
 	self:func_ScheduleResetTimer()
-	E.Cache_All_EventNames_Year()
 	C_Timer.After(1, E.func_UpdateGlobals)
 end
 local function Reset_JournalInstance()

@@ -97,7 +97,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(70750, true)
+				return E.func_GetName("quest", 70750, true)
 			end,
 			name_save = "AidingtheAccord",
 			defS = true,
@@ -148,7 +148,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.DF_CommunityFeast()..E.func_GetQuestName(70893, false)
+				return E.Timers.DF_CommunityFeast()..E.func_GetName("quest", 70893, false)
 			end,
 			name_save = "CommunityFeast",
 			defS = true,
@@ -204,7 +204,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": "..E.func_GetQuestName(78444, true)
+				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78444, true)
 			end,
 			name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 			defS = true,
@@ -218,7 +218,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": "..E.func_GetQuestName(78821, false)
+				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78821, false)
 			end,
 			name_save = "EmeraldDream_BloomingDreamseeds",
 			defS = true,
@@ -232,7 +232,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": "..E.Timers.DF_Flower()..E.func_GetQuestName(78319, false)
+				return E.func_GetName("map", 2200)..": "..E.Timers.DF_Flower()..E.func_GetName("quest", 78319, false)
 			end,
 			name_save = "EmeraldDream_TheSuperbloom",
 			defS = true,
@@ -247,7 +247,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": ".."Rares"
+				return E.func_GetName("map", 2200)..": ".."Rares"
 			end,
 			name_save = "EmeraldDream_Rares",
 			defS = true,
@@ -288,7 +288,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": "..L["Treasures"]
+				return E.func_GetName("map", 2200)..": "..L["Treasures"]
 			end,
 			name_save = "EmeraldDream_Treasures",
 			defS = false,
@@ -320,7 +320,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": "..E.func_GetQuestName(78381, false)
+				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78381, false)
 			end,
 			name_save = "EmeraldDream_DreamsUnified",
 			defS = false,
@@ -334,7 +334,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2200)..": ".."Seeds"
+				return E.func_GetName("map", 2200)..": ".."Seeds"
 			end,
 			name_save = "EmeraldDream_Seeds",
 			defS = false,
@@ -351,7 +351,7 @@ local function tempFunction()
 		-- sorted = false,
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetMapName(2200)..": ".."TheGilneasReclamation_Storylines"
+		-- return E.func_GetName("map", 2200)..": ".."TheGilneasReclamation_Storylines"
 		-- end,
 		-- name_save = "TheGilneasReclamation_Storylines",
 		-- defS = true,
@@ -378,7 +378,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2239)..": "..L["Treasures"]
+				return E.func_GetName("map", 2239)..": "..L["Treasures"]
 			end,
 			name_save = "Amirdrassil_Treasures",
 			defS = false,
@@ -413,7 +413,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": "..E.func_GetQuestName(75665, true)
+				return E.func_GetName("map", 2133)..": "..E.func_GetName("quest", 75665, true)
 			end,
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 			defS = true,
@@ -428,7 +428,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": ".."Rares"
+				return E.func_GetName("map", 2133)..": ".."Rares"
 			end,
 			name_save = "ZaralekCavernRares",
 			defS = true,
@@ -466,7 +466,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": ".."Events"
+				return E.func_GetName("map", 2133)..": ".."Events"
 			end,
 			name_save = "ZaralekCavernEvents",
 			defS = false,
@@ -497,7 +497,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": "..L["Sniffenseeking"]
+				return E.func_GetName("map", 2133)..": "..L["Sniffenseeking"]
 			end,
 			name_save = "ZaralekCavernSniffenseeking",
 			defS = false,
@@ -527,7 +527,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": ".. L["Sniffenseeking"].." ("..ITEMS..")"
+				return E.func_GetName("map", 2133)..": ".. L["Sniffenseeking"].." ("..ITEMS..")"
 			end,
 			name_save = "ZaralekCavernSniffenseekingItems",
 			defS = false,
@@ -552,7 +552,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2133)..": "..E.func_GetQuestName(74906, false).." "..E.Timers.DF_ResearchersUnderFire()
+				return E.func_GetName("map", 2133)..": "..E.func_GetName("quest", 74906, false).." "..E.Timers.DF_ResearchersUnderFire()
 			end,
 			name_save = "ResearchersUnderFire",
 			defS = true,
@@ -570,7 +570,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2151)..": ".."Rares" -- Запретный край.
+				return E.func_GetName("map", 2151)..": ".."Rares" -- Запретный край.
 			end,
 			name_save = "TheForbiddenReachRares",
 			defS = true,
@@ -607,7 +607,7 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_GetMapName(2151)..": "..L["Storm-Bound Chest"],
+			TextLeft = E.func_GetName("map", 2151)..": "..L["Storm-Bound Chest"],
 			name_save = "StormBoundChest",
 			defS = false,
 			reset = "Weekly",
@@ -620,7 +620,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2022)..": "..E.func_GetQuestName(66133, false)
+				return E.func_GetName("map", 2022)..": "..E.func_GetName("quest", 66133, false)
 			end,
 			name_save = "KeysofLoyalty",
 			defS = false,
@@ -663,7 +663,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift()
+				return E.func_GetName("map", 2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift()
 			end,
 			name_save = "DFTimeRift",
 			defS = false,
@@ -677,7 +677,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.Timers.DF_Dreamsurges()..E.func_GetQuestName(77414, false)
+				return E.Timers.DF_Dreamsurges()..E.func_GetName("quest", 77414, false)
 			end,
 			name_save = "DreamsurgeInvestigation",
 			defS = false,
@@ -691,7 +691,7 @@ local function tempFunction()
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetQuestName(77251, false)
+		-- return E.func_GetName("quest", 77251, false)
 		-- end,
 		-- name_save = "ShapingtheDreamsurge",
 		-- defS = false,
@@ -705,7 +705,7 @@ local function tempFunction()
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetQuestName(77236, false)
+		-- return E.func_GetName("quest", 77236, false)
 		-- end,
 		-- name_save = "WhenTimeNeedsMending",
 		-- defS = false,
@@ -718,7 +718,7 @@ local function tempFunction()
 		-- },
 		{
 			showTooltip = true,
-			TextLeft = E.func_GetAchievementName(18554),
+			TextLeft = E.func_GetName("achievement", 18554),
 			name_save = "TemporalAcquisitionsSpecialist",
 			defS = true,
 			reset = "Regular",

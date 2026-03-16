@@ -125,7 +125,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetQuestName(C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.FACTION_CURRENT == "Horde" and 53435 or 53436), false)
+				return E.func_GetName("quest", C_IslandsQueue.GetIslandsWeeklyQuestID() or (E.FACTION_CURRENT == "Horde" and 53435 or 53436), false)
 			end,
 			name_save = "AzeriteForTheFaction",
 			defS = true,
@@ -247,7 +247,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(62)..": ".."Rares"
+				return E.func_GetName("map", 62)..": ".."Rares"
 			end,
 			name_save = "DarkshoreRares",
 			defS = false,
@@ -343,7 +343,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		-- TextLeft = function()
-		--     return E.func_GetMapName(1462)..": "..E.func_GetQuestName(54088, false)
+		--     return E.func_GetName("map", 1462)..": "..E.func_GetName("quest", 54088, false)
 		-- end,
 		--     name_save = "TheMechagonianThreat",
 		-- defS = true,
@@ -384,7 +384,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1462)..": Rares"
+				return E.func_GetName("map", 1462)..": Rares"
 			end,
 			name_save = "MechagonRares",
 			defS = false,
@@ -435,7 +435,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1462)..": Treasures"
+				return E.func_GetName("map", 1462)..": Treasures"
 			end,
 			name_save = "MechagonTREASURE",
 			defS = false,
@@ -563,7 +563,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1462)..": Dailies Visitor Quests"
+				return E.func_GetName("map", 1462)..": Dailies Visitor Quests"
 			end,
 			name_save = "DAILY_VISITOR_QUESTS",
 			defS = false,
@@ -610,7 +610,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1462)..": Daily WQ"
+				return E.func_GetName("map", 1462)..": Daily WQ"
 			end,
 			name_save = "MechagonDAILYWQ",
 			defS = false,
@@ -626,7 +626,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1462)..": "..E.func_GetAchievementName(13489)
+				return E.func_GetName("map", 1462)..": "..E.func_GetName("achievement", 13489)
 			end,
 			name_save = "MechagonSecretFish",
 			defS = false,
@@ -650,7 +650,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetMapName(1462)..": "..E.func_GetAchievementName(13791)
+				return E.func_GetName("map", 1462)..": "..E.func_GetName("achievement", 13791)
 			end,
 			name_save = "MechagonMakingAMount",
 			defS = false,

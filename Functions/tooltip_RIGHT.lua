@@ -45,12 +45,13 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if dataType == "Currencies" and id == 1822 then
 		local curCovID = pd.SL_covenantID or 0
-		for covenant = 1, 4 do
-			local cov = E.OctoTable_Covenant[covenant]
+		for covenantID = 1, 4 do
+			local cov = E.OctoTable_Covenant[covenantID]
 			if cov then
-				-- local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
-				local color = (curCovID == covenant) and E.func_DB_COV_COLOR(curCovID) or E.COLOR_GRAY
-				local leftText = color..E.func_texturefromIcon(cov.icon)..cov.name.."|r"
+				local name = E.func_GetName("covenant", covenantID)
+				-- local color = (curCovID == covenantID) and cov.color or E.COLOR_GRAY
+				local color = (curCovID == covenantID) and E.func_DB_COV_COLOR(curCovID) or E.COLOR_GRAY
+				local leftText = color..E.func_texturefromIcon(cov.icon)..name.."|r"
 				local value = pd[cov.prefix.."_Renown"] or 0
 				local rightText = color..value.."|r"
 				tooltip[#tooltip+1] = { leftText, "", rightText }
@@ -59,15 +60,16 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if dataType == "Currencies" and id == 1813 then
 		local curCovID = pd.SL_covenantID or 0
-		for covenant = 1, 4 do
-			local cov = E.OctoTable_Covenant[covenant]
+		for covenantID = 1, 4 do
+			local cov = E.OctoTable_Covenant[covenantID]
 			if cov then
-				local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
-				local leftText = color..E.func_texturefromIcon(cov.icon)..cov.name.."|r"
+				local name = E.func_GetName("covenant", covenantID)
+				local color = (curCovID == covenantID) and cov.color or E.COLOR_GRAY
+				local leftText = color..E.func_texturefromIcon(cov.icon)..name.."|r"
 				local value = pd[cov.prefix.."_Anima"] or 0
 				local rightText = color..value.."|r"
 				local centText = ""
-				if curCovID == covenant and pd.SL_Possible_Anima then
+				if curCovID == covenantID and pd.SL_Possible_Anima then
 					centText = E.COLOR_BLUE.."+"..pd.SL_Possible_Anima.."|r"
 				end
 				tooltip[#tooltip+1] = { leftText, centText, rightText }
@@ -159,7 +161,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				for mountID, price in next, (dataTBL) do
 					local mountIconNumber = E.func_GetMountTexture(mountID)
 					local mountIcon = E.func_texturefromIcon(mountIconNumber)
-					local mountName = E.func_GetMountName(mountID)
+					local mountName = E.func_GetName("mount", mountID)
 					local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
 					local color = isCollected and E.COLOR_WHITE or E.COLOR_RED
 					local mountLeftText = mountIcon..color..mountName.."|r"
@@ -250,7 +252,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			if IsAccountWideReputation then
 				firstTEXT = firstTEXT..E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE, nil, nil, true)
 			end
-			firstTEXT = firstTEXT..E.func_GetReputationName(id)
+			firstTEXT = firstTEXT..E.func_GetName("reputation", id)
 			local secondTEXT = FIRST.."/"..SECOND
 			if secondTEXT == "1/1" then
 				secondTEXT = " "
@@ -312,7 +314,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		local charProf = cm.professions
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
-				local leftText = E.func_ProfessionIcon(charProf[i].skillLine).." "..E.func_GetProfessionName(charProf[i].skillLine)
+				local leftText = E.func_ProfessionIcon(charProf[i].skillLine).." "..E.func_GetName("profession", charProf[i].skillLine)
 				local rightText = charProf[i].skillLevel.."/"..charProf[i].maxSkillLevel
 				if charProf[i].skillModifier then
 					rightText = charProf[i].skillLevel..E.COLOR_GREEN.."+"..charProf[i].skillModifier.."|r".."/"..charProf[i].maxSkillLevel
@@ -375,7 +377,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if SettingsType == "AdditionallyBOTTOM#MythicZero" then
 		-- Проходим по всем инстансам из OT_curMapTable
 		for SI_ID, _ in pairs(E.OT_curMapTable) do
-			local name = E.func_GetDungeonName(SI_ID)
+			local name = E.func_GetName("dungeon", SI_ID)
 			local defeatedBosses = 0
 			local totalBosses = 0
 			local hasData = false
@@ -437,7 +439,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			table.sort(questIDs, E.func_ReversSort)
 			for i = 1, #questIDs do
 				local questID = questIDs[i]
-				tooltip[#tooltip+1] = {E.func_GetQuestName(questID), cm.ListOfParagonQuests[questID]}
+				tooltip[#tooltip+1] = {E.func_GetName("quest", questID), cm.ListOfParagonQuests[questID]}
 			end
 		end
 		if pd.numQuests and cm.ListOfQuests then
@@ -451,7 +453,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			for i = 1, #questIDs do
 				local questID = questIDs[i]
-				tooltip[#tooltip+1] = {E.func_GetQuestName(questID), cm.ListOfQuests[questID]}
+				tooltip[#tooltip+1] = {E.func_GetName("quest", questID), cm.ListOfQuests[questID]}
 			end
 		end
 	end
@@ -466,9 +468,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					local totalBosses = w.totalBosses
 					local lastBossDefeated = w.lastBossDefeated
 					local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
-					local difficultyName = E.func_GetDifficultyName(difficultyID)
+					local difficultyName = E.func_GetName("difficulty", difficultyID)
 					-- local name = w.name
-					local name = E.func_GetDungeonName(SI_ID)
+					local name = E.func_GetName("dungeon", SI_ID)
 					local EJ_ID = E.func_SI_to_EJ(SI_ID)
 					local _, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
 					local icon
@@ -530,7 +532,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		for _, v in ipairs(combinedTooltip) do
 			tooltip[#tooltip+1] = {
 				v.LeftText,
-				E.func_GetDifficultyName(v.difficultyID),
+				E.func_GetName("difficulty", v.difficultyID),
 				v.status,
 				E.COLOR_TIME..v.time.."|r",
 			}
@@ -586,14 +588,15 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					if data.sorted ~= false then
 						table.sort(questsToShow, function(a, b)
 								local function getName(entry)
+									if not entry then return "" end
 									if entry.forcedText then
 										if entry.forcedText.npcID then
-											return E.func_GetNPCName(entry.forcedText.npcID) or ""
+											return E.func_GetName("npc", entry.forcedText.npcID) or ""
 										elseif entry.forcedText.text then
 											return entry.forcedText.text or ""
 										end
 									end
-									return E.func_GetQuestName(entry[1]) or ""
+									return E.func_GetName("quest", entry[1]) or ""
 								end
 								return getName(a) < getName(b)
 						end)
@@ -619,13 +622,13 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 								Output_LEFT = Output_LEFT..forcedText.text.." "
 							end
 							if forcedText.npcID then
-								Output_LEFT = Output_LEFT..E.func_GetNPCName(forcedText.npcID).." "
+								Output_LEFT = Output_LEFT..E.func_GetName("npc", forcedText.npcID).." "
 							end
 							if forcedText.achievementID then
-								Output_LEFT = Output_LEFT..E.func_GetAchievementName(forcedText.achievementID).." "
+								Output_LEFT = Output_LEFT..E.func_GetName("achievement", forcedText.achievementID).." "
 							end
 							if forcedText.itemID then
-								Output_LEFT = Output_LEFT..E.func_texturefromIcon(E.func_GetItemIcon(forcedText.itemID))..E.func_GetItemName(forcedText.itemID).." "
+								Output_LEFT = Output_LEFT..E.func_texturefromIcon(E.func_GetItemIcon(forcedText.itemID))..E.func_GetName("item", forcedText.itemID).." "
 							end
 							if forcedText.Icon then
 								Output_LEFT = E.func_texturefromIcon(forcedText.Icon)..Output_LEFT
@@ -633,7 +636,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 							Output_LEFT = Output_LEFT:match("^(.-)%s*$")
 						else
 							if questID then
-								Output_LEFT = Output_LEFT..E.func_GetQuestName(questID)
+								Output_LEFT = Output_LEFT..E.func_GetName("quest", questID)
 							end
 						end
 						if addText then
@@ -653,16 +656,16 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 								Output_LEFT = Output_LEFT..addText.notes
 							end
 							if addText.mapID then
-								Output_LEFT = Output_LEFT..E.COLOR_GRAY.." ("..E.func_GetMapName(addText.mapID)..")|r"
+								Output_LEFT = Output_LEFT..E.COLOR_GRAY.." ("..E.func_GetName("map", addText.mapID)..")|r"
 							end
 							if addText.spellID then
-								Output_LEFT = Output_LEFT..E.COLOR_PINK..E.func_GetSpellName(addText.spellID).."|r"
+								Output_LEFT = Output_LEFT..E.COLOR_PINK..E.func_GetName("spell", addText.spellID).."|r"
 							end
 							if addText.text then
 								Output_LEFT = Output_LEFT..addText.text
 							end
 							if addText.itemID then
-								Output_LEFT = Output_LEFT..E.func_texturefromIcon(E.func_GetItemIcon(addText.itemID))..E.func_GetItemName(addText.itemID)
+								Output_LEFT = Output_LEFT..E.func_texturefromIcon(E.func_GetItemIcon(addText.itemID))..E.func_GetName("item", addText.itemID)
 							end
 							if addText.coords then
 								local x, y = E.func_UnpackCoordinates(addText.coords)
@@ -772,7 +775,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			header[1] = {" ", "LEFT"}
 		end
 		for _, diff in ipairs(completedDiffs) do
-			header[#header+1] = {E.func_GetDifficultyName(diff.difficultyID), "CENTER"}
+			header[#header+1] = {E.func_GetName("difficulty", diff.difficultyID), "CENTER"}
 		end
 		tooltip[#tooltip+1] = header
 		-- 8. итоговая строка TOTAL
@@ -813,8 +816,8 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 	local cm = CharInfo.MASLENGO
 	local tooltip = {}
 	local sorted_itemList = {}
-	local Items_BAGS = CharInfo.MASLENGO.Items.Bags
-	local Items_BANK = CharInfo.MASLENGO.Items.Bank
+	local Items_BAGS = cm.Items.Bags
+	local Items_BANK = cm.Items.Bank
 	local total_BAGS = 0
 	local total_BANK = 0
 	for itemID in next, (TBL) do
@@ -825,9 +828,18 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 			if count_BANK > 0 then
 				total_BANK = total_BANK+count_BANK
 			end
+			local quality = E.func_GetItemQualityLevel(itemID)
+			if cm and cm.Items and cm.Items.Bags_FULL and cm.Items.Bags_FULL[itemID] and cm.Items.Bags_FULL[itemID].Quality then
+				quality = cm.Items.Bags_FULL[itemID].Quality
+			end
+
+			if cm and cm.Items and cm.Items.Bank_FULL and cm.Items.Bank_FULL[itemID] and cm.Items.Bank_FULL[itemID].Quality then
+				quality = cm.Items.Bank_FULL[itemID].Quality
+			end
+
 			table.insert(sorted_itemList, {
 					itemID = itemID,
-					quality = E.func_GetItemQualityLevel(itemID),
+					quality = quality,
 					count_BAGS = count_BAGS,
 					count_BANK = count_BANK,
 			})
@@ -848,12 +860,25 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 	end
 	for _, v in ipairs(sorted_itemList) do
 		local itemID = v.itemID
+		local quality = v.quality
 		local count_BAGS = v.count_BAGS
 		local count_BANK = v.count_BANK
 		local row2Text = count_BAGS > 0 and E.func_CompactFormatNumber(count_BAGS) or ""
 		local row3Text = count_BANK > 0 and E.COLOR_GRAY.."+"..E.func_CompactFormatNumber(count_BANK).."|r" or ""
 		local icon = E.func_texturefromIcon(E.func_GetItemIcon(itemID))
-		local name = E.func_GetItemName(itemID)
+		local name = E.func_GetName("item", itemID, quality)
+
+		-- local quality = 1
+		-- if cm.Items and cm.Items.Bags_FULL and cm.Items.Bags_FULL[itemID] then
+		-- 	-- name = cm.Items.Bags_FULL[itemID].ItemLink
+		-- 	quality = cm.Items.Bags_FULL[itemID].Quality
+		-- elseif cm.Items and cm.Items.Bank_FULL and cm.Items.Bank_FULL[itemID] then
+		-- 	-- name = cm.Items.Bank_FULL[itemID].ItemLink
+		-- 	quality = cm.Items.Bank_FULL[itemID].Quality
+		-- else
+		-- 	name = E.func_GetName("item", itemID)
+		-- end
+
 		tooltip[#tooltip+1] = {
 			icon..name,
 			{row2Text, "RIGHT"},

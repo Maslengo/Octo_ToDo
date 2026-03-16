@@ -35,7 +35,7 @@ local function tempFunction()
 		-- {
 		-- sorted = false,
 		-- TextLeft = function()
-		-- return RAIDS..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetEventName(1583)..")",
+		-- return RAIDS..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetName("event", 1583)..")",
 		-- end,
 		-- showTooltip = true,
 		-- name_save = "Raid",
@@ -53,7 +53,7 @@ local function tempFunction()
 		-- {
 		-- sorted = false,
 		-- TextLeft = function()
-		-- return DUNGEONS..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetEventName(1583)..")",
+		-- return DUNGEONS..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetName("event", 1583)..")",
 		-- end,
 		-- showTooltip = true,
 		-- name_save = "Dungeons",
@@ -178,8 +178,8 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-		{id = "ListOfQuests", defS = false,},
 		{id = "LFGInstance", defS = true,},
+		{id = "ListOfQuests", defS = false,},
 		{id = "AllItems", defS = false,},
 		{id = "Professions", defS = false,},
 		{id = "ItemLevel", defS = true,},

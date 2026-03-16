@@ -94,8 +94,8 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				-- return E.func_GetQuestName(24748, false)
-				return E.func_GetItemName(49623)
+				-- return E.func_GetName("quest", 24748, false)
+				return E.func_GetName("item", 49623)
 			end,
 			name_save = "Shadowmourne",
 			defS = true,

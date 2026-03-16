@@ -21,7 +21,7 @@ function E.func_option_CHARACTER(category, layout)
 
 
 	----------------------------------------------------------------
-	-- 2. Octo_ToDo_DB_Vars.Config_LevelToShow
+	-- 1. Octo_ToDo_DB_Vars.Config_LevelToShow
 	----------------------------------------------------------------
 	do
 		-- RegisterProxySetting example. This will run the GetValue and SetValue

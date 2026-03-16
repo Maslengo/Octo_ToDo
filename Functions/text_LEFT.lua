@@ -14,7 +14,7 @@ end
 function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
-	TextLeft = E.func_GetCurrencyName(id)
+	TextLeft = E.func_GetName("currency", id)
 	SettingsType = dataType.."#"..id
 	if id == 824 then
 		TooltipKey = "WoD_824"
@@ -30,14 +30,14 @@ end
 function E.func_Otrisovka_LEFT_Items(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
-	TextLeft = E.func_GetItemName(id)
+	TextLeft = E.func_GetName("item", id)
 	SettingsType = dataType.."#"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
 function E.func_Otrisovka_LEFT_RaidsOrDungeons(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
-	local name = E.func_GetDungeonName(id) -- EJ_GetInstanceInfo(id)
+	local name = E.func_GetName("dungeon", id) -- EJ_GetInstanceInfo(id)
 	-- local JI_ID = tonumber(id)
 	-- local SI_ID = E.func_EJ_to_SI(JI_ID)
 	TextLeft = name
@@ -62,7 +62,7 @@ end
 function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
-	TextLeft = E.func_GetReputationName(id)
+	TextLeft = E.func_GetName("reputation", id)
 	SettingsType = dataType.."#"..id
 	TooltipKey = "Reputation_"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
@@ -82,11 +82,11 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 		IconLeft = 4352494
 	end
 	if id == "HeartofAzeroth" then
-		TextLeft = E.func_GetItemName(158075)
+		TextLeft = E.func_GetName("item", 158075)
 		IconLeft = E.func_GetItemIcon(158075)
 	end
 	if id == "Ashjrakamas" then
-		TextLeft = E.func_GetItemName(169223)
+		TextLeft = E.func_GetName("item", 169223)
 		IconLeft = E.func_GetItemIcon(169223)
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
@@ -121,7 +121,7 @@ function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataTyp
 	end
 	if id == "MythicZero" then
 		-- TextLeft = DUNGEONS .. " (M+0)"
-		TextLeft = DUNGEONS .." (".. E.func_GetDifficultyName(23).."+0)"
+		TextLeft = DUNGEONS .." (".. E.func_GetName("difficulty", 23).."+0)"
 	end
  	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end

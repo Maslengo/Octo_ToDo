@@ -469,9 +469,13 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				end
 			end,
 			OnTooltipShow = function(tooltip)
-				local version = E.func_GetAddOnMetadata(AddonName, "Version")
-				local title = E.func_GetAddOnMetadata(AddonName, "Title")
-				tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
+				-- local version = E.func_GetAddOnMetadata(AddonName, "Version")
+				-- local title = E.func_GetAddOnMetadata(AddonName, "Title")
+				-- tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
+
+				local addonNameNEW = E.func_AddonNameForOptionsFunc(AddonName)
+				tooltip:AddLine(addonNameNEW)
+
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], GAMEMENU_OPTIONS)
@@ -607,6 +611,9 @@ function E.func_SortCharacters()
 end
 ----------------------------------------------------------------
 function E.func_GetColorGradient(value, minValue, maxValue)
+	if not E.PROFTBL then
+		return E.COLOR_WHITE
+	end
 	if E.PROFTBL.ConfigColor_TOOLTIP_usegradient == nil or E.PROFTBL.ConfigColor_TOOLTIP_usegradient == false then
 		return E.COLOR_WHITE
 	end
@@ -803,6 +810,7 @@ end
 ----------------------------------------------------------------
 function E.func_AddonNameForOptionsFunc(addonName)
 	return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title").." "..E.COLOR_GRAY..E.func_GetAddOnMetadata(addonName, "Version").."|r"
+	-- ORANGE = ff7f3f
 end
 ----------------------------------------------------------------
 local countSavedVars = 0
@@ -969,7 +977,7 @@ end
 function E.func_FormatMountInfo(mountID)
 	local mountIconNumber = E.func_GetMountTexture(mountID)
 	local mountIcon = E.func_texturefromIcon(mountIconNumber)
-	local mountName = mountIcon..E.func_GetMountCollectedColor(mountID)..E.func_GetMountName(mountID).."|r"
+	local mountName = mountIcon..E.func_GetMountCollectedColor(mountID)..E.func_GetName("mount", mountID).."|r"
 	return mountName
 end
 function E.func_FormatMoney(number)
@@ -2150,8 +2158,29 @@ function E.func_BUILD_DUNG_DB()
 	-- E.DEBUG_STOP()
 end
 ----------------------------------------------------------------
+function E.func_isAtlas(TextureOrAtlas)
+	if not TextureOrAtlas then return false end
+
+	if not C_Texture or not C_Texture.GetAtlasInfo then
+		return false
+	end
+
+	local info = C_Texture.GetAtlasInfo(TextureOrAtlas)
+	if info and info.name then
+		return true
+	end
+	return false
+end
 ----------------------------------------------------------------
-----------------------------------------------------------------
+function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
+	if not frame or not TextureOrAtlas then return end
+
+	if E.func_isAtlas(TextureOrAtlas) then
+		frame:SetAtlas(TextureOrAtlas, UseAtlasSize or false)
+	else
+		frame:SetTexture(TextureOrAtlas)
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2202,3 +2231,6 @@ E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_REGEN_ENABLED()
 	E.func_RunAfterCombat()
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

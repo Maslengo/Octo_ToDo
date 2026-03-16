@@ -13,12 +13,9 @@ local EventFrame = CreateFrame("FRAME")
 EventFrame:Hide()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-----------------------------------------------------------------
-----------------------------------------------------------------
 ----------------------------------------------------------------
 local icon = E.func_texturefromIcon(C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture"))
-local SettingListHeaderName = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
+local SettingListHeaderName = E.func_GetAddOnMetadata(GlobalAddonName, "Title")
 local vesrion = E.COLOR_GRAY.." ".. C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version").."|r"
 
 local category1name = SettingListHeaderName
@@ -42,8 +39,8 @@ end
 function E.openConfig()
 	EventFrame:openConfig()
 end
-SLASH_CALENDARTOOLTIPCONFIG1 = "/octosettings"
-SlashCmdList["CALENDARTOOLTIPCONFIG"] = function() EventFrame:openConfig() end
+SLASH_OCTO_TODO_OPTIONS1 = "/octosettings"
+SlashCmdList["OCTO_TODO_OPTIONS"] = function() EventFrame:openConfig() end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_LOGIN",

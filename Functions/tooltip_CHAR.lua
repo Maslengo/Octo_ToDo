@@ -70,7 +70,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	if Chromie_inChromieTime and Chromie_name ~= "" then
 		-- tooltip[#tooltip + 1] = { " ", " " }
 		tooltip[#tooltip + 1] = {
-			E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_GetNPCName(167032)..": "..E.COLOR_GREEN..Chromie_name.."|r"
+			E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_GetName("npc", 167032)..": "..E.COLOR_GREEN..Chromie_name.."|r"
 		}
 	end
 	-- if curLocation ~= "" then
@@ -96,7 +96,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	-- if CharInfo.MASLENGO and CharInfo.MASLENGO.Items and CharInfo.MASLENGO.Items.Bags and CharInfo.MASLENGO.Items.Bags[122284] then
 	--     tooltip[#tooltip + 1] = { " ", "" }
 	--     tooltip[#tooltip + 1] = {
-	--         E.func_GetItemName(122284),
+	--         E.func_GetName("item", 122284),
 	--         CharInfo.MASLENGO.Items.Bags[122284]
 	--     }
 	-- end

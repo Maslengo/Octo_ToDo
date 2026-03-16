@@ -831,7 +831,7 @@ function E.func_option_2_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = E.func_CovenantName(1), -- KYRIAN
+						name = E.func_GetName("covenant", 1), -- KYRIAN
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_KYRIAN_r
@@ -853,7 +853,7 @@ function E.func_option_2_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = E.func_CovenantName(2), -- VENTHYR
+						name = E.func_GetName("covenant", 2), -- VENTHYR
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_VENTHYR_r
@@ -875,7 +875,7 @@ function E.func_option_2_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = E.func_CovenantName(3), -- NIGHTFAE
+						name = E.func_GetName("covenant", 3), -- NIGHTFAE
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_NIGHTFAE_r
@@ -897,7 +897,7 @@ function E.func_option_2_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = E.func_CovenantName(4), -- NECROLORD
+						name = E.func_GetName("covenant", 4), -- NECROLORD
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_NECROLORD_r

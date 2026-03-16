@@ -335,6 +335,7 @@ E.NIL = E.COLOR_RED.."nil|r"
 E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
 E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\ICON_EMPTY"
+E.ICON_DEBUG = 7448162 -- "poi-torghast" -- ATLAS
 E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
 E.OctoTable_Prefixes = {
 	"Русский",

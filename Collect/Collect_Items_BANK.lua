@@ -44,12 +44,14 @@ local function Collect_Items_BANK()
 			----------------------------------------------------------------
 			collectMASLENGO.Items = collectMASLENGO.Items or {}
 			collectMASLENGO.Items.Bank = {}
+			collectMASLENGO.Items.Bank_FULL = {}
 			----------------------------------------------------------------
 			-- ПРОВЕРКА
 			----------------------------------------------------------------
 			if not Enum.BagIndex or not Enum.BagIndex.CharacterBankTab_1 then return end
 			----------------------------------------------------------------
 			-- BANK
+			-- local seenSlots = {}
 			for _, bagID in next, (OctoTable_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
@@ -57,6 +59,63 @@ local function Collect_Items_BANK()
 					local free = C_Container.GetContainerNumFreeSlots(bagID)
 					usedSlots_BANK = usedSlots_BANK + (numSlots - free)
 					for slotIndex = 1, numSlots do
+
+
+
+
+				-- local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex)
+				local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
+				if itemLocation and C_Item.DoesItemExist(itemLocation) then
+					local ItemName = C_Item.GetItemName(itemLocation)
+					if ItemName then
+						local current_Durability, maximum_Durability = GetInventoryItemDurability(slotIndex)
+						local itemID = C_Item.GetItemID(itemLocation)
+						local Icon = C_Item.GetItemIcon(itemLocation)
+						local ItemLink = C_Item.GetItemLink(itemLocation)
+						local Quality = C_Item.GetItemQuality(itemLocation)
+						local CurrentItemLevel = C_Item.GetCurrentItemLevel(itemLocation)
+						local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
+						local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
+						-- local xyz = tostring(bagID)..tostring(slotIndex)
+
+						collectMASLENGO.Items.Bank_FULL[itemID] = {
+							itemID = itemID,
+							ItemName = ItemName,
+							Icon = Icon,
+							ItemLink = ItemLink,
+							Quality = Quality,
+							CurrentItemLevel = CurrentItemLevel,
+							ItemInventoryType = ItemInventoryType,
+							RequestLoadItemData = RequestLoadItemData,
+							-- ItemDataCached = ItemDataCached,
+							current_Durability = current_Durability,
+							maximum_Durability = maximum_Durability,
+						}
+					-- else
+					-- 	-- данные не загружены, оставляем старые и помечаем для подгрузки
+					-- 	local existing = collectMASLENGO.Items.Bank_FULL[itemID]
+					-- 	if existing then
+					-- 		existing.RequestLoadItemData = true
+					-- 		seenSlots[slotID] = true
+					-- 	end
+
+
+					end
+				end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 						local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID

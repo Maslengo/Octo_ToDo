@@ -181,7 +181,7 @@
 
 			<OnShow>
 				local E = OctoEngine
-				if E and E.PROFTBL then
+				if E and E.PROFTBL and E.PROFTBL.ConfigColor_MAIN_MainFrame_r then
 
 					self:SetBackdrop(E.menuBackdrop)
 					self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
@@ -208,7 +208,7 @@
 
 			<OnShow>
 				local E = OctoEngine
-				if E and E.PROFTBL then
+				if E and E.PROFTBL and E.PROFTBL.ConfigColor_MAIN_MainFrame_r then
 					self:SetBackdrop(E.menuBackdrop)
 					self:SetBackdropColor(E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a)
 					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)

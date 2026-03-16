@@ -21,54 +21,52 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 3028, defS = false,}, -- season 1
 		-- фиол
-		{id = 3400, defS = false,},
-		{id = 3379, defS = true,},
+		{id = 3400, defS = false,}, -- Uncontaminated Void Sample
+		{id = 3379, defS = false,}, -- Brimming Arcana
+		{id = 3378, defS = false,}, -- Dawnlight Manaflux
+		{id = 3212, defS = false,}, -- Radiant Spark Dust
+		{id = 3028, defS = false,}, -- Restored Coffer Key (season 1)
+		{id = 3310, defS = false,}, -- Coffer Key Shards
+		-- https://www.wowhead.com/currencies/season-1#0+1+3
+		{id = 3347, defS = true,}, -- Myth Dawncrest (276-289)
+		{id = 3345, defS = true,}, -- Hero Dawncrest (263-276)
+		{id = 3343, defS = true,}, -- Champion Dawncrest (250-263)
+		{id = 3341, defS = true,}, -- Veteran Dawncrest (237-250)
+		{id = 3383, defS = true,}, -- Adventurer Dawncrest (224-237)
+		{id = 3391, defS = false,}, -- Adventurer Dawncrest (UNUSED)
 		-- синий
 		-- {id = 3394, defS = false,}, -- УДАЛЁН
-		{id = 3392, defS = false,},
-		{id = 3376, defS = true,},
-		{id = 3352, defS = false,},
-		{id = 3265, defS = false,},
+		{id = 3392, defS = false,}, -- Remnant of Anguish
+		{id = 3376, defS = false,}, -- Shard of Dundun
+		{id = 3352, defS = false,}, -- Party Favor
 		-- зелень
-		{id = 3385, defS = false,},
-		{id = 3377, defS = false,},
-		{id = 3373, defS = false,},
+		{id = 3385, defS = false,}, -- Luminous Dust
+		{id = 3377, defS = false,}, -- Unalloyed Abundance
+		{id = 3373, defS = false,}, -- Angler Pearls
+		{id = 3363, defS = false,}, -- Community Coupons
 		-- белый
-		{id = 3316, defS = true,},
-		-- {id = 3349, defS = false,},
-		-- {id = 3266, defS = false,},
-		-- {id = 3264, defS = false,},
-		-- {id = 3263, defS = false,},
-		-- {id = 3262, defS = false,},
-		-- {id = 3261, defS = false,},
-		-- {id = 3260, defS = false,},
-		-- {id = 3259, defS = false,},
-		-- {id = 3258, defS = false,},
-		-- {id = 3257, defS = false,},
-		-- {id = 3256, defS = false,},
-
-		-- https://www.wowhead.com/currencies/season-1#0+1+3
-
-		{id = 3347, defS = true,}, --  276-289
-		{id = 3345, defS = true,}, --  263-276
-		{id = 3343, defS = true,}, --  250-263
-		{id = 3341, defS = true,}, --  237-250
-		{id = 3383, defS = true,}, --  224-237
-
-		{id = 3212, defS = true,},
-		{id = 3378, defS = false,},
-		{id = 3310, defS = false,},
-
-		{id = 3319, defS = false,}, -- MIDNIGHT PREPATCH
-		-- {id = 3356, defS = false,},
-		-- {id = 3028, defS = false,},
-		-- {id = 2803, defS = false,},
+		{id = 3316, defS = false,}, -- Voidlight Marl
+		-- {id = 3349, defS = false,}, -- [DNT] [PH] Evergreen Initiative Currency
+		-- {id = 3319, defS = false,}, -- Twilight's Blade Insignia -- MIDNIGHT PREPATCH (REMOVED)
+		-- {id = 3356, defS = false,}, -- Untainted Mana-Crystals
+		-- {id = 3028, defS = false,}, -- Restored Coffer Key
+		-- {id = 2803, defS = false,}, -- Undercoin
+		-- проф
+		-- {id = 3266, defS = false,}, -- Artisan Tailor's Moxie
+		-- {id = 3265, defS = false,}, -- Artisan Skinner's Moxie
+		-- {id = 3264, defS = false,}, -- Artisan Miner's Moxie
+		-- {id = 3263, defS = false,}, -- Artisan Leatherworker's Moxie
+		-- {id = 3262, defS = false,}, -- Artisan Jewelcrafter's Moxie
+		-- {id = 3261, defS = false,}, -- Artisan Scribe's Moxie
+		-- {id = 3260, defS = false,}, -- Artisan Herbalist's Moxie
+		-- {id = 3259, defS = false,}, -- Artisan Engineer's Moxie
+		-- {id = 3258, defS = false,}, -- Artisan Enchanter's Moxie
+		-- {id = 3257, defS = false,}, -- Artisan Blacksmith's Moxie
+		-- {id = 3256, defS = false,}, -- Artisan Alchemist's Moxie
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
@@ -92,18 +90,21 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2696, defS = true,}, -- Amani Tribe (Племя Амани)
-		{id = 2699, defS = true,}, -- The Singularity (Сингулярность)
-		{id = 2704, defS = true,}, -- Hara'ti (Хара'ти)
-		{id = 2710, defS = true,}, -- Silvermoon Court (Двор Луносвета)
+		{id = 2742, defS = false,}, -- Delves: Season 1
+		{id = 2764, defS = false,}, -- Prey: Season 1
+
+		{id = 2696, defS = false,}, -- Amani Tribe (Племя Амани)
+		{id = 2699, defS = false,}, -- The Singularity (Сингулярность)
+		{id = 2704, defS = false,}, -- Hara'ti (Хара'ти)
+		{id = 2710, defS = false,}, -- Silvermoon Court (Двор Луносвета)
+
 		{id = 2770, defS = false,}, -- Slayer's Duellum
 		{id = 2744, defS = false,}, -- Valeera Sanguinar
 		{id = 2714, defS = false,}, -- Shades of the Row
 		{id = 2712, defS = false,}, -- Blood Knights
 		{id = 2711, defS = false,}, -- Magisters
 		{id = 2713, defS = false,}, -- Farstriders
-		{id = 2742, defS = true,}, -- Delves: Season 1
-		{id = 2764, defS = true,}, -- Prey: Season 1
+
 		-- {id = 2722, defS = true,}, -- C_DelvesUI.GetDelvesFactionForSeason() для миднайта криво работает
 		-- {id = 2764, defS = false,}, -- Preyseeker's Journey
 		-- {id = 2700, defS = false,}, -- DEPRECATED Fungarian Fighting Ring
@@ -119,97 +120,613 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				-- Луносвет
-				-- return E.func_GetMapName(241)..": "..E.func_GetQuestName(95245, false) -- Луносвет
-				return E.func_GetQuestName(95245, false) -- Луносвет
+				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
 			end,
-			name_save = "MidnightWorldTour",
-			defS = false,
-			reset = "Regular",
+			name_save = "WorldBoss",
+			defS = true,
+			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{95245},
+				-- {81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
+				-- {82653, addText = {mapID = 2214},}, -- Гулкие глубины.
+				-- {81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
+				-- {81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
+				-- {nil},
+				-- {85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
+				-- {nil},
+				-- {87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
+				{92123, forcedText = {npcID = 244424}, addText = {mapID = 2437},}, -- Cragpine (244424) К'ареш
+				{92560, forcedText = {npcID = 244762}, addText = {mapID = 2395},}, -- Lu'ashal (244762) К'ареш
+				{92636, forcedText = {npcID = 248864}, addText = {mapID = 2405},}, -- Predaxas (248864) К'ареш
+				{92034, forcedText = {npcID = 249776}, addText = {mapID = 2413},}, -- Thorm'belan (249776) К'ареш
 			},
-			-- forcedMaxQuest = 1,
+			forcedMaxQuest = 1,
 		},
-
-
+		-- https://www.wowhead.com/quest=89507/
+		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
+		-- sorted = false,
+		-- showTooltip = true,
+		-- TextLeft = function()
+		-- return E.func_GetName("map", 241)..": "..E.func_GetName("quest", 90764, false) -- Twilight Highlands -- "PREPATCH: "..
+		-- end,
+		-- name_save = "TheCultWithin",
+		-- defS = true,
+		-- reset = "Regular",
+		-- desc = categoryKey,
+		-- quests = {
+		-- {90759, FactionOrClass = {Alliance = true,}, }, -- The Cult Within
+		-- {90764, FactionOrClass = {Horde = true,}, }, -- The Cult Within
+		-- {90760, FactionOrClass = {Alliance = true,}, },
+		-- {90761, FactionOrClass = {Horde = true,}, },
+		-- {90762, FactionOrClass = {Alliance = true,}, },
+		-- {90763, FactionOrClass = {Horde = true,}, },
+		-- {90765},
+		-- {90766},
+		-- {90767},
+		-- {90768},
+		-- },
+		-- -- forcedMaxQuest = 1,
+		-- },
+		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
+		-- sorted = false,
+		-- showTooltip = true,
+		-- TextLeft = function()
+		-- return E.func_GetName("map", 241)..": "..E.func_GetName("quest", 87308, false) -- Twilight Highlands -- "PREPATCH: "..
+		-- end,
+		-- name_save = "TwilightsDawn",
+		-- defS = true,
+		-- reset = "Weekly",
+		-- isAccount = false,
+		-- desc = categoryKey,
+		-- quests = {
+		-- {87308},
+		-- },
+		-- -- forcedMaxQuest = 1,
+		-- },
+		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
+		-- sorted = false,
+		-- showTooltip = true,
+		-- TextLeft = function()
+		-- return E.func_GetName("map", 241)..": "..E.func_GetName("quest", 91795, false) -- Twilight Highlands -- "PREPATCH: "..
+		-- end,
+		-- name_save = "DisrupttheCall",
+		-- defS = true,
+		-- reset = "Weekly",
+		-- isAccount = false,
+		-- desc = categoryKey,
+		-- quests = {
+		-- {91795},
+		-- },
+		-- -- forcedMaxQuest = 1,
+		-- },
 		{
-			sorted = false,
+			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				-- Луносвет
-				-- return E.func_GetMapName(241)..": "..E.func_GetQuestName(93744, false) -- Луносвет
-				return E.func_GetQuestName(93744, false) -- Луносвет
+				return L["Midnight: Meta Quest"] -- https://www.wowhead.com/npc = 256203/lady-liadrin
 			end,
-			name_save = "UnityAgainsttheVoid",
+			name_save = "Midnight MetaQuest",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6072&page = 1
+				{93766}, -- Midnight: World Quests
+				{93767}, -- Midnight: Arcantina
+				{93769}, -- Midnight: Housing
+				{93889}, -- Midnight: Saltheril's Soiree
+				{93890}, -- Midnight: Abundance
+				{93891}, -- Midnight: Legends of the Haranir
+				{93892}, -- Midnight: Stormarion Assault
+				{93909}, -- Midnight: Delves
+				{93910}, -- Midnight: Prey
+				{93911}, -- Midnight: Dungeons
+				{93912}, -- Midnight: Raid
+				{93913}, -- Midnight: World Boss
+				{94457}, -- Midnight: Battlegrounds
+				{95842}, -- Midnight: Void Assaults
+				{95843}, -- Midnight: Ritual Sites
+			},
+			forcedMaxQuest = 2,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Special Assignments"]
+			end,
+			name_save = "SpecialAssignments",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{93744},
+				-- https://wago.tools/db2/QuestV2CliTask?filter%5BField_12_0_5_66330_001_lang%5D = Special%20Assignment&page = 1
+				{91390}, -- Special Assignment: What Remains of a Temple Broken
+				{91796}, -- Special Assignment: Ours Once More!
+				{92063}, -- Special Assignment: A Hunter's Regret
+				{92139}, -- Special Assignment: Shade and Claw
+				{92145}, -- Special Assignment: The Grand Magister's Drink
+				{93013}, -- Special Assignment: Push Back the Light
+				{93244}, -- Special Assignment: Agents of the Shield
+				{93438}, -- Special Assignment: Precision Excision
 			},
-			-- forcedMaxQuest = 1,
+			forcedMaxQuest = 2,
 		},
-
-		-- https://www.wowhead.com/quest=89507/
-
-		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
-		--     sorted = false,
-		--     showTooltip = true,
-		--     TextLeft = function()
-		--         return E.func_GetMapName(241)..": "..E.func_GetQuestName(90764, false) -- Twilight Highlands -- "PREPATCH: "..
-		--     end,
-		--     name_save = "TheCultWithin",
-		--     defS = true,
-		--     reset = "Regular",
-		--     desc = categoryKey,
-		--     quests = {
-		--         {90759, FactionOrClass = {Alliance = true,}, }, -- The Cult Within
-		--         {90764, FactionOrClass = {Horde = true,}, }, -- The Cult Within
-		--         {90760, FactionOrClass = {Alliance = true,}, },
-		--         {90761, FactionOrClass = {Horde = true,}, },
-		--         {90762, FactionOrClass = {Alliance = true,}, },
-		--         {90763, FactionOrClass = {Horde = true,}, },
-		--         {90765},
-		--         {90766},
-		--         {90767},
-		--         {90768},
-		--     },
-		--     -- forcedMaxQuest = 1,
-		-- },
-		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
-		--     sorted = false,
-		--     showTooltip = true,
-		--     TextLeft = function()
-		--         return E.func_GetMapName(241)..": "..E.func_GetQuestName(87308, false) -- Twilight Highlands -- "PREPATCH: "..
-		--     end,
-		--     name_save = "TwilightsDawn",
-		--     defS = true,
-		--     reset = "Weekly",
-		--     isAccount = false,
-		--     desc = categoryKey,
-		--     quests = {
-		--         {87308},
-		--     },
-		--     -- forcedMaxQuest = 1,
-		-- },
-		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
-		--     sorted = false,
-		--     showTooltip = true,
-		--     TextLeft = function()
-		--         return E.func_GetMapName(241)..": "..E.func_GetQuestName(91795, false) -- Twilight Highlands -- "PREPATCH: "..
-		--     end,
-		--     name_save = "DisrupttheCall",
-		--     defS = true,
-		--     reset = "Weekly",
-		--     isAccount = false,
-		--     desc = categoryKey,
-		--     quests = {
-		--         {91795},
-		--     },
-		--     -- forcedMaxQuest = 1,
-		-- },
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Dungeon Quest"]
+			end,
+			name_save = "DungeonQuest",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 4887&page = 1
+				{93751}, -- Windrunner Spire
+				{93752}, -- Murder Row
+				{93753}, -- Magisters' Terrace
+				{93754}, -- Maisara Caverns
+				{93755}, -- Den of Nalorakk
+				{93756}, -- The Blinding Vale
+				{93757}, -- Voidscar Arena
+				{93758}, -- Nexus-Point Xenas
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Prey Normal"]
+			end,
+			name_save = "PreyNormal",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6036&page = 1
+				{91124}, -- Prey: Dengzag, the Darkened Blaze (Normal)
+				{91123}, -- Prey: Grothoz, the Burning Shadow (Normal)
+				{91122}, -- Prey: Thorn-Witch Liset (Normal)
+				{91121}, -- Prey: Thornspeaker Edgath (Normal)
+				{91120}, -- Prey: Neydra the Starving (Normal)
+				{91119}, -- Prey: Lost Theldrin (Normal)
+				{91118}, -- Prey: Vylenna the Defector (Normal)
+				{91117}, -- Prey: Knight-Errant Bloodshatter (Normal)
+				{91116}, -- Prey: Imperator Enigmalia (Normal)
+				{91115}, -- Prey: Executor Kaenius (Normal)
+				{91114}, -- Prey: Consul Nebulor (Normal)
+				{91113}, -- Prey: Praetor Singularis (Normal)
+				{91112}, -- Prey: Crusader Luxia Maxwell (Normal)
+				{91111}, -- Prey: High Vindicator Vureem (Normal)
+				{91110}, -- Prey: Lamyne of the Undercroft (Normal)
+				{91109}, -- Prey: Petyoll the Razorleaf (Normal)
+				{91108}, -- Prey: Lieutenant Blazewing (Normal)
+				{91107}, -- Prey: Ranger Swiftglade (Normal)
+				{91106}, -- Prey: The Wing of Akil'zon (Normal)
+				{91105}, -- Prey: The Talon of Jan'alai (Normal)
+				{91104}, -- Prey: Zadu, Fist of Nalorakk (Normal)
+				{91103}, -- Prey: Jo'zolo the Breaker (Normal)
+				{91102}, -- Prey: Nexus-Edge Hadim (Normal)
+				{91101}, -- Prey: Phaseblade Talasha (Normal)
+				{91100}, -- Prey: Deliah Gloomsong (Normal)
+				{91099}, -- Prey: Mordril Shadowfell (Normal)
+				{91098}, -- Prey: L-N-0R the Recycler (Normal)
+				{91097}, -- Prey: Senior Tinker Ozwold (Normal)
+				{91096}, -- Prey: Magistrix Emberlash (Normal)
+				{91095}, -- Prey: Magister Sunbreaker (Normal)
+			},
+			forcedMaxQuest = 4,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Prey Hard"]
+			end,
+			name_save = "PreyHard",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6036&page = 1
+				{91255}, -- Prey: Dengzag, the Darkened Blaze (Hard)
+				{91254}, -- Prey: Grothoz, the Burning Shadow (Hard)
+				{91253}, -- Prey: Thorn-Witch Liset (Hard)
+				{91252}, -- Prey: Thornspeaker Edgath (Hard)
+				{91251}, -- Prey: Neydra the Starving (Hard)
+				{91250}, -- Prey: Lost Theldrin (Hard)
+				{91249}, -- Prey: Vylenna the Defector (Hard)
+				{91248}, -- Prey: Knight-Errant Bloodshatter (Hard)
+				{91247}, -- Prey: Imperator Enigmalia (Hard)
+				{91246}, -- Prey: Executor Kaenius (Hard)
+				{91245}, -- Prey: Consul Nebulor (Hard)
+				{91244}, -- Prey: Praetor Singularis (Hard)
+				{91243}, -- Prey: Crusader Luxia Maxwell (Hard)
+				{91242}, -- Prey: High Vindicator Vureem (Hard)
+				{91240}, -- Prey: Lamyne of the Undercroft (Hard)
+				{91238}, -- Prey: Petyoll the Razorleaf (Hard)
+				{91236}, -- Prey: Lieutenant Blazewing (Hard)
+				{91234}, -- Prey: Ranger Swiftglade (Hard)
+				{91232}, -- Prey: The Wing of Akil'zon (Hard)
+				{91230}, -- Prey: The Talon of Jan'alai (Hard)
+				{91228}, -- Prey: Zadu, Fist of Nalorakk (Hard)
+				{91226}, -- Prey: Jo'zolo the Breaker (Hard)
+				{91224}, -- Prey: Nexus-Edge Hadim (Hard)
+				{91222}, -- Prey: Phaseblade Talasha (Hard)
+				{91220}, -- Prey: Deliah Gloomsong (Hard)
+				{91218}, -- Prey: Mordril Shadowfell (Hard)
+				{91216}, -- Prey: L-N-0R the Recycler (Hard)
+				{91214}, -- Prey: Senior Tinker Ozwold (Hard)
+				{91212}, -- Prey: Magistrix Emberlash (Hard)
+				{91210}, -- Prey: Magister Sunbreaker (Hard)
+			},
+			forcedMaxQuest = 4,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Prey Nightmare"]
+			end,
+			name_save = "PreyNightmare",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6036&page = 1
+				{91269}, -- Prey: Dengzag, the Darkened Blaze (Nightmare)
+				{91268}, -- Prey: Grothoz, the Burning Shadow (Nightmare)
+				{91267}, -- Prey: Thorn-Witch Liset (Nightmare)
+				{91266}, -- Prey: Thornspeaker Edgath (Nightmare)
+				{91265}, -- Prey: Neydra the Starving (Nightmare)
+				{91264}, -- Prey: Lost Theldrin (Nightmare)
+				{91263}, -- Prey: Vylenna the Defector (Nightmare)
+				{91262}, -- Prey: Knight-Errant Bloodshatter (Nightmare)
+				{91261}, -- Prey: Imperator Enigmalia (Nightmare)
+				{91260}, -- Prey: Executor Kaenius (Nightmare)
+				{91259}, -- Prey: Consul Nebulor (Nightmare)
+				{91258}, -- Prey: Praetor Singularis (Nightmare)
+				{91257}, -- Prey: Crusader Luxia Maxwell (Nightmare)
+				{91256}, -- Prey: High Vindicator Vureem (Nightmare)
+				{91241}, -- Prey: Lamyne of the Undercroft (Nightmare)
+				{91239}, -- Prey: Petyoll the Razorleaf (Nightmare)
+				{91237}, -- Prey: Lieutenant Blazewing (Nightmare)
+				{91235}, -- Prey: Ranger Swiftglade (Nightmare)
+				{91233}, -- Prey: The Wing of Akil'zon (Nightmare)
+				{91231}, -- Prey: The Talon of Jan'alai (Nightmare)
+				{91229}, -- Prey: Zadu, Fist of Nalorakk (Nightmare)
+				{91227}, -- Prey: Jo'zolo the Breaker (Nightmare)
+				{91225}, -- Prey: Nexus-Edge Hadim (Nightmare)
+				{91223}, -- Prey: Phaseblade Talasha (Nightmare)
+				{91221}, -- Prey: Deliah Gloomsong (Nightmare)
+				{91219}, -- Prey: Mordril Shadowfell (Nightmare)
+				{91217}, -- Prey: L-N-0R the Recycler (Nightmare)
+				{91215}, -- Prey: Senior Tinker Ozwold (Nightmare)
+				{91213}, -- Prey: Magistrix Emberlash (Nightmare)
+				{91211}, -- Prey: Magister Sunbreaker (Nightmare)
+			},
+			forcedMaxQuest = 4,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Abundant Offerings"]
+				return E.func_GetName("quest", 89507)
+			end,
+			name_save = "AbundantOfferings",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89507},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Legends of the Haranir"]
+			end,
+			name_save = "LegendsoftheHaranir",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{88993}, -- Wey'nan's Ward
+				{88994}, -- The Cauldron of Echoes
+				{88995}, -- Aln'hara's Bloom
+				{88996}, -- The Echoless Flame
+				{88997}, -- Russula's Outreach
+				{88998}, -- Root of the World
+				{88999}, -- Sky's Hope
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Harandar Daily Wanted"]
+			end,
+			name_save = "HarandarDailyWanted",
+			defS = false,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{91970}, -- WANTED: Gelatonius
+				{91980}, -- WANTED: Hellebora's Thorn
+				{91982}, -- WANTED: Toadshade's Petals
+				{91998}, -- WANTED: Muckmire's Choking Vines
+				{92010}, -- WANTED: Slewstalk's Stalks
+				{92012}, -- WANTED: Gorebarb's Pincers
+				{92013}, -- WANTED: Dionaea's Thorntusks
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Fortify the Runestones"]
+			end,
+			name_save = "FortifytheRunestones",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{90573}, -- Fortify the Runestones: Magisters
+				{90574}, -- Fortify the Runestones: Blood Knights
+				{90575}, -- Fortify the Runestones: Farstriders
+				{90576}, -- Fortify the Runestones: Shades of the Row
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Saltheril's Haven"]
+			end,
+			name_save = "SaltherilsHaven",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 5316&page = 1
+				{89276}, -- Light Snacks
+				{89277}, -- Illuminate the Space
+				{89278}, -- Minding Our Duty
+				{91971}, -- Hitting the Hammer
+				{91972}, -- Hold the Watch
+				{91973}, -- Naga Blades
+				{91974}, -- Sunfire to the Blade
+				{91975}, -- That's Our Wood
+				{91976}, -- Lightbloom Dimmed
+				{91977}, -- Less Lawless
+				{91978}, -- Taxing the Tideborne
+				{91979}, -- Chop It Down
+				{91983}, -- Lovely Plumage
+				{91984}, -- Sungrub Silk
+				{91985}, -- ?
+				{91986}, -- Put a Little Snap in Their Step
+				{91987}, -- Potted Lashers
+				{91988}, -- Brightwing Conservation
+				{91989}, -- Ghostland Peppers
+				{91990}, -- Sunset to Sea
+				{91991}, -- A Little Errand
+				{91992}, -- Where Has the Wine Gone?
+				{91993}, -- Diminutive Demand
+				{91994}, -- Pyrepetal Purposes
+				{91995}, -- What Horrible Magic
+				{91996}, -- Fit for a Magister
+				{91997}, -- Power Clean
+				{91999}, -- A Bit of Bloodthistle
+				{92000}, -- Bring the Ruckus
+				{92001}, -- One Smuggler to Another
+				{92002}, -- Dangerous Showpieces
+				{92003}, -- Artisanal Replicas
+				{92004}, -- Shady Dealings
+				{92005}, -- Throw the Dice
+				{92006}, -- We Need a Refill
+				{92007}, -- Begged, Borrowed, or Stolen
+			},
+			forcedMaxQuest = 3,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Saltheril's Soiree"]
+				return E.func_GetName("quest", 91966)
+			end,
+			name_save = "SaltherilsSoiree",
+			defS = false,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{91966},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Stormarion Assault"]
+				return E.func_GetName("quest", 90962)
+			end,
+			name_save = "StormarionAssault",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{90962},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Research Console: Exploring the Void"]
+				return E.func_GetName("quest", 94790)
+			end,
+			name_save = "ResearchConsole:ExploringtheVoid",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{94790},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Sparks of War"]
+			end,
+			name_save = "SparksofWar",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93423}, -- Sparks of War: Eversong Woods
+				{93424}, -- Sparks of War: Zul'Aman
+				{93425}, -- Sparks of War: Harandar
+				{93426}, -- Sparks of War: Voidstorm
+			},
+			forcedMaxQuest = 1, any
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Preparing for Battle"]
+				return E.func_GetName("quest", 89354)
+			end,
+			name_save = "PreparingforBattle",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89354},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Carve Your Way"]
+				return E.func_GetName("quest", 93865)
+			end,
+			name_save = "CarveYourWay",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93865},
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				-- return E.func_GetName("map", 2393)..": "..TRADE_SKILLS
+				return L["Profession Weeklies"]
+			end,
+			name_save = "ProfessionWeeklies",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- itemID = 263455
+				{93691, addText = {IconVignette = "Mobile-Blacksmithing",}, }, -- Blacksmithing Services Requested
+				-- itemID = 263456
+				{93692, addText = {IconVignette = "Mobile-Enginnering",}, }, -- Engineering Services Requested
+				-- itemID = 263457
+				{93693, addText = {IconVignette = "Mobile-Inscription",}, }, -- Inscription Services Requested
+				-- itemID = 263458
+				{93694, addText = {IconVignette = "Mobile-Jewelcrafting",}, }, -- Jewelcrafting Services Requested
+				-- itemID = 263459
+				{93695, addText = {IconVignette = "Mobile-Leatherworking",}, }, -- Leatherworking Services Requested
+				-- itemID = 263460
+				{93696, addText = {IconVignette = "Mobile-Tailoring",}, }, -- Tailoring Services Requested
+				-- itemID = 263454
+				{93690, addText = {IconVignette = "Mobile-Alchemy",}, }, -- Alchemy Services Requested
+				{nil},
+				-- itemID = 263463
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6082&page = 1
+				{93705, addText = {IconVignette = "Mobile-Mining",}, }, -- Copper for Your Thoughts?
+				{93706, addText = {IconVignette = "Mobile-Mining",}, }, -- Aggressive Tin-dencies
+				{93707, addText = {IconVignette = "Mobile-Mining",}, }, -- ?
+				{93708, addText = {IconVignette = "Mobile-Mining",}, }, -- Conductive Metals
+				{93709, addText = {IconVignette = "Mobile-Mining",}, }, -- Stocking the Staples
+				-- itemID = 263461
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6083&page = 1
+				{93710, addText = {IconVignette = "Mobile-Skinning",}, }, -- Tempered in Darkness
+				{93711, addText = {IconVignette = "Mobile-Skinning",}, }, -- The Chill of the Void
+				{93712, addText = {IconVignette = "Mobile-Skinning",}, }, -- Style and Skill
+				{93713, addText = {IconVignette = "Mobile-Skinning",}, }, -- ?
+				{93714, addText = {IconVignette = "Mobile-Skinning",}, }, -- Minor Scales
+				-- itemID = 263464
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6079&page = 1
+				{93697, addText = {IconVignette = "Mobile-Enchanting",}, }, -- Just a Pinch -- зачаровывателя
+				{93698, addText = {IconVignette = "Mobile-Enchanting",}, }, -- Just a Pinch -- зачаровывателя
+				{93699, addText = {IconVignette = "Mobile-Enchanting",}, }, -- Just a Pinch -- зачаровывателя
+				-- itemID = 263462
+				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6080&page = 1
+				{93700, addText = {IconVignette = "Mobile-Herbalism",}, }, -- Experience Tranquility
+				{93701, addText = {IconVignette = "Mobile-Herbalism",}, }, -- ?
+				{93702, addText = {IconVignette = "Mobile-Herbalism",}, }, -- The Root of Life
+				{93703, addText = {IconVignette = "Mobile-Herbalism",}, }, -- Sin'dorei Vices
+				{93704, addText = {IconVignette = "Mobile-Herbalism",}, }, -- Traditional Harvests
+			},
+			forcedMaxQuest = 2,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Thalassian Treatise"]
+			end,
+			name_save = "ThalassianTreatise",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{95127}, -- Thalassian Treatise on Alchemy
+				{95128}, -- Thalassian Treatise on Blacksmithing
+				{95129}, -- Thalassian Treatise on Enchanting
+				{95138}, -- Thalassian Treatise on Engineering
+				{95130}, -- Thalassian Treatise on Herbalism
+				{95131}, -- Thalassian Treatise on Inscription
+				{95133}, -- Thalassian Treatise on Jewelcrafting
+				{95134}, -- Thalassian Treatise on Leatherworking
+				{95135}, -- Thalassian Treatise on Mining
+				{95136}, -- Thalassian Treatise on Skinning
+				{95137}, -- Thalassian Treatise on Tailoring
+				-- [95127] = L["Thalassian Treatise on Alchemy"],
+				-- [95128] = L["Thalassian Treatise on Blacksmithing"],
+				-- [95129] = L["Thalassian Treatise on Enchanting"],
+				-- [95138] = L["Thalassian Treatise on Engineering"],
+				-- [95130] = L["Thalassian Treatise on Herbalism"],
+				-- [95131] = L["Thalassian Treatise on Inscription"],
+				-- [95133] = L["Thalassian Treatise on Jewelcrafting"],
+				-- [95134] = L["Thalassian Treatise on Leatherworking"],
+				-- [95135] = L["Thalassian Treatise on Mining"],
+				-- [95136] = L["Thalassian Treatise on Skinning"],
+				-- [95137] = L["Thalassian Treatise on Tailoring"],
+			},
+			forcedMaxQuest = 2,
+		},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
