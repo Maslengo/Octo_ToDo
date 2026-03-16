@@ -146,7 +146,7 @@ local MyEventsTable = {
 
 
 	-- "QUEST_DATA_LOAD_RESULT",
-	"ITEM_DATA_LOAD_RESULT",
+	-- "ITEM_DATA_LOAD_RESULT",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
@@ -360,10 +360,10 @@ end
 -- E.func_GetName("quest", questID)
 -- end
 
-function EventFrame:ITEM_DATA_LOAD_RESULT(...)
-	local itemID = ...
-	E.func_GetName("item", itemID)
-end
+-- function EventFrame:ITEM_DATA_LOAD_RESULT(...)
+-- 	local itemID = ...
+-- 	E.func_GetName("item", itemID)
+-- end
 
 function EventFrame:BAG_UPDATE()
 	if not BankFrame or not BankFrame:IsShown() then return end
