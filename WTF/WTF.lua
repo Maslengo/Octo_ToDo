@@ -366,7 +366,7 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 
 		Config_ShowAllDifficulties = true,
 		Config_DifficultyAbbreviation = true,
-		Config_MountsInTooltip = false,
+		Config_MountsInTooltip = true,
 
 
 
@@ -426,7 +426,6 @@ function EventFrame:Init_Octo_Cache_DB()
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
 
-	E.func_BUILD_DUNG_DB()
 end
 
 function E.Init_Octo_Cache_DB()
@@ -634,6 +633,9 @@ end
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CacheGameData()
 	self:func_ScheduleResetTimer()
+	E.func_BUILD_DUNG_DB()
+	-- C_Timer.After(2, E.func_BUILD_DUNG_DB)
+
 	C_Timer.After(1, E.func_UpdateGlobals)
 end
 local function Reset_JournalInstance()

@@ -1825,11 +1825,11 @@ function E.func_OpenToCategory(frame)
 		HideUIPanel(SettingsPanel)
 	else
 		E.openConfig()
-	-- 	if C_SettingsUtil and E.SettingsCategoryID then
-	-- 		C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
-	-- 	elseif Settings then
-	-- 		Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
-	-- 	end
+		--     if C_SettingsUtil and E.SettingsCategoryID then
+		--         C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
+		--     elseif Settings then
+		--         Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+		--     end
 	end
 end
 ----------------------------------------------------------------
@@ -2100,7 +2100,9 @@ function E.func_BUILD_DUNG_DB()
 	local backupTier = EJ_GetCurrentTier()
 	local backupDifficulty = EJ_GetDifficulty()
 	local numTiers = EJ_GetNumTiers()
-	if not numTiers or numTiers < 1 then return end
+	if not numTiers or numTiers < 1 then
+		return
+	end
 	local SI_to_EJ = {}
 	local EJ_to_SI = {}
 	local result = {}

@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 function E.func_IsAvailable(id, curType)
 	if id and curType then
 		if curType == "spell" and IsSpellKnown(id) then

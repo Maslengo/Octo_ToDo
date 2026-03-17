@@ -56,7 +56,7 @@ function E.func_option_TOOLTIP(category, layout)
 		local name = ACCESSIBILITY_MOUNT_LABEL.. E.COLOR_RED.."*|r" -- "Средства передвижения" TUTORIAL_TITLE53
 
 
-		local defaultValue = false -- Settings.Default.False
+		local defaultValue = true -- Settings.Default.False
 		-- local variableType = Settings.VarType.Boolean
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)

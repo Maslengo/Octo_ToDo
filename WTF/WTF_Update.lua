@@ -193,14 +193,17 @@ local function updateGlobal(DBVersion)
 	end
 	----------------------------------------------------------------
 	if compareVersion(112.2, DBVersion) then
-		Octo_Cache_DB = {}
-		E.Init_Octo_Cache_DB()
 		if Octo_profileKeys and Octo_profileKeys.profiles and Octo_profileKeys.profiles.Default then
 			wipe(Octo_profileKeys.profiles.Default)
 			E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
 			print (addonName, "reset profile:", DEFAULT)
 		end
 
+	end
+	----------------------------------------------------------------
+	if compareVersion(112.4, DBVersion) then
+		Octo_Cache_DB = {}
+		E.Init_Octo_Cache_DB()
 	end
 	----------------------------------------------------------------
 end

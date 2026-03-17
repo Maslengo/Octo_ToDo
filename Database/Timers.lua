@@ -3,6 +3,7 @@ local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
 local function CreateTimer(baseTime, interval, duration, label)
+	if E.CURRENT_REGION_NAME ~= "EU" then return "" end
 	if not baseTime or not interval or interval <= 0 then
 		return ""
 	end

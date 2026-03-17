@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 local ALWAYS = _G.ALWAYS or "Always"
 local PRICE_5K   = 5000
 local PRICE_10K  = 10000

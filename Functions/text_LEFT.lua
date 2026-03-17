@@ -1,5 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_Dispatcher(categoryKey, CharInfo, dataType, id)
 	local funcNames = {
 		"func_Otrisovka_LEFT_"..dataType,
@@ -11,6 +14,9 @@ function E.func_Otrisovka_LEFT_Dispatcher(categoryKey, CharInfo, dataType, id)
 	end
 	return "", nil, nil, nil, nil
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
@@ -27,6 +33,9 @@ function E.func_Otrisovka_LEFT_Currencies(categoryKey, CharInfo, dataType, id)
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_Items(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
@@ -34,6 +43,9 @@ function E.func_Otrisovka_LEFT_Items(categoryKey, CharInfo, dataType, id)
 	SettingsType = dataType.."#"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_RaidsOrDungeons(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
@@ -44,6 +56,9 @@ function E.func_Otrisovka_LEFT_RaidsOrDungeons(categoryKey, CharInfo, dataType, 
 	SettingsType = dataType.."#"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
@@ -59,6 +74,9 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	SettingsType = dataType.."#"..questKey
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
@@ -67,9 +85,9 @@ function E.func_Otrisovka_LEFT_Reputations(categoryKey, CharInfo, dataType, id)
 	TooltipKey = "Reputation_"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
-
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
@@ -91,9 +109,9 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
-
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
@@ -125,3 +143,6 @@ function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataTyp
 	end
  	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

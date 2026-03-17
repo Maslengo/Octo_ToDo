@@ -676,7 +676,7 @@ function E.func_option_2_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = "Rep_Friend",
+						name = L["Friend"],
 						hasAlpha = true,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_Rep_Friend_r
@@ -698,7 +698,7 @@ function E.func_option_2_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = "Rep_Major",
+						name = L["Major"],
 						hasAlpha = true,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_Rep_Major_r

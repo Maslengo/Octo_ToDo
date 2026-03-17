@@ -225,9 +225,9 @@ function E.func_SpecIcon(specID)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local ScanningTooltipFUNC = CreateFrame("GameTooltip", E.MainAddonName.."ScanningTooltipFUNC", UIParent, "GameTooltipTemplate")
-ScanningTooltipFUNC:Hide()
-ScanningTooltipFUNC:SetOwner(UIParent, "ANCHOR_NONE")
+local TooltipForNpcScan = CreateFrame("GameTooltip", E.MainAddonName.."TooltipForNpcScan", UIParent, "GameTooltipTemplate")
+TooltipForNpcScan:Hide()
+TooltipForNpcScan:SetOwner(UIParent, "ANCHOR_NONE")
 ----------------------------------------------------------------
 function E.func_GetName(TYPE, id, forcedQuality)
 	if not id then return "no id" end
@@ -278,15 +278,24 @@ function E.func_GetName(TYPE, id, forcedQuality)
 			name = func_CacheName(id, Cache, result, TYPE) -- CURRENCY
 		elseif TYPE == "npc" then -- AllNPCs
 			-- if Cache and not Cache[id] and not Cache[id][E.curLocaleLang] then
-			ScanningTooltipFUNC:ClearLines()
-			ScanningTooltipFUNC:SetHyperlink("unit:Creature-0-0-0-0-"..id)
-			local result
-			if ScanningTooltipFUNC:NumLines() > 0 then
-				result = _G[E.MainAddonName.."ScanningTooltipFUNCTextLeft1"]:GetText()
-				if result then
-					name = func_CacheName(id, Cache, result, TYPE) -- NPC
+			TooltipForNpcScan:ClearLines()
+			TooltipForNpcScan:SetHyperlink("unit:Creature-0-0-0-0-"..id)
+			if TooltipForNpcScan:NumLines() > 0 then
+
+				local result1 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft1"]:GetText()
+				-- print (result1)
+
+				-- local result2 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft2"]:GetText()
+				-- print (result2)
+
+				-- local result3 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft3"]:GetText()
+				-- print (result3)
+
+				if result1 then
+					name = func_CacheName(id, Cache, result1, TYPE) -- NPC
+					-- name = func_CacheName(id, Cache, result1..E.COLOR_SKYBLUE.." ("..result3..")|r", TYPE) -- NPC
 				end
-			elseif not name and E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
+			elseif E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
 				local result = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
 				-- name = func_CacheName(id, Cache, result, TYPE) -- NPC
 				name = result -- NPC

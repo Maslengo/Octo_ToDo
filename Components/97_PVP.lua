@@ -13,7 +13,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
-	OctoTables_Vibor[categoryKey].name = "PVP" -- PVP_OPTIONS -- BUG_CATEGORY14
+	OctoTables_Vibor[categoryKey].name = PVP -- "PVP" -- PVP_OPTIONS -- BUG_CATEGORY14
 	OctoTables_Vibor[categoryKey].color = E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
@@ -25,8 +25,10 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 219934, defS = true,}, -- Sparks of War
 		{id = 137642, defS = true,}, -- Mark of Honor
-		-- {id = 215236, defS = false,}, -- Vicious Bloodstone
+		{id = 253307, defS = true,}, -- Vicious Bloodstone
+		{id = 215236, defS = false,}, -- Vicious Bloodstone
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
@@ -36,6 +38,66 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("item", 219934) -- L["Sparks of War"]
+			end,
+			name_save = "SparksofWar",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93423}, -- Sparks of War: Eversong Woods
+				{93424}, -- Sparks of War: Zul'Aman
+				{93425}, -- Sparks of War: Harandar
+				{93426}, -- Sparks of War: Voidstorm
+			},
+			forcedMaxQuest = 1, any
+		},
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 89354) -- L["Preparing for Battle"]
+			end,
+			name_save = "PreparingforBattle",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89354},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 93865) -- L["Carve Your Way"]
+			end,
+			name_save = "CarveYourWay",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{93865},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+
+
+
+
+
+
+
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,

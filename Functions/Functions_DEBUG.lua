@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 function E.DEBUG_START()
 	local timer = debugprofilestart()
 	return timer

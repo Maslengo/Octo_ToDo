@@ -175,8 +175,6 @@ local function TooltipOnShow()
 	end
 end
 function EventFrame:Create_Octo_TooltipFrame()
-
-
 	Octo_TooltipFrame:SetScript("OnEnter", TooltipOnEnter)
 	Octo_TooltipFrame:SetScript("OnLeave", TooltipOnLeave)
 	Octo_TooltipFrame:HookScript("OnShow", TooltipOnShow)
@@ -192,11 +190,9 @@ function EventFrame:Create_Octo_TooltipFrame()
 	end
 	-- Octo_TooltipFrame.ScrollBox:Layout()
 	Octo_TooltipFrame.ScrollBox:SetFrameLevel(Octo_TooltipFrame.ScrollBox:GetFrameLevel() + 1)
-
 	Octo_TooltipFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_TooltipFrame, "MinimalScrollBar,OctoPropagateTemplate")
 	Octo_TooltipFrame.ScrollBar:SetPoint("TOPLEFT", Octo_TooltipFrame.ScrollBox, "TOPRIGHT", -15, -3)
 	Octo_TooltipFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_TooltipFrame.ScrollBox, "BOTTOMRIGHT", -15, 3)
-
 	if not InCombatLockdown() then
 		Octo_TooltipFrame.ScrollBar.Back:SetPropagateMouseMotion(true)
 		Octo_TooltipFrame.ScrollBar.Forward:SetPropagateMouseMotion(true)

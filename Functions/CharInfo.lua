@@ -3,7 +3,6 @@ local GlobalAddonName, E = ...
 local count = 0
 function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, CustomColor, markPlayer)
 	if not CharInfo then return "" end
-
 	local pd = CharInfo.PlayerData
 	local result = ""
 	local color = CustomColor or pd.classColorHex
@@ -13,12 +12,10 @@ function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, Cus
 		result = curPers..result
 	end
 	local name = pd.Name
-
 	if E.DEBUG_NAME then
 		count = count + 1
 		name = "Name_"..count
 	end
-
 	if name and color then
 		result = result .. color..name.."|r"
 	end
@@ -28,8 +25,6 @@ function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, Cus
 			result = result.." "..levelColor..pd.UnitLevel.."|r"
 		end
 	end
-
-
 	return E.func_translit(result)
 end
 ----------------------------------------------------------------
@@ -40,7 +35,6 @@ function E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, Cust
 	local curServer = pd.curServer
 	local curServerShort = pd.curServerShort
 	local color = CustomColor or E.COLOR_SKYBLUE
-
 	if E.DEBUG_NAME then
 		curServer = "Server"
 	end
@@ -60,13 +54,11 @@ function E.func_CharInfo_Guild(CharInfo, showRank)
 	local guildName = pd.guildName or ""
 	local guildRankName = pd.guildRankName or ""
 	local guildRankIndex = pd.guildRankIndex or 0
-
 	if guildName ~= "" and guildRankName ~= "" and guildRankIndex > 0 then
 		local guildPART = "<"..E.COLOR_GREEN..guildName.."|r>"
 		local rankPART = showRank and " ["..E.COLOR_GREEN..guildRankName.."|r]" or ""
 		result = result.. guildPART..rankPART
 	end
-
 	return E.func_translit(result)
 end
 ----------------------------------------------------------------
@@ -92,7 +84,6 @@ function E.func_CharInfo_Durability(CharInfo, showIcon, whenShow)
 	local PlayerDurability = pd.PlayerDurability or 100
 	local durColor = E.func_GetColorGradient(PlayerDurability, 0, 100)
 	local whenShow = whenShow or 100
-
 	if PlayerDurability < whenShow then
 		result = result..durColor..PlayerDurability.."%|r"
 		if showIcon then
@@ -100,8 +91,6 @@ function E.func_CharInfo_Durability(CharInfo, showIcon, whenShow)
 			result = result..E.func_texturefromIcon(E.ATLAS_REPAIR, nil, nil, true)
 		end
 	end
-
-
 	return tostring(result)
 end
 ----------------------------------------------------------------
@@ -112,7 +101,6 @@ function E.func_CharInfo_ItemLevel(CharInfo)
 	local avgItemLevel = pd.avgItemLevel
 	local avgItemLevelEquipped = pd.avgItemLevelEquipped
 	local avgItemLevelPvp = pd.avgItemLevelPvp
-
 	if avgItemLevelEquipped and avgItemLevel then
 		result = result..E.func_GetColorGradient(avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..avgItemLevelEquipped
 		if avgItemLevel > avgItemLevelEquipped then
@@ -122,7 +110,6 @@ function E.func_CharInfo_ItemLevel(CharInfo)
 			result = result..E.COLOR_BLUE.."+|r"
 		end
 	end
-
 	return result
 end
 ----------------------------------------------------------------

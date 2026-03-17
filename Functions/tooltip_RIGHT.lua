@@ -1,9 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
-
-
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if not GUID or not SettingsType then return end
 	local ServerTime = GetServerTime()
@@ -197,7 +196,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		if cm.Reputation and cm.Reputation[id] and type(cm.Reputation[id]) == "table" then
 			-- local FIRST, SECOND, ParagonCount, color, standingTEXT, repType = ("#"):split(cm.Reputation[id])
 			-- local fir, sec, ParagonCount, col, standingTEXT, typ = ("#"):split(cm.Reputation[id])
-
 			local FIRST = cm.Reputation[id].FIRST or 0
 			local SECOND = cm.Reputation[id].SECOND or 0
 			local ParagonCount = cm.Reputation[id].ParagonCount
@@ -210,12 +208,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local renownLevel = cm.Reputation[id].renownLevel
 			local renownMaxLevel = cm.Reputation[id].renownMaxLevel
 			local gender = pd.UnitSex or 1
-
 			-- local color = E.COLOR_BLACK
 			local color = E.func_DB_REP_COLOR(repType, reaction)
-
 			local standingTEXT = ""
-
 			if repType == 2 then -- FRIENDSHIP
 				if rankInfocurrentLevel and rankInfomaxLevel then
 					standingTEXT = rankInfocurrentLevel .. "/"..rankInfomaxLevel
@@ -231,8 +226,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			elseif repType == 4 then
 				standingTEXT = L["Paragon"]
 			end
-
-
 			local percent = (SECOND > 0) and math.floor(FIRST / SECOND * 100) or 0
 			local percentResult = color..percent.."%|r"
 			local firstTEXT = ""
@@ -260,14 +253,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				-- secondTEXT = color..standingTEXT.."|r"
 			end
 			local thirdTEXT = standingTEXT
-
-
 			local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
 			if paragonQuest and cm.ListOfParagonQuests[paragonQuest] then
 				secondTEXT = E.COLOR_PURPLE..">"..FIRST.."/"..SECOND.."<".."|r"
 			end
-
-
 			if secondTEXT ~= "0/0" then
 				tooltip[#tooltip+1] = {firstTEXT, color..thirdTEXT.."|r"}
 				tooltip[#tooltip+1] = {"", secondTEXT.." "..percentResult}
@@ -280,8 +269,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					end
 				end
 			end
-
-
 			if E.DebugReputationInfo then
 				tooltip[#tooltip+1] = {" "}
 				tooltip[#tooltip+1] = {E.COLOR_DEBUG.."~~~ DEBUG ~~~|r"}
@@ -299,12 +286,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local new_reaction = GetText("FACTION_STANDING_LABEL"..reaction, UnitSex("player"))
 				tooltip[#tooltip+1] = {"new_reaction", new_reaction}
 			end
-
-
-
-
-
-
 		end
 	end
 	if SettingsType == "AdditionallyBOTTOM#AllItems" then
@@ -372,8 +353,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 		end
 	end
-
-
 	if SettingsType == "AdditionallyBOTTOM#MythicZero" then
 		-- Проходим по всем инстансам из OT_curMapTable
 		for SI_ID, _ in pairs(E.OT_curMapTable) do
@@ -382,11 +361,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local totalBosses = 0
 			local hasData = false
 			local EJ_ID = E.func_SI_to_EJ(SI_ID)
-
 			-- Получаем иконку инстанса
 			local _, _, _, _, _, buttonImage2 = EJ_GetInstanceInfo(EJ_ID)
 			local icon = E.func_texturefromIcon(buttonImage2) or ""
-
 			-- Проверяем, есть ли данные по этому инстансу
 			if cm.journalInstance and cm.journalInstance[SI_ID] then
 				local v = cm.journalInstance[SI_ID]
@@ -398,7 +375,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					hasData = true
 				end
 			end
-
 			local color
 			if not hasData then
 				-- Нет данных об инстансе
@@ -410,25 +386,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			else
 				color = E.COLOR_RED        -- Не пройдено (есть данные, но боссы не убиты)
 			end
-
 			-- Формируем строку с прогрессом боссов
 			local bossProgress = color..defeatedBosses.."/"..totalBosses.."|r"
-
 			-- Добавляем информацию в тултип (как в LFGInstance)
 			tooltip[#tooltip+1] = {icon..name, color..bossProgress.."|r"}
 		end
 	end
-
-
-
-
-
-
-
-
-
-
-
 	if SettingsType == "AdditionallyBOTTOM#ListOfQuests" then
 		if pd.numQuests_Paragon and cm.ListOfParagonQuests then
 			tooltip[#tooltip+1] = {E.COLOR_BLUE..L["Paragon"]..":|r"}
@@ -679,9 +642,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 							Output_LEFT = E.func_texturefromIcon(pd.specIcon)..Output_LEFT
 						end
 						-- if Output_CENT ~= "" then
-							tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
+						tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
 						-- else
-						-- 	tooltip[#tooltip+1] = {Output_LEFT, " ", Output_RIGHT}
+						--     tooltip[#tooltip+1] = {Output_LEFT, " ", Output_RIGHT}
 						-- end
 					end
 				end
@@ -701,7 +664,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		-- 1. получаем список всех сложностей для инстанса
 		local difficulties
 		for idQWE, v in next, (Octo_Cache_DB.Octo_Table_SI_IDS) do -- E.Octo_Table_SI_IDS
-
 			-- if SI_ID == v.SI_ID then
 			if SI_ID == idQWE then
 				difficulties = v.difficulties
@@ -811,6 +773,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
@@ -832,11 +797,9 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 			if cm and cm.Items and cm.Items.Bags_FULL and cm.Items.Bags_FULL[itemID] and cm.Items.Bags_FULL[itemID].Quality then
 				quality = cm.Items.Bags_FULL[itemID].Quality
 			end
-
 			if cm and cm.Items and cm.Items.Bank_FULL and cm.Items.Bank_FULL[itemID] and cm.Items.Bank_FULL[itemID].Quality then
 				quality = cm.Items.Bank_FULL[itemID].Quality
 			end
-
 			table.insert(sorted_itemList, {
 					itemID = itemID,
 					quality = quality,
@@ -867,18 +830,16 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 		local row3Text = count_BANK > 0 and E.COLOR_GRAY.."+"..E.func_CompactFormatNumber(count_BANK).."|r" or ""
 		local icon = E.func_texturefromIcon(E.func_GetItemIcon(itemID))
 		local name = E.func_GetName("item", itemID, quality)
-
 		-- local quality = 1
 		-- if cm.Items and cm.Items.Bags_FULL and cm.Items.Bags_FULL[itemID] then
-		-- 	-- name = cm.Items.Bags_FULL[itemID].ItemLink
-		-- 	quality = cm.Items.Bags_FULL[itemID].Quality
+		--     -- name = cm.Items.Bags_FULL[itemID].ItemLink
+		--     quality = cm.Items.Bags_FULL[itemID].Quality
 		-- elseif cm.Items and cm.Items.Bank_FULL and cm.Items.Bank_FULL[itemID] then
-		-- 	-- name = cm.Items.Bank_FULL[itemID].ItemLink
-		-- 	quality = cm.Items.Bank_FULL[itemID].Quality
+		--     -- name = cm.Items.Bank_FULL[itemID].ItemLink
+		--     quality = cm.Items.Bank_FULL[itemID].Quality
 		-- else
-		-- 	name = E.func_GetName("item", itemID)
+		--     name = E.func_GetName("item", itemID)
 		-- end
-
 		tooltip[#tooltip+1] = {
 			icon..name,
 			{row2Text, "RIGHT"},
@@ -887,3 +848,6 @@ function E.func_BuildItemTooltip(CharInfo, TBL, needShowAllItems)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

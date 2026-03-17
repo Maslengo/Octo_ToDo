@@ -4,21 +4,16 @@ E.MainAddonName = GlobalAddonName
 OctoEngine = E -- в других аддонах
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
-
-
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 E.DefaultFont = LibSharedMedia:GetDefault("font")
-
 if E.curLocaleLang == "ruRU" or E.curLocaleLang == "enUS" then
 	E.DefaultFont = "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
 end
-
 ----------------------------------------------------------------
 E.DEBUG = false
 E.DEBUG_NAME = false
 E.DEBUG_OPTIONS = false
 ----------------------------------------------------------------
-
 E.OT_curMapTable = {
 	[2805] = true,
 	[2915] = true,
@@ -29,7 +24,6 @@ E.OT_curMapTable = {
 	[2923] = true,
 	[2825] = true,
 }
-
 E.OctoTable_ColoredFrames = {}
 E.L = {}
 E.OctoTables_Vibor = {}
@@ -125,12 +119,10 @@ E.ICON_MONTH = "cursor_Wrapper_64"
 E.FULL_WIDTH = 3.60
 E.FOURTH_WIDTH = E.FULL_WIDTH/4.4
 E.HALF_WIDTH = E.FULL_WIDTH/2.2
-
 E.borderColorR = 0
 E.borderColorG = 0
 E.borderColorB = 0
 E.borderColorA = 1
-
 E.edgeSize = 1
 E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
 E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
@@ -173,7 +165,6 @@ E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
 E.CURRENT_REGION_ID = GetCurrentRegion()
 E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU"
-
 if E.CURRENT_REGION_NAME == "" then E.CURRENT_REGION_NAME = "US" end
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
@@ -205,8 +196,6 @@ E.COLOR_TIME = "|cff9999FF"
 -- E.COLOR_THEWARWITHIN = "|cff90CCDD"
 -- E.COLOR_MIDNIGHT = "|cffB580FF"
 -- E.COLOR_THELASTTITAN = "|cffF4C263"
-
-
 E.COLOR_WORLDOFWARCRAFT = "|cffD0B070"
 E.COLOR_THEBURNINGCRUSADE = "|cffD45565"
 E.COLOR_WRATHOFTHELICHKING = "|cff6CB8D8"
@@ -220,7 +209,6 @@ E.COLOR_DRAGONFLIGHT = "|cff6BC8A8"
 E.COLOR_THEWARWITHIN = "|cff9CB4C8"
 E.COLOR_MIDNIGHT = "|cff7a91ff"
 E.COLOR_THELASTTITAN = "|cffE0C880"
-
 E.COLOR_WOW_POOR = "|cff9D9D9D"
 E.COLOR_WOW_COMMON = "|cffFFFFFF"
 E.COLOR_WOW_UNCOMMON = "|cff1EFF00"
@@ -255,8 +243,6 @@ E.COLOR_INDIGO = "|cff4B0082"
 E.COLOR_MAGENTA = "|cffFF00FF"
 E.COLOR_PINK = "|cffFF69B3"
 E.COLOR_REPFRIEND = "|cff9F7CFF" -- "|cffD064FF"
-
-
 E.COLOR_SKYBLUE = "|cff87CDEB"
 E.COLOR_STEELBLUE = "|cff4682B3"
 E.COLOR_SLATEGRAY = "|cff708090"
@@ -284,23 +270,15 @@ E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
 E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
 E.ATLAS_RAID = "Raid"
 E.ATLAS_DUNGEON = "Dungeon"
-
 -- E.ATLAS_RAID = "questlog-questtypeicon-raid"
 -- E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
-
 -- E.ATLAS_RAID = "worldquest-icon-raid"
 -- E.ATLAS_DUNGEON = "worldquest-icon-dungeon"
-
 E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
-
-
-
 -- UI-HUD-Minimap-Mail-New-Flipbook-2x
 -- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
-
 E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 16)
 E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
-
 E.COLOR_HORDE = "|cffC41E3A"
 E.COLOR_ALLIANCE = "|cff0070DD"
 E.COLOR_NEUTRAL = E.Class_Monk_Color
@@ -386,26 +364,12 @@ E.OctoTable_Covenant = {
 		b = E.COLOR_NECROLORD_B,
 	},
 }
-
-
-
-
 -- E.CovenantData = {
 --     [1] = { prefix = "SL_KYRIAN" },
 --     [2] = { prefix = "SL_VENTHYR" },
 --     [3] = { prefix = "SL_NIGHTFAE" },
 --     [4] = { prefix = "SL_NECROLORD" },
 -- }
-
-
-
-
-
-
-
-
-
-
 E.LIST_MAX_SIZE = 30
 E.DEBUG_TEXT = E.COLOR_BLUE..BINDING_HEADER_DEBUG.."|r"
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
@@ -438,13 +402,6 @@ function E.func_Is_Dragonflight_available() return E.interfaceVersion >= 100000 
 function E.func_Is_TheWarWithin_available() return E.interfaceVersion >= 110000 end
 function E.func_Is_Midnight_available() return E.interfaceVersion >= 120000 end
 function E.func_Is_TheLastTitan_available() return E.interfaceVersion >= 130000 end
-
-
-
-
-
-
-
 E.OctoTable_PlayerBags = {
 	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
 	Enum.BagIndex.Backpack, -- 0,
@@ -471,18 +428,14 @@ E.OctoTable_Account_bankTabs = {
 	Enum.BagIndex.AccountBankTab_4, -- 15
 	Enum.BagIndex.AccountBankTab_5, -- 16
 }
-
-
 E.OctoTable_SlotMapping = {
 	[1] = {name = "HEADSLOT", invslot = INVSLOT_HEAD, priority = 1},
 	[2] = {name = "NECKSLOT", invslot = INVSLOT_NECK, priority = 2},
 	[3] = {name = "SHOULDERSLOT", invslot = INVSLOT_SHOULDER, priority = 3},
 	[15] = {name = "BACKSLOT", invslot = INVSLOT_BACK, priority = 4},
 	[5] = {name = "CHESTSLOT", invslot = INVSLOT_CHEST, priority = 5},
-
 	[4] = {name = "SHIRTSLOT", invslot = INVSLOT_BODY, priority = 6},
 	[19] = {name = "TABARDSLOT", invslot = INVSLOT_TABARD, priority = 7},
-
 	[9] = {name = "WRISTSLOT", invslot = INVSLOT_WRIST, priority = 8},
 	[10] = {name = "HANDSSLOT", invslot = INVSLOT_HAND, priority = 9},
 	[6] = {name = "WAISTSLOT", invslot = INVSLOT_WAIST, priority = 10},
@@ -495,8 +448,6 @@ E.OctoTable_SlotMapping = {
 	[16] = {name = "MAINHANDSLOT", invslot = INVSLOT_MAINHAND, priority = 17},
 	[17] = {name = "SECONDARYHANDSLOT", invslot = INVSLOT_OFFHAND, priority = 18},
 }
-
-
 E.dataDisplayOrder = {
 	"AdditionallyTOP",
 	"Currencies",
@@ -506,16 +457,12 @@ E.dataDisplayOrder = {
 	"Reputations",
 	"AdditionallyBOTTOM",
 }
-
-
 local season = C_MythicPlus and C_MythicPlus.GetCurrentSeason()
 if season == nil or season == false or season == 0 or season == -1 then
 	E.MythicPlus_seasonID = 1
 else
 	E.MythicPlus_seasonID = season
 end
-
-
 E.OctoTable_reactionColors = {
 	[1] = {
 		[0] = E.COLOR_WHITE, -- (NO REACTION)
@@ -532,5 +479,4 @@ E.OctoTable_reactionColors = {
 	[3] = E.COLOR_BLUE,
 	[4] = E.COLOR_BLUE,
 }
-
 E.TEXT_INDEV = E.COLOR_RED..">>> ".."In Development".." <<<|r"

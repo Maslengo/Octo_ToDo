@@ -34,7 +34,7 @@ local function tempFunction()
 		{id = 3343, defS = true,}, -- Champion Dawncrest (250-263)
 		{id = 3341, defS = true,}, -- Veteran Dawncrest (237-250)
 		{id = 3383, defS = true,}, -- Adventurer Dawncrest (224-237)
-		{id = 3391, defS = false,}, -- Adventurer Dawncrest (UNUSED)
+		-- {id = 3391, defS = false,}, -- Adventurer Dawncrest (UNUSED)
 		-- синий
 		-- {id = 3394, defS = false,}, -- УДАЛЁН
 		{id = 3392, defS = false,}, -- Remnant of Anguish
@@ -90,21 +90,18 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2742, defS = false,}, -- Delves: Season 1
-		{id = 2764, defS = false,}, -- Prey: Season 1
-
-		{id = 2696, defS = false,}, -- Amani Tribe (Племя Амани)
-		{id = 2699, defS = false,}, -- The Singularity (Сингулярность)
-		{id = 2704, defS = false,}, -- Hara'ti (Хара'ти)
-		{id = 2710, defS = false,}, -- Silvermoon Court (Двор Луносвета)
-
+		{id = 2696, defS = true,}, -- Amani Tribe (Племя Амани)
+		{id = 2699, defS = true,}, -- The Singularity (Сингулярность)
+		{id = 2704, defS = true,}, -- Hara'ti (Хара'ти)
+		{id = 2710, defS = true,}, -- Silvermoon Court (Двор Луносвета)
 		{id = 2770, defS = false,}, -- Slayer's Duellum
 		{id = 2744, defS = false,}, -- Valeera Sanguinar
 		{id = 2714, defS = false,}, -- Shades of the Row
 		{id = 2712, defS = false,}, -- Blood Knights
 		{id = 2711, defS = false,}, -- Magisters
 		{id = 2713, defS = false,}, -- Farstriders
-
+		{id = 2742, defS = true,}, -- Delves: Season 1
+		{id = 2764, defS = true,}, -- Prey: Season 1
 		-- {id = 2722, defS = true,}, -- C_DelvesUI.GetDelvesFactionForSeason() для миднайта криво работает
 		-- {id = 2764, defS = false,}, -- Preyseeker's Journey
 		-- {id = 2700, defS = false,}, -- DEPRECATED Fungarian Fighting Ring
@@ -116,6 +113,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+		----------------------------------------------------------------
 		{
 			sorted = false,
 			showTooltip = true,
@@ -142,70 +140,14 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-		-- https://www.wowhead.com/quest=89507/
-		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
-		-- sorted = false,
-		-- showTooltip = true,
-		-- TextLeft = function()
-		-- return E.func_GetName("map", 241)..": "..E.func_GetName("quest", 90764, false) -- Twilight Highlands -- "PREPATCH: "..
-		-- end,
-		-- name_save = "TheCultWithin",
-		-- defS = true,
-		-- reset = "Regular",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {90759, FactionOrClass = {Alliance = true,}, }, -- The Cult Within
-		-- {90764, FactionOrClass = {Horde = true,}, }, -- The Cult Within
-		-- {90760, FactionOrClass = {Alliance = true,}, },
-		-- {90761, FactionOrClass = {Horde = true,}, },
-		-- {90762, FactionOrClass = {Alliance = true,}, },
-		-- {90763, FactionOrClass = {Horde = true,}, },
-		-- {90765},
-		-- {90766},
-		-- {90767},
-		-- {90768},
-		-- },
-		-- -- forcedMaxQuest = 1,
-		-- },
-		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
-		-- sorted = false,
-		-- showTooltip = true,
-		-- TextLeft = function()
-		-- return E.func_GetName("map", 241)..": "..E.func_GetName("quest", 87308, false) -- Twilight Highlands -- "PREPATCH: "..
-		-- end,
-		-- name_save = "TwilightsDawn",
-		-- defS = true,
-		-- reset = "Weekly",
-		-- isAccount = false,
-		-- desc = categoryKey,
-		-- quests = {
-		-- {87308},
-		-- },
-		-- -- forcedMaxQuest = 1,
-		-- },
-		-- { -- MIDNIGHT PREPATCH (27 JANUARY)
-		-- sorted = false,
-		-- showTooltip = true,
-		-- TextLeft = function()
-		-- return E.func_GetName("map", 241)..": "..E.func_GetName("quest", 91795, false) -- Twilight Highlands -- "PREPATCH: "..
-		-- end,
-		-- name_save = "DisrupttheCall",
-		-- defS = true,
-		-- reset = "Weekly",
-		-- isAccount = false,
-		-- desc = categoryKey,
-		-- quests = {
-		-- {91795},
-		-- },
-		-- -- forcedMaxQuest = 1,
-		-- },
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Midnight: Meta Quest"] -- https://www.wowhead.com/npc = 256203/lady-liadrin
+				return L["Midnight: Meta Quests"] -- https://www.wowhead.com/npc=256203/lady-liadrin
 			end,
-			name_save = "Midnight MetaQuest",
+			name_save = "MidnightMetaQuest",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
@@ -215,25 +157,31 @@ local function tempFunction()
 				{93767}, -- Midnight: Arcantina
 				{93769}, -- Midnight: Housing
 				{93889}, -- Midnight: Saltheril's Soiree
-				{93890}, -- Midnight: Abundance
 				{93891}, -- Midnight: Legends of the Haranir
 				{93892}, -- Midnight: Stormarion Assault
 				{93909}, -- Midnight: Delves
 				{93910}, -- Midnight: Prey
 				{93911}, -- Midnight: Dungeons
+				{94457}, -- Midnight: Battlegrounds
+
+				{93890}, -- Midnight: Abundance (https://www.wowhead.com/npc=240279/magovu)
 				{93912}, -- Midnight: Raid
 				{93913}, -- Midnight: World Boss
-				{94457}, -- Midnight: Battlegrounds
 				{95842}, -- Midnight: Void Assaults
 				{95843}, -- Midnight: Ritual Sites
+
+
+
+
 			},
 			forcedMaxQuest = 2,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Special Assignments"]
+				return L["Special Assignment"]
 			end,
 			name_save = "SpecialAssignments",
 			defS = false,
@@ -252,11 +200,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 2,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Dungeon Quest"]
+				return QUESTS_LABEL .. ": " .. DUNGEONS -- L["Dungeon Quest"]
 			end,
 			name_save = "DungeonQuest",
 			defS = false,
@@ -275,11 +224,13 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Prey Normal"]
+				-- return L["Prey"]..": "..L["Normal"]
+				return L["Prey: Normal"]
 			end,
 			name_save = "PreyNormal",
 			defS = false,
@@ -320,11 +271,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 4,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Prey Hard"]
+				return L["Prey: Hard"]
 			end,
 			name_save = "PreyHard",
 			defS = false,
@@ -365,11 +317,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 4,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Prey Nightmare"]
+				return L["Prey: Nightmare"]
 			end,
 			name_save = "PreyNightmare",
 			defS = false,
@@ -410,6 +363,7 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 4,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
@@ -426,10 +380,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- any
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
+				-- return L["Legends Relics"]
 				return L["Legends of the Haranir"]
 			end,
 			name_save = "LegendsoftheHaranir",
@@ -447,11 +403,13 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- any
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Harandar Daily Wanted"]
+				-- return L["Harandar Daily Wanted"]
+				return E.func_GetName("map", 2413)..": "..L["WANTED"]
 			end,
 			name_save = "HarandarDailyWanted",
 			defS = false,
@@ -468,6 +426,7 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- any
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
@@ -486,11 +445,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- any
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Saltheril's Haven"]
+				return E.func_GetName("quest", 91627) -- L["Saltheril's Haven"]
 			end,
 			name_save = "SaltherilsHaven",
 			defS = false,
@@ -537,12 +497,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 3,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				-- return L["Saltheril's Soiree"]
-				return E.func_GetName("quest", 91966)
+				return E.func_GetName("quest", 91966) -- L["Saltheril's Soiree"]
 			end,
 			name_save = "SaltherilsSoiree",
 			defS = false,
@@ -553,12 +513,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				-- return L["Stormarion Assault"]
-				return E.func_GetName("quest", 90962)
+				return E.func_GetName("quest", 90962) -- L["Stormarion Assault"]
 			end,
 			name_save = "StormarionAssault",
 			defS = false,
@@ -569,12 +529,12 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				-- return L["Research Console: Exploring the Void"]
-				return E.func_GetName("quest", 94790)
+				return E.func_GetName("quest", 94790) -- L["Research Console: Exploring the Void"]
 			end,
 			name_save = "ResearchConsole:ExploringtheVoid",
 			defS = false,
@@ -585,62 +545,14 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Sparks of War"]
-			end,
-			name_save = "SparksofWar",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{93423}, -- Sparks of War: Eversong Woods
-				{93424}, -- Sparks of War: Zul'Aman
-				{93425}, -- Sparks of War: Harandar
-				{93426}, -- Sparks of War: Voidstorm
-			},
-			forcedMaxQuest = 1, any
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				-- return L["Preparing for Battle"]
-				return E.func_GetName("quest", 89354)
-			end,
-			name_save = "PreparingforBattle",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{89354},
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				-- return L["Carve Your Way"]
-				return E.func_GetName("quest", 93865)
-			end,
-			name_save = "CarveYourWay",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{93865},
-			},
-			forcedMaxQuest = 1,
-		},
+		----------------------------------------------------------------
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				-- return E.func_GetName("map", 2393)..": "..TRADE_SKILLS
-				return L["Profession Weeklies"]
+				-- return L["Profession Weeklies"]
+				return TRADE_SKILLS
 			end,
 			name_save = "ProfessionWeeklies",
 			defS = false,
@@ -661,7 +573,6 @@ local function tempFunction()
 				{93696, addText = {IconVignette = "Mobile-Tailoring",}, }, -- Tailoring Services Requested
 				-- itemID = 263454
 				{93690, addText = {IconVignette = "Mobile-Alchemy",}, }, -- Alchemy Services Requested
-				{nil},
 				-- itemID = 263463
 				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6082&page = 1
 				{93705, addText = {IconVignette = "Mobile-Mining",}, }, -- Copper for Your Thoughts?
@@ -691,6 +602,7 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 2,
 		},
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
@@ -702,31 +614,21 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{95127}, -- Thalassian Treatise on Alchemy
-				{95128}, -- Thalassian Treatise on Blacksmithing
-				{95129}, -- Thalassian Treatise on Enchanting
-				{95138}, -- Thalassian Treatise on Engineering
-				{95130}, -- Thalassian Treatise on Herbalism
-				{95131}, -- Thalassian Treatise on Inscription
-				{95133}, -- Thalassian Treatise on Jewelcrafting
-				{95134}, -- Thalassian Treatise on Leatherworking
-				{95135}, -- Thalassian Treatise on Mining
-				{95136}, -- Thalassian Treatise on Skinning
-				{95137}, -- Thalassian Treatise on Tailoring
-				-- [95127] = L["Thalassian Treatise on Alchemy"],
-				-- [95128] = L["Thalassian Treatise on Blacksmithing"],
-				-- [95129] = L["Thalassian Treatise on Enchanting"],
-				-- [95138] = L["Thalassian Treatise on Engineering"],
-				-- [95130] = L["Thalassian Treatise on Herbalism"],
-				-- [95131] = L["Thalassian Treatise on Inscription"],
-				-- [95133] = L["Thalassian Treatise on Jewelcrafting"],
-				-- [95134] = L["Thalassian Treatise on Leatherworking"],
-				-- [95135] = L["Thalassian Treatise on Mining"],
-				-- [95136] = L["Thalassian Treatise on Skinning"],
-				-- [95137] = L["Thalassian Treatise on Tailoring"],
+				{95127, forcedText = {itemID = 245755}}, -- Thalassian Treatise on Alchemy
+				{95128, forcedText = {itemID = 245763}}, -- Thalassian Treatise on Blacksmithing
+				{95129, forcedText = {itemID = 245759}}, -- Thalassian Treatise on Enchanting
+				{95138, forcedText = {itemID = 245809}}, -- Thalassian Treatise on Engineering
+				{95130, forcedText = {itemID = 245761}}, -- Thalassian Treatise on Herbalism
+				{95131, forcedText = {itemID = 245757}}, -- Thalassian Treatise on Inscription
+				{95133, forcedText = {itemID = 245760}}, -- Thalassian Treatise on Jewelcrafting
+				{95134, forcedText = {itemID = 245758}}, -- Thalassian Treatise on Leatherworking
+				{95135, forcedText = {itemID = 245762}}, -- Thalassian Treatise on Mining
+				{95136, forcedText = {itemID = 245828}}, -- Thalassian Treatise on Skinning
+				{95137, forcedText = {itemID = 245756}}, -- Thalassian Treatise on Tailoring
 			},
 			forcedMaxQuest = 2,
 		},
+		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
@@ -739,3 +641,4 @@ local function tempFunction()
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
+

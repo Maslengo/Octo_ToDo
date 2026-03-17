@@ -22,7 +22,6 @@ btn:SetScript("OnClick", function(self, button, down)
 end)
 btn:RegisterForClicks("LeftButtonUp")
 ----------------------------------------------------------------
-
 E.SortUI = {}
 local SortUI = E.SortUI
 SortUI.rows = {}
@@ -276,20 +275,12 @@ function SortUI:CreateOptionsBlock(parent)
 	reset:SetText("Сбросить к стандартной")
 	reset:SetPoint("TOPLEFT", last, "BOTTOMLEFT", 0, -12)
 end
-
-
-
 function EventFrame:func_CreateOcto_SortUI()
 	----------------------------------------------------------------
 	-- ВРЕМЕННЫЙ ТЕСТОВЫЙ ВЫЗОВ (чтобы просто увидеть окно)
 	----------------------------------------------------------------
 	Octo_SortUI:SetSize(660, 560)
 	Octo_SortUI:SetPoint("CENTER")
-
-
-
-
-
 	Octo_SortUI:SetMovable(true)
 	Octo_SortUI:EnableMouse(true)
 	Octo_SortUI:RegisterForDrag("LeftButton")
@@ -299,8 +290,6 @@ function EventFrame:func_CreateOcto_SortUI()
 	-- local close = CreateFrame("Button", nil, Octo_SortUI, "UIPanelCloseButton")
 	-- close:SetPoint("TOPRIGHT")
 end
-
-
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_LOGIN",

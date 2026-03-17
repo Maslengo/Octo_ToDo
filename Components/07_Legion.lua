@@ -144,6 +144,7 @@ local function tempFunction()
 			forcedMaxQuest = 2,
 		},
 		{
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetName("quest", 43533, false)
@@ -158,6 +159,7 @@ local function tempFunction()
 				{43503},
 				{43501},
 				{43505},
+
 				{40668},
 				{43514},
 				{43517},
@@ -191,6 +193,7 @@ local function tempFunction()
 				{43533},
 			},
 			forcedMaxQuest = 33,
+			forcedIDQuest = 43533,
 		},
 		{
 			showTooltip = true,

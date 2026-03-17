@@ -12,7 +12,6 @@ local Octo_MainFrame = CreateFrame("BUTTON", "Octo_MainFrame", UIParent, "OctoBa
 Octo_MainFrame:Hide()
 E.func_RegisterFrame_ICONS(Octo_MainFrame)
 table.insert(E.OctoTable_ColoredFrames, Octo_MainFrame)
-
 local SearchBox = CreateFrame("EditBox", "Octo_SearchBox", Octo_MainFrame, "SearchBoxTemplate")
 local NewSettingsButton = CreateFrame("CheckButton", "NewSettingsButton", Octo_MainFrame, "UICheckButtonTemplate")
 local INDENT_LEFT = 10
@@ -35,8 +34,6 @@ local function SafeTooltipShow(frame, ...)
 		E.func_Octo_TooltipFrame_OnEnter(frame, ...)
 	end
 end
-
-
 local func_OnAcquiredLeft do
 	local function Create_SettingsButton(frame)
 		frame.SettingsButton = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
@@ -148,9 +145,7 @@ local func_OnAcquiredCenter do
 	function func_OnAcquiredCenter(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-
 		-- AdditionalSettings(frame, "func_OnAcquiredCenter")
-
 		frame.columnFrames = setmetatable({}, {
 				__index = function(self, key)
 					if key then
@@ -160,12 +155,8 @@ local func_OnAcquiredCenter do
 						Create_ReputationBackground(columnFrame)
 						Create_TextCenter(columnFrame)
 						-- AdditionalSettings(columnFrame, "func_OnAcquiredCenter METATABLE")
-
-
-
 						columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
 						columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
-
 						columnFrame:SetScript("OnHide", function()
 								columnFrame:Hide()
 						end)
@@ -447,9 +438,6 @@ local function HeaderFrameLeft_OnShow(frame)
 	frame.Text1:SetText(text)
 end
 function EventFrame:func_CreateMainFrame()
-
-
-
 	Octo_MainFrame:SetPoint("TOP", 0, -150)
 	Octo_MainFrame:HookScript("OnShow", function()
 			RequestRaidInfo()
@@ -506,12 +494,7 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame.ScrollBoxLEFT:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
 	Octo_MainFrame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
-
-
 	Octo_MainFrame.ScrollBoxLEFT:SetFrameLevel(Octo_MainFrame.ScrollBoxLEFT:GetFrameLevel() + 1)
-
-
-
 	-- Octo_MainFrame.ScrollBoxLEFT:GetScrollTarget():SetPropagateMouseClicks(true)
 	horizontalScrollFrame:SetPoint("TOPLEFT", Octo_MainFrame.ScrollBoxLEFT, "TOPRIGHT", 0, E.HEADER_HEIGHT)
 	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
@@ -577,16 +560,12 @@ function EventFrame:func_CreateMainFrame()
 		self:SetSize(MIN_COLUMN_WIDTH_Center, E.HEADER_HEIGHT)
 		self.Nickname = self:CreateFontString()
 		self.Nickname:SetFontObject(OctoFont11)
-
 		self.Server = self:CreateFontString()
 		self.Server:SetFontObject(OctoFont10)
-
 		self.Mail = self:CreateFontString()
 		self.Mail:SetFontObject(OctoFont10)
-
 		self.Durability = self:CreateFontString()
 		self.Durability:SetFontObject(OctoFont10)
-
 		self.Text = self:CreateFontString()
 		self.Text:SetFontObject(OctoFont11)
 		self.Text:SetPoint("CENTER")
@@ -603,11 +582,10 @@ function E.func_main_frame_toggle()
 	if Octo_MainFrame then
 		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 		-- if not InCombatLockdown() then
-			local left = Octo_MainFrame:GetLeft()
-			local top = Octo_MainFrame:GetTop()
-
-			Octo_MainFrame:ClearAllPoints()
-			Octo_MainFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
+		local left = Octo_MainFrame:GetLeft()
+		local top = Octo_MainFrame:GetTop()
+		Octo_MainFrame:ClearAllPoints()
+		Octo_MainFrame:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", left, top)
 		-- end
 	end
 end
@@ -755,7 +733,6 @@ local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 	end
 	return totalRightWidth
 end
-
 function EventFrame:CreateDataProvider()
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
@@ -781,15 +758,9 @@ function EventFrame:CreateDataProvider()
 		else
 			serverTEXT = E.func_CharInfo_Server(CharInfo)
 		end
-
 		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, nicknameTEXT, serverTEXT)
 	end
 	Octo_MainFrame.pool:Release(HeaderFrameCenter)
-
-
-
-
-
 	-- Локальная функция для обработки данных (чтобы избежать дублирования кода)
 	local function processData(categoryKey, dataType, dataList)
 		for i, id in next, (dataList) do
@@ -845,17 +816,10 @@ function EventFrame:CreateDataProvider()
 			end
 		end
 	end
-
-
-
-
-
-
 	-- Получаем настройку режима отображения
 	-- Предположим, что она хранится в базе под ключом "DisplayByType" (true = по типу, false = по экспаншену)
 	-- local displayByType = E.func_GetData_profileKeys("DisplayByType") or false
 	local displayByType = true
-
 	if displayByType then
 		-- Режим: сначала по типу данных, потом по дополнениям
 		for _, dataType in ipairs(dataDisplayOrder) do
@@ -877,7 +841,6 @@ function EventFrame:CreateDataProvider()
 			end
 		end
 	end
-
 	if totalLines == 0 then
 		totalLines = 1
 		local rowData = {
@@ -902,7 +865,6 @@ function EventFrame:CreateDataProvider()
 	EventFrame.columnWidthsLeft = columnWidthsLeft
 	EventFrame.columnWidthsCenter = columnWidthsCenter
 	self:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
-
 end
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 	if not Octo_MainFrame or not Octo_MainFrame.scrollContentFrame then return end
@@ -935,9 +897,6 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
-
-
-
 		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
 		HeaderFrameCenter.Nickname:SetWordWrap(false)
 		HeaderFrameCenter.Nickname:SetJustifyV("MIDDLE")
@@ -946,7 +905,6 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter.Server:SetWordWrap(false)
 		HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
 		HeaderFrameCenter.Server:SetJustifyH("CENTER")
-
 		HeaderFrameCenter.Nickname:SetText(E.func_CharInfo_NickName(CharInfo))
 		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
 			HeaderFrameCenter.Nickname:SetPoint("CENTER")
@@ -954,41 +912,29 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		else
 			HeaderFrameCenter.Server:SetText(E.func_CharInfo_Server(CharInfo))
 		end
-
-
 		HeaderFrameCenter.Mail:SetPoint("TOPRIGHT")
 		HeaderFrameCenter.Mail:SetWordWrap(false)
 		HeaderFrameCenter.Mail:SetJustifyV("MIDDLE")
 		HeaderFrameCenter.Mail:SetJustifyH("RIGHT")
 		local Mail = E.func_CharInfo_Mail(CharInfo)
 		HeaderFrameCenter.Mail:SetText(Mail)
-
-
 		HeaderFrameCenter.Durability:SetPoint("BOTTOMRIGHT")
 		HeaderFrameCenter.Durability:SetWordWrap(false)
 		HeaderFrameCenter.Durability:SetJustifyV("MIDDLE")
 		HeaderFrameCenter.Durability:SetJustifyH("RIGHT")
 		local Durability = E.func_CharInfo_Durability(CharInfo, false, 41)
 		HeaderFrameCenter.Durability:SetText(Durability)
-
-
-
 		-- local faction = pd.Faction or "Neutral"
 		-- if faction == "Horde" then
-		-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
+		--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
 		-- elseif faction == "Alliance" then
-		-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
+		--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
 		-- elseif faction == "Neutral" then
-		-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
+		--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
 		-- end
 		-- HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
-
-
 		local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
 		HeaderFrameCenter.CharTexture:SetVertexColor(r, g, b, a)
-
-
-
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
 				HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
 				SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})

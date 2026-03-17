@@ -15,7 +15,6 @@ local Octo_EquipmentsFrame = CreateFrame("BUTTON", "Octo_EquipmentsFrame", UIPar
 Octo_EquipmentsFrame:Hide()
 E.func_RegisterFrame_SIMPLE(Octo_EquipmentsFrame)
 table.insert(E.OctoTable_ColoredFrames, Octo_EquipmentsFrame)
-
 local NameHeader = CreateFrame("FRAME", nil, Octo_EquipmentsFrame)
 EventFrame.columnWidths = {}
 EventFrame.columnTypes = {}
@@ -102,7 +101,6 @@ local func_OnAcquired do
 		text:SetJustifyH(justifyH or "LEFT")
 		return text
 	end
-
 	function func_OnAcquired(owner, frame, node, new)
 		if new then
 			frame.columnFrames = setmetatable({}, {
@@ -214,10 +212,6 @@ function EventFrame:Octo_Frame_init(frame, node)
 		end
 	end
 end
-
-
-
-
 function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInfo)
 	if not Octo_EquipmentsFrame or not Octo_EquipmentsFrame.view then
 		return
@@ -226,7 +220,6 @@ function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInf
 	local pd = CharInfo.PlayerData
 	local faction = pd.Faction or "Neutral"
 	----------------------------------------------------------------
-
 	NameHeader.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
 	NameHeader.Nickname:SetWordWrap(false)
 	NameHeader.Nickname:SetJustifyV("MIDDLE")
@@ -263,31 +256,24 @@ function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInf
 	NameHeader.Durability:SetText(E.func_CharInfo_Durability(CharInfo, true))
 	NameHeader.Mail:SetText(E.func_CharInfo_Mail(CharInfo))
 	NameHeader.ItemLevel:SetText(E.func_CharInfo_ItemLevel(CharInfo))
-
 	----------------------------------------------------------------
-
 	-- if faction == "Horde" then
-	-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
+	--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
 	-- elseif faction == "Alliance" then
-	-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
+	--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
 	-- elseif faction == "Neutral" then
-	-- 	charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
+	--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
 	-- end
 	-- NameHeader.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
 	local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
 	NameHeader.CharTexture:SetVertexColor(r, g, b, a)
 	----------------------------------------------------------------
 end
-
-
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, CharInfo)
 	if not Octo_EquipmentsFrame or not Octo_EquipmentsFrame.view then
 		return
 	end
-
 	EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInfo)
-
-
 	Octo_EquipmentsFrame.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	local width = CalculateMainFrameWidth(columnWidths)
 	local height, displayLines = CalculateMainFrameHeight(totalLines)
@@ -316,28 +302,23 @@ function EventFrame:CreateDataProvider(GUID)
 	local specTexture = E.func_texturefromIcon(specIcon)
 	local curServer = pd.curServer or ""
 	local resultName = specTexture..classColorHex..Name.."|r"
-
 	-- local ItemLevel = E.func_CharInfo_ItemLevel(CharInfo)
-
-
 	-- local PlayerItemLevel = ""
 	-- if pd.avgItemLevelEquipped and pd.avgItemLevel then
-	-- 	PlayerItemLevel = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
-	-- 	if pd.avgItemLevel > pd.avgItemLevelEquipped then
-	-- 		PlayerItemLevel = PlayerItemLevel.."/"..pd.avgItemLevel.."|r"
-	-- 	end
-	-- 	if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
-	-- 		PlayerItemLevel = PlayerItemLevel..E.COLOR_GREEN.."+|r"
-	-- 	end
+	--     PlayerItemLevel = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
+	--     if pd.avgItemLevel > pd.avgItemLevelEquipped then
+	--         PlayerItemLevel = PlayerItemLevel.."/"..pd.avgItemLevel.."|r"
+	--     end
+	--     if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
+	--         PlayerItemLevel = PlayerItemLevel..E.COLOR_GREEN.."+|r"
+	--     end
 	-- end
-
-
 	for slotID in next, (E.OctoTable_SlotMapping) do
 		totalLines = totalLines + 1
 		local v = InventoryType[slotID] or {}
 		local ItemID = v.itemID
 		local Icon = v.Icon or E.func_GetEmptySlotIcon(slotID) or 134400
-		local ItemLink = v.ItemLink or ""
+		local ItemLink = v.ItemLink
 		local Quality = v.Quality or 0
 		local CurrentItemLevel = v.CurrentItemLevel or 0
 		local ItemInventoryType = v.ItemInventoryType or 0
@@ -345,9 +326,10 @@ function EventFrame:CreateDataProvider(GUID)
 		local slotName = E.func_GetSlotNameForEmptySlot(slotID)
 		local current_Durability = v.current_Durability or 0
 		local maximum_Durability = v.maximum_Durability or 0
-		local ItemName = ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
+		-- local ItemName = ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
+		local ItemName = ItemLink or ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
 		local rowData = {
-			ItemLink = v.ItemLink,
+			ItemLink = ItemLink,
 			slotID = slotID,
 			column1Icon = Icon,
 			column2Text = color..ItemName.."|r",
@@ -400,7 +382,6 @@ function EventFrame:CreateDataProvider(GUID)
 	self:UpdateMainFrameUI(DataProvider, totalLines, EventFrame.columnWidths, CharInfo)
 end
 function EventFrame:Create_Octo_EquipmentsFrame()
-
 	-- Octo_EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
 	Octo_EquipmentsFrame:HookScript("OnShow", function()
 			local scrollBar = Octo_EquipmentsFrame.ScrollBar
@@ -444,16 +425,6 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	-- Octo_EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
 	-- Octo_EquipmentsFrame.ScrollBox:Layout()
 	Octo_EquipmentsFrame.ScrollBox:SetFrameLevel(Octo_EquipmentsFrame.ScrollBox:GetFrameLevel() + 1)
-
-
-
-
-
-
-
-
-
-
 	Octo_EquipmentsFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_EquipmentsFrame, "MinimalScrollBar")
 	Octo_EquipmentsFrame.ScrollBar:SetPoint("TOPLEFT", Octo_EquipmentsFrame.ScrollBox, "TOPRIGHT", 6, 0)
 	Octo_EquipmentsFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_EquipmentsFrame.ScrollBox, "BOTTOMRIGHT", 6, 0)
@@ -506,11 +477,6 @@ function E.Toggle_Octo_EquipmentsFrame(GUID)
 		EventFrame:CreateDataProvider(GUID)
 	end
 end
-
-
-
-
-
 local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",

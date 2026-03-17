@@ -41,6 +41,183 @@ E.translations = {
 	-- },
 
 
+	-- ["ЙЦУЙЦУ"] = {
+	-- 	["ruRU"] = "ЙЦУЙЦУ",
+	-- 	["deDE"] = "ЙЦУЙЦУ",
+	-- 	["esES"] = "ЙЦУЙЦУ",
+	-- 	["esMX"] = "ЙЦУЙЦУ",
+	-- 	["frFR"] = "ЙЦУЙЦУ",
+	-- 	["itIT"] = "ЙЦУЙЦУ",
+	-- 	["ptBR"] = "ЙЦУЙЦУ",
+	-- 	["koKR"] = "ЙЦУЙЦУ",
+	-- 	["zhCN"] = "ЙЦУЙЦУ",
+	-- 	["zhTW"] = "ЙЦУЙЦУ",
+	-- },
+
+	["Midnight: Meta Quests"] = { -- QUEST_CLASSIFICATION_META - Мета
+		["ruRU"] = "Midnight: Метазадания",
+		["deDE"] = "Midnight: Metaaufgaben", -- ["deDE"] = "Midnight: Metaquests",
+		["esES"] = "Midnight: Metamisiones",
+		["esMX"] = "Midnight: Metamisiones",
+		["frFR"] = "Midnight: Méta quêtes",
+		["itIT"] = "Midnight: Metamissioni",
+		["ptBR"] = "Midnight: Metamissões",
+		["koKR"] = "한밤: 상위 퀘스트", -- /run opde(E.func_GetName("quest", 93890))
+		["zhCN"] = "至暗之夜: 统合任务",
+		["zhTW"] = "至暗之夜: 主任務", -- /run opde(E.func_GetName("quest", 93890))
+	},
+
+
+	["Paragon"] = {
+		["ruRU"] = "Парагон",
+		["deDE"] = "Huldigend",
+		["esES"] = "Paragón",
+		["esMX"] = "Paragón",
+		["frFR"] = "Parangon",
+		["itIT"] = "Eccellenza",
+		["ptBR"] = "Paragão",
+		["koKR"] = "불멸의 동맹",
+		["zhCN"] = "巅峰",
+		["zhTW"] = "巅峰",
+	},
+
+
+
+
+
+	["Special Assignment"] = {
+		["ruRU"] = "Особое поручение",
+		["deDE"] = "Spezialauftrag",
+		["esES"] = "Tarea especial",
+		["esMX"] = "Asignación especial",
+		["frFR"] = "Mission spéciale",
+		["itIT"] = "Incarico speciale",
+		["ptBR"] = "Designação especial",
+		["koKR"] = "특별 과제",
+		["zhCN"] = "特别任务",
+		["zhTW"] = "特殊任務",
+	},
+
+	-- https://www.wowhead.com/pt/storyline/presa-5945
+	["Prey: Normal"] = { -- https://www.wowhead.com/quest=91124/
+		["ruRU"] = "Добыча: Обычная сложность",
+		["deDE"] = "Beutejagd: Normal",
+		["esES"] = "Presa: Normal",
+		["esMX"] = "Presa: Normal",
+		["frFR"] = "Traque: Normal",
+		["itIT"] = "Preda: Normale",
+		["ptBR"] = "Presa: Normal",
+		["koKR"] = "사냥감: 일반",
+		["zhCN"] = "狩猎: 普通",
+		["zhTW"] = "狩獵: 普通",
+	},
+
+	["Prey: Hard"] = { -- https://www.wowhead.com/quest=91251/
+		["ruRU"] = "Добыча: Высокая сложность",
+		["deDE"] = "Beutejagd: Schwer",
+		["esES"] = "Presa: Difícil",
+		["esMX"] = "Presa: Difícil",
+		["frFR"] = "Traque: Difficile",
+		["itIT"] = "Preda: Difficile",
+		["ptBR"] = "Presa: Difícil",
+		["koKR"] = "사냥감: 어려움",
+		["zhCN"] = "狩猎: 困难",
+		["zhTW"] = "狩獵: 困難",
+	},
+
+	["Prey: Nightmare"] = { -- https://www.wowhead.com/quest=91229/
+		["ruRU"] = "Добыча: Кошмарная сложность",
+		["deDE"] = "Beutejagd: Alptraum",
+		["esES"] = "Presa: Pesadilla",
+		["esMX"] = "Presa: Pesadilla",
+		["frFR"] = "Traque: Cauchemar",
+		["itIT"] = "Preda: Incubo",
+		["ptBR"] = "Presa: Pesadelo", -- ["ptBR"] = "Presa: Nightmare",
+		["koKR"] = "사냥감: 악몽",
+		["zhCN"] = "狩猎: 梦魇",
+		["zhTW"] = "狩獵: 夢魘",
+	},
+	["WANTED"] = {
+		["ruRU"] = "РАЗЫСКИВАЕТСЯ",
+		["deDE"] = "GESUCHT",
+		["esES"] = "SE BUSCA",
+		["esMX"] = "SE BUSCA",
+		["frFR"] = "AVIS DE RECHERCHE",
+		["itIT"] = "RICERCATO",
+		["ptBR"] = "PROCURA-SE",
+		["koKR"] = "현상 수배",
+		["zhCN"] = "通缉",
+		["zhTW"] = "懸賞",
+	},
+	["Legends of the Haranir"] = { -- https://www.wowhead.com/storyline/%D0%BB%D0%B5%D0%B3%D0%B5%D0%BD%D0%B4%D1%8B-%D1%85%D0%B0%D1%80%D0%B0%D0%BD%D0%B8%D1%80%D0%BE%D0%B2-6209
+		["ruRU"] = "Легенды хараниров",
+		["deDE"] = "Legenden der Haranir",
+		["esES"] = "Leyendas de los haranir",
+		["esMX"] = "Leyendas de los haranir",
+		["frFR"] = "Légendes des Haranir",
+		["itIT"] = "Leggende degli Haranir",
+		["ptBR"] = "Lendas dos Haranir",
+		["koKR"] = "하라니르의 전설",
+		["zhCN"] = "哈籁尼尔的传说",
+		["zhTW"] = "哈拉尼爾的傳說",
+	},
+
+	["Fortify the Runestones"] = { -- https://www.wowhead.com/quest=90574/fortify-the-runestones-blood-knights
+		["ruRU"] = "Укрепление рунических камней",
+		["deDE"] = "Die Runensteine verstärken",
+		["esES"] = "Fortificación de piedras rúnicas",
+		["esMX"] = "Piedras rúnicas fortificadas",
+		["frFR"] = "Renforcement des pierres runiques",
+		["itIT"] = "Fortificare le Pietre Runiche",
+		["ptBR"] = "Fortificar as pedras rúnicas",
+		["koKR"] = "룬석 강화", -- /run opde(E.func_GetName("quest", 90574))
+		["zhCN"] = "加固符文石",
+		["zhTW"] = "強化符石",
+	},
+	["Thalassian Treatise"] = {
+		["ruRU"] = "Талассийский трактат",
+		["deDE"] = "Thalassische Abhandlung",
+		["esES"] = "Tratado thalassiano",
+		["esMX"] = "Tratado thalassiano",
+		["frFR"] = "Traité thalassien",
+		["itIT"] = "Trattato thalassiano",
+		["ptBR"] = "Tratado talassiano",
+		["koKR"] = "탈라시안 논문",
+		["zhCN"] = "萨拉斯论述",
+		["zhTW"] = "薩拉斯論述",
+	},
+
+	-- ["Dungeon Quests"] = {
+	-- 	["ruRU"] = "Задания подземелий",
+	-- 	["deDE"] = "Dungeonquests", -- или Dungeonaufgaben
+	-- 	["esES"] = "Misiones de mazmorra",
+	-- 	["esMX"] = "Misiones de calabozo",
+	-- 	["frFR"] = "Quêtes de donjon",
+	-- 	["itIT"] = "Missioni dei dungeon",
+	-- 	["ptBR"] = "Missões de masmorra",
+	-- 	["koKR"] = "던전 퀘스트",
+	-- 	["zhCN"] = "地下城任务",
+	-- 	["zhTW"] = "地城任務",
+	-- },
+
+
+	-- ["ЙЦУЙЦУ"] = {
+	-- 	["ruRU"] = "ЙЦУЙЦУ",
+	-- 	["deDE"] = "ЙЦУЙЦУ",
+	-- 	["esES"] = "ЙЦУЙЦУ",
+	-- 	["esMX"] = "ЙЦУЙЦУ",
+	-- 	["frFR"] = "ЙЦУЙЦУ",
+	-- 	["itIT"] = "ЙЦУЙЦУ",
+	-- 	["ptBR"] = "ЙЦУЙЦУ",
+	-- 	["koKR"] = "ЙЦУЙЦУ",
+	-- 	["zhCN"] = "ЙЦУЙЦУ",
+	-- 	["zhTW"] = "ЙЦУЙЦУ",
+	-- },
+
+
+
+
+
 
 	["Shows mounts available for this currency in the tooltip"] = {
 		["ruRU"] = "Отображает средства передвижения, доступные за эту валюту, в тултипе",
@@ -755,18 +932,6 @@ E.translations = {
 		["koKR"] = "기록 보관소",
 		["zhCN"] = "档案馆",
 		["zhTW"] = "文庫",
-	},
-	["Special Assignment"] = {
-		["ruRU"] = "Особое поручение",
-		["deDE"] = "Spezialauftrag",
-		["esES"] = "Tarea especial",
-		["esMX"] = "Asignación especial",
-		["frFR"] = "Mission spéciale",
-		["itIT"] = "Incarico speciale",
-		["ptBR"] = "Designação especial",
-		["koKR"] = "특별 과제",
-		["zhCN"] = "特别任务",
-		["zhTW"] = "特殊任務",
 	},
 	["Algari Treatise"] = { -- Tailoring version: Algari Treatise on Tailoring
 		["ruRU"] = "Алгарийский трактат", -- Алгарийский трактат о портняжном деле
@@ -2248,18 +2413,6 @@ E.translations = {
 		["koKR"] = "보조 열쇠 불꽃",
 		["zhCN"] = "次要钥焰",
 		["zhTW"] = "次要鑰焰",
-	},
-	["Paragon"] = {
-		["ruRU"] = "Парагон",
-		["deDE"] = "Huldigend",
-		["esES"] = "Paragón",
-		["esMX"] = "Paragón",
-		["frFR"] = "Parangon",
-		["itIT"] = "Eccellenza",
-		["ptBR"] = "Paragão",
-		["koKR"] = "불멸의 동맹",
-		["zhCN"] = "巅峰",
-		["zhTW"] = "巅峰",
 	},
 	["Only Current Server"] = {
 		["ruRU"] = "Только текущий сервер",

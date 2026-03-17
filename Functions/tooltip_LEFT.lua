@@ -1,5 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	local pd = CharInfo.PlayerData
 	local isVisible = visiblePlayers[GUID]
@@ -18,6 +21,9 @@ function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 
 	return leftText
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 	local tooltip = {}
 	local isRenown = (typeSL == 1)
@@ -133,7 +139,9 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 
 	return tooltip
 end
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_ItemLevelTooltipLeft(visiblePlayers)
 	local tooltip = {}
 	local characterData = {}
@@ -189,6 +197,9 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_ProfessionsTooltipLeft(visiblePlayers)
 	local tooltip = {}
 	local characterData = {}
@@ -242,6 +253,9 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
@@ -314,6 +328,9 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_MoneyTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
@@ -377,6 +394,9 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
@@ -422,6 +442,9 @@ function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
@@ -483,6 +506,9 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local ids_tbl = {}
@@ -566,6 +592,9 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
@@ -627,6 +656,9 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_ItemsTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
@@ -706,6 +738,9 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_KeyTooltip_LEFT(SettingsType)
 	if not SettingsType then return end
 	local tooltip = {}
@@ -747,3 +782,6 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	end
 	return tooltip
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
