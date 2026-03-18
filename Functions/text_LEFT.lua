@@ -120,7 +120,7 @@ function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataTyp
 		TextLeft = QUESTS_LABEL
 	end
 	if id == "LFGInstance" then
-		TextLeft = DUNGEONS
+		TextLeft = DUNGEONS .. " ("..ALL..")"
 	end
 	if id == "AllItems" then
 		TextLeft = ITEMS

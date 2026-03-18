@@ -202,15 +202,25 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		if paragonQuest and cm.ListOfParagonQuests[paragonQuest] then
 			TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"
 		end
-		if repType == 2 or repType == 3 then -- 2
-			if TextCenter ~= "0/0" and TextCenter ~= "1/1" then
-				-- local color = E.func_DB_REP_COLOR(repType, reaction)
-				-- local percent = (SECOND > 0) and math.floor(FIRST / SECOND * 100) or 0
-				-- local percentResult = color..percent.."%|r"
-				local thirdTEXT = ColorCenter..standingTEXT.."|r"
-				TextCenter = TextCenter .." ".. thirdTEXT
-			end
-		end
+
+
+
+
+
+
+		-- if repType == 2 or repType == 3 then -- 2
+		-- 	if TextCenter ~= "0/0" and TextCenter ~= "1/1" then
+		-- 		-- local color = E.func_DB_REP_COLOR(repType, reaction)
+		-- 		-- local percent = (SECOND > 0) and math.floor(FIRST / SECOND * 100) or 0
+		-- 		-- local percentResult = color..percent.."%|r"
+		-- 		local thirdTEXT = ColorCenter..standingTEXT.."|r"
+		-- 		TextCenter = TextCenter .." ".. thirdTEXT
+		-- 	end
+		-- end
+
+
+
+
 	end
 	return TextCenter, ColorCenter, FIRST, SECOND
 end
@@ -278,12 +288,12 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 	if id == "MythicZero" then
 		local countMZ = 0
 		local totalInstances = 0
-		-- Считаем общее количество инстансов в OT_curMapTable
-		for SI_ID, _ in pairs(E.OT_curMapTable) do
+		-- Считаем общее количество инстансов в Octo_Cache_DB.Octo_Table_currentSeason
+		for SI_ID, _ in pairs(Octo_Cache_DB.Octo_Table_currentSeason) do
 			totalInstances = totalInstances + 1
 		end
-		-- Проверяем каждый инстанс из OT_curMapTable
-		for SI_ID, _ in pairs(E.OT_curMapTable) do
+		-- Проверяем каждый инстанс из Octo_Cache_DB.Octo_Table_currentSeason
+		for SI_ID, _ in pairs(Octo_Cache_DB.Octo_Table_currentSeason) do
 			if cm.journalInstance and cm.journalInstance[SI_ID] then
 				local instanceData = cm.journalInstance[SI_ID]
 				-- Проверяем сложность 23 (Mythic)

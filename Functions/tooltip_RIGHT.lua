@@ -354,42 +354,62 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if SettingsType == "AdditionallyBOTTOM#MythicZero" then
-		-- Проходим по всем инстансам из OT_curMapTable
-		for SI_ID, _ in pairs(E.OT_curMapTable) do
+		-- Создаем временную таблицу для сбора данных
+		local tempData = {}
+		local myhDif = 23
+		-- Сначала собираем все данные
+		for SI_ID, t in pairs(Octo_Cache_DB.Octo_Table_currentSeason) do
 			local name = E.func_GetName("dungeon", SI_ID)
 			local defeatedBosses = 0
-			local totalBosses = 0
+			local totalBosses = t.difficulties and t.difficulties[myhDif] or 0
 			local hasData = false
 			local EJ_ID = E.func_SI_to_EJ(SI_ID)
-			-- Получаем иконку инстанса
 			local _, _, _, _, _, buttonImage2 = EJ_GetInstanceInfo(EJ_ID)
 			local icon = E.func_texturefromIcon(buttonImage2) or ""
-			-- Проверяем, есть ли данные по этому инстансу
 			if cm.journalInstance and cm.journalInstance[SI_ID] then
 				local v = cm.journalInstance[SI_ID]
-				-- Ищем данные для сложности 23 (Mythic)
-				if v[23] and type(v[23]) == "table" then
-					local difficultyData = v[23]
+				if v[myhDif] and type(v[myhDif]) == "table" then
+					local difficultyData = v[myhDif]
 					defeatedBosses = difficultyData.defeatedBosses or 0
-					totalBosses = difficultyData.totalBosses or 0
+					if difficultyData.totalBosses then
+						totalBosses = difficultyData.totalBosses
+					end
 					hasData = true
 				end
 			end
 			local color
 			if not hasData then
-				-- Нет данных об инстансе
 				color = E.COLOR_GRAY
 			elseif defeatedBosses == totalBosses and totalBosses > 0 then
-				color = E.COLOR_GREEN      -- Полностью пройдено
+				color = E.COLOR_GREEN
 			elseif defeatedBosses > 0 then
-				color = E.COLOR_YELLOW     -- Частично пройдено
+				color = E.COLOR_YELLOW
 			else
-				color = E.COLOR_RED        -- Не пройдено (есть данные, но боссы не убиты)
+				color = E.COLOR_RED
 			end
-			-- Формируем строку с прогрессом боссов
 			local bossProgress = color..defeatedBosses.."/"..totalBosses.."|r"
-			-- Добавляем информацию в тултип (как в LFGInstance)
-			tooltip[#tooltip+1] = {icon..name, color..bossProgress.."|r"}
+			local tier = E.func_GetDungTier(SI_ID)
+			local source = E.func_FormatExpansion(tier, "LEFT")
+			-- Сохраняем данные вместе с tier для сортировки
+			table.insert(tempData, {
+					tier = tier,
+					icon = icon,
+					name = name,
+					source = source,
+					progress = bossProgress,
+					color = color,
+			})
+		end
+		table.sort(tempData, function(a, b)
+				-- if a.tier == b.tier then
+				-- 	return a.name < b.name -- Если tier одинаковый, сортируем по имени
+				-- end
+				-- return a.tier > b.tier
+				return a.name < b.name
+		end)
+		-- Добавляем отсортированные данные в тултип
+		for _, data in ipairs(tempData) do
+			tooltip[#tooltip+1] = {data.icon..data.name, {data.source, "LEFT"}, data.progress}
 		end
 	end
 	if SettingsType == "AdditionallyBOTTOM#ListOfQuests" then
@@ -582,6 +602,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 						end
 						if forcedText then
 							if forcedText.text then
+								-- ЕСЛИ ФУНКЦИЯ, ТО...
 								Output_LEFT = Output_LEFT..forcedText.text.." "
 							end
 							if forcedText.npcID then
@@ -625,6 +646,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 								Output_LEFT = Output_LEFT..E.COLOR_PINK..E.func_GetName("spell", addText.spellID).."|r"
 							end
 							if addText.text then
+								-- ЕСЛИ ФУНКЦИЯ, ТО...
 								Output_LEFT = Output_LEFT..addText.text
 							end
 							if addText.itemID then

@@ -2106,6 +2106,7 @@ function E.func_BUILD_DUNG_DB()
 	local SI_to_EJ = {}
 	local EJ_to_SI = {}
 	local result = {}
+	local currentSeason = {}
 	local function CountEncounters()
 		local i = 1
 		while EJ_GetEncounterInfoByIndex(i) do
@@ -2128,6 +2129,7 @@ function E.func_BUILD_DUNG_DB()
 					SI_to_EJ[savedInstanceID] = ejInstanceID
 					EJ_to_SI[ejInstanceID] = savedInstanceID
 				end
+
 				local diffTable = nil
 				for diffID in next, (E.OctoTable_Difficulties) do
 					if EJ_IsValidInstanceDifficulty(diffID) then
@@ -2140,10 +2142,20 @@ function E.func_BUILD_DUNG_DB()
 					end
 				end
 				if diffTable then
-					result[savedInstanceID] = {
-						difficulties = diffTable,
-						isRaid = isRaid
-					}
+					if tier ~= numTiers then
+						result[savedInstanceID] = {
+							difficulties = diffTable,
+							isRaid = isRaid,
+							-- name = name,
+							tier = tier,
+						}
+					elseif tier == numTiers and not isRaid and savedInstanceID ~= 3029 then
+						currentSeason[savedInstanceID] = {
+							difficulties = diffTable,
+							isRaid = isRaid,
+							-- name = name
+						}
+					end
 				end
 				index = index + 1
 				ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
@@ -2152,11 +2164,16 @@ function E.func_BUILD_DUNG_DB()
 	end
 	EJ_SetDifficulty(backupDifficulty)
 	EJ_SelectTier(backupTier)
+
+	Octo_Cache_DB.Octo_Table_currentSeason = currentSeason
+	-- opde(Octo_Cache_DB.Octo_Table_currentSeason)
+
 	Octo_Cache_DB.Octo_Table_SI_IDS = result
+	-- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
+
 	Octo_Cache_DB.SavedInstanceID_to_EJInstance = SI_to_EJ
 	Octo_Cache_DB.EJInstance_to_SavedInstanceID = EJ_to_SI
 	-- Octo_Cache_DB.LastUpdateDB = serverTime + C_DateAndTime.GetSecondsUntilDailyReset()
-	-- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
 	-- E.DEBUG_STOP()
 end
 ----------------------------------------------------------------
@@ -2184,6 +2201,12 @@ function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	end
 end
 ----------------------------------------------------------------
+function E.func_GetDungTier(SI_ID)
+	if not Octo_Cache_DB or not Octo_Cache_DB.Octo_Table_SI_IDS then return 1 end
+
+	local tier = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID] and Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].tier or 1
+	return tier
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -51,9 +51,9 @@ local function func_CacheName(id, Cache, name, debugLabel)
 		if Octo_DevTool_DB and Octo_DevTool_DB.DebugCache then
 			E.func_PrintMessage(
 				E.COLOR_LIME..debugLabel.."|r",
-				E.COLOR_ADDON_LEFT..E.curLocaleLang.."|r",
+				-- E.COLOR_GRAY..E.curLocaleLang.."|r",
 				name,
-				E.COLOR_ADDON_RIGHT..id.."|r"
+				E.COLOR_GRAY.."id:"..id.."|r"
 			)
 		end
 	end

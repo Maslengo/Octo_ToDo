@@ -201,7 +201,7 @@ local function updateGlobal(DBVersion)
 
 	end
 	----------------------------------------------------------------
-	if compareVersion(112.4, DBVersion) then
+	if compareVersion(112.5, DBVersion) then
 		Octo_Cache_DB = {}
 		E.Init_Octo_Cache_DB()
 	end

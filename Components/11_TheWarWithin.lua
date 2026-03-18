@@ -1122,21 +1122,6 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- 8? nadoutichnit
 		},
-		{ -- The War Within Season 3
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Delves"]..": "..L["Delver's Bounty"] -- (E.func_GetName("item", 233071) Season 2)(E.func_GetName("item", 248142) Season 3)
-			end,
-			name_save = "DelversBountySeason3",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(248142))..E.func_GetName("item", 248142)},}, -- This item can be fished in Excavation Site 9
-			},
-			forcedMaxQuest = 1,
-		},
 		{
 			sorted = false,
 			showTooltip = true,

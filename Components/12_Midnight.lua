@@ -24,16 +24,16 @@ local function tempFunction()
 		-- фиол
 		{id = 3400, defS = false,}, -- Uncontaminated Void Sample
 		{id = 3379, defS = false,}, -- Brimming Arcana
-		{id = 3378, defS = false,}, -- Dawnlight Manaflux
-		{id = 3212, defS = false,}, -- Radiant Spark Dust
-		{id = 3028, defS = false,}, -- Restored Coffer Key (season 1)
+		{id = 3378, defS = true,}, -- Dawnlight Manaflux       ---------> (CATALYST)
+		{id = 3212, defS = false,}, -- Radiant Spark Dust (Midnight Season 1)
+		{id = 3028, defS = false,}, -- Restored Coffer Key (Midnight Season 1)
 		{id = 3310, defS = false,}, -- Coffer Key Shards
 		-- https://www.wowhead.com/currencies/season-1#0+1+3
-		{id = 3347, defS = true,}, -- Myth Dawncrest (276-289)
-		{id = 3345, defS = true,}, -- Hero Dawncrest (263-276)
-		{id = 3343, defS = true,}, -- Champion Dawncrest (250-263)
-		{id = 3341, defS = true,}, -- Veteran Dawncrest (237-250)
-		{id = 3383, defS = true,}, -- Adventurer Dawncrest (224-237)
+		{id = 3347, defS = true,}, -- Myth Dawncrest (Midnight Season 1 up to item levels 276-289)
+		{id = 3345, defS = true,}, -- Hero Dawncrest (Midnight Season 1 up to item levels 263-276)
+		{id = 3343, defS = true,}, -- Champion Dawncrest (Midnight Season 1 up to item levels 250-263)
+		{id = 3341, defS = true,}, -- Veteran Dawncrest (Midnight Season 1 up to item levels 237-250)
+		{id = 3383, defS = true,}, -- Adventurer Dawncrest (Midnight Season 1 up to item levels 224-237)
 		-- {id = 3391, defS = false,}, -- Adventurer Dawncrest (UNUSED)
 		-- синий
 		-- {id = 3394, defS = false,}, -- УДАЛЁН
@@ -74,19 +74,21 @@ local function tempFunction()
 		{id = 2913, defS = true,}, -- March on Quel'Danas
 		{id = 2912, defS = true,}, -- The Voidspire
 		{id = 2939, defS = true,}, -- The Dreamrift
-		-- Dungeon
+		-- Dungeon -- /dump C_ChallengeMode.GetMapTable() -- НЕ ТО
+		-- {id = 2805, defS = true,}, -- Windrunner Spire
+		-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
+		-- {id = 2811, defS = true,}, -- Magisters' Terrace
 		-- {id = 2874, defS = true,}, -- Maisara Caverns
+
+		-- {id = 2813, defS = true,}, -- Murder Row
+		-- {id = 2825, defS = true,}, -- Den of Nalorakk
+		-- {id = 2923, defS = true,}, -- Voidscar Arena
+		-- {id = 2859, defS = true,}, -- The Blinding Vale
+
 		-- {id = 1209, defS = true,}, -- Skyreach
 		-- {id = 1753, defS = true,}, -- Seat of the Triumvirate
 		-- {id = 2526, defS = true,}, -- Algeth'ar Academy
-		-- {id = 2825, defS = true,}, -- Den of Nalorakk
-		-- {id = 2923, defS = true,}, -- Voidscar Arena
-		-- {id = 2811, defS = true,}, -- Magisters' Terrace
-		-- {id = 2859, defS = true,}, -- The Blinding Vale
 		-- {id = 658, defS = true,}, -- Pit of Saron
-		-- {id = 2805, defS = true,}, -- Windrunner Spire
-		-- {id = 2813, defS = true,}, -- Murder Row
-		-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
@@ -175,6 +177,29 @@ local function tempFunction()
 
 			},
 			forcedMaxQuest = 2,
+		},
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				-- TWW S2: 233071 (Клад участника вылазки) L["Delver's Bounty"]
+				-- TWW S3: 248142 (Клад участника вылазки) L["Delver's Bounty"]  -- This item can be fished in Excavation Site 9
+				-- Mid S1: 252415 (Трофей охотника за сокровищами)
+
+
+
+				return L["Delves"]..": " .. E.func_GetName("item", 252415, 1)
+			end,
+			name_save = "DelversBountySeason1",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- {86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(252415))..E.func_GetName("item", 252415)},},
+				{86371, forcedText = {itemID = 252415}, addText = {text = E.COLOR_GREEN.." ("..format(EXPANSION_SEASON_NAME, "Midnight", 1)..")|r"}  },
+			},
+			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		{
@@ -635,7 +660,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-		{id = "MythicZero", defS = false,},
+		{id = "MythicZero", defS = true,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

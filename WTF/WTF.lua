@@ -97,7 +97,7 @@ function EventFrame:func_CacheGameData()
 	end
 
 	-- for itemID, v in next,(E.ALL_Items) do
-		-- print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityLevel(itemID))
+	-- 	print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityLevel(itemID))
 	-- end
 	----------------------------------------------------------------
 	-- Асинхронная загрузка
@@ -105,9 +105,9 @@ function EventFrame:func_CacheGameData()
 	promise:AddItemsByKey(E.ALL_Items)
 	:ThenForAllWithCached(function(_, ID, TYPE)
 			E.func_GetName(TYPE, ID)
-			if TYPE == "item" then
-				E.func_GetItemQualityLevel(ID)
-			end
+			-- if TYPE == "item" then
+			-- 	E.func_GetItemQualityLevel(ID)
+			-- end
 			-- if TYPE == "quest" then
 			-- 	E.func_GetName("quest", ID)
 			-- elseif TYPE == "item" then

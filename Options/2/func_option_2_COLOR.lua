@@ -404,7 +404,7 @@ function E.func_option_2_COLOR(width, tabName)
 					[E.func_AutoKey()] = {
 						type = "toggle",
 						name = L["Gradient"],
-						desc = CURSOR_SIZE_DEFAULT..": "..YES.."|n|n"..L["Use gradient values in tooltip"],
+						desc = CURSOR_SIZE_DEFAULT..": "..NO.."|n|n"..L["Use gradient values in tooltip"],
 						get = function()
 							return E.PROFTBL.ConfigColor_TOOLTIP_usegradient
 						end,
