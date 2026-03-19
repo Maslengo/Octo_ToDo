@@ -152,6 +152,7 @@ E.IsRestrictedAccount = IsRestrictedAccount()
 E.IsTrialAccount = IsTrialAccount()
 E.IsVeteranTrialAccount = IsVeteranTrialAccount()
 E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
+E.curBattleTag = E.BattleTag
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
 E.CURRENT_REGION_ID = GetCurrentRegion()
 E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU"

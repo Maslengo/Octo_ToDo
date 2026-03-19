@@ -354,9 +354,11 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	local featureDefaults = {
 		Config_LevelToShow = 1,
 		Config_LevelToShowMAX = 90,
+
+		isOnlyCurrentBtag = true,
+		ShowOnlyCurrentRegion = true,
 		isOnlyCurrentServer = false,
 		isOnlyCurrentFaction = false,
-		ShowOnlyCurrentRegion = true,
 
 		Config_DebugID_ALL = false,
 

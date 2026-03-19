@@ -1,5 +1,5 @@
 <Ui>
-	<Script file="Options\Init.lua"/>
+	<Script file="Options\Options.lua"/>
 
 	<Script file="Options\1\func_option_CHARACTER.lua"/>
 	<Script file="Options\1\func_option_DEBUG.lua"/>
@@ -11,5 +11,7 @@
 
 	<Script file="Options\3\func_option_COLOR_MAIN.lua"/>
 	<Script file="Options\3\func_option_COLOR_PROFILE.lua"/>
+
+	<Script file="Options\4\func_option_userscript.lua"/>
 
 </Ui>

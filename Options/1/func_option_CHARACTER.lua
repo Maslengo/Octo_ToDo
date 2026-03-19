@@ -3,18 +3,11 @@ local L = E.L
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
-local function func_Header(lay_out, text)
-	if lay_out and lay_out.AddInitializer then
-		lay_out:AddInitializer(CreateSettingsListSectionHeaderInitializer(text))
-	end
-end
-
-
 function E.func_option_CHARACTER(category, layout)
 	----------------------------------------------------------------
 	-- HEADER ------------------------------------------------------
 	----------------------------------------------------------------
-	func_Header(layout, L["Characters"])
+	E.func_Header(layout, L["Characters"])
 	----------------------------------------------------------------
 
 
@@ -78,6 +71,37 @@ function E.func_option_CHARACTER(category, layout)
 
 
 
+	----------------------------------------------------------------
+	-- 3. isOnlyCurrentBtag
+	----------------------------------------------------------------
+	do
+		local variable = E.func_GenerateID()
+		local variableKey = "isOnlyCurrentBtag"
+		local variableTbl = Octo_ToDo_DB_Vars
+		local name = L["Only Current BattleTag"]
+		local defaultValue = true -- Settings.Default.False
+		-- local variableType = Settings.VarType.Boolean
+		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
+		setting:SetValueChangedCallback(E.func_UpdateGlobals)
+		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
+		Settings.CreateCheckbox(category, setting, tooltip)
+	end
+
+	----------------------------------------------------------------
+	-- 5. ShowOnlyCurrentRegion
+	----------------------------------------------------------------
+	do
+		local variable = E.func_GenerateID()
+		local variableKey = "ShowOnlyCurrentRegion"
+		local variableTbl = Octo_ToDo_DB_Vars
+		local name = L["Only Current Region"]
+		local defaultValue = true -- Settings.Default.True
+		-- local variableType = Settings.VarType.Boolean
+		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
+		setting:SetValueChangedCallback(E.func_UpdateGlobals)
+		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
+		Settings.CreateCheckbox(category, setting, tooltip)
+	end
 
 
 
@@ -96,8 +120,6 @@ function E.func_option_CHARACTER(category, layout)
 		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
 		Settings.CreateCheckbox(category, setting, tooltip)
 	end
-
-
 	----------------------------------------------------------------
 	-- 4. isOnlyCurrentFaction
 	----------------------------------------------------------------
@@ -124,21 +146,6 @@ function E.func_option_CHARACTER(category, layout)
 	end
 
 
-	----------------------------------------------------------------
-	-- 5. ShowOnlyCurrentRegion
-	----------------------------------------------------------------
-	do
-		local variable = E.func_GenerateID()
-		local variableKey = "ShowOnlyCurrentRegion"
-		local variableTbl = Octo_ToDo_DB_Vars
-		local name = L["Only Current Region"]
-		local defaultValue = true -- Settings.Default.True
-		-- local variableType = Settings.VarType.Boolean
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
-		Settings.CreateCheckbox(category, setting, tooltip)
-	end
 
 
 

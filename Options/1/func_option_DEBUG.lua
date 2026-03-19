@@ -3,19 +3,13 @@ local L = E.L
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
-local function func_Header(lay_out, text)
-	if lay_out and lay_out.AddInitializer then
-		lay_out:AddInitializer(CreateSettingsListSectionHeaderInitializer(text))
-	end
-end
-
 
 function E.func_option_DEBUG(category, layout)
 	------------------------------------------------------------
 	----------------------------------------------------------------
 	-- HEADER
 	----------------------------------------------------------------
-	func_Header(layout, BINDING_HEADER_DEBUG)
+	E.func_Header(layout, BINDING_HEADER_DEBUG)
 	----------------------------------------------------------------
 	-- 1. Config_DebugID_ALL
 	----------------------------------------------------------------

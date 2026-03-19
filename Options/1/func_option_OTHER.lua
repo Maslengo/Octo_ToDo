@@ -3,18 +3,11 @@ local L = E.L
 
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
-local function func_Header(lay_out, text)
-	if lay_out and lay_out.AddInitializer then
-		lay_out:AddInitializer(CreateSettingsListSectionHeaderInitializer(text))
-	end
-end
-
-
 function E.func_option_OTHER(category, layout)
 	----------------------------------------------------------------
 	-- HEADER
 	----------------------------------------------------------------
-	func_Header(layout, OTHER)
+	E.func_Header(layout, OTHER)
 	----------------------------------------------------------------
 	-- Octo_ToDo_DB_Vars.Config_numberFormatMode -------------------
 	----------------------------------------------------------------

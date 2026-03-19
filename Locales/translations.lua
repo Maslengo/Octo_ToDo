@@ -54,6 +54,22 @@ E.translations = {
 	-- 	["zhTW"] = "ЙЦУЙЦУ",
 	-- },
 
+
+
+	["Fortify the Runestones"] = { -- /run opde(E.func_GetName("quest", 90573)) -- 90573 90574 90575 90576
+		["ruRU"] = "Укрепление рунических камней",
+		["deDE"] = "Die Runensteine verstärken",
+		["esES"] = "Fortificación de piedras rúnicas",
+		["esMX"] = "Piedras rúnicas fortificadas",
+		["frFR"] = "Renforcement des pierres runiques",
+		["itIT"] = "Fortificare le Pietre Runiche",
+		["ptBR"] = "Fortificar as pedras rúnicas",
+		["koKR"] = "룬석 강화", -- 룬석을 강화하라
+		["zhCN"] = "加固符文石",
+		["zhTW"] = "強化符石",
+	},
+
+
 	["Midnight: Meta Quests"] = { -- QUEST_CLASSIFICATION_META - Мета
 		["ruRU"] = "Midnight: Метазадания",
 		["deDE"] = "Midnight: Metaaufgaben", -- ["deDE"] = "Midnight: Metaquests",
@@ -956,18 +972,6 @@ E.translations = {
 		["koKR"] = "침입",
 		["zhCN"] = "入侵",
 		["zhTW"] = "入侵",
-	},
-	["Delves"] = {
-		["ruRU"] = "Вылазки",
-		["deDE"] = "Tiefen",
-		["esES"] = "Profundidades",
-		["esMX"] = "Abismos",
-		["frFR"] = "Gouffre",
-		["itIT"] = "Scorribande",
-		["ptBR"] = "Imersões",
-		["koKR"] = "구렁",
-		["zhCN"] = "地下堡",
-		["zhTW"] = "探究",
 	},
 	["Coffer Key"] = { -- https://www.wowhead.com/item=238527/restored-coffer-key
 		["ruRU"] = "Ключ от сундука",
@@ -2426,6 +2430,7 @@ E.translations = {
 		["zhCN"] = "仅当前服务器",
 		["zhTW"] = "僅目前伺服器",
 	},
+
 	["Only Current Region"] = {
 		["ruRU"] = "Только текущий регион",
 		["deDE"] = "Nur aktuelle Region",
@@ -2438,17 +2443,30 @@ E.translations = {
 		["zhCN"] = "仅当前地区",
 		["zhTW"] = "僅目前地區",
 	},
+
 	["Only Current Realm"] = {
-		["ruRU"] = "Только текущий игровой мир",
-		["deDE"] = "Nur aktuelles Realm",
+		["ruRU"] = "Только текущий мир", -- более Blizzard-like
+		["deDE"] = "Nur aktueller Realm",
 		["esES"] = "Solo reino actual",
 		["esMX"] = "Solo reino actual",
 		["frFR"] = "Royaume actuel uniquement",
-		["itIT"] = "Solo reame attuale",
+		["itIT"] = "Solo regno attuale",
 		["ptBR"] = "Apenas reino atual",
-		["koKR"] = "현재 서버(Realm)만",
-		["zhCN"] = "仅当前位面",
-		["zhTW"] = "僅目前伺服器位面",
+		["koKR"] = "현재 서버만",
+		["zhCN"] = "仅当前服务器",
+		["zhTW"] = "僅目前伺服器",
+	},
+	["Only Current BattleTag"] = {
+		["ruRU"] = "Только текущий BattleTag",
+		["deDE"] = "Nur aktueller BattleTag",
+		["esES"] = "Solo BattleTag actual",
+		["esMX"] = "Solo BattleTag actual",
+		["frFR"] = "BattleTag actuel uniquement",
+		["itIT"] = "Solo BattleTag attuale",
+		["ptBR"] = "Apenas BattleTag atual",
+		["koKR"] = "현재 BattleTag만",
+		["zhCN"] = "仅当前 BattleTag",
+		["zhTW"] = "僅目前 BattleTag",
 	},
 	["Daily quests"] = {
 		["ruRU"] = "Ежедневные задания",

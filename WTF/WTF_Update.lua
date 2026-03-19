@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-local addonName = E.func_AddonNameForOptionsFunc(GlobalAddonName)
+local addonNAME = E.func_AddonNameForOptions(GlobalAddonName)
 ----------------------------------------------------------------
 local function compareVersion(v1, v2)
 	if v2 == 1 or v2 == 0 then return false end
@@ -196,7 +196,7 @@ local function updateGlobal(DBVersion)
 		if Octo_profileKeys and Octo_profileKeys.profiles and Octo_profileKeys.profiles.Default then
 			wipe(Octo_profileKeys.profiles.Default)
 			E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
-			print (addonName, "reset profile:", DEFAULT)
+			print (addonNAME, "reset profile:", DEFAULT)
 		end
 
 	end

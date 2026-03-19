@@ -1,15 +1,10 @@
 local GlobalAddonName, E = ...
 local L = E.L
-local function func_Header(lay_out, text)
-	if lay_out and lay_out.AddInitializer then
-		lay_out:AddInitializer(CreateSettingsListSectionHeaderInitializer(text))
-	end
-end
 function E.func_option_COLOR_MAIN(category, layout)
 	----------------------------------------------------------------
 	-- HEADER
 	----------------------------------------------------------------
-	func_Header(layout, L["Main Frame Colors"])
+	E.func_Header(layout, L["Main Frame Colors"])
 	----------------------------------------------------------------
 	-- Octo_ToDo_DB_Vars.Colors.textColor
 	----------------------------------------------------------------

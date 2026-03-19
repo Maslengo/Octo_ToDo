@@ -1103,7 +1103,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Delves"]..": "..E.func_GetName("quest", 82706, false) -- DELVES_LABEL
+				return DELVES_LABEL..": "..E.func_GetName("quest", 82706, false) -- DELVES_LABEL
 			end,
 			name_save = "Delves",
 			defS = false,
@@ -1126,7 +1126,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return L["Delves"]..": "..L["Delver's Call"]
+				return DELVES_LABEL..": "..L["Delver's Call"]
 			end,
 			name_save = "DelversCall",
 			defS = false,
@@ -1160,7 +1160,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return L["Delves"]..": "..L["TEST"]
+		--         return DELVES_LABEL..": "..L["TEST"]
 		--     end,
 		--     name_save = "DelversTEST",
 		--     defS = true,

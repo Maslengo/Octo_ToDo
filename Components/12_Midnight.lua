@@ -71,6 +71,7 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
 		-- Raid
+		-- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
 		{id = 2913, defS = true,}, -- March on Quel'Danas
 		{id = 2912, defS = true,}, -- The Voidspire
 		{id = 2939, defS = true,}, -- The Dreamrift
@@ -79,12 +80,10 @@ local function tempFunction()
 		-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
 		-- {id = 2811, defS = true,}, -- Magisters' Terrace
 		-- {id = 2874, defS = true,}, -- Maisara Caverns
-
 		-- {id = 2813, defS = true,}, -- Murder Row
 		-- {id = 2825, defS = true,}, -- Den of Nalorakk
 		-- {id = 2923, defS = true,}, -- Voidscar Arena
 		-- {id = 2859, defS = true,}, -- The Blinding Vale
-
 		-- {id = 1209, defS = true,}, -- Skyreach
 		-- {id = 1753, defS = true,}, -- Seat of the Triumvirate
 		-- {id = 2526, defS = true,}, -- Algeth'ar Academy
@@ -92,10 +91,10 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2696, defS = true,}, -- Amani Tribe (Племя Амани)
-		{id = 2699, defS = true,}, -- The Singularity (Сингулярность)
-		{id = 2704, defS = true,}, -- Hara'ti (Хара'ти)
 		{id = 2710, defS = true,}, -- Silvermoon Court (Двор Луносвета)
+		{id = 2696, defS = true,}, -- Amani Tribe (Племя Амани)
+		{id = 2704, defS = true,}, -- Hara'ti (Хара'ти)
+		{id = 2699, defS = true,}, -- The Singularity (Сингулярность)
 		{id = 2770, defS = false,}, -- Slayer's Duellum
 		{id = 2744, defS = false,}, -- Valeera Sanguinar
 		{id = 2714, defS = false,}, -- Shades of the Row
@@ -165,16 +164,11 @@ local function tempFunction()
 				{93910}, -- Midnight: Prey
 				{93911}, -- Midnight: Dungeons
 				{94457}, -- Midnight: Battlegrounds
-
 				{93890}, -- Midnight: Abundance (https://www.wowhead.com/npc=240279/magovu)
 				{93912}, -- Midnight: Raid
 				{93913}, -- Midnight: World Boss
 				{95842}, -- Midnight: Void Assaults
 				{95843}, -- Midnight: Ritual Sites
-
-
-
-
 			},
 			forcedMaxQuest = 2,
 		},
@@ -183,13 +177,27 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
+				return DELVES_LABEL..": "..E.func_GetName("quest", 93784) -- A Gnawing Void of Curiosity
+			end,
+			name_save = "AGnawingVoidofCuriosity",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93784},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
 				-- TWW S2: 233071 (Клад участника вылазки) L["Delver's Bounty"]
 				-- TWW S3: 248142 (Клад участника вылазки) L["Delver's Bounty"]  -- This item can be fished in Excavation Site 9
 				-- Mid S1: 252415 (Трофей охотника за сокровищами)
-
-
-
-				return L["Delves"]..": " .. E.func_GetName("item", 252415, 1)
+				return DELVES_LABEL..": " .. E.func_GetName("item", 252415, 1)
 			end,
 			name_save = "DelversBountySeason1",
 			defS = true,
@@ -201,6 +209,171 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+
+
+
+
+
+
+
+
+
+		----------------------------------------------------------------
+		-- Silvermoon Court --------------------------------------------
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2710)..": "..E.func_GetName("quest", 89289) -- Favor of the Court
+			end,
+			name_save = "FavoroftheCourt",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89289},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2710)..": "..L["Fortify the Runestones"]
+			end,
+			name_save = "FortifytheRunestones",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{90573},
+				{90574},
+				{90575},
+				{90576},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
+		-- Amani Tribe -------------------------------------------------
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2696)..": "..E.func_GetName("quest", 89507) -- Abundant Offerings
+			end,
+			name_save = "AbundantOfferings",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89507},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
+		-- Harandar ----------------------------------------------------
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2704)..": "..L["Legends of the Haranir"]
+			end,
+			name_save = "LegendsoftheHaranir",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{88993}, -- Wey'nan's Ward
+				{88994}, -- The Cauldron of Echoes
+				{88995}, -- Aln'hara's Bloom
+				{88996}, -- The Echoless Flame
+				{88997}, -- Russula's Outreach
+					{88998}, -- Root of the World
+					{88999}, -- Sky's Hope
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2704)..": "..L["WANTED"] -- E.func_GetName("map", 2413)..": "..
+			end,
+			name_save = "HarandarDailyWanted",
+			defS = false,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = {
+				{91970}, -- WANTED: Gelatonius
+				{91980}, -- WANTED: Hellebora's Thorn
+				{91982}, -- WANTED: Toadshade's Petals
+				{91998}, -- WANTED: Muckmire's Choking Vines
+				{92010}, -- WANTED: Slewstalk's Stalks
+				{92012}, -- WANTED: Gorebarb's Pincers
+				{92013}, -- WANTED: Dionaea's Thorntusks
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
+		-- The Singularity ---------------------------------------------
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2699)..": "..QUESTS_LABEL
+			end,
+			name_save = "TheSingularityQuests",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{90962}, -- StormarionAssault
+				{nil},
+				{94581}, -- StandYourGround
+				{nil},
+				{91700}, -- DarknessUnmade
+				{86810}, -- HarvestingtheVoid
+				{92407}, -- HideyHole
+			},
+			forcedMaxQuest = 5,
+		},
+		----------------------------------------------------------------
+		-- Slayer's Duellum --------------------------------------------
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2770)..": "..E.func_GetName("quest", 89354)
+			end,
+			name_save = "PreparingforBattle",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89354},
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 		----------------------------------------------------------------
 		{
 			sorted = true,
@@ -393,88 +566,6 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				-- return L["Abundant Offerings"]
-				return E.func_GetName("quest", 89507)
-			end,
-			name_save = "AbundantOfferings",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{89507},
-			},
-			forcedMaxQuest = 1, -- any
-		},
-		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				-- return L["Legends Relics"]
-				return L["Legends of the Haranir"]
-			end,
-			name_save = "LegendsoftheHaranir",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{88993}, -- Wey'nan's Ward
-				{88994}, -- The Cauldron of Echoes
-				{88995}, -- Aln'hara's Bloom
-				{88996}, -- The Echoless Flame
-				{88997}, -- Russula's Outreach
-				{88998}, -- Root of the World
-				{88999}, -- Sky's Hope
-			},
-			forcedMaxQuest = 1, -- any
-		},
-		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				-- return L["Harandar Daily Wanted"]
-				return E.func_GetName("map", 2413)..": "..L["WANTED"]
-			end,
-			name_save = "HarandarDailyWanted",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{91970}, -- WANTED: Gelatonius
-				{91980}, -- WANTED: Hellebora's Thorn
-				{91982}, -- WANTED: Toadshade's Petals
-				{91998}, -- WANTED: Muckmire's Choking Vines
-				{92010}, -- WANTED: Slewstalk's Stalks
-				{92012}, -- WANTED: Gorebarb's Pincers
-				{92013}, -- WANTED: Dionaea's Thorntusks
-			},
-			forcedMaxQuest = 1, -- any
-		},
-		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return L["Fortify the Runestones"]
-			end,
-			name_save = "FortifytheRunestones",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{90573}, -- Fortify the Runestones: Magisters
-				{90574}, -- Fortify the Runestones: Blood Knights
-				{90575}, -- Fortify the Runestones: Farstriders
-				{90576}, -- Fortify the Runestones: Shades of the Row
-			},
-			forcedMaxQuest = 1, -- any
-		},
-		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
 				return E.func_GetName("quest", 91627) -- L["Saltheril's Haven"]
 			end,
 			name_save = "SaltherilsHaven",
@@ -535,22 +626,6 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{91966},
-			},
-			forcedMaxQuest = 1,
-		},
-		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", 90962) -- L["Stormarion Assault"]
-			end,
-			name_save = "StormarionAssault",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{90962},
 			},
 			forcedMaxQuest = 1,
 		},
@@ -660,10 +735,9 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-		{id = "MythicZero", defS = true,},
+		{id = "MythicZero", defS = false,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
-

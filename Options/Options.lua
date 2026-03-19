@@ -15,12 +15,17 @@ EventFrame:Hide()
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 local icon = E.func_texturefromIcon(C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture"))
-local SettingListHeaderName = E.func_GetAddOnMetadata(GlobalAddonName, "Title")
+-- local SettingListHeaderName = E.func_GetAddOnMetadata(GlobalAddonName, "Title")
+local SettingListHeaderName = E.func_AddonNameForOptions(GlobalAddonName)
 local vesrion = E.COLOR_GRAY.." ".. C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version").."|r"
+
+local deb = E.func_texturefromIcon(E.ICON_DEBUG, 16, 32, false)
 
 local category1name = SettingListHeaderName
 local category2name = COLORS
-local category3name = "category3name"
+local category3name = deb.."category3name"
+local category4name = deb.."func_option_userscript"
+local category5name = deb.."func_option_moduls" -- E.func_AddonNameForOptions(GlobalAddonName)
 ----------------------------------------------------------------
 local category1, layout1 = Settings.RegisterVerticalLayoutCategory(category1name)
 Settings.RegisterAddOnCategory(category1)
@@ -53,7 +58,13 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	do
 		local enable = true
-		if enable then
+		if enable
+		and E.func_option_FONT
+		and E.func_option_OTHER
+		and E.func_option_TOOLTIP
+		and E.func_option_CHARACTER
+		and E.func_option_DEBUG
+		then
 			local category, layout = category1, layout1
 			E.func_option_FONT(category, layout)
 			E.func_option_OTHER(category, layout)
@@ -68,7 +79,6 @@ function EventFrame:PLAYER_LOGIN()
 	do
 		local enable = true
 		if enable then
-
 			local width = E.FOURTH_WIDTH
 			-- local category3, layout3 = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
 			-- local category, layout = category3, layout3
@@ -81,25 +91,31 @@ function EventFrame:PLAYER_LOGIN()
 				AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_2_COLOR(width, rightText))
 				AceConfigDialog:AddToBlizOptions(leftText, leftText, category1:GetID())
 			end
-
-
-
 		end
 	end
 	----------------------------------------------------------------
 	-- 3 -----------------------------------------------------------
 	----------------------------------------------------------------
 	do
-		local enable = false
-		if enable then
-			local category2, layout2 = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category2name)
+		local enable = true
+		if enable and E.DEBUG_OPTIONS and E.func_option_COLOR_PROFILE and E.func_option_COLOR_MAIN then
+			local category2, layout2 = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
 			local category, layout = category2, layout2
 			E.func_option_COLOR_PROFILE(category, layout)
 			E.func_option_COLOR_MAIN(category, layout)
 		end
 	end
-
 	----------------------------------------------------------------
-
+	-- 4 -----------------------------------------------------------
+	----------------------------------------------------------------
+	do
+		local enable = true
+		if enable and E.DEBUG_OPTIONS and E.func_option_userscript then
+			local category2, layout2 = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category4name)
+			local category, layout = category2, layout2
+			E.func_option_userscript(category, layout)
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------

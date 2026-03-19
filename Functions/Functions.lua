@@ -439,8 +439,8 @@ end
 ----------------------------------------------------------------
 function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, frameString)
 	local iconName = AddonName:gsub("^Octo_", "")
-	local qwe = E.func_GetAddOnMetadata(AddonName, "Title")
-	local zxc = E.func_GetAddOnMetadata(AddonName, "Interface")
+	-- local qwe = E.func_GetAddOnMetadata(AddonName, "Title")
+	-- local zxc = E.func_GetAddOnMetadata(AddonName, "Interface")
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
 			icon = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\IconTexture\\"..iconName,
@@ -473,7 +473,7 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				-- local title = E.func_GetAddOnMetadata(AddonName, "Title")
 				-- tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
 
-				local addonNameNEW = E.func_AddonNameForOptionsFunc(AddonName)
+				local addonNameNEW = E.func_AddonNameForOptions(AddonName)
 				tooltip:AddLine(addonNameNEW)
 
 				tooltip:AddLine(" ")
@@ -522,13 +522,17 @@ function E.func_CountVisibleCharacters()
 	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
 	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
 	local count = 0
 	local curGUID = E.curGUID
 	local curFaction = E.FACTION_CURRENT
 	local curServer = E.func_GetPlayerRealm()
 	local CurrentRegionName = E.CurrentRegionName
+	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
 	local checkCurrentServer = isOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
+	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local PlayerData = CharInfo.PlayerData
@@ -539,13 +543,15 @@ function E.func_CountVisibleCharacters()
 				PlayerData.UnitLevel and
 				PlayerData.CurrentRegionName and
 				PlayerData.curServer and
-				PlayerData.Faction then
+				PlayerData.Faction and
+				PlayerData.BattleTag then -- Добавляем проверку BattleTag
 					local unitLevel = PlayerData.UnitLevel
 					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
 					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
 					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
 					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
-					if meetsLevel and meetsFaction and meetsServer and meetsRegion then
+					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
 						count = count + 1
 					end
 				end
@@ -554,21 +560,27 @@ function E.func_CountVisibleCharacters()
 	end
 	return count > 0 and count or 1
 end
+
 function E.func_SortCharacters()
 	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
 	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
 	local sorted = {}
 	local curGUID = E.curGUID
 	local curFaction = E.FACTION_CURRENT
 	local curServer = E.func_GetPlayerRealm()
 	local CurrentRegionName = E.CurrentRegionName
+	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
 	local checkCurrentServer = isOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
+	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if not CharInfo.PlayerData then
+			-- Пропускаем, если нет PlayerData
 		else
 			local PlayerData = CharInfo.PlayerData
 			if GUID == curGUID then
@@ -578,19 +590,22 @@ function E.func_SortCharacters()
 				PlayerData.UnitLevel and
 				PlayerData.CurrentRegionName and
 				PlayerData.curServer and
-				PlayerData.Faction then
+				PlayerData.Faction and
+				PlayerData.BattleTag then -- Добавляем проверку BattleTag
 					local unitLevel = PlayerData.UnitLevel
 					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
 					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
 					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
 					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
-					if meetsLevel and meetsFaction and meetsServer and meetsRegion then
+					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
 						sorted[#sorted + 1] = CharInfo
 					end
 				end
 			end
 		end
 	end
+
 	table.sort(sorted, function(a, b)
 			local aData, bData = a.PlayerData, b.PlayerData
 			local aLevel = aData.UnitLevel or 0
@@ -607,6 +622,7 @@ function E.func_SortCharacters()
 			local bName = bData.Name or "noname"
 			return aName < bName
 	end)
+
 	return sorted
 end
 ----------------------------------------------------------------
@@ -803,14 +819,12 @@ function E.func_CopyTableDeep(orig)
 	return copy
 end
 ----------------------------------------------------------------
-function E.func_AddonNameForOptionsInit(addonName)
-	-- return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title")
-	return E.func_GetAddOnMetadata(addonName, "Title")
-end
-----------------------------------------------------------------
-function E.func_AddonNameForOptionsFunc(addonName)
-	return E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))..E.func_GetAddOnMetadata(addonName, "Title").." "..E.COLOR_GRAY..E.func_GetAddOnMetadata(addonName, "Version").."|r"
-	-- ORANGE = ff7f3f
+function E.func_AddonNameForOptions(addonName)
+	-- local icon = E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))
+	local name = E.func_GetAddOnMetadata(addonName, "Title")
+	local vers = E.COLOR_GRAY..E.func_GetAddOnMetadata(addonName, "Version").."|r" -- ORANGE = ff7f3f
+	local result = name.." "..vers
+	return result
 end
 ----------------------------------------------------------------
 local countSavedVars = 0
@@ -1339,9 +1353,9 @@ function E.func_EJ_to_SI(id) -- 721 Чертоги доблести
 end
 ----------------------------------------------------------------
 function E.func_GetSpecializationIconSafe()
-	local specID = GetSpecialization()
-	if specID then
-		local _, _, _, icon = GetSpecializationInfo(specID)
+	local specIndex = GetSpecialization()
+	if specIndex then
+		local _, _, _, icon = GetSpecializationInfo(specIndex)
 		return icon
 	end
 	return nil
@@ -2193,11 +2207,12 @@ end
 ----------------------------------------------------------------
 function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	if not frame or not TextureOrAtlas then return end
+	local m = getmetatable(frame).__index
 
 	if E.func_isAtlas(TextureOrAtlas) then
-		frame:SetAtlas(TextureOrAtlas, UseAtlasSize or false)
+		m.SetAtlas(frame, TextureOrAtlas, UseAtlasSize or false)
 	else
-		frame:SetTexture(TextureOrAtlas)
+		m.SetTexture(frame, TextureOrAtlas)
 	end
 end
 ----------------------------------------------------------------
@@ -2208,6 +2223,11 @@ function E.func_GetDungTier(SI_ID)
 	return tier
 end
 ----------------------------------------------------------------
+function E.func_Header(lay_out, text)
+	if lay_out and lay_out.AddInitializer then
+		lay_out:AddInitializer(CreateSettingsListSectionHeaderInitializer(text))
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

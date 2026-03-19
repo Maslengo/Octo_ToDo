@@ -2,7 +2,8 @@ local GlobalAddonName, E = ...
 local INDENT_TEXT = 4
 local INDEND_SCROLL = 20
 local MIN_COLUMN_WIDTH = 30
-local MAX_COLUMN_WIDTH = 306-20-30 -- (20 иконка) (30 2ойфрейм)
+-- local MAX_COLUMN_WIDTH = 306-20-30 -- (20 иконка) (30 2ойфрейм)
+local MAX_COLUMN_WIDTH = 276-20-30 -- (20 иконка) (30 2ойфрейм)
 local MAX_DISPLAY_LINES = 32
 local LINES_TOTAL = math.floor(math.floor(E.PHYSICAL_SCREEN_HEIGHT/E.GLOBAL_LINE_HEIGHT)*.7)
 if MAX_DISPLAY_LINES > LINES_TOTAL then
