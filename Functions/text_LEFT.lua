@@ -64,6 +64,7 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
 	local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 	local reset = data.reset
+	local isAccount = data.isAccount
 	local output
 	if type(data.TextLeft) == "function" then
 		output = data.TextLeft()
@@ -72,6 +73,9 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	end
 	TextLeft = output
 	SettingsType = dataType.."#"..questKey
+	if isAccount then
+		TextLeft = E.COLOR_SKYBLUE..TextLeft.."|r"
+	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
 ----------------------------------------------------------------

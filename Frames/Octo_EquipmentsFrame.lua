@@ -328,7 +328,76 @@ function EventFrame:CreateDataProvider(GUID)
 		local current_Durability = v.current_Durability or 0
 		local maximum_Durability = v.maximum_Durability or 0
 		-- local ItemName = ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
-		local ItemName = ItemLink or ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
+
+		-- local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
+		-- if ItemID then
+		-- 	local tempName = E.func_GetName("item", ItemID, Quality)
+		-- 	if strfind(tempName, UNKNOWN) then
+		-- 		if ItemLink then
+		-- 			ItemName = ItemLink
+		-- 		elseif v.ItemName then
+		-- 			ItemName = v.ItemName
+		-- 		end
+		-- 	else
+		-- 		ItemName = tempName
+		-- 	end
+		-- else
+		-- 	if ItemLink then
+		-- 		ItemName = ItemLink
+		-- 	end
+		-- end
+
+
+		local function IsValidName(name)
+			return name and not string.find(name, UNKNOWN, 1, true)
+		end
+
+		local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
+
+		if ItemID then
+			local itemName = E.func_GetName("item", ItemID, Quality)
+			if IsValidName(itemName) then
+				ItemName = itemName
+			elseif ItemLink then
+				ItemName = ItemLink
+			elseif v.ItemName then
+				ItemName = v.ItemName
+			end
+		else
+			if ItemLink then
+				ItemName = ItemLink
+				local extractedID = string.match(ItemLink, "Hitem:(%d+)")
+				if extractedID then
+					extractedID = tonumber(extractedID)
+					local itemName = E.func_GetName("item", extractedID, Quality)
+					if IsValidName(itemName) then
+						ItemName = itemName
+					end
+				end
+			elseif v.ItemName then
+				ItemName = v.ItemName
+			end
+		end
+
+
+
+
+
+
+		-- if ItemID then
+		-- 	ItemName = tempName
+		-- elseif v.ItemName then
+		-- 	ItemName = v.ItemName
+		-- end
+		-- if ItemLink then
+		-- 	ItemName = ItemLink
+		-- end
+
+
+
+
+
+		-- local ItemName = ItemLink or ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
 		local rowData = {
 			ItemLink = ItemLink,
 			slotID = slotID,

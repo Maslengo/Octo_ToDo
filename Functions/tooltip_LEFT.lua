@@ -754,9 +754,30 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		visiblePlayers[charInfo.PlayerData.GUID] = true
 	end
 	if dataType == "UniversalQuests" then
-		local reset = id:match("_([^_]+)$")
-		-- if data.isAccount then
-		tooltip[#tooltip+1] = {reset}
+
+
+		for _, data in next, (E.ALL_UniversalQuests) do
+			if data.quests and data.reset then
+				local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+				local reset = data.reset
+				if data.isAccount then
+					reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
+				end
+				if id == questKey then
+					tooltip[#tooltip+1] = {reset}
+				end
+			end
+		end
+
+
+
+
+		-- local reset = id:match("_([^_]+)$")
+		-- -- if data.isAccount then
+		-- tooltip[#tooltip+1] = {reset}
+
+
+
 	elseif dataType == "Currencies" and id == 1822 then
 		tooltip = E.func_CovenantCurrencyTooltip(1822, visiblePlayers, 1)
 	elseif dataType == "Currencies" and id == 1813 then

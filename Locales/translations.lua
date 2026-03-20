@@ -54,7 +54,31 @@ E.translations = {
 	-- 	["zhTW"] = "ЙЦУЙЦУ",
 	-- },
 
+	["Scale"] = {
+		["ruRU"] = "Масштаб",
+		["deDE"] = "Skalierung",
+		["esES"] = "Escala",
+		["esMX"] = "Escala",
+		["frFR"] = "Échelle",
+		["itIT"] = "Scala",
+		["ptBR"] = "Escala",
+		["koKR"] = "크기",
+		["zhCN"] = "缩放",
+		["zhTW"] = "縮放",
+	},
 
+	["Alpha"] = {
+		["ruRU"] = "Прозрачность",
+		["deDE"] = "Transparenz",
+		["esES"] = "Transparencia",
+		["esMX"] = "Transparencia",
+		["frFR"] = "Transparence",
+		["itIT"] = "Trasparenza",
+		["ptBR"] = "Transparência",
+		["koKR"] = "투명도",
+		["zhCN"] = "透明度",
+		["zhTW"] = "透明度",
+	},
 
 	["Fortify the Runestones"] = { -- /run opde(E.func_GetName("quest", 90573)) -- 90573 90574 90575 90576
 		["ruRU"] = "Укрепление рунических камней",

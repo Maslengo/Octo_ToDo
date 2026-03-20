@@ -278,6 +278,23 @@ local function tempFunction()
 		-- Harandar ----------------------------------------------------
 		----------------------------------------------------------------
 		{
+			isAccount = true,
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2704)..": "..E.func_GetName("quest", 89268)  -- Утраченные легенды
+			end,
+			name_save = "LostLegends",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{89268}, -- Lost Legends
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
@@ -318,7 +335,7 @@ local function tempFunction()
 				{92012}, -- WANTED: Gorebarb's Pincers
 				{92013}, -- WANTED: Dionaea's Thorntusks
 			},
-			forcedMaxQuest = 1, -- any
+			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		-- The Singularity ---------------------------------------------
@@ -527,6 +544,7 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
+				-- 94446 ???? -- A Nightmarish Task
 				-- https://wago.tools/db2/QuestLabel?filter%5BLabelID%5D = 6036&page = 1
 				{91269}, -- Prey: Dengzag, the Darkened Blaze (Nightmare)
 				{91268}, -- Prey: Grothoz, the Burning Shadow (Nightmare)
