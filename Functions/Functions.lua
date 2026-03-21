@@ -406,7 +406,7 @@ function E.func_SpamBlock(...)
 	local key = (""):join(tostringall(...))
 	local func, needCheckCombat, newSpamTimer = ...
 	if type(func) ~= "function" then return end
-	local SPAM_TIME = newSpamTimer and newSpamTimer or Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_SPAM_TIME or 2
+	local SPAM_TIME = newSpamTimer and newSpamTimer or Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME or 2
 	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
 		E._inCombats[key] = true
 		return true -- заблочена и добавлена в выполнение после сброса комбата
@@ -472,10 +472,8 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				-- local version = E.func_GetAddOnMetadata(AddonName, "Version")
 				-- local title = E.func_GetAddOnMetadata(AddonName, "Title")
 				-- tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
-
 				local addonNameNEW = E.func_AddonNameForOptions(AddonName)
 				tooltip:AddLine(addonNameNEW)
-
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], GAMEMENU_OPTIONS)
@@ -532,7 +530,6 @@ function E.func_CountVisibleCharacters()
 	local checkCurrentServer = isOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
 	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local PlayerData = CharInfo.PlayerData
@@ -560,7 +557,6 @@ function E.func_CountVisibleCharacters()
 	end
 	return count > 0 and count or 1
 end
-
 function E.func_SortCharacters()
 	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
@@ -577,7 +573,6 @@ function E.func_SortCharacters()
 	local checkCurrentServer = isOnlyCurrentServer and curServer
 	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
 	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if not CharInfo.PlayerData then
 			-- Пропускаем, если нет PlayerData
@@ -605,7 +600,6 @@ function E.func_SortCharacters()
 			end
 		end
 	end
-
 	table.sort(sorted, function(a, b)
 			local aData, bData = a.PlayerData, b.PlayerData
 			local aLevel = aData.UnitLevel or 0
@@ -622,7 +616,6 @@ function E.func_SortCharacters()
 			local bName = bData.Name or "noname"
 			return aName < bName
 	end)
-
 	return sorted
 end
 ----------------------------------------------------------------
@@ -1402,7 +1395,7 @@ function E.func_GetEmptySlotIcon(slotID)
 end
 ----------------------------------------------------------------
 function E.func_translit(text)
-	if not Octo_ToDo_DB_Vars or not Octo_ToDo_DB_Vars.Config_UseTranslit then
+	if not Octo_ToDo_DB_Vars or not Octo_ToDo_DB_Vars.CONFIG_TRANSLIT then
 		return text
 	end
 	if type(text) ~= "string" or text == "" then
@@ -2143,7 +2136,6 @@ function E.func_BUILD_DUNG_DB()
 					SI_to_EJ[savedInstanceID] = ejInstanceID
 					EJ_to_SI[ejInstanceID] = savedInstanceID
 				end
-
 				local diffTable = nil
 				for diffID in next, (E.OctoTable_Difficulties) do
 					if EJ_IsValidInstanceDifficulty(diffID) then
@@ -2178,13 +2170,10 @@ function E.func_BUILD_DUNG_DB()
 	end
 	EJ_SetDifficulty(backupDifficulty)
 	EJ_SelectTier(backupTier)
-
 	Octo_Cache_DB.Octo_Table_currentSeason = currentSeason
 	-- opde(Octo_Cache_DB.Octo_Table_currentSeason)
-
 	Octo_Cache_DB.Octo_Table_SI_IDS = result
 	-- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
-
 	Octo_Cache_DB.SavedInstanceID_to_EJInstance = SI_to_EJ
 	Octo_Cache_DB.EJInstance_to_SavedInstanceID = EJ_to_SI
 	-- Octo_Cache_DB.LastUpdateDB = serverTime + C_DateAndTime.GetSecondsUntilDailyReset()
@@ -2193,11 +2182,9 @@ end
 ----------------------------------------------------------------
 function E.func_isAtlas(TextureOrAtlas)
 	if not TextureOrAtlas then return false end
-
 	if not C_Texture or not C_Texture.GetAtlasInfo then
 		return false
 	end
-
 	local info = C_Texture.GetAtlasInfo(TextureOrAtlas)
 	if info and info.name then
 		return true
@@ -2208,7 +2195,6 @@ end
 function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	if not frame or not TextureOrAtlas then return end
 	local m = getmetatable(frame).__index
-
 	if E.func_isAtlas(TextureOrAtlas) then
 		m.SetAtlas(frame, TextureOrAtlas, UseAtlasSize or false)
 	else
@@ -2218,7 +2204,6 @@ end
 ----------------------------------------------------------------
 function E.func_GetDungTier(SI_ID)
 	if not Octo_Cache_DB or not Octo_Cache_DB.Octo_Table_SI_IDS then return 1 end
-
 	local tier = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID] and Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].tier or 1
 	return tier
 end

@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local L = E.L
-
 ----------------------------------------------------------------
 function E.func_option_userscript(width, tabName)
 	-------------------------------------------------

@@ -38,7 +38,6 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-
 		----------------------------------------------------------------
 		{
 			sorted = true,
@@ -91,13 +90,6 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-
-
-
-
-
-
-
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,

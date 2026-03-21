@@ -228,11 +228,6 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			info.keepShownOnClick = true
 			info.notCheckable = false
 			info.isNotRadio = true
-
-
-
-
-
 			-- Только текущий сервер
 			info.text = L["Only Current Server"]
 			info.checked = Octo_ToDo_DB_Vars.isOnlyCurrentServer
@@ -241,9 +236,6 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
-
-
-
 			-- Только текущая фракция
 			if E.FACTION_CURRENT == "Horde" then
 				info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
@@ -256,9 +248,6 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
-
-
-
 			-- Только текущий регион
 			if countRegions > 1 then
 				info.text = L["Only Current Region"]
@@ -269,18 +258,6 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				end
 				self:ddAddButton(info, level)
 			end
-
-
-
-
-
-
-
-
-
-
-
-
 		elseif level == 3 then
 			if type(value) == "string" then
 				-- Третий уровень: сервера региона
@@ -836,9 +813,9 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 				info.isNotRadio = true
 				info.text = "Показывать завершенные"
 				info.hasArrow = nil
-				info.checked = Octo_Achievements_DB.Config_AchievementShowCompleted
+				info.checked = Octo_Achievements_DB.CONFIG_ACHIEVEMENT_SHOW_COMPLETED
 				info.func = function(_, _, _, checked)
-					Octo_Achievements_DB.Config_AchievementShowCompleted = checked
+					Octo_Achievements_DB.CONFIG_ACHIEVEMENT_SHOW_COMPLETED = checked
 					providerfunc()
 				end
 				self:ddAddButton(info, level)

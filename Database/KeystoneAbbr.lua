@@ -90,14 +90,9 @@ E.OctoTable_KeystoneAbbr = {
 	[167] = {abbreviation = "UBS", portal = 159902}, -- Upper Blackrock Spire
 	-- 1216786
 	-- AATDH - raid
-
-
-
 	-- Midnight
 	[557] = {abbreviation = "WS", portal = 000000}, -- Windrunner Spire
 	[558] = {abbreviation = "MT", portal = 000000}, -- Magisters' Terrace
 	[559] = {abbreviation = "NPX", portal = 000000}, -- Nexus-Point Xenas
 	[560] = {abbreviation = "MC", portal = 000000}, -- Maisara Caverns
-
-
 }

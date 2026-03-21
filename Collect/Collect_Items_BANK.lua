@@ -30,8 +30,6 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local OctoTable_bankTabs = E.OctoTable_bankTabs
 local OctoTable_Account_bankTabs = E.OctoTable_Account_bankTabs
-
-
 local function Collect_Items_BANK()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
@@ -59,10 +57,6 @@ local function Collect_Items_BANK()
 					local free = C_Container.GetContainerNumFreeSlots(bagID)
 					usedSlots_BANK = usedSlots_BANK + (numSlots - free)
 					for slotIndex = 1, numSlots do
-
-
-
-
 				-- local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex)
 				local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
 				if itemLocation and C_Item.DoesItemExist(itemLocation) then
@@ -77,7 +71,6 @@ local function Collect_Items_BANK()
 						local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
 						local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
 						-- local xyz = tostring(bagID)..tostring(slotIndex)
-
 						collectMASLENGO.Items.Bank_FULL[itemID] = {
 							itemID = itemID,
 							ItemName = ItemName,
@@ -98,30 +91,12 @@ local function Collect_Items_BANK()
 					-- 		existing.RequestLoadItemData = true
 					-- 		seenSlots[slotID] = true
 					-- 	end
-
-
 					end
 				end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 						local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1
-
-
 							if itemID == 169223 then
 								local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
 								if itemLocation:IsValid() and C_Item.DoesItemExist(itemLocation) then
@@ -130,10 +105,6 @@ local function Collect_Items_BANK()
 									collectPlayerData.cloak_lvl = rank
 								end
 							end
-
-
-
-
 							collectMASLENGO.Items.Bank[itemID] = (collectMASLENGO.Items.Bank[itemID] or 0) + stack
 						end
 					end
@@ -166,7 +137,6 @@ local function Collect_Items_AccountBank()
 			if C_Bank and C_Bank.FetchBankLockedReason and C_Bank.FetchBankLockedReason(Enum.BankType.Account) ~= nil then return end -- Банк заблокирован, не обрабатываем
 			----------------------------------------------------------------
 			-- ACCOUNT BANK
-
 			for _, bagID in next, (OctoTable_Account_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then

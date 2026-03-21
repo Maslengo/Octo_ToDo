@@ -177,23 +177,6 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return DELVES_LABEL..": "..E.func_GetName("quest", 93784) -- A Gnawing Void of Curiosity
-			end,
-			name_save = "AGnawingVoidofCuriosity",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{93784},
-			},
-			forcedMaxQuest = 1, -- any
-		},
-
-		----------------------------------------------------------------
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
 				-- TWW S2: 233071 (Клад участника вылазки) L["Delver's Bounty"]
 				-- TWW S3: 248142 (Клад участника вылазки) L["Delver's Bounty"]  -- This item can be fished in Excavation Site 9
 				-- Mid S1: 252415 (Трофей охотника за сокровищами)
@@ -209,16 +192,23 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-
-
-
-
-
-
-
-
-
-
+		----------------------------------------------------------------
+		{
+			isAccount = true,
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return DELVES_LABEL..": "..E.func_GetName("quest", 93784) -- A Gnawing Void of Curiosity
+			end,
+			name_save = "AGnawingVoidofCuriosity",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93784},
+			},
+			forcedMaxQuest = 1, -- any
+		},
 		----------------------------------------------------------------
 		-- Silvermoon Court --------------------------------------------
 		----------------------------------------------------------------
@@ -257,6 +247,23 @@ local function tempFunction()
 			forcedMaxQuest = 1, -- any
 		},
 		----------------------------------------------------------------
+		{
+			isAccount = true,
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2710)..": "..L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)
+			end,
+			name_save = "BountifulDelve2710",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93821, forcedText = {text = L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)},},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
 		-- Amani Tribe -------------------------------------------------
 		----------------------------------------------------------------
 		{
@@ -271,6 +278,23 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{89507},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
+		{
+			isAccount = true,
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2696)..": "..L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)
+			end,
+			name_save = "BountifulDelve2696",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93819, forcedText = {text = L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)},},
 			},
 			forcedMaxQuest = 1, -- any
 		},
@@ -338,6 +362,23 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
+		{
+			isAccount = true,
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2704)..": "..L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)
+			end,
+			name_save = "BountifulDelve2704",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93822, forcedText = {text = L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)},},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
 		-- The Singularity ---------------------------------------------
 		----------------------------------------------------------------
 		{
@@ -362,6 +403,23 @@ local function tempFunction()
 			forcedMaxQuest = 5,
 		},
 		----------------------------------------------------------------
+		{
+			isAccount = true,
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("reputation", 2699)..": "..L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)
+			end,
+			name_save = "BountifulDelve2699",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93820, forcedText = {text = L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)},},
+			},
+			forcedMaxQuest = 1, -- any
+		},
+		----------------------------------------------------------------
 		-- Slayer's Duellum --------------------------------------------
 		----------------------------------------------------------------
 		{
@@ -379,18 +437,6 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-		----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
 		----------------------------------------------------------------
 		{
 			sorted = true,
@@ -436,6 +482,9 @@ local function tempFunction()
 				{93756}, -- The Blinding Vale
 				{93757}, -- Voidscar Arena
 				{93758}, -- Nexus-Point Xenas
+				-- /dump E.func_GetName("quest", 93752)
+				-- /dump C_QuestLog.GetTitleForQuestID(93752)
+				-- /dump GetQuestInfo(93752)
 			},
 			forcedMaxQuest = 1,
 		},

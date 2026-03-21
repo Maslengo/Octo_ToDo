@@ -1,24 +1,24 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local GetItemNameByID = C_Item.GetItemNameByID
-local GetItemQualityByID = C_Item.GetItemQualityByID
-local GetSpellName = C_Spell.GetSpellName
-local GetCurrencyInfo = C_CurrencyInfo.GetCurrencyInfo
-local GetQuestInfo = C_QuestLog.GetQuestInfo
-local GetTitleForQuestID = C_QuestLog.GetTitleForQuestID
-local GetFactionDataByID = C_Reputation.GetFactionDataByID
-local GetFriendshipReputation = C_GossipInfo.GetFriendshipReputation
-local GetTradeSkillDisplayName = C_TradeSkillUI.GetTradeSkillDisplayName
-local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
-local GetMapInfo = C_Map.GetMapInfo
-local GetMapGroupID = C_Map.GetMapGroupID
-local GetMapGroupMembersInfo = C_Map.GetMapGroupMembersInfo
-local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
-local GetDayEvent = C_Calendar.GetDayEvent
-local GetMonthInfo = C_Calendar.GetMonthInfo
-local SetAbsMonth = C_Calendar.SetAbsMonth
-local GetNumDayEvents = C_Calendar.GetNumDayEvents
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
+local GetItemNameByID = GetItemNameByID or  C_Item.GetItemNameByID
+local GetItemQualityByID = GetItemQualityByID or  C_Item.GetItemQualityByID
+local GetSpellName = GetSpellName or  C_Spell.GetSpellName
+local GetCurrencyInfo = GetCurrencyInfo or  C_CurrencyInfo.GetCurrencyInfo
+local GetQuestInfo = GetQuestInfo or  C_QuestLog.GetQuestInfo
+local GetTitleForQuestID = GetTitleForQuestID or  C_QuestLog.GetTitleForQuestID
+local GetFactionDataByID = GetFactionDataByID or  C_Reputation.GetFactionDataByID
+local GetFriendshipReputation = GetFriendshipReputation or  C_GossipInfo.GetFriendshipReputation
+local GetTradeSkillDisplayName = GetTradeSkillDisplayName or  C_TradeSkillUI.GetTradeSkillDisplayName
+local GetTradeSkillTexture = GetTradeSkillTexture or  GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
+local GetMapInfo = GetMapInfo or  C_Map.GetMapInfo
+local GetMapGroupID = GetMapGroupID or  C_Map.GetMapGroupID
+local GetMapGroupMembersInfo = GetMapGroupMembersInfo or  C_Map.GetMapGroupMembersInfo
+local GetCurrentCalendarTime = GetCurrentCalendarTime or  C_DateAndTime.GetCurrentCalendarTime
+local GetDayEvent = GetDayEvent or  C_Calendar.GetDayEvent
+local GetMonthInfo = GetMonthInfo or  C_Calendar.GetMonthInfo
+local SetAbsMonth = SetAbsMonth or  C_Calendar.SetAbsMonth
+local GetNumDayEvents = GetNumDayEvents or  C_Calendar.GetNumDayEvents
+local GetMountInfoByID = GetMountInfoByID or  C_MountJournal.GetMountInfoByID
 ----------------------------------------------------------------
 local UNKNOWN = UNKNOWN
 ----------------------------------------------------------------
@@ -253,15 +253,12 @@ function E.func_GetName(TYPE, id, forcedQuality)
 	else
 		----------------------------------------------------------------
 		if TYPE == "item" then -- AllItems
-
 			local quality = GetItemQualityByID(id)
-
 			if quality and quality ~= "" then
 				name = func_CacheName(id, Cache, E.func_GetQualityHexColor(quality)..GetItemNameByID(id).."|r", TYPE) -- ITEMS
 			else
 				name = GetItemNameByID(id)
 			end
-
 		elseif TYPE == "quest" then -- AllQuests
 			local result = (GetTitleForQuestID or GetQuestInfo)(id)
 			if result then
@@ -281,16 +278,12 @@ function E.func_GetName(TYPE, id, forcedQuality)
 			TooltipForNpcScan:ClearLines()
 			TooltipForNpcScan:SetHyperlink("unit:Creature-0-0-0-0-"..id)
 			if TooltipForNpcScan:NumLines() > 0 then
-
 				local result1 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft1"]:GetText()
 				-- print (result1)
-
 				-- local result2 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft2"]:GetText()
 				-- print (result2)
-
 				-- local result3 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft3"]:GetText()
 				-- print (result3)
-
 				if result1 then
 					name = func_CacheName(id, Cache, result1, TYPE) -- NPC
 					-- name = func_CacheName(id, Cache, result1..E.COLOR_SKYBLUE.." ("..result3..")|r", TYPE) -- NPC

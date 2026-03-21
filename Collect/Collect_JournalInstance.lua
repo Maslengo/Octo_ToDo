@@ -1,13 +1,9 @@
 local GlobalAddonName, E = ...
-
-
 local OctoTable_LFGDungeons = {
 	[286] = "Повелитель Холода Ахун",
 	[287] = "Корен Худовар",
 	[285] = "Всадник без головы",
 }
-
-
 ----------------------------------------------------------------
 local function Collect_JournalInstance()
 	----------------------------------------------------------------
@@ -49,7 +45,6 @@ local function Collect_JournalInstance()
 				ji.totalBosses = E.func_Save(totalBosses)
 				ji.defeatedBosses = E.func_Save(defeatedBosses)
 				ji.lastBossDefeated = E.func_Save(lastBossDefeated)
-
 				-- Bosses собираем только если нужно
 				if not ji.Bosses or #ji.Bosses ~= totalBosses then
 					ji.Bosses = {}

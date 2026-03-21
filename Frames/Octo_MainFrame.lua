@@ -230,16 +230,57 @@ local function func_Setup_Items(frame, id)
 end
 local function func_Setup_UniversalQuests(frame, id)
 	local IconLeft = nil
-	local reset = id:match("_([^_]+)$")
-	if reset == "Daily" then
-		IconLeft = E.ICON_DAILY
-	elseif reset == "Weekly" then
-		IconLeft = E.ICON_WEEKLY
-	elseif reset == "Regular" then
-		IconLeft = E.ICON_REGULAR
-	elseif reset == "Month" then
-		IconLeft = E.ICON_MONTH
+
+
+	for _, data in next, (E.ALL_UniversalQuests) do
+		if data.quests and data.reset then
+			local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+			local reset = data.reset
+			if id == questKey then
+				local result = reset
+				if reset == "Daily" then
+					IconLeft = E.ICON_DAILY
+					-- result = DAILY
+				elseif reset == "Weekly" then
+					IconLeft = E.ICON_WEEKLY
+					-- result = WEEKLY
+				elseif reset == "Regular" then
+					IconLeft = E.ICON_REGULAR
+					-- result = ITEM_QUALITY1_DESC -- PLAYER_DIFFICULTY1
+				elseif reset == "Month" then
+					IconLeft = E.ICON_MONTH
+					-- result = CALENDAR_REPEAT_MONTHLY
+				end
+
+
+					if data.isAccount then
+						-- reset = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
+						-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
+						IconLeft = E.ICON_MONTH -- Crosshair_unableQuest_64
+					end
+
+
+			end
+		end
 	end
+
+
+
+
+
+
+
+
+	-- local reset = id:match("_([^_]+)$")
+	-- if reset == "Daily" then
+	-- 	IconLeft = E.ICON_DAILY
+	-- elseif reset == "Weekly" then
+	-- 	IconLeft = E.ICON_WEEKLY
+	-- elseif reset == "Regular" then
+	-- 	IconLeft = E.ICON_REGULAR
+	-- elseif reset == "Month" then
+	-- 	IconLeft = E.ICON_MONTH
+	-- end
 	if IconLeft then
 		frame.icon3texture:SetAtlas(IconLeft, false)
 		frame.icon3frame:Show()

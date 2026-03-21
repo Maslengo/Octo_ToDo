@@ -39,21 +39,138 @@ E.translations = {
 	--     ["zhCN"] = "窗口背景",
 	--     ["zhTW"] = "視窗背景",
 	-- },
-
-
 	-- ["ЙЦУЙЦУ"] = {
-	-- 	["ruRU"] = "ЙЦУЙЦУ",
-	-- 	["deDE"] = "ЙЦУЙЦУ",
-	-- 	["esES"] = "ЙЦУЙЦУ",
-	-- 	["esMX"] = "ЙЦУЙЦУ",
-	-- 	["frFR"] = "ЙЦУЙЦУ",
-	-- 	["itIT"] = "ЙЦУЙЦУ",
-	-- 	["ptBR"] = "ЙЦУЙЦУ",
-	-- 	["koKR"] = "ЙЦУЙЦУ",
-	-- 	["zhCN"] = "ЙЦУЙЦУ",
-	-- 	["zhTW"] = "ЙЦУЙЦУ",
+	--     ["ruRU"] = "ЙЦУЙЦУ",
+	--     ["deDE"] = "ЙЦУЙЦУ",
+	--     ["esES"] = "ЙЦУЙЦУ",
+	--     ["esMX"] = "ЙЦУЙЦУ",
+	--     ["frFR"] = "ЙЦУЙЦУ",
+	--     ["itIT"] = "ЙЦУЙЦУ",
+	--     ["ptBR"] = "ЙЦУЙЦУ",
+	--     ["koKR"] = "ЙЦУЙЦУ",
+	--     ["zhCN"] = "ЙЦУЙЦУ",
+	--     ["zhTW"] = "ЙЦУЙЦУ",
 	-- },
-
+	["Show zero values"] = {
+		["ruRU"] = "Нулевые значения",
+		["deDE"] = "Nullwerte anzeigen",
+		["esES"] = "Mostrar ceros",
+		["esMX"] = "Mostrar ceros",
+		["frFR"] = "Valeurs nulles",
+		["itIT"] = "Mostra zeri",
+		["ptBR"] = "Mostrar zeros",
+		["koKR"] = "0 값 표시",
+		["zhCN"] = "显示零值",
+		["zhTW"] = "顯示零值",
+	},
+	["Shows currency even if zero"] = {
+		["ruRU"] = "Показывает валюту, даже если ноль",
+		["deDE"] = "Zeigt Währung, auch wenn null",
+		["esES"] = "Muestra moneda incluso si es cero",
+		["esMX"] = "Muestra moneda incluso si es cero",
+		["frFR"] = "Affiche la monnaie même si zéro",
+		["itIT"] = "Mostra valuta anche se zero",
+		["ptBR"] = "Exibe moeda mesmo que zero",
+		["koKR"] = "0이어도 화폐 표시",
+		["zhCN"] = "即使为零也显示货币",
+		["zhTW"] = "即使為零也顯示貨幣",
+	},
+	["Show progress (in parentheses)"] = {
+		["ruRU"] = "Прогресс (в скобках)",
+		["deDE"] = "Fortschritt (Klammern)",
+		["esES"] = "Progreso (paréntesis)",
+		["esMX"] = "Progreso (paréntesis)",
+		["frFR"] = "Progression (parenthèses)",
+		["itIT"] = "Progresso (parentesi)",
+		["ptBR"] = "Progresso (parênteses)",
+		["koKR"] = "진행 상황 (괄호)",
+		["zhCN"] = "进度 (括号)",
+		["zhTW"] = "進度 (括號)",
+	},
+	["Shows earned amount in () if currency has weekly/seasonal cap"] = {
+		["ruRU"] = "Показывает полученное в скобках, если у валюты есть недельный/сезонный кап",
+		["deDE"] = "Zeigt Verdientes in () wenn Währung Wochen-/Saisonlimit hat",
+		["esES"] = "Muestra obtenido entre () si la moneda tiene límite semanal/temporada",
+		["esMX"] = "Muestra obtenido entre () si la moneda tiene límite semanal/temporada",
+		["frFR"] = "Affiche obtenu entre () si monnaie a limite hebdo/saison",
+		["itIT"] = "Mostra ottenuto tra () se valuta ha limite settimanale/stagionale",
+		["ptBR"] = "Mostra obtido em () se moeda tiver limite semanal/sazonal",
+		["koKR"] = "총액 옆 ()에 획득 표시, 화폐에 주간/시즌 한도 있을 때",
+		["zhCN"] = "总数旁()显示已获得数量，若货币有周/赛季上限",
+		["zhTW"] = "總數旁()顯示已獲得數量，若貨幣有每週/賽季上限",
+	},
+	["Show earnable amount"] = {
+		["ruRU"] = "Доступный лимит",
+		["deDE"] = "Verbleibend",
+		["esES"] = "Cantidad disponible",
+		["esMX"] = "Cantidad disponible",
+		["frFR"] = "Quantité restante",
+		["itIT"] = "Quantità rimanente",
+		["ptBR"] = "Quantitade restante",
+		["koKR"] = "획득 가능량",
+		["zhCN"] = "剩余可获取",
+		["zhTW"] = "剩餘可獲取",
+	},
+	["Shows remaining amount if currency has weekly/seasonal cap"] = {
+		["ruRU"] = "Показывает сколько ещё можно получить, если у валюты есть недельный/сезонный кап",
+		["deDE"] = "Zeigt Restmenge, wenn Währung Wochen-/Saisonlimit hat",
+		["esES"] = "Muestra cuánto queda si la moneda tiene límite semanal/temporada",
+		["esMX"] = "Muestra cuánto queda si la moneda tiene límite semanal/temporada",
+		["frFR"] = "Affiche reste à obtenir si monnaie a limite hebdo/saison",
+		["itIT"] = "Mostra quanto resta se valuta ha limite settimanale/stagionale",
+		["ptBR"] = "Mostra quanto resta se moeda tiver limite semanal/sazonal",
+		["koKR"] = "화폐에 주간/시즌 한도 있을 경우 남은 획득량 표시",
+		["zhCN"] = "显示在周或赛季上限内还能获得的数量",
+		["zhTW"] = "顯示在每週或賽季上限內仍可獲取的數量",
+	},
+	["To Earn"] = {
+		["ruRU"] = "Можно получить",
+		["deDE"] = "Erhaltbar",
+		["esES"] = "Por obtener",
+		["esMX"] = "Por obtener",
+		["frFR"] = "À obtenir",
+		["itIT"] = "Da ottenere",
+		["ptBR"] = "A obter",
+		["koKR"] = "획득 가능",
+		["zhCN"] = "可获取",
+		["zhTW"] = "可獲取",
+	},
+	["Earnable"] = {
+		["ruRU"] = "К получению",
+		["deDE"] = "Erhaltbar",
+		["esES"] = "Obtenible",
+		["esMX"] = "Obtenible",
+		["frFR"] = "Obtenable",
+		["itIT"] = "Ottenibile",
+		["ptBR"] = "Obtível",
+		["koKR"] = "획득 가능",
+		["zhCN"] = "可获取",
+		["zhTW"] = "可獲取",
+	},
+	["Bountiful Delve"] = {
+		["ruRU"] = "Многообещающая вылазка",
+		["deDE"] = "Großzügige Tiefe",
+		["esES"] = "Profundidad pródiga",
+		["esMX"] = "Profundidad pródiga",
+		["frFR"] = "Gouffre abondant",
+		["itIT"] = "Scorribanda fruttuosa",
+		["ptBR"] = "Imersão abundante",
+		["koKR"] = "풍요로운 구렁",
+		["zhCN"] = "丰裕地下堡",
+		["zhTW"] = "豐碩探究",
+	},
+	["Your Warband can only receive this reward once per week"] = {
+		["ruRU"] = "Ваш боевой отряд может получить эту награду только раз в неделю",
+		["deDE"] = "Deine Kriegsmeute kann diese Belohnung nur einmal pro Woche erhalten",
+		["esES"] = "Tu banda de guerra solo puede recibir esta recompensa una vez por semana",
+		["esMX"] = "Tu banda de guerra solo puede recibir esta recompensa una vez por semana",
+		["frFR"] = "Votre bataillon ne peut recevoir cette récompense qu'une fois par semaine",
+		["itIT"] = "La tua Brigata può ricevere questa ricompensa solo una volta a settimana",
+		["ptBR"] = "Seu bando de guerra só pode receber esta recompensa uma vez por semana",
+		["koKR"] = "이 보상은 전투부대 기준으로 주간 1회만 획득 가능합니다",
+		["zhCN"] = "你的战团每周只能获得一次此奖励。",
+		["zhTW"] = "你的戰隊每週只能獲得一次此獎勵。",
+	},
 	["Scale"] = {
 		["ruRU"] = "Масштаб",
 		["deDE"] = "Skalierung",
@@ -66,7 +183,6 @@ E.translations = {
 		["zhCN"] = "缩放",
 		["zhTW"] = "縮放",
 	},
-
 	["Alpha"] = {
 		["ruRU"] = "Прозрачность",
 		["deDE"] = "Transparenz",
@@ -79,7 +195,6 @@ E.translations = {
 		["zhCN"] = "透明度",
 		["zhTW"] = "透明度",
 	},
-
 	["Fortify the Runestones"] = { -- /run opde(E.func_GetName("quest", 90573)) -- 90573 90574 90575 90576
 		["ruRU"] = "Укрепление рунических камней",
 		["deDE"] = "Die Runensteine verstärken",
@@ -92,8 +207,6 @@ E.translations = {
 		["zhCN"] = "加固符文石",
 		["zhTW"] = "強化符石",
 	},
-
-
 	["Midnight: Meta Quests"] = { -- QUEST_CLASSIFICATION_META - Мета
 		["ruRU"] = "Midnight: Метазадания",
 		["deDE"] = "Midnight: Metaaufgaben", -- ["deDE"] = "Midnight: Metaquests",
@@ -106,8 +219,6 @@ E.translations = {
 		["zhCN"] = "至暗之夜: 统合任务",
 		["zhTW"] = "至暗之夜: 主任務", -- /run opde(E.func_GetName("quest", 93890))
 	},
-
-
 	["Paragon"] = {
 		["ruRU"] = "Парагон",
 		["deDE"] = "Huldigend",
@@ -120,11 +231,6 @@ E.translations = {
 		["zhCN"] = "巅峰",
 		["zhTW"] = "巅峰",
 	},
-
-
-
-
-
 	["Special Assignment"] = {
 		["ruRU"] = "Особое поручение",
 		["deDE"] = "Spezialauftrag",
@@ -137,7 +243,6 @@ E.translations = {
 		["zhCN"] = "特别任务",
 		["zhTW"] = "特殊任務",
 	},
-
 	-- https://www.wowhead.com/pt/storyline/presa-5945
 	["Prey: Normal"] = { -- https://www.wowhead.com/quest=91124/
 		["ruRU"] = "Добыча: Обычная сложность",
@@ -151,7 +256,6 @@ E.translations = {
 		["zhCN"] = "狩猎: 普通",
 		["zhTW"] = "狩獵: 普通",
 	},
-
 	["Prey: Hard"] = { -- https://www.wowhead.com/quest=91251/
 		["ruRU"] = "Добыча: Высокая сложность",
 		["deDE"] = "Beutejagd: Schwer",
@@ -164,7 +268,6 @@ E.translations = {
 		["zhCN"] = "狩猎: 困难",
 		["zhTW"] = "狩獵: 困難",
 	},
-
 	["Prey: Nightmare"] = { -- https://www.wowhead.com/quest=91229/
 		["ruRU"] = "Добыча: Кошмарная сложность",
 		["deDE"] = "Beutejagd: Alptraum",
@@ -201,7 +304,6 @@ E.translations = {
 		["zhCN"] = "哈籁尼尔的传说",
 		["zhTW"] = "哈拉尼爾的傳說",
 	},
-
 	["Fortify the Runestones"] = { -- https://www.wowhead.com/quest=90574/fortify-the-runestones-blood-knights
 		["ruRU"] = "Укрепление рунических камней",
 		["deDE"] = "Die Runensteine verstärken",
@@ -226,39 +328,30 @@ E.translations = {
 		["zhCN"] = "萨拉斯论述",
 		["zhTW"] = "薩拉斯論述",
 	},
-
 	-- ["Dungeon Quests"] = {
-	-- 	["ruRU"] = "Задания подземелий",
-	-- 	["deDE"] = "Dungeonquests", -- или Dungeonaufgaben
-	-- 	["esES"] = "Misiones de mazmorra",
-	-- 	["esMX"] = "Misiones de calabozo",
-	-- 	["frFR"] = "Quêtes de donjon",
-	-- 	["itIT"] = "Missioni dei dungeon",
-	-- 	["ptBR"] = "Missões de masmorra",
-	-- 	["koKR"] = "던전 퀘스트",
-	-- 	["zhCN"] = "地下城任务",
-	-- 	["zhTW"] = "地城任務",
+	--     ["ruRU"] = "Задания подземелий",
+	--     ["deDE"] = "Dungeonquests", -- или Dungeonaufgaben
+	--     ["esES"] = "Misiones de mazmorra",
+	--     ["esMX"] = "Misiones de calabozo",
+	--     ["frFR"] = "Quêtes de donjon",
+	--     ["itIT"] = "Missioni dei dungeon",
+	--     ["ptBR"] = "Missões de masmorra",
+	--     ["koKR"] = "던전 퀘스트",
+	--     ["zhCN"] = "地下城任务",
+	--     ["zhTW"] = "地城任務",
 	-- },
-
-
 	-- ["ЙЦУЙЦУ"] = {
-	-- 	["ruRU"] = "ЙЦУЙЦУ",
-	-- 	["deDE"] = "ЙЦУЙЦУ",
-	-- 	["esES"] = "ЙЦУЙЦУ",
-	-- 	["esMX"] = "ЙЦУЙЦУ",
-	-- 	["frFR"] = "ЙЦУЙЦУ",
-	-- 	["itIT"] = "ЙЦУЙЦУ",
-	-- 	["ptBR"] = "ЙЦУЙЦУ",
-	-- 	["koKR"] = "ЙЦУЙЦУ",
-	-- 	["zhCN"] = "ЙЦУЙЦУ",
-	-- 	["zhTW"] = "ЙЦУЙЦУ",
+	--     ["ruRU"] = "ЙЦУЙЦУ",
+	--     ["deDE"] = "ЙЦУЙЦУ",
+	--     ["esES"] = "ЙЦУЙЦУ",
+	--     ["esMX"] = "ЙЦУЙЦУ",
+	--     ["frFR"] = "ЙЦУЙЦУ",
+	--     ["itIT"] = "ЙЦУЙЦУ",
+	--     ["ptBR"] = "ЙЦУЙЦУ",
+	--     ["koKR"] = "ЙЦУЙЦУ",
+	--     ["zhCN"] = "ЙЦУЙЦУ",
+	--     ["zhTW"] = "ЙЦУЙЦУ",
 	-- },
-
-
-
-
-
-
 	["Shows mounts available for this currency in the tooltip"] = {
 		["ruRU"] = "Отображает средства передвижения, доступные за эту валюту, в тултипе",
 		["deDE"] = "Zeigt im Tooltip verfügbare Reittiere für diese Währung an",
@@ -271,11 +364,6 @@ E.translations = {
 		["zhCN"] = "在提示信息中显示可用该货币购买的坐骑。",
 		["zhTW"] = "在提示資訊中顯示可使用此貨幣購買的坐騎。",
 	},
-
-
-
-
-
 	["Per Session"] = {
 		["ruRU"] = "За сеанс",
 		["deDE"] = "Pro Sitzung",
@@ -288,7 +376,6 @@ E.translations = {
 		["zhCN"] = "本次会话",
 		["zhTW"] = "本次工作階段",
 	},
-
 	["Per Day"] = {
 		["ruRU"] = "За день",
 		["deDE"] = "Pro Tag",
@@ -301,7 +388,6 @@ E.translations = {
 		["zhCN"] = "今日",
 		["zhTW"] = "今日",
 	},
-
 	["Per Week"] = {
 		["ruRU"] = "За неделю",
 		["deDE"] = "Pro Woche",
@@ -314,7 +400,6 @@ E.translations = {
 		["zhCN"] = "本周",
 		["zhTW"] = "本週",
 	},
-
 	["Per Month"] = {
 		["ruRU"] = "За месяц",
 		["deDE"] = "Pro Monat",
@@ -327,12 +412,6 @@ E.translations = {
 		["zhCN"] = "本月",
 		["zhTW"] = "本月",
 	},
-
-
-
-
-
-
 	["Session"] = {
 		["ruRU"] = "Сеанс",
 		["deDE"] = "Sitzung",
@@ -345,7 +424,6 @@ E.translations = {
 		["zhCN"] = "会话",
 		["zhTW"] = "工作階段",
 	},
-
 	["Day"] = {
 		["ruRU"] = "День",
 		["deDE"] = "Tag",
@@ -358,7 +436,6 @@ E.translations = {
 		["zhCN"] = "日",
 		["zhTW"] = "日",
 	},
-
 	["Week"] = {
 		["ruRU"] = "Неделя",
 		["deDE"] = "Woche",
@@ -371,7 +448,6 @@ E.translations = {
 		["zhCN"] = "周",
 		["zhTW"] = "週",
 	},
-
 	["Month"] = {
 		["ruRU"] = "Месяц",
 		["deDE"] = "Monat",
@@ -384,8 +460,6 @@ E.translations = {
 		["zhCN"] = "月",
 		["zhTW"] = "月",
 	},
-
-
 	["In Development"] = {
 		["ruRU"] = "В разработке",
 		["deDE"] = "In Entwicklung",
@@ -398,8 +472,6 @@ E.translations = {
 		["zhCN"] = "开发中",
 		["zhTW"] = "開發中",
 	},
-
-
 	["Rename"] = {
 		["ruRU"] = "Переименовать",
 		["deDE"] = "Umbenennen",
@@ -412,10 +484,6 @@ E.translations = {
 		["zhCN"] = "重命名",
 		["zhTW"] = "重新命名",
 	},
-
-
-
-
 	["Variant"] = {
 		["ruRU"] = "Вариант",
 		["deDE"] = "Variante",
@@ -452,9 +520,6 @@ E.translations = {
 		["zhCN"] = "平滑动画",
 		["zhTW"] = "平滑動畫",
 	},
-
-
-
 	["Backdrop"] = {
 		["ruRU"] = "Фон",
 		["deDE"] = "Hintergrund",
@@ -467,7 +532,6 @@ E.translations = {
 		["zhCN"] = "背景",
 		["zhTW"] = "背景",
 	},
-
 	["Backdrop Faded"] = {
 		["ruRU"] = "Прозрачный фон",
 		["deDE"] = "Hintergrund verblasst",
@@ -480,7 +544,6 @@ E.translations = {
 		["zhCN"] = "背景透明",
 		["zhTW"] = "背景透明",
 	},
-
 	["Value"] = {
 		["ruRU"] = "Значение",
 		["deDE"] = "Wert",
@@ -493,7 +556,6 @@ E.translations = {
 		["zhCN"] = "数值",
 		["zhTW"] = "數值",
 	},
-
 	["Border"] = {
 		["ruRU"] = "Граница",
 		["deDE"] = "Rahmen",
@@ -518,7 +580,6 @@ E.translations = {
 		["zhCN"] = "边框颜色",
 		["zhTW"] = "邊框顏色",
 	},
-
 	["Textures"] = {
 		["ruRU"] = "Текстуры",
 		["deDE"] = "Texturen",
@@ -531,7 +592,6 @@ E.translations = {
 		["zhCN"] = "材质",
 		["zhTW"] = "材質",
 	},
-
 	["Texture"] = {
 		["ruRU"] = "Текстура",
 		["deDE"] = "Textur",
@@ -544,8 +604,6 @@ E.translations = {
 		["zhCN"] = "材质",
 		["zhTW"] = "材質",
 	},
-
-
 	["Main Frame"] = {
 		["ruRU"] = "Основной фрейм",
 		["deDE"] = "Hauptrahmen",
@@ -558,7 +616,6 @@ E.translations = {
 		["zhCN"] = "主框架",
 		["zhTW"] = "主框架",
 	},
-
 	["Main Frame Color"] = {
 		["ruRU"] = "Цвет основного фрейма",
 		["deDE"] = "Farbe des Hauptrahmens",
@@ -571,8 +628,6 @@ E.translations = {
 		["zhCN"] = "主框架颜色",
 		["zhTW"] = "主框架顏色",
 	},
-
-
 	["Header"] = {
 		["ruRU"] = "Заголовок",
 		["deDE"] = "Kopfzeile",
@@ -597,7 +652,6 @@ E.translations = {
 		["zhCN"] = "标题栏颜色",
 		["zhTW"] = "標題列顏色",
 	},
-
 	["Header Background"] = {
 		["ruRU"] = "Фон заголовка",
 		["deDE"] = "Hintergrund der Kopfzeile",
@@ -610,9 +664,6 @@ E.translations = {
 		["zhCN"] = "标题背景",
 		["zhTW"] = "標題背景",
 	},
-
-
-
 	["Character Background"] = {
 		["ruRU"] = "Фон персонажа",
 		["deDE"] = "Charakterhintergrund",
@@ -625,7 +676,6 @@ E.translations = {
 		["zhCN"] = "角色背景",
 		["zhTW"] = "角色背景",
 	},
-
 	["Character Background"] = {
 		["ruRU"] = "Фон персонажа",
 		["deDE"] = "Charakterhintergrund",
@@ -638,7 +688,6 @@ E.translations = {
 		["zhCN"] = "角色背景",
 		["zhTW"] = "角色背景",
 	},
-
 	["Tooltip Color"] = {
 		["ruRU"] = "Цвет тултипа",
 		["deDE"] = "Tooltip-Farbe",
@@ -651,18 +700,8 @@ E.translations = {
 		["zhCN"] = "提示颜色",
 		["zhTW"] = "提示顏色",
 	},
-
-
-
-
-
-
-
-
-
 	["Are you sure?"] = {
 		["ruRU"] = "Вы уверены?",
-		["enUS"] = "Are you sure?",
 		["deDE"] = "Bist du sicher?",
 		["esES"] = "¿Estás seguro?",
 		["esMX"] = "¿Estás seguro?",
@@ -1645,9 +1684,6 @@ E.translations = {
 		["zhCN"] = "字体样式",
 		["zhTW"] = "字型樣式",
 	},
-
-
-
 	["Font Outline"] = {
 		["ruRU"] = "Граница шрифта",
 		["deDE"] = "Kontur der Schriftart",
@@ -1660,7 +1696,6 @@ E.translations = {
 		["zhCN"] = "字体描边",
 		["zhTW"] = "字體描邊",
 	},
-
 	["Default Font"] = {
 		["ruRU"] = "Шрифт по умолчанию",
 		["deDE"] = "Standardschriftart",
@@ -1673,7 +1708,6 @@ E.translations = {
 		["zhCN"] = "默认字体",
 		["zhTW"] = "預設字體",
 	},
-
 	["Line Height"] = {
 		["ruRU"] = "Высота строки",
 		["deDE"] = "Zeilenhöhe",
@@ -1823,9 +1857,9 @@ E.translations = {
 		["deDE"] = "Mindeststufe",
 		["esES"] = "Nivel mínimo",
 		["esMX"] = "Nivel mínimo",
-		["frFR"] = "Niveau min.",
-		["itIT"] = "Livello min.",
-		["ptBR"] = "Nível mín.",
+		["frFR"] = "Niveau min",
+		["itIT"] = "Livello min",
+		["ptBR"] = "Nível mín",
 		["koKR"] = "최소 레벨",
 		["zhCN"] = "最低等级",
 		["zhTW"] = "最低等級",
@@ -1835,9 +1869,9 @@ E.translations = {
 		["deDE"] = "Maximalstufe",
 		["esES"] = "Nivel máximo",
 		["esMX"] = "Nivel máximo",
-		["frFR"] = "Niveau max.",
-		["itIT"] = "Livello max.",
-		["ptBR"] = "Nível máx.",
+		["frFR"] = "Niveau max",
+		["itIT"] = "Livello max",
+		["ptBR"] = "Nível máx",
 		["koKR"] = "최대 레벨",
 		["zhCN"] = "最高等级",
 		["zhTW"] = "最高等級",
@@ -2454,7 +2488,6 @@ E.translations = {
 		["zhCN"] = "仅当前服务器",
 		["zhTW"] = "僅目前伺服器",
 	},
-
 	["Only Current Region"] = {
 		["ruRU"] = "Только текущий регион",
 		["deDE"] = "Nur aktuelle Region",
@@ -2467,7 +2500,6 @@ E.translations = {
 		["zhCN"] = "仅当前地区",
 		["zhTW"] = "僅目前地區",
 	},
-
 	["Only Current Realm"] = {
 		["ruRU"] = "Только текущий мир", -- более Blizzard-like
 		["deDE"] = "Nur aktueller Realm",

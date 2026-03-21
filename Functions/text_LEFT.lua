@@ -74,7 +74,8 @@ function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, 
 	TextLeft = output
 	SettingsType = dataType.."#"..questKey
 	if isAccount then
-		TextLeft = E.COLOR_SKYBLUE..TextLeft.."|r"
+		-- TextLeft = E.COLOR_IVORY..TextLeft.."|r"
+		TextLeft = TextLeft
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
@@ -119,7 +120,6 @@ end
 function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
-
 	if id == "ListOfQuests" then
 		TextLeft = QUESTS_LABEL
 	end

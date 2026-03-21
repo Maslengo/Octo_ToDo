@@ -51,11 +51,8 @@ function E.func_Mounts_1166() -- Timewalk
 		{itemID = 232624, price = PRICE_5K, mountID = 2321,  source = SOURCE_ALWAYS},
 		{itemID = 205208, price = PRICE_5K, mountID = 1737,  source = SOURCE_ALWAYS},
 		{itemID = 238739, price = PRICE_5K, mountID = 2518,  source = SOURCE_ALWAYS},
-
-
 		-- https://www.wowhead.com/achievement=61394/
 		-- https://www.wowhead.com/quest=92857/
-
 		{itemID = 257511, price = PRICE_5K, mountID = 2795,  source = SOURCE_ALWAYS},
 		{itemID = 257513, price = PRICE_5K, mountID = 2796,  source = SOURCE_ALWAYS},
 		{itemID = 257514, price = PRICE_5K, mountID = 2797,  source = SOURCE_ALWAYS},
@@ -164,7 +161,6 @@ function E.func_Mounts_2778() -- Bronze (Pandaria)
 		{itemID = 213603, price = 2200, mountID = 2073, source = source5},
 		{itemID = 213595, price = 2200, mountID = 2069, source = source5},
 		{itemID = 213605, price = 2200, mountID = 2074, source = source5},
-
 		{itemID = 213624, price = 4400, mountID = 2085, source = source5},
 		{itemID = 213625, price = 4400, mountID = 2086, source = source5},
 		{itemID = 213626, price = 4400, mountID = 2087, source = source5},
@@ -172,7 +168,6 @@ function E.func_Mounts_2778() -- Bronze (Pandaria)
 		{itemID = 218111, price = 4400, mountID = 2118, source = source5},
 		{itemID = 213622, price = 4400, mountID = 2083, source = source5},
 		{itemID = 213621, price = 4400, mountID = 2084, source = source5},
-
 		{itemID = 213600, price = 6600, mountID = 2071, source = source5},
 		{itemID = 213601, price = 6600, mountID = 2070, source = source5},
 		{itemID = 213596, price = 6600, mountID = 2065, source = source5},

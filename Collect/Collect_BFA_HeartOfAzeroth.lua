@@ -16,9 +16,6 @@ local function Collect_BFA_HeartOfAzeroth()
 		floor(xp / totalLevelXP * 100),
 		E.func_CompactFormatNumber(totalLevelXP - xp)
 		)
-
-
-
 	collectPlayerData.azerite_xp = xp
 	collectPlayerData.azerite_totalLevelXP = totalLevelXP
 end

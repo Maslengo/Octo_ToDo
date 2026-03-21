@@ -13,6 +13,7 @@ end
 E.DEBUG = false
 E.DEBUG_NAME = false
 E.DEBUG_OPTIONS = false
+E.DEBUG_CURRENCY_TOOLTIP = false
 ----------------------------------------------------------------
 E.OctoTable_ColoredFrames = {}
 E.L = {}
@@ -101,7 +102,7 @@ E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHe
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup()
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
 E.TEXT_SPACE = " "
-E.Config_UseTranslit = false
+E.CONFIG_TRANSLIT = false
 E.ICON_REGULAR = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
 E.ICON_WEEKLY = "Crosshair_Wrapper_64"
@@ -242,6 +243,7 @@ E.COLOR_HOLIDAY = "|cffFF8C00"
 E.COLOR_EVENT = "|cffFFF371"
 E.COLOR_DEBUG = E.classColorHexCurrent
 E.COLOR_FUNCTION = "|cff87CDEB"
+E.COLOR_IVORY = "|cffFFF7D7"
 E.FACTION_CURRENT = UnitFactionGroup("PLAYER")
 E.FACTION_OPPOSITE = E.FACTION_CURRENT == "Alliance" and "Horde" or "Alliance"
 E.ICON_TABARD = 135026

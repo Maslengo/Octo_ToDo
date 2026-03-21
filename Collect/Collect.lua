@@ -52,16 +52,8 @@ function E.func_Collect_All()
 end
 ----------------------------------------------------------------
 local MyEventsTable = {
-
-
-"UNIT_FACTION",
-"PVP_TIMER_UPDATE",
-
-
-
-
-
-
+	"UNIT_FACTION",
+	"PVP_TIMER_UPDATE",
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BARBER_SHOP_APPEARANCE_APPLIED",
@@ -135,16 +127,9 @@ local MyEventsTable = {
 	"ZONE_CHANGED",
 	"ZONE_CHANGED_NEW_AREA",
 	"ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED",
-
-
 	"CURRENCY_TRANSFER_INITIATED",
 	"CURRENCY_TRANSFER_FAILED",
 	"CURRENCY_TRANSFER_SUCCESS",
-
-
-
-
-
 	-- "QUEST_DATA_LOAD_RESULT",
 	-- "ITEM_DATA_LOAD_RESULT",
 }
@@ -359,12 +344,10 @@ end
 -- local questID = ...
 -- E.func_GetName("quest", questID)
 -- end
-
 -- function EventFrame:ITEM_DATA_LOAD_RESULT(...)
 -- 	local itemID = ...
 -- 	E.func_GetName("item", itemID)
 -- end
-
 function EventFrame:BAG_UPDATE()
 	if not BankFrame or not BankFrame:IsShown() then return end
 	E.Collect_Items_BANK()
@@ -431,7 +414,7 @@ function EventFrame:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
 		E.Collect_Items_MythicKeystone()
-		C_Timer.After(Octo_ToDo_DB_Vars.Config_SPAM_TIME+.1, function()
+		C_Timer.After(Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME+.1, function()
 			E.Collect_Items_MythicKeystone()
 		end)
 		E.func_RequestUIUpdate("ITEM_CHANGED")
@@ -444,24 +427,18 @@ function EventFrame:ITEM_COUNT_CHANGED()
 	E.Collect_Items_AccountBank()
 	E.func_RequestUIUpdate("ITEM_COUNT_CHANGED")
 end
-
-
 function EventFrame:ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED()
 	E.func_DEBUG_CURRENCY_TRANSFER()
 end
-
 function EventFrame:CURRENCY_TRANSFER_INITIATED()
 	E.func_DEBUG_CURRENCY_TRANSFER()
 end
-
 function EventFrame:CURRENCY_TRANSFER_FAILED()
 	E.func_DEBUG_CURRENCY_TRANSFER()
 end
-
 function EventFrame:CURRENCY_TRANSFER_SUCCESS()
 	E.func_DEBUG_CURRENCY_TRANSFER()
 end
-
 function EventFrame:CURRENCY_TRANSFER_LOG_UPDATE()
 	E.func_DEBUG_CURRENCY_TRANSFER()
 end

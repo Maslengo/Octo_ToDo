@@ -2051,7 +2051,6 @@ E.OctoTable_Reputations_DB = {
 		["enUS"] = "Booty Bay",
 		["ruRU"] = "Пиратская Бухта",
 	},
-
 }
 E.TBL_validReps = {}
 E.TBL_paragonQuests = {}

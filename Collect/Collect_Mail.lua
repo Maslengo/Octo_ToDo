@@ -12,7 +12,6 @@ local function Collect_Mail()
 	else
 		collectPlayerData.hasMail = nil
 	end
-
 end
 ----------------------------------------------------------------
 function E.Collect_Mail()

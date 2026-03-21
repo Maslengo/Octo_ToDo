@@ -5,7 +5,7 @@ local L = E.L
 ----------------------------------------------------------------
 function E.func_Otrisovka_Center_Dispatcher(categoryKey, CharInfo, dataType, id)
 	local funcNames = {
-		"func_Otrisovka_Center_"..dataType,
+		"func_Otrisovka_Center_" .. dataType,
 	}
 	for _, funcName in ipairs(funcNames) do
 		if E[funcName] then
@@ -41,7 +41,7 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 				if earnedSinceLastCollect >= 5 then
 					color = (earnedSinceLastCollect == cacheSize) and E.COLOR_PURPLE or E.COLOR_YELLOW
 				end
-				TextCenter = TextCenter..color.." +"..earnedSinceLastCollect.."|r"
+				TextCenter = TextCenter .. color .. " +" .. earnedSinceLastCollect .. "|r"
 			end
 		end
 	elseif id == 1822 then -- RENOWN
@@ -51,10 +51,10 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			-- local color = E.OctoTable_Covenant[covenantID].color
 			local color = E.func_DB_COV_COLOR(covenantID)
 			-- local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
-			local renown  = pd[prefix .. "_Renown"]
-			-- local anima   = pd[prefix .. "_Anima"]
+			local renown = pd[prefix .. "_Renown"]
+			-- local anima = pd[prefix .. "_Anima"]
 			if renown then
-				TextCenter = color..renown.."|r"
+				TextCenter = color .. renown .. "|r"
 			end
 		end
 	elseif id == 1813 then -- ANIMA
@@ -63,14 +63,14 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			local prefix = E.OctoTable_Covenant[covenantID].prefix
 			-- local color = E.OctoTable_Covenant[covenantID].color
 			local color = E.func_DB_COV_COLOR(covenantID)
-			-- local renown  = pd[prefix .. "_Renown"]
+			-- local renown = pd[prefix .. "_Renown"]
 			local anima = pd[prefix .. "_Anima"]
 			if anima then
-				TextCenter = color..anima.."|r"
+				TextCenter = color .. anima .. "|r"
 			end
 		end
 		if pd.SL_Possible_Anima and type(pd.SL_Possible_Anima) == "number" and pd.SL_Possible_Anima > 0 then
-			TextCenter = TextCenter..E.COLOR_BLUE.." +"..pd.SL_Possible_Anima.."|r"
+			TextCenter = TextCenter .. E.COLOR_BLUE .. " +" .. pd.SL_Possible_Anima .. "|r"
 		end
 	end
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
@@ -129,7 +129,7 @@ function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType
 	local cm = CharInfo.MASLENGO
 	if data.quests then
 		local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-		local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+		local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
 		-- local showTooltip = data.showTooltip or false
 		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter then
 			TextCenter = CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter
@@ -168,7 +168,7 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		local standingTEXT = ""
 		if repType == 2 then -- FRIENDSHIP
 			if rankInfocurrentLevel and rankInfomaxLevel then
-				standingTEXT = rankInfocurrentLevel .. "/"..rankInfomaxLevel
+				standingTEXT = rankInfocurrentLevel .. "/" .. rankInfomaxLevel
 			end
 			-- ColorCenter = OctoTable_reactionColors[repType] or E.COLOR_PINK
 		elseif repType == 3 then
@@ -178,7 +178,7 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 			-- ColorCenter = OctoTable_reactionColors[repType] or E.COLOR_BLUE
 		elseif repType == 1 then
 			if reaction and gender then
-				standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, gender)
+				standingTEXT = GetText("FACTION_STANDING_LABEL" .. reaction, gender)
 			end
 			if reaction then
 				-- ColorCenter = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
@@ -191,36 +191,26 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		-- SECOND = tonumber(SECOND)
 		-- ColorCenter = color
 		-- local repType = tonumber(repType or 0)
-		TextCenter = E.func_CompactFormatNumber(FIRST).."/"..E.func_CompactFormatNumber(SECOND)
+		TextCenter = E.func_CompactFormatNumber(FIRST) .. "/" .. E.func_CompactFormatNumber(SECOND)
 		if TextCenter == "1/1" then
-			TextCenter = ColorCenter..DONE.."|r"
-			-- TextCenter = ColorCenter..standingTEXT.."|r"
+			TextCenter = ColorCenter .. DONE .. "|r"
+			-- TextCenter = ColorCenter .. standingTEXT .. "|r"
 		elseif TextCenter == "0/0" then
 			TextCenter = ""
 		end
 		local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
 		if paragonQuest and cm.ListOfParagonQuests[paragonQuest] then
-			TextCenter = E.COLOR_PURPLE..">"..TextCenter.."<".."|r"
+			TextCenter = E.COLOR_PURPLE .. ">" .. TextCenter .. "<" .. "|r"
 		end
-
-
-
-
-
-
 		-- if repType == 2 or repType == 3 then -- 2
-		-- 	if TextCenter ~= "0/0" and TextCenter ~= "1/1" then
-		-- 		-- local color = E.func_DB_REP_COLOR(repType, reaction)
-		-- 		-- local percent = (SECOND > 0) and math.floor(FIRST / SECOND * 100) or 0
-		-- 		-- local percentResult = color..percent.."%|r"
-		-- 		local thirdTEXT = ColorCenter..standingTEXT.."|r"
-		-- 		TextCenter = TextCenter .." ".. thirdTEXT
-		-- 	end
+		--     if TextCenter ~= "0/0" and TextCenter ~= "1/1" then
+		--         -- local color = E.func_DB_REP_COLOR(repType, reaction)
+		--         -- local percent = (SECOND > 0) and math.floor(FIRST / SECOND * 100) or 0
+		--         -- local percentResult = color .. percent .. "%|r"
+		--         local thirdTEXT = ColorCenter .. standingTEXT .. "|r"
+		--         TextCenter = TextCenter .. " " .. thirdTEXT
+		--     end
 		-- end
-
-
-
-
 	end
 	return TextCenter, ColorCenter, FIRST, SECOND
 end
@@ -234,7 +224,7 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	local cm = CharInfo.MASLENGO
 	if id == "GreatVault" then
 		if pd.HasAvailableRewards then
-			TextCenter = E.COLOR_BLUE..">"..REWARD.."<|r"
+			TextCenter = E.COLOR_BLUE .. ">" .. REWARD .. "<|r"
 		else
 			for j = 1, #E.Enum_Activities_table do
 				local ID = E.Enum_Activities_table[j]
@@ -245,7 +235,7 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 				local vaultMin = vaultData and vaultData.min or 0
 				local rewards = vaultData and vaultData.rewards or {}
 				if vaultMin ~= 0 then
-					TextCenter = TextCenter..(" "..vaultMin.."/"..max)
+					TextCenter = TextCenter .. (" " .. vaultMin .. "/" .. max)
 				end
 			end
 		end
@@ -258,19 +248,19 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	end
 	if id == "HeartofAzeroth" then
 		if pd.azeriteLVL and pd.azeriteEXP then
-			TextCenter = E.COLOR_GREEN..pd.azeriteLVL.."|r".."+"..E.COLOR_GRAY..pd.azeriteEXP.."|r"
+			TextCenter = E.COLOR_GREEN .. pd.azeriteLVL .. "|r" .. "+" .. E.COLOR_GRAY .. pd.azeriteEXP .. "|r"
 		else
 			if cm.Items.Bank[158075] then
-				TextCenter = E.COLOR_ORANGE.."in bank|r"
+				TextCenter = E.COLOR_ORANGE .. "in bank|r"
 			end
 		end
 	end
 	if id == "Ashjrakamas" then
 		if pd.cloak_lvl then
-			TextCenter = E.COLOR_CYAN..AZERITE_ESSENCE_RANK:format(pd.cloak_lvl).."|r"
+			TextCenter = E.COLOR_CYAN .. AZERITE_ESSENCE_RANK:format(pd.cloak_lvl) .. "|r"
 		else
 			if cm.Items.Bank[169223] then
-				TextCenter = E.COLOR_ORANGE.."in bank|r"
+				TextCenter = E.COLOR_ORANGE .. "in bank|r"
 				-- elseif cm.Items.Bags[169223] then
 			end
 		end
@@ -311,20 +301,20 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		-- Формируем текст с цветом
 		if countMZ == totalInstances then
 			TextCenter = E.DONE
-			-- TextCenter = E.COLOR_GREEN..countMZ.."/"..totalInstances.."|r"  -- Все пройдены
+			-- TextCenter = E.COLOR_GREEN .. countMZ .. "/" .. totalInstances .. "|r" -- Все пройдены
 		elseif countMZ > 0 then
-			TextCenter = E.COLOR_YELLOW..countMZ.."/"..totalInstances.."|r"  -- Частично
+			TextCenter = E.COLOR_YELLOW .. countMZ .. "/" .. totalInstances .. "|r" -- Частично
 		else
-			TextCenter = E.COLOR_RED..countMZ.."/"..totalInstances.."|r"     -- Ни одного
+			TextCenter = E.COLOR_RED .. countMZ .. "/" .. totalInstances .. "|r" -- Ни одного
 		end
 	end
 	if id == "ListOfQuests" then
 		if pd.numQuests then
-			-- TextCenter = pd.classColorHex..pd.numQuests.."/"..pd.maxNumQuestsCanAccept.."|r"
-			TextCenter = pd.classColorHex..pd.numQuests.."|r"
+			-- TextCenter = pd.classColorHex .. pd.numQuests .. "/" .. pd.maxNumQuestsCanAccept .. "|r"
+			TextCenter = pd.classColorHex .. pd.numQuests .. "|r"
 		end
 		if pd.numQuests_Paragon then
-			TextCenter = TextCenter ..E.COLOR_BLUE.." +"..pd.numQuests_Paragon.."|r"
+			TextCenter = TextCenter .. E.COLOR_BLUE .. " +" .. pd.numQuests_Paragon .. "|r"
 		end
 	end
 	if id == "LFGInstance" then
@@ -344,11 +334,11 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 			end
 		end
 		-- for dungeonID, v in next, (cm.LFGInstance) do
-		--     if v then
-		--         if cm.LFGInstance[dungeonID].donetoday then
-		--             count = count+1
-		--         end
-		--     end
+		-- if v then
+		-- if cm.LFGInstance[dungeonID].donetoday then
+		-- count = count+1
+		-- end
+		-- end
 		-- end
 		for worldBossID, v in next, (cm.SavedWorldBoss) do
 			if v then
@@ -370,7 +360,7 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 			end
 		end
 		if count > 0 then
-			TextCenter = E.COLOR_GRAY..ITEMS.."|r"
+			TextCenter = E.COLOR_GRAY .. ITEMS .. "|r"
 		end
 	end
 	if id == "Professions" then
@@ -378,32 +368,32 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
 				if i == 1 or i == 2 then
-					TextCenter = TextCenter..E.func_ProfessionIcon(charProf[i].skillLine) -- .." "
+					TextCenter = TextCenter .. E.func_ProfessionIcon(charProf[i].skillLine) -- .. " "
 				end
 			end
 		end
 	end
 	if id == "ItemLevel" then
 		TextCenter = E.func_CharInfo_ItemLevel(CharInfo)
-		-- .." ".. E.func_CharInfo_Durability(CharInfo, true, 41)
+		-- .. " " .. E.func_CharInfo_Durability(CharInfo, true, 41)
 	end
 	if id == "Money" then
 		if pd.Money then
-			TextCenter = E.func_GetColorGradient(pd.Money, E.minValue_Money, E.maxValue_Money)..E.func_FormatMoney(pd.Money)
+			TextCenter = E.func_GetColorGradient(pd.Money, E.minValue_Money, E.maxValue_Money) .. E.func_FormatMoney(pd.Money)
 		end
 	end
 	if id == "LastOnline" then
 		local color = E.COLOR_WHITE
 		if pd.loginHour and pd.loginDay then
 			if pd.GUID == E.curGUID then
-				TextCenter = E.COLOR_GREEN..FRIENDS_LIST_ONLINE.."|r"
+				TextCenter = E.COLOR_GREEN .. FRIENDS_LIST_ONLINE .. "|r"
 			else
 				if pd.needResetWeekly then
 					color = E.COLOR_GRAY
 				elseif pd.needResetDaily then
 					color = E.COLOR_RED
 				end
-				TextCenter = color..E.func_FormatTimeAgo(pd.time).."|r"
+				TextCenter = color .. E.func_FormatTimeAgo(pd.time) .. "|r"
 			end
 		end
 	end
@@ -422,35 +412,98 @@ function E.func_TextCenter_Items(CharInfo, itemID)
 		result = result .. E.func_CompactFormatNumber(Bags)
 	end
 	if Bank > 0 then
-		result = result .. E.COLOR_GRAY.."+"..E.func_CompactFormatNumber(Bank).."|r"
+		result = result .. E.COLOR_GRAY .. "+" .. E.func_CompactFormatNumber(Bank) .. "|r"
 	end
 	return result
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_TextCenter_Currency(CharInfo, currencyID, itemID)
-	local data = CharInfo.MASLENGO.Currency
-	if not data[currencyID] then return "" end
+function E.func_TextCenter_Currency(CharInfo, id, itemID)
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
+	local data = cm.Currency
+	-- if not data[id] then return "" end
+	if not data[id] then data[id] = {} end
 	local result = ""
-	local color = E.COLOR_WHITE
-	if data[currencyID].quantity then
-		result = result..E.func_CompactFormatNumber(data[currencyID].quantity)
-		if data[currencyID].maxQuantity and data[currencyID].maxQuantity ~= 0 then
-			if data[currencyID].quantity == data[currencyID].maxQuantity then
-				color = E.COLOR_GREEN
+	local quantity = data[id].quantity or 0
+	local totalEarned = data[id].totalEarned
+	local maxQuantity = data[id].maxQuantity
+	local quantityEarnedThisWeek = data[id].quantityEarnedThisWeek or 0
+	local maxWeeklyQuantity = data[id].maxWeeklyQuantity or 0
+	local useTotalEarnedForMaxQty = data[id].useTotalEarnedForMaxQty
+
+	local CONFIG_CURRENCY_SHOW_BRACKETS = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_BRACKETS or false  -- Показывать прогресс в скобках (заработано/максимум)
+	local COLOR_BRACKETS = "|c"..Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_BRACKETS or E.COLOR_BLUE
+	local CONFIG_CURRENCY_SHOW_REMAINING = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING or false -- Показывать сколько осталось заработать (+123)
+	local COLOR_REMAINING = "|c"..Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_REMAINING or E.COLOR_YELLOW
+	local CONFIG_CURRENCY_SHOW_ZERO = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_ZERO or false
+
+	if quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO then
+		-- Main currency display logic
+		if useTotalEarnedForMaxQty then
+			-- Season-based currency
+			if maxQuantity then
+				-- result = result .. TOTAL .. ": " .. color .. quantity .. "|r"
+				-- HIDE IF ZERO
+				-- result = color .. quantity .. "|r"
+				if totalEarned and totalEarned ~= 0 then
+					-- PERENES SUDA
+					result = result .. E.func_CompactFormatNumber(quantity)
+					-- result = result .. string.format(CURRENCY_SEASON_TOTAL_MAXIMUM, color, maxWeeklyQuantity, totalEarned)
+					-- result = result .. E.COLOR_BLUE .. "*|r"
+					if CONFIG_CURRENCY_SHOW_BRACKETS then
+						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(totalEarned) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. ")|r"
+					end
+					if CONFIG_CURRENCY_SHOW_REMAINING then
+						if maxQuantity ~= totalEarned then
+							local canEarn = maxQuantity - totalEarned
+							result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
+						end
+					end
+				end
+			else
+				result = result .. E.func_CompactFormatNumber(quantity)
+				if CONFIG_CURRENCY_SHOW_BRACKETS then
+					if quantityEarnedThisWeek ~= 0 and quantityEarnedThisWeek ~= quantity then
+						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. ")|r"
+					end
+				end
 			end
-			result = color..result.."/"..E.func_CompactFormatNumber(data[currencyID].maxQuantity).."|r"
+		else
+			-- Regular currency
+			if maxQuantity then
+				-- Has maximum limit
+				-- result = result .. TOTAL .. ": " .. color .. quantity .. "/" .. maxQuantity .. "|r"
+				local color = E.COLOR_WHITE
+				if quantity == maxQuantity then
+					color = E.COLOR_GREEN
+				end
+				result = result .. color .. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. "|r"
+			else
+				-- Simple display: just "Total: 123"
+				-- result = result .. TOTAL .. ": " .. color .. quantity .. "|r"
+				result = result .. E.func_CompactFormatNumber(quantity)
+			end
+		end
+		if CONFIG_CURRENCY_SHOW_BRACKETS then
+			-- Weekly cap display (always show if exists)
+			if maxWeeklyQuantity ~= 0 then
+				-- result = result .. {string.format(CURRENCY_WEEKLY_CAP, color, quantity, maxWeeklyQuantity)}
+				result = result .. COLOR_BRACKETS .." (".. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
+			end
+		end
+		if CONFIG_CURRENCY_SHOW_REMAINING then
+			if maxWeeklyQuantity ~= 0 then
+				if maxWeeklyQuantity ~= quantity then
+					local canEarn = maxWeeklyQuantity - quantity
+					result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
+				end
+			end
 		end
 	end
-	if data[currencyID].totalEarned and data[currencyID].maxQuantity then
-		local curQuantity = E.func_CompactFormatNumber(data[currencyID].quantity or 0)
-		result = E.func_CompactFormatNumber(data[currencyID].totalEarned)
-		result = " ("..result.."/"..E.func_CompactFormatNumber(data[currencyID].maxQuantity)..")"
-		result = color..curQuantity..result.."|r"
-	end
 	if itemID then
-		result = result..E.COLOR_GREEN..E.func_TextCenter_Items(CharInfo, itemID, true).."|r"
+		result = result .. E.COLOR_GREEN .. E.func_TextCenter_Items(CharInfo, itemID, true) .. "|r"
 	end
 	return result
 end

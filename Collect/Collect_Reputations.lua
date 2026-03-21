@@ -113,19 +113,16 @@ local function Collect_Reputations()
 				FIRST = FIRST,					-- число
 				SECOND = SECOND,				-- число
 				ParagonCount = ParagonCount,	-- число
-				-- color = color,					-- строка или таблица цветов (УБРАТЬ)
+				-- color = color,				-- строка или таблица цветов (УБРАТЬ)
 				-- standingTEXT = standingTEXT,	-- строка (УБРАТЬ)
-
 				repType = repType,				-- число
 				reaction = reaction,			-- число
-
 				renownLevel = renownLevel,
 				renownMaxLevel = renownMaxLevel,
 				rankInfocurrentLevel = rankInfocurrentLevel,
 				rankInfomaxLevel = rankInfomaxLevel,
 			}
 		end
-
 		-- local result = FIRST.."#"..SECOND.."#"..ParagonCount.."#"..color.."#"..standingTEXT.."#"..repType.."#"..reaction
 		return result
 	end

@@ -1,9 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
-
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-
-
 function E.func_option_DEBUG(category, layout)
 	------------------------------------------------------------
 	----------------------------------------------------------------

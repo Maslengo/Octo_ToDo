@@ -3,20 +3,16 @@ local GlobalAddonName, E = ...
 E.Enum_Activities_table = {}
 E.GW_Start = true
 ----------------------------------------------------------------
-
 local GetMapTable = GetMapTable or C_ChallengeMode.GetMapTable
 local GetWeeklyChestRewardLevel = GetWeeklyChestRewardLevel or C_MythicPlus.GetWeeklyChestRewardLevel
 local GetWeeklyBestForMap = GetWeeklyBestForMap or C_MythicPlus.GetWeeklyBestForMap
 local HasAvailableRewards = HasAvailableRewards or C_WeeklyRewards.HasAvailableRewards
 local HasGeneratedRewards = HasGeneratedRewards or C_WeeklyRewards.HasGeneratedRewards
-
-
 local affixIDs = C_MythicPlus.GetCurrentAffixes() -- tbl
 local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
 local seasonID = C_MythicPlus.GetCurrentUIDisplaySeason()
 local challengeMapId, level = C_MythicPlus.GetLastWeeklyBestInformation()
 -- local sequenceLevel = C_MythicPlus.GetEndOfRunGearSequenceLevel(keystoneLevel)
-
 local function Collect_GreatVault()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
@@ -64,8 +60,6 @@ local function Collect_GreatVault()
 		end
 	end
 	local overallScore = C_ChallengeMode.GetOverallDungeonScore()
-
-
 	----------------------------------------------------------------
 	collectMASLENGO.GreatVault = collectMASLENGO.GreatVault or {}
 	wipe(collectMASLENGO.GreatVault)
@@ -73,7 +67,6 @@ local function Collect_GreatVault()
 	collectPlayerData.MythicPlus[E.MythicPlus_seasonID] = collectPlayerData.MythicPlus[E.MythicPlus_seasonID] or {}
 	collectPlayerData.MythicPlus[E.MythicPlus_seasonID].RIO_Score = E.func_Save(overallScore)
 	collectPlayerData.MythicPlus[E.MythicPlus_seasonID].RIO_weeklyBest = E.func_Save(currentWeekBestLevel)
-
 	-- collectPlayerData.RIO_Score = E.func_Save(overallScore)
 	-- collectPlayerData.RIO_weeklyBest = E.func_Save(currentWeekBestLevel)
 		----------------------------------------------------------------
@@ -129,7 +122,6 @@ local function Collect_GreatVault()
 		----------------------------------------------------------------
 	collectPlayerData.HasAvailableRewards = E.func_Save(HasAvailableRewards())
 	collectPlayerData.HasGeneratedRewards = E.func_Save(HasGeneratedRewards())
-
 	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GreatVault)
 end
 ----------------------------------------------------------------

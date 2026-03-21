@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
-
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-
 function E.func_option_OTHER(category, layout)
 	----------------------------------------------------------------
 	-- HEADER
@@ -47,9 +45,6 @@ function E.func_option_OTHER(category, layout)
 		end
 		Settings.CreateDropdown(category, setting, GetFontOptions)
 	end
-
-
-
 	----------------------------------------------------------------
 	-- 2. Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
 	----------------------------------------------------------------

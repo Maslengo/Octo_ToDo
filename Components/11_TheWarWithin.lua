@@ -39,8 +39,8 @@ local function tempFunction()
 		{id = 3090, defS = false,}, -- Flame-Blessed Iron
 		{id = 3056, defS = false,}, -- Kej
 		{id = 2803, defS = false,}, -- Undercoin
-		-- {id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
-		-- {id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
+			{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
+			{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
 		{id = 1191, defS = false,},
 		{id = 3226, defS = false,}, -- Market Research
 		{id = 3303, defS = false,}, --

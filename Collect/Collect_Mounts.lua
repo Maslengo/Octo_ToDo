@@ -14,7 +14,6 @@ local function Collect_Mounts()
 	E.OctoTable_ALL_Mounts[3252] = E.OctoTable_ALL_Mounts[3252] or {}
 	local cache_2778 = E.func_Mounts_2778()
 	E.OctoTable_ALL_Mounts[2778] = E.OctoTable_ALL_Mounts[2778] or {}
-
 	for _, mountID in ipairs(GetMountIDs()) do
 		local _, _, source = GetMountInfoExtraByID(mountID)
 		source = source:gsub(" ", "") -- mountID == 645
@@ -61,8 +60,6 @@ local function Collect_Mounts()
 				end
 			end
 		end
-
-
 	end
 end
 ----------------------------------------------------------------

@@ -31,8 +31,6 @@ local GlobalAddonName, E = ...
 -- local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
 local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
 local OctoTable_PlayerBags = E.OctoTable_PlayerBags
-
-
 local function Collect_Items_BAGS()
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
@@ -45,14 +43,8 @@ local function Collect_Items_BAGS()
 	collectMASLENGO.Items = collectMASLENGO.Items or {}
 	collectMASLENGO.Items.Bags = {}
 	collectMASLENGO.Items.Bags_FULL = {}
-
 	local OctoTable_itemID_ItemsUsable = E.OctoTable_itemID_ItemsUsable
-
-
-
 	-- local seenSlots = {}
-
-
 	for _, bagID in next, (OctoTable_PlayerBags) do
 		-- for bagID = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
 		local numSlots = C_Container.GetContainerNumSlots(bagID)
@@ -78,7 +70,6 @@ local function Collect_Items_BAGS()
 						local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
 						-- local xyz = tostring(bagID)..tostring(slotIndex)
 						-- print (ItemLink, Quality)
-
 						collectMASLENGO.Items.Bags_FULL[itemID] = {
 							itemID = itemID,
 							ItemName = ItemName,
@@ -99,17 +90,8 @@ local function Collect_Items_BAGS()
 					-- 		existing.RequestLoadItemData = true
 					-- 		seenSlots[slotID] = true
 					-- 	end
-
-
-
 					end
 				end
-
-
-
-
-
-
 				local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
 				if info then
 					local itemID = info.itemID
@@ -120,7 +102,6 @@ local function Collect_Items_BAGS()
 					if researchValue then
 						SL_Possible_CatalogedResearch = SL_Possible_CatalogedResearch+(researchValue*stack)
 					end
-
 					if itemID == 169223 then
 						local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
 						if itemLocation:IsValid() and C_Item.DoesItemExist(itemLocation) then
@@ -129,10 +110,6 @@ local function Collect_Items_BAGS()
 							collectPlayerData.cloak_lvl = rank
 						end
 					end
-
-
-
-
 					-- Anima
 					if E.func_IsAnimaItemByID(itemID) then
 						local quality = info.quality
@@ -162,7 +139,6 @@ local function Collect_Items_BAGS()
 			end
 		end
 	end
-
 	-- wipe(collectMASLENGO.Items.Bags or {})
 	collectPlayerData.SL_Possible_Anima = SL_Possible_Anima ~= 0 and SL_Possible_Anima or nil
 	collectPlayerData.SL_Possible_CatalogedResearch = SL_Possible_CatalogedResearch ~= 0 and SL_Possible_CatalogedResearch or nil

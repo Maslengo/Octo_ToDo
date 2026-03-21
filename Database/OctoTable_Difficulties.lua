@@ -8,7 +8,6 @@ E.OctoTable_Difficulties = {
 	[17] = {prior = 2, abbr = "LFR"}, -- Looking For Raid
 	[7] = {prior = 3, abbr = "LFR"}, -- Looking For Raid (Legacy)
 	[220] = {prior = 4, abbr = "Solo"}, -- Story (solo) raid
-
 	-- 2. Normal
 	[1] = {prior = 5, abbr = "N"}, -- Normal (party)
 	[150] = {prior = 6, abbr = "N"}, -- Normal (party)
@@ -19,7 +18,6 @@ E.OctoTable_Difficulties = {
 	[12] = {prior = 11, abbr = "NS"}, -- Normal Scenario
 	[38] = {prior = 12, abbr = "NS"}, -- Normal Scenario
 	[147] = {prior = 13, abbr = "N"}, -- Normal (Warfronts)
-
 	-- 3. Heroic
 	[2] = {prior = 14, abbr = "H"}, -- Heroic (party)
 	[15] = {prior = 15, abbr = "H"}, -- Heroic (raid)
@@ -29,31 +27,25 @@ E.OctoTable_Difficulties = {
 	[39] = {prior = 19, abbr = "HS"}, -- Heroic Scenario
 	[149] = {prior = 20, abbr = "H"}, -- Heroic (Warfronts)
 	[230] = {prior = 21, abbr = "H"}, -- Heroic (none)
-
 	-- 4. Mythic
 	[23] = {prior = 22, abbr = "M"}, -- Mythic (party)
 	[16] = {prior = 23, abbr = "M"}, -- Mythic (raid)
 	[40] = {prior = 24, abbr = "MS"}, -- Mythic Scenario
-
 	-- 5. Mythic Keystone
 	[8] = {prior = 25, abbr = "M+"}, -- Mythic Keystone
-
 	-- 6. Timewalking
 	[24] = {prior = 26, abbr = "TW"}, -- Timewalking (party)
 	[33] = {prior = 27, abbr = "TW"}, -- Timewalking (raid)
-
 	-- 7. PvP / PvEvP
 	[34] = {prior = 28, abbr = "PvP"}, -- PvP
 	[45] = {prior = 29, abbr = "PvP"}, -- PvP Scenario
 	[25] = {prior = 30, abbr = "PvEvP"}, -- PvEvP Scenario
 	[32] = {prior = 31, abbr = "WPvP"}, -- World PvP Scenario
-
 	-- 8. Event / Scenario / Story
 	[20] = {prior = 32, abbr = "ES"}, -- Event Scenario
 	[30] = {prior = 33, abbr = "E"}, -- Event (scenario)
 	[18] = {prior = 34, abbr = "E"}, -- Event (raid)
 	[19] = {prior = 35, abbr = "E"}, -- Event (party)
-
 	-- 9. Other scenarios / dungeons
 	[152] = {prior = 36, abbr = "VoN"}, -- Visions of N'Zoth
 	[153] = {prior = 37, abbr = "TI"}, -- Teeming Island

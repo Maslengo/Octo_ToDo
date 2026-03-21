@@ -10,15 +10,12 @@ function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	if not isVisible then
 		CustomColor = E.COLOR_GRAY
 	end
-
 	local CharName = E.func_CharInfo_NickName(CharInfo, false, true, CustomColor, true)
 	local curServerShort = pd.curServerShort ~= E.curServerShort and "-"..E.func_CharInfo_Server(CharInfo, nil, true, CustomColor) or ""
-
 	local leftText =
 	E.func_texturefromIcon(pd.specIcon)..
 	CharName..
 	curServerShort
-
 	return leftText
 end
 ----------------------------------------------------------------
@@ -29,43 +26,34 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 	local isRenown = (typeSL == 1)
 	local characterData = {}
 	local grandTotal = 0
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local curCovID = pd.SL_covenantID
-
 		if curCovID then
 			local values = {}
 			local charTotal = 0
 			local activeValue = 0
-
 			for covenantID, covenant in next, (E.OctoTable_Covenant) do
 				local key = covenant.prefix .. (isRenown and "_Renown" or "_Anima")
 				local value = pd[key] or 0
-
 				values[covenantID] = value
 				charTotal = charTotal + value
-
 				if covenantID == curCovID then
 					activeValue = value
 				end
 			end
-
 			local hasData
 			if isRenown then
 				hasData = activeValue > 0
 			else
 				hasData = charTotal > 0 or (pd.SL_Possible_Anima or 0) > 0
 			end
-
 			if hasData then
 				if not isRenown then
 					grandTotal = grandTotal + charTotal
 				end
-
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 				local row = { leftText }
-
 				for covenantID, covenant in next, (E.OctoTable_Covenant) do
 					local value = values[covenantID]
 					if value > 0 then
@@ -76,11 +64,9 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 						row[covenantID + 1] = "-"
 					end
 				end
-
 				local sortValue
 				local totalAnimaText
 				local SL_Possible_Anima
-
 				if isRenown then
 					sortValue = activeValue
 				else
@@ -90,7 +76,6 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 						SL_Possible_Anima = E.COLOR_BLUE .. " +" .. E.func_CompactFormatNumber(pd.SL_Possible_Anima) .. "|r"
 					end
 				end
-
 				table.insert(characterData, {
 						row = row,
 						name = pd.Name,
@@ -101,7 +86,6 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 			end
 		end
 	end
-
 	if #characterData > 0 then
 		table.sort(characterData, function(a, b)
 				if a.sortValue ~= b.sortValue then
@@ -109,12 +93,10 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 				end
 				return a.name < b.name
 		end)
-
 		local minValue, maxValue
 		if not isRenown then
 			minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		end
-
 		for _, d in ipairs(characterData) do
 			if not isRenown then
 				local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
@@ -123,20 +105,16 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 			end
 			table.insert(tooltip, d.row)
 		end
-
 		local header = { "" }
 		for _, covenant in next, (E.OctoTable_Covenant) do
 			header[#header + 1] = E.func_texturefromIcon(covenant.icon)
 		end
 		header[#header + 1] = ""
-
 		if not isRenown then
 			header[#header + 1] = TOTAL .. ": " .. E.func_CompactFormatNumber(grandTotal)
 		end
-
 		table.insert(tooltip, 1, header)
 	end
-
 	return tooltip
 end
 ----------------------------------------------------------------
@@ -159,8 +137,6 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 				local row = { leftText }
 				local row2Text = E.func_CharInfo_Durability(CharInfo, true)
 				local row3Text = E.func_CharInfo_ItemLevel(CharInfo)
-
-
 				avgILVL = avgILVL + pd.avgItemLevel
 				table.insert(characterData, {
 						row = row,
@@ -265,15 +241,9 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local IsAccountWide = C_CurrencyInfo.IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
 	local IsAccountTransferable = C_CurrencyInfo.IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
 	local REGION = {}
-
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		REGION[CharInfo.PlayerData.CurrentRegionName] = true
 	end
-
-
-
-
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
@@ -301,7 +271,6 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 							row2Text = row2Text,
 					})
 				end
-
 			end
 		end
 	end
@@ -456,11 +425,9 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 			local OwnedKeystoneChallengeMapID = pd.OwnedKeystoneChallengeMapID or 0
 			-- local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY.."-|r"
 			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
-
 			local RIO_Score = seasonData and tonumber(seasonData.RIO_Score) or 0
 			local RIO_weeklyBest = seasonData and tonumber(seasonData.RIO_weeklyBest) or E.COLOR_GRAY.."-|r"
 			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, false)
-
 			local hasData = (RIO_Score > 0) or (OwnedKeystoneLevel > 0 and OwnedKeystoneChallengeMapID > 0)
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
@@ -487,7 +454,6 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 				return a.name < b.name
 		end)
 		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
-
 		for _, d in ipairs(characterData) do
 			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
 			d.row[2] = {d.row2Text, "LEFT"}
@@ -495,7 +461,6 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 			d.row[4] = color..d.row4Text.."|r"
 			table.insert(tooltip, d.row)
 		end
-
 		local heade1 = {
 			"",
 			"",
@@ -754,30 +719,32 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 		visiblePlayers[charInfo.PlayerData.GUID] = true
 	end
 	if dataType == "UniversalQuests" then
-
-
 		for _, data in next, (E.ALL_UniversalQuests) do
 			if data.quests and data.reset then
 				local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 				local reset = data.reset
-				if data.isAccount then
-					reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
-				end
 				if id == questKey then
-					tooltip[#tooltip+1] = {reset}
+					local result = reset
+					if reset == "Weekly" then
+						result = WEEKLY
+					elseif reset == "Daily" then
+						result = DAILY
+					elseif reset == "Month" then
+						result = CALENDAR_REPEAT_MONTHLY
+					elseif reset == "Regular" then
+						result = ITEM_QUALITY1_DESC -- PLAYER_DIFFICULTY1
+					end
+					if data.isAccount then
+						result = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
+						-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
+					end
+					tooltip[#tooltip+1] = {result}
 				end
 			end
 		end
-
-
-
-
 		-- local reset = id:match("_([^_]+)$")
 		-- -- if data.isAccount then
 		-- tooltip[#tooltip+1] = {reset}
-
-
-
 	elseif dataType == "Currencies" and id == 1822 then
 		tooltip = E.func_CovenantCurrencyTooltip(1822, visiblePlayers, 1)
 	elseif dataType == "Currencies" and id == 1813 then

@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
-
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-
 function E.func_option_TOOLTIP(category, layout)
 	----------------------------------------------------------------
 	-- HEADER ------------------------------------------------------
@@ -47,8 +45,6 @@ function E.func_option_TOOLTIP(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		-- local name = MOUNTS -- "Транспорт"
 		local name = ACCESSIBILITY_MOUNT_LABEL.. E.COLOR_RED.."*|r" -- "Средства передвижения" TUTORIAL_TITLE53
-
-
 		local defaultValue = true -- Settings.Default.False
 		-- local variableType = Settings.VarType.Boolean
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)

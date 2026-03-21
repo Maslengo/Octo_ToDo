@@ -57,8 +57,6 @@ function EventFrame:func_CacheGameData()
 					end
 				end
 			end
-
-
 			if cm and cm.Items then
 				if cm.Items.Bags then
 					for itemID in next,(cm.Items.Bags) do
@@ -74,7 +72,6 @@ function EventFrame:func_CacheGameData()
 						end
 					end
 				end
-
 				if cm.Items.Bank then
 					for itemID in next,(cm.Items.Bank) do
 						if itemID then
@@ -90,12 +87,8 @@ function EventFrame:func_CacheGameData()
 					end
 				end
 			end
-
-
-
 		end
 	end
-
 	-- for itemID, v in next,(E.ALL_Items) do
 	-- 	print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityLevel(itemID))
 	-- end
@@ -236,7 +229,6 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		UnitSex = 1,
 		-- Money = 0,
 		realTotalTime = 1,
-
 		levelCapped20 = false,
 		GameLimitedMode_IsActive = false,
 		specName = E.NONE,
@@ -349,72 +341,59 @@ function EventFrame:init_Octo_ToDo_DB_AccountData()
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] or {}
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank or {}
 end
+E.Octo_ToDo_DB_Vars_DEFAULTS = {
+	Config_LevelToShow = 1,
+	Config_LevelToShowMAX = 90,
+	isOnlyCurrentBtag = false,
+	ShowOnlyCurrentRegion = false,
+	isOnlyCurrentServer = false,
+	isOnlyCurrentFaction = false,
+	Config_DebugID_ALL = false,
+	Config_numberFormatMode = 1,
+	Config_ADDON_HEIGHT = 20,
+	Config_ClampedToScreen = false,
+	Config_ShowAllDifficulties = true,
+	Config_DifficultyAbbreviation = true,
+	Config_MountsInTooltip = true,
+	CONFIG_SPAM_TIME = 2,
+	CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,
+	Currencies = true,
+	CONFIG_TEXTURE = "Blizzard Raid Bar",
+	GlobalDBVersion = 0,
+	CONFIG_TRANSLIT = false,
+	CONFIG_CURRENCY_SHOW_BRACKETS = false,
+	CONFIG_CURRENCY_COLOR_BRACKETS = E.COLOR_STEELBLUE:gsub("^|c", ""),
+	CONFIG_CURRENCY_SHOW_REMAINING = false,
+	CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_SKYBLUE:gsub("^|c", ""),
+	CONFIG_CURRENCY_SHOW_ZERO = false,
+	CONFIG_CURRENCY_COLOR_ZERO = E.COLOR_GRAY:gsub("^|c", ""),
+}
 function EventFrame:init_Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
-	local featureDefaults = {
-		Config_LevelToShow = 1,
-		Config_LevelToShowMAX = 90,
-
-		isOnlyCurrentBtag = true,
-		ShowOnlyCurrentRegion = true,
-		isOnlyCurrentServer = false,
-		isOnlyCurrentFaction = false,
-
-		Config_DebugID_ALL = false,
-
-		Config_numberFormatMode = 1,
-		Config_ADDON_HEIGHT = 20,
-		Config_ClampedToScreen = false,
-
-		Config_ShowAllDifficulties = true,
-		Config_DifficultyAbbreviation = true,
-		Config_MountsInTooltip = true,
-
-
-
-
-
-
-		Config_SPAM_TIME = 2,
-		Config_AchievementShowCompleted = true,
-		Currencies = true,
-		Config_Texture = "Blizzard Raid Bar",
-		GlobalDBVersion = 0,
-		Config_UseTranslit = false,
-	}
-	for k, v in next, (featureDefaults) do
+	for k, v in next, (E.Octo_ToDo_DB_Vars_DEFAULTS) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
 	end
 	--------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------
 	--------------------------------------------------------------------------------
-
 	--------------------------------------------------------------------------------
 	-- opde(Octo_ToDo_DB_Vars)
 	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or E.DefaultFont
-
-
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
-
 function E.init_Octo_ToDo_DB_Vars()
 	EventFrame:init_Octo_ToDo_DB_Vars()
 	return
 end
-
-
-
 function EventFrame:Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
-
 	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
 	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
 	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
-
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllItems")
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
@@ -427,22 +406,16 @@ function EventFrame:Init_Octo_Cache_DB()
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
 	-- E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
-
 end
-
 function E.Init_Octo_Cache_DB()
 	EventFrame:Init_Octo_Cache_DB()
 end
-
-
-
 function EventFrame:init_Octo_profileColors()
 	Octo_profileColors = Octo_profileColors or {}
 	local db = Octo_profileColors
 	db.profiles = db.profiles or {}
 	db.Current_profile = db.Current_profile or E.TEXT_DEFAULT
 	E.func_CreateNew_profileColors(E.TEXT_DEFAULT)
-
 	if db and db.profiles then
 		for profileName in next, (db.profiles) do
 			if profileName ~= E.TEXT_DEFAULT then
@@ -450,29 +423,20 @@ function EventFrame:init_Octo_profileColors()
 			end
 		end
 	end
-
-
 	E.func_CheckALL_profileColors()
 	-- C_Timer.After(1, function()
 	-- 	opde(db)
 	-- end)
 	E.PROFTBL = db.profiles[db.Current_profile]
-
-
-
 end
-
 function E.init_Octo_profileColors()
 	EventFrame:init_Octo_profileColors()
 	return
 end
-
-
 function EventFrame:init_Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
 	E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
-
 	if Octo_profileKeys and Octo_profileKeys.profiles then
 		for profileName in next, (Octo_profileKeys.profiles) do
 			if profileName ~= E.TEXT_DEFAULT then
@@ -489,8 +453,6 @@ function EventFrame:init_Octo_profileKeys()
 		end
 	end
 end
-
-
 function EventFrame:func_Daily_Reset()
 	local serverTime = GetServerTime()
 	E.Reset_JournalInstance()
@@ -528,7 +490,6 @@ function EventFrame:func_Weekly_Reset()
 				pd.OwnedKeystoneLevel = nil
 				pd.OwnedKeystoneChallengeMapID = nil
 				pd.RIO_weeklyBest = nil
-
 				if pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID] then
 					pd.MythicPlus[E.MythicPlus_seasonID].RIO_weeklyBest = nil
 				end
@@ -579,14 +540,9 @@ function EventFrame:func_CheckAll()
 	EventFrame:func_Weekly_Reset()
 	EventFrame:func_Month_Reset()
 end
-
-
 function E.WTF_func_CheckAll()
 	EventFrame:func_CheckAll()
 end
-
-
-
 function EventFrame:func_ScheduleResetTimer()
 	local function func_GetTimeToReset()
 		if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then
@@ -637,7 +593,6 @@ function EventFrame:PLAYER_LOGIN()
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()
 	-- C_Timer.After(2, E.func_BUILD_DUNG_DB)
-
 	C_Timer.After(1, E.func_UpdateGlobals)
 end
 local function Reset_JournalInstance()

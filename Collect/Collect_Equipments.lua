@@ -26,17 +26,14 @@ local function Collect_Equipments()
 				local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
 				local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
 				-- local ItemDataCached = C_Item.IsItemDataCached(itemLocation) -- or false
-
 				if itemID then
 					local cacheName = E.func_GetName("item", itemID)
 					-- E.ALL_Items[itemID] = true
 				end
-
 				if itemID == 169223 then
 					local rank = E.GetItemRankFromLink(ItemLink)
 					collectPlayerData.cloak_lvl = rank
 				end
-
 				collectMASLENGO.InventoryType[slotID] = {
 					itemID = itemID,
 					ItemName = ItemName,
@@ -50,7 +47,6 @@ local function Collect_Equipments()
 					current_Durability = current_Durability,
 					maximum_Durability = maximum_Durability,
 				}
-
 				seenSlots[slotID] = true
 			else
 				-- данные не загружены, оставляем старые и помечаем для подгрузки

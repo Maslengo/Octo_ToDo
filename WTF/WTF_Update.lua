@@ -71,7 +71,6 @@ local function updateChars(pd, cm, DBVersion)
 		if cm.Items then
 			pd.usedSlots_BANK = nil
 			pd.totalSlots_BANK = nil
-
 			if cm.Items.Bank then
 				wipe(cm.Items.Bank)
 			end
@@ -101,7 +100,6 @@ local function updateChars(pd, cm, DBVersion)
 			end
 			pd.InventoryType = nil
 		end
-
 		if cm.CovenantAndAnima then
 			local curCov = cm.CovenantAndAnima.curCovID
 			pd.SL_covenantID = E.func_Save(curCov)
@@ -140,12 +138,10 @@ local function updateChars(pd, cm, DBVersion)
 			pd.OwnedKeystoneLevel = pd.CurrentKeyLevel
 			pd.CurrentKeyLevel = nil
 		end
-
 		if cm.Reputation then
 			for reputationID, v in next, (cm.Reputation) do
 				if type(v) == "string" then
 					local FIRST, SECOND, ParagonCount, color, standingTEXT, repType = ("#"):split(v)
-
 					cm.Reputation[reputationID] = {
 						FIRST = tonumber(FIRST),
 						SECOND = tonumber(SECOND),
@@ -185,11 +181,11 @@ local function updateGlobal(DBVersion)
 	end
 	----------------------------------------------------------------
 	if compareVersion(108.5, DBVersion) then
-		Octo_ToDo_DB_Vars.Config_SPAM_TIME = 2
+		Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME = 2
 	end
 	----------------------------------------------------------------
 	if compareVersion(110.4, DBVersion) then
-		Octo_ToDo_DB_Vars.Config_UseTranslit = false
+		Octo_ToDo_DB_Vars.CONFIG_TRANSLIT = false
 	end
 	----------------------------------------------------------------
 	if compareVersion(112.2, DBVersion) then
@@ -198,10 +194,9 @@ local function updateGlobal(DBVersion)
 			E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
 			print (addonNAME, "reset profile:", DEFAULT)
 		end
-
 	end
 	----------------------------------------------------------------
-	if compareVersion(112.5, DBVersion) then
+	if compareVersion(112.8, DBVersion) then
 		Octo_Cache_DB = {}
 		E.Init_Octo_Cache_DB()
 	end

@@ -99,8 +99,6 @@ function E.func_option_COLOR_PROFILE(category, layout)
 				local profilesMenu2 = E.CreateProfilesMenu(dd, providerfunc, Octo_profileColors, "Colors")
 				dd:ddSetInitFunc(function(dd, level, value)
 						return profilesMenu2(dd, level, value)
-
-
 							-- local info = {list = {}}
 							-- ----------------------------------------------------------------
 							-- for i, fontName in ipairs(tbl) do

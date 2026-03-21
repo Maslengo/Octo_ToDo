@@ -32,7 +32,6 @@ local function func_InitializeProfileStructure_profileColors(profileName)
 	E.func_InitField(db, "Current_profile", profileName)
 	Octo_profileColors.Current_profile = db.Current_profile
 	E.PROFTBL = Octo_profileColors.profiles[Octo_profileColors.Current_profile]
-
 	-- E.func_InitSubTable(db, "profileColors")
 	E.func_InitSubTable(db, "profiles")
 	E.func_InitSubTable(db.profiles, profileName)
@@ -168,12 +167,10 @@ local function defaults_tbl()
 		ConfigColor_Rep_Standard_8_g = RS8g,
 		ConfigColor_Rep_Standard_8_b = RS8b,
 		ConfigColor_Rep_Standard_8_a = RS8a,
-
 		ConfigColor_Rep_Friend_r = RFr,
 		ConfigColor_Rep_Friend_g = RFg,
 		ConfigColor_Rep_Friend_b = RFb,
 		ConfigColor_Rep_Friend_a = RFa,
-
 		ConfigColor_Rep_Major_r = RMr,
 		ConfigColor_Rep_Major_g = RMg,
 		ConfigColor_Rep_Major_b = RMb,
@@ -215,7 +212,6 @@ local function defaults_tbl()
 	}
 	return tbl
 end
-
 local function OctoUI_tbl()
 	local tbl = {
 		ConfigColor_Highlight_UseFaction_CONFIG = false,
@@ -259,7 +255,6 @@ local function OctoUI_tbl()
 		ConfigColor_Rep_Friend_g = 0.4862745098039216,
 		ConfigColor_Rep_Friend_b = 1,
 		ConfigColor_Rep_Friend_a = 0.5,
-
 		ConfigColor_faction_Horde_r = 0.7686274509803922,
 		ConfigColor_TOOLTIP_TooltipFrame_b = 0.1647058874368668,
 		ConfigColor_Rep_Paragon_b = 1,
@@ -379,16 +374,12 @@ local function syncProfileWithDefaults(profile, defaults, profileName, path)
 		end
 	end
 end
-
-
 -- local function applyProfileToE(profile)
 -- 	-- local profile = Octo_profileColors.profiles[profileName]
 -- 	if not profile then return end
-
 -- 	local function recurse(tbl, prefix)
 -- 		for key, value in next, tbl do
 -- 			local flatKey = prefix and (prefix .. "_" .. key) or key
-
 -- 			if type(value) == "table" then
 -- 				recurse(value, flatKey)
 -- 			else
@@ -396,16 +387,8 @@ end
 -- 			end
 -- 		end
 -- 	end
-
 -- 	recurse(profile, nil)
 -- end
-
-
-
-
-
-
-
 -- Обновлённая функция проверки всех профилей
 function E.func_CheckALL_profileColors()
 	local db = Octo_profileColors
@@ -415,11 +398,6 @@ function E.func_CheckALL_profileColors()
 		syncProfileWithDefaults(profile, defaults, profileName)
 	end
 end
-
-
-
-
-
 function E.func_CreateNew_profileColors(profileName)
 	local db = func_InitializeProfileStructure_profileColors(profileName)
 	-- гарантируем, что профиль существует
@@ -427,12 +405,10 @@ function E.func_CreateNew_profileColors(profileName)
 	-- единая точка инициализации / миграции
 	syncProfileWithDefaults(db.profiles[profileName], defaults_tbl(), profileName)
 	-- applyProfileToE(db.profiles[profileName])
-
 	do
 		local profileName = E.TEXT_DEFAULT_DARK
 		local db = func_InitializeProfileStructure_profileColors(profileName)
 		db.profiles[profileName] = db.profiles[profileName] or {}
 		syncProfileWithDefaults(db.profiles[profileName], OctoUI_tbl(), profileName)
 	end
-
 end

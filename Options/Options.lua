@@ -18,9 +18,7 @@ local icon = E.func_texturefromIcon(C_AddOns.GetAddOnMetadata(GlobalAddonName, "
 -- local SettingListHeaderName = E.func_GetAddOnMetadata(GlobalAddonName, "Title")
 local SettingListHeaderName = E.func_AddonNameForOptions(GlobalAddonName)
 local vesrion = E.COLOR_GRAY.." ".. C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version").."|r"
-
 local deb = E.func_texturefromIcon(E.ICON_DEBUG, 16, 32, false)
-
 local category1name = SettingListHeaderName
 local category2name = COLORS
 local category3name = deb.."category3name"
@@ -70,6 +68,7 @@ function EventFrame:PLAYER_LOGIN()
 			E.func_option_OTHER(category, layout)
 			E.func_option_TOOLTIP(category, layout)
 			E.func_option_CHARACTER(category, layout)
+			E.func_option_CURRENCY(category, layout)
 			E.func_option_DEBUG(category, layout)
 		end
 	end
