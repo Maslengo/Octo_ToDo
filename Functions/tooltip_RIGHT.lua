@@ -99,9 +99,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			-- Weekly cap display (always show if exists)
 			if maxWeeklyQuantity ~= 0 then
-				tooltip[#tooltip+1] = {string.format(CURRENCY_WEEKLY_CAP, COLOR_BRACKETS, quantity, maxWeeklyQuantity)}
-				if maxWeeklyQuantity ~= quantity then
-					local canEarn = maxWeeklyQuantity - quantity
+				tooltip[#tooltip+1] = {string.format(CURRENCY_WEEKLY_CAP, COLOR_BRACKETS, quantityEarnedThisWeek, maxWeeklyQuantity)}
+				if maxWeeklyQuantity ~= quantityEarnedThisWeek then
+					local canEarn = maxWeeklyQuantity - quantityEarnedThisWeek
 					tooltip[#tooltip+1] = {" "}
 					tooltip[#tooltip+1] = {{L["To Earn"]..": " .. COLOR_REMAINING .. canEarn .. "|r", "LEFT"}}
 				end

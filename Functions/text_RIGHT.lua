@@ -490,13 +490,13 @@ function E.func_TextCenter_Currency(CharInfo, id, itemID)
 			-- Weekly cap display (always show if exists)
 			if maxWeeklyQuantity ~= 0 then
 				-- result = result .. {string.format(CURRENCY_WEEKLY_CAP, color, quantity, maxWeeklyQuantity)}
-				result = result .. COLOR_BRACKETS .." (".. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
+				result = result .. COLOR_BRACKETS .." (".. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
 			end
 		end
 		if CONFIG_CURRENCY_SHOW_REMAINING then
 			if maxWeeklyQuantity ~= 0 then
-				if maxWeeklyQuantity ~= quantity then
-					local canEarn = maxWeeklyQuantity - quantity
+				if maxWeeklyQuantity ~= quantityEarnedThisWeek then
+					local canEarn = maxWeeklyQuantity - quantityEarnedThisWeek
 					result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
 				end
 			end
