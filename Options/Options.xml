@@ -1,18 +1,23 @@
 <Ui>
 	<Script file="Options\Options.lua"/>
 
-	<Script file="Options\1\func_option_CHARACTER.lua"/>
-	<Script file="Options\1\func_option_CURRENCY.lua"/>
-	<Script file="Options\1\func_option_DEBUG.lua"/>
-	<Script file="Options\1\func_option_FONT.lua"/>
-	<Script file="Options\1\func_option_OTHER.lua"/>
-	<Script file="Options\1\func_option_TOOLTIP.lua"/>
+	<Script file="Options\0\func_option_CHARACTER.lua"/>
+	<Script file="Options\0\func_option_FONT.lua"/>
+	<Script file="Options\0\func_option_OTHER.lua"/>
 
-	<Script file="Options\2\func_option_2_COLOR.lua"/>
+	<Script file="Options\2\func_option_CURRENCY.lua"/>
 
-	<Script file="Options\3\func_option_COLOR_MAIN.lua"/>
-	<Script file="Options\3\func_option_COLOR_PROFILE.lua"/>
+	<Script file="Options\3\func_option_REPUTATION.lua"/>
 
-	<Script file="Options\4\func_option_userscript.lua"/>
+	<Script file="Options\4\func_option_DUNGEONS.lua"/>
+
+	<Script file="Options\10\func_option_COLOR.lua"/>
+
+	<Script file="Options\11\func_option_COLOR_MAIN.lua"/>
+	<Script file="Options\11\func_option_COLOR_PROFILE.lua"/>
+
+	<Script file="Options\998\func_option_userscript.lua"/>
+
+	<Script file="Options\999\func_option_DEBUG.lua"/>
 
 </Ui>

@@ -6,7 +6,7 @@ function E.func_option_DEBUG(category, layout)
 	----------------------------------------------------------------
 	-- HEADER
 	----------------------------------------------------------------
-	E.func_Header(layout, BINDING_HEADER_DEBUG)
+	-- E.func_Header(layout, BINDING_HEADER_DEBUG)
 	----------------------------------------------------------------
 	-- 1. Config_DebugID_ALL
 	----------------------------------------------------------------

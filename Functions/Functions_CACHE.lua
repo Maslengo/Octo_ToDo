@@ -81,11 +81,11 @@ function E.func_GetQuestIcon(id)
 	local info = C_QuestLog.GetQuestTagInfo(id)
 	if info and info.tagID and QUEST_TAG_ATLAS[info.tagID] then
 		local atlasName = QUEST_TAG_ATLAS[info.tagID]
-		icon = icon..E.func_texturefromIcon(atlasName, nil, nil, true)
+		icon = icon..E.func_texturefromIcon(atlasName)
 	end
 	local classification, _, atlasName = QuestUtil.GetQuestClassificationDetails(id)
 	if classification and atlasName then
-		icon = icon..E.func_texturefromIcon(atlasName, nil, nil, true)
+		icon = icon..E.func_texturefromIcon(atlasName)
 	end
 	return icon
 end
@@ -262,7 +262,7 @@ function E.func_GetName(TYPE, id, forcedQuality)
 		elseif TYPE == "quest" then -- AllQuests
 			local result = (GetTitleForQuestID or GetQuestInfo)(id)
 			if result then
-				name = E.func_GetQuestIcon(id)..func_CacheName(id, Cache, result, TYPE) -- QUESTS_LABEL
+				name = func_CacheName(id, Cache, result, TYPE) -- QUESTS_LABEL
 			end
 		elseif TYPE == "currency" then -- AllCurrencies
 			local info = GetCurrencyInfo(id)
@@ -362,8 +362,66 @@ function E.func_GetName(TYPE, id, forcedQuality)
 	end
 	local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
 	local result = E.func_translit and E.func_translit(name or E.COLOR_RED..UNKNOWN.."|r") or ""
+
+
+
+	-- if TYPE == "quest" then
+	-- 	result = E.func_GetQuestIcon(id)..result
+	-- end
+
+
 	return result..debugTEXT
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function E.func_GetIcon(TYPE, id)
+	local icon = E.ICON_QUESTION_MARK
+	if not id then return icon end -- "no id" end
+	if type(id) ~= "number" then return icon end -- "wrong id type" end
+	if not TYPE then return icon end -- "not TYPE" end
+	id = tonumber(id)
+	-- E.ICON_QUESTION_MARK
+	-- E.ICON_EMPTY
+
+	if TYPE == "currency" then
+		icon = E.func_GetCurrencyIcon(id)
+	elseif TYPE == "item" then
+		icon = E.func_GetItemIcon(id)
+	elseif TYPE == "spell" then
+		icon = E.func_GetSpellIcon(id)
+	end
+
+
+	-- E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
+	-- E.func_GetEmptySlotIcon(slotID)
+
+
+
+
+
+
+	return icon
+
 end

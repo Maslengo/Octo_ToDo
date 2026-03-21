@@ -55,7 +55,19 @@ local function tempFunction()
 				{93425}, -- Sparks of War: Harandar
 				{93426}, -- Sparks of War: Voidstorm
 			},
-			forcedMaxQuest = 1, any
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+					{rewID = 232875, rewTYPE = "item", rewSIZE = 1 }, -- Spark of Radiance
+				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+
+				{rewID = 2123, rewTYPE = "currency", rewSIZE = 1000,}, -- Bloody Tokens
+				{rewID = 1792, rewTYPE = "currency", rewSIZE = 500,}, -- Honor
+				{rewID = 1602, rewTYPE = "currency", rewSIZE = 50,}, -- Conquest
+				{rewID = 3365, rewTYPE = "currency", rewSIZE = 250,}, -- Silvermoon Court
+			},
+			forcedMaxQuest = 1, -- any
 		},
 		----------------------------------------------------------------
 		{
@@ -70,6 +82,13 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{89354},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+					-- {rewID = 232875, rewTYPE = "item", rewSIZE = 1 }, -- Spark of Radiance
+				{rewID = 2123, rewTYPE = "currency", rewSIZE = 150,}, -- Bloody Tokens
+				{rewID = 1792, rewTYPE = "currency", rewSIZE = 500,}, -- Honor
+				{rewID = 3410, rewTYPE = "currency", rewSIZE = 1000,}, -- Slayer's Duellum
 			},
 			forcedMaxQuest = 1,
 		},
@@ -87,55 +106,58 @@ local function tempFunction()
 			quests = {
 				{93865},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+					-- {rewID = 232875, rewTYPE = "item", rewSIZE = 1 }, -- Spark of Radiance
+				{rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
+				{rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
+				{rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
+			},
 			forcedMaxQuest = 1,
 		},
-		----------------------------------------------------------------
+
+
+
 		-- {
 		-- 	sorted = false,
 		-- 	showTooltip = true,
 		-- 	TextLeft = function()
-		-- 		return E.func_GetName("map", 2339)..": "..E.func_GetName("quest", 47148, false)
+		-- 		return E.func_GetName("map", 2339)..": "..L["Weekly quests"].." (PVP)"
 		-- 	end,
-		-- 	name_save = "SomethingDifferent",
-		-- 	defS = true,
+		-- 	name_save = "WeeklyPVP",
+		-- 	defS = false,
 		-- 	reset = "Weekly",
 		-- 	desc = categoryKey,
 		-- 	quests = {
-		-- 		{47148,},
-		-- 	},
-		-- 	forcedMaxQuest = 1,
-		-- },
-		-- {
-		-- 	sorted = false,
-		-- 	showTooltip = true,
-		-- 	TextLeft = function()
-		-- 		return E.func_GetName("map", 2339)..": "..E.func_GetName("npc", 219260) -- "Ruffious"
-		-- 	end,
-		-- 	name_save = "Ruffious",
-		-- 	defS = true,
-		-- 	reset = "Weekly",
-		-- 	desc = categoryKey,
-		-- 	quests = {
-		-- 			{80185},
-		-- 				{nil},
-		-- 			{80184},
-		-- 			{80189},
-		-- 			{80187},
-		-- 			{80188},
-		-- 			{80186},
-		-- 				{nil},
-		-- 			{81796},
-		-- 			{81794},
-		-- 			{90781},
-		-- 			{86853},
-		-- 			{81793},
-		-- 			{81795},
+		-- 		-- {nil}, --"PvP Weekly"
+		-- 		{80184},
+		-- 		{80185},
+		-- 		{80186},
+		-- 		{80187},
+		-- 		{80188},
+		-- 		{80189},
+		-- 		{nil},
+		-- 		-- {nil}, --"World PvP Weekly"
+		-- 		{81793},
+		-- 		{81794},
+		-- 		{81795},
+		-- 		{81796},
+		-- 		{86853},
+		-- 		{90781},
+		-- 		{nil}, -- "Brawl Weekly"
+		-- 		{47148},
 		-- 	},
 		-- 	forcedMaxQuest = 3,
 		-- },
-		-- wowhead.com/ptr-2/ru/quest=90781
-		-- wowhead.com/ptr-2/ru/quest=80186
-		-- wowhead.com/ptr-2/ru/quest=80189
+
+
+
+
+
+
+
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {

@@ -1050,15 +1050,6 @@ function E.func_SecondsToClock(time, allwaysShowSeconds)
 	end
 	return table.concat(parts)
 end
-function E.func_texturefromIcon(icon, iconWidth, iconHeight, isAtlas)
-	local iconWidth = iconWidth or 16
-	local iconHeight = iconHeight or 16
-	if isAtlas then
-		return E.func_GetAtlasIcon(icon, iconWidth, iconHeight)
-	else
-		return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
-	end
-end
 function E.func_texturefromIconEVENT(icon, iconSize)
 	iconSize = iconSize or 16
 	return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
@@ -2186,11 +2177,18 @@ function E.func_isAtlas(TextureOrAtlas)
 		return false
 	end
 	local info = C_Texture.GetAtlasInfo(TextureOrAtlas)
-	if info and info.name then
+	-- if info and info.name then
+	if info and info.width then
 		return true
 	end
 	return false
 end
+
+
+-- /dump C_Texture.GetAtlasInfo("warbands-icon")
+-- /dump C_Texture.GetAtlasInfo(629077)
+
+
 ----------------------------------------------------------------
 function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	if not frame or not TextureOrAtlas then return end
@@ -2199,6 +2197,16 @@ function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 		m.SetAtlas(frame, TextureOrAtlas, UseAtlasSize or false)
 	else
 		m.SetTexture(frame, TextureOrAtlas)
+	end
+end
+----------------------------------------------------------------
+function E.func_texturefromIcon(icon, iconWidth, iconHeight)
+	local iconWidth = iconWidth or 16
+	local iconHeight = iconHeight or 16
+	if E.func_isAtlas(icon) then
+		return E.func_GetAtlasIcon(icon, iconWidth, iconHeight)
+	else
+		return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
 	end
 end
 ----------------------------------------------------------------

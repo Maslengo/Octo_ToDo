@@ -724,6 +724,7 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 				local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 				local reset = data.reset
 				if id == questKey then
+					----------------
 					local result = reset
 					if reset == "Weekly" then
 						result = WEEKLY
@@ -735,12 +736,34 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 						result = ITEM_QUALITY1_DESC -- PLAYER_DIFFICULTY1
 					end
 					if data.isAccount then
-						result = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
+						result = E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE)..WEEKLY .. " " .. REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE
+						-- result = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
 						-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
 					end
 					tooltip[#tooltip+1] = {result}
+
+					----------------
+
+					local rewards = data.rewards or 0
+					if rewards ~= 0 then
+						tooltip[#tooltip+1] = {" "}
+						tooltip[#tooltip+1] = {REWARDS..": ", " "}
+						for _, rews in next,(rewards) do
+							local rewID = rews.rewID
+							local rewTYPE = rews.rewTYPE
+							local rewSIZE = rews.rewSIZE
+							if rewID then
+								tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetIcon(rewTYPE, rewID))..E.func_GetName(rewTYPE, rewID), rewSIZE}
+							end
+						end
+					end
+					----------------
+
 				end
 			end
+
+
+
 		end
 		-- local reset = id:match("_([^_]+)$")
 		-- -- if data.isAccount then

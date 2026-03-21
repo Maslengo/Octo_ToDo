@@ -5,7 +5,7 @@ function E.func_option_CURRENCY(category, layout)
 	----------------------------------------------------------------
 	-- HEADER ------------------------------------------------------
 	----------------------------------------------------------------
-	E.func_Header(layout, CURRENCY)
+	-- E.func_Header(layout, CURRENCY)
 	----------------------------------------------------------------
 	-- 1. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_ZERO ----------
 	----------------------------------------------------------------
@@ -131,6 +131,22 @@ function E.func_option_CURRENCY(category, layout)
 			end
 			return frame
 		end
+	end
+	----------------------------------------------------------------
+	-- 7. Octo_ToDo_DB_Vars.Config_MountsInTooltip -----------------
+	----------------------------------------------------------------
+	do
+		local variable = E.func_GenerateID()
+		local variableKey = "Config_MountsInTooltip"
+		local variableTbl = Octo_ToDo_DB_Vars
+		-- local name = MOUNTS -- "Транспорт"
+		local name = ACCESSIBILITY_MOUNT_LABEL.. E.COLOR_RED.."*|r" -- "Средства передвижения" TUTORIAL_TITLE53
+		local defaultValue = true -- Settings.Default.False
+		-- local variableType = Settings.VarType.Boolean
+		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
+		setting:SetValueChangedCallback(E.func_UpdateGlobals)
+		local tooltip = L["Shows mounts available for this currency in the tooltip"]
+		Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
 end

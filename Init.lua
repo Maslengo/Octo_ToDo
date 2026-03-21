@@ -12,7 +12,6 @@ end
 ----------------------------------------------------------------
 E.DEBUG = false
 E.DEBUG_NAME = false
-E.DEBUG_OPTIONS = false
 E.DEBUG_CURRENCY_TOOLTIP = false
 ----------------------------------------------------------------
 E.OctoTable_ColoredFrames = {}

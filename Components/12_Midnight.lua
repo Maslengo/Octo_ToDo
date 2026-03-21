@@ -67,6 +67,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 232875, defS = false,}, -- Spark of Radiance (Midnight Season 1)
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
@@ -170,6 +171,14 @@ local function tempFunction()
 				{95842}, -- Midnight: Void Assaults
 				{95843}, -- Midnight: Ritual Sites
 			},
+			rewards = {
+				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				{rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				{rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
 			forcedMaxQuest = 2,
 		},
 		----------------------------------------------------------------
@@ -190,6 +199,19 @@ local function tempFunction()
 				-- {86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(252415))..E.func_GetName("item", 252415)},},
 				{86371, forcedText = {itemID = 252415}, addText = {text = E.COLOR_GREEN.." ("..format(EXPANSION_SEASON_NAME, "Midnight", 1)..")|r"}  },
 			},
+			rewards = {
+				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				{rewID = 252415, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
+
+
+
+
+
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
@@ -206,6 +228,13 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{93784},
+			},
+			rewards = {
+				{rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+				{rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				{rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 264248, rewTYPE = "item", rewSIZE = 1500,}, --
+				-- {rewID = 157980, rewTYPE = "spell", rewSIZE = 1500,}, --
 			},
 			forcedMaxQuest = 1, -- any
 		},
@@ -225,6 +254,11 @@ local function tempFunction()
 			quests = {
 				{89289},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "currency", rewSIZE = nil,}, --
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 238987, rewTYPE = "item", rewSIZE = 1,}, -- Saltheril's Favor
+			},
 			forcedMaxQuest = 1, -- any
 		},
 		----------------------------------------------------------------
@@ -243,6 +277,15 @@ local function tempFunction()
 				{90574},
 				{90575},
 				{90576},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 263465, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268489, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269701, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Season 1)
+				{rewID = 3316, rewTYPE = "currency", rewSIZE = 200,}, -- Silvermoon Court
+				{rewID = 3365, rewTYPE = "currency", rewSIZE = 2000,}, -- Silvermoon Court
+				{rewID = 3379, rewTYPE = "currency", rewSIZE = 275,}, -- Brimming Arcana
 			},
 			forcedMaxQuest = 1, -- any
 		},
@@ -278,6 +321,15 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{89507},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 263466, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268488, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269702, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Season 1)
+				{rewID = 3310, rewTYPE = "currency", rewSIZE = 50,}, -- Coffer Key Shards
+				{rewID = 3316, rewTYPE = "currency", rewSIZE = 200,}, -- Voidlight Marl
+				{rewID = 3354, rewTYPE = "currency", rewSIZE = 2000,}, -- The Amani Tribe
 			},
 			forcedMaxQuest = 1, -- any
 		},
@@ -315,6 +367,11 @@ local function tempFunction()
 			quests = {
 				{89268}, -- Lost Legends
 			},
+			rewards = {
+				{rewID = 1281792, rewTYPE = "spell", rewSIZE = nil,}, --
+				-- {rewID = 263466, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, --
+				-- {rewID = 3310, rewTYPE = "currency", rewSIZE = 50,}, --
+			},
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
@@ -329,13 +386,22 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{88993}, -- Wey'nan's Ward
-				{88994}, -- The Cauldron of Echoes
-				{88995}, -- Aln'hara's Bloom
-				{88996}, -- The Echoless Flame
-				{88997}, -- Russula's Outreach
+				{88993}, -- Wey'nan's Ward (item=263037/replica-weynans-ward)
+				{88994}, -- The Cauldron of Echoes (item=263315/bubbling-haranir-cauldron)
+				{88995}, -- Aln'hara's Bloom (item=263196/harandar-glowvine-lantern)
+				{88996}, -- The Echoless Flame (https://www.wowhead.com/item=264262/haranir-whistling-arrow)
+				{88997}, -- Russula's Outreach (item=262906/harandar-anvil)
 					{88998}, -- Root of the World
 					{88999}, -- Sky's Hope
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+					-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
+				{rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				{rewID = 3316, rewTYPE = "currency", rewSIZE = 100,}, -- Voidlight Marl
+				{rewID = 3370, rewTYPE = "currency", rewSIZE = 1000,}, -- The Amani Tribe
 			},
 			forcedMaxQuest = 1, -- any
 		},
@@ -358,6 +424,18 @@ local function tempFunction()
 				{92010}, -- WANTED: Slewstalk's Stalks
 				{92012}, -- WANTED: Gorebarb's Pincers
 				{92013}, -- WANTED: Dionaea's Thorntusks
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+					-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
+				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				{rewID = 3310, rewTYPE = "currency", rewSIZE = 25,}, -- Coffer Key Shards
+
+				{rewID = 3316, rewTYPE = "currency", rewSIZE = 50,}, -- Voidlight Marl
+				{rewID = 3370, rewTYPE = "currency", rewSIZE = 250,}, -- The Amani Tribe
+				{rewID = 3383, rewTYPE = "currency", rewSIZE = 10,}, -- Adventurer Dawncrest
 			},
 			forcedMaxQuest = 1,
 		},
@@ -396,9 +474,9 @@ local function tempFunction()
 				{nil},
 				{94581}, -- StandYourGround
 				{nil},
-				{91700}, -- DarknessUnmade
-				{86810}, -- HarvestingtheVoid
-				{92407}, -- HideyHole
+				{91700}, -- DarknessUnmade		(REWARD: item=246951)
+				{86810}, -- HarvestingtheVoid	(REWARD: item=246951)
+				{92407}, -- HideyHole			(REWARD: item=246951)
 			},
 			forcedMaxQuest = 5,
 		},
@@ -434,6 +512,17 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{89354},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+					-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
+				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+
+				{rewID = 1792, rewTYPE = "currency", rewSIZE = 500,}, -- Honor
+				{rewID = 2123, rewTYPE = "currency", rewSIZE = 150,}, -- Bloody Tokens
+				{rewID = 3410, rewTYPE = "currency", rewSIZE = 1000,}, -- Slayer's Duellum
 			},
 			forcedMaxQuest = 1,
 		},

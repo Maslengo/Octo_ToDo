@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-function E.func_option_2_COLOR(width, tabName)
+function E.func_option_COLOR(width, tabName)
 	-------------------------------------------------
 	-- Вкладка: Цвета
 	-------------------------------------------------
