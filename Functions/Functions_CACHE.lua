@@ -23,7 +23,7 @@ local GetMountInfoByID = GetMountInfoByID or  C_MountJournal.GetMountInfoByID
 local UNKNOWN = UNKNOWN
 ----------------------------------------------------------------
 local function GetOrCreateCache(category)
-	local Octo_Cache_DB = Octo_Cache_DB or {}
+	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
 	return Octo_Cache_DB[category]
 end
@@ -33,7 +33,7 @@ local function func_ForcedQuality(text, forcedQuality)
 		forcedQuality = 1
 	end
 	local nameOnly = text:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", "")
-	local colorHex = ITEM_QUALITY_COLORS[forcedQuality].hex
+	local colorHex = ITEM_QUALITY_COLORS[forcedQuality] and ITEM_QUALITY_COLORS[forcedQuality].hex or E.COLOR_RED
 	local coloredName = colorHex..nameOnly.."|r"
 	return coloredName
 end
@@ -169,25 +169,31 @@ handler.currency = function(Cache, TYPE, id)
 	local name
 	local info = GetCurrencyInfo(id)
 	local result
-	if info then
+	if info and info.name then
 		local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
 		result = colorHex..info.name.."|r"
+		name = func_CacheName(id, Cache, result, TYPE)
 	end
-	name = func_CacheName(id, Cache, result, TYPE)
 	return name
 end
 handler.npc = function(Cache, TYPE, id)
 	local name
 	TooltipForNpcScan:ClearLines()
 	TooltipForNpcScan:SetHyperlink("unit:Creature-0-0-0-0-"..id)
+	local result
+
 	if TooltipForNpcScan:NumLines() > 0 then
-		local result1 = _G[E.MainAddonName.."TooltipForNpcScanTextLeft1"]:GetText()
-		if result1 then
-			name = func_CacheName(id, Cache, result1, TYPE)
+		result = _G[E.MainAddonName.."TooltipForNpcScanTextLeft1"]:GetText()
+	end
+
+	if result and result ~= "" then
+		name = func_CacheName(id, Cache, result, TYPE)
+	elseif E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] then
+		if E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
+			name = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang].." (DB)|r"
+		elseif E.OctoTable_AllNPCs_DB[id]["enUS"] then
+			name = E.OctoTable_AllNPCs_DB[id]["enUS"].." (enUS)|r"
 		end
-	elseif E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] and E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
-		local result = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang]
-		name = result
 	end
 	return name
 end
@@ -249,7 +255,7 @@ end
 handler.difficulty = function(Cache, TYPE, id)
 	local name
 	if Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation then
-		name = E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_CacheName(id, Cache, GetDifficultyInfo(id), "Difficulty")
+		name = E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_CacheName(id, Cache, GetDifficultyInfo(id), TYPE)
 	else
 		name = func_CacheName(id, Cache, GetDifficultyInfo(id), TYPE)
 	end
@@ -267,8 +273,8 @@ handler.covenant = function(Cache, TYPE, id)
 end
 handler.class = function(Cache, TYPE, id)
 	local name
-	local className = GetClassInfo(id)
-	if className then
+	local className, classFile = GetClassInfo(id)
+	if className and classFile then
 		name = func_CacheName(id, Cache, className, TYPE)
 	end
 	return name
@@ -301,23 +307,17 @@ function E.func_GetName(TYPE, id, forcedQuality)
 		end
 		name = cached..(hasMount and E.COLOR_RED.."*|r" or "")
 	else
-		if handler[TYPE] then
-			name = handler[TYPE](Cache, TYPE, id)
-		else
-			local newTYPE = TYPE:lower()
-			if handler[newTYPE] then
-				name = handler[newTYPE](Cache, TYPE, id)
-			-- else
-			-- 	print ("MISSING TYPE (Functions_CACHE.lua)", TYPE)
-			end
-
+		local h = handler[TYPE] or handler[TYPE:lower()]
+		if h then
+		    name = h(Cache, TYPE, id)
 		end
 	end
 	if forcedQuality and name then
 		name = func_ForcedQuality(name, forcedQuality)
 	end
 	local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
-	local result = E.func_translit and E.func_translit(name or E.COLOR_RED..UNKNOWN.."|r") or ""
+	local resultName = name or E.COLOR_RED..UNKNOWN.."|r"
+	local result = E.func_translit and E.func_translit(resultName) or resultName
 	return result..debugTEXT
 end
 ----------------------------------------------------------------
