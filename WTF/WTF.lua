@@ -111,6 +111,53 @@ function EventFrame:func_CacheGameData()
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("func_CacheGameData")
 	----------------------------------------------------------------
+	E.UniversalQuestMap = {}
+	E.ALL_UniversalQuests = {}
+	-- заранее построенный lookup
+	for _, componentFunc in next, (E.Components) do
+		local _, OctoTables_DataOtrisovka = componentFunc()
+
+		for _, categoryData in next, (OctoTables_DataOtrisovka) do
+			for dataType, dataEntries in next, (categoryData) do
+				if dataType == "UniversalQuests" then
+					for _, data in next, (dataEntries) do
+						if data.quests and data.reset then
+							local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+							data.questKey = questKey -- ← ВОТ ЭТО ГЛАВНОЕ
+							table.insert(E.ALL_UniversalQuests, data)
+
+							-- local questKey = data.questKey
+							E.UniversalQuestMap[questKey] = data
+						end
+					end
+				end
+			end
+		end
+	end
+	-- opde(E.UniversalQuestMap)
+
+	-- for categoryKey, categoryData in next, (E.OctoTables_DataOtrisovka) do
+	-- 	for dataType, dataEntries in next, (categoryData) do
+	-- 		E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
+	-- 		E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
+	-- 		if dataType ~= "UniversalQuests" then
+	-- 			func_ProcessStandardData_profileKeys(categoryKey, dataType, dataEntries, Current_profile, defaultProfile)
+	-- 		else
+	-- 			func_ProcessUniversalQuests_profileKeys(categoryKey, dataEntries, Current_profile, defaultProfile)
+	-- 		end
+	-- 	end
+	-- end
+
+	-- E.UniversalQuestMap[id] = data
+
+
+	-- E.ALL_UniversalQuests
+
+
+
+
+
+
 end
 function EventFrame:func_RemoveDuplicateCharacters()
 	if not Octo_ToDo_DB_Levels then return end
@@ -152,7 +199,7 @@ function EventFrame:func_RemoveDuplicateCharacters()
 	end
 end
 function EventFrame:func_DatabaseClear()
-	local enable = true
+	local enable = false
 	if not enable then return end
 	if Octo_ToDo_DB_Levels then
 		E.func_RemoveZeroValues(Octo_ToDo_DB_Levels, "^0/")
@@ -185,11 +232,24 @@ function EventFrame:func_DatabaseClear()
 			"CharInfo",
 		}
 	}
-	E.func_CleanDeepTable(Octo_profileKeys, rules)
+
 	E.func_CleanDeepTable(Octo_profileColors, rules)
+	E.func_CleanDeepTable(Octo_profileKeys, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_Levels, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_Vars, rules)
 	E.func_CleanDeepTable(Octo_Cache_DB, rules)
+	E.func_CleanDeepTable(Octo_ToDo_DB_AccountData, rules)
+	E.func_CleanDeepTable(Octo_Options, rules)
+
+	E.func_CleanDeepTable(Octo_Achievements_DB, rules)
+
+	E.func_CleanDeepTable(Octo_DevTool_DB, rules)
+
+	E.func_CleanDeepTable(Octo_Moduls_DB, rules)
+
+	E.func_CleanDeepTable(Octo_QuestsChanged_DB, rules)
+
+	E.func_CleanDeepTable(Octo_TalentsFrameArt_DB, rules)
 end
 function EventFrame:init_Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
@@ -388,28 +448,6 @@ function E.init_Octo_ToDo_DB_Vars()
 	EventFrame:init_Octo_ToDo_DB_Vars()
 	return
 end
-function EventFrame:Init_Octo_Cache_DB()
-	Octo_Cache_DB = Octo_Cache_DB or {}
-	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
-	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
-	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
-	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllItems")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllDungeons")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllCurrencies")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllNPCs")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllQuests")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllReputations")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllSpells")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllAchievements")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllVignettes")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllEvents")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllProfessions")
-	-- E.func_InitSubTable(Octo_Cache_DB, "AllDifficulty")
-end
-function E.Init_Octo_Cache_DB()
-	EventFrame:Init_Octo_Cache_DB()
-end
 function EventFrame:init_Octo_profileColors()
 	Octo_profileColors = Octo_profileColors or {}
 	local db = Octo_profileColors
@@ -464,7 +502,8 @@ function EventFrame:func_Daily_Reset()
 			pd.needResetDaily = true
 			for _, data in next, (E.ALL_UniversalQuests) do
 				if data.reset == "Daily" then
-					local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+					-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+					local questKey = data.questKey
 					cm.UniversalQuest[questKey] = nil
 				end
 			end
@@ -499,7 +538,8 @@ function EventFrame:func_Weekly_Reset()
 				cm.GreatVault = {}
 				for _, data in next, (E.ALL_UniversalQuests) do
 					if data.reset == "Weekly" then
-						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+						-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = data.questKey
 						cm.UniversalQuest[questKey] = nil
 					end
 				end
@@ -521,7 +561,8 @@ function EventFrame:func_Month_Reset()
 				pd.needResetMonth = true
 				for _, data in next, (E.ALL_UniversalQuests) do
 					if data.reset == "Month" then
-						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+						-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+						local questKey = data.questKey
 						cm.UniversalQuest[questKey] = nil
 					end
 				end
@@ -529,16 +570,33 @@ function EventFrame:func_Month_Reset()
 		end
 	end
 end
+
+
+function E.Init_Octo_Cache_DB()
+	Octo_Cache_DB = Octo_Cache_DB or {}
+	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
+	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
+	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
+	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
+	Octo_Cache_DB = Octo_Cache_DB or {}
+	if Octo_Cache_DB.interfaceVersionForReset ~= E.interfaceVersion then
+		Octo_Cache_DB = {}
+	end
+	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
+end
+
+
+
 function EventFrame:func_CheckAll()
 	EventFrame:func_RemoveDuplicateCharacters()
 	EventFrame:init_Octo_ToDo_DB_Levels()
 	EventFrame:init_Octo_ToDo_DB_Vars()
 	EventFrame:init_Octo_ToDo_DB_AccountData()
-	EventFrame:Init_Octo_Cache_DB()
 	E.func_setOldChanges()
 	EventFrame:func_Daily_Reset()
 	EventFrame:func_Weekly_Reset()
 	EventFrame:func_Month_Reset()
+	E.Init_Octo_Cache_DB()
 end
 function E.WTF_func_CheckAll()
 	EventFrame:func_CheckAll()
@@ -574,18 +632,15 @@ function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-	Octo_Cache_DB = Octo_Cache_DB or {}
-	if Octo_Cache_DB.interfaceVersionForReset ~= E.interfaceVersion then
-		Octo_Cache_DB = {}
-	end
-	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
+	E.Init_Octo_Cache_DB()
 	EventFrame:init_Octo_profileKeys()
 	EventFrame:init_Octo_profileColors()
 	E.func_UpdateGlobals()
 end
 function EventFrame:VARIABLES_LOADED()
+	EventFrame:func_DatabaseClear()
 	EventFrame:func_CheckAll()
 end
 function EventFrame:PLAYER_LOGIN()

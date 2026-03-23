@@ -62,7 +62,8 @@ end
 function E.func_Otrisovka_LEFT_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
-	local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+	-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+	local questKey = data.questKey
 	local reset = data.reset
 	local isAccount = data.isAccount
 	local output

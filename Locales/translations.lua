@@ -51,6 +51,12 @@ E.translations = {
 	--     ["zhCN"] = "ЙЦУЙЦУ",
 	--     ["zhTW"] = "ЙЦУЙЦУ",
 	-- },
+
+	-- L["Import from file"]
+	-- L["Export"]
+	-- L["Import"]
+
+
 	["Show zero values"] = {
 		["ruRU"] = "Нулевые значения",
 		["deDE"] = "Nullwerte anzeigen",

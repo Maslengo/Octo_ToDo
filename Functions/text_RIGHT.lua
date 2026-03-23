@@ -129,7 +129,8 @@ function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType
 	local cm = CharInfo.MASLENGO
 	if data.quests then
 		local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-		local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
+		-- local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
+		local questKey = data.questKey
 		-- local showTooltip = data.showTooltip or false
 		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter then
 			TextCenter = CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter

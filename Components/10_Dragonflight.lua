@@ -607,7 +607,9 @@ local function tempFunction()
 		},
 		{
 			showTooltip = true,
-			TextLeft = E.func_GetName("map", 2151)..": "..L["Storm-Bound Chest"],
+			TextLeft = function()
+				return E.func_GetName("map", 2151)..": "..L["Storm-Bound Chest"]
+			end,
 			name_save = "StormBoundChest",
 			defS = false,
 			reset = "Weekly",

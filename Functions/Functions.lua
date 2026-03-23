@@ -830,7 +830,7 @@ function E.func_GetSavedVars(addonName)
 end
 ----------------------------------------------------------------
 function E.func_RequestUIUpdate(event_name)
-	if not E.DebugEvent then return end
+	if not E.CONFIG_DEBUG_EVENTS then return end
 	local isMainFrameVisible = Octo_MainFrame and Octo_MainFrame:IsShown()
 	if isMainFrameVisible then
 		if not E.updateScheduledFlag then

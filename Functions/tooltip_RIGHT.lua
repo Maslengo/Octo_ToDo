@@ -345,7 +345,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					end
 				end
 			end
-			if E.DebugReputationInfo then
+			if E.CONFIG_DEBUG_REPUTATIONTOOLTIP then
 				tooltip[#tooltip+1] = {" "}
 				tooltip[#tooltip+1] = {E.COLOR_DEBUG .. "~~~ DEBUG ~~~|r"}
 				tooltip[#tooltip+1] = {"FIRST", FIRST} -- число
@@ -600,7 +600,8 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if dataType == "UniversalQuests" then
 		for _, data in next, (E.ALL_UniversalQuests) do
 			if data.quests then
-				local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
+				-- local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
+				local questKey = data.questKey
 				local showTooltip = data.showTooltip or false
 				if showTooltip and id == questKey then
 					local totalQuest = 0
@@ -622,7 +623,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 						end
 					end
 					forcedMaxQuest = totalQuest
-					if E.DebugUniversal then
+					if E.CONFIG_DEBUG_UNIVERSAL then
 						tooltip[#tooltip+1] = {questKey, "forcedMaxQuest: " .. totalQuest}
 					end
 					if totalQuest >= 1 then

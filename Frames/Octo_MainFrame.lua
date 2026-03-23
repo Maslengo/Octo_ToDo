@@ -228,59 +228,27 @@ local function func_Setup_Items(frame, id)
 	frame.icon1texture:SetTexture(icon1)
 	frame.icon1frame:Show()
 end
+
+local RESET_ICONS = {
+	Regular = E.ICON_REGULAR,
+	Daily = E.ICON_DAILY,
+	Weekly = E.ICON_WEEKLY,
+	Month = E.ICON_MONTH,
+}
 local function func_Setup_UniversalQuests(frame, id)
-	local IconLeft = nil
-
-
-	for _, data in next, (E.ALL_UniversalQuests) do
-		if data.quests and data.reset then
-			local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-			local reset = data.reset
-			if id == questKey then
-				local result = reset
-				if reset == "Daily" then
-					IconLeft = E.ICON_DAILY
-					-- result = DAILY
-				elseif reset == "Weekly" then
-					IconLeft = E.ICON_WEEKLY
-					-- result = WEEKLY
-				elseif reset == "Regular" then
-					IconLeft = E.ICON_REGULAR
-					-- result = ITEM_QUALITY1_DESC -- PLAYER_DIFFICULTY1
-				elseif reset == "Month" then
-					IconLeft = E.ICON_MONTH
-					-- result = CALENDAR_REPEAT_MONTHLY
-				end
-
-
-					if data.isAccount then
-						-- reset = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
-						-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
-						IconLeft = E.ICON_MONTH -- Crosshair_unableQuest_64
-					end
-
-
-			end
+	local IconLeft
+	local info = E.UniversalQuestMap[id]
+	if info then
+		local reset = info.reset
+		if info.isAccount then
+			-- reset = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
+			-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
+			IconLeft = E.ICON_MONTH -- Crosshair_unableQuest_64
+			-- IconLeft = E.ICON_ACCOUNT -- если появится
+		else
+			IconLeft = RESET_ICONS[reset]
 		end
 	end
-
-
-
-
-
-
-
-
-	-- local reset = id:match("_([^_]+)$")
-	-- if reset == "Daily" then
-	-- 	IconLeft = E.ICON_DAILY
-	-- elseif reset == "Weekly" then
-	-- 	IconLeft = E.ICON_WEEKLY
-	-- elseif reset == "Regular" then
-	-- 	IconLeft = E.ICON_REGULAR
-	-- elseif reset == "Month" then
-	-- 	IconLeft = E.ICON_MONTH
-	-- end
 	if IconLeft then
 		frame.icon3texture:SetAtlas(IconLeft, false)
 		frame.icon3frame:Show()
@@ -807,7 +775,8 @@ function EventFrame:CreateDataProvider()
 		for i, id in next, (dataList) do
 			local questKey
 			if dataType == "UniversalQuests" then
-				questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
+				questKey = id.questKey
+				-- questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 			end
 			local canDraw = false
 			if dataType ~= "UniversalQuests" then

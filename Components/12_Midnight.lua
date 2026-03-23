@@ -238,6 +238,51 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1, -- any
 		},
+
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return DELVES_LABEL..": "..L["Delver's Call"]
+			end,
+			name_save = "DelversCallMID",
+			defS = false,
+			reset = "Regular",
+			desc = categoryKey,
+			-- /run local q,n={93372,93384,93385,93386,93409,93410,93416,93421,93427,93428},{"Encl","Coll","Dark","Plaz","Atal","Twil","Gulf","Grud","Sunk","Shad"}for i,v in ipairs(q)do print(n[i],C_QuestLog.IsQuestFlaggedCompleted(v)and"OK"or"NO")end
+			-- https://www.wowhead.com/quest=93385/delvers-call-the-darkway#comments
+			quests = {
+				{nil, addText = {mapID = 2393},}, -- Silvermoon City
+				{93384}, -- Delver's Call: Collegiate Calamity (Вызов в вылазку: Общая Беда)
+				{93385}, -- Delver's Call: The Darkway (Вызов в вылазку: катакомбы тьмы)
+				{nil},
+				{nil, addText = {mapID = 2395},}, -- Eversong Woods
+				{93372}, -- Delver's Call: Shadow Enclave (Вызов в вылазку: анклав Теней)
+				{nil},
+				{nil, addText = {mapID = 2437},}, -- Zul'Aman
+				{93409}, -- Delver's Call: Atal'Aman (Вызов в вылазку: Атал'Аман)
+				{93410}, -- Delver's Call: Twilight Crypts (Вызов в вылазку: Сумеречные склепы)
+				{nil},
+				{nil, addText = {mapID = 2413},}, -- Harandar
+				{93416}, -- Delver's Call: The Gulf of Memory (Вызов в вылазку: Залив воспоминаний)
+				{93421}, -- Delver's Call: The Grudge Pit (Вызов в вылазку: Грызальня)
+				{nil},
+				{nil, addText = {mapID = 2405},}, -- Voidstorm
+				{93427}, -- Delver's Call: Sunkiller Sanctum (Вызов в вылазку: святилище Солнцеубийцы)
+				{93428}, -- Delver's Call: Shadowguard Point (Вызов в вылазку: форпост Темной Стражи)
+				{nil},
+				{nil, addText = {mapID = 2424},}, -- Isle of Quel'Danas
+				{93386}, -- Delver's Call: Parhelion Plaza (Вызов в вылазку: Площадь Паргелия)
+			},
+			-- rewards = {
+				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
+				-- {rewID = 232049, rewTYPE = "item", rewSIZE = nil, addtext = ""}, -- Pinnacle Cache
+				-- {rewID = 2815, rewTYPE = "currency", rewSIZE = 100,}, -- Resonance Crystals
+				-- {rewID = 3278, rewTYPE = "currency", rewSIZE = nil,}, -- Ethereal Strands
+			-- },
+			-- forcedMaxQuest = 1,
+		},
 		----------------------------------------------------------------
 		-- Silvermoon Court --------------------------------------------
 		----------------------------------------------------------------
@@ -884,6 +929,57 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 2,
 		},
+		----------------------------------------------------------------
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return L["Weekly Profession Knowledge Drops from Treasures around the World"]
+		-- 	end,
+		-- 	name_save = "WeeklyProfessionKnowledgeDropsfromTreasuresaroundtheWorld",
+		-- 	defS = false,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{93530},
+		-- 		{93531},
+		-- 		{93540},
+		-- 		{93541},
+		-- 		{93528},
+		-- 		{93529},
+		-- 		{93542},
+		-- 		{93543},
+		-- 		{93534},
+		-- 		{93535},
+		-- 		{93532},
+		-- 		{93533},
+		-- 		{93539},
+		-- 		{93538},
+		-- 		{93536},
+		-- 		{93537},
+		-- 	},
+		-- 	rewards = {
+		-- 		-- {rewID = ЙЦУЙЦУ, rewTYPE = "currency", rewSIZE = nil,}, --
+		-- 		-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+		-- 		{rewID = 259190, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259191, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259200, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259201, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259188, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259189, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259202, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259203, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259194, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259195, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259192, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259193, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259198, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259199, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259196, rewTYPE = "item", rewSIZE = 1,},
+		-- 		{rewID = 259197, rewTYPE = "item", rewSIZE = 1,},
+		-- 	},
+		-- 	forcedMaxQuest = 2,
+		-- },
 		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------

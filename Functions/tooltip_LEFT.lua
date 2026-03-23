@@ -721,7 +721,8 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	if dataType == "UniversalQuests" then
 		for _, data in next, (E.ALL_UniversalQuests) do
 			if data.quests and data.reset then
-				local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+				-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+				local questKey = data.questKey
 				local reset = data.reset
 				if id == questKey then
 					----------------

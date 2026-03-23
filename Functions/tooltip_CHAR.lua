@@ -107,7 +107,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	if cm.InventoryType then
 		tooltip[#tooltip+1] = {"Shift +"..E.LEFT_MOUSE_ICON..L["LMB"]}
 	end
-	if E.DebugCharacterInfo then
+	if E.CONFIG_DEBUG_CHARACTERTOOLTIP then
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color..E.DEVTEXT.."|r", ""}
 		if pd.tmstp_Daily then

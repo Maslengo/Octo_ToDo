@@ -7,7 +7,7 @@ function E.func_GetData_profileKeys(key)
 end
 local function func_ProcessComponents_profileKeys()
 	E.DataProvider_Otrisovka = {}
-	E.ALL_UniversalQuests = {}
+	-- E.ALL_UniversalQuests = {}
 	E.ALL_AdditionallyTOP = {}
 	E.ALL_RaidsOrDungeons = {}
 	E.OctoTables_Vibor = {}
@@ -52,9 +52,14 @@ local function func_InitializeProfileStructure_profileKeys(profileName)
 end
 local function func_ProcessUniversalQuests_profileKeys(categoryKey, questEntries, Current_profile, defaultProfile)
 	for _, questData in next, (questEntries) do
-		table.insert(E.DataProvider_Otrisovka[categoryKey]["UniversalQuests"], questData)
-		table.insert(E.ALL_UniversalQuests, questData)
 		local questKey = E.UNIVERSAL..questData.desc.."_"..questData.name_save.."_"..questData.reset
+		questData.questKey = questKey -- ← ВОТ ЭТО ГЛАВНОЕ
+
+
+		table.insert(E.DataProvider_Otrisovka[categoryKey]["UniversalQuests"], questData)
+		-- table.insert(E.ALL_UniversalQuests, questData)
+		-- E.UniversalQuestMap[questKey] = questData
+
 		Current_profile.UniversalQuests[questKey] = Current_profile.UniversalQuests[questKey] or questData.defS
 		defaultProfile.UniversalQuests[questKey] = defaultProfile.UniversalQuests[questKey] or questData.defS
 		for _, questEntry in ipairs(questData.quests) do
