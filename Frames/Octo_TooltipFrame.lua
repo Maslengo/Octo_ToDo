@@ -151,11 +151,11 @@ end
 local function TooltipOnEnter()
 	if EventFrame.shouldShowScrollBar then
 		Octo_TooltipFrame:Show()
-		if not InCombatLockdown() then
+		if not InCombatLockdown() and E.IsMidnight then
 			Octo_TooltipFrame:SetPropagateMouseMotion(false)
 		end
 	else
-		if not InCombatLockdown() then
+		if not InCombatLockdown() and E.IsMidnight then
 			Octo_TooltipFrame:SetPropagateMouseMotion(true)
 		end
 	end
@@ -184,7 +184,7 @@ function EventFrame:Create_Octo_TooltipFrame()
 	Octo_TooltipFrame:SetFrameStrata("TOOLTIP")
 	Octo_TooltipFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_TooltipFrame, "WowScrollBoxList,OctoPropagateTemplate")
 	Octo_TooltipFrame.ScrollBox:SetAllPoints()
-	if not InCombatLockdown() then
+	if not InCombatLockdown() and E.IsMidnight then
 		Octo_TooltipFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
 		Octo_TooltipFrame.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
 	end
@@ -193,7 +193,7 @@ function EventFrame:Create_Octo_TooltipFrame()
 	Octo_TooltipFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_TooltipFrame, "MinimalScrollBar,OctoPropagateTemplate")
 	Octo_TooltipFrame.ScrollBar:SetPoint("TOPLEFT", Octo_TooltipFrame.ScrollBox, "TOPRIGHT", -15, -3)
 	Octo_TooltipFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_TooltipFrame.ScrollBox, "BOTTOMRIGHT", -15, 3)
-	if not InCombatLockdown() then
+	if not InCombatLockdown() and E.IsMidnight then
 		Octo_TooltipFrame.ScrollBar.Back:SetPropagateMouseMotion(true)
 		Octo_TooltipFrame.ScrollBar.Forward:SetPropagateMouseMotion(true)
 		Octo_TooltipFrame.ScrollBar.Track:SetPropagateMouseMotion(true)

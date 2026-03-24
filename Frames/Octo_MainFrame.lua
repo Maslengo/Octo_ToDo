@@ -1,6 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
 local EventFrame = CreateFrame("FRAME")
+
+
 EventFrame.searchFilter = nil
 EventFrame.measureFrame = CreateFrame("Frame")
 EventFrame.measureFrame:SetParent(UIParent)
@@ -100,9 +102,9 @@ local func_OnAcquiredLeft do
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
 	function func_OnAcquiredLeft(owner, frame, node, new)
-		if not C_AddOns.IsAddOnLoaded("Blizzard_CurrencyTransfer") then
-			C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
-		end
+		-- if not C_AddOns.IsAddOnLoaded("Blizzard_CurrencyTransfer") then
+		-- 	C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
+		-- end
 		if not new then return end
 		local frameData = node:GetData()
 		Create_SettingsButton(frame)
@@ -148,7 +150,7 @@ local func_OnAcquiredCenter do
 		-- AdditionalSettings(frame, "func_OnAcquiredCenter")
 		frame.columnFrames = setmetatable({}, {
 				__index = function(self, key)
-					if key then
+					if type(key) == "number" then
 						local columnFrame = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
 						columnFrame:Hide()
 						Create_CurrentCharBackground(columnFrame)
@@ -186,14 +188,14 @@ local function func_Setup_Currencies(frame, id)
 	local icon1 = E.func_GetCurrencyIcon(id)
 	frame.icon1texture:SetTexture(icon1)
 	frame.icon1frame:Show()
-	if C_CurrencyInfo.IsAccountWideCurrency(id) then
+	if E.func_IsAccountWideCurrency(id) then
 		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
 		frame.icon3frame:Show()
-	elseif C_CurrencyInfo.IsAccountTransferableCurrency(id) then
+	elseif E.func_IsAccountTransferableCurrency(id) then
 		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_TRANSFERABLE, false)
 		frame.icon3frame:Show()
 	else
-		frame.icon3texture:SetTexture(spacerEMPTY)
+		frame.icon3texture:SetTexture(E.ICON_EMPTY)
 		frame.icon3frame:Hide()
 	end
 end
@@ -212,14 +214,14 @@ local function func_Setup_Reputations(frame, id)
 		frame.icon2texture:SetAtlas(ReputationAtlas)
 		frame.icon2frame:Show()
 	else
-		frame.icon2texture:SetTexture(spacerEMPTY)
+		frame.icon2texture:SetTexture(E.ICON_EMPTY)
 		frame.icon2frame:Hide()
 	end
-	if C_Reputation.IsAccountWideReputation(id) then
+	if E.func_IsAccountWideReputation(id) then
 		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
 		frame.icon3frame:Show()
 	else
-		frame.icon3texture:SetTexture(spacerEMPTY)
+		frame.icon3texture:SetTexture(E.ICON_EMPTY)
 		frame.icon3frame:Hide()
 	end
 end
@@ -254,7 +256,7 @@ local function func_Setup_UniversalQuests(frame, id)
 		frame.icon3frame:Show()
 		frame.icon1frame:Hide()
 	else
-		frame.icon3texture:SetTexture(spacerEMPTY)
+		frame.icon3texture:SetTexture(E.ICON_EMPTY)
 		frame.icon3frame:Hide()
 	end
 end
@@ -275,7 +277,7 @@ function EventFrame:func_InitLEFT(frame, node)
 		frame.icon2frame:Hide()
 		frame.icon3frame:Hide()
 		frame.TextLeft:SetText("")
-		frame.icon1texture:SetTexture(spacerEMPTY)
+		frame.icon1texture:SetTexture(E.ICON_EMPTY)
 		frame:SetScript("OnEnter", function()
 				frame.tooltip = nil
 		end)
@@ -292,8 +294,11 @@ function EventFrame:func_InitLEFT(frame, node)
 		frame.icon2frame:Hide()
 		frame.icon3frame:Hide()
 		if frameData.IconLeft then
-			frame.icon1texture:SetTexture(frameData.IconLeft)
-			frame.icon1texture:SetAtlas(frameData.IconLeft, false)
+			if E.func_isAtlas and E.func_isAtlas(frameData.IconLeft) then
+				frame.icon1texture:SetAtlas(frameData.IconLeft, false)
+			else
+				frame.icon1texture:SetTexture(frameData.IconLeft)
+			end
 		else
 			frame.icon1texture:SetTexture(E.ICON_EMPTY)
 		end
@@ -338,11 +343,10 @@ function EventFrame:func_InitLEFT(frame, node)
 		frame.SettingsButton:SetScript("OnClick", function(self)
 				func_SettingsButton_OnClick(self, frameData)
 		end)
-		local expansionICON = ""
 		if type(frameData.TextLeft) == "function" then
-			frame.TextLeft:SetText(expansionICON..frameData.TextLeft())
+			frame.TextLeft:SetText(frameData.TextLeft())
 		else
-			frame.TextLeft:SetText(expansionICON..frameData.TextLeft)
+			frame.TextLeft:SetText(frameData.TextLeft)
 		end
 		if frameData.ColorLeft then
 			local r, g, b = E.func_Hex2RGBA(frameData.ColorLeft)
@@ -455,6 +459,7 @@ function EventFrame:func_CreateMainFrame()
 	end)
 	local numPlayers = math.min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
 	Octo_MainFrame:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
+
 	Octo_MainFrame:SetDontSavePosition(true)
 	Octo_MainFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame:SetFrameStrata("HIGH")
@@ -509,7 +514,7 @@ function EventFrame:func_CreateMainFrame()
 	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
 	Octo_MainFrame.ViewLeft = CreateScrollBoxListTreeListView(0)
 	Octo_MainFrame.ViewLeft:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame.ViewLeft:SetElementInitializer("OctoPropagateTemplate", function(...) self:func_InitLEFT(...) end)
+	Octo_MainFrame.ViewLeft:SetElementInitializer("OctoPropagateTemplate", function(...) EventFrame:func_InitLEFT(...) end)
 	Octo_MainFrame.ViewLeft:RegisterCallback(Octo_MainFrame.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame)
 	Octo_MainFrame.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList,OctoPropagateTemplate") -- OctoRectTemplate
 	Octo_MainFrame.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
@@ -520,7 +525,7 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame, "BOTTOMRIGHT", 6, 0)
 	Octo_MainFrame.ViewCenter = CreateScrollBoxListTreeListView(0)
 	Octo_MainFrame.ViewCenter:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame.ViewCenter:SetElementInitializer("OctoPropagateTemplate", function(...) self:func_InitCenter(...) end)
+	Octo_MainFrame.ViewCenter:SetElementInitializer("OctoPropagateTemplate", function(...) EventFrame:func_InitCenter(...) end)
 	Octo_MainFrame.ViewCenter:RegisterCallback(Octo_MainFrame.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCenter, Octo_MainFrame)
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter, Octo_MainFrame.ViewLeft)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter)
@@ -665,7 +670,7 @@ local function func_calculateColumnWidthsLEFT(node)
 	local frameData = node:GetData()
 	local columnWidthsLEFT = {}
 	local textToMeasure = frameData.TextLeft
-	local width = E.func_MeasureTextWidth(textToMeasure, MIN_COLUMN_WIDTH)
+	local width = E.func_MeasureTextWidth(textToMeasure, MIN_COLUMN_WIDTH_LEFT)
 	columnWidthsLEFT[1] = width + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT
 	return columnWidthsLEFT
 end
@@ -743,6 +748,7 @@ local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 	return totalRightWidth
 end
 function EventFrame:CreateDataProvider()
+	if not E.OctoTables_Vibor then return end
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
 	local columnWidthsLeft = {}
@@ -891,11 +897,11 @@ function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, so
 	local totalRightWidth_scrollContentFrame = CalculateFullRightWidth(columnWidthsCenter, EventFrame.MAX_COLUMN_COUNT)
 	local width = CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
 	local height, maxDisplayLines = CalculateMainFrameHeight(totalLines)
-	MAX_DISPLAY_LINES = maxDisplayLines
+		-- MAX_DISPLAY_LINES = maxDisplayLines
 	Octo_MainFrame:SetSize(width, height)
 	Octo_MainFrame.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
-	self:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
-	self:UpdateCenterColumnPositions(columnWidthsCenter)
+	EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
+	EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 end
 function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 	Octo_MainFrame.pool:ReleaseAll()

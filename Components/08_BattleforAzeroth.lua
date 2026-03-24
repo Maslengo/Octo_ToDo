@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_BattleforAzeroth_available = E.func_Is_BattleforAzeroth_available()
+local Is_BattleforAzeroth_available = E.Is_BattleforAzeroth_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_BattleforAzeroth_available then return end;

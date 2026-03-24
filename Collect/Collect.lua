@@ -240,6 +240,7 @@ function EventFrame:HEARTHSTONE_BOUND()
 end
 function EventFrame:ZONE_CHANGED()
 	E.Collect_Locations()
+	E.Collect_GreatVault()
 	E.func_RequestUIUpdate("ZONE_CHANGED")
 end
 function EventFrame:ZONE_CHANGED_NEW_AREA()

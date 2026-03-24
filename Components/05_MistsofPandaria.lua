@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_MistsofPandaria_available = E.func_Is_MistsofPandaria_available()
+local Is_MistsofPandaria_available = E.Is_MistsofPandaria_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_MistsofPandaria_available then return end;

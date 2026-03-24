@@ -196,18 +196,38 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local vaultData = cm.GreatVault and cm.GreatVault[ID]
 			local rewards = vaultData and vaultData.rewards or {}
 			local activities = C_WeeklyRewards.GetActivities(ID)
-			local max = activities and activities[3] and activities[3].threshold or 0
+			local max1 = activities and activities[1] and activities[1].threshold or 0
+			local max2 = activities and activities[2] and activities[2].threshold or 0
+			local max3 = activities and activities[3] and activities[3].threshold or 0
 			local vaultMin = vaultData and vaultData.min or 0
+
+			-- прогресс с цветами: зелёный, жёлтый, серый
+			local progressColor
+			if max3 == 0 then
+				progressColor = E.COLOR_GRAY
+			elseif vaultMin >= max3 then
+				progressColor = E.COLOR_GREEN
+			elseif vaultMin > 0 then
+				progressColor = E.COLOR_YELLOW
+			else
+				progressColor = E.COLOR_GRAY
+			end
+
+			local progressText = progressColor .. vaultMin .. "/" .. max3 .. "|r"
+
 			tooltip[#tooltip+1] = {
 				E.name_activities[ID] or "?",
 				" ",
 				" ",
-				(vaultMin >= max and E.COLOR_WHITE or vaultMin > 0 and E.COLOR_YELLOW or E.COLOR_GRAY) .. vaultMin .. "/" .. max .. "|r",
+				progressText,
 				" ",
 				" ",
-				rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "-|r",
-				rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "-|r",
-				rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "-|r"
+				rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "0/"..max1.."|r",
+				rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "0/"..max2.."|r",
+				rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "0/"..max3.."|r"
+				-- rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "-|r",
+				-- rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "-|r",
+				-- rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "-|r"
 			}
 		end
 	end
@@ -317,7 +337,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			if ReputationAtlas then
 				firstTEXT = firstTEXT .. E.func_texturefromIcon(ReputationAtlas, nil, nil, true)
 			end
-			local IsAccountWideReputation = C_Reputation.IsAccountWideReputation(id)
+			local IsAccountWideReputation = E.func_IsAccountWideReputation(id)
 			if IsAccountWideReputation then
 				firstTEXT = firstTEXT .. E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE, nil, nil, true)
 			end

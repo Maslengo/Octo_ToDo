@@ -758,7 +758,7 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 		for i = 1, #categories do
 			local categoryID = categories[i]
 			local _, parentCategoryID = GetCategoryInfo(categoryID)
-			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.Config_Achievements.AchievementToShow[categoryID] == true then
+			if arg1 and cID == parentCategoryID and Octo_Achievements_DB.Config_Achievements.AchievementToShow[categoryID] then
 				return E.func_Gradient(arg1.name)..arg1.output
 			end
 		end

@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Dragonflight_available = E.func_Is_Dragonflight_available()
+local Is_Dragonflight_available = E.Is_Dragonflight_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_Dragonflight_available then return end;

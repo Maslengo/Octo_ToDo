@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_TheWarWithin_available = E.func_Is_TheWarWithin_available()
+local Is_TheWarWithin_available = E.Is_TheWarWithin_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_TheWarWithin_available then return end;

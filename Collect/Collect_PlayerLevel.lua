@@ -18,7 +18,7 @@ local function Collect_Character_Level()
 		if UnitLevel == E.currentMaxLevel then
 			collectPlayerData.PlayerCanEarnExperience = nil
 		else
-			if E.GameLimitedMode_IsActive == true then
+			if E.GameLimitedMode_IsActive then
 				if UnitLevel >= E.GetRestrictedAccountData_rLevel then
 					collectPlayerData.levelCapped20 = true
 					collectPlayerData.PlayerCanEarnExperience = nil

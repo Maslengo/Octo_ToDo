@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Shadowlands_available = E.func_Is_Shadowlands_available()
+local Is_Shadowlands_available = E.Is_Shadowlands_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_Shadowlands_available then return end;

@@ -238,8 +238,8 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local total = 0
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	-- 2032
-	local IsAccountWide = C_CurrencyInfo.IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
-	local IsAccountTransferable = C_CurrencyInfo.IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
+	local IsAccountWideCurrency = E.func_IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
+	local IsAccountTransferableCurrency = E.func_IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
 	local REGION = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		REGION[CharInfo.PlayerData.CurrentRegionName] = true
@@ -252,7 +252,7 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 			local curmaxQuantity = cm.Currency[id] and cm.Currency[id].maxQuantity or 0
 			local hasData = curquantity > 0
 			if hasData then
-				if IsAccountWide and GUID == E.curGUID then
+				if IsAccountWideCurrency and GUID == E.curGUID then
 					tooltip[#tooltip+1] = {E.COLOR_CYAN..ACCOUNT_LEVEL_CURRENCY.."|r"}
 					tooltip[#tooltip+1] = {TOTAL..": "..E.func_CompactFormatNumber(curquantity)}
 					return tooltip
@@ -476,87 +476,242 @@ end
 ----------------------------------------------------------------
 function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
-	local ids_tbl = {}
 	local characterData = {}
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+
+	-- header активности
+	local header_ids_tbl = {}
+	for j = 1, #E.Enum_Activities_table do
+		header_ids_tbl[j] = E.Enum_Activities_table[j]
+	end
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+
 			local pd = CharInfo.PlayerData
 			local cm = CharInfo.MASLENGO
 			local HasAvailableRewards = pd.HasAvailableRewards and 1 or 0
-			local RIO_Score = pd.RIO_Score or 0
-			local reward1 = E.COLOR_GRAY.."-|r"
-			local reward2 = E.COLOR_GRAY.."-|r"
-			local reward3 = E.COLOR_GRAY.."-|r"
 			local hasData = (HasAvailableRewards > 0)
+
+			local progress = {}
+			local rewards = {}
+
 			for j = 1, #E.Enum_Activities_table do
 				local ID = E.Enum_Activities_table[j]
-				table.insert(ids_tbl, ID)
+
 				local vaultData = cm.GreatVault and cm.GreatVault[ID]
-				local rewards = vaultData and vaultData.rewards or {}
+				local rewardData = vaultData and vaultData.rewards or {}
 				local activities = C_WeeklyRewards.GetActivities(ID)
+
 				local max = activities and activities[3] and activities[3].threshold or 0
 				local vaultMin = vaultData and vaultData.min or 0
-				if rewards[1] then
+
+				if rewardData[1] or rewardData[2] or rewardData[3] then
 					hasData = true
-					reward1 = E.COLOR_GREEN..rewards[1].."|r"
 				end
-				if rewards[2] then
-					hasData = true
-					reward2 = E.COLOR_GREEN..rewards[2].."|r"
+
+				-- прогресс
+				if max == 0 then
+					progress[j] = E.COLOR_GRAY .. "-|r"
+				else
+					local color
+					if vaultMin >= max then
+						color = E.COLOR_GREEN
+					elseif vaultMin > 0 then
+						color = E.COLOR_YELLOW
+					else
+						color = E.COLOR_GRAY
+					end
+
+					progress[j] = color .. vaultMin .. "/" .. max .. "|r"
 				end
-				if rewards[3] then
-					hasData = true
-					reward3 = E.COLOR_GREEN..rewards[3].."|r"
-				end
+
+				-- 3 награды отдельно
+				rewards[j] = {
+					rewardData[1] and E.COLOR_WHITE .. rewardData[1] .. "|r" or E.COLOR_GRAY .. "-|r",
+					rewardData[2] and E.COLOR_WHITE .. rewardData[2] .. "|r" or E.COLOR_GRAY .. "-|r",
+					rewardData[3] and E.COLOR_WHITE .. rewardData[3] .. "|r" or E.COLOR_GRAY .. "-|r",
+				}
 			end
+
 			if hasData then
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
-				local row = { leftText }
-				local row2Text = HasAvailableRewards > 0 and E.COLOR_BLUE..">"..REWARD.."<|r" or ""
-				local row3Text = reward1
-				local row4Text = reward2
-				local row5Text = reward3
+
 				table.insert(characterData, {
-						row = row,
-						name = pd.Name,
-						sortValue = HasAvailableRewards,
-						row2Text = row2Text,
-						row3Text = row3Text,
-						row4Text = row4Text,
-						row5Text = row5Text,
-						ids_tbl = ids_tbl,
+					name = pd.Name,
+					sortValue = HasAvailableRewards,
+					row = {
+						leftText,
+						HasAvailableRewards > 0 and E.COLOR_BLUE..">"..REWARD.."<|r" or "",
+
+						-- activity 1
+						progress[1],
+						-- rewards[1][1],
+						-- rewards[1][2],
+						-- rewards[1][3],
+
+						-- activity 2
+						progress[2],
+						-- rewards[2][1],
+						-- rewards[2][2],
+						-- rewards[2][3],
+
+						-- activity 3
+						progress[3],
+						-- rewards[3][1],
+						-- rewards[3][2],
+						-- rewards[3][3],
+					}
 				})
 			end
 		end
 	end
+
 	if #characterData > 0 then
 		table.sort(characterData, function(a, b)
-				if a.sortValue ~= b.sortValue then
-					return a.sortValue > b.sortValue
-				end
-				return a.name < b.name
+			if a.sortValue ~= b.sortValue then
+				return a.sortValue > b.sortValue
+			end
+			return a.name < b.name
 		end)
-		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
+
 		for _, d in ipairs(characterData) do
-			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-			d.row[2] = d.row2Text
-			d.row[3] = d.row3Text
-			d.row[4] = d.row4Text
-			d.row[5] = d.row5Text
 			table.insert(tooltip, d.row)
 		end
-		local heade1 = {
+
+		local header = {
 			"",
 			"",
-			E.name_activities[ids_tbl[1]],
-			E.name_activities[ids_tbl[2]],
-			E.name_activities[ids_tbl[3]],
+
+			-- E.name_activities[header_ids_tbl[1]], "", "", "",
+			-- E.name_activities[header_ids_tbl[2]], "", "", "",
+			-- E.name_activities[header_ids_tbl[3]], "", "", "",
+			E.name_activities[header_ids_tbl[1]],
+			E.name_activities[header_ids_tbl[2]],
+			E.name_activities[header_ids_tbl[3]],
 		}
-		table.insert(tooltip, 1, heade1)
+
+		table.insert(tooltip, 1, header)
 	end
+
 	return tooltip
 end
+-- function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
+-- 	local tooltip = {}
+-- 	local characterData = {}
+-- 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+
+-- 	-- header активности (один раз)
+-- 	local header_ids_tbl = {}
+-- 	for j = 1, #E.Enum_Activities_table do
+-- 		header_ids_tbl[j] = E.Enum_Activities_table[j]
+-- 	end
+
+-- 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+-- 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+
+-- 			local pd = CharInfo.PlayerData
+-- 			local cm = CharInfo.MASLENGO
+-- 			local HasAvailableRewards = pd.HasAvailableRewards and 1 or 0
+-- 			local hasData = (HasAvailableRewards > 0)
+
+-- 			-- ВАЖНО: массивы по активностям
+-- 			local reward = {}
+-- 			local totalRuns = {}
+
+-- 			for j = 1, #E.Enum_Activities_table do
+-- 				local ID = E.Enum_Activities_table[j]
+
+-- 				local vaultData = cm.GreatVault and cm.GreatVault[ID]
+-- 				local rewards = vaultData and vaultData.rewards or {}
+-- 				local activities = C_WeeklyRewards.GetActivities(ID)
+
+-- 				local max = activities and activities[3] and activities[3].threshold or 0
+-- 				local vaultMin = vaultData and vaultData.min or 0
+
+-- 				if rewards[1] or rewards[2] or rewards[3] then
+-- 					hasData = true
+-- 				end
+
+-- 				-- прогресс как в твоём рабочем коде
+-- 				local progressText
+-- 				if max == 0 then
+-- 					progressText = E.COLOR_GRAY .. "-|r"
+-- 				else
+-- 					local color
+
+-- 					if vaultMin >= max then
+-- 						color = E.COLOR_GREEN
+-- 					elseif vaultMin > 0 then
+-- 						color = E.COLOR_YELLOW
+-- 					else
+-- 						color = E.COLOR_GRAY
+-- 					end
+
+-- 					progressText = color .. vaultMin .. "/" .. max .. "|r"
+-- 				end
+
+-- 				-- награды в одну строку (как у тебя)
+-- 				local rewardText =
+-- 					(rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "-|r") .. " " ..
+-- 					(rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "-|r") .. " " ..
+-- 					(rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "-|r")
+
+-- 				reward[j] = rewardText
+-- 				totalRuns[j] = progressText
+-- 			end
+
+-- 			if hasData then
+-- 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
+-- 				local row = { leftText }
+
+-- 				local row2Text = HasAvailableRewards > 0 and E.COLOR_BLUE..">"..REWARD.."<|r" or ""
+
+-- 				table.insert(characterData, {
+-- 					row = row,
+-- 					name = pd.Name,
+-- 					sortValue = HasAvailableRewards,
+
+-- 					row2Text = row2Text,
+-- 					reward = reward,
+-- 					totalRuns = totalRuns,
+-- 				})
+-- 			end
+-- 		end
+-- 	end
+
+-- 	if #characterData > 0 then
+-- 		table.sort(characterData, function(a, b)
+-- 			if a.sortValue ~= b.sortValue then
+-- 				return a.sortValue > b.sortValue
+-- 			end
+-- 			return a.name < b.name
+-- 		end)
+
+-- 		for _, d in ipairs(characterData) do
+-- 			d.row[2] = d.row2Text
+
+-- 			-- 3 активности = 3 колонки
+-- 			d.row[3] = "(" .. (d.totalRuns[1] or "-") .. ")" .. (d.reward[1] or "-")
+-- 			d.row[4] = "(" .. (d.totalRuns[2] or "-") .. ")" .. (d.reward[2] or "-")
+-- 			d.row[5] = "(" .. (d.totalRuns[3] or "-") .. ")" .. (d.reward[3] or "-")
+
+-- 			table.insert(tooltip, d.row)
+-- 		end
+
+-- 		local header = {
+-- 			"CharName",
+-- 			"HasAvailableRewards",
+-- 			E.name_activities[header_ids_tbl[1]],
+-- 			E.name_activities[header_ids_tbl[2]],
+-- 			E.name_activities[header_ids_tbl[3]],
+-- 		}
+
+-- 		table.insert(tooltip, 1, header)
+-- 	end
+
+-- 	return tooltip
+-- end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -565,7 +720,7 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 	local paragonQuest = E.OctoTable_Reputations_DB[id] and E.OctoTable_Reputations_DB[id].paragonQuest or false
 	if not paragonQuest then return end
 	local characterData = {}
-	local IsAccountWideReputation = C_Reputation.IsAccountWideReputation(id)
+	local IsAccountWideReputation = E.func_IsAccountWideReputation(id)
 	if IsAccountWideReputation then
 		local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
 		if not CharInfo then

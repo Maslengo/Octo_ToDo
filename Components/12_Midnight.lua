@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Midnight_available = E.func_Is_Midnight_available()
+local Is_Midnight_available = E.Is_Midnight_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_Midnight_available then return end;
@@ -179,7 +179,7 @@ local function tempFunction()
 				{rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
 				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
 			},
-			forcedMaxQuest = 2,
+			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		{

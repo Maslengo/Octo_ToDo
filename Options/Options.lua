@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+if not E.IsMidnight then return end
 local L = E.L
 ----------------------------------------------------------------
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")

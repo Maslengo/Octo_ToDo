@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Cataclysm_available = E.func_Is_Cataclysm_available()
+local Is_Cataclysm_available = E.Is_Cataclysm_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_Cataclysm_available then return end;

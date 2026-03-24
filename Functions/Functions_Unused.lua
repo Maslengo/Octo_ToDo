@@ -34,7 +34,7 @@ function E.func_UpdateButtonState(frame, id, curType)
 		frame.icon:SetVertexColor(1, 1, 1, .5)
 		frame.icon:SetDesaturated(true)
 	else
-		if E.func_IsOnCD(id, curType) == true then
+		if E.func_IsOnCD(id, curType) then
 			frame.icon:SetVertexColor(1, 0, 0, 1)
 		else
 			frame.icon:SetVertexColor(1, 1, 1, 1)

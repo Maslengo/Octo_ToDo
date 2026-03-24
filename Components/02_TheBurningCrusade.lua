@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_TheBurningCrusade_available = E.func_Is_TheBurningCrusade_available()
+local Is_TheBurningCrusade_available = E.Is_TheBurningCrusade_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_TheBurningCrusade_available then return end;

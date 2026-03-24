@@ -114,7 +114,7 @@ local function defaults_tbl()
 		ConfigColor_TOOLTIP_max_RGBA_g = GG,
 		ConfigColor_TOOLTIP_max_RGBA_b = GB,
 		ConfigColor_TOOLTIP_max_RGBA_a = GA,
-		ConfigColor_TOOLTIP_usegradient = true,
+		ConfigColor_TOOLTIP_usegradient = false,
 		ConfigColor_CharLines_r = 0.5,
 		ConfigColor_CharLines_g = 0.5,
 		ConfigColor_CharLines_b = 0.5,

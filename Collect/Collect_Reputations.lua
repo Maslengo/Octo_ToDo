@@ -16,6 +16,12 @@ local function Collect_Reputations()
 		local standingTEXT = ""
 		local reaction = 0
 		local hasValidData = false  -- Флаг наличия данных
+
+
+
+		-- /dump GetFactionInfo(76)
+		-- /dump E.func_GetFactionDataByID(76)
+
 		local simpleData = E.func_GetFactionDataByID(reputationID)
 		local friendData = E.func_GetFriendshipReputation(reputationID)
 		local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
@@ -138,7 +144,7 @@ local function Collect_Reputations()
 	for reputationID in next, (E.TBL_validReps) do
 		local output = func_GetReputationProgress(reputationID)
 		-- if output then
-		local isAccountWide = C_Reputation.IsAccountWideReputation(reputationID)
+		local isAccountWide = E.func_IsAccountWideReputation(reputationID)
 		if isAccountWide then
 			-- Аккаунтовая: обновляем всех
 			for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do

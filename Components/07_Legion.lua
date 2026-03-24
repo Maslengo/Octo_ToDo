@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Legion_available = E.func_Is_Legion_available()
+local Is_Legion_available = E.Is_Legion_available
 ----------------------------------------------------------------
 if not enable then return end
 if not Is_Legion_available then return end;

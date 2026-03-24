@@ -1,24 +1,24 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
-local GetItemNameByID = GetItemNameByID or  C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or  C_Item.GetItemQualityByID
-local GetSpellName = GetSpellName or  C_Spell.GetSpellName
-local GetCurrencyInfo = GetCurrencyInfo or  C_CurrencyInfo.GetCurrencyInfo
-local GetQuestInfo = GetQuestInfo or  C_QuestLog.GetQuestInfo
-local GetTitleForQuestID = GetTitleForQuestID or  C_QuestLog.GetTitleForQuestID
-local GetFactionDataByID = GetFactionDataByID or  C_Reputation.GetFactionDataByID
-local GetFriendshipReputation = GetFriendshipReputation or  C_GossipInfo.GetFriendshipReputation
-local GetTradeSkillDisplayName = GetTradeSkillDisplayName or  C_TradeSkillUI.GetTradeSkillDisplayName
-local GetTradeSkillTexture = GetTradeSkillTexture or  GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
-local GetMapInfo = GetMapInfo or  C_Map.GetMapInfo
-local GetMapGroupID = GetMapGroupID or  C_Map.GetMapGroupID
-local GetMapGroupMembersInfo = GetMapGroupMembersInfo or  C_Map.GetMapGroupMembersInfo
-local GetCurrentCalendarTime = GetCurrentCalendarTime or  C_DateAndTime.GetCurrentCalendarTime
-local GetDayEvent = GetDayEvent or  C_Calendar.GetDayEvent
-local GetMonthInfo = GetMonthInfo or  C_Calendar.GetMonthInfo
-local SetAbsMonth = SetAbsMonth or  C_Calendar.SetAbsMonth
-local GetNumDayEvents = GetNumDayEvents or  C_Calendar.GetNumDayEvents
-local GetMountInfoByID = GetMountInfoByID or  C_MountJournal.GetMountInfoByID
+local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
+local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
+local GetSpellName = GetSpellName or C_Spell.GetSpellName
+local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
+local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
+local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
+local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
+local GetFriendshipReputation = GetFriendshipReputation or C_GossipInfo.GetFriendshipReputation
+local GetTradeSkillDisplayName = GetTradeSkillDisplayName or C_TradeSkillUI.GetTradeSkillDisplayName
+local GetTradeSkillTexture = GetTradeSkillTexture or GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
+local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
+local GetMapGroupID = GetMapGroupID or C_Map.GetMapGroupID
+local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMembersInfo
+local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
+local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
+local GetMonthInfo = GetMonthInfo or C_Calendar.GetMonthInfo
+local SetAbsMonth = SetAbsMonth or C_Calendar.SetAbsMonth
+local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
+local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
 ----------------------------------------------------------------
 local UNKNOWN = UNKNOWN
 ----------------------------------------------------------------
@@ -199,7 +199,7 @@ handler.npc = function(Cache, TYPE, id)
 end
 handler.reputation = function(Cache, TYPE, id)
 	local name
-	local repInfo = GetFactionDataByID(id)
+	local repInfo = GetFactionDataByID and GetFactionDataByID(id)
 	local result
 	if repInfo then
 		result = repInfo.name
@@ -287,13 +287,18 @@ handler.specialization = function(Cache, TYPE, id)
 	end
 	return name
 end
+-- /dump E.func_GetName("global", DONE)
+-- handler.global = function(Cache, TYPE, id)
+-- 	local name = func_CacheName(id, Cache, specName, TYPE)
+-- 	return name
+-- end
 ----------------------------------------------------------------
 function E.func_GetName(TYPE, id, forcedQuality)
 	if not id then return "no id" end
+	id = tonumber(id)
 	if type(id) ~= "number" then return "wrong id type" end
 	if not TYPE then return "not TYPE" end
 	local name
-	id = tonumber(id)
 	local Cache = GetOrCreateCache(TYPE)
 	local localeCache = Cache[id]
 	local cached = localeCache and localeCache[E.curLocaleLang] or nil
@@ -309,7 +314,7 @@ function E.func_GetName(TYPE, id, forcedQuality)
 	else
 		local h = handler[TYPE] or handler[TYPE:lower()]
 		if h then
-		    name = h(Cache, TYPE, id)
+			name = h(Cache, TYPE, id)
 		end
 	end
 	if forcedQuality and name then

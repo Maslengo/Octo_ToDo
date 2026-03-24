@@ -238,11 +238,11 @@ end
 function E.func_GetNextResetTime(time)
 	local time = time or 1
 	local daytime = 86400
-	local thursdayReset = GetWeeklyResetStartTime()
+	local thursdayReset = GetWeeklyResetStartTime and GetWeeklyResetStartTime() or 0
 	return (math.ceil((GetServerTime() - thursdayReset)/(daytime*time))*daytime*time)+thursdayReset
 end
 function E.func_GetSecondsToWeeklyReset()
-	return GetSecondsUntilWeeklyReset()
+	return GetSecondsUntilWeeklyReset and GetSecondsUntilWeeklyReset() or 0
 end
 function E.func_IsOnQuest(id)
 	return IsOnQuest(id)
@@ -407,7 +407,7 @@ function E.func_SpamBlock(...)
 	local func, needCheckCombat, newSpamTimer = ...
 	if type(func) ~= "function" then return end
 	local SPAM_TIME = newSpamTimer and newSpamTimer or Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME or 2
-	if (needCheckCombat == nil or needCheckCombat == true) and InCombatLockdown() then
+	if (needCheckCombat == nil or needCheckCombat) and InCombatLockdown() then
 		E._inCombats[key] = true
 		return true -- заблочена и добавлена в выполнение после сброса комбата
 	end
@@ -915,7 +915,7 @@ function E.func_RegisterFrame_SIMPLE(frame)
 end
 function E.func_GetPlayerRealm()
 	local result = GetRealmName()
-	if E.func_IsRemix() then
+	if E.IsRemix then
 		result = result.." (Remix)"
 	end
 	return result
@@ -1135,7 +1135,7 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 end
 function E.func_GetRealmShortName(text)
 	local a, b = strsplit(" ", text:gsub("[-']", " "))
-	local isRemix = E.func_IsRemix() and " (Remix)" or ""
+	local isRemix = E.IsRemix and " (Remix)" or ""
 	local output
 	if b then
 		output = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
@@ -1294,9 +1294,18 @@ function E.func_CompactFormatNumber(num)
 	local s = tostring(rounded):gsub("%.0$", "")
 	return s..suffixes[i]
 end
+
+-- /run opde(GetFactionInfo(76))
+-- /dump GetFactionInfo(76)
 ----------------------------------------------------------------
 function E.func_GetFactionDataByID(id)
-	return GetFactionDataByID(id)
+	local data
+	if GetFactionDataByID and GetFactionDataByID(id) then
+		data = GetFactionDataByID(id)
+	elseif GetFactionInfo then
+		data = GetFactionInfo(id)
+	end
+	return data
 end
 function E.func_GetFactionParagonInfo(id)
 	return GetFactionParagonInfo(id)
@@ -2222,6 +2231,17 @@ function E.func_Header(lay_out, text)
 	end
 end
 ----------------------------------------------------------------
+function E.func_IsAccountWideReputation(id)
+	return IsAccountWideReputation and IsAccountWideReputation(id)
+end
+----------------------------------------------------------------
+function E.func_IsAccountWideCurrency(id)
+	return IsAccountWideCurrency and IsAccountWideCurrency(id)
+end
+----------------------------------------------------------------
+function E.func_IsAccountTransferableCurrency(id)
+	return IsAccountTransferableCurrency and IsAccountTransferableCurrency(id)
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2236,21 +2256,58 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+-- function E.func_RegisterEvents(frame, MyEventsTable)
+-- 	local stack = debugstack(2)
+-- 	local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
+-- 	local DebugPath = STR:gsub("]", "")
+-- 	for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
+-- 	frame:SetScript("OnEvent",
+-- 		function(self, event, ...)
+-- 			if self[event] then
+-- 				self[event](self, ...)
+-- 			else
+-- 				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
+-- 				self:UnregisterEvent(event)
+-- 				self.event = nil
+-- 			end
+-- 	end)
+-- end
+
+
+
+
 function E.func_RegisterEvents(frame, MyEventsTable)
-	local stack = debugstack(2)
-	local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
-	local DebugPath = STR:gsub("]", "")
-	for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
-	frame:SetScript("OnEvent",
-		function(self, event, ...)
-			if self[event] then
-				self[event](self, ...)
-			else
-				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
-				self:UnregisterEvent(event)
-				self.event = nil
-			end
-	end)
+    local stack = debugstack(2)
+    local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
+    local DebugPath = STR:gsub("]", "")
+
+    for _, event in ipairs(MyEventsTable) do
+        local success, err = pcall(function()
+            frame:RegisterEvent(event)
+        end)
+
+        if success then
+            -- Успешно зарегистрировано
+        else
+            -- Ошибка регистрации (как в вашем случае с ACCOUNT_MONEY)
+            -- DEFAULT_CHAT_FRAME:AddMessage(string.format(
+            --     "|cffff0000[Ошибка]|r Событие '%s' не существует в этой версии WoW\n%s",
+            --     event,
+            --     tostring(err)
+            -- ))
+        end
+    end
+
+    frame:SetScript("OnEvent",
+        function(self, event, ...)
+            if self[event] then
+                self[event](self, ...)
+            else
+                DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
+                pcall(function() self:UnregisterEvent(event) end)
+                self.event = nil
+            end
+        end)
 end
 ----------------------------------------------------------------
 function E.func_RunAfterCombat()

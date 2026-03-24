@@ -97,7 +97,7 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 	if instanceData then
 		-- Собираем все сложности в массив для сортировки
 		local difficulties = {}
-		for difficultyID, v in next, instanceData do
+		for difficultyID, v in next, (instanceData) do
 			difficulties[#difficulties+1] = {
 				difficultyID = difficultyID,
 				defeatedBosses = v.defeatedBosses or 0,
@@ -115,7 +115,26 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 		for _, diff in ipairs(difficulties) do
 			if diff.defeatedBosses > 0 then
 				local color = diff.defeatedBosses == diff.totalBosses and E.COLOR_GREEN or (diff.lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
+
 				TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
+
+
+				-- if diff.defeatedBosses == diff.totalBosses then
+				-- 	local diffABBR = E.OctoTable_Difficulties and E.OctoTable_Difficulties[diff.difficultyID] and E.OctoTable_Difficulties[diff.difficultyID].abbr
+				-- 	TextCenter = TextCenter .. color .. diffABBR .. "|r "
+				-- else
+				-- 	TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
+				-- end
+
+
+				-- if diff.defeatedBosses == diff.totalBosses then
+				-- 	local diffABBR = E.OctoTable_Difficulties and E.OctoTable_Difficulties[diff.difficultyID] and E.OctoTable_Difficulties[diff.difficultyID].abbr
+				-- 	TextCenter = TextCenter .. E.DONE .. " "
+				-- else
+				-- 	TextCenter = TextCenter .. color .. diff.defeatedBosses .. "/" .. diff.totalBosses .. "|r "
+				-- end
+
+
 			end
 		end
 	end
@@ -223,24 +242,36 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
-	if id == "GreatVault" then
-		if pd.HasAvailableRewards then
-			TextCenter = E.COLOR_BLUE .. ">" .. REWARD .. "<|r"
-		else
-			for j = 1, #E.Enum_Activities_table do
-				local ID = E.Enum_Activities_table[j]
-				local name = E.name_activities[ID]
-				local activities = C_WeeklyRewards.GetActivities(ID)
-				local max = activities and activities[3] and activities[3].threshold or 0
-				local vaultData = cm.GreatVault and cm.GreatVault[ID]
-				local vaultMin = vaultData and vaultData.min or 0
-				local rewards = vaultData and vaultData.rewards or {}
-				if vaultMin ~= 0 then
-					TextCenter = TextCenter .. (" " .. vaultMin .. "/" .. max)
-				end
+if id == "GreatVault" then
+	if pd.HasAvailableRewards then
+		TextCenter = E.COLOR_BLUE .. ">" .. REWARD .. "<|r"
+	else
+		TextCenter = ""  -- обнуляем перед циклом
+		for j = 1, #E.Enum_Activities_table do
+			local ID = E.Enum_Activities_table[j]
+			local activities = C_WeeklyRewards.GetActivities(ID)
+			local max = activities and activities[3] and activities[3].threshold or 0
+			local vaultData = cm.GreatVault and cm.GreatVault[ID]
+			local vaultMin = vaultData and vaultData.min or 0
+
+			local displayText
+
+			if max == 0 then
+				displayText = E.COLOR_GRAY .. "-|r"
+			elseif vaultMin >= max then
+				displayText = E.COLOR_GREEN .. vaultMin .. "/" .. max .. "|r"
+				-- displayText = E.DONE
+			elseif vaultMin > 0 then
+				displayText = E.COLOR_YELLOW .. vaultMin .. "/" .. max .. "|r"
+			else
+				displayText = E.COLOR_GRAY .. "-|r"
+				-- displayText = E.COLOR_GRAY .. "0/" .. max .. "|r"
 			end
+
+			TextCenter = TextCenter .. " " .. displayText
 		end
 	end
+end
 	if id == "CurrentKey" then
 		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
 			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, false, false)

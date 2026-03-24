@@ -93,7 +93,12 @@ E.CONFIG_TRANSLIT = false
 E.ICON_REGULAR = "Crosshair_Quest_64"
 E.ICON_DAILY = "Crosshair_Recurring_64"
 E.ICON_WEEKLY = "Crosshair_Wrapper_64"
-E.ICON_MONTH = "cursor_Wrapper_64"
+E.ICON_MONTH = "warbands-icon" -- "cursor_Wrapper_64"
+
+
+
+
+
 E.FULL_WIDTH = 3.60
 E.FOURTH_WIDTH = E.FULL_WIDTH/4.4
 E.HALF_WIDTH = E.FULL_WIDTH/2.2
@@ -345,43 +350,44 @@ E.OctoTable_Covenant = {
 	},
 }
 -- E.CovenantData = {
---     [1] = { prefix = "SL_KYRIAN" },
---     [2] = { prefix = "SL_VENTHYR" },
---     [3] = { prefix = "SL_NIGHTFAE" },
---     [4] = { prefix = "SL_NECROLORD" },
+--   [1] = { prefix = "SL_KYRIAN" },
+--   [2] = { prefix = "SL_VENTHYR" },
+--   [3] = { prefix = "SL_NIGHTFAE" },
+--   [4] = { prefix = "SL_NECROLORD" },
 -- }
 E.LIST_MAX_SIZE = 30
 E.DEBUG_TEXT = E.COLOR_BLUE..BINDING_HEADER_DEBUG.."|r"
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
-function E.func_IsClassic() return E.interfaceVersion > 10000 and E.interfaceVersion < 20000 end
-function E.func_IsBC() return E.interfaceVersion > 20000 and E.interfaceVersion < 30000 end
-function E.func_IsWOTLK() return E.interfaceVersion > 30000 and E.interfaceVersion < 40000 end
-function E.func_IsCataclysm() return E.interfaceVersion > 40000 and E.interfaceVersion < 50000 end
-function E.func_IsMOP() return E.interfaceVersion > 50000 and E.interfaceVersion < 60000 end
-function E.func_IsWOD() return E.interfaceVersion > 60000 and E.interfaceVersion < 70000 end
-function E.func_IsLegion() return E.interfaceVersion > 70000 and E.interfaceVersion < 80000 end
-function E.func_IsBFA() return E.interfaceVersion > 80000 and E.interfaceVersion < 90000 end
-function E.func_IsShadowlands() return E.interfaceVersion > 90000 and E.interfaceVersion < 100000 end
-function E.func_IsDragonflight() return E.interfaceVersion > 100000 and E.interfaceVersion < 110000 end
-function E.func_IsTWW() return E.interfaceVersion > 110000 and E.interfaceVersion < 120000 end
-function E.func_IsMidnight() return E.interfaceVersion > 120000 and E.interfaceVersion < 130000 end
-function E.func_IsTLT() return E.interfaceVersion > 130000 and E.interfaceVersion < 140000 end
-function E.func_IsRetail() return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE end
-function E.func_IsPTR() return GetCurrentRegion() >= 72 end -- 90 BETA midnight
-function E.func_IsRemix() return PlayerIsTimerunning() end
-function E.func_Is_WorldofWarcraft_available() return E.interfaceVersion >= 10000 end
-function E.func_Is_TheBurningCrusade_available() return E.interfaceVersion >= 20000 end
-function E.func_Is_WrathoftheLichKing_available() return E.interfaceVersion >= 30000 end
-function E.func_Is_Cataclysm_available() return E.interfaceVersion >= 40000 end
-function E.func_Is_MistsofPandaria_available() return E.interfaceVersion >= 50000 end
-function E.func_Is_WarlordsofDraenor_available() return E.interfaceVersion >= 60000 end
-function E.func_Is_Legion_available() return E.interfaceVersion >= 70000 end
-function E.func_Is_BattleforAzeroth_available() return E.interfaceVersion >= 80000 end
-function E.func_Is_Shadowlands_available() return E.interfaceVersion >= 90000 end
-function E.func_Is_Dragonflight_available() return E.interfaceVersion >= 100000 end
-function E.func_Is_TheWarWithin_available() return E.interfaceVersion >= 110000 end
-function E.func_Is_Midnight_available() return E.interfaceVersion >= 120000 end
-function E.func_Is_TheLastTitan_available() return E.interfaceVersion >= 130000 end
+E.func_IsClassic = E.interfaceVersion > 10000 and E.interfaceVersion < 20000
+E.func_IsBC = E.interfaceVersion > 20000 and E.interfaceVersion < 30000
+E.func_IsWOTLK = E.interfaceVersion > 30000 and E.interfaceVersion < 40000
+E.func_IsCataclysm = E.interfaceVersion > 40000 and E.interfaceVersion < 50000
+E.func_IsMOP = E.interfaceVersion > 50000 and E.interfaceVersion < 60000
+E.func_IsWOD = E.interfaceVersion > 60000 and E.interfaceVersion < 70000
+E.func_IsLegion = E.interfaceVersion > 70000 and E.interfaceVersion < 80000
+E.func_IsBFA = E.interfaceVersion > 80000 and E.interfaceVersion < 90000
+E.func_IsShadowlands = E.interfaceVersion > 90000 and E.interfaceVersion < 100000
+E.func_IsDragonflight = E.interfaceVersion > 100000 and E.interfaceVersion < 110000
+E.func_IsTWW = E.interfaceVersion > 110000 and E.interfaceVersion < 120000
+E.IsMidnight = E.interfaceVersion > 120000 and E.interfaceVersion < 130000
+E.IsTLT = E.interfaceVersion > 130000 and E.interfaceVersion < 140000
+E.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+E.IsPTR = GetCurrentRegion() >= 72 -- 90 BETA midnight
+E.IsRemix = PlayerIsTimerunning and PlayerIsTimerunning()
+E.Is_WorldofWarcraft_available = E.interfaceVersion >= 10000
+E.Is_TheBurningCrusade_available = E.interfaceVersion >= 20000
+E.Is_WrathoftheLichKing_available = E.interfaceVersion >= 30000
+E.Is_Cataclysm_available = E.interfaceVersion >= 40000
+E.Is_MistsofPandaria_available = E.interfaceVersion >= 50000
+E.Is_WarlordsofDraenor_available = E.interfaceVersion >= 60000
+E.Is_Legion_available = E.interfaceVersion >= 70000
+E.Is_BattleforAzeroth_available = E.interfaceVersion >= 80000
+E.Is_Shadowlands_available = E.interfaceVersion >= 90000
+E.Is_Dragonflight_available = E.interfaceVersion >= 100000
+E.Is_TheWarWithin_available = E.interfaceVersion >= 110000
+E.Is_Midnight_available = E.interfaceVersion >= 120000
+E.Is_TheLastTitan_available = E.interfaceVersion >= 130000
+
 E.OctoTable_PlayerBags = {
 	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
 	Enum.BagIndex.Backpack, -- 0,
@@ -392,7 +398,7 @@ E.OctoTable_PlayerBags = {
 	Enum.BagIndex.ReagentBag, -- 5,
 }
 E.OctoTable_bankTabs = {
-	-- Enum.BagIndex.CharacterBankTab, -- -2,  (classic)
+	-- Enum.BagIndex.CharacterBankTab, -- -2, (classic)
 	Enum.BagIndex.CharacterBankTab_1, -- 6,
 	Enum.BagIndex.CharacterBankTab_2, -- 7,
 	Enum.BagIndex.CharacterBankTab_3, -- 8,
@@ -460,3 +466,29 @@ E.OctoTable_reactionColors = {
 	[4] = E.COLOR_BLUE,
 }
 E.TEXT_INDEV = E.COLOR_RED..">>> ".."In Development".." <<<|r"
+
+
+-- addon mem: 6.16 MB
+
+
+E.OctoTable_Launguages = {
+
+	{name = "ruRU", translate = "Русский", }, -- 1
+	{name = "deDE", translate = "Deutsch", }, -- 2
+	{name = "enEN", translate = "English", }, -- 3
+	{name = "esES", translate = "Español", }, -- 4
+	{name = "esMX", translate = "Español (México)", }, -- 5
+	{name = "frFR", translate = "Français", }, -- 6
+	{name = "itIT", translate = "Italiano", }, -- 7
+	{name = "ptBR", translate = "Português (Brasil)", }, -- 8
+	{name = "koKR", translate = "한국어", }, -- 9
+	{name = "zhCN", translate = "简体中文", }, -- 10
+	{name = "zhTW", translate = "繁體中文", }, -- 11
+
+
+	{name = "Auto", translate = "Язык", }, -- 12
+}
+
+-- for i, v in ipairs(E.OctoTable_Launguages) do
+-- 	print (i, v.name, v.translate)
+-- end
