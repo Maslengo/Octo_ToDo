@@ -666,9 +666,6 @@ function EventFrame:func_CheckAll()
 	EventFrame:init_Octo_ToDo_DB_Vars()
 	EventFrame:init_Octo_ToDo_DB_AccountData()
 	E.func_setOldChanges()
-	EventFrame:func_Daily_Reset()
-	EventFrame:func_Weekly_Reset()
-	EventFrame:func_Month_Reset()
 	E.Init_Octo_Cache_DB()
 end
 function E.WTF_func_CheckAll()
@@ -690,6 +687,11 @@ function EventFrame:func_ScheduleResetTimer()
 		timerHandle = C_Timer.NewTimer(seconds + 4, function()
 				EventFrame:func_CheckAll()
 				E.func_Collect_All()
+
+				EventFrame:func_Daily_Reset()
+				EventFrame:func_Weekly_Reset()
+				EventFrame:func_Month_Reset()
+
 				EventFrame:func_ScheduleResetTimer()
 		end)
 	end
@@ -723,9 +725,17 @@ function EventFrame:VARIABLES_LOADED()
 end
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CacheGameData()
+
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()
 	-- C_Timer.After(2, E.func_BUILD_DUNG_DB)
+
+
+
+	EventFrame:func_Daily_Reset()
+	EventFrame:func_Weekly_Reset()
+	EventFrame:func_Month_Reset()
+
 	C_Timer.After(1, E.func_UpdateGlobals)
 end
 local function Reset_JournalInstance()

@@ -60,7 +60,7 @@ local function Collect_GreatVault()
 		E.GW_Start = false
 	end
 	local UnitLevel = UnitLevel("PLAYER") or 0
-	if UnitLevel < 90 then return end
+	-- if UnitLevel < 90 then return end
 	----------------------------------------------------------------
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
@@ -123,7 +123,7 @@ local function Collect_GreatVault()
 						end
 					end
 					-- Сохраняем только если есть данные
-					if tbl.min or hasRewards then
+					if tbl.min and hasRewards then
 						-- local resetReward = nil
 						collectMASLENGO.GreatVault.NextWeekReward = true
 						collectMASLENGO.GreatVault[ID] = tbl
