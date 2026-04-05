@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
-local dataDisplayOrder = E.dataDisplayOrder
 function E.func_GetData_profileKeys(key)
 	local tbl = Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][key] or {}
 	return tbl
@@ -40,28 +40,33 @@ local function func_InitializeProfileStructure_profileKeys(profileName)
 		-- [97] = false, -- PVP
 		[99] = true -- OTHER
 	})
-	for _, section in ipairs(dataDisplayOrder) do
+	for _, section in ipairs(E.dataDisplayOrder) do
 		E.func_InitSubTable(profile, section)
 	end
 	E.func_InitSubTable(db.profiles, "Default")
 	local defaultProfile = db.profiles.Default
-	for _, section in ipairs(dataDisplayOrder) do
+	for _, section in ipairs(E.dataDisplayOrder) do
 		E.func_InitSubTable(defaultProfile, section)
 	end
 	return db
 end
 local function func_ProcessUniversalQuests_profileKeys(categoryKey, questEntries, Current_profile, defaultProfile)
 	for _, questData in next, (questEntries) do
-		local questKey = E.UNIVERSAL..questData.desc.."_"..questData.name_save.."_"..questData.reset
-		questData.questKey = questKey -- ← ВОТ ЭТО ГЛАВНОЕ
-
+		questData.questKey = E.UNIVERSAL..questData.desc.."_"..questData.name_save.."_"..questData.reset -- ← ВОТ ЭТО ГЛАВНОЕ
+		local questKey = questData.questKey
 
 		table.insert(E.DataProvider_Otrisovka[categoryKey]["UniversalQuests"], questData)
 		-- table.insert(E.ALL_UniversalQuests, questData)
 		-- E.UniversalQuestMap[questKey] = questData
+		if Current_profile.UniversalQuests[questKey] == nil then
+			Current_profile.UniversalQuests[questKey] = questData.defS
+		end
+		if defaultProfile.UniversalQuests[questKey] == nil then
+			defaultProfile.UniversalQuests[questKey] = questData.defS
+		end
 
-		Current_profile.UniversalQuests[questKey] = Current_profile.UniversalQuests[questKey] or questData.defS
-		defaultProfile.UniversalQuests[questKey] = defaultProfile.UniversalQuests[questKey] or questData.defS
+		-- Current_profile.UniversalQuests[questKey] = Current_profile.UniversalQuests[questKey] or questData.defS
+		-- defaultProfile.UniversalQuests[questKey] = defaultProfile.UniversalQuests[questKey] or questData.defS
 		for _, questEntry in ipairs(questData.quests) do
 			local questID = questEntry[1]
 			if type(questID) == "number" then

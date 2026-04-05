@@ -13,13 +13,14 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
-	OctoTables_Vibor[categoryKey].name = OTHER
+	OctoTables_Vibor[categoryKey].name = L["OTHER"]
 	OctoTables_Vibor[categoryKey].color = E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
 		{id = 1166, defS = false,}, -- Timewarped Badge
 		-- {id = 3139, defS = false,}, -- Plunder
 		{id = 2032, defS = false,}, -- Trader's Tender
+		{id = 1191, defS = false,},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
@@ -53,7 +54,7 @@ local function tempFunction()
 		-- {
 		-- sorted = false,
 		-- TextLeft = function()
-		-- return DUNGEONS..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetName("event", 1583)..")",
+		-- return L["DUNGEONS"]..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetName("event", 1583)..")",
 		-- end,
 		-- showTooltip = true,
 		-- name_save = "Dungeons",
@@ -94,7 +95,7 @@ local function tempFunction()
 		-- end,
 		-- name_save = "Prohodki",
 		-- defS = true,
-		-- reset = "Regular",
+		-- reset = "Normal",
 		-- desc = categoryKey,
 		-- quests = {
 		-- ----------------------------------------------------------------
@@ -178,6 +179,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
+		{id = "MythicZero", defS = false,},
 		{id = "LFGInstance", defS = true,},
 		{id = "ListOfQuests", defS = false,},
 		{id = "AllItems", defS = false,},

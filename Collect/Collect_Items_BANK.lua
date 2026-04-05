@@ -48,7 +48,7 @@ local function Collect_Items_BANK()
 			----------------------------------------------------------------
 			if not Enum.BagIndex or not Enum.BagIndex.CharacterBankTab_1 then return end
 			----------------------------------------------------------------
-			-- BANK
+			-- L["BANK"]
 			-- local seenSlots = {}
 			for _, bagID in next, (OctoTable_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
@@ -136,7 +136,7 @@ local function Collect_Items_AccountBank()
 			----------------------------------------------------------------
 			if C_Bank and C_Bank.FetchBankLockedReason and C_Bank.FetchBankLockedReason(Enum.BankType.Account) ~= nil then return end -- Банк заблокирован, не обрабатываем
 			----------------------------------------------------------------
-			-- ACCOUNT BANK
+			-- ACCOUNT L["BANK"]
 			for _, bagID in next, (OctoTable_Account_bankTabs) do
 				local numSlots = C_Container.GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then

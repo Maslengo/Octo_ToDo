@@ -1,12 +1,13 @@
 local GlobalAddonName, E = ...
 local L = E.L
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
+----------------------------------------------------------------
 function E.func_option_DEBUG(category, layout)
 	------------------------------------------------------------
 	----------------------------------------------------------------
 	-- HEADER
 	----------------------------------------------------------------
-	-- E.func_Header(layout, BINDING_HEADER_DEBUG)
+	-- E.func_Header(layout, L["BINDING_HEADER_DEBUG"])
 	----------------------------------------------------------------
 	-- 1. Config_DebugID_ALL
 	----------------------------------------------------------------
@@ -15,12 +16,12 @@ function E.func_option_DEBUG(category, layout)
 		local variableKey = "Config_DebugID_ALL"
 		local variableTbl = Octo_ToDo_DB_Vars
 		local name = L["Show ID"]
-		local defaultValue = false -- Settings.Default.False
-		-- local variableType = Settings.VarType.Boolean
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
+		-- setting:SetIsEnabledCallback(function() return false end)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO
-		Settings.CreateCheckbox(category, setting, tooltip)
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
+		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------

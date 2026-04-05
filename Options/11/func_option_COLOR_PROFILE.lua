@@ -123,7 +123,7 @@ function E.func_option_COLOR_PROFILE(category, layout)
 							-- info.fontObject = OctoFont11
 							-- info.keepShownOnClick = false
 							-- info.notCheckable = true
-							-- info.text = L["Create"]
+							-- info.text = L["NEW"]
 							-- info.func = function()
 							-- 	ShowCreateProfileDialog(false)
 							-- end

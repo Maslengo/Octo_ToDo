@@ -20,11 +20,14 @@ local icon = E.func_texturefromIcon(C_AddOns.GetAddOnMetadata(GlobalAddonName, "
 local SettingListHeaderName = E.func_AddonNameForOptions(GlobalAddonName)
 local vesrion = E.COLOR_GRAY.." ".. C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version").."|r"
 local category1name = SettingListHeaderName
-local category2name = CURRENCY -- COLORS
-local category3name = DUNGEONS
-local category4name = E.COLOR_GRAY..REPUTATION.."|r"
-local category5name = "func_option_moduls" -- E.func_AddonNameForOptions(GlobalAddonName)
-local category999name = BINDING_HEADER_DEBUG
+local category2name = L["CURRENCY"] -- L["COLORS"]
+local category3name = L["DUNGEONS"]
+local category4name = L["REPUTATION"]
+local category5name = L["ITEMS"]
+-- local category5name = "func_option_moduls" -- E.func_AddonNameForOptions(GlobalAddonName)
+
+local category999name = E.COLOR_GRAY..L["BINDING_HEADER_DEBUG"].."|r"
+-- local category999name = E.func_Gradient(L["BINDING_HEADER_DEBUG"], E.COLOR_GRAY, E.COLOR_WHITE)
 ----------------------------------------------------------------
 local main_category, main_layout = Settings.RegisterVerticalLayoutCategory(category1name)
 Settings.RegisterAddOnCategory(main_category)
@@ -32,19 +35,21 @@ local parentCategory = main_category
 ----------------------------------------------------------------
 -- OPEN CONFIG
 ----------------------------------------------------------------
-function EventFrame:openConfig()
+function E.func_openConfig()
 	if SettingsPanel:IsVisible() and self:IsVisible() then
 		if InCombatLockdown() then return end
 		HideUIPanel(SettingsPanel)
 	else
 		Settings.OpenToCategory(main_category:GetID(), GlobalAddonName)
 	end
-end
-function E.openConfig()
-	EventFrame:openConfig()
+	--     if C_SettingsUtil and E.SettingsCategoryID then
+	--         C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
+	--     elseif Settings then
+	--         Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
+	--     end
 end
 SLASH_OCTO_TODO_OPTIONS1 = "/octosettings"
-SlashCmdList["OCTO_TODO_OPTIONS"] = function() EventFrame:openConfig() end
+SlashCmdList["OCTO_TODO_OPTIONS"] = function() E.func_openConfig() end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_LOGIN",
@@ -57,14 +62,17 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	do
 		local enable = true
-		if enable
-		and E.func_option_FONT
-		and E.func_option_OTHER
-		and E.func_option_CHARACTER
-		then
-			E.func_option_FONT(main_category, main_layout)
-			E.func_option_OTHER(main_category, main_layout)
-			E.func_option_CHARACTER(main_category, main_layout)
+
+		if enable then
+			if E.func_option_FONT then
+				E.func_option_FONT(main_category, main_layout)
+			end
+			if E.func_option_OTHER then
+				E.func_option_OTHER(main_category, main_layout)
+			end
+			if E.func_option_CHARACTER then
+				E.func_option_CHARACTER(main_category, main_layout)
+			end
 		end
 	end
 	----------------------------------------------------------------
@@ -72,11 +80,39 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	do
 		local enable = true
-		if enable
-		and E.func_option_CURRENCY
-		then
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category2name) -- CURRENCY
-			E.func_option_CURRENCY(category, layout, tabName)
+		if enable then
+			-- local iconID = E.func_texturefromIcon(E.func_GetIcon("currency", 1166))
+			local tabName = L["CURRENCY"]
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- CURRENCY
+			if E.func_option_CURRENCY_ICONS then
+				E.func_option_CURRENCY_ICONS(category, layout)
+			end
+			if E.func_option_CURRENCY_COLORS then
+				E.func_option_CURRENCY_COLORS(category, layout)
+			end
+			if E.func_option_CURRENCY_OTHER then
+				E.func_option_CURRENCY_OTHER(category, layout)
+			end
+			if E.func_option_CURRENCY_TOOLTIP then
+				E.func_option_CURRENCY_TOOLTIP(category, layout)
+			end
+		end
+	end
+	----------------------------------------------------------------
+	-- 5 -----------------------------------------------------------
+	----------------------------------------------------------------
+	do
+		local enable = true
+		if enable then
+			-- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081))  -- (49778 sword) (2362 shield)
+			local tabName = L["ITEMS"]
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- L["ITEMS"]
+			if E.func_option_ITEMS_ICONS then
+				E.func_option_ITEMS_ICONS(category, layout)
+			end
+			if E.func_option_ITEMS_COLORS then
+				E.func_option_ITEMS_COLORS(category, layout)
+			end
 		end
 	end
 	----------------------------------------------------------------
@@ -84,11 +120,25 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	do
 		local enable = true
-		if enable
-		and E.func_option_REPUTATION
-		then
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category4name) -- REPUTATION
-			E.func_option_REPUTATION(category, layout)
+		if enable then
+			-- local iconID = E.func_texturefromIcon(E.ICON_TABARD)
+			local tabName = L["REPUTATION"]
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- REPUTATION
+			if E.func_option_REPUTATION_ICONS then
+				E.func_option_REPUTATION_ICONS(category, layout)
+			end
+			if E.func_option_REPUTATION_PARAGON then
+				E.func_option_REPUTATION_PARAGON(category, layout)
+			end
+			if E.func_option_REPUTATION_MAJOR then
+				E.func_option_REPUTATION_MAJOR(category, layout)
+			end
+			if E.func_option_REPUTATION_FRIEND then
+				E.func_option_REPUTATION_FRIEND(category, layout)
+			end
+			if E.func_option_REPUTATION_SIMPLE then
+				E.func_option_REPUTATION_SIMPLE(category, layout)
+			end
 		end
 	end
 	----------------------------------------------------------------
@@ -96,19 +146,18 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	do
 		local enable = true
-		if enable
-		and E.func_option_DUNGEONS
-		then
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name) -- DUNGEONS
-			E.func_option_DUNGEONS(category, layout)
+		if enable then
+			-- local iconID = E.func_texturefromIcon(E.ATLAS_RAID)
+			local tabName = L["RAIDS"]
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+			if E.func_option_RAIDS_ICONS then
+				E.func_option_RAIDS_ICONS(category, layout)
+			end
+			if E.func_option_RAIDS_TOOLTIP then
+				E.func_option_RAIDS_TOOLTIP(category, layout)
+			end
 		end
 	end
-
-
-
-
-
-
 	----------------------------------------------------------------
 	-- 10 -----------------------------------------------------------
 	----------------------------------------------------------------
@@ -119,11 +168,11 @@ function EventFrame:PLAYER_LOGIN()
 			-- local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
 			-- E.func_option_COLOR_PROFILE(category, layout)
 			-- E.func_option_COLOR_MAIN(category, layout)
-			if E.func_option_COLOR then
+			if E.func_option_COLORS then
 				local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
-				local leftText = COLORS
-				local rightText = COLORS
-				AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_COLOR(width, rightText))
+				local leftText = L["COLORS"]
+				local rightText = L["COLORS"]
+				AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_COLORS(width, rightText))
 				AceConfigDialog:AddToBlizOptions(leftText, leftText, main_category:GetID())
 			end
 		end
@@ -155,11 +204,19 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	do
 		local enable = true
-		if enable
-		and E.func_option_DEBUG
-		then
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category999name) -- CURRENCY
-			E.func_option_DEBUG(category, layout)
+		if enable then
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, L["BINDING_HEADER_DEBUG"]) -- BINDING_HEADER_DEBUG
+			if E.func_option_DEBUG then
+				E.func_option_DEBUG(category, layout)
+			end
+
+			if not E.DEBUG then return end
+			if E.func_option_DEV1 then
+				E.func_option_DEV1(category, layout)
+			end
+			if E.func_option_DEV2 then
+				E.func_option_DEV2(category, layout)
+			end
 		end
 	end
 	----------------------------------------------------------------

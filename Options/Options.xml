@@ -1,17 +1,28 @@
 <Ui>
 	<Script file="Options\Options.lua"/>
 
-	<Script file="Options\0\func_option_CHARACTER.lua"/>
-	<Script file="Options\0\func_option_FONT.lua"/>
-	<Script file="Options\0\func_option_OTHER.lua"/>
+	<Script file="Options\MAIN\func_option_CHARACTER.lua"/>
+	<Script file="Options\MAIN\func_option_FONT.lua"/>
+	<Script file="Options\MAIN\func_option_OTHER.lua"/>
 
-	<Script file="Options\2\func_option_CURRENCY.lua"/>
+	<Script file="Options\CURRENCY\func_option_CURRENCY_ICONS.lua"/>
+	<Script file="Options\CURRENCY\func_option_CURRENCY_COLORS.lua"/>
+	<Script file="Options\CURRENCY\func_option_CURRENCY_OTHER.lua"/>
+	<Script file="Options\CURRENCY\func_option_CURRENCY_TOOLTIP.lua"/>
 
-	<Script file="Options\3\func_option_REPUTATION.lua"/>
+	<Script file="Options\REPUTATION\func_option_REPUTATION_ICONS.lua"/>
+	<Script file="Options\REPUTATION\func_option_REPUTATION_PARAGON.lua"/>
+	<Script file="Options\REPUTATION\func_option_REPUTATION_MAJOR.lua"/>
+	<Script file="Options\REPUTATION\func_option_REPUTATION_FRIEND.lua"/>
+	<Script file="Options\REPUTATION\func_option_REPUTATION_SIMPLE.lua"/>
 
-	<Script file="Options\4\func_option_DUNGEONS.lua"/>
+	<Script file="Options\RAIDS\func_option_RAIDS_ICONS.lua"/>
+	<Script file="Options\RAIDS\func_option_RAIDS_TOOLTIP.lua"/>
 
-	<Script file="Options\10\func_option_COLOR.lua"/>
+	<Script file="Options\ITEMS\func_option_ITEMS_ICONS.lua"/>
+	<Script file="Options\ITEMS\func_option_ITEMS_COLORS.lua"/>
+
+	<Script file="Options\COLORS\func_option_COLORS.lua"/>
 
 	<Script file="Options\11\func_option_COLOR_MAIN.lua"/>
 	<Script file="Options\11\func_option_COLOR_PROFILE.lua"/>
@@ -19,5 +30,7 @@
 	<Script file="Options\998\func_option_userscript.lua"/>
 
 	<Script file="Options\999\func_option_DEBUG.lua"/>
+	<Script file="Options\999\func_option_DEV1.lua"/>
+	<Script file="Options\999\func_option_DEV2.lua"/>
 
 </Ui>

@@ -347,7 +347,7 @@ local function tempFunction()
 		-- end,
 		--     name_save = "TheMechagonianThreat",
 		-- defS = true,
-		--     reset = "Regular",
+		--     reset = "Normal",
 		--     desc = categoryKey,
 		--     quests = {
 		--         -- Только для Альянса
@@ -499,7 +499,7 @@ local function tempFunction()
 		-- TextLeft = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- name_save = "UNLOCKING MECHAGON PART 1 ALLIANCE",
 		-- defS = true,
-		-- reset = "Regular",
+		-- reset = "Normal",
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
@@ -534,7 +534,7 @@ local function tempFunction()
 		-- TextLeft = "UNLOCKING MECHAGON PART 2",
 		-- name_save = "UNLOCKING MECHAGON PART 2",
 		-- defS = true,
-		-- reset = "Regular",
+		-- reset = "Normal",
 		-- desc = categoryKey,
 		-- -- forcedMaxQuest = "all",
 		-- quests = {
@@ -654,7 +654,7 @@ local function tempFunction()
 			end,
 			name_save = "MechagonMakingAMount",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{55608},
@@ -694,7 +694,7 @@ local function localfunc2()
 				----------------------------------------------------------------
 				local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil
 				TooltipKey = "BfA_mechagonItems"
-				TextCenter = E.COLOR_GRAY..ITEMS.."|r"
+				TextCenter = E.COLOR_GRAY..L["ITEMS"].."|r"
 				----------------------------------------------------------------
 				TextLeft = "МЕХАГОН"
 				ColorLeft = E.OctoTable_Expansions[categoryKey].color

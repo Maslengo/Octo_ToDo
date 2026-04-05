@@ -21,12 +21,12 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 1508, defS = false,},
-		{id = 1342, defS = false,},
+		{id = 1508, defS = true,},
+		{id = 1342, defS = true,},
 		{id = 1220, defS = true,},
-		{id = 1226, defS = false,},
+		{id = 1226, defS = true,},
 		{id = 1533, defS = false,},
-		{id = 1155, defS = false,},
+		{id = 1155, defS = true,},
 		{id = 1149, defS = false,},
 		{id = 1416, defS = false,},
 		{id = 1273, defS = false,},
@@ -151,7 +151,7 @@ local function tempFunction()
 			end,
 			defS = false,
 			name_save = "BalanceofPower",
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			MainquestID = 43533,
 			quests = {

@@ -90,7 +90,7 @@ function EventFrame:func_CacheGameData()
 		end
 	end
 	-- for itemID, v in next,(E.ALL_Items) do
-	-- 	print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityLevel(itemID))
+	-- print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityByID(itemID))
 	-- end
 	----------------------------------------------------------------
 	-- Асинхронная загрузка
@@ -99,13 +99,13 @@ function EventFrame:func_CacheGameData()
 	:ThenForAllWithCached(function(_, ID, TYPE)
 			E.func_GetName(TYPE, ID)
 			-- if TYPE == "item" then
-			-- 	E.func_GetItemQualityLevel(ID)
+			-- E.func_GetItemQualityByID(ID)
 			-- end
 			-- if TYPE == "quest" then
-			-- 	E.func_GetName("quest", ID)
+			-- E.func_GetName("quest", ID)
 			-- elseif TYPE == "item" then
-			-- 	E.func_GetName("item", ID)
-			-- 	-- C_Item.GetItemQualityByID(ID)
+			-- E.func_GetName("item", ID)
+			-- -- C_Item.GetItemQualityByID(ID)
 			-- end
 	end)
 	----------------------------------------------------------------
@@ -137,15 +137,15 @@ function EventFrame:func_CacheGameData()
 	-- opde(E.UniversalQuestMap)
 
 	-- for categoryKey, categoryData in next, (E.OctoTables_DataOtrisovka) do
-	-- 	for dataType, dataEntries in next, (categoryData) do
-	-- 		E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
-	-- 		E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
-	-- 		if dataType ~= "UniversalQuests" then
-	-- 			func_ProcessStandardData_profileKeys(categoryKey, dataType, dataEntries, Current_profile, defaultProfile)
-	-- 		else
-	-- 			func_ProcessUniversalQuests_profileKeys(categoryKey, dataEntries, Current_profile, defaultProfile)
-	-- 		end
-	-- 	end
+	-- for dataType, dataEntries in next, (categoryData) do
+	--  E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
+	--  E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
+	--  if dataType ~= "UniversalQuests" then
+	--   func_ProcessStandardData_profileKeys(categoryKey, dataType, dataEntries, Current_profile, defaultProfile)
+	--  else
+	--   func_ProcessUniversalQuests_profileKeys(categoryKey, dataEntries, Current_profile, defaultProfile)
+	--  end
+	-- end
 	-- end
 
 	-- E.UniversalQuestMap[id] = data
@@ -306,7 +306,7 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		totalSlots_BAGS = 16,
 		UnitXPMax = 0,
 		specIcon = E.ICON_QUESTION_MARK,
-		RaceID = 0,  -- НЕ ТАК
+		RaceID = 0, -- НЕ ТАК
 		PVP_timer = 0,
 		LuaVersion = _VERSION,
 		BindLocation = E.NONE,
@@ -402,32 +402,88 @@ function EventFrame:init_Octo_ToDo_DB_AccountData()
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank or {}
 end
 E.Octo_ToDo_DB_Vars_DEFAULTS = {
-	Config_LevelToShow = 1,
-	Config_LevelToShowMAX = 90,
-	isOnlyCurrentBtag = false,
-	ShowOnlyCurrentRegion = false,
-	isOnlyCurrentServer = false,
-	isOnlyCurrentFaction = false,
-	Config_DebugID_ALL = false,
 	Config_numberFormatMode = 1,
-	Config_ADDON_HEIGHT = 20,
-	Config_ClampedToScreen = false,
-	Config_ShowAllDifficulties = true,
-	Config_DifficultyAbbreviation = true,
-	Config_MountsInTooltip = true,
-	CONFIG_SPAM_TIME = 2,
-	CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,
-	Currencies = true,
-	CONFIG_TEXTURE = "Blizzard Raid Bar",
 	GlobalDBVersion = 0,
-	CONFIG_TRANSLIT = false,
-	CONFIG_CURRENCY_SHOW_BRACKETS = false,
-	CONFIG_CURRENCY_COLOR_BRACKETS = E.COLOR_ADDON_LEFT:gsub("^|c", ""),
-	CONFIG_CURRENCY_SHOW_REMAINING = false,
-	CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_ADDON_RIGHT:gsub("^|c", ""),
-	CONFIG_CURRENCY_SHOW_ZERO = false,
-	CONFIG_CURRENCY_COLOR_ZERO = E.COLOR_GRAY:gsub("^|c", ""),
+
+		Config_LevelToShow = 1,
+		Config_LevelToShowMAX = 90,
+		isOnlyCurrentBtag = false,
+		ShowOnlyCurrentRegion = false,
+		isOnlyCurrentServer = false,
+		isOnlyCurrentFaction = false,
+		Config_DebugID_ALL = false, -- /run Octo_ToDo_DB_Vars.Config_DebugID_ALL = true
+		Config_ADDON_HEIGHT = 20,
+		Config_ClampedToScreen = false,
+		Config_MountsInTooltip = true,
+		CONFIG_SPAM_TIME = 2,
+		CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,
+		Currencies = true,
+
+		CONFIG_RAIDS_ICON = true,
+		CONFIG_RAIDS_EXTRA_ICON = false,
+		CONFIG_RAIDS_DIFFICULTIES_ALL = true,
+		CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS = true,
+
+		Config_ShowAllDifficulties = true,
+		Config_DifficultyAbbreviation = true,
+
+		CONFIG_ITEMS_COLOREDNAME = true,
+		CONFIG_ITEMS_ICON = true,
+		CONFIG_CURRENCY_ICON = true,
+		CONFIG_CURRENCY_WARBAND_ICON = true,
+
+		CONFIG_CURRENCY_COLOREDNAME = true,
+		CONFIG_CURRENCY_SHOW_BRACKETS = false,
+		CONFIG_CURRENCY_COLOR_BRACKETS = E.COLOR_ADDON_LEFT:gsub("^|c", ""),
+		CONFIG_CURRENCY_SHOW_REMAINING = true,
+		CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_ADDON_RIGHT:gsub("^|c", ""),
+		CONFIG_CURRENCY_SHOW_ZERO = false,
+		CONFIG_CURRENCY_COLOR_ZERO = E.COLOR_GRAY:gsub("^|c", ""),
+
+		CONFIG_REPUTATION_ICON = false,
+		CONFIG_REPUTATION_EXTRA_ICON = true,
+		CONFIG_REPUTATION_FACTION_ICON = true,
+		CONFIG_REPUTATION_WARBAND_ICON = true,
+
+		CONFIG_REPUTATION_ZERO = false,
+		CONFIG_REPUTATION_COLOREDNAME = false,
+
+		CONFIG_REPUTATION_VALUE_PARAGON = true,
+		CONFIG_REPUTATION_PERCENTAGE_PARAGON = false,
+		CONFIG_REPUTATION_REACTION_PARAGON = false,
+		CONFIG_REPUTATION_STANDINGS_PARAGON = false,
+		CONFIG_REPUTATION_PARAGON_COLOR = E.COLOR_REPPARAGON:gsub("^|c", ""),
+
+		CONFIG_REPUTATION_VALUE_MAJOR = true,
+		CONFIG_REPUTATION_PERCENTAGE_MAJOR = false,
+		CONFIG_REPUTATION_REACTION_MAJOR = true,
+		CONFIG_REPUTATION_STANDINGS_MAJOR = false,
+		CONFIG_REPUTATION_MAJOR_COLOR = E.COLOR_REPMAJOR:gsub("^|c", ""),
+
+		CONFIG_REPUTATION_VALUE_FRIEND = true,
+		CONFIG_REPUTATION_PERCENTAGE_FRIEND = false,
+		CONFIG_REPUTATION_REACTION_FRIEND = true,
+		CONFIG_REPUTATION_STANDINGS_FRIEND = false,
+		CONFIG_REPUTATION_FRIEND_COLOR = E.COLOR_REPFRIEND:gsub("^|c", ""),
+
+		CONFIG_REPUTATION_VALUE_SIMPLE = true,
+		CONFIG_REPUTATION_PERCENTAGE_SIMPLE = false,
+		CONFIG_REPUTATION_REACTION_SIMPLE = false,
+		CONFIG_REPUTATION_STANDINGS_SIMPLE = false,
+		CONFIG_REPUTATION_SIMPLE_COLOR_1 = E.COLOR_REPSIMPLE_1:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_2 = E.COLOR_REPSIMPLE_2:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_3 = E.COLOR_REPSIMPLE_3:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_4 = E.COLOR_REPSIMPLE_4:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_5 = E.COLOR_REPSIMPLE_5:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_6 = E.COLOR_REPSIMPLE_6:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_7 = E.COLOR_REPSIMPLE_7:gsub("^|c", ""),
+		CONFIG_REPUTATION_SIMPLE_COLOR_8 = E.COLOR_REPSIMPLE_8:gsub("^|c", ""),
+
 }
+
+
+
+
 function EventFrame:init_Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	for k, v in next, (E.Octo_ToDo_DB_Vars_DEFAULTS) do
@@ -463,7 +519,7 @@ function EventFrame:init_Octo_profileColors()
 	end
 	E.func_CheckALL_profileColors()
 	-- C_Timer.After(1, function()
-	-- 	opde(db)
+	-- opde(db)
 	-- end)
 	E.PROFTBL = db.profiles[db.Current_profile]
 end
@@ -571,7 +627,6 @@ function EventFrame:func_Month_Reset()
 	end
 end
 
-
 function E.Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
@@ -584,83 +639,128 @@ function E.Init_Octo_Cache_DB()
 	end
 	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
 	----------------------------------------------------------------
-	-- Octo_Cache_DB.GLOBALS = Octo_Cache_DB.GLOBALS or {}
-	-- local values = {
-	-- 	ACCOUNT_BANK_PANEL_TITLE = ACCOUNT_BANK_PANEL_TITLE,
-	-- 	AZERITE_ESSENCE_RANK = AZERITE_ESSENCE_RANK,
-	-- 	BAG_NAME_BACKPACK = BAG_NAME_BACKPACK,
-	-- 	BANK = BANK,
-	-- 	BNET_LAST_ONLINE_TIME = BNET_LAST_ONLINE_TIME,
-	-- 	BONUS_ROLL_REWARD_MONEY = BONUS_ROLL_REWARD_MONEY,
-	-- 	CALENDAR_REPEAT_MONTHLY = CALENDAR_REPEAT_MONTHLY,
-	-- 	CANCEL = CANCEL,
-	-- 	COLORS = COLORS,
-	-- 	CURRENCY_SEASON_TOTAL = CURRENCY_SEASON_TOTAL,
-	-- 	CURRENCY_SEASON_TOTAL_MAXIMUM = CURRENCY_SEASON_TOTAL_MAXIMUM,
-	-- 	CURRENCY_WEEKLY_CAP = CURRENCY_WEEKLY_CAP,
-	-- 	DAILY = DAILY,
-	-- 	DEFAULT = DEFAULT,
-	-- 	DELETE = DELETE,
-	-- 	DELVES_GREAT_VAULT_LABEL = DELVES_GREAT_VAULT_LABEL,
-	-- 	DONE = DONE,
-	-- 	DUNGEONS = DUNGEONS,
-	-- 	ERR_PVP_WARMODE_TOGGLE_ON = ERR_PVP_WARMODE_TOGGLE_ON,
-	-- 	FAILED = FAILED,
-	-- 	FRIENDS_LIST_OFFLINE = FRIENDS_LIST_OFFLINE,
-	-- 	FRIENDS_LIST_ONLINE = FRIENDS_LIST_ONLINE,
-	-- 	FRIENDS_LIST_ZONE = FRIENDS_LIST_ZONE,
-	-- 	GAMEMENU_OPTIONS = GAMEMENU_OPTIONS,
-	-- 	GARRISON_CACHE = GARRISON_CACHE,
-	-- 	ITEM_QUALITY1_DESC = ITEM_QUALITY1_DESC,
-	-- 	ITEM_QUALITY2_DESC = ITEM_QUALITY2_DESC,
-	-- 	ITEM_QUALITY3_DESC = ITEM_QUALITY3_DESC,
-	-- 	ITEM_QUALITY4_DESC = ITEM_QUALITY4_DESC,
-	-- 	ITEM_QUALITY5_DESC = ITEM_QUALITY5_DESC,
-	-- 	ITEM_QUALITY6_DESC = ITEM_QUALITY6_DESC,
-	-- 	ITEM_QUALITY7_DESC = ITEM_QUALITY7_DESC,
-	-- 	ITEM_QUALITY8_DESC = ITEM_QUALITY8_DESC,
-	-- 	ITEMS = ITEMS,
-	-- 	LFG_LIST_ITEM_LEVEL_CURRENT_PVP = LFG_LIST_ITEM_LEVEL_CURRENT_PVP,
-	-- 	NONE = NONE,
-	-- 	PLAYER_DIFFICULTY1 = PLAYER_DIFFICULTY1,
-	-- 	PLAYER_DIFFICULTY2 = PLAYER_DIFFICULTY2,
-	-- 	PLAYER_DIFFICULTY3 = PLAYER_DIFFICULTY3,
-	-- 	PLAYER_DIFFICULTY4 = PLAYER_DIFFICULTY4,
-	-- 	PLAYER_DIFFICULTY5 = PLAYER_DIFFICULTY5,
-	-- 	PLAYER_DIFFICULTY6 = PLAYER_DIFFICULTY6,
-	-- 	PROFESSIONS_BUTTON = PROFESSIONS_BUTTON,
-	-- 	PROVING_GROUNDS_SCORE = PROVING_GROUNDS_SCORE,
-	-- 	QUESTS_LABEL = QUESTS_LABEL,
-	-- 	QUEST_WATCH_QUEST_READY = QUEST_WATCH_QUEST_READY,
-	-- 	RATED_PVP_WEEKLY_VAULT = RATED_PVP_WEEKLY_VAULT,
-	-- 	REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE = REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE,
-	-- 	RESET = RESET,
-	-- 	RETRIEVING_DATA = RETRIEVING_DATA,
-	-- 	REWARD = REWARD,
-	-- 	REWARDS = REWARDS,
-	-- 	STAT_AVERAGE_ITEM_LEVEL = STAT_AVERAGE_ITEM_LEVEL,
-	-- 	TIME_PLAYED_ALERT = TIME_PLAYED_ALERT,
-	-- 	TIME_PLAYED_TOTAL = TIME_PLAYED_TOTAL,
-	-- 	TOTAL = TOTAL,
-	-- 	UNKNOWN = UNKNOWN,
-	-- 	WEEKLY = WEEKLY,
-	-- }
-	-- wipe(Octo_Cache_DB.GLOBALS)
-	-- for key, value in pairs(values) do
-	-- 	if value then
-	-- 		Octo_Cache_DB.GLOBALS[key] = Octo_Cache_DB.GLOBALS[key] or {}
-	-- 		Octo_Cache_DB.GLOBALS[key][E.curLocaleLang] = value
-	-- 	end
-	-- end
-	-- if opde then
-	-- 	opde(Octo_Cache_DB.GLOBALS)
-	-- end
-	----------------------------------------------------------------
+end
+
+E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
+	["CONFIG_DEBUG"] = {
+		{
+			name = L["OPTIONS"], -- /run Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS = true
+			variableKey = "CONFIG_DEBUG_OPTIONS", -- Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS
+			defaultValue = false,
+		},
+		{
+			name = L["DEBUG"],
+			variableKey = "CONFIG_DEBUG_DEBUG", -- Octo_DevTool_DB.CONFIG_DEBUG_ENABLED
+			defaultValue = false,
+		},
+		{
+			name = L["TRANSLIT"],
+			variableKey = "CONFIG_DEBUG_TRANSLIT",
+			defaultValue = false,
+		},
+		{
+			name = L["CHARACTERTOOLTIP"],
+			variableKey = "CONFIG_DEBUG_CHARACTERTOOLTIP",
+			defaultValue = false,
+		},
+		{
+			name = L["REPUTATIONTOOLTIP"],
+			variableKey = "CONFIG_DEBUG_REPUTATIONTOOLTIP",
+			defaultValue = false,
+		},
+		{
+			name = L["EVENTS"],
+			variableKey = "CONFIG_DEBUG_EVENTS",
+			defaultValue = false,
+		},
+		{
+			name = E.COLOR_GRAY..L["FUNCTIONS"].."|r",
+			variableKey = "CONFIG_DEBUG_FUNCTIONS",
+			defaultValue = false,
+		},
+		{
+			name = E.COLOR_GRAY..L["BUTTONS"].."|r",
+			variableKey = "CONFIG_DEBUG_BUTTONS",
+			defaultValue = false,
+		},
+		{
+			name = L["GOSSIPS"],
+			variableKey = "CONFIG_DEBUG_GOSSIPS",
+			defaultValue = false,
+		},
+		{
+			name = L["CACHE"],
+			variableKey = "CONFIG_DEBUG_CACHE",
+			defaultValue = false,
+		},
+		{
+			name = L["UNIVERSAL"],
+			variableKey = "CONFIG_DEBUG_UNIVERSAL",
+			defaultValue = false,
+		},
+	},
+	-- ["Quests Changed"] = {
+	-- {
+	--  name = L["QC_VIGNETTES"],
+	--  variableKey = "CONFIG_DEBUG_QC_VIGNETTES",
+	--  defaultValue = false,
+	-- },
+	-- {
+	--  name = L["QC_QUESTS"],
+	--  variableKey = "CONFIG_DEBUG_QC_QUESTS",
+	--  defaultValue = false,
+	-- },
+	-- },
+	["EDITBOX"] = {
+		{
+			name = L["EB_FONTSIZE"],
+			variableKey = "CONFIG_DEBUG_EB_FONTSIZE",
+			defaultValue = 12,
+			minValue = 10,
+			maxValue = 16,
+			step = 1,
+		},
+		{
+			name = L["EB_TABSPACES"],
+			variableKey = "CONFIG_DEBUG_EB_TABSPACES",
+			defaultValue = 4,
+			minValue = 0,
+			maxValue = 4,
+			step = 1,
+		}, -- for _, v in ipairs({0, 2, 3, 4}) do
+		{
+			name = L["EB_EDITORTHEME"],
+			variableKey = "CONFIG_DEBUG_EB_EDITORTHEME",
+			defaultValue = "Standard",
+			values = E.editorThemes,
+		},
+	},
+
+
+
+	-- CONFIG_DEBUG_EB_EDITORTHEME = "Twilight", -- for name in next, E.editorThemes do
+}
+function EventFrame:Octo_DevTool_DB()
+	Octo_DevTool_DB = Octo_DevTool_DB or {}
+	-- EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
+	for _, headers in next,(E.Octo_DevTool_DB_defaultOptions) do
+		for _, tbl in ipairs(headers) do
+			local variableKey = tbl.variableKey
+			local defaultValue = tbl.defaultValue
+			E.func_InitField(Octo_DevTool_DB, variableKey, defaultValue)
+			E[variableKey] = Octo_DevTool_DB[variableKey] -- Копируем в глобальную таблицу
+		end
+	end
 end
 
 
 
+
+
+
+
 function EventFrame:func_CheckAll()
+	EventFrame:Octo_DevTool_DB()
 	EventFrame:func_RemoveDuplicateCharacters()
 	EventFrame:init_Octo_ToDo_DB_Levels()
 	EventFrame:init_Octo_ToDo_DB_Vars()
@@ -729,8 +829,6 @@ function EventFrame:PLAYER_LOGIN()
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()
 	-- C_Timer.After(2, E.func_BUILD_DUNG_DB)
-
-
 
 	EventFrame:func_Daily_Reset()
 	EventFrame:func_Weekly_Reset()

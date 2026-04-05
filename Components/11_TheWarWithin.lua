@@ -41,7 +41,6 @@ local function tempFunction()
 		{id = 2803, defS = false,}, -- Undercoin
 			{id = 3116, defS = false,}, -- Essence of Kaja'mite (Season 2)
 			{id = 2813, defS = false,}, -- Harmonized Silk (Season 1)
-		{id = 1191, defS = false,},
 		{id = 3226, defS = false,}, -- Market Research
 		{id = 3303, defS = false,}, --
 		{id = 3055, defS = false,}, --
@@ -206,7 +205,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2255",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {81695, forcedText = {npcID = 216031}, },
@@ -228,7 +227,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Treasures2255",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {82520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -280,7 +279,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2248",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {82196, forcedText = {npcID = 219281}, },
@@ -303,7 +302,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Treasures2248",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {82715, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -356,7 +355,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2214",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {81674, forcedText = {npcID = 220265}, },
@@ -380,7 +379,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Treasures2214",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {82230, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -577,7 +576,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2339)..": "..L["Weekly quests"].." ("..DUNGEONS..")" -- https://www.wowhead.com/npc=226623/biergoth
+				return E.func_GetName("map", 2339)..": "..L["Weekly quests"].." ("..L["DUNGEONS"]..")" -- https://www.wowhead.com/npc=226623/biergoth
 			end,
 			name_save = "BiergothDungeonQuest",
 			defS = false,
@@ -616,7 +615,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2369",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {85672, forcedText = {npcID = 229982}, },
@@ -637,7 +636,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Treasures2369",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {87446, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -701,7 +700,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2346",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {84917, forcedText = {npcID = 230931}},
@@ -733,7 +732,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Treasure2346",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         -- {85683, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -1039,7 +1038,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2215",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {81763, forcedText = {npcID = 207802}, },
@@ -1062,7 +1061,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Treasures2215",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {83298, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -1090,7 +1089,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "Rares2371",
 		--     defS = false,
-		--     reset = "Regular", -- "Daily",
+		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
@@ -1238,7 +1237,7 @@ local function tempFunction()
 			end,
 			name_save = "DelversCall",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
@@ -1283,7 +1282,7 @@ local function tempFunction()
 		--     end,
 		--     name_save = "DelversTEST",
 		--     defS = true,
-		--     reset = "Regular",
+		--     reset = "Normal",
 		--     desc = categoryKey,
 		--     quests = {
 		--         {83318, forcedText = {text = E.func_GetName("reputation", 2594) },},
@@ -1307,17 +1306,17 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{83725, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222546))..E.func_GetName("item", 222546)},}, -- = L["Algari Treatise on Alchemy"],
-				{83726, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222554))..E.func_GetName("item", 222554)},}, -- = L["Algari Treatise on Blacksmithing"],
-				{83727, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222550))..E.func_GetName("item", 222550)},}, -- = L["Algari Treatise on Enchanting"],
-				{83728, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222621))..E.func_GetName("item", 222621)},}, -- = L["Algari Treatise on Engineering"],
-				{83729, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222552))..E.func_GetName("item", 222552)},}, -- = L["Algari Treatise on Herbalism"],
-				{83730, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222548))..E.func_GetName("item", 222548)},}, -- = L["Algari Treatise on Inscription"],
-				{83731, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222551))..E.func_GetName("item", 222551)},}, -- = L["Algari Treatise on Jewelcrafting"],
-				{83732, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222549))..E.func_GetName("item", 222549)},}, -- = L["Algari Treatise on Leatherworking"],
-				{83733, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222553))..E.func_GetName("item", 222553)},}, -- = L["Algari Treatise on Mining"],
-				{83734, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222649))..E.func_GetName("item", 222649)},}, -- = L["Algari Treatise on Skinning"],
-				{83735, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(222547))..E.func_GetName("item", 222547)},}, -- = L["Algari Treatise on Tailoring"],
+				{83725, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222546))..E.func_GetName("item", 222546)},}, -- = L["Algari Treatise on Alchemy"],
+				{83726, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222554))..E.func_GetName("item", 222554)},}, -- = L["Algari Treatise on Blacksmithing"],
+				{83727, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222550))..E.func_GetName("item", 222550)},}, -- = L["Algari Treatise on Enchanting"],
+				{83728, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222621))..E.func_GetName("item", 222621)},}, -- = L["Algari Treatise on Engineering"],
+				{83729, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222552))..E.func_GetName("item", 222552)},}, -- = L["Algari Treatise on Herbalism"],
+				{83730, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222548))..E.func_GetName("item", 222548)},}, -- = L["Algari Treatise on Inscription"],
+				{83731, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222551))..E.func_GetName("item", 222551)},}, -- = L["Algari Treatise on Jewelcrafting"],
+				{83732, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222549))..E.func_GetName("item", 222549)},}, -- = L["Algari Treatise on Leatherworking"],
+				{83733, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222553))..E.func_GetName("item", 222553)},}, -- = L["Algari Treatise on Mining"],
+				{83734, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222649))..E.func_GetName("item", 222649)},}, -- = L["Algari Treatise on Skinning"],
+				{83735, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 222547))..E.func_GetName("item", 222547)},}, -- = L["Algari Treatise on Tailoring"],
 			},
 			forcedMaxQuest = 2, -- nadoutichnit
 		},
@@ -1362,26 +1361,26 @@ local function tempFunction()
 			forcedMaxQuest = 2,
 		},
 		----------------------------------------------------------------
-		-- OTHER
+		-- L["OTHER"]
 		----------------------------------------------------------------
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return OTHER..": "..L["Coffer Key"]
+				return L["OTHER"]..": "..L["Coffer Key"]
 			end,
 			name_save = "CofferKey",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(245653))..E.func_GetName("item", 245653)}},
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 245653))..E.func_GetName("item", 245653)}},
 				{84736, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
 				{84737, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
 				{84738, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
 				{84739, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Fourth Cache"]},},
 				{nil},
-				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(238527))..E.func_GetName("item", 238527)}},
+				{nil, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 238527))..E.func_GetName("item", 238527)}},
 				{91175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["First Cache"]},},
 				{91176, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Second Cache"]},},
 				{91177, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Third Cache"]},},
@@ -1393,14 +1392,14 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return OTHER..": "..E.func_GetName("quest", 84370, false)
+				return L["OTHER"]..": "..E.func_GetName("quest", 84370, false)
 			end,
 			name_save = "TheKeytoSuccess",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{84370, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(227794))..E.func_GetName("item", 227794)},},
+				{84370, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 227794))..E.func_GetName("item", 227794)},},
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
@@ -1419,7 +1418,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return OTHER..": "..L["Special Assignment"]
+				return L["OTHER"]..": "..L["Special Assignment"]
 			end,
 			name_save = "SpecialAssignment",
 			defS = false,

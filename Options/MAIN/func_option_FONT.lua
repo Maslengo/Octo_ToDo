@@ -180,7 +180,7 @@ function E.func_option_FONT(category, layout)
 		-- RegisterProxySetting example. This will run the GetValue and SetValue
 		-- callbacks whenever access to the setting is required.
 		local variable = E.func_GenerateID()
-		local name = FONT_SIZE
+		local name = L["FONT_SIZE"]
 		local defaultValue = 11
 		local minValue = 8
 		local maxValue = 32
@@ -194,6 +194,7 @@ function E.func_option_FONT(category, layout)
 		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
 		setting:SetValueChangedCallback(E.func_UpdateFont)
 		-- local tooltip = "This is a tooltip for the slider."
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
 		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
 		Settings.CreateSlider(category, setting, options, tooltip)

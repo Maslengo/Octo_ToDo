@@ -51,7 +51,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
 	if ItemLevel ~= "" then
 		tooltip[#tooltip + 1] = {
-			STAT_AVERAGE_ITEM_LEVEL..": "..
+			L["STAT_AVERAGE_ITEM_LEVEL"]..": "..
 			ItemLevel,
 			durability
 		}
@@ -67,7 +67,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	-- end
 	-- if WarMode then
 	--     tooltip[#tooltip + 1] = {
-	--         E.COLOR_SKYBLUE..ERR_PVP_WARMODE_TOGGLE_ON.."|r"
+	--         E.COLOR_SKYBLUE..L["ERR_PVP_WARMODE_TOGGLE_ON"].."|r"
 	--     }
 	-- end
 	if Chromie_inChromieTime and Chromie_name ~= "" then
@@ -79,21 +79,21 @@ function E.func_Tooltip_Chars(CharInfo)
 	-- if curLocation ~= "" then
 	--     -- tooltip[#tooltip + 1] = { " ", " " }
 	--     tooltip[#tooltip + 1] = {
-	--         E.func_texturefromIcon(132319)..FRIENDS_LIST_ZONE..classColorHex..curLocation.."|r"
+	--         E.func_texturefromIcon(132319)..L["FRIENDS_LIST_ZONE"]..classColorHex..curLocation.."|r"
 	--     }
 	-- end
 	-- if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
 	--     local icon = E.func_texturefromIcon(133634)
-	--     local textLeft = icon..BAG_NAME_BACKPACK..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
+	--     local textLeft = icon..L["BAG_NAME_BACKPACK"]..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
 	--     if usedSlots_BANK and totalSlots_BANK then
-	--         textLeft = textLeft.." "..BANK..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
+	--         textLeft = textLeft.." "..L["BANK"]..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
 	--     end
 	--     tooltip[#tooltip + 1] = { textLeft, "" }
 	-- end
 	if realTotalTime > 0 then
 		tooltip[#tooltip + 1] = { " ", "" }
 		tooltip[#tooltip + 1] = {
-			string.format(TIME_PLAYED_TOTAL,classColorHex..E.func_SecondsToClock(realTotalTime)).."|r"
+			string.format(L["TIME_PLAYED_TOTAL"],classColorHex..E.func_SecondsToClock(realTotalTime)).."|r"
 		}
 	end
 	-- if CharInfo.MASLENGO and CharInfo.MASLENGO.Items and CharInfo.MASLENGO.Items.Bags and CharInfo.MASLENGO.Items.Bags[122284] then
@@ -107,7 +107,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	if cm.InventoryType then
 		tooltip[#tooltip+1] = {"Shift +"..E.LEFT_MOUSE_ICON..L["LMB"]}
 	end
-	if E.CONFIG_DEBUG_CHARACTERTOOLTIP then
+	if Octo_DevTool_DB.CONFIG_DEBUG_CHARACTERTOOLTIP then
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color..E.DEVTEXT.."|r", ""}
 		if pd.tmstp_Daily then

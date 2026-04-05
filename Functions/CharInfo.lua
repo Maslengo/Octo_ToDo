@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 local count = 0
 function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, CustomColor, markPlayer)

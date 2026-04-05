@@ -217,7 +217,7 @@ E.OctoTable_Portals = {
 		393276, -- name = "NELT", expansion = "dragonflight", mapID = {404}}, -- Neltharus
 		393256, -- name = "RLP", expansion = "dragonflight", mapID = {399}}, -- Ruby Life Pools
 		393279, -- name = "AV", expansion = "dragonflight", mapID = {401}}, -- The Azure Vault
-		393262, -- name = "NO", expansion = "dragonflight", mapID = {400}}, -- The Nokhud Offensive
+		393262, -- name = "L["NO"]", expansion = "dragonflight", mapID = {400}}, -- The Nokhud Offensive
 		393222, -- name = "ULD", expansion = "dragonflight", mapID = {403}}, -- Uldaman:Legacy of Tyr
 		--Dragonflight
 		432257, -- name = "ATSC", expansion = "dragonflight"}, --Aberrus, the Shadowed Crucible

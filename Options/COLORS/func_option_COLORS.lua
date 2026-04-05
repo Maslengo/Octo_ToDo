@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-function E.func_option_COLOR(width, tabName)
+function E.func_option_COLORS(width, tabName)
 	-------------------------------------------------
 	-- Вкладка: Цвета
 	-------------------------------------------------
@@ -41,7 +41,7 @@ function E.func_option_COLOR(width, tabName)
 			},
 			[E.func_AutoKey()] = {
 				type = "execute",
-				name = SETTINGS_DEFAULTS,
+				name = L["SETTINGS_DEFAULTS"],
 				desc = E.TEXT_INDEV .. "|n|n".. L["Reset Color Settings"],
 				confirm = true,
 				confirmText = L["Are you sure?"],
@@ -376,7 +376,7 @@ function E.func_option_COLOR(width, tabName)
 					[E.func_AutoKey()] = {
 						type = "toggle",
 						name = L["Smooth Animation"],
-						desc = CURSOR_SIZE_DEFAULT..": "..NO,
+						desc = L["CURSOR_SIZE_DEFAULT"]..": "..L["NO"],
 						get = function()
 							return E.PROFTBL.ConfigColor_ENABLE_HIGHLIGHT_ANIMATION
 						end,
@@ -403,7 +403,7 @@ function E.func_option_COLOR(width, tabName)
 					[E.func_AutoKey()] = {
 						type = "toggle",
 						name = L["Gradient"],
-						desc = CURSOR_SIZE_DEFAULT..": "..YES.."|n|n"..L["Use gradient values in tooltip"],
+						desc = L["CURSOR_SIZE_DEFAULT"]..": "..L["YES"].."|n|n"..L["Use gradient values in tooltip"],
 						get = function()
 							return E.PROFTBL.ConfigColor_TOOLTIP_usegradient
 						end,
@@ -484,263 +484,6 @@ function E.func_option_COLOR(width, tabName)
 				},
 			},
 			-------------------------------------------------
-			-- Репутация
-			-------------------------------------------------
-			[E.func_AutoKey()] = {
-				type = "group",
-				name = REPUTATION,
-				inline = true,
-				order = E.func_GetOrder(),
-				args = {
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..1, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_1_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_1_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_1_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_1_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_1_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_1_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_1_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_1_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..2, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_2_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_2_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_2_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_2_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_2_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_2_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_2_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_2_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..3, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_3_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_3_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_3_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_3_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_3_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_3_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_3_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_3_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..4, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_4_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_4_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_4_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_4_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_4_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_4_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_4_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_4_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..5, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_5_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_5_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_5_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_5_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_5_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_5_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_5_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_5_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..6, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_6_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_6_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_6_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_6_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_6_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_6_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_6_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_6_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..7, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_7_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_7_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_7_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_7_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_7_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_7_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_7_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_7_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = GetText("FACTION_STANDING_LABEL"..8, UnitSex("PLAYER")),
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Standard_8_r
-							local g = E.PROFTBL.ConfigColor_Rep_Standard_8_g
-							local b = E.PROFTBL.ConfigColor_Rep_Standard_8_b
-							local a = E.PROFTBL.ConfigColor_Rep_Standard_8_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Standard_8_r = r
-							E.PROFTBL.ConfigColor_Rep_Standard_8_g = g
-							E.PROFTBL.ConfigColor_Rep_Standard_8_b = b
-							E.PROFTBL.ConfigColor_Rep_Standard_8_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					[E.func_AutoKey()] = {
-						type = "header",
-						name = "",
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = L["Friend"],
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Friend_r
-							local g = E.PROFTBL.ConfigColor_Rep_Friend_g
-							local b = E.PROFTBL.ConfigColor_Rep_Friend_b
-							local a = E.PROFTBL.ConfigColor_Rep_Friend_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Friend_r = r
-							E.PROFTBL.ConfigColor_Rep_Friend_g = g
-							E.PROFTBL.ConfigColor_Rep_Friend_b = b
-							E.PROFTBL.ConfigColor_Rep_Friend_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = L["Major"],
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Major_r
-							local g = E.PROFTBL.ConfigColor_Rep_Major_g
-							local b = E.PROFTBL.ConfigColor_Rep_Major_b
-							local a = E.PROFTBL.ConfigColor_Rep_Major_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Major_r = r
-							E.PROFTBL.ConfigColor_Rep_Major_g = g
-							E.PROFTBL.ConfigColor_Rep_Major_b = b
-							E.PROFTBL.ConfigColor_Rep_Major_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-					-------------------------------------------------
-					[E.func_AutoKey()] = {
-						type = "color",
-						name = L["Paragon"],
-						hasAlpha = true,
-						get = function()
-							local r = E.PROFTBL.ConfigColor_Rep_Paragon_r
-							local g = E.PROFTBL.ConfigColor_Rep_Paragon_g
-							local b = E.PROFTBL.ConfigColor_Rep_Paragon_b
-							local a = E.PROFTBL.ConfigColor_Rep_Paragon_a
-							return r, g, b, a
-						end,
-						set = function(_, r, g, b, a)
-							E.PROFTBL.ConfigColor_Rep_Paragon_r = r
-							E.PROFTBL.ConfigColor_Rep_Paragon_g = g
-							E.PROFTBL.ConfigColor_Rep_Paragon_b = b
-							E.PROFTBL.ConfigColor_Rep_Paragon_a = a
-							E.func_UpdateGlobals()
-						end,
-						width = width,
-						order = E.func_GetOrder(),
-					},
-				},
-			},
-			-------------------------------------------------
 			-- Фракция
 			-------------------------------------------------
 			[E.func_AutoKey()] = {
@@ -752,7 +495,7 @@ function E.func_option_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = FACTION_HORDE,
+						name = L["FACTION_HORDE"],
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_faction_Horde_r
@@ -774,7 +517,7 @@ function E.func_option_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = FACTION_ALLIANCE,
+						name = L["FACTION_ALLIANCE"],
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_faction_Alliance_r
@@ -796,7 +539,7 @@ function E.func_option_COLOR(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = FACTION_NEUTRAL,
+						name = L["FACTION_NEUTRAL"],
 						hasAlpha = false,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_faction_Neutral_r
@@ -823,7 +566,7 @@ function E.func_option_COLOR(width, tabName)
 			-------------------------------------------------
 			[E.func_AutoKey()] = {
 				type = "group",
-				name = GARRISON_TYPE_9_0_LANDING_PAGE_TITLE,
+				name = L["GARRISON_TYPE_9_0_LANDING_PAGE_TITLE"],
 				inline = true,
 				order = E.func_GetOrder(),
 				args = {

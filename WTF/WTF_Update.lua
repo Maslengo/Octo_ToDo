@@ -184,15 +184,11 @@ local function updateGlobal(DBVersion)
 		Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME = 2
 	end
 	----------------------------------------------------------------
-	if compareVersion(110.4, DBVersion) then
-		Octo_ToDo_DB_Vars.CONFIG_TRANSLIT = false
-	end
-	----------------------------------------------------------------
 	if compareVersion(112.2, DBVersion) then
 		if Octo_profileKeys and Octo_profileKeys.profiles and Octo_profileKeys.profiles.Default then
 			wipe(Octo_profileKeys.profiles.Default)
 			E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
-			print (addonNAME, "reset profile:", DEFAULT)
+			print (addonNAME, "reset profile:", L["DEFAULT"])
 		end
 	end
 	----------------------------------------------------------------

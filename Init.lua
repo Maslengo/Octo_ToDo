@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ... -- ns
+local L = E.L
 ----------------------------------------------------------------
 E.MainAddonName = GlobalAddonName
 OctoEngine = E -- в других аддонах
@@ -15,7 +16,6 @@ E.DEBUG_NAME = false
 E.DEBUG_CURRENCY_TOOLTIP = false
 ----------------------------------------------------------------
 E.OctoTable_ColoredFrames = {}
-E.L = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
@@ -59,8 +59,8 @@ E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
 E.DataProvider_Otrisovka = {}
-E.TEXT_DEFAULT = "Default" -- DEFAULT
-E.TEXT_DEFAULT_DARK = "Default (Dark)" -- DEFAULT
+E.TEXT_DEFAULT = "Default" -- L["DEFAULT"]
+E.TEXT_DEFAULT_DARK = "Default (Dark)" -- L["DEFAULT"]
 E.UNIVERSAL = "UNIVERSAL_"
 E.TEXTURE_ADDON = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\ToDo.tga"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga"
@@ -89,11 +89,23 @@ E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHe
 E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup()
 E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
 E.TEXT_SPACE = " "
-E.CONFIG_TRANSLIT = false
-E.ICON_REGULAR = "Crosshair_Quest_64"
-E.ICON_DAILY = "Crosshair_Recurring_64"
-E.ICON_WEEKLY = "Crosshair_Wrapper_64"
-E.ICON_MONTH = "warbands-icon" -- "cursor_Wrapper_64"
+-- E.ICON_QUESTNORMAL = "Crosshair_Quest_64"
+-- E.ICON_QUESTDAILY = "Crosshair_Recurring_64"
+-- E.ICON_QUESTWEEKLY = "Crosshair_Wrapper_64"
+-- E.ICON_QUESTMONTHLY = "warbands-icon" -- "cursor_Wrapper_64"
+
+E.ICON_QUESTNORMAL = "QuestNormal"
+E.ICON_QUESTDAILY = "questlog-questtypeicon-daily"
+E.ICON_QUESTWEEKLY = "questlog-questtypeicon-weekly"
+E.ICON_QUESTMONTHLY = "questlog-questtypeicon-monthly"
+E.ICON_QUESTWEEKLY_ACCOUNT = "worldquest-tracker-questmarker-gray"
+
+E.RESET_INFO = {
+	Normal = {icon = E.ICON_QUESTNORMAL, string = L["ITEM_QUALITY1_DESC"]},
+	Daily = {icon = E.ICON_QUESTDAILY, string = L["DAILY"]},
+	Weekly = {icon = E.ICON_QUESTWEEKLY, string = L["WEEKLY"]},
+	Monthly = {icon = E.ICON_QUESTMONTHLY, string = L["CALENDAR_REPEAT_MONTHLY"]},
+}
 
 
 
@@ -226,7 +238,6 @@ E.COLOR_PURPLE = "|cffAF61FF"
 E.COLOR_INDIGO = "|cff4B0082"
 E.COLOR_MAGENTA = "|cffFF00FF"
 E.COLOR_PINK = "|cffFF69B3"
-E.COLOR_REPFRIEND = "|cff9F7CFF" -- "|cffD064FF"
 E.COLOR_SKYBLUE = "|cff87CDEB"
 E.COLOR_STEELBLUE = "|cff4682B3"
 E.COLOR_SLATEGRAY = "|cff708090"
@@ -236,18 +247,33 @@ E.COLOR_EVENT = "|cffFFF371"
 E.COLOR_DEBUG = E.classColorHexCurrent
 E.COLOR_FUNCTION = "|cff87CDEB"
 E.COLOR_IVORY = "|cffFFF7D7"
+
+E.COLOR_REPPARAGON = "|cff00527F" -- 00A3FF
+E.COLOR_REPMAJOR = "|cff00527F" -- 00A3FF
+E.COLOR_REPFRIEND = "|cff4F3E7F"  -- 9F7CFF
+E.COLOR_REPSIMPLE_1 = "|cff7F2629" -- FF4C4F
+E.COLOR_REPSIMPLE_2 = "|cff7F2629" -- FF4C4F
+E.COLOR_REPSIMPLE_3 = "|cff7F300E" -- FF661A
+E.COLOR_REPSIMPLE_4 = "|cff7C7638" -- FFF371
+E.COLOR_REPSIMPLE_5 = "|cff7C7638" -- FFF371
+E.COLOR_REPSIMPLE_6 = "|cff277F3C" -- 4FFF79
+E.COLOR_REPSIMPLE_7 = "|cff277F3C" -- 4FFF79
+E.COLOR_REPSIMPLE_8 = "|cff277F3C" -- 4FFF79
+
+
 E.FACTION_CURRENT = UnitFactionGroup("PLAYER")
 E.FACTION_OPPOSITE = E.FACTION_CURRENT == "Alliance" and "Horde" or "Alliance"
 E.ICON_TABARD = 135026
-E.ICON_ALLIANCE = 255140
-E.ICON_HORDE = 255142
-E.ICON_KYRIAN = 3641395
-E.ICON_NECROLORD = 3752259 -- 3641396
-E.ICON_NIGHTFAE = 3752258 -- 3641394
-E.ICON_VENTHYR = 3257751 -- 3641397
-E.ICON_WORLDBOSS = 3528312
-E.ICON_RARES = 135903
-E.ICON_MONEY = 133784
+E.ICON_KYRIAN = "CovenantChoice-Panel-Sigil-Kyrian" -- 3641395
+E.ICON_NECROLORD = "CovenantChoice-Panel-Sigil-Necrolords" -- 3752259 -- 3641396
+E.ICON_NIGHTFAE = "CovenantChoice-Panel-Sigil-NightFae" -- 3752258 -- 3641394
+E.ICON_VENTHYR = "CovenantChoice-Panel-Sigil-Venthyr" -- 3257751 -- 3641397
+E.ICON_WORLDBOSS = "worldquest-icon-boss" -- 3528312
+E.ICON_RARES = "nameplates-icon-rareelite" -- 135903 -- "UI-HUD-UnitFrame-Target-PortraitOn-Boss-Rare-Star" "UI-HUD-UnitFrame-Target-PortraitOn-Boss-Rare"
+E.ICON_MONEY = "Coin-Gold" -- 133784
+-- challenges-medal-small-bronze challenges-medal-bronze
+-- challenges-medal-small-silver challenges-medal-silver
+-- challenges-medal-small-gold   challenges-medal-gold
 E.ICON_DURABILITY = 132281 -- 136241
 E.ATLAS_REPAIR = "Crosshair_repairnpc_32"
 E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
@@ -255,6 +281,7 @@ E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
 E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
 E.ATLAS_RAID = "Raid"
 E.ATLAS_DUNGEON = "Dungeon"
+E.ICON_LASTRAID = 7480127
 -- E.ATLAS_RAID = "questlog-questtypeicon-raid"
 -- E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
 -- E.ATLAS_RAID = "worldquest-icon-raid"
@@ -264,19 +291,28 @@ E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
 -- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
 E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 16)
 E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
+E.ATLAS_GREATVAULT = "greatvault-dragonflight-32x32" -- GreatVault-32x32
+-- "greatVault-whole-normal"
+
+
 E.COLOR_HORDE = "|cffC41E3A"
 E.COLOR_ALLIANCE = "|cff0070DD"
 E.COLOR_NEUTRAL = E.Class_Monk_Color
+
+E.ICON_HORDE = "HordeEmblem" -- "GarrMission_ClassIcon-Horde" -- 255142-- 2565244
+E.ICON_ALLIANCE = "AllianceEmblem" -- "GarrMission_ClassIcon-Alliance" -- 255140-- 2565243
+E.ICON_NEUTRAL = 775462
 if E.FACTION_CURRENT == "Horde" then
-	E.ICON_FACTION = 2565244
+	E.ICON_CURRENT_FACTION = E.ICON_HORDE
 	E.COLOR_FACTION = E.COLOR_HORDE
 elseif E.FACTION_CURRENT == "Alliance" then
-	E.ICON_FACTION = 2565243
+	E.ICON_CURRENT_FACTION = E.ICON_ALLIANCE
 	E.COLOR_FACTION = E.COLOR_ALLIANCE
 else
-	E.ICON_FACTION = 775462
+	E.ICON_CURRENT_FACTION = 775462
 	E.COLOR_FACTION = E.Class_Monk_Color
 end
+
 E.COLOR_KYRIAN_R = 0.44
 E.COLOR_KYRIAN_G = 0.66
 E.COLOR_KYRIAN_B = 0.86
@@ -289,9 +325,10 @@ E.COLOR_NIGHTFAE_B = 0.76
 E.COLOR_VENTHYR_R = 0.88
 E.COLOR_VENTHYR_G = 0.40
 E.COLOR_VENTHYR_B = 0.40
+
 E.RIFT = E.COLOR_PURPLE.." (RIFT)|r"
-E.DONE = E.COLOR_GREEN..DONE.."|r"
-E.NONE = E.COLOR_GRAY..NONE.."|r"
+E.DONE = E.COLOR_GREEN..L["DONE"].."|r"
+E.NONE = E.COLOR_GRAY..L["NONE"].."|r"
 E.TRUE = E.COLOR_GREEN.."true|r"
 E.FALSE = E.COLOR_RED.."false|r"
 E.NIL = E.COLOR_RED.."nil|r"
@@ -300,17 +337,6 @@ E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\ICON_EMPTY"
 E.ICON_DEBUG = 7448162 -- "poi-torghast" -- ATLAS
 E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
-E.OctoTable_Prefixes = {
-	"Русский",
-	"Deutsch",
-	"English",
-	"Español",
-	"Français",
-	"Italiano",
-	"Português Brasileiro",
-	"Korean",
-	"Chinese",
-}
 E.OctoTable_Covenant = {
 	[1] = {
 		prefix = "SL_KYRIAN",
@@ -356,7 +382,6 @@ E.OctoTable_Covenant = {
 --   [4] = { prefix = "SL_NECROLORD" },
 -- }
 E.LIST_MAX_SIZE = 30
-E.DEBUG_TEXT = E.COLOR_BLUE..BINDING_HEADER_DEBUG.."|r"
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
 E.func_IsClassic = E.interfaceVersion > 10000 and E.interfaceVersion < 20000
 E.func_IsBC = E.interfaceVersion > 20000 and E.interfaceVersion < 30000
@@ -397,6 +422,19 @@ E.OctoTable_PlayerBags = {
 	Enum.BagIndex.Bag_4, -- 4,
 	Enum.BagIndex.ReagentBag, -- 5,
 }
+
+E.OctoTable_PlayerBags_WithoutReagents = {
+	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
+	Enum.BagIndex.Backpack, -- 0,
+	Enum.BagIndex.Bag_1, -- 1,
+	Enum.BagIndex.Bag_2, -- 2,
+	Enum.BagIndex.Bag_3, -- 3,
+	Enum.BagIndex.Bag_4, -- 4,
+	-- Enum.BagIndex.ReagentBag, -- 5,
+}
+
+
+
 E.OctoTable_bankTabs = {
 	-- Enum.BagIndex.CharacterBankTab, -- -2, (classic)
 	Enum.BagIndex.CharacterBankTab_1, -- 6,
@@ -449,30 +487,91 @@ if season == nil or season == false or season == 0 or season == -1 then
 else
 	E.MythicPlus_seasonID = season
 end
-E.OctoTable_reactionColors = {
-	[1] = {
-		[0] = E.COLOR_WHITE, -- (NO REACTION)
-		[1] = E.COLOR_RED, -- Hated
-		[2] = E.COLOR_RED, -- Hostile
-		[3] = E.COLOR_ORANGE, -- Unfriendly
-		[4] = E.COLOR_YELLOW, -- Neutral
-		[5] = E.COLOR_YELLOW, -- Friendly
-		[6] = E.COLOR_GREEN, -- Honored
-		[7] = E.COLOR_GREEN, -- Revered
-		[8] = E.COLOR_GREEN, -- Exalted
-	},
-	[2] = E.COLOR_PINK,
-	[3] = E.COLOR_BLUE,
-	[4] = E.COLOR_BLUE,
-}
 E.TEXT_INDEV = E.COLOR_RED..">>> ".."In Development".." <<<|r"
+
+-- Таблица цветовых схем для редактора
+E.editorThemes = {
+	["Twilight"] = {
+		-- ["Special"] = "|cff7587A6", -- спецсимволы (голубоватый)
+		["Special"] = "|cff66d9ef", -- спецсимволы (голубой)
+		["Keyword"] = "|cffCDA869", -- ключевые слова (золотисто-бежевый)
+		["Comment"] = "|cff5F5A60", -- комментарии (серо-фиолетовый)
+		["Number"] = "|cffCF6A4C", -- числа (оранжево-красный)
+		["String"] = "|cff8F9D6A", -- строки (травянисто-зелёный)
+		["Background"] = "|cff141414", -- тёмный фон
+		-- ["Foreground"] = "|cffF8F8F2", -- основной текст (не чисто белый, а слегка голубоватый)
+		["Function"] = "|cffDAD085", -- функции (жёлто-бежевый)
+		["Class"] = "|cff9B703F", -- классы/типы (коричневатый)
+		-- ["Operator"] = "|cffF8F8F2", -- операторы (как основной текст)
+		-- ["Bracket"] = "|cffF8F8F2", -- скобки (как основной текст)
+		["Tag"] = "|cffAC885B", -- теги (коричневатый)
+		["Attribute"] = "|cff7587A6", -- атрибуты (голубоватый)
+		["Constant"] = "|cffCF6A4C", -- константы (оранжево-красный)
+		["Error"] = "|cffCF6A4C", -- ошибки (оранжево-красный)
+	},
+	["Standard"] = {
+		["Special"] = "|c00ff3333", -- спецсимволы (ярко-красный)
+		["Keyword"] = "|c004444ff", -- ключевые слова (синий)
+		["Comment"] = "|c0000aa00", -- комментарии (зелёный)
+		["Number"] = "|c00ff9900", -- числа (оранжевый)
+		["String"] = "|c00999999", -- строки (серый)
+	},
+	["Obsidian"] = {
+		["Special"] = "|c00AFC0E5", -- спецсимволы (голубой)
+		["Keyword"] = "|c0093C763", -- ключевые слова (зелёный)
+		["Comment"] = "|c0066747B", -- комментарии (серо-голубой)
+		["Number"] = "|c00FFCD22", -- числа (жёлтый)
+		["String"] = "|c00EC7600", -- строки (оранжевый)
+	},
+	["Monokai"] = {
+		["Special"] = "|c0066d9ef", -- спецсимволы (бирюзовый)
+		["Keyword"] = "|c00f92672", -- ключевые слова (розовый)
+		["Comment"] = "|c0075715e", -- комментарии (серо-коричневый)
+		["Number"] = "|c00ae81ff", -- числа (фиолетовый)
+		["String"] = "|c00e6db74", -- строки (жёлтый)
+	},
+	["Sublime"] = {
+		["Special"] = "|cff66d9ef", -- спецсимволы (голубой)
+		["Keyword"] = "|cffF9EE98", -- ключевые слова (светло-жёлтый)
+		["Comment"] = "|cff605A60", -- комментарии (серо-фиолетовый)
+		["Number"] = "|cffCF6137", -- числа (красно-оранжевый)
+		["String"] = "|cff829D61", -- строки (зелёный)
+	},
+}
+
+
+
+
+E.cur_gender = UnitSex("PLAYER")
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 -- addon mem: 6.16 MB
 
 
+E.OctoTable_Prefixes = {
+	"Русский",
+	"Deutsch",
+	"English",
+	"Español",
+	"Français",
+	"Italiano",
+	"Português Brasileiro",
+	"Korean",
+	"Chinese",
+}
 E.OctoTable_Launguages = {
-
 	{name = "ruRU", translate = "Русский", }, -- 1
 	{name = "deDE", translate = "Deutsch", }, -- 2
 	{name = "enEN", translate = "English", }, -- 3
@@ -485,10 +584,13 @@ E.OctoTable_Launguages = {
 	{name = "zhCN", translate = "简体中文", }, -- 10
 	{name = "zhTW", translate = "繁體中文", }, -- 11
 
-
 	{name = "Auto", translate = "Язык", }, -- 12
 }
 
 -- for i, v in ipairs(E.OctoTable_Launguages) do
 -- 	print (i, v.name, v.translate)
 -- end
+
+E.CompressionMethod = Enum.CompressionMethod and Enum.CompressionMethod.Deflate or 0
+E.CompressionLevel = Enum.CompressionLevel and Enum.CompressionLevel.OptimizeForSize or 2
+E.Base64Variant = Enum.Base64Variant and Enum.Base64Variant.StandardUrlSafe or 1

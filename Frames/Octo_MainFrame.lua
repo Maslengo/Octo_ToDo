@@ -1,15 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
 local EventFrame = CreateFrame("FRAME")
-
-
+----------------------------------------------------------------
 EventFrame.searchFilter = nil
-EventFrame.measureFrame = CreateFrame("Frame")
-EventFrame.measureFrame:SetParent(UIParent)
-EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
-EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
-EventFrame.measureText:SetFontObject(OctoFont11)
-EventFrame.measureText:SetWordWrap(false)
 local Octo_MainFrame = CreateFrame("BUTTON", "Octo_MainFrame", UIParent, "OctoBackdropTemplate") -- SettingsFrameTemplate
 Octo_MainFrame:Hide()
 E.func_RegisterFrame_ICONS(Octo_MainFrame)
@@ -29,13 +22,14 @@ local textR, textG, textB, textA = 1, 1, 1, 1
 local classR, classG, classB = GetClassColor(E.classFilename)
 local LEFT_TEXTURE_ALPHA = .05 -- 0.1
 local charR, charG, charB = 1, 1, 1
-local dataDisplayOrder = E.dataDisplayOrder
 local WeeklyResetFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame)
+----------------------------------------------------------------
 local function SafeTooltipShow(frame, ...)
 	if Octo_MainFrame:IsShown() then
 		E.func_Octo_TooltipFrame_OnEnter(frame, ...)
 	end
 end
+----------------------------------------------------------------
 local func_OnAcquiredLeft do
 	local function Create_SettingsButton(frame)
 		frame.SettingsButton = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
@@ -58,7 +52,7 @@ local func_OnAcquiredLeft do
 		local texture = frame.icon1frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("CENTER")
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-		texture:SetTexCoord(.10, .90, .10, .90)
+		-- texture:SetTexCoord(.10, .90, .10, .90)
 		frame.icon1texture = texture
 		frame.icon1frame:SetCollapsesLayout(true)
 	end
@@ -70,7 +64,7 @@ local func_OnAcquiredLeft do
 		local texture = frame.icon2frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("CENTER")
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-		texture:SetTexCoord(.10, .90, .10, .90)
+		-- texture:SetTexCoord(.10, .90, .10, .90)
 		frame.icon2texture = texture
 		frame.icon2frame:SetCollapsesLayout(true)
 	end
@@ -82,6 +76,7 @@ local func_OnAcquiredLeft do
 		local texture = frame.icon3frame:CreateTexture(nil, "BACKGROUND", nil, 5)
 		texture:SetPoint("CENTER")
 		texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+		-- texture:SetTexCoord(.10, .90, .10, .90)
 		frame.icon3texture = texture
 		frame.icon3frame:SetCollapsesLayout(true)
 	end
@@ -103,7 +98,7 @@ local func_OnAcquiredLeft do
 	end
 	function func_OnAcquiredLeft(owner, frame, node, new)
 		-- if not C_AddOns.IsAddOnLoaded("Blizzard_CurrencyTransfer") then
-		-- 	C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
+		-- C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
 		-- end
 		if not new then return end
 		local frameData = node:GetData()
@@ -119,6 +114,7 @@ local func_OnAcquiredLeft do
 		frame:SetScript("OnShow", function() frame.Highlight:Show() end)
 	end
 end
+----------------------------------------------------------------
 local func_OnAcquiredCenter do
 	local function Create_CurrentCharBackground(columnFrame)
 		columnFrame.CurrentCharBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
@@ -170,6 +166,7 @@ local func_OnAcquiredCenter do
 		})
 	end
 end
+----------------------------------------------------------------
 local function func_SettingsButton_OnClick(button, frameData)
 	local dataType, id = ("#"):split(frameData.SettingsType)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
@@ -184,59 +181,137 @@ local function func_SettingsButton_OnClick(button, frameData)
 	local texture = newValue and "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
 	button:GetParent().SettingsTexture:SetTexture(texture)
 end
-local function func_Setup_Currencies(frame, id)
-	local icon1 = E.func_GetCurrencyIcon(id)
-	frame.icon1texture:SetTexture(icon1)
-	frame.icon1frame:Show()
-	if E.func_IsAccountWideCurrency(id) then
-		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
-		frame.icon3frame:Show()
-	elseif E.func_IsAccountTransferableCurrency(id) then
-		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_TRANSFERABLE, false)
-		frame.icon3frame:Show()
+----------------------------------------------------------------
+local function instullTEXTURE(FTEXT, FRAME, ICON)
+	local isAtlas = E.func_isAtlas(ICON)
+	if isAtlas then
+		FTEXT:SetAtlas(ICON, false)
 	else
-		frame.icon3texture:SetTexture(E.ICON_EMPTY)
-		frame.icon3frame:Hide()
+		FTEXT:SetTexture(ICON)
 	end
+	FRAME:Show()
 end
+----------------------------------------------------------------
+local function func_Setup_Currencies(frame, id)
+
+	if Octo_ToDo_DB_Vars.CONFIG_CURRENCY_ICON then
+		local icon1 = E.func_GetIcon("currency", id)
+		instullTEXTURE(frame.icon1texture, frame.icon1frame, icon1)
+	else
+		frame.icon1texture:SetTexture(E.ICON_EMPTY)
+		frame.icon1frame:Hide()
+	end
+
+	if Octo_ToDo_DB_Vars.CONFIG_CURRENCY_WARBAND_ICON then
+		frame.icon2texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
+		if E.func_IsAccountWideCurrency(id) then
+			instullTEXTURE(frame.icon2texture, frame.icon2frame, E.ATLAS_ACCOUNT_WIDE)
+		elseif E.func_IsAccountTransferableCurrency(id) then
+			instullTEXTURE(frame.icon2texture, frame.icon2frame, E.ATLAS_ACCOUNT_TRANSFERABLE)
+		end
+	else
+		frame.icon2texture:SetTexture(E.ICON_EMPTY)
+		frame.icon2frame:Show()
+		frame.icon2frame:Hide()
+	end
+
+
+	frame.icon3texture:SetTexture(E.ICON_EMPTY)
+	frame.icon3frame:Show()
+	frame.icon3frame:Hide()
+end
+----------------------------------------------------------------
 local function func_Setup_Reputations(frame, id)
-	frame.icon1texture:SetTexture(E.ICON_TABARD)
-	local factionIcon = E.func_GetReputationSideIcon(id)
-	local AdditionalIcon = E.func_GetReputationIcon(id)
-	local ReputationAtlas = E.func_GetReputationAtlas(id)
-	if factionIcon then
-		frame.icon2texture:SetTexture(factionIcon)
-		frame.icon2frame:Show()
-	elseif AdditionalIcon then
-		frame.icon2texture:SetTexture(AdditionalIcon)
-		frame.icon2frame:Show()
-	elseif ReputationAtlas then
-		frame.icon2texture:SetAtlas(ReputationAtlas)
-		frame.icon2frame:Show()
+	if Octo_ToDo_DB_Vars.CONFIG_REPUTATION_ICON then
+		instullTEXTURE(frame.icon1texture, frame.icon1frame, E.ICON_TABARD)
+	else
+		frame.icon1texture:SetTexture(E.ICON_EMPTY)
+		frame.icon1frame:Hide()
+	end
+
+	-- if E.func_isAtlas(E.ICON_TABARD) then
+	-- 	frame.icon1texture:SetAtlas(E.ICON_TABARD, false)
+	-- else
+	-- 	frame.icon1texture:SetTexture(E.ICON_TABARD)
+	-- end
+
+
+
+
+	local AdditionalIcon = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_EXTRA_ICON and E.func_GetReputationIcon(id) -- ТЕКСТУРА
+	local ReputationSide = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_FACTION_ICON and E.func_GetReputationSide(id) -- ФРАКЦИЯ (НЕ ТЕКСТУРА)
+
+	if AdditionalIcon then
+		instullTEXTURE(frame.icon2texture, frame.icon2frame, AdditionalIcon)
+	elseif ReputationSide then
+		local icon = E.ICON_QUESTION_MARK
+		if ReputationSide == "Horde" then
+			icon = E.ICON_HORDE
+		elseif ReputationSide == "Alliance" then
+			icon = E.ICON_ALLIANCE
+		elseif ReputationSide == "Neutral" then
+			icon = E.ICON_NEUTRAL
+		end
+		instullTEXTURE(frame.icon2texture, frame.icon2frame, icon)
 	else
 		frame.icon2texture:SetTexture(E.ICON_EMPTY)
 		frame.icon2frame:Hide()
 	end
-	if E.func_IsAccountWideReputation(id) then
-		frame.icon3texture:SetAtlas(E.ATLAS_ACCOUNT_WIDE, false)
-		frame.icon3frame:Show()
+
+
+
+
+	local warbandICON = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_WARBAND_ICON and E.func_IsAccountWideReputation(id) and E.ATLAS_ACCOUNT_WIDE
+	if warbandICON then
+		instullTEXTURE(frame.icon3texture, frame.icon3frame, warbandICON)
+		-- if E.func_isAtlas(warbandICON) then
+		-- 	frame.icon3texture:SetAtlas(warbandICON, false)
+		-- else
+		-- 	frame.icon3texture:SetTexture(warbandICON)
+		-- end
+		-- frame.icon3frame:Show()
 	else
 		frame.icon3texture:SetTexture(E.ICON_EMPTY)
 		frame.icon3frame:Hide()
 	end
 end
+----------------------------------------------------------------
 local function func_Setup_Items(frame, id)
-	local icon1 = E.func_GetItemIcon(id)
-	frame.icon1texture:SetTexture(icon1)
-	frame.icon1frame:Show()
+	local icon1 = E.func_GetIcon("item", id)
+	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ITEMS_ICON then
+		frame.icon1texture:SetTexture(icon1)
+		frame.icon1frame:Show()
+	else
+		frame.icon1texture:SetTexture(E.ICON_EMPTY)
+		frame.icon1frame:Hide()
+	end
 end
+----------------------------------------------------------------
+local function func_Setup_Raids(frame, id)
+	local EJ_ID = E.func_SI_to_EJ(id) -- SI_ID
+	local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
 
-local RESET_ICONS = {
-	Regular = E.ICON_REGULAR,
-	Daily = E.ICON_DAILY,
-	Weekly = E.ICON_WEEKLY,
-	Month = E.ICON_MONTH,
-}
+	if Octo_ToDo_DB_Vars.CONFIG_RAIDS_ICON  then
+		frame.icon1texture:SetTexture(buttonImage2)
+	else
+		frame.icon1texture:SetTexture(E.ICON_EMPTY)
+		frame.icon1frame:Hide()
+	end
+
+	if Octo_ToDo_DB_Vars.CONFIG_RAIDS_EXTRA_ICON  then
+		if isRaid then
+			frame.icon2frame:Show()
+			frame.icon2texture:SetAtlas(E.ATLAS_RAID)
+		else
+			frame.icon2frame:Show()
+			frame.icon2texture:SetAtlas(E.ATLAS_DUNGEON)
+		end
+	else
+		frame.icon2texture:SetTexture(E.ICON_EMPTY)
+		frame.icon2frame:Hide()
+	end
+end
+----------------------------------------------------------------
 local function func_Setup_UniversalQuests(frame, id)
 	local IconLeft
 	local info = E.UniversalQuestMap[id]
@@ -245,10 +320,10 @@ local function func_Setup_UniversalQuests(frame, id)
 		if info.isAccount then
 			-- reset = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
 			-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
-			IconLeft = E.ICON_MONTH -- Crosshair_unableQuest_64
+			IconLeft = E.ICON_QUESTWEEKLY_ACCOUNT -- Crosshair_unableQuest_64
 			-- IconLeft = E.ICON_ACCOUNT -- если появится
 		else
-			IconLeft = RESET_ICONS[reset]
+			IconLeft = E.RESET_INFO[reset].icon
 		end
 	end
 	if IconLeft then
@@ -260,6 +335,7 @@ local function func_Setup_UniversalQuests(frame, id)
 		frame.icon3frame:Hide()
 	end
 end
+----------------------------------------------------------------
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
 	if EventFrame.columnWidthsLeft and EventFrame.columnWidthsLeft[1] then
@@ -312,16 +388,8 @@ function EventFrame:func_InitLEFT(frame, node)
 			func_Setup_Reputations(frame, id)
 		end
 		if dataType == "RaidsOrDungeons" then
-			local EJ_ID = E.func_SI_to_EJ(id) -- SI_ID
-			local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
-			if isRaid then
-				frame.icon2frame:Show()
-				frame.icon2texture:SetAtlas(E.ATLAS_RAID)
-			else
-				frame.icon2frame:Show()
-				frame.icon2texture:SetAtlas(E.ATLAS_DUNGEON)
-			end
-			frame.icon1texture:SetTexture(buttonImage2)
+			func_Setup_Raids(frame, id)
+
 		end
 		if dataType == "UniversalQuests" then
 			func_Setup_UniversalQuests(frame, id)
@@ -365,6 +433,7 @@ function EventFrame:func_InitLEFT(frame, node)
 		end)
 	end
 end
+----------------------------------------------------------------
 function EventFrame:func_InitCenter(frame, node)
 	local frameData = node:GetData()
 	if not frameData.SettingsType then
@@ -446,10 +515,12 @@ function EventFrame:func_InitCenter(frame, node)
 		end
 	end
 end
+----------------------------------------------------------------
 local function HeaderFrameLeft_OnShow(frame)
 	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r"
 	frame.Text1:SetText(text)
 end
+----------------------------------------------------------------
 function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame:SetPoint("TOP", 0, -150)
 	Octo_MainFrame:HookScript("OnShow", function()
@@ -459,7 +530,6 @@ function EventFrame:func_CreateMainFrame()
 	end)
 	local numPlayers = math.min(E.func_CountVisibleCharacters(), EventFrame.MAX_COLUMN_COUNT)
 	Octo_MainFrame:SetSize(MIN_COLUMN_WIDTH_LEFT + MIN_COLUMN_WIDTH_Center * numPlayers, E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES)
-
 	Octo_MainFrame:SetDontSavePosition(true)
 	Octo_MainFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
 	Octo_MainFrame:SetFrameStrata("HIGH")
@@ -592,6 +662,7 @@ function EventFrame:func_CreateMainFrame()
 	end
 	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, "OctoPropagateTemplate", ResetPoolFrame, false, InitializePoolFrame)
 end
+----------------------------------------------------------------
 function E.func_main_frame_toggle()
 	if Octo_MainFrame then
 		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
@@ -603,6 +674,7 @@ function E.func_main_frame_toggle()
 		-- end
 	end
 end
+----------------------------------------------------------------
 function EventFrame:func_CreateSearchBox()
 	SearchBox.Border = SearchBox:CreateTexture(nil, "BACKGROUND")
 	SearchBox.Border:SetColorTexture(0, 0, 0, 1)
@@ -647,6 +719,7 @@ function EventFrame:func_CreateSearchBox()
 	end)
 	Octo_MainFrame.SearchBox = SearchBox
 end
+----------------------------------------------------------------
 function EventFrame:ApplySearchFilter(searchText)
 	if not Octo_MainFrame or not Octo_MainFrame.ViewLeft then return end
 	searchText = searchText and searchText:lower():trim() or ""
@@ -659,6 +732,7 @@ function EventFrame:ApplySearchFilter(searchText)
 	EventFrame.searchFilter = searchText
 	EventFrame:CreateDataProvider()
 end
+----------------------------------------------------------------
 function EventFrame:func_ResetsearchFilter()
 	EventFrame.searchFilter = nil
 	if Octo_MainFrame.SearchBox then
@@ -666,6 +740,7 @@ function EventFrame:func_ResetsearchFilter()
 	end
 	EventFrame:CreateDataProvider()
 end
+----------------------------------------------------------------
 local function func_calculateColumnWidthsLEFT(node)
 	local frameData = node:GetData()
 	local columnWidthsLEFT = {}
@@ -674,6 +749,7 @@ local function func_calculateColumnWidthsLEFT(node)
 	columnWidthsLEFT[1] = width + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT + E.GLOBAL_LINE_HEIGHT
 	return columnWidthsLEFT
 end
+----------------------------------------------------------------
 local function func_calculateColumnWidthsCenter(node)
 	local frameData = node:GetData()
 	local columnWidthsCenter = {}
@@ -688,6 +764,7 @@ local function func_calculateColumnWidthsCenter(node)
 	end
 	return columnWidthsCenter
 end
+----------------------------------------------------------------
 local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serverTEXT)
 	local textToMeasure1 = nicknameTEXT
 	local width1 = E.func_MeasureTextWidth(textToMeasure1, MIN_COLUMN_WIDTH_Center)
@@ -695,14 +772,17 @@ local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serv
 	local width2 = E.func_MeasureTextWidth(textToMeasure2, MIN_COLUMN_WIDTH_Center)
 	return math.max(width1, width2)
 end
+----------------------------------------------------------------
 local function func_UPDATE_MAINFRAME()
 	if Octo_MainFrame and Octo_MainFrame:IsShown() and Octo_TooltipFrame and not Octo_TooltipFrame:IsShown() then
 		EventFrame:CreateDataProvider()
 	end
 end
+----------------------------------------------------------------
 function E.func_UPDATE_MAINFRAME()
 	E.func_SpamBlock(func_UPDATE_MAINFRAME, true)
 end
+----------------------------------------------------------------
 local function PassSearchFilter(TextLeft, searchText)
 	if not searchText or searchText == "" then
 		return true
@@ -712,6 +792,7 @@ local function PassSearchFilter(TextLeft, searchText)
 	or tostring(TextLeft or "")
 	return text:lower():find(searchText:lower(), 1, true) ~= nil
 end
+----------------------------------------------------------------
 local function CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
 	local leftColumnWidth = MIN_COLUMN_WIDTH_LEFT + INDENT_TEXT
 	if columnWidthsLeft and columnWidthsLeft[1] then
@@ -723,11 +804,13 @@ local function CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, tot
 	end
 	return width
 end
+----------------------------------------------------------------
 local function CalculateMainFrameHeight(totalLines)
 	local LINES_TOTAL = math.floor(MAX_FRAME_HEIGHT / E.GLOBAL_LINE_HEIGHT)
 	local maxDisplayLines = math.max(1, math.min(totalLines, LINES_TOTAL or totalLines))
 	return E.GLOBAL_LINE_HEIGHT * maxDisplayLines + E.HEADER_HEIGHT, maxDisplayLines
 end
+----------------------------------------------------------------
 local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColumns)
 	local totalRightWidth = 0
 	for i = 1, math.min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
@@ -740,6 +823,7 @@ local function CalculateLimitedRightWidth(columnWidthsCenter, maxRIGHT, maxColum
 	end
 	return totalRightWidth
 end
+----------------------------------------------------------------
 local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 	local totalRightWidth = 0
 	for i = 1, math.min(#columnWidthsCenter, maxColumns or EventFrame.MAX_COLUMN_COUNT) do
@@ -747,6 +831,7 @@ local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 	end
 	return totalRightWidth
 end
+----------------------------------------------------------------
 function EventFrame:CreateDataProvider()
 	if not E.OctoTables_Vibor then return end
 	local DataProvider = CreateTreeDataProvider()
@@ -797,7 +882,7 @@ function EventFrame:CreateDataProvider()
 				if canDraw then
 					totalLines = totalLines + 1
 					local rowData = {
-						TextLeft = TextLeft or E.NONE or NONE or "None",
+						TextLeft = TextLeft or E.NONE or L["NONE"] or "None",
 						IconLeft = IconLeft,
 						-- ColorLeft = E.OctoTable_Expansions[categoryKey]
 						-- and E.OctoTable_Expansions[categoryKey].color
@@ -838,7 +923,7 @@ function EventFrame:CreateDataProvider()
 	local displayByType = true
 	if displayByType then
 		-- Режим: сначала по типу данных, потом по дополнениям
-		for _, dataType in ipairs(dataDisplayOrder) do
+		for _, dataType in ipairs(E.dataDisplayOrder) do
 			for categoryKey in next, (E.OctoTables_Vibor) do
 				if ExpansionToShowTBL[categoryKey] and E.DataProvider_Otrisovka[categoryKey] and E.DataProvider_Otrisovka[categoryKey][dataType] then
 					processData(categoryKey, dataType, E.DataProvider_Otrisovka[categoryKey][dataType])
@@ -849,7 +934,7 @@ function EventFrame:CreateDataProvider()
 		-- Режим: сначала по дополнениям, потом по типам данных
 		for categoryKey in next, (E.OctoTables_Vibor) do
 			if ExpansionToShowTBL[categoryKey] then
-				for _, dataType in ipairs(dataDisplayOrder) do
+				for _, dataType in ipairs(E.dataDisplayOrder) do
 					if E.DataProvider_Otrisovka[categoryKey] and E.DataProvider_Otrisovka[categoryKey][dataType] then
 						processData(categoryKey, dataType, E.DataProvider_Otrisovka[categoryKey][dataType])
 					end
@@ -860,7 +945,7 @@ function EventFrame:CreateDataProvider()
 	if totalLines == 0 then
 		totalLines = 1
 		local rowData = {
-			TextLeft = E.NONE or NONE or "None",
+			TextLeft = E.NONE or L["NONE"] or "None",
 			IconLeft = {},
 			ColorLeft = {},
 			categoryKey = {},
@@ -882,6 +967,7 @@ function EventFrame:CreateDataProvider()
 	EventFrame.columnWidthsCenter = columnWidthsCenter
 	self:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 end
+----------------------------------------------------------------
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, sortedCharacters, columnWidthsLeft, columnWidthsCenter)
 	if not Octo_MainFrame or not Octo_MainFrame.scrollContentFrame then return end
 	Octo_MainFrame.ViewCenter:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
@@ -897,12 +983,13 @@ function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, totalColumns, so
 	local totalRightWidth_scrollContentFrame = CalculateFullRightWidth(columnWidthsCenter, EventFrame.MAX_COLUMN_COUNT)
 	local width = CalculateMainFrameWidth(columnWidthsLeft, columnWidthsCenter, totalRightWidth)
 	local height, maxDisplayLines = CalculateMainFrameHeight(totalLines)
-		-- MAX_DISPLAY_LINES = maxDisplayLines
+	-- MAX_DISPLAY_LINES = maxDisplayLines
 	Octo_MainFrame:SetSize(width, height)
 	Octo_MainFrame.scrollContentFrame:SetSize(totalRightWidth_scrollContentFrame, height)
 	EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 	EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 end
+----------------------------------------------------------------
 function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 	Octo_MainFrame.pool:ReleaseAll()
 	local accumulatedWidth = 0
@@ -942,11 +1029,11 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter.Durability:SetText(Durability)
 		-- local faction = pd.Faction or "Neutral"
 		-- if faction == "Horde" then
-		--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
+		-- charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
 		-- elseif faction == "Alliance" then
-		--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
+		-- charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
 		-- elseif faction == "Neutral" then
-		--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
+		-- charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
 		-- end
 		-- HeaderFrameCenter.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
 		local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
@@ -964,6 +1051,7 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter:Show()
 	end
 end
+----------------------------------------------------------------
 function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 	for _, frame in ipairs(Octo_MainFrame.ViewCenter:GetFrames()) do
 		local accumulatedWidth = 0
@@ -977,21 +1065,25 @@ function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 		end
 	end
 end
+----------------------------------------------------------------
 local function Toggle_Octo_MainFrame_TestFrame(frame)
 	if Octo_MainFrame then
 		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 	end
 end
+----------------------------------------------------------------
 function EventFrame:main_frame_toggle()
 	if Octo_MainFrame then
 		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 	end
 end
+----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
+----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CreateMainFrame()
 	EventFrame:func_CreateSearchBox()
@@ -999,6 +1091,8 @@ function EventFrame:PLAYER_LOGIN()
 	E.func_Create_DDframe_ToDo(Octo_MainFrame, E.COLOR_FACTION, function() EventFrame:CreateDataProvider() end)
 	E.func_CreateMinimapButton(GlobalAddonName, Octo_ToDo_DB_Vars, Octo_MainFrame, E.func_main_frame_toggle)
 end
+----------------------------------------------------------------
 function EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_MainFrame:Hide()
 end
+----------------------------------------------------------------

@@ -12,21 +12,18 @@ local function Collect_Currencies()
 	----------------------------------------------------------------
 	local currencyCache = {}
 	for currencyID in next, (E.ALL_Currencies) do
-
-
-
-		local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-		if not data then
+		local info = E.func_GetCurrencyInfo(currencyID)
+		if not info then
 			collectMASLENGO.Currency[currencyID] = nil
 		else
 			collectMASLENGO.Currency[currencyID] = collectMASLENGO.Currency[currencyID] or {}
-			local quantity = data.quantity
-			local maxQuantity = data.maxQuantity
-			local canEarnPerWeek = data.canEarnPerWeek
-			local quantityEarnedThisWeek = data.quantityEarnedThisWeek
-			local totalEarned = data.totalEarned
-			local maxWeeklyQuantity = data.maxWeeklyQuantity
-			local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
+			local quantity = info.quantity
+			local maxQuantity = info.maxQuantity
+			local canEarnPerWeek = info.canEarnPerWeek
+			local quantityEarnedThisWeek = info.quantityEarnedThisWeek
+			local totalEarned = info.totalEarned
+			local maxWeeklyQuantity = info.maxWeeklyQuantity
+			local useTotalEarnedForMaxQty = info.useTotalEarnedForMaxQty
 
 
 
@@ -58,7 +55,7 @@ local function Collect_Currencies()
 			end
 
 
-			if IsAccountWideCurrency and IsAccountWideCurrency(currencyID) then
+			if E.func_IsAccountWideCurrency(currencyID) then
 				-- Валюта аккаунтная, нужно всем персонажам сохранить одни и те же значения
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName and CharInfo.MASLENGO then
@@ -94,18 +91,18 @@ local function Collect_Currencies_Account()
 	if not collectMASLENGO then return end
 	local currencyCache = {}
 	for currencyID in next, (E.ALL_Currencies) do
-		local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-		if not data then
+		local info = E.func_GetCurrencyInfo(currencyID)
+		if not info then
 			collectMASLENGO.Currency[currencyID] = nil
 		else
 			collectMASLENGO.Currency[currencyID] = collectMASLENGO.Currency[currencyID] or {}
-			local quantity = data.quantity
-			local maxQuantity = data.maxQuantity
-			local canEarnPerWeek = data.canEarnPerWeek
-			local quantityEarnedThisWeek = data.quantityEarnedThisWeek
-			local maxWeeklyQuantity = data.maxWeeklyQuantity
-			local totalEarned = data.totalEarned
-			local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
+			local quantity = info.quantity
+			local maxQuantity = info.maxQuantity
+			local canEarnPerWeek = info.canEarnPerWeek
+			local quantityEarnedThisWeek = info.quantityEarnedThisWeek
+			local maxWeeklyQuantity = info.maxWeeklyQuantity
+			local totalEarned = info.totalEarned
+			local useTotalEarnedForMaxQty = info.useTotalEarnedForMaxQty
 
 
 			-- Получаем кэш данных аккаунтных валют
@@ -128,7 +125,7 @@ local function Collect_Currencies_Account()
 			end
 
 
-			if IsAccountWideCurrency and IsAccountWideCurrency(currencyID) then
+			if E.func_IsAccountWideCurrency(currencyID) then
 
 				-- Валюта аккаунтная, нужно всем персонажам сохранить одни и те же значения
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
@@ -169,17 +166,17 @@ function E.Collect_TARGET_Currency(currencyID)
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	if not collectMASLENGO then return end
 	collectMASLENGO.Currency = collectMASLENGO.Currency or {}
-	local data = C_CurrencyInfo.GetCurrencyInfo(currencyID)
-	if not data then
+	local info = E.func_GetCurrencyInfo(currencyID)
+	if not info then
 		collectMASLENGO.Currency[currencyID] = nil
 	end
 	collectMASLENGO.Currency[currencyID] = collectMASLENGO.Currency[currencyID] or {}
 	local charCurrency = collectMASLENGO.Currency[currencyID]
-	local quantity = data.quantity
-	local maxQuantity = data.maxQuantity
-	local totalEarned = data.totalEarned
-	local maxWeeklyQuantity = data.maxWeeklyQuantity
-	local useTotalEarnedForMaxQty = data.useTotalEarnedForMaxQty
+	local quantity = info.quantity
+	local maxQuantity = info.maxQuantity
+	local totalEarned = info.totalEarned
+	local maxWeeklyQuantity = info.maxWeeklyQuantity
+	local useTotalEarnedForMaxQty = info.useTotalEarnedForMaxQty
 	E.func_SetOrNil(charCurrency, "quantity", quantity) -- number
 	E.func_SetOrNil(charCurrency, "maxQuantity", maxQuantity) -- number
 	E.func_SetOrNil(charCurrency, "totalEarned", totalEarned) -- number
@@ -241,9 +238,9 @@ function E.func_DEBUG_CURRENCY_TRANSFER()
 			if accountCurrencyData then
 
 				for q, v in ipairs(accountCurrencyData) do
-					local characterGUID = v.characterGUID or "NONE"
-					-- local characterName = v.characterName or "NONE"
-					local fullCharacterName = v.fullCharacterName or "NONE-PIZDA"
+					local characterGUID = v.characterGUID or "L["NONE"]"
+					-- local characterName = v.characterName or "L["NONE"]"
+					local fullCharacterName = v.fullCharacterName or "L["NONE"]-PIZDA"
 					local quantity = v.quantity or 0
 					-- local Server = fullCharacterName:gsub("-", "")
 					-- local part1, Server = fullCharacterName:match("([^-]+)-([^-]+)")

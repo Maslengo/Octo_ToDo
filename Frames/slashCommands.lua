@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 local slashCommands = {
 	OCTO = {
 		commands = {"/octo"},

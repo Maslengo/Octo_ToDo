@@ -1,18 +1,9 @@
 local GlobalAddonName, E = ...
-----------------------------------------------------------------
 local L = E.L
+----------------------------------------------------------------
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-local LibTranslit = LibStub("LibTranslit-1.0")
 ----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
-EventFrame.measureFrame = CreateFrame("Frame")
-EventFrame.measureFrame:Hide()
-EventFrame.measureFrame:SetParent(UIParent)
-EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
-EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
-EventFrame.measureText:SetFontObject(OctoFont11)
-EventFrame.measureText:SetWordWrap(false)
-local measureText = EventFrame.measureText
 ----------------------------------------------------------------
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
 local strsplit = strsplit
@@ -115,18 +106,41 @@ function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
 	local iconHeight = iconHeight or 16
 	return CreateAtlasMarkup(atlasName, iconWidth, iconHeight)
 end
-function E.func_GetItemIcon(itemID)
-	local texture = GetItemIconByID(itemID) or E.ICON_QUESTION_MARK
-	return texture
+
+
+function E.func_GetSpellInfo(id)
+	return GetSpellInfo(id)
 end
-function E.func_GetSpellIcon(spellID)
-	local texture = GetSpellTexture(spellID) or E.ICON_QUESTION_MARK
-	return texture
+
+
+function E.func_GetSpellName(id)
+	return GetSpellName(id)
 end
-function E.func_GetCurrencyIcon(currencyID)
-	local info = GetCurrencyInfo(currencyID)
-	return info and info.iconFileID or E.ICON_EMPTY
+
+
+function E.func_GetItemNameByID(id)
+	return GetItemNameByID(id)
 end
+
+
+function E.func_GetMountInfoByID(id)
+	return GetMountInfoByID(id)
+end
+
+function E.func_GetCurrencyInfo(id)
+	local info = GetCurrencyInfo(id)
+	return info
+end
+
+function E.func_GetItemIconByID(id)
+	return GetItemIconByID(id)
+end
+
+function E.func_GetSpellTexture(id)
+	return GetSpellTexture(id)
+end
+
+
 function E.func_IsAccountQuest(questID)
 	if not questID then
 		return false
@@ -147,11 +161,11 @@ function E.func_GetItemHyperlink(itemID)
 	local _, link = E.func_GetItemData(itemID)
 	return link
 end
-function E.func_GetItemQualityLevel(itemID)
+function E.func_GetItemQualityByID(itemID)
 	return GetItemQualityByID(itemID) or 0
 end
 function E.func_GetItemQualityColorTable(itemID)
-	return ITEM_QUALITY_COLORS[E.func_GetItemQualityLevel(itemID)]
+	return ITEM_QUALITY_COLORS[E.func_GetItemQualityByID(itemID)]
 end
 function E.func_GetQualityHexColor(quality)
 	local numQuality = tonumber(quality)
@@ -210,16 +224,45 @@ function E.func_RGB2Hex(r, g, b, a)
 end
 ----------------------------------------------------------------
 function E.func_Hex2RGBA(hex, forcedAlpha)
-	if not hex or hex == "" or not hex:match("^|c") or #hex < 10 then
+	if type(hex) ~= "string" then
 		return 1, 1, 1, 1
 	end
-	-- Формат: |cAARRGGBB
-	-- Берем только hex часть после |c (10 символов всего)
-	local a = tonumber(hex:sub(3, 4), 16) or 255 -- AA
-	local r = tonumber(hex:sub(5, 6), 16) or 255 -- RR
-	local g = tonumber(hex:sub(7, 8), 16) or 255 -- GG
-	local b = tonumber(hex:sub(9, 10), 16) or 255 -- BB
-	return r/255, g/255, b/255, forcedAlpha or a/255
+
+	-- Приводим к нижнему регистру для удобства
+	hex = hex:lower()
+
+	-- |cffRRGGBB или |caarrggbb
+	if hex:sub(1,2) == "|c" then
+		if #hex < 10 then
+			return 1, 1, 1, 1
+		end
+
+		local a = tonumber(hex:sub(3,4), 16) or 255
+		local r = tonumber(hex:sub(5,6), 16) or 255
+		local g = tonumber(hex:sub(7,8), 16) or 255
+		local b = tonumber(hex:sub(9,10), 16) or 255
+
+		if not (r and g and b and a) then
+			return 1, 1, 1, 1
+		end
+
+		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or a/255
+	end
+
+	-- RRGGBB
+	if #hex == 6 then
+		local r = tonumber(hex:sub(1,2), 16)
+		local g = tonumber(hex:sub(3,4), 16)
+		local b = tonumber(hex:sub(5,6), 16)
+
+		if not (r and g and b) then
+			return 1, 1, 1, 1
+		end
+
+		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or 1
+	end
+
+	return 1, 1, 1, 1
 end
 ----------------------------------------------------------------
 function E.func_Hex2ColorTable(hex, forcedAlpha)
@@ -324,9 +367,9 @@ function E.func_GetCurrentExpansion()
 end
 function E.func_FormatLastSeen(time, color)
 	if not time then
-		return FRIENDS_LIST_OFFLINE
+		return L["FRIENDS_LIST_OFFLINE"]
 	else
-		return string.format(BNET_LAST_ONLINE_TIME, color..E.func_FormatTimeAgo(time).."|r")
+		return string.format(L["BNET_LAST_ONLINE_TIME"], color..E.func_FormatTimeAgo(time).."|r")
 	end
 end
 function E.func_FormatTimeAgo(timeDiff, isAbsolute)
@@ -476,7 +519,7 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				tooltip:AddLine(addonNameNEW)
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
-				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], GAMEMENU_OPTIONS)
+				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], L["OPTIONS"])
 				-- tooltip:AddLine(" ")
 				-- tooltip:AddLine(E.COLOR_RED..L["Temporarily disabled in combat"].."|r")
 			end,
@@ -830,21 +873,22 @@ function E.func_GetSavedVars(addonName)
 end
 ----------------------------------------------------------------
 function E.func_RequestUIUpdate(event_name)
-	if not E.CONFIG_DEBUG_EVENTS then return end
-	local isMainFrameVisible = Octo_MainFrame and Octo_MainFrame:IsShown()
-	if isMainFrameVisible then
-		if not E.updateScheduledFlag then
-			E.updateScheduledFlag = true
-			C_Timer.After(0.1, function()
-					E.updateScheduledFlag = false
-					if Octo_MainFrame and Octo_MainFrame:IsShown() then
-						-- E.func_TODO_CreateDataProvider()
-						DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_GREEN, E.COLOR_YELLOW)..event_name)
-					end
-			end)
+	if Octo_DevTool_DB.CONFIG_DEBUG_EVENTS then
+		local isMainFrameVisible = Octo_MainFrame and Octo_MainFrame:IsShown()
+		if isMainFrameVisible then
+			if not E.updateScheduledFlag then
+				E.updateScheduledFlag = true
+				C_Timer.After(0.1, function()
+						E.updateScheduledFlag = false
+						if Octo_MainFrame and Octo_MainFrame:IsShown() then
+							-- E.func_TODO_CreateDataProvider()
+							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_GREEN, E.COLOR_YELLOW)..event_name)
+						end
+				end)
+			end
+		else
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_RED, E.COLOR_PURPLE)..event_name)
 		end
-	else
-		DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_RED, E.COLOR_PURPLE)..event_name)
 	end
 end
 function E.func_GetTimewalkingDungeon()
@@ -1087,7 +1131,7 @@ function E.func_GetPlayerLocation()
 			end
 		end
 	end
-	return UNKNOWN, true
+	return L["UNKNOWN"], true
 end
 function E.func_GetQuestStatus(questID, forceBoolean)
 	if not questID then return end
@@ -1097,7 +1141,7 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 	-- желтный делается
 	-- фиолетовый можно сдать
 	if IsFailed(questID) then
-		result = E.COLOR_RED..FAILED.."|r"
+		result = E.COLOR_RED..L["FAILED"].."|r"
 	elseif IsQuestFlaggedCompleted(questID) then
 		if forceBoolean then
 			result = true
@@ -1105,7 +1149,7 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 			result = E.DONE
 		end
 	elseif IsComplete(questID) then
-		result = E.COLOR_PURPLE..">"..QUEST_WATCH_QUEST_READY.."<|r"
+		result = E.COLOR_PURPLE..">"..L["QUEST_WATCH_QUEST_READY"].."<|r"
 	elseif not E.func_IsOnQuest(questID) then
 		result = nil
 	else
@@ -1294,7 +1338,6 @@ function E.func_CompactFormatNumber(num)
 	local s = tostring(rounded):gsub("%.0$", "")
 	return s..suffixes[i]
 end
-
 -- /run opde(GetFactionInfo(76))
 -- /dump GetFactionInfo(76)
 ----------------------------------------------------------------
@@ -1322,7 +1365,7 @@ end
 function E.func_IsFactionParagonForCurrentPlayer(id)
 	if IsFactionParagonForCurrentPlayer then
 		return IsFactionParagonForCurrentPlayer(id)
-	else
+	elseif IsFactionParagon then
 		return IsFactionParagon(id)
 	end
 end
@@ -1358,8 +1401,8 @@ function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
 	minWidth = minWidth or 1
 	local result = type(textToMeasure) == "function" and textToMeasure() or textToMeasure
 	local text = tostring(result or "")
-	measureText:SetText(text)
-	local width = math.max(math.ceil(measureText:GetStringWidth()), minWidth) -- 8 indent
+	Octo_MeasureFrame.measureText:SetText(text)
+	local width = math.max(math.ceil(Octo_MeasureFrame.measureText:GetStringWidth()), minWidth) -- 8 indent
 	return width
 end
 ----------------------------------------------------------------
@@ -1374,7 +1417,7 @@ function E.func_UpdateFont()
 	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
 	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
 	E.OctoFont22:SetFont(fontPath, 22, Config_FontFlags)
-	measureText:SetFontObject(OctoFont11)
+	Octo_MeasureFrame.measureText:SetFontObject(OctoFont11)
 end
 ----------------------------------------------------------------
 function E.func_GetSlotNameForEmptySlot(slotID)
@@ -1392,25 +1435,6 @@ function E.func_GetEmptySlotIcon(slotID)
 		return texture or 134400
 	end
 	return 134400
-end
-----------------------------------------------------------------
-function E.func_translit(text)
-	if not Octo_ToDo_DB_Vars or not Octo_ToDo_DB_Vars.CONFIG_TRANSLIT then
-		return text
-	end
-	if type(text) ~= "string" or text == "" then
-		return text
-	end
-	-- нет кириллицы → не трогаем
-	if not text:find("[А-Яа-яЁё]") then
-		return text
-	end
-	local result = LibTranslit:Transliterate(text)
-	-- защита от пустых строк
-	if not result or result == "" then
-		return text
-	end
-	return result
 end
 ----------------------------------------------------------------
 function E:func_CanCollectData()
@@ -1445,7 +1469,7 @@ function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needI
 	elseif not fullName and E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID] then -- dungeonID
 		namePart = E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID].abbreviation
 	else
-		namePart = name or UNKNOWN
+		namePart = name or L["UNKNOWN"]
 	end
 	if needIcon and texture then
 		iconPart = E.func_texturefromIcon(texture)
@@ -1561,61 +1585,20 @@ function E.func_UpdateGlobals()
 end
 ----------------------------------------------------------------
 function E.func_DB_REP_COLOR(repType, reaction)
-	local result = E.COLOR_GRAY
-	if not repType then return result end
-	if not E.PROFTBL then return result end
-	local OctoTable_reactionColors = E.OctoTable_reactionColors
-	-- if repType == 2 then
-	-- color = OctoTable_reactionColors[repType] or E.COLOR_PINK
-	-- elseif repType == 3 then
-	-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
-	-- elseif repType == 1 and reaction then
-	-- color = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
-	-- elseif repType == 4 then
-	-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
-	-- end
+	local color
+	if not repType or not reaction or not E.PROFTBL then return color end
 	if repType == 1 and reaction and type(reaction) == "number" and reaction > 0 then
-		-- local colorKeys = {
-		-- [1] = "ConfigColor_Rep_Standard_1",
-		-- [2] = "ConfigColor_Rep_Standard_2",
-		-- [3] = "ConfigColor_Rep_Standard_3",
-		-- [4] = "ConfigColor_Rep_Standard_4",
-		-- [5] = "ConfigColor_Rep_Standard_5",
-		-- [6] = "ConfigColor_Rep_Standard_6",
-		-- [7] = "ConfigColor_Rep_Standard_7",
-		-- [8] = "ConfigColor_Rep_Standard_8",
-		-- }
-		-- local key = colorKeys[reaction]
-		-- local r = E.PROFTBL[key.."_r"]
-		-- local g = E.PROFTBL[key.."_g"]
-		-- local b = E.PROFTBL[key.."_b"]
-		-- local a = E.PROFTBL[key.."_a"]
-		local baseKey = string.format("ConfigColor_Rep_Standard_%d", reaction)
-		local r = E.PROFTBL[baseKey.."_r"]
-		local g = E.PROFTBL[baseKey.."_g"]
-		local b = E.PROFTBL[baseKey.."_b"]
-		local a = E.PROFTBL[baseKey.."_a"]
-		result = E.func_RGB2Hex(r, g, b, a)
+		color = Octo_ToDo_DB_Vars[string.format("CONFIG_REPUTATION_SIMPLE_COLOR_%d", reaction)]
 	elseif repType == 2 then
-		local r = E.PROFTBL.ConfigColor_Rep_Friend_r
-		local g = E.PROFTBL.ConfigColor_Rep_Friend_g
-		local b = E.PROFTBL.ConfigColor_Rep_Friend_b
-		local a = E.PROFTBL.ConfigColor_Rep_Friend_a
-		result = E.func_RGB2Hex(r, g, b, a)
+		color = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_FRIEND_COLOR
 	elseif repType == 3 then
-		local r = E.PROFTBL.ConfigColor_Rep_Major_r
-		local g = E.PROFTBL.ConfigColor_Rep_Major_g
-		local b = E.PROFTBL.ConfigColor_Rep_Major_b
-		local a = E.PROFTBL.ConfigColor_Rep_Major_a
-		result = E.func_RGB2Hex(r, g, b, a)
+		color = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_MAJOR_COLOR
 	elseif repType == 4 then
-		local r = E.PROFTBL.ConfigColor_Rep_Paragon_r
-		local g = E.PROFTBL.ConfigColor_Rep_Paragon_g
-		local b = E.PROFTBL.ConfigColor_Rep_Paragon_b
-		local a = E.PROFTBL.ConfigColor_Rep_Paragon_a
-		result = E.func_RGB2Hex(r, g, b, a)
+		color = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_PARAGON_COLOR
+	else
+		color = E.COLOR_DARKGRAY:gsub("^|c", "")
 	end
-	return result
+	return "|c"..color
 end
 ----------------------------------------------------------------
 function E.func_DB_COV_COLOR(covenantID)
@@ -1651,6 +1634,7 @@ end
 ----------------------------------------------------------------
 function E.func_DB_FACTION_COLOR(CharInfo)
 	local r, g, b, a = 1, 1, 1, 1
+	if not E.PROFTBL then return r, g, b, a end
 	if not CharInfo then return r, g, b, a end
 	local pd = CharInfo.PlayerData
 	local faction = pd.Faction or "Neutral"
@@ -1676,6 +1660,7 @@ end
 ----------------------------------------------------------------
 function E.func_DB_HEADER_COLOR(CharInfo)
 	local r, g, b, a = 1, 1, 1, 1
+	if not E.PROFTBL then return r, g, b, a end
 	if not CharInfo then return r, g, b, a end
 	local pd = CharInfo.PlayerData
 	if not pd then return r, g, b, a end
@@ -1695,6 +1680,7 @@ end
 ----------------------------------------------------------------
 function E.func_DB_CHARLINE_COLOR()
 	local r, g, b, a = 1, 1, 1, 1
+	if not E.PROFTBL then return r, g, b, a end
 	local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
 	local pd = CharInfo.PlayerData
 	local classColorHex = pd.classColorHex or E.COLOR_WHITE
@@ -1782,27 +1768,29 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	frame:SetScript("OnEnter", function(self)
 			frame.highlight:Show()
 			ResetHighlightState(self)
-			self.highlight:SetAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
+			self.highlight:SetAlpha(E.PROFTBL and E.PROFTBL.ConfigColor_Highlight_a or .2)
 	end)
 	frame:SetScript("OnLeave", function(self)
 			-- frame.highlight:Hide()
 			ResetHighlightState(self)
-			if E.PROFTBL.ConfigColor_ENABLE_HIGHLIGHT_ANIMATION then
+			if E.PROFTBL and E.PROFTBL.ConfigColor_ENABLE_HIGHLIGHT_ANIMATION then
 				-- При выключенном флаге, используем fade
 				self.highlightLeave:Restart()
 			end
 			GameTooltip:Hide()
 	end)
 	frame:SetScript("OnShow", function(self)
-			local r = E.PROFTBL.ConfigColor_Highlight_r
-			local g = E.PROFTBL.ConfigColor_Highlight_g
-			local b = E.PROFTBL.ConfigColor_Highlight_b
-			local a = E.PROFTBL.ConfigColor_Highlight_a
-			local UseFaction = E.PROFTBL.ConfigColor_Highlight_UseFaction_CONFIG
-			local UseClass = E.PROFTBL.ConfigColor_Highlight_UseClass_CONFIG
-			alpha:SetFromAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
-			E.func_DB_FRAME_Color(frame, "highlight", r, g, b, a, UseFaction, UseClass)
-			ResetHighlightState(self)
+			if E.PROFTBL then
+				local r = E.PROFTBL.ConfigColor_Highlight_r
+				local g = E.PROFTBL.ConfigColor_Highlight_g
+				local b = E.PROFTBL.ConfigColor_Highlight_b
+				local a = E.PROFTBL.ConfigColor_Highlight_a
+				local UseFaction = E.PROFTBL.ConfigColor_Highlight_UseFaction_CONFIG
+				local UseClass = E.PROFTBL.ConfigColor_Highlight_UseClass_CONFIG
+				alpha:SetFromAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
+				E.func_DB_FRAME_Color(frame, "highlight", r, g, b, a, UseFaction, UseClass)
+				ResetHighlightState(self)
+			end
 	end)
 	frame:GetScript("OnShow")(frame)
 end
@@ -1831,12 +1819,7 @@ function E.func_OpenToCategory(frame)
 	if SettingsPanel:IsVisible() then
 		HideUIPanel(SettingsPanel)
 	else
-		E.openConfig()
-		--     if C_SettingsUtil and E.SettingsCategoryID then
-		--         C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
-		--     elseif Settings then
-		--         Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
-		--     end
+		E.func_openConfig()
 	end
 end
 ----------------------------------------------------------------
@@ -1900,10 +1883,10 @@ end
 ----------------------------------------------------------------
 -- local allRanks = {}
 -- for i = 1, 15 do
--- local text = AZERITE_ESSENCE_RANK:format(i)
+-- local text = L["AZERITE_ESSENCE_RANK"]:format(i)
 -- allRanks[text] = true
 -- end
--- local removePatter = AZERITE_ESSENCE_RANK:format(9999)
+-- local removePatter = L["AZERITE_ESSENCE_RANK"]:format(9999)
 -- removePatter = removePatter:gsub("9999", "")
 local scanner = CreateFrame("GameTooltip", "RankScannerTooltip", nil, "GameTooltipTemplate")
 scanner:SetOwner(UIParent, "ANCHOR_NONE")
@@ -1914,7 +1897,7 @@ function E.GetItemRankFromLink(ItemLink)
 	-- "15 rank" ENG
 	-- "15-й уровень" RU
 	-- "|cFF 0FFFF15-й уровень|r"
-	local newPattern = AZERITE_ESSENCE_RANK:gsub("%%d", "^.-(%%d+).*")
+	local newPattern = L["AZERITE_ESSENCE_RANK"]:gsub("%%d", "^.-(%%d+).*")
 	scanner:SetHyperlink(ItemLink)
 	-- Проходим строки тултипа
 	for i = 1, scanner:NumLines() do
@@ -2192,12 +2175,8 @@ function E.func_isAtlas(TextureOrAtlas)
 	end
 	return false
 end
-
-
 -- /dump C_Texture.GetAtlasInfo("warbands-icon")
 -- /dump C_Texture.GetAtlasInfo(629077)
-
-
 ----------------------------------------------------------------
 function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	if not frame or not TextureOrAtlas then return end
@@ -2236,6 +2215,7 @@ function E.func_IsAccountWideReputation(id)
 end
 ----------------------------------------------------------------
 function E.func_IsAccountWideCurrency(id)
+	if id == 2032 then return true end
 	return IsAccountWideCurrency and IsAccountWideCurrency(id)
 end
 ----------------------------------------------------------------
@@ -2243,9 +2223,49 @@ function E.func_IsAccountTransferableCurrency(id)
 	return IsAccountTransferableCurrency and IsAccountTransferableCurrency(id)
 end
 ----------------------------------------------------------------
+
+local RIO_COLORS = {
+	{ threshold = 0,    color = "GRAY" },    -- E.COLOR_GRAY
+	{ threshold = 1,    color = "WHITE" },   -- E.COLOR_WHITE
+	{ threshold = 1000, color = "GREEN" },   -- E.COLOR_GREEN
+	{ threshold = 1500, color = "BLUE" },    -- E.COLOR_BLUE
+	{ threshold = 2000, color = "PURPLE" },  -- E.COLOR_PURPLE
+	{ threshold = 2500, color = "ORANGE" },  -- E.COLOR_ORANGE
+	{ threshold = 3000, color = "YELLOW" },  -- E.COLOR_YELLOW
+}
+
+function E.func_RioColor(score)
+	if not score or score == 0 then
+		return E.COLOR_GRAY
+	end
+
+	for i = #RIO_COLORS, 1, -1 do
+		if score >= RIO_COLORS[i].threshold then
+			return E["COLOR_" .. RIO_COLORS[i].color]
+		end
+	end
+
+	return E.COLOR_YELLOW
+end
 ----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
+function E.func_defaultValue_tooltip(value, reloadRequare)
+	local text = L["CURSOR_SIZE_DEFAULT"]..": "
+	local reloadText = E.COLOR_RED.."|n|n"..L["Changes require a ReloadUI"].."|r"
+	if type(value) == "boolean" then
+		text = text .. (value and L["YES"] or L["NO"])
+	elseif type(value) == "string" then
+		text = text .. value
+	elseif type(value) == "number" then
+		text = text .. tostring(value)
+	end
+
+	if reloadRequare then
+		text = text .. reloadText
+	end
+
+
+	return text
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2257,57 +2277,50 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- function E.func_RegisterEvents(frame, MyEventsTable)
--- 	local stack = debugstack(2)
--- 	local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
--- 	local DebugPath = STR:gsub("]", "")
--- 	for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
--- 	frame:SetScript("OnEvent",
--- 		function(self, event, ...)
--- 			if self[event] then
--- 				self[event](self, ...)
--- 			else
--- 				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
--- 				self:UnregisterEvent(event)
--- 				self.event = nil
--- 			end
--- 	end)
+--  local stack = debugstack(2)
+--  local STR = stack:match("Interface/AddOns/(.-):%d+") or L["UNKNOWN"]
+--  local DebugPath = STR:gsub("]", "")
+--  for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
+--  frame:SetScript("OnEvent",
+--   function(self, event, ...)
+--    if self[event] then
+--     self[event](self, ...)
+--    else
+--     DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
+--     self:UnregisterEvent(event)
+--     self.event = nil
+--    end
+--  end)
 -- end
-
-
-
-
 function E.func_RegisterEvents(frame, MyEventsTable)
-    local stack = debugstack(2)
-    local STR = stack:match("Interface/AddOns/(.-):%d+") or UNKNOWN
-    local DebugPath = STR:gsub("]", "")
-
-    for _, event in ipairs(MyEventsTable) do
-        local success, err = pcall(function()
-            frame:RegisterEvent(event)
-        end)
-
-        if success then
-            -- Успешно зарегистрировано
-        else
-            -- Ошибка регистрации (как в вашем случае с ACCOUNT_MONEY)
-            -- DEFAULT_CHAT_FRAME:AddMessage(string.format(
-            --     "|cffff0000[Ошибка]|r Событие '%s' не существует в этой версии WoW\n%s",
-            --     event,
-            --     tostring(err)
-            -- ))
-        end
-    end
-
-    frame:SetScript("OnEvent",
-        function(self, event, ...)
-            if self[event] then
-                self[event](self, ...)
-            else
-                DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
-                pcall(function() self:UnregisterEvent(event) end)
-                self.event = nil
-            end
-        end)
+	local stack = debugstack(2)
+	local STR = stack:match("Interface/AddOns/(.-):%d+") or L["UNKNOWN"]
+	local DebugPath = STR:gsub("]", "")
+	for _, event in ipairs(MyEventsTable) do
+		local success, err = pcall(function()
+				frame:RegisterEvent(event)
+		end)
+		if success then
+			-- Успешно зарегистрировано
+		else
+			-- Ошибка регистрации (как в вашем случае с ACCOUNT_MONEY)
+			-- DEFAULT_CHAT_FRAME:AddMessage(string.format(
+			--     "|cffff0000[Ошибка]|r Событие '%s' не существует в этой версии WoW\n%s",
+			--     event,
+			--     tostring(err)
+			-- ))
+		end
+	end
+	frame:SetScript("OnEvent",
+		function(self, event, ...)
+			if self[event] then
+				self[event](self, ...)
+			else
+				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
+				pcall(function() self:UnregisterEvent(event) end)
+				self.event = nil
+			end
+	end)
 end
 ----------------------------------------------------------------
 function E.func_RunAfterCombat()
@@ -2326,6 +2339,4 @@ E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_REGEN_ENABLED()
 	E.func_RunAfterCombat()
 end
-----------------------------------------------------------------
-----------------------------------------------------------------
 ----------------------------------------------------------------

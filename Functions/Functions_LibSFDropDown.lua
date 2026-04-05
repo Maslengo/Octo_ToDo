@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 local LibStub = LibStub
-local L = E.L
 local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 local LibIndentation = LibStub("LibIndentation-1.0")
 -- local classR, classG, classB = GetClassColor(E.classFilename) -- Цвет класса игрока
@@ -37,7 +37,7 @@ local function CreateBaseDropDown(frame, providerfunc)
 	DropDown.text:SetJustifyV("MIDDLE")
 	DropDown.text:SetJustifyH("CENTER")
 	-- DropDown.text:SetTextColor(1, 1, 1, 1)
-	local text = GAMEMENU_OPTIONS
+	local text = L["OPTIONS"]
 	DropDown.text:SetText(text)
 	local width = math.max(math.ceil(DropDown.text:GetStringWidth())+50, 90)
 	if width % 2 == 1 then
@@ -458,7 +458,7 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 		StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
 			text = "Введите новое название для профиля '"..profileName.."':",
 			button1 = L["Rename"],
-			button2 = CANCEL,
+			button2 = L["CANCEL"],
 			hasEditBox = true,
 			editBoxWidth = 260,
 			maxLetters = 30,
@@ -536,8 +536,8 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 		StaticPopupDialogs["OCTO_CREATE_PROFILE"] = {
 			text = copyFromCurrent and L["Enter a name for the new profile|n(will be copied from the current one)"]
 			or L["Enter a name for the new profile"],
-			button1 = L["Create"],
-			button2 = CANCEL,
+			button1 = L["NEW"],
+			button2 = L["CANCEL"],
 			hasEditBox = true,
 			editBoxWidth = 260,
 			maxLetters = 30,
@@ -577,7 +577,7 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 				dropdown:ddCloseMenus()
 			end,
 			OnTooltipShow = function(btn, tooltip)
-				tooltip:AddLine(DELETE, nil, nil, nil, true)
+				tooltip:AddLine(L["DELETE"], nil, nil, nil, true)
 			end,
 		}
 	end
@@ -609,7 +609,7 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 				dropdown:ddCloseMenus()
 			end,
 			OnTooltipShow = function(btn, tooltip)
-				tooltip:AddLine(RESET, nil, nil, nil, true)
+				tooltip:AddLine(L["RESET"], nil, nil, nil, true)
 			end,
 		}
 	end
@@ -644,12 +644,12 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 			if profileName == E.TEXT_DEFAULT then
 				info.widgets = {}
 				tinsert(info.widgets, createResetWidget(profileName))
-				info.text = DEFAULT
+				info.text = L["DEFAULT"]
 			end
 			if profileName == E.TEXT_DEFAULT_DARK then
 				info.widgets = {}
 				tinsert(info.widgets, createResetWidget(profileName))
-				info.text = DEFAULT.." (Dark)"
+				info.text = L["DEFAULT"].." (Dark)"
 			end
 			self:ddAddButton(info, level)
 		end
@@ -660,7 +660,7 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 		info.fontObject = OctoFont11
 		info.keepShownOnClick = false
 		info.notCheckable = true
-		info.text = L["Create"]
+		info.text = L["NEW"]
 		info.func = function()
 			ShowCreateProfileDialog(false)
 		end
@@ -703,7 +703,7 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.value = L["Characters"]
 				self:ddAddButton(info, level)
 				-- Меню дополнений
-				info.text = EXPANSION_FILTER_TEXT
+				info.text = L["EXPANSION_FILTER_TEXT"]
 				info.value = "expansions"
 				self:ddAddButton(info, level)
 				-- Меню профилей
@@ -711,8 +711,8 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 				info.value = L["Profiles"]
 				self:ddAddButton(info, level)
 				-- Меню профилей цвета
-				-- info.text = COLORS
-				-- info.value = COLORS
+				-- info.text = L["COLORS"]
+				-- info.value = L["COLORS"]
 				-- self:ddAddButton(info, level)
 			elseif level == 2 then
 				-- Роутинг на соответствующие меню
@@ -722,16 +722,16 @@ function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
 					return expansionsMenu(self, level, value)
 				elseif value == L["Profiles"] then
 					return profilesMenu1(self, level, value)
-				elseif value == COLORS then
+				elseif value == L["COLORS"] then
 					return profilesMenu2(self, level, value)
 				end
 			elseif level >= 3 then
 				-- Определяем тип меню по значению
-				if value == EXPANSION_FILTER_TEXT or (type(value) == "number" and E.OctoTables_Vibor[value]) then
+				if value == L["EXPANSION_FILTER_TEXT"] or (type(value) == "number" and E.OctoTables_Vibor[value]) then
 					return expansionsMenu(self, level, value)
 				elseif value == L["Profiles"] then
 					return profilesMenu1(self, level, value)
-				elseif value == COLORS then
+				elseif value == L["COLORS"] then
 					return profilesMenu2(self, level, value)
 				else
 					return charactersMenu(self, level, value)
@@ -811,7 +811,7 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 				info.keepShownOnClick = true
 				info.notCheckable = false
 				info.isNotRadio = true
-				info.text = "Показывать завершенные"
+				info.text = L["COMBAT_LOG_MENU_EVERYTHING"] -- Показывать все
 				info.hasArrow = nil
 				info.checked = Octo_Achievements_DB.CONFIG_ACHIEVEMENT_SHOW_COMPLETED
 				info.func = function(_, _, _, checked)
@@ -819,7 +819,7 @@ function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
-				info.text = RESET
+				info.text = L["RESET"]
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.func = function(_, _, _, checked)
@@ -843,14 +843,14 @@ function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 				info.keepShownOnClick = true
 				info.notCheckable = false
 				info.isNotRadio = true
-				info.text = "QC_Quests"
+				info.text = L["QC_Quests"]
 				info.checked = Octo_ToDo_DB_Vars.QC_Quests
 				info.func = function(_, _, _, checked)
 					Octo_ToDo_DB_Vars.QC_Quests = checked
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
-				info.text = "QC_Vignettes"
+				info.text = L["QC_Vignettes"]
 				info.checked = Octo_ToDo_DB_Vars.QC_Vignettes
 				info.func = function(_, _, _, checked)
 					Octo_ToDo_DB_Vars.QC_Vignettes = checked
@@ -858,7 +858,7 @@ function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 				end
 				self:ddAddButton(info, level)
 				self:ddAddSeparator(level)
-				info.text = "wipe QC_Quests"
+				info.text = L["wipe QC_Quests"]
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.func = function(_, _, _, checked)
@@ -866,7 +866,7 @@ function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
-				info.text = "wipe QC_Vignettes"
+				info.text = L["wipe QC_Vignettes"]
 				info.keepShownOnClick = false
 				info.notCheckable = true
 				info.func = function(_, _, _, checked)
@@ -882,7 +882,7 @@ end
 ----------------------------------------------------------------
 function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	local DropDown = CreateBaseDropDown(frame, providerfunc)
-	local editBox = frame.editFrame:GetEditBox()
+	local editBox = E.editBox:GetEditBox()
 	local handlerCache = setmetatable({}, { __mode = "kv" }) -- (ПОФИКСИТЬ) Weak table с __mode = "v" работает только со значениями, но ключи могут накапливаться. Лучше использовать __mode = "kv" или очищать периодически.
 	local function makeThemeHandler(themeName)
 		return function(btn)
@@ -933,7 +933,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 				info.text = L["Tab Size"]
 				info.value = "tab"
 				dd:ddAddButton(info, level)
-				info.text = FONT_SIZE
+				info.text = L["FONT_SIZE"]
 				info.value = "font"
 				dd:ddAddButton(info, level)
 			elseif value == "tab" then

@@ -14,6 +14,129 @@ local GlobalAddonName, E = ...
 -- },
 -- Таблица с переводами
 E.translations = {
+	["NEW"] = NEW,
+	-- CREATE_PROFESSION - Создать
+	-- CREATE_ARENA_TEAM - Создать
+	-- CALENDAR_CREATE - Создать
+	-- LEGENDARY_CRAFTING_CRAFT_ITEM - Создать
+	-- NEW - Создать
+	-- COMMUNITIES_CREATE - Создать
+	-- BATTLETAG_CREATE - Создать
+	-- CREATE_COMPACT_UNIT_FRAME_PROFILE - Создать
+
+
+	["FACTION_STANDING_LABEL1"] = FACTION_STANDING_LABEL1,
+	["FACTION_STANDING_LABEL2"] = FACTION_STANDING_LABEL2,
+	["FACTION_STANDING_LABEL3"] = FACTION_STANDING_LABEL3,
+	["FACTION_STANDING_LABEL4"] = FACTION_STANDING_LABEL4,
+	["FACTION_STANDING_LABEL5"] = FACTION_STANDING_LABEL5,
+	["FACTION_STANDING_LABEL6"] = FACTION_STANDING_LABEL6,
+	["FACTION_STANDING_LABEL7"] = FACTION_STANDING_LABEL7,
+	["FACTION_STANDING_LABEL8"] = FACTION_STANDING_LABEL8,
+
+
+
+
+
+
+	["RAIDS"] = RAIDS,
+	["DUNGEONS"] = DUNGEONS,
+	["COLOR"] = COLOR,
+	["COLORS"] = COLORS,
+	["ACCOUNT_LEVEL_CURRENCY"] = ACCOUNT_LEVEL_CURRENCY,
+	["LARGE"] = LARGE,
+	["JOURNEYS_RENOWN_LABEL"] = JOURNEYS_RENOWN_LABEL, -- Renown
+	["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"] = AUCTION_HOUSE_MAX_QUANTITY_BUTTON, -- CURRENCY_TRANSFER_MAX_QUANTITY_BUTTON ("Макс.", "Max")
+	["MAXIMUM"] = MAXIMUM, -- ("Maximum")
+	["COMBAT_LOG_MENU_EVERYTHING"] = COMBAT_LOG_MENU_EVERYTHING, -- BLIZZARD_COMBAT_LOG_MENU_EVERYTHING
+	["CLOSE"] = CLOSE,
+	["WEEKLY_REWARDS_MYTHIC_KEYSTONE"] = WEEKLY_REWARDS_MYTHIC_KEYSTONE,
+	["PVP"] = PVP,
+	["PVP_OPTIONS"] = PVP_OPTIONS,
+	["CUSTOM"] = CUSTOM, -- ("Вручную")
+	["OTHER"] = OTHER, -- ("Другое")
+	["OPTIONS"] = OPTIONS,
+	["YES"] = YES,
+	["NO"] = NO,
+	["CURSOR_SIZE_DEFAULT"] = CURSOR_SIZE_DEFAULT,
+	["GARRISON_TYPE_9_0_LANDING_PAGE_TITLE"] = GARRISON_TYPE_9_0_LANDING_PAGE_TITLE,
+	["FACTION_HORDE"] = FACTION_HORDE,
+	["FACTION_ALLIANCE"] = FACTION_ALLIANCE,
+	["FACTION_NEUTRAL"] = FACTION_NEUTRAL,
+	["CURRENCY"] = CURRENCY,
+	["REPUTATION"] = REPUTATION,
+	["BINDING_HEADER_DEBUG"] = BINDING_HEADER_DEBUG,
+	["FONT_SIZE"] = FONT_SIZE,
+	["EXPANSION_FILTER_TEXT"] = EXPANSION_FILTER_TEXT,
+	["SETTINGS_DEFAULTS"] = SETTINGS_DEFAULTS,
+	["USE"] = USE,
+	["ACCOUNT_BANK_PANEL_TITLE"] = ACCOUNT_BANK_PANEL_TITLE,
+	["AZERITE_ESSENCE_RANK"] = AZERITE_ESSENCE_RANK,
+	["BAG_NAME_BACKPACK"] = BAG_NAME_BACKPACK,
+	["BANK"] = BANK,
+	["BNET_LAST_ONLINE_TIME"] = BNET_LAST_ONLINE_TIME,
+	["BONUS_ROLL_REWARD_MONEY"] = BONUS_ROLL_REWARD_MONEY,
+	["CALENDAR_REPEAT_MONTHLY"] = CALENDAR_REPEAT_MONTHLY,
+	["CANCEL"] = CANCEL,
+	["CURRENCY_SEASON_TOTAL"] = CURRENCY_SEASON_TOTAL,
+	["CURRENCY_SEASON_TOTAL_MAXIMUM"] = CURRENCY_SEASON_TOTAL_MAXIMUM,
+	["CURRENCY_WEEKLY_CAP"] = CURRENCY_WEEKLY_CAP,
+	["DAILY"] = DAILY,
+	["DEFAULT"] = DEFAULT,
+	["DELETE"] = DELETE,
+	["DELVES_GREAT_VAULT_LABEL"] = DELVES_GREAT_VAULT_LABEL,
+	["DONE"] = DONE,
+	["ERR_PVP_WARMODE_TOGGLE_ON"] = ERR_PVP_WARMODE_TOGGLE_ON,
+	["FAILED"] = FAILED,
+	["FRIENDS_LIST_OFFLINE"] = FRIENDS_LIST_OFFLINE,
+	["FRIENDS_LIST_ONLINE"] = FRIENDS_LIST_ONLINE,
+	["FRIENDS_LIST_ZONE"] = FRIENDS_LIST_ZONE,
+	["GAMEMENU_OPTIONS"] = GAMEMENU_OPTIONS,
+	["GARRISON_CACHE"] = GARRISON_CACHE,
+	["ITEM_QUALITY1_DESC"] = ITEM_QUALITY1_DESC,
+	["ITEM_QUALITY2_DESC"] = ITEM_QUALITY2_DESC,
+	["ITEM_QUALITY3_DESC"] = ITEM_QUALITY3_DESC,
+	["ITEM_QUALITY4_DESC"] = ITEM_QUALITY4_DESC,
+	["ITEM_QUALITY5_DESC"] = ITEM_QUALITY5_DESC,
+	["ITEM_QUALITY6_DESC"] = ITEM_QUALITY6_DESC,
+	["ITEM_QUALITY7_DESC"] = ITEM_QUALITY7_DESC,
+	["ITEM_QUALITY8_DESC"] = ITEM_QUALITY8_DESC,
+	["ITEMS"] = ITEMS,
+	["LFG_LIST_ITEM_LEVEL_CURRENT_PVP"] = LFG_LIST_ITEM_LEVEL_CURRENT_PVP,
+	["NONE"] = NONE,
+	["PLAYER_DIFFICULTY1"] = PLAYER_DIFFICULTY1,
+	["PLAYER_DIFFICULTY2"] = PLAYER_DIFFICULTY2,
+	["PLAYER_DIFFICULTY3"] = PLAYER_DIFFICULTY3,
+	["PLAYER_DIFFICULTY4"] = PLAYER_DIFFICULTY4,
+	["PLAYER_DIFFICULTY5"] = PLAYER_DIFFICULTY5,
+	["PLAYER_DIFFICULTY6"] = PLAYER_DIFFICULTY6,
+	["TRADE_SKILLS"] = TRADE_SKILLS,
+	["PROVING_GROUNDS_SCORE"] = PROVING_GROUNDS_SCORE,
+	["QUESTS_LABEL"] = QUESTS_LABEL,
+	["QUEST_WATCH_QUEST_READY"] = QUEST_WATCH_QUEST_READY,
+	["RATED_PVP_WEEKLY_VAULT"] = RATED_PVP_WEEKLY_VAULT,
+	["RESET"] = RESET,
+	["RETRIEVING_DATA"] = RETRIEVING_DATA,
+	["REWARD"] = REWARD,
+	["REWARDS"] = REWARDS,
+	["STAT_AVERAGE_ITEM_LEVEL"] = STAT_AVERAGE_ITEM_LEVEL,
+	["TIME_PLAYED_ALERT"] = TIME_PLAYED_ALERT,
+	["TIME_PLAYED_TOTAL"] = TIME_PLAYED_TOTAL,
+	["TOTAL"] = TOTAL,
+	["UNKNOWN"] = UNKNOWN,
+	["WEEKLY"] = WEEKLY,
+	["WEEKLY_REWARDS_RETURN_TO_CLAIM"] = WEEKLY_REWARDS_RETURN_TO_CLAIM,
+
+
+	["REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE"] = REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE or {
+		["ruRU"] = "Отряд",
+		["enUs"] = "Warband",
+	},
+
+
+
+
+
 	-- ["Unit Prefix Style"] = {
 	--     ["ruRU"] = "Стиль сокращений",
 	--     ["deDE"] = "Einheit Präfix Stil",
@@ -57,6 +180,145 @@ E.translations = {
 	-- L["Import"]
 
 
+	["Value"] = { -- ["VALUE"] = {
+		["ruRU"] = "Значение",
+		["deDE"] = "Wert",
+		["esES"] = "Valor",
+		["esMX"] = "Valor",
+		["frFR"] = "Valeur",
+		["itIT"] = "Valore",
+		["ptBR"] = "Valor",
+		["koKR"] = "값",
+		["zhCN"] = "数值",
+		["zhTW"] = "數值",
+	},
+
+	["Percentage"] = { -- ["PERCENTAGE"] = {
+		["ruRU"] = "Процент",
+		["deDE"] = "Prozent",
+		["esES"] = "Porcentaje",
+		["esMX"] = "Porcentaje",
+		["frFR"] = "Pourcentage",
+		["itIT"] = "Percentuale",
+		["ptBR"] = "Porcentagem",
+		["koKR"] = "백분율",
+		["zhCN"] = "百分比",
+		["zhTW"] = "百分比",
+	},
+
+	["Reaction"] = { -- ["REACTION"] = {
+		["ruRU"] = "Уровень",
+		["deDE"] = "Stufe",
+		["esES"] = "Nivel",
+		["esMX"] = "Nivel",
+		["frFR"] = "Niveau",
+		["itIT"] = "Livello",
+		["ptBR"] = "Nível",
+		["koKR"] = "단계",
+		["zhCN"] = "等级",
+		["zhTW"] = "等級",
+	},
+
+	["Standings"] = { -- ["STANDINGS"] = {
+		["ruRU"] = "Отношение",
+		["deDE"] = "Ruf",
+		["esES"] = "Reputación",
+		["esMX"] = "Reputación",
+		["frFR"] = "Réputation",
+		["itIT"] = "Reputazione",
+		["ptBR"] = "Reputação",
+		["koKR"] = "평판",
+		["zhCN"] = "声望",
+		["zhTW"] = "聲望",
+	},
+
+
+	["Extra icon"] = { -- ["EXTRA_ICON"] = {
+		["ruRU"] = "Доп. иконка",
+		["deDE"] = "Zusatzsymbol",
+		["esES"] = "Icono extra",
+		["esMX"] = "Icono extra",
+		["frFR"] = "Icône suppl.",
+		["itIT"] = "Icona extra",
+		["ptBR"] = "Ícone extra",
+		["koKR"] = "추가 아이콘",
+		["zhCN"] = "附加图标",
+		["zhTW"] = "附加圖示",
+	},
+	["Faction icon"] = {
+		["ruRU"] = "Иконка фракции",
+		["deDE"] = "Fraktionssymbol",
+		["esES"] = "Icono de facción",
+		["esMX"] = "Icono de facción",
+		["frFR"] = "Icône de faction",
+		["itIT"] = "Icona fazione",
+		["ptBR"] = "Ícone de facção",
+		["koKR"] = "진영 아이콘",
+		["zhCN"] = "阵营图标",
+		["zhTW"] = "陣營圖示",
+	},
+	["Warband icon"] = {
+		["ruRU"] = "Иконка отряда",
+		["deDE"] = "Truppsymbol",
+		["esES"] = "Icono de banda",
+		["esMX"] = "Icono de banda",
+		["frFR"] = "Icône de bataillon",
+		["itIT"] = "Icona gruppo",
+		["ptBR"] = "Ícone da tropa",
+		["koKR"] = "부대 아이콘",
+		["zhCN"] = "战团图标",
+		["zhTW"] = "戰隊圖示",
+	},
+	["Icons"] = {
+		["ruRU"] = "Иконки",
+		["deDE"] = "Symbole",
+		["esES"] = "Iconos",
+		["esMX"] = "Iconos",
+		["frFR"] = "Icônes",
+		["itIT"] = "Icone",
+		["ptBR"] = "Ícones",
+		["koKR"] = "아이콘",
+		["zhCN"] = "图标",
+		["zhTW"] = "圖示",
+	},
+
+	["Icon"] = {
+		["ruRU"] = "Иконка",
+		["deDE"] = "Symbol anzeigen",
+		["esES"] = "Mostrar icono",
+		["esMX"] = "Mostrar icono",
+		["frFR"] = "Afficher l’icône",
+		["itIT"] = "Mostra icona",
+		["ptBR"] = "Mostrar ícone",
+		["koKR"] = "아이콘 표시",
+		["zhCN"] = "显示图标",
+		["zhTW"] = "顯示圖示",
+	},
+
+	["Show reputation rank"] = {
+		["ruRU"] = "Ранг репутации",
+		["deDE"] = "Rufrang",
+		["esES"] = "Rango de reputación",
+		["esMX"] = "Rango de reputación",
+		["frFR"] = "Rang de réputation",
+		["itIT"] = "Grado reputazione",
+		["ptBR"] = "Grau de reputação",
+		["koKR"] = "평판 등급",
+		["zhCN"] = "声望等级",
+		["zhTW"] = "聲望等級",
+	},
+	["Color by quality"] = {
+		["ruRU"] = "Цвет по качеству",
+		["deDE"] = "Nach Qualität färben",
+		["esES"] = "Color por calidad",
+		["esMX"] = "Color por calidad",
+		["frFR"] = "Couleur par qualité",
+		["itIT"] = "Colore per qualità",
+		["ptBR"] = "Cor por qualidade",
+		["koKR"] = "품질별 색상",
+		["zhCN"] = "按品质着色",
+		["zhTW"] = "依品質著色",
+	},
 	["Show zero values"] = {
 		["ruRU"] = "Нулевые значения",
 		["deDE"] = "Nullwerte anzeigen",
@@ -201,18 +463,6 @@ E.translations = {
 		["zhCN"] = "透明度",
 		["zhTW"] = "透明度",
 	},
-	["Fortify the Runestones"] = { -- /run opde(E.func_GetName("quest", 90573)) -- 90573 90574 90575 90576
-		["ruRU"] = "Укрепление рунических камней",
-		["deDE"] = "Die Runensteine verstärken",
-		["esES"] = "Fortificación de piedras rúnicas",
-		["esMX"] = "Piedras rúnicas fortificadas",
-		["frFR"] = "Renforcement des pierres runiques",
-		["itIT"] = "Fortificare le Pietre Runiche",
-		["ptBR"] = "Fortificar as pedras rúnicas",
-		["koKR"] = "룬석 강화", -- 룬석을 강화하라
-		["zhCN"] = "加固符文石",
-		["zhTW"] = "強化符石",
-	},
 	["Midnight: Meta Quests"] = { -- QUEST_CLASSIFICATION_META - Мета
 		["ruRU"] = "Midnight: Метазадания",
 		["deDE"] = "Midnight: Metaaufgaben", -- ["deDE"] = "Midnight: Metaquests",
@@ -310,7 +560,7 @@ E.translations = {
 		["zhCN"] = "哈籁尼尔的传说",
 		["zhTW"] = "哈拉尼爾的傳說",
 	},
-	["Fortify the Runestones"] = { -- https://www.wowhead.com/quest=90574/fortify-the-runestones-blood-knights
+	["Fortify the Runestones"] = { -- /run opde(E.func_GetName("quest", 90573)) -- 90573 90574 90575 90576
 		["ruRU"] = "Укрепление рунических камней",
 		["deDE"] = "Die Runensteine verstärken",
 		["esES"] = "Fortificación de piedras rúnicas",
@@ -681,30 +931,6 @@ E.translations = {
 		["koKR"] = "캐릭터 배경",
 		["zhCN"] = "角色背景",
 		["zhTW"] = "角色背景",
-	},
-	["Character Background"] = {
-		["ruRU"] = "Фон персонажа",
-		["deDE"] = "Charakterhintergrund",
-		["esES"] = "Fondo del personaje",
-		["esMX"] = "Fondo del personaje",
-		["frFR"] = "Fond du personnage",
-		["itIT"] = "Sfondo del personaggio",
-		["ptBR"] = "Fundo do personagem",
-		["koKR"] = "캐릭터 배경",
-		["zhCN"] = "角色背景",
-		["zhTW"] = "角色背景",
-	},
-	["Tooltip Color"] = {
-		["ruRU"] = "Цвет тултипа",
-		["deDE"] = "Tooltip-Farbe",
-		["esES"] = "Color del tooltip",
-		["esMX"] = "Color del tooltip",
-		["frFR"] = "Couleur de l’info-bulle",
-		["itIT"] = "Colore tooltip",
-		["ptBR"] = "Cor do tooltip",
-		["koKR"] = "툴팁 색상",
-		["zhCN"] = "提示颜色",
-		["zhTW"] = "提示顏色",
 	},
 	["Are you sure?"] = {
 		["ruRU"] = "Вы уверены?",
@@ -1246,18 +1472,6 @@ E.translations = {
 		["zhCN"] = "新建配置文件",
 		["zhTW"] = "新增設定檔",
 	},
-	["Create"] = {
-		["ruRU"] = "Создать",
-		["deDE"] = "Erstellen",
-		["esES"] = "Crear",
-		["esMX"] = "Crear",
-		["frFR"] = "Créer",
-		["itIT"] = "Crea",
-		["ptBR"] = "Criar",
-		["koKR"] = "생성",
-		["zhCN"] = "创建",
-		["zhTW"] = "建立",
-	},
 	["Copy current"] = {
 		["ruRU"] = "Копировать текущий",
 		["deDE"] = "Aktuelles kopieren",
@@ -1509,18 +1723,6 @@ E.translations = {
 		["koKR"] = "평판 배경",
 		["zhCN"] = "声望背景",
 		["zhTW"] = "聲望背景",
-	},
-	["Character Background"] = {
-		["ruRU"] = "Фон персонажа",
-		["deDE"] = "Charakter-Hintergrund",
-		["esES"] = "Fondo de personaje",
-		["esMX"] = "Fondo de personaje",
-		["frFR"] = "Fond du personnage",
-		["itIT"] = "Sfondo personaggio",
-		["ptBR"] = "Fundo do personagem",
-		["koKR"] = "캐릭터 배경",
-		["zhCN"] = "角色背景",
-		["zhTW"] = "角色背景",
 	},
 	["Addon Background"] = {
 		["ruRU"] = "Фон аддона",

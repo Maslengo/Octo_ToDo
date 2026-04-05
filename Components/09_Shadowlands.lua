@@ -263,7 +263,7 @@ local function tempFunction()
 			end,
 			name_save = "ZMtreasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{65520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
@@ -302,7 +302,7 @@ local function tempFunction()
 			end,
 			name_save = "ZMUndulatingFoliage",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{65572, forcedText = {text = L["Undulating Foliage"]},},
@@ -363,7 +363,7 @@ local function tempFunction()
 			end,
 			name_save = "Concordance",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{65179, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 1"},},
@@ -634,7 +634,7 @@ local function tempFunction()
 		-- end,
 		-- name_save = "KORTHIAitems",
 		-- defS = true,
-		-- reset = "Regular",
+		-- reset = "Normal",
 		-- desc = categoryKey,
 		-- quests = {
 		-- {64061, forcedText = {itemID = 186453}}, -- Vault Anima Tracker
@@ -808,7 +808,7 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = OTHER..": Rares",
+			TextLeft = L["OTHER"]..": Rares",
 			name_save = "OtherRares",
 			defS = true,
 			reset = "Daily",
@@ -846,7 +846,7 @@ local function tempFunction()
 				{59869, forcedText = {npcID = 166521}, addText = {mount = 1379},},
 				{59900, forcedText = {npcID = 166679}, addText = {mount = 1298, Icon = E.ICON_VENTHYR},},
 				{62046, forcedText = {npcID = 173499}, addText = {mount = 1391},},
-				-- {62050, forcedText = {npcID = 173468}, addText = {mount = 1414},}, -- WEEKLY
+				-- {62050, forcedText = {npcID = 173468}, addText = {mount = 1414},}, -- L["WEEKLY"]
 			},
 			-- forcedMaxQuest = 25,
 		},
@@ -854,9 +854,9 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1670)..": "..DUNGEONS
+				return E.func_GetName("map", 1670)..": "..L["DUNGEONS"]
 			end,
-			name_save = "DUNGEONS",
+			name_save = "TradingFavors",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,

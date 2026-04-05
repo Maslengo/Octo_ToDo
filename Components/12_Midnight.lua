@@ -92,18 +92,18 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-		{id = 2710, defS = true,}, -- Silvermoon Court (Двор Луносвета)
-		{id = 2696, defS = true,}, -- Amani Tribe (Племя Амани)
-		{id = 2704, defS = true,}, -- Hara'ti (Хара'ти)
-		{id = 2699, defS = true,}, -- The Singularity (Сингулярность)
+		{id = 2710, defS = false,}, -- Silvermoon Court (Двор Луносвета)
+		{id = 2696, defS = false,}, -- Amani Tribe (Племя Амани)
+		{id = 2704, defS = false,}, -- Hara'ti (Хара'ти)
+		{id = 2699, defS = false,}, -- The Singularity (Сингулярность)
 		{id = 2770, defS = false,}, -- Slayer's Duellum
 		{id = 2744, defS = false,}, -- Valeera Sanguinar
 		{id = 2714, defS = false,}, -- Shades of the Row
 		{id = 2712, defS = false,}, -- Blood Knights
 		{id = 2711, defS = false,}, -- Magisters
 		{id = 2713, defS = false,}, -- Farstriders
-		{id = 2742, defS = true,}, -- Delves: Season 1
-		{id = 2764, defS = true,}, -- Prey: Season 1
+		{id = 2742, defS = false,}, -- Delves: Season 1
+		{id = 2764, defS = false,}, -- Prey: Season 1
 		-- {id = 2722, defS = true,}, -- C_DelvesUI.GetDelvesFactionForSeason() для миднайта криво работает
 		-- {id = 2764, defS = false,}, -- Preyseeker's Journey
 		-- {id = 2700, defS = false,}, -- DEPRECATED Fungarian Fighting Ring
@@ -183,6 +183,29 @@ local function tempFunction()
 		},
 		----------------------------------------------------------------
 		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return DELVES_LABEL..": " .. E.func_GetName("quest", 93595)
+			end,
+			name_save = "ACalltoDelves",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{93595},
+			},
+			-- rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				-- {rewID = 137642, rewTYPE = "item", rewSIZE = 1 }, -- Mark of Honor
+				-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
+				-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
+				-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
+			-- },
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
@@ -196,7 +219,7 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				-- {86371, forcedText = {text = E.func_texturefromIcon(E.func_GetItemIcon(252415))..E.func_GetName("item", 252415)},},
+				-- {86371, forcedText = {text = E.func_texturefromIcon(E.func_GetIcon("item", 252415))..E.func_GetName("item", 252415)},},
 				{86371, forcedText = {itemID = 252415}, addText = {text = E.COLOR_GREEN.." ("..format(EXPANSION_SEASON_NAME, "Midnight", 1)..")|r"}  },
 			},
 			rewards = {
@@ -248,9 +271,9 @@ local function tempFunction()
 			end,
 			name_save = "DelversCallMID",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
-			-- /run local q,n={93372,93384,93385,93386,93409,93410,93416,93421,93427,93428},{"Encl","Coll","Dark","Plaz","Atal","Twil","Gulf","Grud","Sunk","Shad"}for i,v in ipairs(q)do print(n[i],C_QuestLog.IsQuestFlaggedCompleted(v)and"OK"or"NO")end
+			-- /run local q,n={93372,93384,93385,93386,93409,93410,93416,93421,93427,93428},{"Encl","Coll","Dark","Plaz","Atal","Twil","Gulf","Grud","Sunk","Shad"}for i,v in ipairs(q)do print(n[i],C_QuestLog.IsQuestFlaggedCompleted(v)and"OK"or"L["NO"]")end
 			-- https://www.wowhead.com/quest=93385/delvers-call-the-darkway#comments
 			quests = {
 				{nil, addText = {mapID = 2393},}, -- Silvermoon City
@@ -508,7 +531,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("reputation", 2699)..": "..QUESTS_LABEL
+				return E.func_GetName("reputation", 2699)..": "..L["QUESTS_LABEL"]
 			end,
 			name_save = "TheSingularityQuests",
 			defS = false,
@@ -519,9 +542,9 @@ local function tempFunction()
 				{nil},
 				{94581}, -- StandYourGround
 				{nil},
-				{91700}, -- DarknessUnmade		(REWARD: item=246951)
-				{86810}, -- HarvestingtheVoid	(REWARD: item=246951)
-				{92407}, -- HideyHole			(REWARD: item=246951)
+				{91700}, -- DarknessUnmade		(L["REWARD"]: item=246951)
+				{86810}, -- HarvestingtheVoid	(L["REWARD"]: item=246951)
+				{92407}, -- HideyHole			(L["REWARD"]: item=246951)
 			},
 			forcedMaxQuest = 5,
 		},
@@ -541,35 +564,6 @@ local function tempFunction()
 				{93820, forcedText = {text = L["Bountiful Delve"]..E.func_texturefromIcon("questlog-questtypeicon-Delves", nil, nil, true)},},
 			},
 			forcedMaxQuest = 1, -- any
-		},
-		----------------------------------------------------------------
-		-- Slayer's Duellum --------------------------------------------
-		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("reputation", 2770)..": "..E.func_GetName("quest", 89354)
-			end,
-			name_save = "PreparingforBattle",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{89354},
-			},
-			rewards = {
-				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-					-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
-				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
-
-				{rewID = 1792, rewTYPE = "currency", rewSIZE = 500,}, -- Honor
-				{rewID = 2123, rewTYPE = "currency", rewSIZE = 150,}, -- Bloody Tokens
-				{rewID = 3410, rewTYPE = "currency", rewSIZE = 1000,}, -- Slayer's Duellum
-			},
-			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
 		{
@@ -600,7 +594,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return QUESTS_LABEL .. ": " .. DUNGEONS -- L["Dungeon Quest"]
+				return L["QUESTS_LABEL"] .. ": " .. L["DUNGEONS"] -- L["Dungeon Quest"]
 			end,
 			name_save = "DungeonQuest",
 			defS = false,
@@ -981,13 +975,32 @@ local function tempFunction()
 		-- 	forcedMaxQuest = 2,
 		-- },
 		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 92600)
+			end,
+			name_save = "CrackedKeystone",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{92600},
+			},
+			rewards = {
+				{rewID = 3348, rewTYPE = "currency", rewSIZE = 15,}, -- Myth Dawncrest
+				{rewID = 3346, rewTYPE = "currency", rewSIZE = 15,}, -- Hero Dawncrest
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-		{id = "MythicZero", defS = false,},
 	}
 	----------------------------------------------------------------
 	return OctoTables_Vibor, OctoTables_DataOtrisovka

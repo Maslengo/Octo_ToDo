@@ -1,6 +1,6 @@
 local GlobalAddonName, E = ...
-local EventFrame = CreateFrame("FRAME")
 local L = E.L
+local EventFrame = CreateFrame("FRAME")
 ------------------------------------------------------------
 -- constants
 ------------------------------------------------------------
@@ -51,10 +51,15 @@ local function CreateCloseButton(frame, anchor)
 	local button = CreateUtilityButton(
 		frame,
 		"CloseButton",
+
 		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\Close.tga",
+
+		-- "common-icon-redx",
+		-- "decor-controls-exit-active",
+		-- "128-RedButton-Exit",
 		BUTTON_SIZE,
 		function()
-			return { { E.classColorHexCurrent .. CLOSE .. "|r" } }
+			return { { E.classColorHexCurrent .. L["CLOSE"] .. "|r" } }
 		end,
 		function(self)
 			local parent = self:GetParent()
@@ -70,10 +75,17 @@ local function CreateOptionsButton(frame, anchor, addonIconTexture)
 	local button = CreateUtilityButton(
 		frame,
 		"OptionsButton",
+
 		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\IconTexture\\" .. addonIconTexture,
+		-- "QuestLog-icon-setting",
+
+
+		-- "decor-controls-settings-active",
+		-- "QuestLog-icon-Expand", -- ПЛЮС
+		-- "QuestLog-icon-shrink", -- МИНУС
 		18,
 		function()
-			return { { E.classColorHexCurrent .. OPTIONS .. "|r" } }
+			return { { E.classColorHexCurrent .. L["OPTIONS"] .. "|r" } }
 		end,
 		function()
 			E.func_OpenToCategory(frame)
@@ -86,13 +98,13 @@ local function CreateGreatVaultButton(frame, anchor)
 	local button = CreateUtilityButton(
 		frame,
 		"GreatVaultButton",
-		"greatVault-whole-normal",
+		E.ATLAS_GREATVAULT,
 		BUTTON_SIZE,
 		function()
 			if InCombatLockdown() then
 				return { { ERR_NOT_IN_COMBAT } }
 			end
-			return { { E.classColorHexCurrent .. RATED_PVP_WEEKLY_VAULT .. "|r" } }
+			return { { E.classColorHexCurrent .. L["RATED_PVP_WEEKLY_VAULT"] .. "|r" } }
 		end,
 		function()
 			if InCombatLockdown() then

@@ -1,6 +1,5 @@
 local GlobalAddonName, E = ...
 local L = E.L
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 function E.func_option_CHARACTER(category, layout)
 	----------------------------------------------------------------
 	-- HEADER ------------------------------------------------------
@@ -29,7 +28,7 @@ function E.func_option_CHARACTER(category, layout)
 		end
 		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = E.COLOR_RED..L["Changes require a ReloadUI"].."|r"
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
 		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
 		Settings.CreateSlider(category, setting, options, tooltip)
@@ -56,7 +55,7 @@ function E.func_option_CHARACTER(category, layout)
 		end
 		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = E.COLOR_RED..L["Changes require a ReloadUI"].."|r"
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
 		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
 		Settings.CreateSlider(category, setting, options, tooltip)
@@ -70,10 +69,9 @@ function E.func_option_CHARACTER(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Only Current BattleTag"]
-		-- local variableType = Settings.VarType.Boolean
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
@@ -85,10 +83,9 @@ function E.func_option_CHARACTER(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Only Current Region"]
-		-- local variableType = Settings.VarType.Boolean
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
@@ -100,10 +97,9 @@ function E.func_option_CHARACTER(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Only Current Server"]
-		-- local variableType = Settings.VarType.Boolean
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
@@ -124,10 +120,9 @@ function E.func_option_CHARACTER(category, layout)
 			return result
 		end
 		local name = funcName()
-		-- local variableType = Settings.VarType.Boolean
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		-- local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
 		Settings.CreateCheckbox(category, setting, tooltip)
 	end
 end

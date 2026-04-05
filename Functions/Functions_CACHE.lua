@@ -1,7 +1,6 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
-local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
 local GetSpellName = GetSpellName or C_Spell.GetSpellName
 local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
 local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
@@ -18,14 +17,18 @@ local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 local GetMonthInfo = GetMonthInfo or C_Calendar.GetMonthInfo
 local SetAbsMonth = SetAbsMonth or C_Calendar.SetAbsMonth
 local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
-local GetMountInfoByID = GetMountInfoByID or C_MountJournal.GetMountInfoByID
 ----------------------------------------------------------------
-local UNKNOWN = UNKNOWN
-----------------------------------------------------------------
-local function GetOrCreateCache(category)
+local function GetOrCreateCache_Name(category)
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}
 	return Octo_Cache_DB[category]
+end
+----------------------------------------------------------------
+local function GetOrCreateCache_Quality(category)
+	Octo_Cache_DB = Octo_Cache_DB or {}
+	local newCat = tostring(category).."_Quality"
+	Octo_Cache_DB[newCat] = Octo_Cache_DB[newCat] or {}
+	return Octo_Cache_DB[newCat]
 end
 ----------------------------------------------------------------
 local function func_ForcedQuality(text, forcedQuality)
@@ -38,10 +41,11 @@ local function func_ForcedQuality(text, forcedQuality)
 	return coloredName
 end
 ----------------------------------------------------------------
-local function func_CacheName(id, Cache, name, debugLabel)
-	if name and name ~= "" then
-		Cache[id] = Cache[id] or {}
-		Cache[id][E.curLocaleLang] = name
+local function func_Cache_Name(id, Cache_Name, name, debugLabel)
+	if type(name) == "string" and name ~= "" then
+		Cache_Name[id] = Cache_Name[id] or {}
+		Cache_Name[id][E.curLocaleLang] = name
+
 		if Octo_DevTool_DB and Octo_DevTool_DB.CONFIG_DEBUG_CACHE then
 			E.func_PrintMessage(
 				E.COLOR_LIME..debugLabel.."|r",
@@ -50,12 +54,21 @@ local function func_CacheName(id, Cache, name, debugLabel)
 			)
 		end
 	end
-	local entry = Cache[id]
-	if entry then
+
+	local entry = Cache_Name[id]
+	if entry and type(entry) == "table" and type(entry[E.curLocaleLang]) == "string" then
 		return entry[E.curLocaleLang]
 	else
-		return E.COLOR_DARKORANGE..UNKNOWN.."|r"
+		return E.COLOR_DARKORANGE..L["UNKNOWN"].."|r"
 	end
+end
+----------------------------------------------------------------
+local function func_Cache_Quality(id, Cache_Quality, NEWquality, debugLabel)
+	if NEWquality ~= nil and type(NEWquality) == "number" then
+		Cache_Quality[id] = NEWquality
+		return NEWquality
+	end
+	return Cache_Quality[id]
 end
 ----------------------------------------------------------------
 function E.func_GetQuestIcon(id)
@@ -75,44 +88,44 @@ end
 function E.func_GetReputationIcon(id)
 	local reputationData = E.OctoTable_Reputations_DB[id]
 	if reputationData then
-		return reputationData.icon1
+		return reputationData.icon
 	end
 	return nil
 end
 ----------------------------------------------------------------
-function E.func_GetReputationAtlas(id)
+function E.func_GetReputationSide(id)
 	local reputationData = E.OctoTable_Reputations_DB[id]
 	if reputationData then
-		return reputationData.atlas
+		return reputationData.side
 	end
 	return nil
 end
 ----------------------------------------------------------------
-function E.func_GetReputationSideIcon(id)
-	local reputationData = E.OctoTable_Reputations_DB[id]
-	if reputationData and reputationData.side then
-		local side = reputationData.side
-		if side == "Horde" or side == "Alliance" then
-			return reputationData.icon1
-		end
-	end
-	return nil
-end
+-- function E.func_GetReputationSideIcon(id)
+--     local reputationData = E.OctoTable_Reputations_DB[id]
+--     if reputationData and reputationData.side then
+--         local side = reputationData.side
+--         if side == "Horde" or side == "Alliance" then
+--             return reputationData.icon1
+--         end
+--     end
+--     return nil
+-- end
 ----------------------------------------------------------------
 function E.func_GetMountTexture(mountID)
 	if not mountID then return end
-	return select(3, GetMountInfoByID(mountID))
+	return select(3, E.func_GetMountInfoByID(mountID))
 end
 ----------------------------------------------------------------
 function E.func_IsMountCollected(mountID)
 	if not mountID then return "no mountID" end
-	local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+	local isCollected = select(11, E.func_GetMountInfoByID(mountID))
 	return isCollected
 end
 ----------------------------------------------------------------
 function E.func_GetMountCollectedColor(mountID)
 	if not mountID then return end
-	local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+	local isCollected = select(11, E.func_GetMountInfoByID(mountID))
 	return isCollected and E.COLOR_WHITE or E.COLOR_RED
 end
 ----------------------------------------------------------------
@@ -146,245 +159,576 @@ local TooltipForNpcScan = CreateFrame("GameTooltip", E.MainAddonName.."TooltipFo
 TooltipForNpcScan:Hide()
 TooltipForNpcScan:SetOwner(UIParent, "ANCHOR_NONE")
 ----------------------------------------------------------------
+local function func_cached_Name(Cache_Name, id)
+	local localeCache = Cache_Name[id]
+	return localeCache and localeCache[E.curLocaleLang]
+end
+local function func_cached_Quality(Cache_Name, id)
+	local localeCache = Cache_Name[id]
+	return localeCache
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local handler = {}
-handler.item = function(Cache, TYPE, id)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.item = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
 	local name
-	local quality = GetItemQualityByID(id)
-	if quality and quality ~= "" then
-		name = func_CacheName(id, Cache, E.func_GetQualityHexColor(quality)..GetItemNameByID(id).."|r", TYPE)
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
 	else
-		name = GetItemNameByID(id)
+		name = func_Cache_Name(id, Cache_Name, E.func_GetItemNameByID(id), category)
 	end
-	return name
-end
-handler.quest = function(Cache, TYPE, id)
-	local name
-	local result = (GetTitleForQuestID or GetQuestInfo)(id)
-	if result then
-		name = func_CacheName(id, Cache, result, TYPE)
-	end
-	return name
-end
-handler.currency = function(Cache, TYPE, id)
-	local name
-	local info = GetCurrencyInfo(id)
-	local result
-	if info and info.name then
-		local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
-		result = colorHex..info.name.."|r"
-		name = func_CacheName(id, Cache, result, TYPE)
-	end
-	return name
-end
-handler.npc = function(Cache, TYPE, id)
-	local name
-	TooltipForNpcScan:ClearLines()
-	TooltipForNpcScan:SetHyperlink("unit:Creature-0-0-0-0-"..id)
-	local result
-
-	if TooltipForNpcScan:NumLines() > 0 then
-		result = _G[E.MainAddonName.."TooltipForNpcScanTextLeft1"]:GetText()
-	end
-
-	if result and result ~= "" then
-		name = func_CacheName(id, Cache, result, TYPE)
-	elseif E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] then
-		if E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
-			name = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang].." (DB)|r"
-		elseif E.OctoTable_AllNPCs_DB[id]["enUS"] then
-			name = E.OctoTable_AllNPCs_DB[id]["enUS"].." (enUS)|r"
+	-----------
+	-- COLOR --
+	-----------
+	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ITEMS_COLOREDNAME then
+		local quality
+		local cachedQuality = func_cached_Quality(Cache_Quality, id)
+		if cachedQuality then
+			quality = cachedQuality
+		else
+			quality = func_Cache_Quality(id, Cache_Quality, E.func_GetItemQualityByID(id), category)
+		end
+		if type(name) == "string" and name ~= "" and quality then
+		    name = E.func_GetQualityHexColor(quality) .. name .. "|r"
+		else
+			print ("QWEQWE")
+		    name = E.COLOR_PURPLE .. L["UNKNOWN"].."|r"
 		end
 	end
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
 	return name
 end
-handler.reputation = function(Cache, TYPE, id)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.quest = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
 	local name
-	local repInfo = GetFactionDataByID and GetFactionDataByID(id)
-	local result
-	if repInfo then
-		result = repInfo.name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
 	else
-		local reputationInfo = GetFriendshipReputation(id)
-		if reputationInfo and reputationInfo.name then
-			result = reputationInfo.name
-		end
-	end
-	if result and result ~= "" then
-		name = func_CacheName(id, Cache, result, TYPE)
-	elseif E.OctoTable_Reputations_DB and E.OctoTable_Reputations_DB[id] then
-		if E.OctoTable_Reputations_DB[id][E.curLocaleLang] then
-			name = E.OctoTable_Reputations_DB[id][E.curLocaleLang]..E.COLOR_SLATEGRAY.." (DB)|r"
-		elseif E.OctoTable_Reputations_DB[id]["enUS"] then
-			name = E.OctoTable_Reputations_DB[id]["enUS"]..E.COLOR_SKYBLUE.." (enUS)|r"
-		end
-	end
-	return name
-end
-handler.spell = function(Cache, TYPE, id)
-	local name
-	name = func_CacheName(id, Cache, GetSpellName(id), TYPE)
-	return name
-end
-handler.achievement = function(Cache, TYPE, id)
-	local name
-	name = func_CacheName(id, Cache, select(2, GetAchievementInfo(id)), TYPE)
-	return name
-end
-handler.mount = function(Cache, TYPE, id)
-	local name
-	name = func_CacheName(id, Cache, GetMountInfoByID(id), TYPE)
-	return name
-end
-handler.map = function(Cache, TYPE, id)
-	local name
-	local info = GetMapInfo(id)
-	local result = info and info.name or ""
-	name = func_CacheName(id, Cache, result, TYPE)
-	return name
-end
-handler.profession = function(Cache, TYPE, id)
-	local name
-	name = func_CacheName(id, Cache, GetTradeSkillDisplayName(id), TYPE)
-	return name
-end
-handler.dungeon = function(Cache, TYPE, id)
-	local name
-	name = func_CacheName(id, Cache, GetRealZoneText(id), TYPE)
-	return name
-end
-handler.difficulty = function(Cache, TYPE, id)
-	local name
-	if Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation then
-		name = E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_CacheName(id, Cache, GetDifficultyInfo(id), TYPE)
-	else
-		name = func_CacheName(id, Cache, GetDifficultyInfo(id), TYPE)
-	end
-	return name
-end
-handler.covenant = function(Cache, TYPE, id)
-	local name
-	if E.OctoTable_Covenant and E.OctoTable_Covenant[id] then
-		local result = E.OctoTable_Covenant[id].name
+		local result = (GetTitleForQuestID or GetQuestInfo)(id)
 		if result then
-			name = func_CacheName(id, Cache, result, TYPE)
+			name = func_Cache_Name(id, Cache_Name, result, category)
 		end
 	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
 	return name
 end
-handler.class = function(Cache, TYPE, id)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.currency = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
 	local name
-	local className, classFile = GetClassInfo(id)
-	if className and classFile then
-		name = func_CacheName(id, Cache, className, TYPE)
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local info = E.func_GetCurrencyInfo(id)
+		if info and info.name then
+			name = func_Cache_Name(id, Cache_Name, info.name, category)
+		end
 	end
+	-----------
+	-- COLOR --
+	-----------
+	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOREDNAME then
+		local info = E.func_GetCurrencyInfo(id)
+		if info then
+			local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
+			name = colorHex..name.."|r"
+		end
+	end
+	-----------
+	-- OTHER --
+	-----------
+	------------
+	-- RETURN --
+	------------
 	return name
 end
-handler.specialization = function(Cache, TYPE, id)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.npc = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
 	local name
-	local _, specName = GetSpecializationInfoByID(id)
-	if specName then
-		name = func_CacheName(id, Cache, specName, TYPE)
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		TooltipForNpcScan:ClearLines()
+		TooltipForNpcScan:SetHyperlink("unit:Creature-0-0-0-0-"..id)
+		local result
+		if TooltipForNpcScan:NumLines() > 0 then
+			result = _G[E.MainAddonName.."TooltipForNpcScanTextLeft1"]:GetText()
+		end
+		if result and result ~= "" then
+			name = func_Cache_Name(id, Cache_Name, result, category)
+		elseif E.OctoTable_AllNPCs_DB and E.OctoTable_AllNPCs_DB[id] then
+			if E.OctoTable_AllNPCs_DB[id][E.curLocaleLang] then
+				name = E.OctoTable_AllNPCs_DB[id][E.curLocaleLang].." (DB)|r"
+			elseif E.OctoTable_AllNPCs_DB[id]["enUS"] then
+				name = E.OctoTable_AllNPCs_DB[id]["enUS"].." (enUS)|r"
+			end
+		end
 	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
 	return name
 end
--- /dump E.func_GetName("global", DONE)
--- handler.global = function(Cache, TYPE, id)
--- 	local name = func_CacheName(id, Cache, specName, TYPE)
--- 	return name
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.reputation = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local repInfo = GetFactionDataByID and GetFactionDataByID(id)
+		local result
+		if repInfo then
+			result = repInfo.name
+		else
+			local reputationInfo = GetFriendshipReputation(id)
+			if reputationInfo and reputationInfo.name then
+				result = reputationInfo.name
+			end
+		end
+		if result and result ~= "" then
+			name = func_Cache_Name(id, Cache_Name, result, category)
+		elseif GetFactionInfoByID and GetFactionInfoByID(id) then -- 10.2.7
+			local n = GetFactionInfoByID(id)
+			if type(n) == "string" then
+				name = n
+			end
+			-- name = func_Cache_Name(id, Cache_Name, result, category)
+		elseif E.OctoTable_Reputations_DB and E.OctoTable_Reputations_DB[id] then
+			if E.OctoTable_Reputations_DB[id][E.curLocaleLang] then
+				name = E.OctoTable_Reputations_DB[id][E.curLocaleLang]..E.COLOR_SLATEGRAY.." (DB)|r"
+			elseif E.OctoTable_Reputations_DB[id]["enUS"] then
+				name = E.OctoTable_Reputations_DB[id]["enUS"]..E.COLOR_SKYBLUE.." (enUS)|r"
+			end
+		end
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.spell = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local result = E.func_GetSpellName(id) or E.func_GetSpellInfo(id)
+		if GetSpellName and GetSpellName(id) then
+			result = GetSpellName(id)
+		elseif GetSpellInfo and GetSpellInfo(id) then
+			result = GetSpellInfo(id)
+			-- /dump GetSpellInfo(20271)
+		end
+		name = func_Cache_Name(id, Cache_Name, result, category)
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.achievement = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local name
+		name = func_Cache_Name(id, Cache_Name, select(2, GetAchievementInfo(id)), category)
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.mount = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local name
+		name = func_Cache_Name(id, Cache_Name, E.func_GetMountInfoByID(id), category)
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.map = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local name
+		local info = GetMapInfo(id)
+		local result = info and info.name or ""
+		name = func_Cache_Name(id, Cache_Name, result, category)
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.profession = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local name
+		name = func_Cache_Name(id, Cache_Name, GetTradeSkillDisplayName(id), category)
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.dungeon = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		name = func_Cache_Name(id, Cache_Name, GetRealZoneText(id), category)
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.difficulty = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS then
+		name = E.OctoTable_Difficulties and E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_Cache_Name(id, Cache_Name, GetDifficultyInfo(id), category)
+	else
+		if cached_Name then
+			name = cached_Name
+		else
+			name = func_Cache_Name(id, Cache_Name, GetDifficultyInfo(id), category)
+		end
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.covenant = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		if E.OctoTable_Covenant and E.OctoTable_Covenant[id] then
+			local result = E.OctoTable_Covenant[id].name
+			if result then
+				name = func_Cache_Name(id, Cache_Name, result, category)
+			end
+		end
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.class = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local className, classFile = GetClassInfo(id)
+		if className and classFile then
+			name = func_Cache_Name(id, Cache_Name, className, category)
+		end
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.specialization = function(Cache_Name, Cache_Quality, category, id)
+	----------
+	-- NAME --
+	----------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local _, specName = GetSpecializationInfoByID(id)
+		if specName then
+			name = func_Cache_Name(id, Cache_Name, specName, category)
+		end
+	end
+	-----------
+	-- COLOR --
+	-----------
+	-- some code
+	-----------
+	-- OTHER --
+	-----------
+	-- some code
+	------------
+	-- RETURN --
+	------------
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+-- /dump E.func_GetName("global", L["DONE"])
+-- handler.global = function(Cache_Name, Cache_Quality, category, id)
+-- local name = func_Cache_Name(id, Cache_Name, specName, category)
+-- return name
 -- end
 ----------------------------------------------------------------
-function E.func_GetName(TYPE, id, forcedQuality)
+function E.func_GetName(category, id, forcedQuality)
 	if not id then return "no id" end
 	id = tonumber(id)
 	if type(id) ~= "number" then return "wrong id type" end
-	if not TYPE then return "not TYPE" end
+	if not category then return "not category" end
 	local name
-	local Cache = GetOrCreateCache(TYPE)
-	local localeCache = Cache[id]
-	local cached = localeCache and localeCache[E.curLocaleLang] or nil
-	if localeCache and cached then
-		local hasMount
-		if TYPE == "currency" then
-			hasMount = Octo_ToDo_DB_Vars.Config_MountsInTooltip and E.OctoTable_CurrencyMountForFuncCurName[id] or false
-			if id == 3252 or id == 1166 or id == 2778 then
-				hasMount = true
-			end
-		end
-		name = cached..(hasMount and E.COLOR_RED.."*|r" or "")
-	else
-		local h = handler[TYPE] or handler[TYPE:lower()]
-		if h then
-			name = h(Cache, TYPE, id)
-		end
+	local Cache_Name    = GetOrCreateCache_Name(category)
+	local Cache_Quality = GetOrCreateCache_Quality(category)
+	-- local localeCache = Cache_Name[id]
+	-- local cached_Name = localeCache and localeCache[E.curLocaleLang]
+	-- if cached_Name then
+	-- name = cached_Name
+	-- else
+	local h = handler[category] or handler[category:lower()]
+	if h then
+		name = h(Cache_Name, Cache_Quality, category, id)
 	end
+	-- end
 	if forcedQuality and name then
 		name = func_ForcedQuality(name, forcedQuality)
 	end
 	local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
-	local resultName = name or E.COLOR_RED..UNKNOWN.."|r"
-	local result = E.func_translit and E.func_translit(resultName) or resultName
+	name = name or E.COLOR_RED..L["UNKNOWN"].."|r"
+	----------------
+	if category == "currency" then
+		local hasMount = Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_MountsInTooltip and E.OctoTable_CurrencyMountForFuncCurName[id] or false
+		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_MountsInTooltip and (id == 3252 or id == 1166 or id == 2778) then
+			hasMount = true
+		end
+		name = name..(hasMount and E.COLOR_RED.."*|r" or "")
+	end
+	----------------
+	if type(name) ~= "string" then
+		error()
+		print (name)
+	end
+	local result = name -- E.func_translit and E.func_translit(name) or name
 	return result..debugTEXT
 end
 ----------------------------------------------------------------
-function E.func_GetIcon(TYPE, id)
-	local icon = E.ICON_QUESTION_MARK
-	if not id then return icon end
-	if type(id) ~= "number" then return icon end
-	if not TYPE then return icon end
-	id = tonumber(id)
-	if TYPE == "currency" then
-		icon = E.func_GetCurrencyIcon(id)
-	elseif TYPE == "item" then
-		icon = E.func_GetItemIcon(id)
-	elseif TYPE == "spell" then
-		icon = E.func_GetSpellIcon(id)
+function E.func_GetIcon(category, id)
+	local icon -- = E.ICON_QUESTION_MARK -- or E.ICON_EMPTY
+	if id and category and type(id) == "number" then
+		if category == "currency" then --  and Octo_ToDo_DB_Vars.CONFIG_CURRENCY_ICON
+			local info = E.func_GetCurrencyInfo(id)
+			icon = (info and info.iconFileID) or icon
+		elseif category == "item" then -- and Octo_ToDo_DB_Vars.CONFIG_ITEMS_ICON
+			icon = E.func_GetItemIconByID(id) or icon
+		elseif category == "spell" then
+			icon = E.func_GetSpellTexture(id) or icon
+		end
 	end
+
 	return icon
 end
 ----------------------------------------------------------------
--- local rep_meta_table = {
--- 	__index = function(self, id)
--- 		id = tonumber(id)
--- 		if not id then
--- 			local unknown = E.COLOR_RED..UNKNOWN.."|r"
--- 			rawset(self, id, unknown)
--- 			return unknown
--- 		end
--- 		local Cache = GetOrCreateCache("reputation")
--- 		local name
--- 		local localeCache = Cache[id]
--- 		local cached = localeCache and localeCache[E.curLocaleLang] or nil
--- 		if localeCache and cached then
--- 			name = cached
--- 		else
--- 			local repInfo = GetFactionDataByID(id)
--- 			if repInfo then
--- 				name = repInfo.name
--- 			else
--- 				local reputationInfo = GetFriendshipReputation(id)
--- 				if reputationInfo and reputationInfo.name then
--- 					name = reputationInfo.name
--- 				end
--- 			end
--- 			if name and name ~= "" then
--- 				Cache[id] = Cache[id] or {}
--- 				Cache[id][E.curLocaleLang] = name
--- 			else
--- 				local dbEntry = E.OctoTable_Reputations_DB[id]
--- 				if dbEntry then
--- 					if dbEntry[E.curLocaleLang] and dbEntry[E.curLocaleLang] ~= "NONE" then
--- 						name = dbEntry[E.curLocaleLang]..E.COLOR_SLATEGRAY.." (DB)|r"
--- 					elseif dbEntry["enUS"] then
--- 						name = dbEntry["enUS"]..E.COLOR_SKYBLUE.." (enUS)|r"
--- 					end
--- 				end
--- 			end
--- 		end
--- 		if not name or name == "" then
--- 			name = E.COLOR_RED..UNKNOWN.."|r"
--- 		end
--- 		rawset(self, id, name)
--- 		return name
--- 	end
--- }
--- local ReputationNames = setmetatable({}, rep_meta_table)

@@ -1,9 +1,11 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local L = E.L
+local HOUR = 3600 -- 60*60
+local ADDITIONAL_TIME = HOUR*5.5
 ----------------------------------------------------------------
 local function CreateTimer(baseTime, interval, duration, label)
-	if E.CURRENT_REGION_NAME ~= "EU" then return "" end
+	-- if E.CURRENT_REGION_NAME ~= "EU" then return "" end
 	if not baseTime or not interval or interval <= 0 then
 		return ""
 	end
@@ -24,51 +26,111 @@ local function CreateTimer(baseTime, interval, duration, label)
 	return color..E.func_SecondsToClock(displayTime).."|r "..(label or "")
 end
 function E.Timers.BfA_Assault()
-	return CreateTimer(1547611200, 86400, 86400)
+	local TIMER = {
+		US = 1547611200+ADDITIONAL_TIME,
+		EU = 1547611200,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 86400, 86400)
 end
 function E.Timers.DF_ToDragonbaneKeep()
-	return CreateTimer(1670342460, 7200, 900)
+	local TIMER = {
+		US = 1670342460+ADDITIONAL_TIME,
+		EU = 1670342460,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 7200, 900)
 end
 function E.Timers.DF_GrandHunts()
-	return CreateTimer(1671307200, 7200, 7199)
+	local TIMER = {
+		US = 1671307200+ADDITIONAL_TIME,
+		EU = 1671307200,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 7200, 7199)
 end
 function E.Timers.DF_CommunityFeast()
-	return CreateTimer(1677168000, 5400, 900)
+	local TIMER = {
+		US = 1677168000+ADDITIONAL_TIME,
+		EU = 1677168000,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 5400, 900)
 end
 function E.Timers.DF_PrimalStorms()
-	return CreateTimer(1683804640, 18000, 7200)
+	local TIMER = {
+		US = 1683804640+ADDITIONAL_TIME,
+		EU = 1683804640,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 18000, 7200)
 end
 function E.Timers.DF_ResearchersUnderFire()
-	return CreateTimer(1683804640, 3600, 1500)
+	local TIMER = {
+		US = 1683804640+ADDITIONAL_TIME,
+		EU = 1683804640,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 3600, 1500)
 end
 function E.Timers.DF_TimeRift()
-	return CreateTimer(1689159620, 3600, 600)
+	local TIMER = {
+		US = 1689159620+ADDITIONAL_TIME,
+		EU = 1689159620,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 3600, 600)
 end
 function E.Timers.DF_Dreamsurges()
-	return CreateTimer(1689159620, 1800, 300)
+	local TIMER = {
+		US = 1689159620+ADDITIONAL_TIME,
+		EU = 1689159620,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 1800, 300)
 end
 function E.Timers.SL_Maw_Assault()
 	return CreateTimer(3780, 7200, 900)
 end
 function E.Timers.SL_Maw_TormentorsofTorghast()
 	local TIMER = {
-		US = 1754917310,
+		US = 1754917310+ADDITIONAL_TIME,
 		EU = 1754917310,
-		CN = 1754917310,
+		-- CN = 1754917310,
 	}
 	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 7200, 900)
 end
 function E.Timers.Treasure_Goblin()
-	return CreateTimer(1689159620, 3600, 300)
+	local TIMER = {
+		US = 1689159620+ADDITIONAL_TIME,
+		EU = 1689159620,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 3600, 300)
 end
 function E.Timers.ElementalStorm()
-	return CreateTimer(1689166820, 10800, 7200)
+	local TIMER = {
+		US = 1689166820+ADDITIONAL_TIME,
+		EU = 1689166820,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 10800, 7200)
 end
 function E.Timers.DF_Flower()
-	return CreateTimer(1689166820, 3600, 1200)
+	local TIMER = {
+		US = 1689166820+ADDITIONAL_TIME,
+		EU = 1689166820,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 3600, 1200)
 end
 function E.Timers.TWW_BeledarCycle()
-	return CreateTimer(1726311612, 10800, 1800, E.COLOR_YELLOW)
+	local TIMER = {
+		US = 1726311612+ADDITIONAL_TIME,
+		EU = 1726311612,
+		-- CN = 1754917310,
+	}
+	return CreateTimer(TIMER[E.CURRENT_REGION_NAME], 10800, 1800, E.COLOR_YELLOW)
 end
 -- function E.Timers.Legion_Invasion()
 -- 	local ZONE_CYCLE = {

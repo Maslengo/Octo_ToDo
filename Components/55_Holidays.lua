@@ -42,7 +42,7 @@ local function tempFunction()
 			end,
 			name_save = "FeastofWinterVeil", -- "Feast of Winter Veil"
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey,
 			quests = {
 				{8744, addText = {mapID = 85}, FactionOrClass = {Horde = true,}},
@@ -68,7 +68,7 @@ local function tempFunction()
 			end,
 			name_save = "FeastofWinterVeil_DRAENOR", -- "Feast of Winter Veil"
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey,
 			quests = {
 				{39651},
@@ -86,7 +86,7 @@ local function tempFunction()
 			end,
 			name_save = "HallowsEnd_DRAENOR", -- "Hallow's End"
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey,
 			quests = {
 				{39716},
@@ -105,7 +105,7 @@ local function tempFunction()
 			end,
 			name_save = "ATisketaTasketaNoblegardenBasket",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{13503},
@@ -119,7 +119,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "WhattheDuck",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79575},
@@ -147,7 +147,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "AFowlConcoction",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79576},
@@ -161,7 +161,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "DuckTales",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79577},
@@ -175,7 +175,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "JustaWaddleAway",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysNoblegarden",
 			quests = {
 				{79578, faction = "Horde",}, -- Horde
@@ -221,7 +221,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "orgrimmarStormwind",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysChildrensWeek",
 			quests = {
 				{172, faction = "Horde",}, -- Horde, -- Horde
@@ -250,7 +250,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "Shattrath", --
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysChildrensWeek",
 			quests = {
 				{10942, faction = "Horde",}, -- Horde
@@ -314,7 +314,7 @@ local function tempFunction()
 		{
 			sorted = false,
 			TextLeft = function()
-				return DUNGEONS..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetName("event", 1583)..")",
+				return L["DUNGEONS"]..select(2, E.func_GetTimewalkingDungeon()) --.. " ("..E.func_GetName("event", 1583)..")",
 			end,
 			showTooltip = true,
 			name_save = "Dungeons",
@@ -381,7 +381,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "ProfessionMonthlies",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
 				{29506},
@@ -408,7 +408,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "MonthlyQuests",
 			defS = true,
-			reset = "Month",
+			reset = "Monthly",
 			desc = categoryKey, -- "HolidaysDarkmoonFaire",
 			quests = {
 				{33354},
@@ -482,7 +482,7 @@ local function tempFunction()
 			showTooltip = true,
 			name_save = "GreenFire",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey, -- "Warlock",
 			quests = {
 				{32295},
@@ -591,7 +591,7 @@ table.insert(E.Components, tempFunction)
 -- TextCenter = "CharInfo.MASLENGO.LFGInstance[286]"
 -- end
 -- ----------------------------------------------------------------
--- TextLeft = E.func_texturefromIcon(E.func_GetItemIcon(23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_GetLFGDungeonName(286)
+-- TextLeft = E.func_texturefromIcon(E.func_GetIcon("item", 23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_GetLFGDungeonName(286)
 -- ColorLeft = E.COLOR_HOLIDAY
 -- ----------------------------------------------------------------
 -- return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation

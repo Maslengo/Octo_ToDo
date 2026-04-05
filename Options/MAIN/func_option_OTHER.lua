@@ -1,11 +1,10 @@
 local GlobalAddonName, E = ...
 local L = E.L
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 function E.func_option_OTHER(category, layout)
 	----------------------------------------------------------------
 	-- HEADER
 	----------------------------------------------------------------
-	E.func_Header(layout, OTHER)
+	E.func_Header(layout, L["OTHER"])
 	----------------------------------------------------------------
 	-- Octo_ToDo_DB_Vars.Config_numberFormatMode -------------------
 	----------------------------------------------------------------
@@ -13,7 +12,6 @@ function E.func_option_OTHER(category, layout)
 		local variable = E.func_GenerateID()
 		local defaultValue = 1
 		local name = L["Number Format"]
-		local db = Octo_ToDo_DB_Vars
 		-- NAME, VALUE
 		local tbl = {
 			[1] = L["Universal"], -- "Универсальный"
@@ -25,14 +23,14 @@ function E.func_option_OTHER(category, layout)
 		}
 		local function GetValue()
 			for value, name in ipairs(tbl) do
-				if value == db.Config_numberFormatMode then
+				if value == Octo_ToDo_DB_Vars.Config_numberFormatMode then
 					return value
 				end
 			end
 			return defaultValue
 		end
 		local function SetValue(value)
-			db.Config_numberFormatMode = value
+			Octo_ToDo_DB_Vars.Config_numberFormatMode = value
 		end
 		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
@@ -57,16 +55,16 @@ function E.func_option_OTHER(category, layout)
 		local minValue = 10
 		local maxValue = 40
 		local step = 1
-		local db = Octo_ToDo_DB_Vars
 		local function GetValue()
-			return db.Config_ADDON_HEIGHT or defaultValue
+			return Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT or defaultValue
 		end
 		local function SetValue(value)
-			db.Config_ADDON_HEIGHT = value
+			Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT = value
 		end
 		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.COLOR_RED..L["Changes require a ReloadUI"].."|r"
+		-- local tooltip = E.COLOR_RED..L["Changes require a ReloadUI"].."|r"
+		local tooltip = E.func_defaultValue_tooltip(defaultValue, true)
 		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
 		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
 		Settings.CreateSlider(category, setting, options, tooltip)
@@ -74,17 +72,18 @@ function E.func_option_OTHER(category, layout)
 	----------------------------------------------------------------
 	-- 3. Octo_ToDo_DB_Vars.Config_ClampedToScreen -----------------
 	----------------------------------------------------------------
+
 	do
 		local variable = E.func_GenerateID()
 		local variableKey = "Config_ClampedToScreen"
 		local variableTbl = Octo_ToDo_DB_Vars
 		local name = L["Clamped To Screen"]
-		local defaultValue = false -- Settings.Default.False
-		-- local variableType = Settings.VarType.Boolean
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = CURSOR_SIZE_DEFAULT..": "..NO -- "This is a tooltip for the checkbox."
-		Settings.CreateCheckbox(category, setting, tooltip)
+		-- local tooltip = L["Shows earned amount in () if currency has weekly/seasonal cap"]
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
+		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
 end

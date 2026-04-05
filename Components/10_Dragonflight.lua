@@ -121,6 +121,21 @@ local function tempFunction()
 				{80386},
 				{80388},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 200073, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 201924, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 201921, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 201922, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 2031, rewTYPE = "currency", rewSIZE = 500,}, --
+				{rewID = 2106, rewTYPE = "currency", rewSIZE = 500,}, --
+				{rewID = 2108, rewTYPE = "currency", rewSIZE = 500,}, --
+				{rewID = 2109, rewTYPE = "currency", rewSIZE = 500,}, --
+
+			},
 			forcedMaxQuest = 1,
 		},
 		{
@@ -156,6 +171,15 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{70893},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 200095, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
+
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -212,6 +236,16 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{78444},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 210872, rewTYPE = "item", rewSIZE = 1,},
+				{rewID = 210421, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
+
 			},
 			forcedMaxQuest = 1,
 		},
@@ -292,7 +326,7 @@ local function tempFunction()
 			end,
 			name_save = "EmeraldDream_Treasures",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{77872, forcedText = {itemID = 208067}, addText = {coords = 34105633}, }, -- Item -- quest = {77855, 77857, 77860, 77872},
@@ -324,7 +358,7 @@ local function tempFunction()
 			end,
 			name_save = "EmeraldDream_DreamsUnified",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{78381},
@@ -355,7 +389,7 @@ local function tempFunction()
 		-- end,
 		-- name_save = "TheGilneasReclamation_Storylines",
 		-- defS = true,
-		-- reset = "Regular",
+		-- reset = "Normal",
 		-- desc = categoryKey,
 		-- quests = {
 		-- {78178},
@@ -382,7 +416,7 @@ local function tempFunction()
 			end,
 			name_save = "Amirdrassil_Treasures",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				-- {82823, addText = {IconVignette = "VignetteLoot",},  addText = {itemID = 213012}, forcedText = {text = L["Treasure"].." 1"},}, -- 79490, 53475574
@@ -527,11 +561,11 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": ".. L["Sniffenseeking"].." ("..ITEMS..")"
+				return E.func_GetName("map", 2133)..": ".. L["Sniffenseeking"].." ("..L["ITEMS"]..")"
 			end,
 			name_save = "ZaralekCavernSniffenseekingItems",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{75771},
@@ -683,7 +717,7 @@ local function tempFunction()
 			end,
 			name_save = "DreamsurgeInvestigation",
 			defS = false,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{77414},
@@ -704,26 +738,35 @@ local function tempFunction()
 		-- },
 		-- forcedMaxQuest = 1,
 		-- },
-		-- {
-		-- showTooltip = true,
-		-- TextLeft = function()
-		-- return E.func_GetName("quest", 77236, false)
-		-- end,
-		-- name_save = "WhenTimeNeedsMending",
-		-- defS = false,
-		-- reset = "Weekly",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {77236},
-		-- },
-		-- forcedMaxQuest = 1,
-		-- },
+		{
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 77236, false)
+			end,
+			name_save = "WhenTimeNeedsMending",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{77236},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 208090, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
+
+			},
+			forcedMaxQuest = 1,
+		},
 		{
 			showTooltip = true,
 			TextLeft = E.func_GetName("achievement", 18554),
 			name_save = "TemporalAcquisitionsSpecialist",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{76406},
@@ -743,6 +786,72 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 14,
 		},
+		{
+			isAccount = true,
+			sorted = false,
+			showTooltip = true,
+			TextLeft = E.func_GetName("quest", 72528),
+			name_save = "RevivalCatalyst",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{72528},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				-- {rewID = 200073, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 201924, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 201921, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 201922, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				{rewID = 2166, rewTYPE = "currency", rewSIZE = 1,},
+				-- {rewID = 2031, rewTYPE = "currency", rewSIZE = 500,}, --
+				-- {rewID = 2106, rewTYPE = "currency", rewSIZE = 500,}, --
+				-- {rewID = 2108, rewTYPE = "currency", rewSIZE = 500,}, --
+				-- {rewID = 2109, rewTYPE = "currency", rewSIZE = 500,}, --
+
+			},
+			-- forcedMaxQuest = 1,
+		},
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return DUNGEONS .. " (leveling)"
+		-- 	end,
+		-- 	name_save = "DungeonsLeveling",
+		-- 	defS = false,
+		-- 	reset = "Normal",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{72135}, -- Neltharus: Secrets Within
+		-- 		{76146}, -- Dawn of the Infinite: Chrono-Lord Deios
+		-- 		{66119}, -- Ruby Life Pools: Primalist Invasion
+
+		-- 		{72193},
+		-- 		{71155},
+		-- 		{66586},
+		-- 		{71093},
+		-- 		{66458},
+		-- 		{75388},
+		-- 		{70881},
+		-- 					{72192},
+		-- 		{66211},
+		-- 		{70168},
+		-- 		{70170},
+		-- 		{66658},
+		-- 		{66690},
+		-- 		{66339},
+		-- 		{71001},
+		-- 		{70997},
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
+
+
+
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------

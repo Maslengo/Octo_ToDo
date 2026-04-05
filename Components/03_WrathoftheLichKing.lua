@@ -99,7 +99,7 @@ local function tempFunction()
 			end,
 			name_save = "Shadowmourne",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{24545, FactionOrClass = {PALADIN = true, WARRIOR = true, DEATHKNIGHT = true,},},

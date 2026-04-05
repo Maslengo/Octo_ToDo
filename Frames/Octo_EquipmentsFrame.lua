@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 local INDENT_TEXT = 4
 local INDEND_SCROLL = 20
 local MIN_COLUMN_WIDTH = 30
@@ -332,7 +333,7 @@ function EventFrame:CreateDataProvider(GUID)
 		-- local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
 		-- if ItemID then
 		-- 	local tempName = E.func_GetName("item", ItemID, Quality)
-		-- 	if strfind(tempName, UNKNOWN) then
+		-- 	if strfind(tempName, L["UNKNOWN"]) then
 		-- 		if ItemLink then
 		-- 			ItemName = ItemLink
 		-- 		elseif v.ItemName then
@@ -349,7 +350,7 @@ function EventFrame:CreateDataProvider(GUID)
 
 
 		local function IsValidName(name)
-			return name and not string.find(name, UNKNOWN, 1, true)
+			return name and not string.find(name, L["UNKNOWN"], 1, true)
 		end
 
 		local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
@@ -402,7 +403,7 @@ function EventFrame:CreateDataProvider(GUID)
 			ItemLink = ItemLink,
 			slotID = slotID,
 			column1Icon = Icon,
-			column2Text = color..ItemName.."|r",
+			column2Text = ItemName,
 			column3Text = CurrentItemLevel > 0 and color..CurrentItemLevel.."|r" or "",
 		}
 		local columnCount = self:CalculateColumnWidths(rowData, columnMaxWidths)

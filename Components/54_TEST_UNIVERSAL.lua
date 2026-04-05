@@ -36,7 +36,7 @@ local function tempFunction()
 			end,
 			name_save = "arcantina_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{79550, addText = {IconVignette = "VignetteLoot", coords = 55264393, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -69,7 +69,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2502_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{94001, addText = {IconVignette = "VignetteLoot", coords = 54598488, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -90,7 +90,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2545_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -111,7 +111,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2547_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -132,7 +132,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_nil1_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -153,7 +153,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_nil2_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -174,7 +174,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2510_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -195,7 +195,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2505_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{94023, addText = {IconVignette = "VignetteLoot", coords = 54232518, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -216,7 +216,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2528_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -237,7 +237,7 @@ local function tempFunction()
 			end,
 			name_save = "delves_2506_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -258,7 +258,7 @@ local function tempFunction()
 			end,
 			name_save = "atalaman_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 10001000, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -279,7 +279,7 @@ local function tempFunction()
 			end,
 			name_save = "eversong_woods_Rares",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{91280, addText = {IconVignette = "VignetteKill", coords = 51927380, }, forcedText = {text = L["Rare"].." 1"}, },
@@ -307,7 +307,7 @@ local function tempFunction()
 			end,
 			name_save = "harandar_Rares",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{91832, addText = {IconVignette = "VignetteKill", coords = 51164535, }, forcedText = {text = L["Rare"].." 1"}, },
@@ -335,7 +335,7 @@ local function tempFunction()
 			end,
 			name_save = "voidstorm_Rares",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{90805, addText = {IconVignette = "VignetteKill", coords = 29515008, }, forcedText = {text = L["Rare"].." 1"}, },
@@ -362,7 +362,7 @@ local function tempFunction()
 			end,
 			name_save = "zulaman_Rares",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{89569, addText = {IconVignette = "VignetteKill", coords = 34413305, }, forcedText = {text = L["Rare"].." 1"}, },
@@ -393,7 +393,7 @@ local function tempFunction()
 			end,
 			name_save = "eversong_woods_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{93967, addText = {IconVignette = "VignetteLoot", coords = 24346928, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -416,7 +416,7 @@ local function tempFunction()
 			end,
 			name_save = "harandar_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{92424, addText = {IconVignette = "VignetteLoot", coords = 71683100, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -438,7 +438,7 @@ local function tempFunction()
 			end,
 			name_save = "voidstorm_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{93237, addText = {IconVignette = "VignetteLoot", coords = 49947936, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -464,7 +464,7 @@ local function tempFunction()
 			end,
 			name_save = "zulaman_Treasures",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{nil, addText = {IconVignette = "VignetteLoot", coords = 44724409, }, forcedText = {text = L["Treasure"].." 1"}, },
@@ -488,7 +488,7 @@ local function tempFunction()
 			end,
 			name_save = "midnight_Achievements",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{61081, addText = {IconVignette = "VignetteLoot", coords = 62736680, }, forcedText = {text = L["Achievement"]..": "..L["Share a Drink"]}, },
@@ -509,7 +509,7 @@ local function tempFunction()
 			end,
 			name_save = "harandar_GlowingMoths",
 			defS = true,
-			reset = "Regular",
+			reset = "Normal",
 			desc = categoryKey,
 			quests = {
 				{92196, addText = {IconVignette = "VignetteLoot", coords = 36354839, }, forcedText = {text = L["Glowing Moth"].." 1"}, },

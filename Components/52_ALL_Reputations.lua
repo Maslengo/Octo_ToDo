@@ -12,7 +12,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
-	OctoTables_Vibor[categoryKey].name = REPUTATION
+	OctoTables_Vibor[categoryKey].name = L["REPUTATION"]
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {

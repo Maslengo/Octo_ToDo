@@ -1,4 +1,5 @@
 <Ui>
+	<Script file="Database\OctoTable_Colors.lua"/>
 	<Script file="Database\OctoTable_Expansions.lua"/>
 	<Script file="Database\Items.lua"/>
 	<Script file="Database\KeystoneAbbr.lua"/>

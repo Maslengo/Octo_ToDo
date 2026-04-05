@@ -98,20 +98,25 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
 	if id == "GreatVault" then
-		TextLeft = RATED_PVP_WEEKLY_VAULT
-		IconLeft = "greatVault-whole-normal"
+		TextLeft = L["RATED_PVP_WEEKLY_VAULT"]
+		IconLeft = E.ATLAS_GREATVAULT
 	end
 	if id == "CurrentKey" then
-		TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
+		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ITEMS_COLOREDNAME then
+			TextLeft = E.COLOR_WOW_EPIC..L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"].."|r"
+		else
+			TextLeft = L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"]
+		end
+		-- TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
 		IconLeft = 4352494
 	end
 	if id == "HeartofAzeroth" then
 		TextLeft = E.func_GetName("item", 158075)
-		IconLeft = E.func_GetItemIcon(158075)
+		IconLeft = E.func_GetIcon("item", 158075)
 	end
 	if id == "Ashjrakamas" then
 		TextLeft = E.func_GetName("item", 169223)
-		IconLeft = E.func_GetItemIcon(169223)
+		IconLeft = E.func_GetIcon("item", 169223)
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
@@ -122,29 +127,29 @@ function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataTyp
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
 	if id == "ListOfQuests" then
-		TextLeft = QUESTS_LABEL
+		TextLeft = L["QUESTS_LABEL"]
 	end
 	if id == "LFGInstance" then
-		TextLeft = DUNGEONS .. " ("..ALL..")"
+		TextLeft = L["DUNGEONS"] .. " ("..ALL..")"
 	end
 	if id == "AllItems" then
-		TextLeft = ITEMS
+		TextLeft = L["ITEMS"]
 	end
 	if id == "Professions" then
-		TextLeft = PROFESSIONS_BUTTON
+		TextLeft = L["TRADE_SKILLS"]
 	end
 	if id == "ItemLevel" then
-		TextLeft = STAT_AVERAGE_ITEM_LEVEL
+		TextLeft = L["STAT_AVERAGE_ITEM_LEVEL"]
 	end
 	if id == "Money" then
-		TextLeft = BONUS_ROLL_REWARD_MONEY
+		TextLeft = L["BONUS_ROLL_REWARD_MONEY"]
 	end
 	if id == "LastOnline" then
 		TextLeft = L["Last online"]
 	end
 	if id == "MythicZero" then
-		-- TextLeft = DUNGEONS .. " (M+0)"
-		TextLeft = DUNGEONS .." (".. E.func_GetName("difficulty", 23).."+0)"
+		-- TextLeft = L["DUNGEONS"] .. " (M+0)"
+		TextLeft = L["DUNGEONS"] .." (".. E.func_GetName("difficulty", 23).."+0)"
 	end
  	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end

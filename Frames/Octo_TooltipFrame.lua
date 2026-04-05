@@ -1,20 +1,16 @@
 local GlobalAddonName, E = ...
+local L = E.L
 local EventFrame = CreateFrame("FRAME")
 local Octo_TooltipFrame = CreateFrame("BUTTON", "Octo_TooltipFrame", UIParent, "OctoTooltipBackdropTemplate")
 Octo_TooltipFrame:Hide()
 E.func_RegisterFrame_SIMPLE(Octo_TooltipFrame)
-EventFrame.measureFrame = CreateFrame("Frame")
-EventFrame.measureFrame:SetParent(UIParent)
-EventFrame.measureFrame:SetScale(UIParent:GetEffectiveScale())
-EventFrame.measureText = EventFrame.measureFrame:CreateFontString()
-EventFrame.measureText:SetFontObject(OctoFont11)
-EventFrame.measureText:SetWordWrap(false)
+
 local TEXT_PADDING = 6
 local SEPARATOR_HEIGHT = 2
 local SEPARATOR_KEY = "---"
 local INDENT_TEXT = 4
 local INDENT_SCROLL = 20
-local MAX_DISPLAY_LINES = 27
+local MAX_DISPLAY_LINES = 20 -- 27
 local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
 local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / E.GLOBAL_LINE_HEIGHT))*.7)
 if MAX_DISPLAY_LINES > LINES_TOTAL then

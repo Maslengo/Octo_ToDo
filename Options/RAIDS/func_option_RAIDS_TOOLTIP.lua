@@ -1,40 +1,39 @@
 local GlobalAddonName, E = ...
 local L = E.L
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-function E.func_option_DUNGEONS(category, layout)
+function E.func_option_RAIDS_TOOLTIP(category, layout)
 	----------------------------------------------------------------
 	-- HEADER ------------------------------------------------------
 	----------------------------------------------------------------
-	E.func_Header(layout, L["Tooltip"]) --  .. " ("..HUD_EDIT_MODE_HUD_TOOLTIP_LABEL..")"
+	E.func_Header(layout, L["Tooltip"])
 	----------------------------------------------------------------
-	-- 1. Octo_ToDo_DB_Vars.Config_ShowAllDifficulties -------------
+	-- 1. Octo_ToDo_DB_Vars.CONFIG_RAIDS_DIFFICULTIES_ALL -------------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
-		local variableKey = "Config_ShowAllDifficulties"
+		local variableKey = "CONFIG_RAIDS_DIFFICULTIES_ALL"
 		local variableTbl = Octo_ToDo_DB_Vars
-		local name = E.func_texturefromIcon(E.ATLAS_RAID, nil, nil, true) .. L["All Difficulties"]
-		local defaultValue = false -- Settings.Default.False
-		-- local variableType = Settings.VarType.Boolean
+		local name = L["All Difficulties"]
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = L["Shows all raid difficulties in the tooltip"]
-		Settings.CreateCheckbox(category, setting, tooltip)
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
+		tooltip = tooltip .. "|n|n" .. L["Shows all raid difficulties in the tooltip"]
+		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
-	-- 2. Octo_ToDo_DB_Vars.Config_DifficultyAbbreviation ----------
+	-- 2. Octo_ToDo_DB_Vars.CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS ----------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
-		local variableKey = "Config_DifficultyAbbreviation"
+		local variableKey = "CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS"
 		local variableTbl = Octo_ToDo_DB_Vars
-		local name = E.func_texturefromIcon(E.ATLAS_RAID, nil, nil, true) .. L["Abbreviation"]
-		local defaultValue = true -- Settings.Default.True
-		-- local variableType = Settings.VarType.Boolean
+		local name = L["Abbreviation"]
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
 		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = L["Use English abbreviations for raid and dungeon difficulties instead of full names"]
-		Settings.CreateCheckbox(category, setting, tooltip)
+		local tooltip = E.func_defaultValue_tooltip(defaultValue)
+		tooltip = tooltip .. "|n|n" .. L["Use English abbreviations for raid and dungeon difficulties instead of full names"]
+		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
 	end
 	----------------------------------------------------------------
 end

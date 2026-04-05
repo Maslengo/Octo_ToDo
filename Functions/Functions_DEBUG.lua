@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 function E.DEBUG_START()
 	local timer = debugprofilestart()
@@ -74,9 +75,9 @@ end
 ----------------------------------------------------------------
 -- Функция для вывода таблицы itemID как списка чисел, по 24 элемента в строке
 -- tbl: любая таблица (массив, map, set)
--- Работает с глобальными E.editBox и E.editFrame
+-- Работает с глобальными Octo_editFrame_scrollFrame и Octo_DebugFrame
 function E.func_itemslistSort24(tbl)
-	if not tbl or not E.editBox or not E.editFrame then
+	if not tbl or not Octo_editFrame_scrollFrame or not Octo_DebugFrame then
 		return
 	end
 	E.DEBUG_START()
@@ -95,17 +96,17 @@ function E.func_itemslistSort24(tbl)
 	-- Форматируем чанки по 24 элемента
 	local chunks = formatChunks(list, 24, tostring)
 	-- Объединяем все строки с переносом |n и добавляем финальную запятую
-	E.editBox:SetText(table.concat(chunks, ",|n") .. ",")
-	E.editFrame:Show()
+	Octo_editFrame_scrollFrame:SetText(table.concat(chunks, ",|n") .. ",")
+	Octo_DebugFrame:Show()
 	E.DEBUG_STOP()
 end
 ----------------------------------------------------------------
 -- Функция для вывода таблицы itemID в формате [itemID] = <val>, по 12 элементов в строке
 -- tbl: любая таблица (массив, map, set)
 -- val: значение, которое будет присвоено каждому itemID (по умолчанию "true")
--- Работает с глобальными E.editBox и E.editFrame
+-- Работает с глобальными Octo_editFrame_scrollFrame и Octo_DebugFrame
 function E.func_itemslistToSetText_12(tbl, val)
-	if not tbl or not E.editBox or not E.editFrame then
+	if not tbl or not Octo_editFrame_scrollFrame or not Octo_DebugFrame then
 		return
 	end
 	E.DEBUG_START()
@@ -125,7 +126,14 @@ function E.func_itemslistToSetText_12(tbl, val)
 	for i = 1, #chunks do
 		chunks[i] = chunks[i] .. ","
 	end
-	E.editBox:SetText(table.concat(chunks, "|n"))
-	E.editFrame:Show()
+	Octo_editFrame_scrollFrame:SetText(table.concat(chunks, "|n"))
+	Octo_DebugFrame:Show()
 	E.DEBUG_STOP()
 end
+
+
+
+
+
+
+

@@ -8,12 +8,10 @@ local function Collect_Reputations()
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	local OctoTable_reactionColors = E.OctoTable_reactionColors
 	local gender = UnitSex("player")
 	local function func_GetReputationProgress(reputationID)
 		local FIRST, SECOND = 0, 0
 		-- local color = E.COLOR_WHITE
-		local standingTEXT = ""
 		local reaction = 0
 		local hasValidData = false  -- Флаг наличия данных
 
@@ -27,6 +25,7 @@ local function Collect_Reputations()
 		local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
 		local isMajor = E.func_IsMajorFaction(reputationID)
 		local isParagon = E.func_IsFactionParagonForCurrentPlayer(reputationID)
+
 		local repType = 0
 		local renownLevel
 		local renownMaxLevel
@@ -38,7 +37,6 @@ local function Collect_Reputations()
 			repType = 2
 			hasValidData = true
 			reaction = friendData.reaction
-			-- color = OctoTable_reactionColors[repType] or E.COLOR_PINK
 			local cur = friendData.standing - friendData.reactionThreshold
 			local max = (friendData.nextThreshold or friendData.reactionThreshold) - friendData.reactionThreshold
 			if max <= 0 then cur, max = 1, 1 end
@@ -46,7 +44,6 @@ local function Collect_Reputations()
 			SECOND = max
 			local rankInfo = E.func_GetFriendshipReputationRanks(friendData.friendshipFactionID)
 			if rankInfo then
-				standingTEXT = " ("..rankInfo.currentLevel.."/"..rankInfo.maxLevel..")"
 				rankInfocurrentLevel = rankInfo.currentLevel
 				rankInfomaxLevel = rankInfo.maxLevel
 			end
@@ -56,25 +53,28 @@ local function Collect_Reputations()
 			hasValidData = true
 			local m = E.func_GetMajorFactionData(reputationID)
 			if m then
-				-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
 				FIRST = m.renownReputationEarned
 				SECOND = m.renownLevelThreshold
 				renownLevel = m.renownLevel
 				renownMaxLevel = E.func_GetMaxRenownLevel(reputationID)
-				standingTEXT = " ("..renownLevel.."/"..renownMaxLevel..")"
 			end
 			-- STANDARD
 		elseif simpleData and simpleData.currentReactionThreshold then
 			repType = 1
 			hasValidData = true
 			reaction = simpleData.reaction
-			-- color = OctoTable_reactionColors[repType][reaction] or E.COLOR_WHITE
 			local cur = simpleData.currentStanding - simpleData.currentReactionThreshold
 			local max = simpleData.nextReactionThreshold - simpleData.currentReactionThreshold
 			if max <= 0 then cur, max = 1, 1 end
 			FIRST = cur
 			SECOND = max
-			standingTEXT = GetText("FACTION_STANDING_LABEL"..reaction, gender)
+		elseif GetFactionInfoByID and GetFactionInfoByID(reputationID) then -- 10.2.7
+			repType = 1
+			hasValidData = true
+			-- data = GetFactionInfoByID(id)
+			local _, _, reaction, barMin, barMax, barValue = GetFactionInfoByID(reputationID)
+			FIRST = barValue-barMin -- currentValue
+			SECOND = barMax-barMin -- totalValue
 		end
 		-- Если нет валидных данных, возвращаем nil
 		if not hasValidData then
@@ -87,7 +87,6 @@ local function Collect_Reputations()
 			if currentValue and threshold and threshold > 0 then
 				FIRST = currentValue % threshold
 				SECOND = threshold
-				-- color = OctoTable_reactionColors[repType] or E.COLOR_BLUE
 				local level = math.floor(currentValue/threshold)-(hasRewardPending and 1 or 0)
 				if level > 0 then
 					ParagonCount = level
@@ -120,7 +119,6 @@ local function Collect_Reputations()
 				SECOND = SECOND,				-- число
 				ParagonCount = ParagonCount,	-- число
 				-- color = color,				-- строка или таблица цветов (УБРАТЬ)
-				-- standingTEXT = standingTEXT,	-- строка (УБРАТЬ)
 				repType = repType,				-- число
 				reaction = reaction,			-- число
 				renownLevel = renownLevel,
@@ -129,7 +127,7 @@ local function Collect_Reputations()
 				rankInfomaxLevel = rankInfomaxLevel,
 			}
 		end
-		-- local result = FIRST.."#"..SECOND.."#"..ParagonCount.."#"..color.."#"..standingTEXT.."#"..repType.."#"..reaction
+		-- local result = FIRST.."#"..SECOND.."#"..ParagonCount.."#"..color.."#"..repType.."#"..reaction
 		return result
 	end
 	----------------------------------------------------------------

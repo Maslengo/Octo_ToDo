@@ -13,7 +13,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
-	OctoTables_Vibor[categoryKey].name = WEEKLY_REWARDS_MYTHIC_KEYSTONE -- "MPLUS"
+	OctoTables_Vibor[categoryKey].name = L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"] -- "MPLUS"
 	OctoTables_Vibor[categoryKey].color = E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {

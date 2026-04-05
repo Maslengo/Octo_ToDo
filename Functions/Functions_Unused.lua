@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 function E.func_IsAvailable(id, curType)
 	if id and curType then
@@ -52,9 +53,9 @@ function E.func_CreateSpellButton(id, point, parent, rPoint, x, y, size, curType
 		frame.icon = frame:CreateTexture(nil, "BACKGROUND")
 		frame.icon:SetAllPoints()
 		if curType == "item" or curType == "toy" then
-			frame.icon:SetTexture(E.func_GetItemIcon(id))
+			frame.icon:SetTexture(E.func_GetIcon("item", id))
 		else
-			frame.icon:SetTexture(E.func_GetSpellIcon(id))
+			frame.icon:SetTexture(E.func_GetIcon("spell", id))
 		end
 		frame.icon:SetTexCoord(.10, .90, .10, .90)
 		frame:SetBackdrop(E.menuBackdrop)
@@ -154,7 +155,7 @@ function E.func_GetLFGDungeonName(dID)
 			return name
 		end
 	end
-	return RETRIEVING_DATA
+	return L["RETRIEVING_DATA"]
 end
 function E.func_GetAchievementCompletion(id)
 	local name, _, _, completed, _, _, _, _, _, _, _, _, wasEarnedByMe, earnedBy = GetAchievementInfo(id)

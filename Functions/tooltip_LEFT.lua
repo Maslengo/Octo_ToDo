@@ -1,4 +1,4 @@
-local GlobalAddonName, E = ...
+local GlobalAddonName, E =  ...
 local L = E.L
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -11,10 +11,10 @@ function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 		CustomColor = E.COLOR_GRAY
 	end
 	local CharName = E.func_CharInfo_NickName(CharInfo, false, true, CustomColor, true)
-	local curServerShort = pd.curServerShort ~= E.curServerShort and "-"..E.func_CharInfo_Server(CharInfo, nil, true, CustomColor) or ""
+	local curServerShort = pd.curServerShort ~= E.curServerShort and "-" .. E.func_CharInfo_Server(CharInfo, nil, true, CustomColor) or ""
 	local leftText =
-	E.func_texturefromIcon(pd.specIcon)..
-	CharName..
+	E.func_texturefromIcon(pd.specIcon) ..
+	CharName ..
 	curServerShort
 	return leftText
 end
@@ -34,7 +34,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 			local charTotal = 0
 			local activeValue = 0
 			for covenantID, covenant in next, (E.OctoTable_Covenant) do
-				local key = covenant.prefix .. (isRenown and "_Renown" or "_Anima")
+				local key = covenant.prefix  ..  (isRenown and "_Renown" or "_Anima")
 				local value = pd[key] or 0
 				values[covenantID] = value
 				charTotal = charTotal + value
@@ -59,7 +59,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 					if value > 0 then
 						-- local c = covenantID == curCovID and covenant.color or E.COLOR_GRAY
 						local c = covenantID == curCovID and E.func_DB_COV_COLOR(covenantID) or E.COLOR_GRAY
-						row[covenantID + 1] = c .. E.func_CompactFormatNumber(value) .. "|r"
+						row[covenantID + 1] = c  ..  E.func_CompactFormatNumber(value)  ..  "|r"
 					else
 						row[covenantID + 1] = "-"
 					end
@@ -73,7 +73,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 					sortValue = charTotal
 					totalAnimaText = charTotal > 0 and E.func_CompactFormatNumber(charTotal) or "-"
 					if pd.SL_Possible_Anima and pd.SL_Possible_Anima > 0 then
-						SL_Possible_Anima = E.COLOR_BLUE .. " +" .. E.func_CompactFormatNumber(pd.SL_Possible_Anima) .. "|r"
+						SL_Possible_Anima = E.COLOR_BLUE  ..  " +"  ..  E.func_CompactFormatNumber(pd.SL_Possible_Anima)  ..  "|r"
 					end
 				end
 				table.insert(characterData, {
@@ -101,7 +101,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 			if not isRenown then
 				local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
 				d.row[6] = d.SL_Possible_Anima
-				d.row[7] = color .. d.totalAnimaText .. "|r"
+				d.row[7] = color  ..  d.totalAnimaText  ..  "|r"
 			end
 			table.insert(tooltip, d.row)
 		end
@@ -111,7 +111,7 @@ function E.func_CovenantCurrencyTooltip(id, visiblePlayers, typeSL)
 		end
 		header[#header + 1] = ""
 		if not isRenown then
-			header[#header + 1] = TOTAL .. ": " .. E.func_CompactFormatNumber(grandTotal)
+			header[#header + 1] = L["TOTAL"]  ..  ": "  ..  E.func_CompactFormatNumber(grandTotal)
 		end
 		table.insert(tooltip, 1, header)
 	end
@@ -158,15 +158,15 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		for _, d in ipairs(characterData) do
 			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-			d.row[2] = {color..d.row2Text.."|r", "RIGHT"}
-			d.row[3] = color..d.row3Text.."|r"
+			d.row[2] = {color .. d.row2Text .. "|r", "RIGHT"}
+			d.row[3] = color .. d.row3Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
 		if #characterData > 1 then
 			local header = {
 				"",
 				"",
-				"avg"..": "..E.func_CompactFormatNumber(avgILVL/#characterData),
+				"avg" .. ": " .. E.func_CompactFormatNumber(avgILVL/#characterData),
 			}
 			table.insert(tooltip, 1, header)
 		end
@@ -195,9 +195,9 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 					prof[i].Text = ""
 					if cmP[i] and cmP[i].skillLevel and cmP[i].maxSkillLevel then
 						prof[i].Icon = E.func_ProfessionIcon(cmP[i].skillLine)
-						prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel).."/"..E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
+						prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel) .. "/" .. E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
 						if cmP[i].skillModifier then
-							prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel)..E.COLOR_GREEN.."+"..E.func_CompactFormatNumber(cmP[i].skillModifier).."|r".."/"..E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
+							prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel) .. E.COLOR_GREEN .. "+" .. E.func_CompactFormatNumber(cmP[i].skillModifier) .. "|r" .. "/" .. E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
 						end
 					end
 				end
@@ -223,8 +223,8 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 			return a.name < b.name
 	end)
 	for _, d in ipairs(characterData) do
-		d.row[2] = {d.prof1Text..d.prof1Icon, "RIGHT"}
-		d.row[3] = {d.prof2Text..d.prof2Icon, "RIGHT"}
+		d.row[2] = {d.prof1Text .. d.prof1Icon, "RIGHT"}
+		d.row[3] = {d.prof2Text .. d.prof2Icon, "RIGHT"}
 		table.insert(tooltip, d.row)
 	end
 	return tooltip
@@ -239,7 +239,7 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
 	-- 2032
 	local IsAccountWideCurrency = E.func_IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
-	local IsAccountTransferableCurrency = E.func_IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
+	-- local IsAccountTransferableCurrency = E.func_IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
 	local REGION = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		REGION[CharInfo.PlayerData.CurrentRegionName] = true
@@ -253,15 +253,15 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 			local hasData = curquantity > 0
 			if hasData then
 				if IsAccountWideCurrency and GUID == E.curGUID then
-					tooltip[#tooltip+1] = {E.COLOR_CYAN..ACCOUNT_LEVEL_CURRENCY.."|r"}
-					tooltip[#tooltip+1] = {TOTAL..": "..E.func_CompactFormatNumber(curquantity)}
+					tooltip[#tooltip+1] = {E.COLOR_CYAN .. L["ACCOUNT_LEVEL_CURRENCY"] .. "|r"}
+					tooltip[#tooltip+1] = {L["TOTAL"] .. ": " .. E.func_CompactFormatNumber(curquantity)}
 					return tooltip
 				else
 					local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 					local row = { leftText }
 					local row2Text = E.func_CompactFormatNumber(curquantity)
 					if curmaxQuantity > 0 then
-						row2Text = row2Text.."/"..E.func_CompactFormatNumber(curmaxQuantity)
+						row2Text = row2Text .. "/" .. E.func_CompactFormatNumber(curmaxQuantity)
 					end
 					total = total + curquantity
 					table.insert(characterData, {
@@ -284,13 +284,13 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		for _, d in ipairs(characterData) do
 			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-			d.row[2] = color..d.row2Text.."|r"
+			d.row[2] = color .. d.row2Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
 		if #characterData > 1 then
 			local header = {
 				"",
-				TOTAL..": "..E.func_CompactFormatNumber(total),
+				L["TOTAL"] .. ": " .. E.func_CompactFormatNumber(total),
 			}
 			table.insert(tooltip, 1, header)
 		end
@@ -338,7 +338,7 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 			if price and price > 0 then
 				table.insert(tooltip, {
 						"",
-						E.func_GetName("item", 122284)..": "..E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
+						E.func_GetName("item", 122284) .. ": " .. E.func_FormatMoney(C_WowTokenPublic.GetCurrentMarketPrice())
 				})
 			end
 		end
@@ -347,18 +347,18 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 			if accountMoney and accountMoney > 0 then
 				table.insert(tooltip, {
 						"",
-						ACCOUNT_BANK_PANEL_TITLE..": "..E.func_FormatMoney(accountMoney)
+						L["ACCOUNT_BANK_PANEL_TITLE"] .. ": " .. E.func_FormatMoney(accountMoney)
 				})
 			end
 		end
 		table.insert(tooltip, {
 				"",
-				TOTAL..": "..E.func_FormatMoney(total)
+				L["TOTAL"] .. ": " .. E.func_FormatMoney(total)
 		})
 	end
 	for _, d in ipairs(characterData) do
 		local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-		d.row[2] = color..d.row2Text.."|r"
+		d.row[2] = color .. d.row2Text .. "|r"
 		table.insert(tooltip, d.row)
 	end
 	return tooltip
@@ -400,12 +400,12 @@ function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		for _, d in ipairs(characterData) do
 			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
-			d.row[2] = color..d.row2Text.."|r"
+			d.row[2] = color .. d.row2Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
 		local heade1 = {
 			"",
-			TOTAL..": "..E.func_SecondsToClock(total),
+			L["TOTAL"] .. ": " .. E.func_SecondsToClock(total),
 		}
 		table.insert(tooltip, 1, heade1)
 	end
@@ -423,10 +423,10 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 			local pd = CharInfo.PlayerData
 			local OwnedKeystoneLevel = pd.OwnedKeystoneLevel or 0
 			local OwnedKeystoneChallengeMapID = pd.OwnedKeystoneChallengeMapID or 0
-			-- local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY.."-|r"
+			-- local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY .. "-|r"
 			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
 			local RIO_Score = seasonData and tonumber(seasonData.RIO_Score) or 0
-			local RIO_weeklyBest = seasonData and tonumber(seasonData.RIO_weeklyBest) or E.COLOR_GRAY.."-|r"
+			local RIO_weeklyBest = seasonData and tonumber(seasonData.RIO_weeklyBest) or E.COLOR_GRAY .. "-|r"
 			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, false)
 			local hasData = (RIO_Score > 0) or (OwnedKeystoneLevel > 0 and OwnedKeystoneChallengeMapID > 0)
 			if hasData then
@@ -458,14 +458,14 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
 			d.row[2] = {d.row2Text, "LEFT"}
 			d.row[3] = d.row3Text
-			d.row[4] = color..d.row4Text.."|r"
+			d.row[4] = color .. d.row4Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
 		local heade1 = {
 			"",
 			"",
 			"WeeklyBest",
-			"Score", -- "MythicPlus", PROVING_GROUNDS_SCORE
+			"Score", -- "MythicPlus", L["PROVING_GROUNDS_SCORE"]
 		}
 		table.insert(tooltip, 1, heade1)
 	end
@@ -512,7 +512,7 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 
 				-- прогресс
 				if max == 0 then
-					progress[j] = E.COLOR_GRAY .. "-|r"
+					progress[j] = E.COLOR_GRAY  ..  "-|r"
 				else
 					local color
 					if vaultMin >= max then
@@ -523,14 +523,14 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 						color = E.COLOR_GRAY
 					end
 
-					progress[j] = color .. vaultMin .. "/" .. max .. "|r"
+					progress[j] = color  ..  vaultMin  ..  "/"  ..  max  ..  "|r"
 				end
 
 				-- 3 награды отдельно
 				rewards[j] = {
-					rewardData[1] and E.COLOR_WHITE .. rewardData[1] .. "|r" or E.COLOR_GRAY .. "-|r",
-					rewardData[2] and E.COLOR_WHITE .. rewardData[2] .. "|r" or E.COLOR_GRAY .. "-|r",
-					rewardData[3] and E.COLOR_WHITE .. rewardData[3] .. "|r" or E.COLOR_GRAY .. "-|r",
+					rewardData[1] and E.COLOR_WHITE  ..  rewardData[1]  ..  "|r" or E.COLOR_GRAY  ..  "-|r",
+					rewardData[2] and E.COLOR_WHITE  ..  rewardData[2]  ..  "|r" or E.COLOR_GRAY  ..  "-|r",
+					rewardData[3] and E.COLOR_WHITE  ..  rewardData[3]  ..  "|r" or E.COLOR_GRAY  ..  "-|r",
 				}
 			end
 
@@ -542,7 +542,7 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 					sortValue = HasAvailableRewards,
 					row = {
 						leftText,
-						HasAvailableRewards > 0 and E.COLOR_BLUE..">"..REWARD.."<|r" or "",
+						HasAvailableRewards > 0 and E.COLOR_BLUE .. ">" .. L["REWARD"] .. "<|r" or "",
 
 						-- activity 1
 						progress[1],
@@ -636,7 +636,7 @@ end
 -- 				-- прогресс как в твоём рабочем коде
 -- 				local progressText
 -- 				if max == 0 then
--- 					progressText = E.COLOR_GRAY .. "-|r"
+-- 					progressText = E.COLOR_GRAY  ..  "-|r"
 -- 				else
 -- 					local color
 
@@ -648,14 +648,14 @@ end
 -- 						color = E.COLOR_GRAY
 -- 					end
 
--- 					progressText = color .. vaultMin .. "/" .. max .. "|r"
+-- 					progressText = color  ..  vaultMin  ..  "/"  ..  max  ..  "|r"
 -- 				end
 
 -- 				-- награды в одну строку (как у тебя)
 -- 				local rewardText =
--- 					(rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "-|r") .. " " ..
--- 					(rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "-|r") .. " " ..
--- 					(rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "-|r")
+-- 					(rewards[1] and E.COLOR_WHITE  ..  rewards[1]  ..  "|r" or E.COLOR_GRAY  ..  "-|r")  ..  " "  ..
+-- 					(rewards[2] and E.COLOR_WHITE  ..  rewards[2]  ..  "|r" or E.COLOR_GRAY  ..  "-|r")  ..  " "  ..
+-- 					(rewards[3] and E.COLOR_WHITE  ..  rewards[3]  ..  "|r" or E.COLOR_GRAY  ..  "-|r")
 
 -- 				reward[j] = rewardText
 -- 				totalRuns[j] = progressText
@@ -665,7 +665,7 @@ end
 -- 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 -- 				local row = { leftText }
 
--- 				local row2Text = HasAvailableRewards > 0 and E.COLOR_BLUE..">"..REWARD.."<|r" or ""
+-- 				local row2Text = HasAvailableRewards > 0 and E.COLOR_BLUE .. ">" .. L["REWARD"] .. "<|r" or ""
 
 -- 				table.insert(characterData, {
 -- 					row = row,
@@ -692,9 +692,9 @@ end
 -- 			d.row[2] = d.row2Text
 
 -- 			-- 3 активности = 3 колонки
--- 			d.row[3] = "(" .. (d.totalRuns[1] or "-") .. ")" .. (d.reward[1] or "-")
--- 			d.row[4] = "(" .. (d.totalRuns[2] or "-") .. ")" .. (d.reward[2] or "-")
--- 			d.row[5] = "(" .. (d.totalRuns[3] or "-") .. ")" .. (d.reward[3] or "-")
+-- 			d.row[3] = "("  ..  (d.totalRuns[1] or "-")  ..  ")"  ..  (d.reward[1] or "-")
+-- 			d.row[4] = "("  ..  (d.totalRuns[2] or "-")  ..  ")"  ..  (d.reward[2] or "-")
+-- 			d.row[5] = "("  ..  (d.totalRuns[3] or "-")  ..  ")"  ..  (d.reward[3] or "-")
 
 -- 			table.insert(tooltip, d.row)
 -- 		end
@@ -731,13 +731,13 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 		local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] and 1 or 0
 		local hasData = (DONEPERS > 0)
 		if hasData then
-			local leftText = pd.classColorHex..pd.Name.."|r"
+			local leftText = pd.classColorHex .. pd.Name .. "|r"
 			local row = { leftText }
 			table.insert(characterData, {
 					row = row,
 					name = leftText,
 					sortValue = 1,
-					row2Text = E.COLOR_PURPLE..">"..QUEST_WATCH_QUEST_READY.."<|r",
+					row2Text = E.COLOR_PURPLE .. ">" .. L["QUEST_WATCH_QUEST_READY"] .. "<|r",
 			})
 		end
 	else
@@ -751,7 +751,7 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 				if hasData then
 					local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 					local row = { leftText }
-					local row2Text = DONEPERS > 0 and E.COLOR_PURPLE..">"..QUEST_WATCH_QUEST_READY.."<|r" or ""
+					local row2Text = DONEPERS > 0 and E.COLOR_PURPLE .. ">" .. L["QUEST_WATCH_QUEST_READY"] .. "<|r" or ""
 					table.insert(characterData, {
 							row = row,
 							name = pd.Name,
@@ -798,7 +798,7 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 				local row = { leftText }
 				local row2Text = itemCount_Bags > 0 and E.func_CompactFormatNumber(itemCount_Bags) or ""
-				local row3Text = itemCount_Bank > 0 and E.COLOR_GRAY.."+"..E.func_CompactFormatNumber(itemCount_Bank).."|r" or ""
+				local row3Text = itemCount_Bank > 0 and E.COLOR_GRAY .. "+" .. E.func_CompactFormatNumber(itemCount_Bank) .. "|r" or ""
 				total = total + itemCount_Bags + itemCount_Bank
 				total_BAGS = total_BAGS + itemCount_Bags
 				total_BANK = total_BANK + itemCount_Bank
@@ -828,8 +828,8 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 		if #characterData == 1 and total_BANK ~= 0 then
 			local header = {
 				"",
-				{BAG_NAME_BACKPACK, "RIGHT"},
-				{E.COLOR_GRAY..BANK.."|r", "LEFT"},
+				{L["BAG_NAME_BACKPACK"], "RIGHT"},
+				{E.COLOR_GRAY .. L["BANK"] .. "|r", "LEFT"},
 			}
 			table.insert(tooltip, 1, header)
 		elseif #characterData > 1 then
@@ -837,19 +837,19 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 				local header = {
 					"",
 					"",
-					TOTAL..": "..E.func_CompactFormatNumber(total),
+					L["TOTAL"] .. ": " .. E.func_CompactFormatNumber(total),
 				}
 				table.insert(tooltip, 1, header)
 				local header = {
 					"",
-					{BAG_NAME_BACKPACK, "RIGHT"},
-					{E.COLOR_GRAY..BANK.."|r", "LEFT"},
+					{L["BAG_NAME_BACKPACK"], "RIGHT"},
+					{E.COLOR_GRAY .. L["BANK"] .. "|r", "LEFT"},
 				}
 				table.insert(tooltip, 2, header)
 			else
 				local header = {
 					"",
-					TOTAL..": "..E.func_CompactFormatNumber(total),
+					L["TOTAL"] .. ": " .. E.func_CompactFormatNumber(total),
 					"",
 				}
 				table.insert(tooltip, 1, header)
@@ -876,25 +876,18 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	if dataType == "UniversalQuests" then
 		for _, data in next, (E.ALL_UniversalQuests) do
 			if data.quests and data.reset then
-				-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+				-- local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
 				local questKey = data.questKey
 				local reset = data.reset
 				if id == questKey then
 					----------------
-					local result = reset
-					if reset == "Weekly" then
-						result = WEEKLY
-					elseif reset == "Daily" then
-						result = DAILY
-					elseif reset == "Month" then
-						result = CALENDAR_REPEAT_MONTHLY
-					elseif reset == "Regular" then
-						result = ITEM_QUALITY1_DESC -- PLAYER_DIFFICULTY1
-					end
+					local  result = E.RESET_INFO[reset].string
+
+
 					if data.isAccount then
-						result = E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE)..WEEKLY .. " " .. REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE
-						-- result = E.COLOR_CYAN..L["Your Warband can only receive this reward once per week"].."|r"
-						-- reset = E.COLOR_SKYBLUE.."Account "..reset.."|r"
+						result = E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE) .. result  ..  " "  ..  L["REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE"]
+						-- result = E.COLOR_CYAN .. L["Your Warband can only receive this reward once per week"] .. "|r"
+						-- reset = E.COLOR_SKYBLUE .. "Account " .. reset .. "|r"
 					end
 					tooltip[#tooltip+1] = {result}
 
@@ -903,13 +896,13 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 					local rewards = data.rewards or 0
 					if rewards ~= 0 then
 						tooltip[#tooltip+1] = {" "}
-						tooltip[#tooltip+1] = {REWARDS..": ", " "}
+						tooltip[#tooltip+1] = {L["REWARDS"] .. ": ", " "}
 						for _, rews in next,(rewards) do
 							local rewID = rews.rewID
 							local rewTYPE = rews.rewTYPE
 							local rewSIZE = rews.rewSIZE
 							if rewID then
-								tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetIcon(rewTYPE, rewID))..E.func_GetName(rewTYPE, rewID), rewSIZE}
+								tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetIcon(rewTYPE, rewID)) .. E.func_GetName(rewTYPE, rewID), rewSIZE}
 							end
 						end
 					end

@@ -92,95 +92,13 @@ local function tempFunction()
 			forcedMaxQuest = 4,
 		},
 		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return GARRISON_LOCATION_TOOLTIP
-			end,
-			name_save = "GarrisonLevel",
-			defS = true,
-			reset = "Regular",
-			desc = categoryKey,
-			quests = {
-				{34378, FactionOrClass = {Horde = true,},},
-				{34586, FactionOrClass = {Alliance = true,},},
-				{36567, FactionOrClass = {Horde = true,},},
-				{36592, FactionOrClass = {Alliance = true,},},
-				{36614, FactionOrClass = {Horde = true,},},
-				{36615, FactionOrClass = {Alliance = true,},},
-			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				{rewID = 173838, rewTYPE = "spell", rewSIZE = nil,}, -- Book of Garrison Blueprints
-				{rewID = 110560, rewTYPE = "item", rewSIZE = 1,}, -- Garrison Hearthstone
-				{rewID = 244315, rewTYPE = "item", rewSIZE = 1,}, -- Orcish Warlord's Planning Table
-				{rewID = 248800, rewTYPE = "item", rewSIZE = 1,}, -- Architect's Drafting Table
-
-			},
-			forcedMaxQuest = 3,
-		},
-
-
-
-
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", 39246, false) -- Владычество над морями
-			end,
-			name_save = "Garrison_NavalDomination",
-			defS = false,
-			reset = "Regular",
-			desc = categoryKey,
-			quests = {
-				{39246, FactionOrClass = {Horde = true,},},
-				{39068, FactionOrClass = {Alliance = true,},},
-			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				{rewID = 187788, rewTYPE = "spell", rewSIZE = nil,}, -- Garrison: Shipyard, Level 3
-				{rewID = 127267, rewTYPE = "item", rewSIZE = 1,}, -- Ship Blueprint: Carrier
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
-			},
-			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", 38242, false) -- Раскопанная магия
-			end,
-			name_save = "Garrison_UnearthedMagic",
-			defS = false,
-			reset = "Regular",
-			desc = categoryKey,
-			quests = {
-				{38242, FactionOrClass = {Horde = true,},},
-				{38241, FactionOrClass = {Alliance = true,},},
-			},
-			rewards = {
-				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
-				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
-				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
-				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
-				{rewID = 122457, rewTYPE = "item", rewSIZE = 1,}, -- Ultimate Battle-Training Stone
-				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
-			},
-			forcedMaxQuest = 1,
-		},
-		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
 				-- return E.func_GetName("quest", 38242, false) -- Раскопанная магия
-				return L["Garrison_Assault"]
+				return L["Daily Garrison Assault"]
 			end,
-			name_save = "Garrison_Assault",
+			name_save = "GarrisonAssault",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
@@ -215,7 +133,6 @@ local function tempFunction()
 				{36674, FactionOrClass = {Alliance = true,},},
 				{36687, FactionOrClass = {Alliance = true,},},
 				{38195, FactionOrClass = {Alliance = true,},},
-
 				{36667, FactionOrClass = {Horde = true,},},
 				{36692, FactionOrClass = {Horde = true,},},
 				{36695, FactionOrClass = {Horde = true,},},
@@ -255,6 +172,200 @@ local function tempFunction()
 				-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
 				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
 			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Daily Heroic Dungeons"] -- https://www.wowhead.com/ru/achievement=9703/
+				-- return E.func_GetName("achievement", 9703)
+			end,
+			name_save = "DailyHeroicDungeons",
+			defS = false,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
+				{37228},
+				{37243},
+				{37230},
+				{37235},
+				{37239},
+				{37242},
+				{37241},
+				{37229},
+				{37238},
+				{37232},
+				{37234},
+				{37233},
+				{37240},
+				{37231},
+				{37237},
+				{37236},
+			},
+			rewards = {
+				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				{rewID = 119037, rewTYPE = "item", rewSIZE = 1,}, -- Supply of Storied Rarities
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Daily Dungeon"] -- https://www.wowhead.com/ru/achievement=9703/
+				-- return E.func_GetName("achievement", 9703)
+			end,
+			name_save = "DailyDungeons",
+			defS = false,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
+				{37145},
+				{37209},
+				{37244},
+				{37146},
+				{37227},
+				{37142},
+				{37147},
+				{37245},
+				{37244},
+			},
+			rewards = {
+				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				{rewID = 119041, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 119036, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 119042, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 119040, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 119043, rewTYPE = "item", rewSIZE = 1,}, --
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return GARRISON_LOCATION_TOOLTIP
+			end,
+			name_save = "GarrisonLevel",
+			defS = true,
+			reset = "Normal",
+			desc = categoryKey,
+			quests = {
+				{34378, FactionOrClass = {Horde = true,},},
+				{34586, FactionOrClass = {Alliance = true,},},
+				{36567, FactionOrClass = {Horde = true,},},
+				{36592, FactionOrClass = {Alliance = true,},},
+				{36614, FactionOrClass = {Horde = true,},},
+				{36615, FactionOrClass = {Alliance = true,},},
+			},
+			rewards = {
+				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				{rewID = 173838, rewTYPE = "spell", rewSIZE = nil,}, -- Book of Garrison Blueprints
+				{rewID = 110560, rewTYPE = "item", rewSIZE = 1,}, -- Garrison Hearthstone
+				{rewID = 244315, rewTYPE = "item", rewSIZE = 1,}, -- Orcish Warlord's Planning Table
+				{rewID = 248800, rewTYPE = "item", rewSIZE = 1,}, -- Architect's Drafting Table
+			},
+			forcedMaxQuest = 3,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 39246, false) -- Владычество над морями
+			end,
+			name_save = "Garrison_NavalDomination",
+			defS = false,
+			reset = "Normal",
+			desc = categoryKey,
+			quests = {
+				{39246, FactionOrClass = {Horde = true,},},
+				{39068, FactionOrClass = {Alliance = true,},},
+			},
+			rewards = {
+				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				{rewID = 187788, rewTYPE = "spell", rewSIZE = nil,}, -- Garrison: Shipyard, Level 3
+				{rewID = 127267, rewTYPE = "item", rewSIZE = 1,}, -- Ship Blueprint: Carrier
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 38242, false) -- Раскопанная магия
+			end,
+			name_save = "Garrison_UnearthedMagic",
+			defS = false,
+			reset = "Normal",
+			desc = categoryKey,
+			quests = {
+				{38242, FactionOrClass = {Horde = true,},},
+				{38241, FactionOrClass = {Alliance = true,},},
+			},
+			rewards = {
+				-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				{rewID = 122457, rewTYPE = "item", rewSIZE = 1,}, -- Ultimate Battle-Training Stone
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
+			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				-- return L["Vanity Rewards"] -- https://www.wowhead.com/ru/achievement=9703/
+				return E.func_GetName("achievement", 9703)
+			end,
+			name_save = "DungeonQuests_VanityRewards",
+			defS = false,
+			reset = "Normal",
+			desc = categoryKey,
+			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
+				{37167, addText = {itemID = 118924},},
+				{37159, addText = {itemID = 119093},},
+				{37165, addText = {itemID = 118935},},
+				{37160, addText = {itemID = 118937},},
+				{37151, addText = {itemID = 118918},},
+				{37152, addText = {itemID = 119083},},
+				{37162, addText = {itemID = 118927},},
+				{37161, addText = {itemID = 118926},},
+				{37157, addText = {itemID = 119092},},
+				{37150, addText = {itemID = 118921},},
+				{37158, addText = {itemID = 118928},},
+				{37148, addText = {itemID = 118922},},
+				{37163, addText = {itemID = 119003},},
+				{37155, addText = {itemID = 118925},},
+				{37154, addText = {itemID = 118931},},
+				{37164, addText = {itemID = 118923},},
+				{37156, addText = {itemID = 119039},},
+				{37149, addText = {itemID = 118936},},
+				{37153, addText = {itemID = 118929},},
+				{37166, addText = {itemID = 118930},},
+			},
+			-- rewards = {
+			-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+			-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+			-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+			-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+			-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
+			-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			-- },
 			forcedMaxQuest = 1,
 		},
 	}

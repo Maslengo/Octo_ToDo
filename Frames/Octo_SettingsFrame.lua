@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 if not E.DEBUG then return end
 ----------------------------------------------------------------
 -- /dump SettingsPanel:GetSize()
