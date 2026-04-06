@@ -142,7 +142,7 @@ local function CreateMyAddonEditFrameTemplate()
 			local str = Octo_editFrame_scrollFrame:GetText()
 
 			if not str or str == "" then
-				print(E.COLOR_RED .. "No data to import|r")
+				E.func_PrintMessage(E.COLOR_RED .. "No data to import|r")
 				return
 			end
 
@@ -164,7 +164,7 @@ local function CreateMyAddonEditFrameTemplate()
 	Octo_DebugFrame.closeButton:SetScript(
 		"OnClick",
 		function(self, button, down)
-			-- print("Pressed", button, down and "down" or "up")
+			-- E.func_PrintMessage("Pressed", button, down and "down" or "up")
 			Octo_DebugFrame:Hide()
 		end
 	)
@@ -213,7 +213,7 @@ local function CreateMyAddonEditFrameTemplate()
 		end
 	)
 	if Octo_DevTool_DB then
-		editBox:SetFont(E.Octo_font, Octo_DevTool_DB.CONFIG_DEBUG_EB_FONTSIZE, "")
+		editBox:SetFont(E.Octo_font, Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_FONTSIZE, "")
 	else
 		editBox:SetFont(E.Octo_font, 11, "")
 	end
@@ -434,9 +434,9 @@ do
 			end
 		end
 		if success then
-			print(E.COLOR_GREEN .. "Import successful, chars:|r", count)
+			E.func_PrintMessage(E.COLOR_GREEN .. "Import successful, chars:|r", count)
 		else
-			print(E.COLOR_YELLOW .. "Import failed:|r")
+			E.func_PrintMessage(E.COLOR_YELLOW .. "Import failed:|r")
 		end
 	end
 end
@@ -469,8 +469,8 @@ local function dumpEdit(indent, msg, tables)
 	if indent == 0 then
 		LibIndentation.enable(
 			Octo_editFrame_scrollFrame:GetEditBox(),
-			E.func_createColorScheme(Octo_DevTool_DB.CONFIG_DEBUG_EB_EDITORTHEME or "Twilight"),
-			Octo_DevTool_DB.CONFIG_DEBUG_EB_TABSPACES
+			E.func_createColorScheme(Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME or "Twilight"),
+			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES
 		) -- 4 - ширина табуляции в пробелах
 		Octo_editFrame_scrollFrame:SetText(str)
 		LibIndentation.indentEditbox(Octo_editFrame_scrollFrame:GetEditBox())

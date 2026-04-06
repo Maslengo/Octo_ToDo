@@ -223,6 +223,8 @@ function E.func_RGB2Hex(r, g, b, a)
 	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 ----------------------------------------------------------------
+
+
 function E.func_Hex2RGBA(hex, forcedAlpha)
 	if type(hex) ~= "string" then
 		return 1, 1, 1, 1
@@ -262,20 +264,36 @@ function E.func_Hex2RGBA(hex, forcedAlpha)
 		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or 1
 	end
 
+	if #hex == 8 then
+		local a = tonumber(hex:sub(1,2), 16)
+		local r = tonumber(hex:sub(3,4), 16)
+		local g = tonumber(hex:sub(5,6), 16)
+		local b = tonumber(hex:sub(7,8), 16)
+
+		if not (r and g and b and a) then
+			return 1, 1, 1, 1
+		end
+
+		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or a/255
+	end
+
 	return 1, 1, 1, 1
+end
+----------------------------------------------------------------
+function E.func_RGB2HexString(r, g, b, a)
+	a = a or 1
+
+	return string.upper(string.format("%02x%02x%02x%02x",
+		math.floor(a * 255),
+		math.floor(r * 255),
+		math.floor(g * 255),
+		math.floor(b * 255)
+	))
 end
 ----------------------------------------------------------------
 function E.func_Hex2ColorTable(hex, forcedAlpha)
 	local r, g, b, a = E.func_Hex2RGBA(hex)
 	return {r = r, g = g, b = b, a = forcedAlpha or a}
-end
-----------------------------------------------------------------
-function E.func_RGB2HexString(r, g, b, a)
-	local r, g, b, a = r, g, b, a
-	if not a then
-		a = 1
-	end
-	return utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 ----------------------------------------------------------------
 function E.func_GetNextResetTime(time)
@@ -492,19 +510,7 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 					-- if not InCombatLockdown() then
 					Octo_profileKeys.isSettingsEnabled = nil
 					if frame then
-						if func then
-							func()
-						else
-							frame:SetShown(not frame:IsShown())
-						end
-						if frame:IsShown() then
-							if SettingsPanel:IsVisible() then
-								HideUIPanel(SettingsPanel)
-							end
-							if GameMenuFrame:IsVisible() then
-								HideUIPanel(GameMenuFrame)
-							end
-						end
+						E.func_toogleMainFrame(frame)
 					end
 					-- end
 				elseif button == "RightButton" then
@@ -1463,13 +1469,14 @@ function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needI
 	local iconPart = ""
 	local colorPart = E.COLOR_PURPLE
 	-- pd.CurrentKey
-	local name, id, timeLimit, texture, backgroundTexture, mapID = C_ChallengeMode.GetMapUIInfo(OwnedKeystoneChallengeMapID)
+	local texture = E.func_GetIcon("challenge", OwnedKeystoneChallengeMapID)
+	local name = E.func_GetName("challenge", OwnedKeystoneChallengeMapID)
 	if fullName then
 		namePart = name
 	elseif not fullName and E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID] then -- dungeonID
-		namePart = E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID].abbreviation
+		namePart = E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID].abbreviation or L["UNKNOWN"]
 	else
-		namePart = name or L["UNKNOWN"]
+		namePart = name
 	end
 	if needIcon and texture then
 		iconPart = E.func_texturefromIcon(texture)
@@ -1795,31 +1802,32 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	frame:GetScript("OnShow")(frame)
 end
 ----------------------------------------------------------------
--- function E.func_OpenToCategory(frame)
--- if frame and frame:IsShown() then
--- frame:Hide()
--- end
--- if SettingsPanel:IsVisible() then
--- HideUIPanel(SettingsPanel)
--- else
--- Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
--- -- Settings.OpenToCategory(category:GetID(), E.func_GetAddOnMetadata(E.MainAddonName, "Title"))
--- -- Settings.OpenToCategory(category:GetID(), addon)
--- end
--- end
 function E.func_Create_Highlight(frame, owner)
 	frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoPropagateTemplate")
 	E.func_ApplyHighlightTemplate(frame.Highlight, frame)
+end
+----------------------------------------------------------------
+function E.func_CloseSettings()
+	if InCombatLockdown() then return end
+	if SettingsPanel:IsVisible() then
+		HideUIPanel(SettingsPanel)
+	end
+	if GameMenuFrame:IsVisible() then
+		HideUIPanel(GameMenuFrame)
+	end
 end
 function E.func_OpenToCategory(frame)
 	if InCombatLockdown() then return end
 	if frame and frame:IsShown() then
 		frame:Hide()
 	end
-	if SettingsPanel:IsVisible() then
-		HideUIPanel(SettingsPanel)
-	else
-		E.func_openConfig()
+	local id = E.main_category:GetID()
+	Settings.OpenToCategory(id, GlobalAddonName)
+end
+function E.func_toogleMainFrame(frame)
+	frame:SetShown(not frame:IsShown())
+	if frame:IsShown() then
+		E.func_CloseSettings()
 	end
 end
 ----------------------------------------------------------------
@@ -2175,8 +2183,6 @@ function E.func_isAtlas(TextureOrAtlas)
 	end
 	return false
 end
--- /dump C_Texture.GetAtlasInfo("warbands-icon")
--- /dump C_Texture.GetAtlasInfo(629077)
 ----------------------------------------------------------------
 function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	if not frame or not TextureOrAtlas then return end
@@ -2267,6 +2273,11 @@ function E.func_defaultValue_tooltip(value, reloadRequare)
 	return text
 end
 ----------------------------------------------------------------
+function E.func_auctionator_price(itemID)
+	if not AUCTIONATOR_PRICE_DATABASE then return 0 end
+	local price = Auctionator.API.v1.GetAuctionPriceByItemID(GlobalAddonName, itemID)
+	return price or 0
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

@@ -26,15 +26,6 @@ local function Collect_Currencies()
 			local useTotalEarnedForMaxQty = info.useTotalEarnedForMaxQty
 
 
-
-
-			-- if currencyID == 3310 then
-			-- 	print ("Collect_Currencies")
-			-- 	print (quantity, maxQuantity, canEarnPerWeek, quantityEarnedThisWeek, totalEarned, maxWeeklyQuantity, useTotalEarnedForMaxQty)
-			-- end
-
-
-
 			-- Получаем кэш данных аккаунтных валют
 			if not currencyCache[currencyID] and FetchCurrencyDataFromAccountCharacters then
 				currencyCache[currencyID] = FetchCurrencyDataFromAccountCharacters(currencyID)

@@ -52,34 +52,24 @@ function E.func_option_CURRENCY_ICONS(category, layout)
 	----------------------------------------------------------------
 	E.func_Header(layout, L["Icons"])
 	----------------------------------------------------------------
-	-- Octo_ToDo_DB_Vars.CONFIG_CURRENCY_ICON -------------------
+	-- Octo_ToDo_DB_Vars.CONFIG_CURRENCY_ICON ----------------------
 	----------------------------------------------------------------
 	do
-		local variable = E.func_GenerateID()
 		local variableKey = "CONFIG_CURRENCY_ICON"
 		local variableTbl = Octo_ToDo_DB_Vars
 		local name = E.func_texturefromIcon(E.func_GetIcon("currency", 1166)) .. L["Icon"]
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
-	-- Octo_ToDo_DB_Vars.CONFIG_CURRENCY_WARBAND_ICON -----------
+	-- Octo_ToDo_DB_Vars.CONFIG_CURRENCY_WARBAND_ICON --------------
 	----------------------------------------------------------------
 	do
-		local variable = E.func_GenerateID()
 		local variableKey = "CONFIG_CURRENCY_WARBAND_ICON"
 		local variableTbl = Octo_ToDo_DB_Vars
 		local name = E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE) .. L["Warband icon"]
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
 end

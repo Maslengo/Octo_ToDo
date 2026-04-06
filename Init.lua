@@ -248,17 +248,17 @@ E.COLOR_DEBUG = E.classColorHexCurrent
 E.COLOR_FUNCTION = "|cff87CDEB"
 E.COLOR_IVORY = "|cffFFF7D7"
 
-E.COLOR_REPPARAGON = "|cff00527F" -- 00A3FF
-E.COLOR_REPMAJOR = "|cff00527F" -- 00A3FF
-E.COLOR_REPFRIEND = "|cff4F3E7F"  -- 9F7CFF
-E.COLOR_REPSIMPLE_1 = "|cff7F2629" -- FF4C4F
-E.COLOR_REPSIMPLE_2 = "|cff7F2629" -- FF4C4F
-E.COLOR_REPSIMPLE_3 = "|cff7F300E" -- FF661A
-E.COLOR_REPSIMPLE_4 = "|cff7C7638" -- FFF371
-E.COLOR_REPSIMPLE_5 = "|cff7C7638" -- FFF371
-E.COLOR_REPSIMPLE_6 = "|cff277F3C" -- 4FFF79
-E.COLOR_REPSIMPLE_7 = "|cff277F3C" -- 4FFF79
-E.COLOR_REPSIMPLE_8 = "|cff277F3C" -- 4FFF79
+E.COLOR_REPPARAGON =  "|cff00A3FF"      -- "|cff00527F" -- 00A3FF
+E.COLOR_REPMAJOR =  "|cff00A3FF"      -- "|cff00527F" -- 00A3FF
+E.COLOR_REPFRIEND =  "|cff9F7CFF"      -- "|cff4F3E7F"  -- 9F7CFF
+E.COLOR_REPSIMPLE_1 =  "|cffFF4C4F"      -- "|cff7F2629" -- FF4C4F
+E.COLOR_REPSIMPLE_2 =  "|cffFF4C4F"      -- "|cff7F2629" -- FF4C4F
+E.COLOR_REPSIMPLE_3 =  "|cffFF661A"      -- "|cff7F300E" -- FF661A
+E.COLOR_REPSIMPLE_4 =  "|cffFFF371"      -- "|cff7C7638" -- FFF371
+E.COLOR_REPSIMPLE_5 =  "|cffFFF371"      -- "|cff7C7638" -- FFF371
+E.COLOR_REPSIMPLE_6 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
+E.COLOR_REPSIMPLE_7 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
+E.COLOR_REPSIMPLE_8 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
 
 
 E.FACTION_CURRENT = UnitFactionGroup("PLAYER")
@@ -281,7 +281,7 @@ E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
 E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
 E.ATLAS_RAID = "Raid"
 E.ATLAS_DUNGEON = "Dungeon"
-E.ICON_LASTRAID = 7480127
+E.ICON_FIRSTRAID = 136346 -- 7480127
 -- E.ATLAS_RAID = "questlog-questtypeicon-raid"
 -- E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
 -- E.ATLAS_RAID = "worldquest-icon-raid"
@@ -289,8 +289,14 @@ E.ICON_LASTRAID = 7480127
 E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
 -- UI-HUD-Minimap-Mail-New-Flipbook-2x
 -- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
-E.ATLAS_ACCOUNT_WIDE = "warbands-icon"-- CreateAtlasMarkup("warbands-icon", 16, 16)
-E.ATLAS_ACCOUNT_TRANSFERABLE = "warbands-transferable-icon"-- CreateAtlasMarkup("warbands-transferable-icon", 16, 16)
+
+
+-- interface/warbands/uiwarbandsicons
+E.ATLAS_ACCOUNT_WIDE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-icon" -- "warbands-icon"
+E.ATLAS_ACCOUNT_TRANSFERABLE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-transferable-icon" -- "warbands-transferable-icon"
+
+
+
 E.ATLAS_GREATVAULT = "greatvault-dragonflight-32x32" -- GreatVault-32x32
 -- "greatVault-whole-normal"
 
@@ -586,11 +592,6 @@ E.OctoTable_Launguages = {
 
 	{name = "Auto", translate = "Язык", }, -- 12
 }
-
--- for i, v in ipairs(E.OctoTable_Launguages) do
--- 	print (i, v.name, v.translate)
--- end
-
 E.CompressionMethod = Enum.CompressionMethod and Enum.CompressionMethod.Deflate or 0
 E.CompressionLevel = Enum.CompressionLevel and Enum.CompressionLevel.OptimizeForSize or 2
 E.Base64Variant = Enum.Base64Variant and Enum.Base64Variant.StandardUrlSafe or 1

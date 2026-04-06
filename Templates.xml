@@ -1,6 +1,5 @@
 <Ui>
 
-
 	<EventFrame name="OctoWowTrimhorizontalScrollBar" inherits="horizontalScrollBarTemplate" mixin="WowTrimScrollBarMixin" virtual="true">
 		<Size x="560" y="8"/>
 		<KeyValues>
@@ -147,7 +146,6 @@
 		</Scripts>
 	</EventFrame>
 
-
 	<EditBox name="OCTOEditBoxTemplate" inherits="InputBoxScriptTemplate,BackdropTemplate" multiLine="false" autoFocus="false" virtual="true">
 		<FontString inherits="GameFontHighlightSmall" justifyH="Center"/>
 		<Scripts>
@@ -164,10 +162,8 @@
 		</Scripts>
 	</EditBox>
 
-
 	<Button name="OctoPropagateTemplate" propagateMouseInput="Both" virtual="true">
 	</Button>
-
 
 	<Button name="OctoRectTemplate" inherits="OctoPropagateTemplate" virtual="true">
 		<HitRectInsets>
@@ -177,12 +173,9 @@
 
 	<Frame name="OctoBackdropTemplate" inherits="BackdropTemplate" virtual="true">
 		<Scripts>
-
-
 			<OnShow>
 				local E = OctoEngine
 				if E and E.PROFTBL and E.PROFTBL.ConfigColor_MAIN_MainFrame_r then
-
 					self:SetBackdrop(E.menuBackdrop)
 					self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
 					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
@@ -191,21 +184,13 @@
 					else
 						self:SetClampedToScreen(false)
 					end
-
-
 				end
 			</OnShow>
-
 		</Scripts>
 	</Frame>
 
-
-
-
-
 	<Frame name="OctoTooltipBackdropTemplate" propagateMouseInput="Clicks" inherits="BackdropTemplate" virtual="true">
 		<Scripts>
-
 			<OnShow>
 				local E = OctoEngine
 				if E and E.PROFTBL and E.PROFTBL.ConfigColor_MAIN_MainFrame_r then
@@ -214,56 +199,34 @@
 					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
 				end
 			</OnShow>
-
 		</Scripts>
 	</Frame>
-
-
-
-
 
 	<Frame name="OctoSettingsDropdownControlTemplate" inherits="SettingsDropdownControlTemplate" virtual="true">
 		<Scripts>
 			<OnLoad inherit="prepend">
 					local LibSFDropDown = LibStub("LibSFDropDown-1.5")
-
 					local Center = self.Control.Dropdown
 					LibSFDropDown:SetMixin(Center)
-
 					Center:ddSetDisplayMode("menu")
 					Center:ddHideWhenButtonHidden()
 					Center:ddSetNoGlobalMouseEvent(true)
 					Center:ddSetMinMenuWidth(Center:GetWidth()-24)
-
 					Center:SetScript("OnClick", function(dd)
 						if E and E.sound_OnClick then
 							E.sound_OnClick()
 						end
 						dd:ddToggle(1, nil, dd, -2, 0)
 					end)
-
 			</OnLoad>
 		</Scripts>
 	</Frame>
 
-
-
-
-
-
-	<!-- Наш фрейм с миксином, который наследует от ColorOverrideTemplate -->
 	<Frame name="ColorOverride" mixin="ColorOverrideMixin" inherits="ColorOverrideTemplate" virtual="true">
 		<Scripts>
 			<OnLoad>
 			</OnLoad>
 		</Scripts>
 	</Frame>
-
-
-
-
-
-
-
 
 </Ui>

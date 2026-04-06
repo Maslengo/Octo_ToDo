@@ -6,13 +6,9 @@ function E.func_option_CHARACTER(category, layout)
 	----------------------------------------------------------------
 	E.func_Header(layout, L["Characters"])
 	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- 1. Octo_ToDo_DB_Vars.Config_LevelToShow
+	-- Octo_ToDo_DB_Vars.Config_LevelToShow ------------------------
 	----------------------------------------------------------------
 	do
-		-- RegisterProxySetting example. This will run the GetValue and SetValue
-		-- callbacks whenever access to the setting is required.
-		local variable = E.func_GenerateID()
 		local variableKey = "Config_LevelToShow"
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
@@ -20,26 +16,12 @@ function E.func_option_CHARACTER(category, layout)
 		local minValue = 1
 		local maxValue = 90
 		local step = 1
-		local function GetValue()
-			return variableTbl[variableKey] or defaultValue
-		end
-		local function SetValue(value)
-			variableTbl[variableKey] = value
-		end
-		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
-		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
-		Settings.CreateSlider(category, setting, options, tooltip)
+		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	end
 	----------------------------------------------------------------
-	-- 2. Octo_ToDo_DB_Vars.Config_LevelToShowMAX
+	-- Octo_ToDo_DB_Vars.Config_LevelToShowMAX ---------------------
 	----------------------------------------------------------------
 	do
-		-- RegisterProxySetting example. This will run the GetValue and SetValue
-		-- callbacks whenever access to the setting is required.
-		local variable = E.func_GenerateID()
 		local variableKey = "Config_LevelToShowMAX"
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
@@ -47,21 +29,10 @@ function E.func_option_CHARACTER(category, layout)
 		local minValue = 1
 		local maxValue = 90
 		local step = 1
-		local function GetValue()
-			return variableTbl[variableKey] or defaultValue
-		end
-		local function SetValue(value)
-			variableTbl[variableKey] = value
-		end
-		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local options = Settings.CreateSliderOptions(minValue, maxValue, step)
-		options:SetLabelFormatter(MinimalSliderWithSteppersMixin.Label.Right)
-		Settings.CreateSlider(category, setting, options, tooltip)
+		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	end
 	----------------------------------------------------------------
-	-- 3. isOnlyCurrentBtag
+	-- isOnlyCurrentBtag -------------------------------------------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
@@ -69,13 +40,10 @@ function E.func_option_CHARACTER(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Only Current BattleTag"]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
-	-- 5. ShowOnlyCurrentRegion
+	-- ShowOnlyCurrentRegion ---------------------------------------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
@@ -83,13 +51,10 @@ function E.func_option_CHARACTER(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Only Current Region"]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
-	-- 3. isOnlyCurrentServer
+	-- isOnlyCurrentServer -----------------------------------------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
@@ -97,13 +62,10 @@ function E.func_option_CHARACTER(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Only Current Server"]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
-	-- 4. isOnlyCurrentFaction
+	-- isOnlyCurrentFaction ----------------------------------------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
@@ -120,9 +82,6 @@ function E.func_option_CHARACTER(category, layout)
 			return result
 		end
 		local name = funcName()
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 end

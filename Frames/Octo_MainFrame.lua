@@ -110,8 +110,10 @@ local func_OnAcquiredLeft do
 		Create_TextureLeft(frame)
 		E.func_Create_Highlight(frame, owner)
 		-- AdditionalSettings(frame, "func_OnAcquiredLeft")
-		frame:SetScript("OnHide", function() frame.Highlight:Hide() end)
-		frame:SetScript("OnShow", function() frame.Highlight:Show() end)
+		if frame.Highlight then
+			frame:SetScript("OnHide", function() frame.Highlight:Hide() end)
+			frame:SetScript("OnShow", function() frame.Highlight:Show() end)
+		end
 	end
 end
 ----------------------------------------------------------------
@@ -182,14 +184,14 @@ local function func_SettingsButton_OnClick(button, frameData)
 	button:GetParent().SettingsTexture:SetTexture(texture)
 end
 ----------------------------------------------------------------
-local function instullTEXTURE(FTEXT, FRAME, ICON)
+local function instullTEXTURE(frameTexture, frame, ICON)
 	local isAtlas = E.func_isAtlas(ICON)
 	if isAtlas then
-		FTEXT:SetAtlas(ICON, false)
+		frameTexture:SetAtlas(ICON, false)
 	else
-		FTEXT:SetTexture(ICON)
+		frameTexture:SetTexture(ICON)
 	end
-	FRAME:Show()
+	frame:Show()
 end
 ----------------------------------------------------------------
 local function func_Setup_Currencies(frame, id)

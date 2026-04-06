@@ -14,6 +14,7 @@ local GlobalAddonName, E = ...
 -- },
 -- Таблица с переводами
 E.translations = {
+	----------------------------------------------------------------
 	["NEW"] = NEW,
 	-- CREATE_PROFESSION - Создать
 	-- CREATE_ARENA_TEAM - Создать
@@ -23,8 +24,34 @@ E.translations = {
 	-- COMMUNITIES_CREATE - Создать
 	-- BATTLETAG_CREATE - Создать
 	-- CREATE_COMPACT_UNIT_FRAME_PROFILE - Создать
+	----------------------------------------------------------------
+	["SYSTEM"] = SYSTEM,  -- Настройки
+	-- ["MAIN_MENU"] = MAIN_MENU,  -- Настройки
+	-- ["SETTING_GROUP_SYSTEM"] = SETTING_GROUP_SYSTEM,  -- Настройки
+	-- ["GAMEOPTIONS_MENU"] = GAMEOPTIONS_MENU,  -- Настройки
+	----------------------------------------------------------------
+	["OPTIONS"] = OPTIONS, -- Параметры
+	-- ["COMMUNITIES_ADD_TO_CHAT_DROP_DOWN_CHAT_SETTINGS"] = COMMUNITIES_ADD_TO_CHAT_DROP_DOWN_CHAT_SETTINGS,  -- Параметры
+	-- ["CHAT_CONFIGURATION"] = CHAT_CONFIGURATION,  -- Параметры
+	-- ["RAID_BUFF_1"] = RAID_BUFF_1,  -- Параметры
+	-- ["PET_BATTLE_STATS_LABEL"] = PET_BATTLE_STATS_LABEL,  -- Параметры
+	-- ["EVENTTRACE_OPTIONS"] = EVENTTRACE_OPTIONS,  -- Параметры
+	-- ["SETTINGS"] = SETTINGS,  -- Параметры
+	-- ["SETTINGS_TITLE"] = SETTINGS_TITLE,  -- Параметры
+	-- ["GAMEMENU_OPTIONS"] = GAMEMENU_OPTIONS, -- Параметры
+	----------------------------------------------------------------
 
-
+	["MAW_BUFF_QUALITY_STRING_EPIC"] = MAW_BUFF_QUALITY_STRING_EPIC, --  "|cffa335eeЭпическое|r"
+	["MAW_BUFF_QUALITY_STRING_RARE"] = MAW_BUFF_QUALITY_STRING_RARE, -- "|cff0070ddРедкое|r"
+	["MAW_BUFF_QUALITY_STRING_UNCOMMON"] = MAW_BUFF_QUALITY_STRING_UNCOMMON, -- "|cff1eff00Необычное|r"
+	["MAW_BUFF_QUALITY_STRING_COMMON"] = MAW_BUFF_QUALITY_STRING_COMMON, -- "|cffffffffОбычное|r"
+	["BROWSER_CLEAR_CACHE"] = BROWSER_CLEAR_CACHE, -- Очистить кэш
+	["RELOADUI"] = RELOADUI, -- Перезагрузка
+	["REQUIRES_RELOAD"] = REQUIRES_RELOAD, -- Перезагрузите интерф.
+	["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] = CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL,
+	["CUSTOM"] = CUSTOM,
+	["ACCESSIBILITY_MOUNT_LABEL"] = ACCESSIBILITY_MOUNT_LABEL,
+	["ID"] = ID,
 	["FACTION_STANDING_LABEL1"] = FACTION_STANDING_LABEL1,
 	["FACTION_STANDING_LABEL2"] = FACTION_STANDING_LABEL2,
 	["FACTION_STANDING_LABEL3"] = FACTION_STANDING_LABEL3,
@@ -33,12 +60,6 @@ E.translations = {
 	["FACTION_STANDING_LABEL6"] = FACTION_STANDING_LABEL6,
 	["FACTION_STANDING_LABEL7"] = FACTION_STANDING_LABEL7,
 	["FACTION_STANDING_LABEL8"] = FACTION_STANDING_LABEL8,
-
-
-
-
-
-
 	["RAIDS"] = RAIDS,
 	["DUNGEONS"] = DUNGEONS,
 	["COLOR"] = COLOR,
@@ -55,7 +76,6 @@ E.translations = {
 	["PVP_OPTIONS"] = PVP_OPTIONS,
 	["CUSTOM"] = CUSTOM, -- ("Вручную")
 	["OTHER"] = OTHER, -- ("Другое")
-	["OPTIONS"] = OPTIONS,
 	["YES"] = YES,
 	["NO"] = NO,
 	["CURSOR_SIZE_DEFAULT"] = CURSOR_SIZE_DEFAULT,
@@ -91,7 +111,6 @@ E.translations = {
 	["FRIENDS_LIST_OFFLINE"] = FRIENDS_LIST_OFFLINE,
 	["FRIENDS_LIST_ONLINE"] = FRIENDS_LIST_ONLINE,
 	["FRIENDS_LIST_ZONE"] = FRIENDS_LIST_ZONE,
-	["GAMEMENU_OPTIONS"] = GAMEMENU_OPTIONS,
 	["GARRISON_CACHE"] = GARRISON_CACHE,
 	["ITEM_QUALITY1_DESC"] = ITEM_QUALITY1_DESC,
 	["ITEM_QUALITY2_DESC"] = ITEM_QUALITY2_DESC,

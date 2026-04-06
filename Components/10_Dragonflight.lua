@@ -25,18 +25,19 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 2122, defS = true,},
-		{id = 2118, defS = true,},
-		{id = 2003, defS = true,},
-		{id = 2245, defS = true,},
-		{id = 2594, defS = true,},
-		-- {id = 2812, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
-		-- {id = 2809, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
-		-- {id = 2807, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
-		-- {id = 2806, defS = false,}, -- (УСТАРЕЛО АСПЕКТЫ )
+		{id = 2594, defS = false,}, -- Added in patch 10.1.5 "Fractures in Time"
+		{id = 2003, defS = true,}, -- Added in patch 10.1.0 "Embers of Neltharion"
+		{id = 2245, defS = true,}, -- Added in patch 10.1.0 "Embers of Neltharion"
+		{id = 2122, defS = true,}, -- Added in patch 10.0.0 "Dragonflight"
+		{id = 2118, defS = true,}, -- Added in patch 10.0.0 "Dragonflight"
+
+		{id = 2812, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
+		{id = 2809, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
+		{id = 2807, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
+		{id = 2806, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
 		-- Dragonflight
 		-- https://warcraft.wiki.gg/wiki/Catalyst
-		{id = 2912, defS = true,}, -- Renascent Awakening ()
+		{id = 2912, defS = false,}, -- Renascent Awakening ()
 		{id = 2796, defS = false,}, -- Renascent Dream (Season 3)
 		{id = 2533, defS = false,}, -- Renascent Shadowflame (Season 2)
 		{id = 2167, defS = false,}, -- Catalyst Charges (Season 1)
@@ -127,8 +128,8 @@ local function tempFunction()
 				-- {rewID = 201924, rewTYPE = "item", rewSIZE = 1,},
 				-- {rewID = 201921, rewTYPE = "item", rewSIZE = 1,},
 				-- {rewID = 201922, rewTYPE = "item", rewSIZE = 1,},
-				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
-				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				{rewID = 2031, rewTYPE = "currency", rewSIZE = 500,}, --
 				{rewID = 2106, rewTYPE = "currency", rewSIZE = 500,}, --
@@ -166,7 +167,7 @@ local function tempFunction()
 				return E.Timers.DF_CommunityFeast()..E.func_GetName("quest", 70893, false)
 			end,
 			name_save = "CommunityFeast",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -175,8 +176,8 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				{rewID = 200095, rewTYPE = "item", rewSIZE = 1,},
-				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
-				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
 
@@ -184,6 +185,7 @@ local function tempFunction()
 			-- forcedMaxQuest = 1,
 		},
 		{
+			-- https://wowpedia.fandom.com/wiki/Siege_on_Dragonbane_Keep
 			showTooltip = true,
 			TextLeft = function()
 				return E.Timers.DF_ToDragonbaneKeep()..L["Siege on Dragonbane Keep"]
@@ -195,9 +197,20 @@ local function tempFunction()
 			quests = {
 				{70866, forcedText = {text = L["Siege on Dragonbane Keep"]},},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 200072, rewTYPE = "item", rewSIZE = 1, addText = "(first of the week)",},
+				{rewID = 202142, rewTYPE = "item", rewSIZE = 1, addText = "(all subsequent completions)",},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 2106, rewTYPE = "currency", rewSIZE = 50,}, -- Valdrakken Accord
+			},
 			-- forcedMaxQuest = 1,
 		},
 		{
+			-- https://wowpedia.fandom.com/wiki/Grand_Hunt
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				return E.Timers.DF_GrandHunts()..L["Grand Hunt"]
@@ -207,11 +220,22 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{70906, forcedText = {text = L["Grand Hunt"]},},
+				{70906, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_EPIC"]}},
+				{71136, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_RARE"]}},
+				{71137, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_UNCOMMON"]}},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 200468, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 2108, rewTYPE = "currency", rewSIZE = 90,}, -- Maruuk Centaur
 			},
 			-- forcedMaxQuest = 1,
 		},
 		{
+			-- https://wowpedia.fandom.com/wiki/Storm%27s_Fury
 			showTooltip = true,
 			TextLeft = function()
 				return E.Timers.DF_PrimalStorms()..L["The Storm's Fury"]
@@ -223,6 +247,15 @@ local function tempFunction()
 			quests = {
 				{73162, forcedText = {text = L["The Storm's Fury"]},},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 202371, rewTYPE = "item", rewSIZE = 1, addText = "(first of the week)",},
+				{rewID = 203476, rewTYPE = "item", rewSIZE = 1, addText = "(all subsequent completions)",},
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 2106, rewTYPE = "currency", rewSIZE = 50,}, -- Valdrakken Accord
+			},
 			-- forcedMaxQuest = 1,
 		},
 		{
@@ -231,7 +264,7 @@ local function tempFunction()
 				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78444, true)
 			end,
 			name_save = "EmeraldDream_AWorthyAllyDreamWardens",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
@@ -241,8 +274,8 @@ local function tempFunction()
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				{rewID = 210872, rewTYPE = "item", rewSIZE = 1,},
 				{rewID = 210421, rewTYPE = "item", rewSIZE = 1,},
-				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
-				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				{rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
 
@@ -255,11 +288,20 @@ local function tempFunction()
 				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78821, false)
 			end,
 			name_save = "EmeraldDream_BloomingDreamseeds",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{78821},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 211394, rewTYPE = "item", rewSIZE = 1,},
+				{rewID = 211376, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
+
 			},
 			forcedMaxQuest = 1,
 		},
@@ -269,11 +311,19 @@ local function tempFunction()
 				return E.func_GetName("map", 2200)..": "..E.Timers.DF_Flower()..E.func_GetName("quest", 78319, false)
 			end,
 			name_save = "EmeraldDream_TheSuperbloom",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{78319},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 211389, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
+
 			},
 			forcedMaxQuest = 1,
 		},
@@ -284,7 +334,7 @@ local function tempFunction()
 				return E.func_GetName("map", 2200)..": ".."Rares"
 			end,
 			name_save = "EmeraldDream_Rares",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -362,6 +412,14 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{78381},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 208396, rewTYPE = "item", rewSIZE = 2,},
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
+
 			},
 			forcedMaxQuest = 1,
 		},
@@ -450,11 +508,20 @@ local function tempFunction()
 				return E.func_GetName("map", 2133)..": "..E.func_GetName("quest", 75665, true)
 			end,
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{75665},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 205983, rewTYPE = "item", rewSIZE = 1,},
+				{rewID = 205985, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				{rewID = 2420, rewTYPE = "currency", rewSIZE = 500,}, -- Loamm Niffen
+
+
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -465,7 +532,7 @@ local function tempFunction()
 				return E.func_GetName("map", 2133)..": ".."Rares"
 			end,
 			name_save = "ZaralekCavernRares",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -584,19 +651,31 @@ local function tempFunction()
 			-- forcedMaxQuest = 12,
 		},
 		{
+			-- https://wowpedia.fandom.com/wiki/Researchers_Under_Fire
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetName("map", 2133)..": "..E.func_GetName("quest", 74906, false).." "..E.Timers.DF_ResearchersUnderFire()
 			end,
 			name_save = "ResearchersUnderFire",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{75630, forcedText = {text = MAW_BUFF_QUALITY_STRING_EPIC}},
-				{75629, forcedText = {text = MAW_BUFF_QUALITY_STRING_RARE}},
-				{75628, forcedText = {text = MAW_BUFF_QUALITY_STRING_UNCOMMON}},
-				{75627, forcedText = {text = MAW_BUFF_QUALITY_STRING_COMMON}},
+				{75630, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_EPIC"]}},
+				{75629, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_RARE"]}},
+				{75628, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_UNCOMMON"]}},
+				{75627, forcedText = {text = L["MAW_BUFF_QUALITY_STRING_COMMON"]}},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 205367, rewTYPE = "item", rewSIZE = 1, addText = L["MAW_BUFF_QUALITY_STRING_EPIC"]}, -- 205372
+				{rewID = 205368, rewTYPE = "item", rewSIZE = 1, addText = L["MAW_BUFF_QUALITY_STRING_RARE"]}, -- 205374
+				{rewID = 205369, rewTYPE = "item", rewSIZE = 1, addText = L["MAW_BUFF_QUALITY_STRING_UNCOMMON"]}, -- 205371
+				{rewID = 205370, rewTYPE = "item", rewSIZE = 1, addText = L["MAW_BUFF_QUALITY_STRING_COMMON"]}, -- 205373
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
+
 			},
 			-- forcedMaxQuest = 4,
 		},
@@ -607,7 +686,7 @@ local function tempFunction()
 				return E.func_GetName("map", 2151)..": ".."Rares" -- Запретный край.
 			end,
 			name_save = "TheForbiddenReachRares",
-			defS = true,
+			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
@@ -640,6 +719,7 @@ local function tempFunction()
 			-- forcedMaxQuest = 25,
 		},
 		{
+			-- https://wowpedia.fandom.com/wiki/Storm-Bound_Chest
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetName("map", 2151)..": "..L["Storm-Bound Chest"]
@@ -651,9 +731,16 @@ local function tempFunction()
 			quests = {
 				{74567, forcedText = {text = L["Storm-Bound Chest"]},},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 202196, rewTYPE = "item", rewSIZE = 1}, -- 205372
+				{rewID = 2118, rewTYPE = "currency", rewSIZE = 600,}, --
+
+			},
 			-- forcedMaxQuest = 1,
 		},
 		{
+			-- https://wowpedia.fandom.com/wiki/Keys_of_Loyalty
 			showTooltip = true,
 			TextLeft = function()
 				return E.func_GetName("map", 2022)..": "..E.func_GetName("quest", 66133, false)
@@ -664,6 +751,16 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{66133},
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				-- {rewID = 202196, rewTYPE = "item", rewSIZE = 1}, -- 205372
+
+				-- +1000 reputation with Sabellian or Wrathion
+				{rewID = 2518, rewTYPE = "reputation", rewSIZE = 1000,}, -- Sabellian
+				{rewID = 2517, rewTYPE = "reputation", rewSIZE = 1000,}, -- Wrathion
+				-- {rewID = 2510, rewTYPE = "reputation", rewSIZE = 100,}, -- Valdrakken Accord
+				{rewID = 2106, rewTYPE = "currency", rewSIZE = 100,}, -- Valdrakken Accord
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -753,8 +850,8 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				{rewID = 208090, rewTYPE = "item", rewSIZE = 1,},
-				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
-				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
 
@@ -765,7 +862,7 @@ local function tempFunction()
 			showTooltip = true,
 			TextLeft = E.func_GetName("achievement", 18554),
 			name_save = "TemporalAcquisitionsSpecialist",
-			defS = true,
+			defS = false,
 			reset = "Normal",
 			desc = categoryKey,
 			quests = {
@@ -804,8 +901,8 @@ local function tempFunction()
 				-- {rewID = 201924, rewTYPE = "item", rewSIZE = 1,},
 				-- {rewID = 201921, rewTYPE = "item", rewSIZE = 1,},
 				-- {rewID = 201922, rewTYPE = "item", rewSIZE = 1,},
-				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
-				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				{rewID = 2166, rewTYPE = "currency", rewSIZE = 1,},
 				-- {rewID = 2031, rewTYPE = "currency", rewSIZE = 500,}, --
 				-- {rewID = 2106, rewTYPE = "currency", rewSIZE = 500,}, --

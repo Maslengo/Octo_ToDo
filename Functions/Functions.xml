@@ -4,7 +4,6 @@
 	<Script file="Functions\Functions_DEBUG.lua"/>
 	<Script file="Functions\Functions_profileColors.lua"/>
 	<Script file="Functions\Functions_profileKeys.lua"/>
-	<Script file="Functions\Functions_Unused.lua"/>
 
 	<Script file="Functions\tooltip_LEFT.lua"/>
 	<Script file="Functions\tooltip_RIGHT.lua"/>

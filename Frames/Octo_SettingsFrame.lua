@@ -99,10 +99,6 @@ function EventFrame:func_CreateOcto_SettingsFrame()
 	end)
 	----------------------------------------------------------------
 end
-function EventFrame:func_Octo_Options()
-	Octo_Options = Octo_Options or {}
-	Octo_Options.fontSize = Octo_Options.fontSize or 12
-end
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_LOGIN",

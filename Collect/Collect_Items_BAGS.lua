@@ -68,8 +68,6 @@ local function Collect_Items_BAGS()
 						local CurrentItemLevel = C_Item.GetCurrentItemLevel(itemLocation)
 						local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
 						local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
-						-- local xyz = tostring(bagID)..tostring(slotIndex)
-						-- print (ItemLink, Quality)
 						collectMASLENGO.Items.Bags_FULL[itemID] = {
 							itemID = itemID,
 							ItemName = ItemName,

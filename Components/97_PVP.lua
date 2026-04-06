@@ -57,9 +57,9 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
-				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
 				{rewID = 1792, rewTYPE = "currency", rewSIZE = 500,}, -- Honor
 				{rewID = 2123, rewTYPE = "currency", rewSIZE = 150,}, -- Bloody Tokens
 				{rewID = 3410, rewTYPE = "currency", rewSIZE = 1000,}, -- Slayer's Duellum
@@ -86,9 +86,9 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				{rewID = 232875, rewTYPE = "item", rewSIZE = 1 }, -- Spark of Radiance
-				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
 				{rewID = 2123, rewTYPE = "currency", rewSIZE = 1000,}, -- Bloody Tokens
 				{rewID = 1792, rewTYPE = "currency", rewSIZE = 500,}, -- Honor
 				{rewID = 1602, rewTYPE = "currency", rewSIZE = 50,}, -- Conquest

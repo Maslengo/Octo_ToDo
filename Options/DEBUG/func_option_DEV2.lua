@@ -20,22 +20,7 @@ function E.func_option_DEV2(category, layout)
 			local str = E.getStringFromData(Octo_ToDo_DB_Levels, true)
 			E.ShowImportExportFrame(str)
 		end
-		local tooltip = L["tooltip text"]
-		local addSearchTags = true
-		local newTagID = nil
-		local gameDataFunc = nil
-		local initializer =
-			CreateSettingsButtonInitializer(
-			name,
-			buttonText,
-			buttonClick,
-			tooltip,
-			addSearchTags,
-			newTagID,
-			gameDataFunc
-		)
-		local addonLayout = SettingsPanel:GetLayout(category)
-		addonLayout:AddInitializer(initializer)
+		E.func_Options_CreateButton(category, name, buttonText, buttonClick)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -48,22 +33,7 @@ function E.func_option_DEV2(category, layout)
 			-- opde(E.OctoTable_KeystoneAbbr)
 			E.ShowImportExportFrame()
 		end
-		local tooltip = L["tooltip text"]
-		local addSearchTags = true
-		local newTagID = nil
-		local gameDataFunc = nil
-		local initializer =
-			CreateSettingsButtonInitializer(
-			name,
-			buttonText,
-			buttonClick,
-			tooltip,
-			addSearchTags,
-			newTagID,
-			gameDataFunc
-		)
-		local addonLayout = SettingsPanel:GetLayout(category)
-		addonLayout:AddInitializer(initializer)
+		E.func_Options_CreateButton(category, name, buttonText, buttonClick)
 	end
 	----------------------------------------------------------------
 	----------------------------------------------------------------
@@ -76,27 +46,12 @@ function E.func_option_DEV2(category, layout)
 				if not Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS then return end
 				local data = E.getDataFromString(E.Octo_DevTool_DB_DATA, true)
 				if not data then
-					print("|cffff0000Import failed:|r", err)
+					E.func_PrintMessage("|cffff0000Import failed:|r", err)
 					return
 				end
 				E.func_workWitchMyTable(data)
 			end
-			local tooltip = L["tooltip text"]
-			local addSearchTags = true
-			local newTagID = nil
-			local gameDataFunc = nil
-			local initializer =
-				CreateSettingsButtonInitializer(
-				name,
-				buttonText,
-				buttonClick,
-				tooltip,
-				addSearchTags,
-				newTagID,
-				gameDataFunc
-			)
-			local addonLayout = SettingsPanel:GetLayout(category)
-			addonLayout:AddInitializer(initializer)
+			E.func_Options_CreateButton(category, name, buttonText, buttonClick)
 		end
 	end
 	----------------------------------------------------------------

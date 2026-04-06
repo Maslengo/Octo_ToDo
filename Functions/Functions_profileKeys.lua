@@ -34,8 +34,9 @@ local function func_InitializeProfileStructure_profileKeys(profileName)
 	E.func_InitSubTable(db, "profiles")
 	E.func_InitSubTable(db.profiles, profileName)
 	local profile = db.profiles[profileName]
+	local lastExp = E.func_GetCurrentExpansion()
 	E.func_InitField(profile, "ExpansionToShow", {
-		[12] = true, -- MIDNIGHT
+		[lastExp] = true, -- [12] = true, -- MIDNIGHT
 		[96] = true, -- MPLUS
 		-- [97] = false, -- PVP
 		[99] = true -- OTHER

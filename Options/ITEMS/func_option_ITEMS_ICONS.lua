@@ -6,7 +6,7 @@ function E.func_option_ITEMS_ICONS(category, layout)
 	----------------------------------------------------------------
 	E.func_Header(layout, L["Icons"])
 	----------------------------------------------------------------
-	-- 1. Octo_ToDo_DB_Vars.CONFIG_ITEMS_ICON ----------
+	-- Octo_ToDo_DB_Vars.CONFIG_ITEMS_ICON -------------------------
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
@@ -14,10 +14,7 @@ function E.func_option_ITEMS_ICONS(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local name = E.func_texturefromIcon(E.func_GetIcon("item", 36942)) .. L["Icon"]
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
 end

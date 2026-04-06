@@ -144,7 +144,7 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = CUSTOM,
+						name = L["CUSTOM"],
 						hasAlpha = true,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_CharHeader_r
@@ -200,7 +200,7 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "range",
-						name = CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL,
+						name = L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"],
 						min = 0,
 						max = 1,
 						step = .01,
@@ -223,7 +223,7 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = CUSTOM,
+						name = L["CUSTOM"],
 						hasAlpha = true,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_CharLines_r
@@ -279,7 +279,7 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "range",
-						name = CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL,
+						name = L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"],
 						min = 0,
 						max = 1,
 						step = .01,
@@ -302,7 +302,7 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "color",
-						name = CUSTOM,
+						name = L["CUSTOM"],
 						hasAlpha = true,
 						get = function()
 							local r = E.PROFTBL.ConfigColor_Highlight_r
@@ -358,7 +358,7 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 					[E.func_AutoKey()] = {
 						type = "range",
-						name = CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL,
+						name = L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"],
 						min = 0,
 						max = 1,
 						step = .01,

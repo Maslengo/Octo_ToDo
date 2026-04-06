@@ -13,12 +13,9 @@ function E.func_option_RAIDS_ICONS(category, layout)
 		local variable = E.func_GenerateID()
 		local variableKey = "CONFIG_RAIDS_ICON"
 		local variableTbl = Octo_ToDo_DB_Vars
-		local name = E.func_texturefromIcon(E.ICON_LASTRAID) .. L["Icon"]
+		local name = E.func_texturefromIcon(E.ICON_FIRSTRAID) .. L["Icon"]
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 
 	----------------------------------------------------------------
@@ -30,10 +27,7 @@ function E.func_option_RAIDS_ICONS(category, layout)
 		local variableTbl = Octo_ToDo_DB_Vars
 		local name = E.func_texturefromIcon(E.ATLAS_RAID) .. L["Extra icon"]
 		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
-		local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, variableTbl, type(defaultValue), name, defaultValue)
-		setting:SetValueChangedCallback(E.func_UpdateGlobals)
-		local tooltip = E.func_defaultValue_tooltip(defaultValue)
-		local initializer = Settings.CreateCheckbox(category, setting, tooltip)
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 
 	----------------------------------------------------------------

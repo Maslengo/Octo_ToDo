@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
-if not E.IsMidnight then return end
+-- if not E.IsMidnight then return end
 local L = E.L
 ----------------------------------------------------------------
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
@@ -32,37 +32,18 @@ local category999name = E.COLOR_GRAY..L["BINDING_HEADER_DEBUG"].."|r"
 local main_category, main_layout = Settings.RegisterVerticalLayoutCategory(category1name)
 Settings.RegisterAddOnCategory(main_category)
 local parentCategory = main_category
-----------------------------------------------------------------
--- OPEN CONFIG
-----------------------------------------------------------------
-function E.func_openConfig()
-	if SettingsPanel:IsVisible() and self:IsVisible() then
-		if InCombatLockdown() then return end
-		HideUIPanel(SettingsPanel)
-	else
-		Settings.OpenToCategory(main_category:GetID(), GlobalAddonName)
-	end
-	--     if C_SettingsUtil and E.SettingsCategoryID then
-	--         C_SettingsUtil.OpenSettingsPanel(E.SettingsCategoryID) -- 5
-	--     elseif Settings then
-	--         Settings.OpenToCategory(E.func_GetAddOnMetadata(E.MainAddonName, "Title"), true)
-	--     end
-end
-SLASH_OCTO_TODO_OPTIONS1 = "/octosettings"
-SlashCmdList["OCTO_TODO_OPTIONS"] = function() E.func_openConfig() end
+E.main_category = main_category
 ----------------------------------------------------------------
 local MyEventsTable = {
 	"PLAYER_LOGIN",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
-	Octo_Options = Octo_Options or {}
 	----------------------------------------------------------------
 	-- 0 -----------------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
-
 		if enable then
 			if E.func_option_FONT then
 				E.func_option_FONT(main_category, main_layout)
@@ -186,17 +167,6 @@ function EventFrame:PLAYER_LOGIN()
 	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
 	-- 		E.func_option_COLOR_PROFILE(category, layout)
 	-- 		E.func_option_COLOR_MAIN(category, layout)
-	-- 	end
-	-- end
-	----------------------------------------------------------------
-	-- 998 ---------------------------------------------------------
-	----------------------------------------------------------------
-	-- do
-	-- 	local enable = true
-	-- 	if enable and E.func_option_userscript then
-	-- 		local category2, layout2 = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category4name)
-	-- 		local category, layout = category2, layout2
-	-- 		E.func_option_userscript(category, layout)
 	-- 	end
 	-- end
 	----------------------------------------------------------------

@@ -110,6 +110,12 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 		-- TextLeft = E.COLOR_WOW_EPIC..L["Mythic Keystone"].."|r"
 		IconLeft = 4352494
 	end
+	if id == "PlayerInventory" then
+		TextLeft = "INVENTORY"
+	end
+	if id == "PlayerBANK" then
+		TextLeft = "BANK"
+	end
 	if id == "HeartofAzeroth" then
 		TextLeft = E.func_GetName("item", 158075)
 		IconLeft = E.func_GetIcon("item", 158075)

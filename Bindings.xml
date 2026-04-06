@@ -1,7 +1,9 @@
 <Bindings>
+
 	<Binding
 		name = "|cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo: ReloadUI"
 		category = "ADDONS">
 		ReloadUI()
 	</Binding>
+
 </Bindings>

@@ -72,7 +72,8 @@ local function Collect_Reputations()
 			repType = 1
 			hasValidData = true
 			-- data = GetFactionInfoByID(id)
-			local _, _, reaction, barMin, barMax, barValue = GetFactionInfoByID(reputationID)
+			local _, _, standingID, barMin, barMax, barValue = GetFactionInfoByID(reputationID)
+			reaction = standingID
 			FIRST = barValue-barMin -- currentValue
 			SECOND = barMax-barMin -- totalValue
 		end

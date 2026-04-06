@@ -17,6 +17,7 @@ local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
 local GetMonthInfo = GetMonthInfo or C_Calendar.GetMonthInfo
 local SetAbsMonth = SetAbsMonth or C_Calendar.SetAbsMonth
 local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
+local GetMapUIInfo = GetMapUIInfo or C_ChallengeMode.GetMapUIInfo
 ----------------------------------------------------------------
 local function GetOrCreateCache_Name(category)
 	Octo_Cache_DB = Octo_Cache_DB or {}
@@ -199,7 +200,6 @@ handler.item = function(Cache_Name, Cache_Quality, category, id)
 		if type(name) == "string" and name ~= "" and quality then
 		    name = E.func_GetQualityHexColor(quality) .. name .. "|r"
 		else
-			print ("QWEQWE")
 		    name = E.COLOR_PURPLE .. L["UNKNOWN"].."|r"
 		end
 	end
@@ -667,6 +667,24 @@ handler.specialization = function(Cache_Name, Cache_Quality, category, id)
 	------------
 	return name
 end
+
+handler.challenge = function(Cache_Name, Cache_Quality, category, id)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local n = GetMapUIInfo(id)
+		if n and n ~= "" then
+			name = func_Cache_Name(id, Cache_Name, n, category)
+		end
+	end
+	return name
+
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -708,10 +726,9 @@ function E.func_GetName(category, id, forcedQuality)
 		name = name..(hasMount and E.COLOR_RED.."*|r" or "")
 	end
 	----------------
-	if type(name) ~= "string" then
-		error()
-		print (name)
-	end
+	-- if type(name) ~= "string" then
+	-- 	error()
+	-- end
 	local result = name -- E.func_translit and E.func_translit(name) or name
 	return result..debugTEXT
 end
@@ -726,6 +743,11 @@ function E.func_GetIcon(category, id)
 			icon = E.func_GetItemIconByID(id) or icon
 		elseif category == "spell" then
 			icon = E.func_GetSpellTexture(id) or icon
+		elseif category == "reputation" then
+			icon = E.ICON_TABARD
+		elseif category == "challenge" then
+			local texture = select(4, GetMapUIInfo(id))
+			icon = texture
 		end
 	end
 

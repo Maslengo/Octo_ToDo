@@ -273,7 +273,6 @@ local function tempFunction()
 			defS = false,
 			reset = "Normal",
 			desc = categoryKey,
-			-- /run local q,n={93372,93384,93385,93386,93409,93410,93416,93421,93427,93428},{"Encl","Coll","Dark","Plaz","Atal","Twil","Gulf","Grud","Sunk","Shad"}for i,v in ipairs(q)do print(n[i],C_QuestLog.IsQuestFlaggedCompleted(v)and"OK"or"L["NO"]")end
 			-- https://www.wowhead.com/quest=93385/delvers-call-the-darkway#comments
 			quests = {
 				{nil, addText = {mapID = 2393},}, -- Silvermoon City
@@ -300,7 +299,7 @@ local function tempFunction()
 			},
 			-- rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 232049, rewTYPE = "item", rewSIZE = nil, addtext = ""}, -- Pinnacle Cache
+				-- {rewID = 232049, rewTYPE = "item", rewSIZE = nil, addText = ""}, -- Pinnacle Cache
 				-- {rewID = 2815, rewTYPE = "currency", rewSIZE = 100,}, -- Resonance Crystals
 				-- {rewID = 3278, rewTYPE = "currency", rewSIZE = nil,}, -- Ethereal Strands
 			-- },
@@ -348,9 +347,9 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 263465, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268489, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269701, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Season 1)
+				{rewID = 263465, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268489, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269701, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Surplus Bag of Party Favors (Pinnacle Cache - Midnight Season 1)
 				{rewID = 3316, rewTYPE = "currency", rewSIZE = 200,}, -- Silvermoon Court
 				{rewID = 3365, rewTYPE = "currency", rewSIZE = 2000,}, -- Silvermoon Court
 				{rewID = 3379, rewTYPE = "currency", rewSIZE = 275,}, -- Brimming Arcana
@@ -392,9 +391,9 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 263466, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268488, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269702, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Season 1)
+				{rewID = 263466, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268488, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269702, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Overflowing Abundant Satchel (Pinnacle Cache - Midnight Season 1)
 				{rewID = 3310, rewTYPE = "currency", rewSIZE = 50,}, -- Coffer Key Shards
 				{rewID = 3316, rewTYPE = "currency", rewSIZE = 200,}, -- Voidlight Marl
 				{rewID = 3354, rewTYPE = "currency", rewSIZE = 2000,}, -- The Amani Tribe
@@ -437,7 +436,7 @@ local function tempFunction()
 			},
 			rewards = {
 				{rewID = 1281792, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 263466, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, --
+				-- {rewID = 263466, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, --
 				-- {rewID = 3310, rewTYPE = "currency", rewSIZE = 50,}, --
 			},
 			forcedMaxQuest = 1,
@@ -465,9 +464,9 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 					-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
-				{rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				{rewID = 263467, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
 				{rewID = 3316, rewTYPE = "currency", rewSIZE = 100,}, -- Voidlight Marl
 				{rewID = 3370, rewTYPE = "currency", rewSIZE = 1000,}, -- The Amani Tribe
 			},
@@ -496,9 +495,9 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 					-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
-				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
-				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addtext = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
-				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+				-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
 				{rewID = 3310, rewTYPE = "currency", rewSIZE = 25,}, -- Coffer Key Shards
 
 				{rewID = 3316, rewTYPE = "currency", rewSIZE = 50,}, -- Voidlight Marl

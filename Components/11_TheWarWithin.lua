@@ -259,9 +259,9 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 250769, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–80"}, -- The Weaver's Gratuity
-				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- The Weaver's Gratuity
-				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- The Weaver's Gratuity
+				{rewID = 250769, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–80"}, -- The Weaver's Gratuity
+				-- {rewID = 239125, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- The Weaver's Gratuity
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				{rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				{rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
 
@@ -335,9 +335,9 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 226263, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–80"}, -- Theater Troupe's Trove
-				-- {rewID = 239128, rewTYPE = "item", rewSIZE = 1, addtext = "Level 76–80"}, -- Theater Troupe's Trove
-				-- {rewID = 250763, rewTYPE = "item", rewSIZE = 1, addtext = "Level 70–80"}, -- Theater Troupe's Trove
+				{rewID = 226263, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–80"}, -- Theater Troupe's Trove
+				-- {rewID = 239128, rewTYPE = "item", rewSIZE = 1, addText = "Level 76–80"}, -- Theater Troupe's Trove
+				-- {rewID = 250763, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- Theater Troupe's Trove
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				{rewID = 2897, rewTYPE = "currency", rewSIZE = 1000,}, -- Council of Dornogal
 
@@ -409,9 +409,9 @@ local function tempFunction()
 			},
 			rewards = { -- ПОФИКСИТЬ
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 239121, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–80"}, -- Awakened Mechanical Cache
-				-- {rewID = 250765, rewTYPE = "item", rewSIZE = 1, addtext = "Level 80–80"}, -- Awakened Mechanical Cache
-				-- {rewID = 226273, rewTYPE = "item", rewSIZE = 1, addtext = "Level 72–80"}, -- Awakened Mechanical Cache
+				{rewID = 239121, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–80"}, -- Awakened Mechanical Cache
+				-- {rewID = 250765, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–80"}, -- Awakened Mechanical Cache
+				-- {rewID = 226273, rewTYPE = "item", rewSIZE = 1, addText = "Level 72–80"}, -- Awakened Mechanical Cache
 				-- {rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				-- {rewID = 2897, rewTYPE = "currency", rewSIZE = 1000,}, -- Council of Dornogal
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
@@ -434,7 +434,7 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 227792, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Everyday Cache
+				{rewID = 227792, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Everyday Cache
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				{rewID = 2902, rewTYPE = "currency", rewSIZE = 1000,}, -- The Assembly of the Deeps
 			},
@@ -476,7 +476,7 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 226194, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Cache of Nerubian Treasures
+				{rewID = 226194, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Cache of Nerubian Treasures
 				-- {rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				-- {rewID = 2902, rewTYPE = "currency", rewSIZE = 1000,}, -- The Assembly of the Deeps
 			},
@@ -541,8 +541,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 224784, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				{rewID = 229354, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Algari Adventurer's Cache
+				{rewID = 224784, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				{rewID = 229354, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Algari Adventurer's Cache
 				-- {rewID = 2902, rewTYPE = "currency", rewSIZE = 1000,}, -- The Assembly of the Deeps
 			},
 			forcedMaxQuest = 1,
@@ -564,10 +564,10 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 224784, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				{rewID = 229354, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Algari Adventurer's Cache
+				{rewID = 224784, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				{rewID = 229354, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Algari Adventurer's Cache
 				-- {rewID = 2902, rewTYPE = "currency", rewSIZE = 1000,}, -- The Assembly of the Deeps
 			},
 			forcedMaxQuest = 2,
@@ -596,10 +596,10 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 237014, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Pinnacle Cache
-				-- {rewID = 229354, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Algari Adventurer's Cache
+				{rewID = 237014, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Pinnacle Cache
+				-- {rewID = 229354, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Algari Adventurer's Cache
 				-- {rewID = 2902, rewTYPE = "currency", rewSIZE = 1000,}, -- The Assembly of the Deeps
 			},
 			forcedMaxQuest = 1,
@@ -824,8 +824,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 238208, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 238208, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				{rewID = 3108, rewTYPE = "currency", rewSIZE = 5,}, -- Carved Undermine Crest
 				{rewID = 3118, rewTYPE = "currency", rewSIZE = 1000,}, -- The Cartels of Undermine
@@ -848,8 +848,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 238208, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 238208, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				{rewID = 3108, rewTYPE = "currency", rewSIZE = 5,}, -- Carved Undermine Crest
 				{rewID = 3118, rewTYPE = "currency", rewSIZE = 1000,}, -- The Cartels of Undermine
@@ -872,8 +872,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 238208, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 238208, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 200,}, -- Resonance Crystals
 				{rewID = 3108, rewTYPE = "currency", rewSIZE = 5,}, -- Carved Undermine Crest
 				{rewID = 3118, rewTYPE = "currency", rewSIZE = 1000,}, -- The Cartels of Undermine
@@ -914,8 +914,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 239004, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Radiant Service Satchel
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 239004, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Radiant Service Satchel
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 3008, rewTYPE = "currency", rewSIZE = 25,}, -- Valorstones
 				{rewID = 3108, rewTYPE = "currency", rewSIZE = 15,}, -- Carved Undermine Crest
 				{rewID = 3283, rewTYPE = "currency", rewSIZE = 150,}, -- Flame's Radiance
@@ -943,8 +943,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 239546, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Radiant Service Satchel
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 239546, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Radiant Service Satchel
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 55,}, -- Resonance Crystals
 				{rewID = 3108, rewTYPE = "currency", rewSIZE = 5,}, -- Carved Undermine Crest
 				{rewID = 3283, rewTYPE = "currency", rewSIZE = 150,}, -- Flame's Radiance
@@ -1023,8 +1023,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 228741, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Lamplighter Supply Satchel
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 228741, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Lamplighter Supply Satchel
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 40,}, -- Resonance Crystals
 				{rewID = 2899, rewTYPE = "currency", rewSIZE = 200,}, -- Hallowfall Arathi
 			},
@@ -1153,8 +1153,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 255676, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Phase Diver's Cache (The War Within Season 3)
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 255676, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Phase Diver's Cache (The War Within Season 3)
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 60,}, -- Resonance Crystals
 				{rewID = 3129, rewTYPE = "currency", rewSIZE = 300,}, -- The K'aresh Trust
 				{rewID = 3303, rewTYPE = "currency", rewSIZE = 7,}, -- Untethered Coin
@@ -1184,8 +1184,8 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 255676, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Phase Diver's Cache (The War Within Season 3)
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 255676, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Phase Diver's Cache (The War Within Season 3)
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				-- {rewID = 2815, rewTYPE = "currency", rewSIZE = 60,}, -- Resonance Crystals
 				{rewID = 3129, rewTYPE = "currency", rewSIZE = 525,}, -- The K'aresh Trust
 				{rewID = 3278, rewTYPE = "currency", rewSIZE = nil,}, -- Ethereal Strands
@@ -1218,11 +1218,11 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 224784, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				{rewID = 229354, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Algari Adventurer's Cache
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 224784, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				{rewID = 229354, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Algari Adventurer's Cache
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				-- {rewID = 2815, rewTYPE = "currency", rewSIZE = 60,}, -- Resonance Crystals
 				-- {rewID = 3129, rewTYPE = "currency", rewSIZE = 525,}, -- The K'aresh Trust
 				-- {rewID = 3278, rewTYPE = "currency", rewSIZE = nil,}, -- Ethereal Strands
@@ -1263,11 +1263,11 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 232049, rewTYPE = "item", rewSIZE = nil, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 229354, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Algari Adventurer's Cache
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				{rewID = 232049, rewTYPE = "item", rewSIZE = nil, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 229354, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Algari Adventurer's Cache
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 100,}, -- Resonance Crystals
 				-- {rewID = 3129, rewTYPE = "currency", rewSIZE = 525,}, -- The K'aresh Trust
 				-- {rewID = 3278, rewTYPE = "currency", rewSIZE = nil,}, -- Ethereal Strands
@@ -1403,11 +1403,11 @@ local function tempFunction()
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 232049, rewTYPE = "item", rewSIZE = nil, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Pinnacle Cache
-				-- {rewID = 229354, rewTYPE = "item", rewSIZE = 1, addtext = ""}, -- Algari Adventurer's Cache
-				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addtext = ""}, --  Nanny's Surge Dividends
+				-- {rewID = 232049, rewTYPE = "item", rewSIZE = nil, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 239118, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 244865, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Pinnacle Cache
+				-- {rewID = 229354, rewTYPE = "item", rewSIZE = 1, addText = ""}, -- Algari Adventurer's Cache
+				-- {rewID = 250764, rewTYPE = "item", rewSIZE = 1, addText = ""}, --  Nanny's Surge Dividends
 				{rewID = 2803, rewTYPE = "currency", rewSIZE = 2250,}, -- Undercoin
 				{rewID = 2815, rewTYPE = "currency", rewSIZE = 450,}, -- Resonance Crystals
 				-- {rewID = 3278, rewTYPE = "currency", rewSIZE = nil,}, -- Ethereal Strands

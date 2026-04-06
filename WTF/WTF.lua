@@ -89,9 +89,6 @@ function EventFrame:func_CacheGameData()
 			end
 		end
 	end
-	-- for itemID, v in next,(E.ALL_Items) do
-	-- print (itemID, E.func_GetName("item", itemID), E.func_GetItemQualityByID(itemID))
-	-- end
 	----------------------------------------------------------------
 	-- Асинхронная загрузка
 	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
@@ -159,7 +156,7 @@ function EventFrame:func_CacheGameData()
 
 
 end
-function EventFrame:func_RemoveDuplicateCharacters()
+function E.func_RemoveDuplicateCharacters()
 	if not Octo_ToDo_DB_Levels then return end
 	local currentGUID = E.curGUID
 	local currentName = E.curCharName
@@ -239,7 +236,6 @@ function EventFrame:func_DatabaseClear()
 	E.func_CleanDeepTable(Octo_ToDo_DB_Vars, rules)
 	E.func_CleanDeepTable(Octo_Cache_DB, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_AccountData, rules)
-	E.func_CleanDeepTable(Octo_Options, rules)
 
 	E.func_CleanDeepTable(Octo_Achievements_DB, rules)
 
@@ -251,7 +247,7 @@ function EventFrame:func_DatabaseClear()
 
 	E.func_CleanDeepTable(Octo_TalentsFrameArt_DB, rules)
 end
-function EventFrame:init_Octo_ToDo_DB_Levels()
+function E.init_Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
 	if not curGUID then return end
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
@@ -396,7 +392,9 @@ function EventFrame:init_Octo_ToDo_DB_Levels()
 		end
 	end
 end
-function EventFrame:init_Octo_ToDo_DB_AccountData()
+
+
+function E.init_Octo_ToDo_DB_AccountData()
 	Octo_ToDo_DB_AccountData = Octo_ToDo_DB_AccountData or {}
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] or {}
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank or {}
@@ -434,11 +432,11 @@ E.Octo_ToDo_DB_Vars_DEFAULTS = {
 
 		CONFIG_CURRENCY_COLOREDNAME = true,
 		CONFIG_CURRENCY_SHOW_BRACKETS = false,
-		CONFIG_CURRENCY_COLOR_BRACKETS = E.COLOR_ADDON_LEFT:gsub("^|c", ""),
+		CONFIG_CURRENCY_COLOR_BRACKETS = E.COLOR_ADDON_LEFT:gsub("^|cff", "80"),
 		CONFIG_CURRENCY_SHOW_REMAINING = true,
-		CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_ADDON_RIGHT:gsub("^|c", ""),
+		CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_ADDON_RIGHT:gsub("^|cff", "80"),
 		CONFIG_CURRENCY_SHOW_ZERO = false,
-		CONFIG_CURRENCY_COLOR_ZERO = E.COLOR_GRAY:gsub("^|c", ""),
+		CONFIG_CURRENCY_COLOR_ZERO = E.COLOR_GRAY:gsub("^|cff", "80"),
 
 		CONFIG_REPUTATION_ICON = false,
 		CONFIG_REPUTATION_EXTRA_ICON = true,
@@ -452,39 +450,38 @@ E.Octo_ToDo_DB_Vars_DEFAULTS = {
 		CONFIG_REPUTATION_PERCENTAGE_PARAGON = false,
 		CONFIG_REPUTATION_REACTION_PARAGON = false,
 		CONFIG_REPUTATION_STANDINGS_PARAGON = false,
-		CONFIG_REPUTATION_PARAGON_COLOR = E.COLOR_REPPARAGON:gsub("^|c", ""),
+		CONFIG_REPUTATION_PARAGON_COLOR = E.COLOR_REPPARAGON:gsub("^|cff", "80"),
 
 		CONFIG_REPUTATION_VALUE_MAJOR = true,
 		CONFIG_REPUTATION_PERCENTAGE_MAJOR = false,
 		CONFIG_REPUTATION_REACTION_MAJOR = true,
 		CONFIG_REPUTATION_STANDINGS_MAJOR = false,
-		CONFIG_REPUTATION_MAJOR_COLOR = E.COLOR_REPMAJOR:gsub("^|c", ""),
+		CONFIG_REPUTATION_MAJOR_COLOR = E.COLOR_REPMAJOR:gsub("^|cff", "80"),
 
 		CONFIG_REPUTATION_VALUE_FRIEND = true,
 		CONFIG_REPUTATION_PERCENTAGE_FRIEND = false,
 		CONFIG_REPUTATION_REACTION_FRIEND = true,
 		CONFIG_REPUTATION_STANDINGS_FRIEND = false,
-		CONFIG_REPUTATION_FRIEND_COLOR = E.COLOR_REPFRIEND:gsub("^|c", ""),
+		CONFIG_REPUTATION_FRIEND_COLOR = E.COLOR_REPFRIEND:gsub("^|cff", "80"),
 
 		CONFIG_REPUTATION_VALUE_SIMPLE = true,
 		CONFIG_REPUTATION_PERCENTAGE_SIMPLE = false,
 		CONFIG_REPUTATION_REACTION_SIMPLE = false,
 		CONFIG_REPUTATION_STANDINGS_SIMPLE = false,
-		CONFIG_REPUTATION_SIMPLE_COLOR_1 = E.COLOR_REPSIMPLE_1:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_2 = E.COLOR_REPSIMPLE_2:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_3 = E.COLOR_REPSIMPLE_3:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_4 = E.COLOR_REPSIMPLE_4:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_5 = E.COLOR_REPSIMPLE_5:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_6 = E.COLOR_REPSIMPLE_6:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_7 = E.COLOR_REPSIMPLE_7:gsub("^|c", ""),
-		CONFIG_REPUTATION_SIMPLE_COLOR_8 = E.COLOR_REPSIMPLE_8:gsub("^|c", ""),
-
+		CONFIG_REPUTATION_SIMPLE_COLOR_1 = E.COLOR_REPSIMPLE_1:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_2 = E.COLOR_REPSIMPLE_2:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_3 = E.COLOR_REPSIMPLE_3:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_4 = E.COLOR_REPSIMPLE_4:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_5 = E.COLOR_REPSIMPLE_5:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_6 = E.COLOR_REPSIMPLE_6:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_7 = E.COLOR_REPSIMPLE_7:gsub("^|cff", "80"),
+		CONFIG_REPUTATION_SIMPLE_COLOR_8 = E.COLOR_REPSIMPLE_8:gsub("^|cff", "80"),
 }
 
 
 
 
-function EventFrame:init_Octo_ToDo_DB_Vars()
+function E.init_Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
 	for k, v in next, (E.Octo_ToDo_DB_Vars_DEFAULTS) do
 		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
@@ -500,11 +497,7 @@ function EventFrame:init_Octo_ToDo_DB_Vars()
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
-function E.init_Octo_ToDo_DB_Vars()
-	EventFrame:init_Octo_ToDo_DB_Vars()
-	return
-end
-function EventFrame:init_Octo_profileColors()
+function E.init_Octo_profileColors()
 	Octo_profileColors = Octo_profileColors or {}
 	local db = Octo_profileColors
 	db.profiles = db.profiles or {}
@@ -523,11 +516,7 @@ function EventFrame:init_Octo_profileColors()
 	-- end)
 	E.PROFTBL = db.profiles[db.Current_profile]
 end
-function E.init_Octo_profileColors()
-	EventFrame:init_Octo_profileColors()
-	return
-end
-function EventFrame:init_Octo_profileKeys()
+function E.init_Octo_profileKeys()
 	Octo_profileKeys = Octo_profileKeys or {}
 	local db = Octo_profileKeys
 	E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
@@ -713,24 +702,24 @@ E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 	-- },
 	["EDITBOX"] = {
 		{
-			name = L["EB_FONTSIZE"],
-			variableKey = "CONFIG_DEBUG_EB_FONTSIZE",
+			name = L["EDITBOX_FONTSIZE"],
+			variableKey = "CONFIG_DEBUG_EDITBOX_FONTSIZE",
 			defaultValue = 12,
 			minValue = 10,
 			maxValue = 16,
 			step = 1,
 		},
 		{
-			name = L["EB_TABSPACES"],
-			variableKey = "CONFIG_DEBUG_EB_TABSPACES",
+			name = L["EDITBOX_TABSPACES"],
+			variableKey = "CONFIG_DEBUG_EDITBOX_TABSPACES",
 			defaultValue = 4,
 			minValue = 0,
 			maxValue = 4,
 			step = 1,
 		}, -- for _, v in ipairs({0, 2, 3, 4}) do
 		{
-			name = L["EB_EDITORTHEME"],
-			variableKey = "CONFIG_DEBUG_EB_EDITORTHEME",
+			name = L["EDITBOX_EDITORTHEME"],
+			variableKey = "CONFIG_DEBUG_EDITBOX_EDITORTHEME",
 			defaultValue = "Standard",
 			values = E.editorThemes,
 		},
@@ -738,9 +727,9 @@ E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 
 
 
-	-- CONFIG_DEBUG_EB_EDITORTHEME = "Twilight", -- for name in next, E.editorThemes do
+	-- CONFIG_DEBUG_EDITBOX_EDITORTHEME = "Twilight", -- for name in next, E.editorThemes do
 }
-function EventFrame:Octo_DevTool_DB()
+function E.init_Octo_DevTool_DB()
 	Octo_DevTool_DB = Octo_DevTool_DB or {}
 	-- EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
 	for _, headers in next,(E.Octo_DevTool_DB_defaultOptions) do
@@ -752,24 +741,16 @@ function EventFrame:Octo_DevTool_DB()
 		end
 	end
 end
-
-
-
-
-
-
-
-function EventFrame:func_CheckAll()
-	EventFrame:Octo_DevTool_DB()
-	EventFrame:func_RemoveDuplicateCharacters()
-	EventFrame:init_Octo_ToDo_DB_Levels()
-	EventFrame:init_Octo_ToDo_DB_Vars()
-	EventFrame:init_Octo_ToDo_DB_AccountData()
-	E.func_setOldChanges()
-	E.Init_Octo_Cache_DB()
-end
 function E.WTF_func_CheckAll()
-	EventFrame:func_CheckAll()
+	E.init_Octo_DevTool_DB()
+	E.init_Octo_profileColors()
+	E.init_Octo_profileKeys()
+	E.func_RemoveDuplicateCharacters()
+	E.init_Octo_ToDo_DB_Levels()
+	E.init_Octo_ToDo_DB_Vars()
+	E.Init_Octo_Cache_DB()
+	E.init_Octo_ToDo_DB_AccountData()
+	E.func_setOldChanges()
 end
 function EventFrame:func_ScheduleResetTimer()
 	local function func_GetTimeToReset()
@@ -785,7 +766,7 @@ function EventFrame:func_ScheduleResetTimer()
 			timerHandle:Cancel()
 		end
 		timerHandle = C_Timer.NewTimer(seconds + 4, function()
-				EventFrame:func_CheckAll()
+				E.WTF_func_CheckAll()
 				E.func_Collect_All()
 
 				EventFrame:func_Daily_Reset()
@@ -815,13 +796,13 @@ function EventFrame:ADDON_LOADED(addonName)
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
 	E.Init_Octo_Cache_DB()
-	EventFrame:init_Octo_profileKeys()
-	EventFrame:init_Octo_profileColors()
+	E.init_Octo_profileKeys()
+	E.init_Octo_profileColors()
 	E.func_UpdateGlobals()
 end
 function EventFrame:VARIABLES_LOADED()
 	EventFrame:func_DatabaseClear()
-	EventFrame:func_CheckAll()
+	E.WTF_func_CheckAll()
 end
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CacheGameData()

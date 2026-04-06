@@ -237,7 +237,6 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local characterData = {}
 	local total = 0
 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	-- 2032
 	local IsAccountWideCurrency = E.func_IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
 	-- local IsAccountTransferableCurrency = E.func_IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
 	local REGION = {}
@@ -403,11 +402,11 @@ function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 			d.row[2] = color .. d.row2Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
-		local heade1 = {
+		local header1 = {
 			"",
 			L["TOTAL"] .. ": " .. E.func_SecondsToClock(total),
 		}
-		table.insert(tooltip, 1, heade1)
+		table.insert(tooltip, 1, header1)
 	end
 	return tooltip
 end
@@ -461,13 +460,13 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 			d.row[4] = color .. d.row4Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
-		local heade1 = {
+		local header1 = {
 			"",
 			"",
 			"WeeklyBest",
 			"Score", -- "MythicPlus", L["PROVING_GROUNDS_SCORE"]
 		}
-		table.insert(tooltip, 1, heade1)
+		table.insert(tooltip, 1, header1)
 	end
 	return tooltip
 end
@@ -900,9 +899,12 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 						for _, rews in next,(rewards) do
 							local rewID = rews.rewID
 							local rewTYPE = rews.rewTYPE
-							local rewSIZE = rews.rewSIZE
-							if rewID then
-								tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetIcon(rewTYPE, rewID)) .. E.func_GetName(rewTYPE, rewID), rewSIZE}
+							if rewID and rewTYPE then
+								local rewSIZE = rews.rewSIZE or ""
+								local addText = rews.addText or ""
+								if rewID then
+									tooltip[#tooltip+1] = {E.func_texturefromIcon(E.func_GetIcon(rewTYPE, rewID)) .. E.func_GetName(rewTYPE, rewID), {addText, "LEFT"}, rewSIZE}
+								end
 							end
 						end
 					end

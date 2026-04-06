@@ -1,7 +1,0 @@
-<Ui>
-
-	<Script file="Options_NEW\functions.lua"/>
-	<Script file="Options_NEW\Octo_ToDo_DB_Vars_DEFAULTS_NEW.lua"/>
-	<Script file="Options_NEW\Options_NEW.lua"/>
-
-</Ui>

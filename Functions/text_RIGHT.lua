@@ -464,6 +464,30 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 			TextCenter = keyName
 		end
 	end
+	if id == "PlayerInventory" then
+		TextCenter = "TextCenter_PlayerInventory"
+		local bags = cm.Items and cm.Items.Bags_FULL
+		local totalPrice = 0
+		if bags then
+			for k, v in next, (bags) do
+				local itemID = v.itemID
+				local count = cm.Items and cm.Items.Bags and cm.Items.Bags[itemID] or 0
+				if count> 0 then
+					local price = E.func_auctionator_price(itemID)
+					if price > 0 then
+						totalPrice = totalPrice + (price * count)
+					end
+				end
+			end
+		end
+		if totalPrice > 0 then
+			TextCenter = E.func_FormatMoney(totalPrice)
+		end
+	end
+	if id == "PlayerBANK" then
+		TextCenter = "TextCenter_PlayerBANK"
+	end
+
 	if id == "HeartofAzeroth" then
 		if pd.azeriteLVL and pd.azeriteEXP then
 			TextCenter = E.COLOR_GREEN .. pd.azeriteLVL .. "|r" .. "+" .. E.COLOR_GRAY .. pd.azeriteEXP .. "|r"

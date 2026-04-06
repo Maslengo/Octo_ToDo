@@ -265,7 +265,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				for index = 1, totalRuns do
 					local run = runHistory[index];
 					local mapChallengeModeID = run.mapChallengeModeID -- 402,
-					local name = C_ChallengeMode.GetMapUIInfo(mapChallengeModeID);
+					local name = E.func_GetName("challenge", mapChallengeModeID)
 					local completed = run.completed -- "false",
 					local level = run.level -- 22,
 					local vaultRewardLevel = math.min(level, 20)
@@ -310,6 +310,85 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 			end
 		end
+	end
+
+
+
+
+	if id == "PlayerInventory" then
+		local bags = cm.Items and cm.Items.Bags_FULL
+		if bags then
+			local inventoryData = {}
+
+			for k, v in next, (bags) do
+				local count = cm.Items and cm.Items.Bags and cm.Items.Bags[v.itemID] or 0
+				local row = {}
+				table.insert(inventoryData, {
+					row = row,
+					ItemLink = v.ItemLink,
+					itemID = v.itemID,
+					Quality = v.Quality,
+					Icon = v.Icon,
+					inBank = false,
+					count = count,
+					price = E.func_auctionator_price(v.itemID)
+				})
+			end
+			if #inventoryData > 0 then
+				table.sort( inventoryData, function(a, b)
+					if a.price ~= b.price then
+						return a.price > b.price
+					end
+					if a.Quality ~= b.Quality then
+						return a.Quality > b.Quality
+					end
+					if a.count ~= b.count then
+						return a.count > b.count
+					end
+					return a.itemID < b.itemID
+				end)
+				local totalPrice = 0
+				for _, d in ipairs(inventoryData) do
+					local itemID = d.itemID
+					local price = d.price
+					local row3Text = d.price > 0 and d.count ~= 1 and E.func_FormatMoney(d.price) or ""
+					local row5Text = d.price > 0 and d.count > 1 and E.COLOR_YELLOW .. E.func_FormatMoney(d.price * d.count) .. "|r" or ""
+
+					if d.price > 0 and d.count == 1 then
+						row5Text = E.func_FormatMoney(d.price)
+					end
+
+					if d.price > 0 then
+						totalPrice = totalPrice + (d.price * d.count)
+					end
+					d.row[1] = E.func_texturefromIcon(d.Icon)
+					-- d.row[2] = {d.ItemLink, "LEFT"}
+					d.row[2] = {E.func_GetName("item", d.itemID, d.Quality), "LEFT"}
+					d.row[3] = {row3Text, "LEFT"}
+					d.row[4] = {d.count > 1 and "x"..d.count or "", "LEFT"}
+					d.row[5] = {row5Text, "LEFT"}
+					table.insert(tooltip, d.row)
+				end
+				local header1 = {
+					"",
+					"",
+					"",
+					"",
+					TOTAL .. ": " .. E.func_FormatMoney(totalPrice),
+				}
+				table.insert(tooltip, 1, header1)
+			end
+
+
+
+
+
+		end
+	end
+	if id == "PlayerBANK" then
+		local bank = cm.Items and cm.Items.Bank_FULL
+
+
 	end
 	if dataType == "Currencies" and Octo_ToDo_DB_Vars.Config_MountsInTooltip then
 		for currencyID, dataTBL in next, (E.OctoTable_ALL_Mounts) do
@@ -389,24 +468,20 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end
 			local AdditionalIcon = E.func_GetReputationIcon(id)
 			if AdditionalIcon then
-				local isAtlas = E.func_isAtlas(AdditionalIcon)
-				firstTEXT = firstTEXT .. E.func_texturefromIcon(AdditionalIcon, nil, nil, isAtlas)
+				firstTEXT = firstTEXT .. E.func_texturefromIcon(AdditionalIcon)
 			end
 
 			local ReputationSide = E.func_GetReputationSide(id)
 			if ReputationSide then
 				if ReputationSide == "Horde" then
 					local icon = E.ICON_HORDE
-					local isAtlas = E.func_isAtlas(icon)
-					firstTEXT = firstTEXT .. E.func_texturefromIcon(icon, nil, nil, isAtlas)
+					firstTEXT = firstTEXT .. E.func_texturefromIcon(icon)
 				elseif ReputationSide == "Alliance" then
 					local icon = E.ICON_ALLIANCE
-					local isAtlas = E.func_isAtlas(icon)
-					firstTEXT = firstTEXT .. E.func_texturefromIcon(icon, nil, nil, isAtlas)
+					firstTEXT = firstTEXT .. E.func_texturefromIcon(icon)
 				elseif ReputationSide == "Neutral" then
 					local icon = E.ICON_NEUTRAL
-					local isAtlas = E.func_isAtlas(icon)
-					firstTEXT = firstTEXT .. E.func_texturefromIcon(icon, nil, nil, isAtlas)
+					firstTEXT = firstTEXT .. E.func_texturefromIcon(icon)
 				end
 			end
 
@@ -464,25 +539,95 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if SettingsType == "AdditionallyBOTTOM#Professions" then
 		local charProf = cm.professions
+		local profData = {}
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
-				local leftText = E.func_ProfessionIcon(charProf[i].skillLine) .. " " .. E.func_GetName("profession", charProf[i].skillLine)
-				local rightText = charProf[i].skillLevel .. "/" .. charProf[i].maxSkillLevel
-				if charProf[i].skillModifier then
-					rightText = charProf[i].skillLevel .. E.COLOR_GREEN .. "+" .. charProf[i].skillModifier .. "|r" .. "/" .. charProf[i].maxSkillLevel
+				local skillLineID = charProf[i].skillLine
+				local skillModifier = charProf[i].skillModifier
+
+				local row1Text = E.func_ProfessionIcon(skillLineID)
+				local row2Text = E.func_GetName("profession", skillLineID)
+
+				local row3Text = charProf[i].skillLevel
+				if skillModifier then
+					row3Text = row3Text .. E.COLOR_GREEN .. "+" .. skillModifier .. "|r"
 				end
-				tooltip[#tooltip+1] = {leftText, rightText}
-				if charProf[i].child then
-					for expIndex = #charProf[i].child, 1, -1 do
-						local v = charProf[i].child[expIndex]
-						if v.QWEskillLevel and v.QWEprofessionName then
-							local j = E.OctoTable_Expansions[expIndex]
-							tooltip[#tooltip+1] = {E.func_FormatExpansion(expIndex), v.QWEskillLevel .. "/" .. v.QWEmaxSkillLevel}
-						end
+
+				local row4Text = "/"
+
+				local row5Text = charProf[i].maxSkillLevel
+
+
+				-- local DFCURRENCY = E.Octo_Table_ProfCurr[skillLineID].DRAGONFLIGHT
+				local row6Text = ""
+				if DFCURRENCY then
+					local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
+					if count then
+						row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
 					end
 				end
+				local row = { row1Text }
+
+				table.insert(profData, {
+						row = row,
+						row2Text = row2Text,
+						row3Text = row3Text,
+						row4Text = row4Text,
+						row5Text = row5Text,
+						row6Text = row6Text,
+						sortValue = i,
+				})
+
+
+
+				-- local leftText = E.func_ProfessionIcon(skillLineID) .. " " .. E.func_GetName("profession", skillLineID)
+				-- local rightText = charProf[i].skillLevel .. "/" .. charProf[i].maxSkillLevel
+				-- if skillModifier then
+				-- 	rightText = charProf[i].skillLevel .. E.COLOR_GREEN .. "+" .. skillModifier .. "|r" .. "/" .. charProf[i].maxSkillLevel
+				-- end
+				-- tooltip[#tooltip+1] = {leftText, rightText}
+				-- if charProf[i].child then
+				-- 	for expIndex = #charProf[i].child, 1, -1 do
+				-- 		local v = charProf[i].child[expIndex]
+				-- 		if v.QWEskillLevel and v.QWEprofessionName then
+				-- 			local j = E.OctoTable_Expansions[expIndex]
+				-- 			tooltip[#tooltip+1] = {E.func_FormatExpansion(expIndex), v.QWEskillLevel .. "/" .. v.QWEmaxSkillLevel}
+				-- 		end
+				-- 	end
+				-- end
 			end
 		end
+
+
+
+		if #profData > 0 then
+			table.sort(profData, function(a, b)
+					if a.sortValue ~= b.sortValue then
+						return a.sortValue < b.sortValue
+					end
+					return a.row2Text < b.row2Text
+			end)
+			for _, d in ipairs(profData) do
+				d.row[2] = {d.row2Text, "LEFT"}
+				d.row[3] = d.row3Text
+				d.row[4] = d.row4Text
+				d.row[5] = d.row5Text
+				d.row[6] = d.row6Text
+				table.insert(tooltip, d.row)
+			end
+			local header1 = {
+				"1",
+				"2",
+				"3",
+				"4",
+				"5",
+				"6",
+			}
+			table.insert(tooltip, 1, header1)
+		end
+
+
+
 	end
 	if SettingsType == "AdditionallyBOTTOM#ItemLevel" then
 		if pd.avgItemLevelEquipped and pd.avgItemLevel then

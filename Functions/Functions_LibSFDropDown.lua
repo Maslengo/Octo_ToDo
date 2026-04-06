@@ -542,12 +542,19 @@ function E.CreateProfilesMenu(dropdown, providerfunc, db, Type)
 			editBoxWidth = 260,
 			maxLetters = 30,
 			OnAccept = function(dialog)
-				local profileName = dialog.EditBox:GetText():trim()
-				CreateNewProfile(profileName, copyFromCurrent)
+				local editBox = dialog.EditBox or dialog.editBox
+
+				if editBox then
+					local profileName = editBox:GetText():trim()
+					CreateNewProfile(profileName, copyFromCurrent)
+				end
 			end,
 			OnShow = function(dialog)
-				dialog.EditBox:SetText("")
-				dialog.EditBox:SetFocus()
+				local editBox = dialog.EditBox or dialog.editBox
+				if editBox then
+					editBox:SetText("")
+					editBox:SetFocus()
+				end
 			end,
 			EditBoxOnEnterPressed = function(editBox)
 				local dialog = editBox:GetParent()
@@ -886,8 +893,8 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	local handlerCache = setmetatable({}, { __mode = "kv" }) -- (ПОФИКСИТЬ) Weak table с __mode = "v" работает только со значениями, но ключи могут накапливаться. Лучше использовать __mode = "kv" или очищать периодически.
 	local function makeThemeHandler(themeName)
 		return function(btn)
-			Octo_DevTool_DB.CONFIG_DEBUG_EB_EDITORTHEME = themeName
-			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_DevTool_DB.CONFIG_DEBUG_EB_TABSPACES)
+			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME = themeName
+			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(1)
@@ -895,8 +902,8 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	end
 	local function makeTabSizeHandler(tabSize)
 		return function(btn)
-			Octo_DevTool_DB.CONFIG_DEBUG_EB_TABSPACES = tabSize
-			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_DevTool_DB.CONFIG_DEBUG_EB_EDITORTHEME or "Twilight"), tabSize)
+			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES = tabSize
+			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME or "Twilight"), tabSize)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(2)
@@ -904,7 +911,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 	end
 	local function makeFontSizeHandler(fontSize)
 		return function(btn)
-			Octo_DevTool_DB.CONFIG_DEBUG_EB_FONTSIZE = fontSize
+			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_FONTSIZE = fontSize
 			editBox:SetFont(E.Octo_font, fontSize, "")
 			DropDown:ddRefresh(2)
 		end
@@ -921,7 +928,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					end
 					info.text = name
 					info.value = name
-					info.checked = function(btn) return Octo_DevTool_DB.CONFIG_DEBUG_EB_EDITORTHEME == name end
+					info.checked = function(btn) return Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME == name end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
 				end
@@ -944,7 +951,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					end
 					info.text = v
 					info.value = v
-					info.checked = function(btn) return btn.value == Octo_DevTool_DB.CONFIG_DEBUG_EB_TABSPACES end
+					info.checked = function(btn) return btn.value == Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
 				end
@@ -956,7 +963,7 @@ function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
 					end
 					info.text = i
 					info.value = i
-					info.checked = function(btn) return btn.value == Octo_DevTool_DB.CONFIG_DEBUG_EB_FONTSIZE end
+					info.checked = function(btn) return btn.value == Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_FONTSIZE end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
 				end
