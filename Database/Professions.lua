@@ -99,6 +99,5 @@ E.Octo_Table_ProfCurr = {
 
 for k, SkillLineID in next,(E.Octo_Table_ProfCurr) do
 	if SkillLineID.DRAGONFLIGHT then
-		-- print (SkillLineID.DRAGONFLIGHT)
 	end
 end

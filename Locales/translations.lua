@@ -40,7 +40,8 @@ E.translations = {
 	-- ["SETTINGS_TITLE"] = SETTINGS_TITLE,  -- Параметры
 	-- ["GAMEMENU_OPTIONS"] = GAMEMENU_OPTIONS, -- Параметры
 	----------------------------------------------------------------
-
+	["PROVING_GROUNDS_SCORE"] = PROVING_GROUNDS_SCORE, -- Счёт.
+	["ALL"] = ALL,
 	["MAW_BUFF_QUALITY_STRING_EPIC"] = MAW_BUFF_QUALITY_STRING_EPIC, --  "|cffa335eeЭпическое|r"
 	["MAW_BUFF_QUALITY_STRING_RARE"] = MAW_BUFF_QUALITY_STRING_RARE, -- "|cff0070ddРедкое|r"
 	["MAW_BUFF_QUALITY_STRING_UNCOMMON"] = MAW_BUFF_QUALITY_STRING_UNCOMMON, -- "|cff1eff00Необычное|r"

@@ -460,8 +460,13 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	end
 	if id == "CurrentKey" then
 		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
-			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, false, false)
-			TextCenter = keyName
+			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
+			if seasonData then
+				-- local color = E.func_RioColor(seasonData.RIO_Score)
+				local color = E.COLOR_PURPLE
+				local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, false, false, color)
+				TextCenter = keyName
+			end
 		end
 	end
 	if id == "PlayerInventory" then
@@ -520,28 +525,53 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 	if id == "MythicZero" then
 		local countMZ = 0
 		local totalInstances = 0
-		-- Считаем общее количество инстансов в Octo_Cache_DB.Octo_Table_currentSeason
-		for SI_ID, _ in pairs(Octo_Cache_DB.Octo_Table_currentSeason) do
-			totalInstances = totalInstances + 1
+		local mythicDifID = 23
+
+		local selectedSeasons = {}
+		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
+		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+			local tier = v.tier
+			if ExpansionToShowTBL[tier] then
+				selectedSeasons[tier] = true
+			end
 		end
-		-- Проверяем каждый инстанс из Octo_Cache_DB.Octo_Table_currentSeason
-		for SI_ID, _ in pairs(Octo_Cache_DB.Octo_Table_currentSeason) do
-			if cm.journalInstance and cm.journalInstance[SI_ID] then
-				local instanceData = cm.journalInstance[SI_ID]
-				-- Проверяем сложность 23 (Mythic)
-				if instanceData[23] and type(instanceData[23]) == "table" then
-					local mythicData = instanceData[23]
-					-- Считаем инстанс пройденным, если убиты все боссы
-					if mythicData.defeatedBosses and mythicData.totalBosses
-					and mythicData.defeatedBosses == mythicData.totalBosses
-					and mythicData.totalBosses > 0 then
-						countMZ = countMZ + 1
+
+
+
+		-- Считаем общее количество инстансов в Octo_Cache_DB.Octo_Table_SI_IDS
+		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+			local tier = v.tier
+			local isRaid = v.isRaid
+			local difficulties = v.difficulties
+			if difficulties and difficulties[mythicDifID] and not isRaid and selectedSeasons[tier] then
+				totalInstances = totalInstances + 1
+			end
+		end
+		-- Проверяем каждый инстанс из Octo_Cache_DB.Octo_Table_SI_IDS
+		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+			local tier = v.tier
+			local isRaid = v.isRaid
+			local difficulties = v.difficulties
+			if difficulties and difficulties[mythicDifID] and not isRaid and selectedSeasons[tier] then
+				if cm.journalInstance and cm.journalInstance[SI_ID] then
+					local instanceData = cm.journalInstance[SI_ID]
+					-- Проверяем сложность 23 (Mythic)
+					if instanceData[mythicDifID] and type(instanceData[mythicDifID]) == "table" then
+						local mythicData = instanceData[mythicDifID]
+						-- Считаем инстанс пройденным, если убиты все боссы
+						if mythicData.defeatedBosses and mythicData.totalBosses
+						and mythicData.defeatedBosses == mythicData.totalBosses
+						and mythicData.totalBosses > 0 then
+							countMZ = countMZ + 1
+						end
 					end
 				end
 			end
 		end
 		-- Формируем текст с цветом
-		if countMZ == totalInstances then
+		if totalInstances == 0 then
+			TextCenter = E.COLOR_GRAY.."-|r"
+		elseif totalInstances > 0 and countMZ == totalInstances then
 			TextCenter = E.DONE
 			-- TextCenter = E.COLOR_GREEN .. countMZ .. "/" .. totalInstances .. "|r" -- Все пройдены
 		elseif countMZ > 0 then

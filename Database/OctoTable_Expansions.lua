@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 E.OctoTable_Expansions = {
-	{
+	[1] = {
 		color = E.COLOR_WORLDOFWARCRAFT, --E.func_RGB2Hex(EXPANSION_COLOR_1.r, EXPANSION_COLOR_1.g, EXPANSION_COLOR_1.b)
 		name = "World of Warcraft",
 		nameBlizzard = EXPANSION_NAME0 or "World of Warcraft", -- UNUSED
@@ -11,7 +11,7 @@ E.OctoTable_Expansions = {
 		id = 1,
 		timewalkDungeonID = 2634,
 	},
-	{
+	[2] = {
 		color = E.COLOR_THEBURNINGCRUSADE, --E.func_RGB2Hex(EXPANSION_COLOR_2.r, EXPANSION_COLOR_2.g, EXPANSION_COLOR_2.b)
 		name = "The Burning Crusade",
 		nameBlizzard = EXPANSION_NAME1 or "The Burning Crusade", -- UNUSED
@@ -21,7 +21,7 @@ E.OctoTable_Expansions = {
 		id = 2,
 		timewalkDungeonID = 744,
 	},
-	{
+	[3] = {
 		color = E.COLOR_WRATHOFTHELICHKING, --E.func_RGB2Hex(EXPANSION_COLOR_3.r, EXPANSION_COLOR_3.g, EXPANSION_COLOR_3.b)
 		name = "Wrath of the Lich King",
 		nameBlizzard = EXPANSION_NAME2 or "Wrath of the Lich King", -- UNUSED
@@ -31,7 +31,7 @@ E.OctoTable_Expansions = {
 		id = 3,
 		timewalkDungeonID = 995,
 	},
-	{
+	[4] = {
 		color = E.COLOR_CATACLYSM, --E.func_RGB2Hex(EXPANSION_COLOR_4.r, EXPANSION_COLOR_4.g, EXPANSION_COLOR_4.b)
 		name = "Cataclysm",
 		nameBlizzard = EXPANSION_NAME3 or "Cataclysm", -- UNUSED
@@ -41,7 +41,7 @@ E.OctoTable_Expansions = {
 		id = 4,
 		timewalkDungeonID = 1146,
 	},
-	{
+	[5] = {
 		color = E.COLOR_MISTSOFPANDARIA, --E.func_RGB2Hex(EXPANSION_COLOR_5.r, EXPANSION_COLOR_5.g, EXPANSION_COLOR_5.b)
 		name = "Mists of Pandaria",
 		nameBlizzard = EXPANSION_NAME4 or "Mists of Pandaria", -- UNUSED
@@ -51,7 +51,7 @@ E.OctoTable_Expansions = {
 		id = 5,
 		timewalkDungeonID = 1453, -- (2538 REMIX)
 	},
-	{
+	[6] = {
 		color = E.COLOR_WARLORDSOFDRAENOR, --E.func_RGB2Hex(EXPANSION_COLOR_6.r, EXPANSION_COLOR_6.g, EXPANSION_COLOR_6.b)
 		name = "Warlords of Draenor",
 		nameBlizzard = EXPANSION_NAME5 or "Warlords of Draenor", -- UNUSED
@@ -61,7 +61,7 @@ E.OctoTable_Expansions = {
 		id = 6,
 		timewalkDungeonID = 1971,
 	},
-	{
+	[7] = {
 		color = E.COLOR_LEGION, --E.func_RGB2Hex(EXPANSION_COLOR_7.r, EXPANSION_COLOR_7.g, EXPANSION_COLOR_7.b)
 		name = "Legion",
 		nameBlizzard = EXPANSION_NAME6 or "Legion", -- UNUSED
@@ -71,7 +71,7 @@ E.OctoTable_Expansions = {
 		id = 7,
 		timewalkDungeonID = 2274, -- (2817 REMIX)
 	},
-	{
+	[8] = {
 		color = E.COLOR_BATTLEFORAZEROTH, --E.func_RGB2Hex(EXPANSION_COLOR_8.r, EXPANSION_COLOR_8.g, EXPANSION_COLOR_8.b)
 		name = "Battle for Azeroth",
 		nameBlizzard = EXPANSION_NAME7 or "Battle for Azeroth", -- UNUSED
@@ -81,7 +81,7 @@ E.OctoTable_Expansions = {
 		id = 8,
 		timewalkDungeonID = 2874,
 	},
-	{
+	[9] = {
 		color = E.COLOR_SHADOWLANDS, --E.func_RGB2Hex(EXPANSION_COLOR_9.r, EXPANSION_COLOR_9.g, EXPANSION_COLOR_9.b)
 		name = "Shadowlands",
 		nameBlizzard = EXPANSION_NAME8 or "Shadowlands", -- UNUSED
@@ -91,7 +91,7 @@ E.OctoTable_Expansions = {
 		id = 9,
 		-- timewalkDungeonID = 0,
 	},
-	{
+	[10] = {
 		color = E.COLOR_DRAGONFLIGHT, --E.func_RGB2Hex(EXPANSION_COLOR_10.r, EXPANSION_COLOR_10.g, EXPANSION_COLOR_10.b)
 		name = "Dragonflight",
 		nameBlizzard = EXPANSION_NAME9 or "Dragonflight", -- UNUSED
@@ -101,7 +101,7 @@ E.OctoTable_Expansions = {
 		id = 10,
 		-- timewalkDungeonID = 0,
 	},
-	{
+	[11] = {
 		color = E.COLOR_THEWARWITHIN, --E.func_RGB2Hex(EXPANSION_COLOR_11.r, EXPANSION_COLOR_11.g, EXPANSION_COLOR_11.b)
 		name = "The War Within",
 		nameBlizzard = EXPANSION_NAME10 or "The War Within", -- UNUSED
@@ -111,7 +111,7 @@ E.OctoTable_Expansions = {
 		id = 11,
 		-- timewalkDungeonID = 0,
 	},
-	{
+	[12] = {
 		color = E.COLOR_MIDNIGHT, --E.func_RGB2Hex(EXPANSION_COLOR_12.r, EXPANSION_COLOR_12.g, EXPANSION_COLOR_12.b)
 		name = "Midnight",
 		nameBlizzard = EXPANSION_NAME11 or "Midnight", -- UNUSED
@@ -121,7 +121,7 @@ E.OctoTable_Expansions = {
 		id = 12,
 		-- timewalkDungeonID = 0,
 	},
-	{
+	[13] = {
 		color = E.COLOR_THELASTTITAN, --E.func_RGB2Hex(EXPANSION_COLOR_13.r, EXPANSION_COLOR_13.g, EXPANSION_COLOR_13.b)
 		name = "The Last Titan",
 		nameBlizzard = EXPANSION_NAME12 or "The Last Titan", -- UNUSED
@@ -132,3 +132,8 @@ E.OctoTable_Expansions = {
 		-- timewalkDungeonID = 0,
 	},
 }
+
+for i, v in ipairs(E.OctoTable_Expansions) do
+	E.OctoTable_Expansions_Names[v.nameBlizzard] = true
+	E.OctoTable_Expansions_Tiers[v.nameBlizzard] = i
+end

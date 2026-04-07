@@ -1462,12 +1462,12 @@ function E.func_Save(v)
 	return v
 end
 ----------------------------------------------------------------
-function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needIcon, fullName)
+function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needIcon, fullName, forcedColor)
 	if not keyStoneLevel or not OwnedKeystoneChallengeMapID then return "" end
 	local levelPart = keyStoneLevel
 	local namePart = ""
 	local iconPart = ""
-	local colorPart = E.COLOR_PURPLE
+	local colorPart = forcedColor and forcedColor or E.COLOR_PURPLE
 	-- pd.CurrentKey
 	local texture = E.func_GetIcon("challenge", OwnedKeystoneChallengeMapID)
 	local name = E.func_GetName("challenge", OwnedKeystoneChallengeMapID)
@@ -2112,50 +2112,68 @@ function E.func_BUILD_DUNG_DB()
 		end
 		return i - 1
 	end
+
 	for tier = 1, numTiers do
 		EJ_SelectTier(tier)
-		for pass = 1, 2 do
-			local isRaid = (pass == 2)
-			-- local isRaid = true -- Только рейды 38 ms
-			-- local isRaid = false -- Только подземелья 70 ms
-			local index = 1
-			local ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
-			while ejInstanceID do
-				EJ_SelectInstance(ejInstanceID)
-				local _, _, _, _, _, _, _, _, _, savedInstanceID = EJ_GetInstanceInfo(ejInstanceID)
-				if savedInstanceID then
-					SI_to_EJ[savedInstanceID] = ejInstanceID
-					EJ_to_SI[ejInstanceID] = savedInstanceID
-				end
-				local diffTable = nil
-				for diffID in next, (E.OctoTable_Difficulties) do
-					if EJ_IsValidInstanceDifficulty(diffID) then
-						EJ_SetDifficulty(diffID)
-						local bossCount = CountEncounters()
-						if bossCount > 0 then
-							diffTable = diffTable or {}
-							diffTable[diffID] = bossCount
+		local tierName = EJ_GetTierInfo(tier)
+		local realTierNumber = E.OctoTable_Expansions_Tiers[tierName]
+		if realTierNumber then
+			for pass = 1, 2 do
+				local isRaid = (pass == 2)
+				-- local isRaid = true -- Только рейды 38 ms
+				-- local isRaid = false -- Только подземелья 70 ms
+				local index = 1
+				local ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
+				while ejInstanceID do
+					EJ_SelectInstance(ejInstanceID)
+					local _, _, _, _, _, _, _, _, _, savedInstanceID = EJ_GetInstanceInfo(ejInstanceID)
+					if savedInstanceID then
+						SI_to_EJ[savedInstanceID] = ejInstanceID
+						EJ_to_SI[ejInstanceID] = savedInstanceID
+					end
+					local diffTable = nil
+					for diffID in next, (E.OctoTable_Difficulties) do
+						if EJ_IsValidInstanceDifficulty(diffID) then
+							EJ_SetDifficulty(diffID)
+							local bossCount = CountEncounters()
+							if bossCount > 0 then
+								diffTable = diffTable or {}
+								diffTable[diffID] = bossCount
+							end
 						end
 					end
-				end
-				if diffTable then
-					if tier ~= numTiers then
-						result[savedInstanceID] = {
-							difficulties = diffTable,
-							isRaid = isRaid,
-							-- name = name,
-							tier = tier,
-						}
-					elseif tier == numTiers and not isRaid and savedInstanceID ~= 3029 then
-						currentSeason[savedInstanceID] = {
-							difficulties = diffTable,
-							isRaid = isRaid,
-							-- name = name
-						}
+					if diffTable then
+						-- if tierName == E.currentExpansionName and E.OctoTable_Expansions_Names[tierName] and not isRaid then
+						if tierName == E.currentExpansionName and not isRaid then -- and savedInstanceID ~= 3029 then
+							if currentSeason[savedInstanceID] == nil then currentSeason[savedInstanceID] = {
+									difficulties = diffTable,
+									-- name = name,
+									tier = realTierNumber,
+								}
+							end
+						end
+
+						-- if E.OctoTable_Expansions_Names[tierName] then
+							if result[savedInstanceID] == nil then result[savedInstanceID] = {
+									difficulties = diffTable,
+									isRaid = isRaid,
+									-- name = name,
+									tier = realTierNumber,
+								}
+							end
+						-- end
+
+
+						-- elseif tier == numTiers and not isRaid and savedInstanceID ~= 3029 then
+						-- 	currentSeason[savedInstanceID] = {
+						-- 		difficulties = diffTable,
+						-- 		isRaid = isRaid,
+						-- 		-- name = name
+						-- 	}
 					end
+					index = index + 1
+					ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
 				end
-				index = index + 1
-				ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
 			end
 		end
 	end
@@ -2238,6 +2256,7 @@ local RIO_COLORS = {
 	{ threshold = 2000, color = "PURPLE" },  -- E.COLOR_PURPLE
 	{ threshold = 2500, color = "ORANGE" },  -- E.COLOR_ORANGE
 	{ threshold = 3000, color = "YELLOW" },  -- E.COLOR_YELLOW
+	{ threshold = 3500, color = "PINK" },    -- E.COLOR_PINK
 }
 
 function E.func_RioColor(score)

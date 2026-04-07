@@ -12,8 +12,10 @@ function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	end
 	local CharName = E.func_CharInfo_NickName(CharInfo, false, true, CustomColor, true)
 	local curServerShort = pd.curServerShort ~= E.curServerShort and "-" .. E.func_CharInfo_Server(CharInfo, nil, true, CustomColor) or ""
+	local specId = pd.specId or 72 -- FURY WARRIOR
+	local specIcon = E.func_SpecIcon(specId)
 	local leftText =
-	E.func_texturefromIcon(pd.specIcon) ..
+	E.func_texturefromIcon(specIcon) ..
 	CharName ..
 	curServerShort
 	return leftText
@@ -420,28 +422,35 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
-			local OwnedKeystoneLevel = pd.OwnedKeystoneLevel or 0
-			local OwnedKeystoneChallengeMapID = pd.OwnedKeystoneChallengeMapID or 0
-			-- local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY .. "-|r"
 			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
-			local RIO_Score = seasonData and tonumber(seasonData.RIO_Score) or 0
-			local RIO_weeklyBest = seasonData and tonumber(seasonData.RIO_weeklyBest) or E.COLOR_GRAY .. "-|r"
-			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, false)
-			local hasData = (RIO_Score > 0) or (OwnedKeystoneLevel > 0 and OwnedKeystoneChallengeMapID > 0)
-			if hasData then
-				local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
-				local row = { leftText }
-				local row2Text = keyName
-				local row3Text = RIO_weeklyBest
-				local row4Text = RIO_Score
-				table.insert(characterData, {
-						row = row,
-						name = pd.Name,
-						sortValue = RIO_Score,
-						row2Text = row2Text,
-						row3Text = row3Text,
-						row4Text = row4Text,
-				})
+			if seasonData then
+				local OwnedKeystoneLevel = pd.OwnedKeystoneLevel or 0
+				local OwnedKeystoneChallengeMapID = pd.OwnedKeystoneChallengeMapID or 0
+				-- local RIO_weeklyBest = pd.RIO_weeklyBest or E.COLOR_GRAY .. "-|r"
+
+				local rioColor = E.func_RioColor(seasonData.RIO_Score)
+				-- local rioColor = E.COLOR_PURPLE
+				local RIO_Score = seasonData and tonumber(seasonData.RIO_Score) or 0
+				local RIO_weeklyBest = seasonData and tonumber(seasonData.RIO_weeklyBest) or E.COLOR_GRAY .. "-|r"
+				local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, false)
+				local hasData = (RIO_Score > 0) or (OwnedKeystoneLevel > 0 and OwnedKeystoneChallengeMapID > 0)
+
+				if hasData then
+					local leftText = E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
+					local row = { leftText }
+					local row2Text = keyName
+					local row3Text = RIO_weeklyBest or 0
+					local row4Text = RIO_Score or 0
+					table.insert(characterData, {
+							row = row,
+							name = pd.Name,
+							sortValue = RIO_Score,
+							row2Text = row2Text,
+							row3Text = row3Text,
+							row4Text = row4Text,
+							rioColor = rioColor,
+					})
+				end
 			end
 		end
 	end
@@ -454,17 +463,18 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 		end)
 		local minValue, maxValue = E.func_GetMinMaxValue(characterData, "sortValue")
 		for _, d in ipairs(characterData) do
-			local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
+			-- local color = E.func_GetColorGradient(d.sortValue, minValue, maxValue)
+			local rioColor = d.rioColor
 			d.row[2] = {d.row2Text, "LEFT"}
 			d.row[3] = d.row3Text
-			d.row[4] = color .. d.row4Text .. "|r"
+			d.row[4] = rioColor .. d.row4Text .. "|r"
 			table.insert(tooltip, d.row)
 		end
 		local header1 = {
 			"",
 			"",
-			"WeeklyBest",
-			"Score", -- "MythicPlus", L["PROVING_GROUNDS_SCORE"]
+			L["Weekly Best"],
+			L["PROVING_GROUNDS_SCORE"], -- "MythicPlus",
 		}
 		table.insert(tooltip, 1, header1)
 	end

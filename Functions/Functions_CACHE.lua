@@ -667,11 +667,11 @@ handler.specialization = function(Cache_Name, Cache_Quality, category, id)
 	------------
 	return name
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 
 handler.challenge = function(Cache_Name, Cache_Quality, category, id)
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 	local name
 	local cached_Name = func_cached_Name(Cache_Name, id)
 	if cached_Name then
@@ -685,6 +685,27 @@ handler.challenge = function(Cache_Name, Cache_Quality, category, id)
 	return name
 
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+handler.expansion = function(Cache_Name, Cache_Quality, category, id)
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local n = E.OctoTable_Expansions and E.OctoTable_Expansions[id] and E.OctoTable_Expansions[id].nameBlizzard
+		if n and n ~= "" then
+			name = func_Cache_Name(id, Cache_Name, n, category)
+		end
+	end
+	return name
+
+end
+
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

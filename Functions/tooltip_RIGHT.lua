@@ -238,21 +238,28 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if id == "CurrentKey" then
+		local rioColor
+		local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
+		if seasonData then
+			rioColor = E.func_RioColor(seasonData.RIO_Score)
+		end
 		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
 			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, true)
 			tooltip[#tooltip+1] = {keyName}
 		end
-		local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
 		if seasonData then
-			local color = E.func_RioColor(seasonData.RIO_Score)
-			local RIO_Score = tonumber(seasonData.RIO_Score)
-			local RIO_weeklyBest = tonumber(seasonData.RIO_weeklyBest)
-			if RIO_Score and RIO_weeklyBest then
+			local RIO_Score = tonumber(seasonData.RIO_Score or 0)
+			local RIO_weeklyBest = tonumber(seasonData.RIO_weeklyBest or 0)
+			if RIO_Score > 0 or RIO_weeklyBest > 0 then
 				if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
 					tooltip[#tooltip+1] = {" ", " "}
 				end
-				tooltip[#tooltip+1] = {"Weekly Best:", color..RIO_weeklyBest.."|r"}
-				tooltip[#tooltip+1] = {"MythicPlus Score:", color..RIO_Score.."|r"}
+				-- if RIO_weeklyBest > 0 then
+					tooltip[#tooltip+1] = {L["Weekly Best"], rioColor..RIO_weeklyBest.."|r"}
+				-- end
+				if RIO_Score > 0 then
+					tooltip[#tooltip+1] = {L["PROVING_GROUNDS_SCORE"], rioColor..RIO_Score.."|r"}
+				end
 			end
 		end
 		local runHistory = cm.RunHistory
@@ -672,56 +679,73 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if SettingsType == "AdditionallyBOTTOM#MythicZero" then
 		-- Создаем временную таблицу для сбора данных
 		local tempData = {}
-		local myhDif = 23
+		local mythicDifID = 23
+
+		local selectedSeasons = {}
+		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
+		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+			local difficulties = v.difficulties
+			local tier = v.tier
+			if ExpansionToShowTBL[tier] then
+				selectedSeasons[tier] = true
+			end
+		end
+
 		-- Сначала собираем все данные
-		for SI_ID, t in pairs(Octo_Cache_DB.Octo_Table_currentSeason) do
-			local name = E.func_GetName("dungeon", SI_ID)
-			local defeatedBosses = 0
-			local totalBosses = t.difficulties and t.difficulties[myhDif] or 0
-			local hasData = false
-			local EJ_ID = E.func_SI_to_EJ(SI_ID)
-			local _, _, _, _, _, buttonImage2 = EJ_GetInstanceInfo(EJ_ID)
-			local icon = E.func_texturefromIcon(buttonImage2) or ""
-			if cm.journalInstance and cm.journalInstance[SI_ID] then
-				local v = cm.journalInstance[SI_ID]
-				if v[myhDif] and type(v[myhDif]) == "table" then
-					local difficultyData = v[myhDif]
-					defeatedBosses = difficultyData.defeatedBosses or 0
-					if difficultyData.totalBosses then
-						totalBosses = difficultyData.totalBosses
+		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+			local tier = v.tier
+			local isRaid = v.isRaid
+			local difficulties = v.difficulties
+			if difficulties and difficulties[mythicDifID] and not isRaid and selectedSeasons[tier] then
+				local name = E.func_GetName("dungeon", SI_ID)
+				local defeatedBosses = 0
+				local totalBosses = difficulties and difficulties[mythicDifID] or 0
+				local hasData = false
+				local EJ_ID = E.func_SI_to_EJ(SI_ID)
+				local _, _, _, _, _, buttonImage2 = EJ_GetInstanceInfo(EJ_ID)
+				local icon = E.func_texturefromIcon(buttonImage2) or ""
+				if cm.journalInstance and cm.journalInstance[SI_ID] then
+					local v = cm.journalInstance[SI_ID]
+					if v[mythicDifID] and type(v[mythicDifID]) == "table" then
+						local difficultyData = v[mythicDifID]
+						defeatedBosses = difficultyData.defeatedBosses or 0
+						if difficultyData.totalBosses then
+							totalBosses = difficultyData.totalBosses
+						end
+						hasData = true
 					end
-					hasData = true
 				end
+				local color
+				if not hasData then
+					color = E.COLOR_GRAY
+				elseif defeatedBosses == totalBosses and totalBosses > 0 then
+					color = E.COLOR_GREEN
+				elseif defeatedBosses > 0 then
+					color = E.COLOR_YELLOW
+				else
+					color = E.COLOR_RED
+				end
+				local bossProgress = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
+				local tier = v.tier -- E.func_GetDungTier(SI_ID)
+				local CurrentExpansion = E.func_GetCurrentExpansion()
+				local source = E.func_FormatExpansion(tier, "LEFT")
+				-- Сохраняем данные вместе с tier для сортировки
+				table.insert(tempData, {
+						tier = tier,
+						icon = icon,
+						name = name,
+						source = source,
+						progress = bossProgress,
+						color = color,
+				})
 			end
-			local color
-			if not hasData then
-				color = E.COLOR_GRAY
-			elseif defeatedBosses == totalBosses and totalBosses > 0 then
-				color = E.COLOR_GREEN
-			elseif defeatedBosses > 0 then
-				color = E.COLOR_YELLOW
-			else
-				color = E.COLOR_RED
-			end
-			local bossProgress = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
-			local tier = E.func_GetDungTier(SI_ID)
-			local source = E.func_FormatExpansion(tier, "LEFT")
-			-- Сохраняем данные вместе с tier для сортировки
-			table.insert(tempData, {
-					tier = tier,
-					icon = icon,
-					name = name,
-					source = source,
-					progress = bossProgress,
-					color = color,
-			})
 		end
 		table.sort(tempData, function(a, b)
-				-- if a.tier == b.tier then
-				-- return a.name < b.name -- Если tier одинаковый, сортируем по имени
-				-- end
-				-- return a.tier > b.tier
-				return a.name < b.name
+				if a.tier == b.tier then
+					return a.name < b.name -- Если tier одинаковый, сортируем по имени
+				end
+				return a.tier > b.tier
+				-- return a.name < b.name
 		end)
 		-- Добавляем отсортированные данные в тултип
 		for _, data in ipairs(tempData) do
