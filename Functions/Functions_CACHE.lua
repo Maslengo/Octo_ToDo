@@ -2,22 +2,6 @@ local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
 local GetSpellName = GetSpellName or C_Spell.GetSpellName
-local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
-local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
-local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
-local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
-local GetFriendshipReputation = GetFriendshipReputation or C_GossipInfo.GetFriendshipReputation
-local GetTradeSkillDisplayName = GetTradeSkillDisplayName or C_TradeSkillUI.GetTradeSkillDisplayName
-local GetTradeSkillTexture = GetTradeSkillTexture or GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
-local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
-local GetMapGroupID = GetMapGroupID or C_Map.GetMapGroupID
-local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMembersInfo
-local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
-local GetDayEvent = GetDayEvent or C_Calendar.GetDayEvent
-local GetMonthInfo = GetMonthInfo or C_Calendar.GetMonthInfo
-local SetAbsMonth = SetAbsMonth or C_Calendar.SetAbsMonth
-local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
-local GetMapUIInfo = GetMapUIInfo or C_ChallengeMode.GetMapUIInfo
 ----------------------------------------------------------------
 local function GetOrCreateCache_Name(category)
 	Octo_Cache_DB = Octo_Cache_DB or {}
@@ -72,50 +56,12 @@ local function func_Cache_Quality(id, Cache_Quality, NEWquality, debugLabel)
 	return Cache_Quality[id]
 end
 ----------------------------------------------------------------
-function E.func_GetQuestIcon(id)
-	local icon = ""
-	local info = C_QuestLog.GetQuestTagInfo(id)
-	if info and info.tagID and QUEST_TAG_ATLAS[info.tagID] then
-		local atlasName = QUEST_TAG_ATLAS[info.tagID]
-		icon = icon..E.func_texturefromIcon(atlasName)
-	end
-	local classification, _, atlasName = QuestUtil.GetQuestClassificationDetails(id)
-	if classification and atlasName then
-		icon = icon..E.func_texturefromIcon(atlasName)
-	end
-	return icon
-end
-----------------------------------------------------------------
-function E.func_GetReputationIcon(id)
-	local reputationData = E.OctoTable_Reputations_DB[id]
-	if reputationData then
-		return reputationData.icon
-	end
-	return nil
-end
-----------------------------------------------------------------
 function E.func_GetReputationSide(id)
 	local reputationData = E.OctoTable_Reputations_DB[id]
 	if reputationData then
 		return reputationData.side
 	end
 	return nil
-end
-----------------------------------------------------------------
--- function E.func_GetReputationSideIcon(id)
---     local reputationData = E.OctoTable_Reputations_DB[id]
---     if reputationData and reputationData.side then
---         local side = reputationData.side
---         if side == "Horde" or side == "Alliance" then
---             return reputationData.icon1
---         end
---     end
---     return nil
--- end
-----------------------------------------------------------------
-function E.func_GetMountTexture(mountID)
-	if not mountID then return end
-	return select(3, E.func_GetMountInfoByID(mountID))
 end
 ----------------------------------------------------------------
 function E.func_IsMountCollected(mountID)
@@ -128,32 +74,6 @@ function E.func_GetMountCollectedColor(mountID)
 	if not mountID then return end
 	local isCollected = select(11, E.func_GetMountInfoByID(mountID))
 	return isCollected and E.COLOR_WHITE or E.COLOR_RED
-end
-----------------------------------------------------------------
-function E.func_ProfessionIcon(skillLine)
-	if not skillLine then return "" end
-	return E.func_texturefromIcon(GetTradeSkillTexture(skillLine))
-end
-----------------------------------------------------------------
-function E.func_CovenantIcon(covID)
-	return E.OctoTable_Covenant[covID].icon
-end
-----------------------------------------------------------------
-function E.func_ClassColor(classID)
-	local className, classFile = GetClassInfo(classID)
-	local hex = C_ClassColor and C_ClassColor.GetClassColor and C_ClassColor.GetClassColor(classFile) and C_ClassColor.GetClassColor(classFile):GenerateHexColorMarkup() or E.COLOR_WHITE
-	return hex
-end
-----------------------------------------------------------------
-function E.func_ClassIcon(classID)
-	local className, classFile = GetClassInfo(classID)
-	local atlas = GetClassAtlas(classFile)
-	return atlas
-end
-----------------------------------------------------------------
-function E.func_SpecIcon(specID)
-	local _, _, _, icon = GetSpecializationInfoByID(specID)
-	return icon
 end
 ----------------------------------------------------------------
 local TooltipForNpcScan = CreateFrame("GameTooltip", E.MainAddonName.."TooltipForNpcScan", UIParent, "GameTooltipTemplate")
@@ -224,7 +144,7 @@ handler.quest = function(Cache_Name, Cache_Quality, category, id)
 	if cached_Name then
 		name = cached_Name
 	else
-		local result = (GetTitleForQuestID or GetQuestInfo)(id)
+		local result = (E.func_GetTitleForQuestID or E.func_GetQuestInfo)(id)
 		if result then
 			name = func_Cache_Name(id, Cache_Name, result, category)
 		end
@@ -330,20 +250,20 @@ handler.reputation = function(Cache_Name, Cache_Quality, category, id)
 	if cached_Name then
 		name = cached_Name
 	else
-		local repInfo = GetFactionDataByID and GetFactionDataByID(id)
+		local repInfo = E.func_GetFactionDataByID(id)
 		local result
-		if repInfo then
+		if repInfo and repInfo.name then
 			result = repInfo.name
 		else
-			local reputationInfo = GetFriendshipReputation(id)
+			local reputationInfo = E.func_GetFriendshipReputation(id)
 			if reputationInfo and reputationInfo.name then
 				result = reputationInfo.name
 			end
 		end
 		if result and result ~= "" then
 			name = func_Cache_Name(id, Cache_Name, result, category)
-		elseif GetFactionInfoByID and GetFactionInfoByID(id) then -- 10.2.7
-			local n = GetFactionInfoByID(id)
+		elseif E.func_GetFactionInfoByID(id) then -- 10.2.7
+			local n = E.func_GetFactionInfoByID(id)
 			if type(n) == "string" then
 				name = n
 			end
@@ -382,12 +302,12 @@ handler.spell = function(Cache_Name, Cache_Quality, category, id)
 		name = cached_Name
 	else
 		local result = E.func_GetSpellName(id) or E.func_GetSpellInfo(id)
-		if GetSpellName and GetSpellName(id) then
-			result = GetSpellName(id)
-		elseif GetSpellInfo and GetSpellInfo(id) then
-			result = GetSpellInfo(id)
-			-- /dump GetSpellInfo(20271)
-		end
+		-- if GetSpellName and GetSpellName(id) then
+		-- 	result = GetSpellName(id)
+		-- elseif GetSpellInfo and GetSpellInfo(id) then
+		-- 	result = GetSpellInfo(id)
+		-- 	-- /dump GetSpellInfo(20271)
+		-- end
 		name = func_Cache_Name(id, Cache_Name, result, category)
 	end
 	-----------
@@ -472,7 +392,7 @@ handler.map = function(Cache_Name, Cache_Quality, category, id)
 		name = cached_Name
 	else
 		local name
-		local info = GetMapInfo(id)
+		local info = E.func_GetMapInfo(id)
 		local result = info and info.name or ""
 		name = func_Cache_Name(id, Cache_Name, result, category)
 	end
@@ -502,7 +422,7 @@ handler.profession = function(Cache_Name, Cache_Quality, category, id)
 		name = cached_Name
 	else
 		local name
-		name = func_Cache_Name(id, Cache_Name, GetTradeSkillDisplayName(id), category)
+		name = func_Cache_Name(id, Cache_Name, E.func_GetTradeSkillDisplayName(id), category)
 	end
 	-----------
 	-- COLOR --
@@ -586,6 +506,11 @@ handler.covenant = function(Cache_Name, Cache_Quality, category, id)
 	local cached_Name = func_cached_Name(Cache_Name, id)
 	if cached_Name then
 		name = cached_Name
+	elseif E.func_GetCovenantData(id) then
+		local result = E.func_GetCovenantData(id).name
+		if result then
+			name = func_Cache_Name(id, Cache_Name, result, category)
+		end
 	else
 		if E.OctoTable_Covenant and E.OctoTable_Covenant[id] then
 			local result = E.OctoTable_Covenant[id].name
@@ -619,7 +544,7 @@ handler.class = function(Cache_Name, Cache_Quality, category, id)
 	if cached_Name then
 		name = cached_Name
 	else
-		local className, classFile = GetClassInfo(id)
+		local className, classFile = E.func_GetClassInfo(id)
 		if className and classFile then
 			name = func_Cache_Name(id, Cache_Name, className, category)
 		end
@@ -649,7 +574,7 @@ handler.specialization = function(Cache_Name, Cache_Quality, category, id)
 	if cached_Name then
 		name = cached_Name
 	else
-		local _, specName = GetSpecializationInfoByID(id)
+		local specName = select(2, GetSpecializationInfoByID(id))
 		if specName then
 			name = func_Cache_Name(id, Cache_Name, specName, category)
 		end
@@ -677,7 +602,7 @@ handler.challenge = function(Cache_Name, Cache_Quality, category, id)
 	if cached_Name then
 		name = cached_Name
 	else
-		local n = GetMapUIInfo(id)
+		local n = E.func_GetMapUIInfo(id)
 		if n and n ~= "" then
 			name = func_Cache_Name(id, Cache_Name, n, category)
 		end
@@ -767,11 +692,60 @@ function E.func_GetIcon(category, id)
 		elseif category == "reputation" then
 			icon = E.ICON_TABARD
 		elseif category == "challenge" then
-			local texture = select(4, GetMapUIInfo(id))
+			local texture = select(4, E.func_GetMapUIInfo(id))
 			icon = texture
+		elseif category == "dungeon" then
+			local EJ_ID = E.func_SI_to_EJ(id) -- SI_ID
+			local texture = select(6, EJ_GetInstanceInfo(EJ_ID))
+			icon = texture
+		elseif category == "covenant" then
+			icon = E.OctoTable_Covenant[id].icon
+		elseif category == "mount" then
+			icon = select(3, E.func_GetMountInfoByID(id))
+		elseif category == "specialization" then
+			icon = select(4, GetSpecializationInfoByID(id))
 		end
 	end
 
 	return icon
 end
 ----------------------------------------------------------------
+function E.func_ClassIcon(classID)
+	local className, classFile = E.func_GetClassInfo(classID)
+	local atlas = GetClassAtlas(classFile)
+	return atlas
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E.func_GetQuestIcon(id)
+	local icon = ""
+	local info = E.func_GetQuestTagInfo(id)
+	if info and info.tagID and QUEST_TAG_ATLAS[info.tagID] then
+		local atlasName = QUEST_TAG_ATLAS[info.tagID]
+		icon = icon..E.func_texturefromIcon(atlasName)
+	end
+	local classification, _, atlasName = QuestUtil.GetQuestClassificationDetails(id)
+	if classification and atlasName then
+		icon = icon..E.func_texturefromIcon(atlasName)
+	end
+	return icon
+end
+----------------------------------------------------------------
+function E.func_GetReputationIcon(id)
+	local reputationData = E.OctoTable_Reputations_DB[id]
+	if reputationData then
+		return reputationData.icon
+	end
+	return nil
+end
+----------------------------------------------------------------
+-- function E.func_GetReputationSideIcon(id)
+--     local reputationData = E.OctoTable_Reputations_DB[id]
+--     if reputationData and reputationData.side then
+--         local side = reputationData.side
+--         if side == "Horde" or side == "Alliance" then
+--             return reputationData.icon1
+--         end
+--     end
+--     return nil
+-- end

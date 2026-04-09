@@ -13,7 +13,7 @@ function E.func_GetLeftTextForTooltip(GUID, CharInfo, visiblePlayers)
 	local CharName = E.func_CharInfo_NickName(CharInfo, false, true, CustomColor, true)
 	local curServerShort = pd.curServerShort ~= E.curServerShort and "-" .. E.func_CharInfo_Server(CharInfo, nil, true, CustomColor) or ""
 	local specId = pd.specId or 72 -- FURY WARRIOR
-	local specIcon = E.func_SpecIcon(specId)
+	local specIcon = E.func_GetIcon("specialization", specId)
 	local leftText =
 	E.func_texturefromIcon(specIcon) ..
 	CharName ..
@@ -196,7 +196,7 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 					prof[i].Icon = ""
 					prof[i].Text = ""
 					if cmP[i] and cmP[i].skillLevel and cmP[i].maxSkillLevel then
-						prof[i].Icon = E.func_ProfessionIcon(cmP[i].skillLine)
+						prof[i].Icon = E.func_GetTradeSkillTexture(cmP[i].skillLine)
 						prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel) .. "/" .. E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
 						if cmP[i].skillModifier then
 							prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel) .. E.COLOR_GREEN .. "+" .. E.func_CompactFormatNumber(cmP[i].skillModifier) .. "|r" .. "/" .. E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
@@ -225,8 +225,8 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 			return a.name < b.name
 	end)
 	for _, d in ipairs(characterData) do
-		d.row[2] = {d.prof1Text .. d.prof1Icon, "RIGHT"}
-		d.row[3] = {d.prof2Text .. d.prof2Icon, "RIGHT"}
+		d.row[2] = {d.prof1Text .. E.func_texturefromIcon(d.prof1Icon), "RIGHT"}
+		d.row[3] = {d.prof2Text .. E.func_texturefromIcon(d.prof2Icon), "RIGHT"}
 		table.insert(tooltip, d.row)
 	end
 	return tooltip
@@ -473,8 +473,8 @@ function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 		local header1 = {
 			"",
 			"",
-			L["Weekly Best"],
-			L["PROVING_GROUNDS_SCORE"], -- "MythicPlus",
+			L["BEST"],
+			L["RATING"], -- "MythicPlus",
 		}
 		table.insert(tooltip, 1, header1)
 	end
@@ -510,7 +510,7 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 
 				local vaultData = cm.GreatVault and cm.GreatVault[ID]
 				local rewardData = vaultData and vaultData.rewards or {}
-				local activities = C_WeeklyRewards.GetActivities(ID)
+				local activities = E.func_GetActivities(ID)
 
 				local max = activities and activities[3] and activities[3].threshold or 0
 				local vaultMin = vaultData and vaultData.min or 0
@@ -633,7 +633,7 @@ end
 
 -- 				local vaultData = cm.GreatVault and cm.GreatVault[ID]
 -- 				local rewards = vaultData and vaultData.rewards or {}
--- 				local activities = C_WeeklyRewards.GetActivities(ID)
+-- 				local activities = E.func_GetActivities(ID)
 
 -- 				local max = activities and activities[3] and activities[3].threshold or 0
 -- 				local vaultMin = vaultData and vaultData.min or 0

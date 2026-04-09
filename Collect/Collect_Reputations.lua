@@ -17,9 +17,6 @@ local function Collect_Reputations()
 
 
 
-		-- /dump GetFactionInfo(76)
-		-- /dump E.func_GetFactionDataByID(76)
-
 		local simpleData = E.func_GetFactionDataByID(reputationID)
 		local friendData = E.func_GetFriendshipReputation(reputationID)
 		local isFriend = friendData and friendData.friendshipFactionID and friendData.friendshipFactionID > 0
@@ -68,11 +65,10 @@ local function Collect_Reputations()
 			if max <= 0 then cur, max = 1, 1 end
 			FIRST = cur
 			SECOND = max
-		elseif GetFactionInfoByID and GetFactionInfoByID(reputationID) then -- 10.2.7
+		elseif E.func_GetFactionInfoByID(reputationID) then -- 10.2.7
 			repType = 1
 			hasValidData = true
-			-- data = GetFactionInfoByID(id)
-			local _, _, standingID, barMin, barMax, barValue = GetFactionInfoByID(reputationID)
+			local _, _, standingID, barMin, barMax, barValue = E.func_GetFactionInfoByID(reputationID)
 			reaction = standingID
 			FIRST = barValue-barMin -- currentValue
 			SECOND = barMax-barMin -- totalValue

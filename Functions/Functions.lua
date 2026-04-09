@@ -1,168 +1,35 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-local LibSharedMedia = LibStub("LibSharedMedia-3.0")
-----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
+----------------------------------------------------------------
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
 local strsplit = strsplit
-local GetClassColor = GetClassColor or C_ClassColor.GetClassColor
-local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
-local EnableAddOn = EnableAddOn or C_AddOns.EnableAddOn
-local GetAddOnMetadata = GetAddOnMetadata or C_AddOns.GetAddOnMetadata
-local IsAddOnLoaded = IsAddOnLoaded or C_AddOns.IsAddOnLoaded
-local LoadAddOn = LoadAddOn or C_AddOns.LoadAddOn
-local GetItemCooldown = GetItemCooldown or C_Item.GetItemCooldown
-local GetItemCount = GetItemCount or C_Item.GetItemCount
-local GetItemIconByID = GetItemIconByID or C_Item.GetItemIconByID
-local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
-local GetItemNameByID = GetItemNameByID or C_Item.GetItemNameByID
-local GetItemQualityByID = GetItemQualityByID or C_Item.GetItemQualityByID
-local GetItemQualityColor = GetItemQualityColor or C_Item.GetItemQualityColor
-local IsAnimaItemByID = IsAnimaItemByID or C_Item.IsAnimaItemByID
-local GetDetailedItemLevelInfo = GetDetailedItemLevelInfo or C_Item.GetDetailedItemLevelInfo
-local GetSpellCooldown = GetSpellCooldown or C_Spell.GetSpellCooldown
-local GetSpellName = GetSpellName or C_Spell.GetSpellName
-local GetSpellSubtext = GetSpellSubtext or C_Spell.GetSpellSubtext
-local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
-local GetSpellCharges = GetSpellCharges or C_Spell.GetSpellCharges
-local IsSpellKnown = IsSpellKnown
-local GetCurrencyInfo = GetCurrencyInfo or C_CurrencyInfo.GetCurrencyInfo
-local IsAccountWideCurrency = IsAccountWideCurrency or C_CurrencyInfo.IsAccountWideCurrency
-local IsAccountTransferableCurrency = IsAccountTransferableCurrency or C_CurrencyInfo.IsAccountTransferableCurrency
-local GetQuestInfo = GetQuestInfo or C_QuestLog.GetQuestInfo
-local GetTitleForQuestID = GetTitleForQuestID or C_QuestLog.GetTitleForQuestID
-local IsQuestFlaggedCompleted = IsQuestFlaggedCompleted or C_QuestLog.IsQuestFlaggedCompleted
-local IsQuestFlaggedCompletedOnAccount = IsQuestFlaggedCompletedOnAccount or C_QuestLog.IsQuestFlaggedCompletedOnAccount
-local IsComplete = IsComplete or C_QuestLog.IsComplete
-local IsOnQuest = IsOnQuest or C_QuestLog.IsOnQuest
-local GetQuestObjectives = GetQuestObjectives or C_QuestLog.GetQuestObjectives
-local GetInfo = GetInfo or C_QuestLog.GetInfo
-local IsAccountQuest = IsAccountQuest or C_QuestLog.IsAccountQuest
-local IsFailed = IsFailed or C_QuestLog.IsFailed
-local GetNumQuestLogEntries = GetNumQuestLogEntries or C_QuestLog.GetNumQuestLogEntries
-local GetMaxNumQuestsCanAccept = GetMaxNumQuestsCanAccept or C_QuestLog.GetMaxNumQuestsCanAccept
-local GetFactionDataByID = GetFactionDataByID or C_Reputation.GetFactionDataByID
-local IsFactionParagon = IsFactionParagon or C_Reputation.IsFactionParagon
-local IsFactionParagonForCurrentPlayer = IsFactionParagonForCurrentPlayer or C_Reputation.IsFactionParagonForCurrentPlayer
-local GetFactionParagonInfo = GetFactionParagonInfo or C_Reputation.GetFactionParagonInfo
-local IsAccountWideReputation = IsAccountWideReputation or C_Reputation.IsAccountWideReputation
-local IsMajorFaction = IsMajorFaction or C_Reputation.IsMajorFaction
-local GetMajorFactionData = GetMajorFactionData or C_MajorFactions.GetMajorFactionData
-local GetFriendshipReputation = GetFriendshipReputation or C_GossipInfo.GetFriendshipReputation
-local GetFriendshipReputationRanks = GetFriendshipReputationRanks or C_GossipInfo.GetFriendshipReputationRanks
-local GetCovenantData = GetCovenantData or C_Covenants.GetCovenantData
-local GetTradeSkillDisplayName = GetTradeSkillDisplayName or C_TradeSkillUI.GetTradeSkillDisplayName
-local GetTradeSkillTexture = GetTradeSkillTexture or C_TradeSkillUI.GetTradeSkillTexture
-local GetMapInfo = GetMapInfo or C_Map.GetMapInfo
-local GetMapGroupID = GetMapGroupID or C_Map.GetMapGroupID
-local GetMapGroupMembersInfo = GetMapGroupMembersInfo or C_Map.GetMapGroupMembersInfo
-local GetCurrentCalendarTime = GetCurrentCalendarTime or C_DateAndTime.GetCurrentCalendarTime
-local GetSecondsUntilWeeklyReset = GetSecondsUntilWeeklyReset or C_DateAndTime.GetSecondsUntilWeeklyReset
-local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
-local GetHolidayInfo = C_Calendar.GetHolidayInfo
-local GetDayEvent = C_Calendar.GetDayEvent
-local GetMonthInfo = C_Calendar.GetMonthInfo
-local SetAbsMonth = C_Calendar.SetAbsMonth
-local GetNumDayEvents = GetNumDayEvents or C_Calendar.GetNumDayEvents
-local GetBuildingInfo = GetBuildingInfo or C_Garrison.GetBuildingInfo
-local IsFollowerOnCompletedMission = IsFollowerOnCompletedMission or C_Garrison.IsFollowerOnCompletedMission
-local GetFollowerNameByID = GetFollowerNameByID or C_Garrison.GetFollowerNameByID -- (garrFollowerID)
-local GetPlayerAuraBySpellID = GetPlayerAuraBySpellID or C_UnitAuras.GetPlayerAuraBySpellID
--- local GetFollowerName = GetFollowerName or C_Garrison.GetFollowerName -- (followerID)
-local GetMountIDs = C_MountJournal.GetMountIDs
-local GetMountInfoByID = C_MountJournal.GetMountInfoByID
-local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
-local GetMountFromItem = C_MountJournal.GetMountFromItem
 ----------------------------------------------------------------
-local GetCurrentAffixes = GetCurrentAffixes or C_MythicPlus.GetCurrentAffixes
-local GetCurrentSeason = GetCurrentSeason or C_MythicPlus.GetCurrentSeason
-local GetCurrentSeasonValues = GetCurrentSeasonValues or C_MythicPlus.GetCurrentSeasonValues
-local GetCurrentUIDisplaySeason = GetCurrentUIDisplaySeason or C_MythicPlus.GetCurrentUIDisplaySeason
-local GetEndOfRunGearSequenceLevel = GetEndOfRunGearSequenceLevel or C_MythicPlus.GetEndOfRunGearSequenceLevel
-local GetLastWeeklyBestInformation = GetLastWeeklyBestInformation or C_MythicPlus.GetLastWeeklyBestInformation
-local GetOwnedKeystoneChallengeMapID = GetOwnedKeystoneChallengeMapID or C_MythicPlus.GetOwnedKeystoneChallengeMapID
-local GetOwnedKeystoneLevel = GetOwnedKeystoneLevel or C_MythicPlus.GetOwnedKeystoneLevel
-local GetOwnedKeystoneMapID = GetOwnedKeystoneMapID or C_MythicPlus.GetOwnedKeystoneMapID
-local GetRewardLevelForDifficultyLevel = GetRewardLevelForDifficultyLevel or C_MythicPlus.GetRewardLevelForDifficultyLevel
-local GetRewardLevelFromKeystoneLevel = GetRewardLevelFromKeystoneLevel or C_MythicPlus.GetRewardLevelFromKeystoneLevel
-local GetRunHistory = GetRunHistory or C_MythicPlus.GetRunHistory
-local GetSeasonBestAffixScoreInfoForMap = GetSeasonBestAffixScoreInfoForMap or C_MythicPlus.GetSeasonBestAffixScoreInfoForMap
-local GetSeasonBestForMap = GetSeasonBestForMap or C_MythicPlus.GetSeasonBestForMap
-local GetSeasonBestMythicRatingFromThisExpansion = GetSeasonBestMythicRatingFromThisExpansion or C_MythicPlus.GetSeasonBestMythicRatingFromThisExpansion
-local GetWeeklyBestForMap = GetWeeklyBestForMap or C_MythicPlus.GetWeeklyBestForMap
-local GetWeeklyChestRewardLevel = GetWeeklyChestRewardLevel or C_MythicPlus.GetWeeklyChestRewardLevel
-local IsMythicPlusActive = IsMythicPlusActive or C_MythicPlus.IsMythicPlusActive
-local RequestCurrentAffixes = RequestCurrentAffixes or C_MythicPlus.RequestCurrentAffixes
-local RequestMapInfo = RequestMapInfo or C_MythicPlus.RequestMapInfo
-local RequestRewards = RequestRewards or C_MythicPlus.RequestRewards
+function E.func_WeeklyRewards_ShowUI()
+	if WeeklyRewards_ShowUI then
+		return WeeklyRewards_ShowUI()
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+function E.func_GetLastWeeklyBestInformation()
+	if GetLastWeeklyBestInformation then
+		return GetLastWeeklyBestInformation()
+	end
+end
 function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
 	local iconHeight = iconHeight or 16
 	return CreateAtlasMarkup(atlasName, iconWidth, iconHeight)
 end
-
-
-function E.func_GetSpellInfo(id)
-	return GetSpellInfo(id)
-end
-
-
-function E.func_GetSpellName(id)
-	return GetSpellName(id)
-end
-
-
-function E.func_GetItemNameByID(id)
-	return GetItemNameByID(id)
-end
-
-
-function E.func_GetMountInfoByID(id)
-	return GetMountInfoByID(id)
-end
-
-function E.func_GetCurrencyInfo(id)
-	local info = GetCurrencyInfo(id)
-	return info
-end
-
-function E.func_GetItemIconByID(id)
-	return GetItemIconByID(id)
-end
-
-function E.func_GetSpellTexture(id)
-	return GetSpellTexture(id)
-end
-
-
-function E.func_IsAccountQuest(questID)
-	if not questID then
-		return false
-	end
-	return IsAccountQuest(questID)
-end
-function E.func_IsQuestFlaggedCompletedOnAccount(questID)
-	return IsQuestFlaggedCompletedOnAccount(questID)
-end
-function E.func_GetItemData(itemInfo)
-	return GetItemInfo(itemInfo)
-end
-function E.func_GetItemQuantity(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
-	if not itemID then return end
-	return GetItemCount(itemID, includeBank, includeUses, includeReagentBank, includeAccountBank)
-end
 function E.func_GetItemHyperlink(itemID)
-	local _, link = E.func_GetItemData(itemID)
+	local _, link = E.func_GetItemInfo(itemID)
 	return link
-end
-function E.func_GetItemQualityByID(itemID)
-	return GetItemQualityByID(itemID) or 0
 end
 function E.func_GetItemQualityColorTable(itemID)
 	return ITEM_QUALITY_COLORS[E.func_GetItemQualityByID(itemID)]
@@ -175,41 +42,9 @@ function E.func_GetQualityHexColor(quality)
 	return E.COLOR_WHITE
 end
 ----------------------------------------------------------------
-function E.func_GetQualityColorRGB(quality)
-	local r, g, b = GetItemQualityColor(quality)
-	return r, g, b
-end
-----------------------------------------------------------------
-function E.func_IsAnimaItemByID(itemID)
-	return IsAnimaItemByID(itemID)
-end
-----------------------------------------------------------------
-function E.func_GetItemLevelDetails(itemID)
-	return GetDetailedItemLevelInfo(itemID)
-end
-----------------------------------------------------------------
-function E.func_GetItemCooldown(itemID)
-	local start, duration = GetItemCooldown(itemID)
-	local result = 0
-	if start > 0 and duration > 0 then
-		result = (start + duration - GetTime())
-	end
-	return E.func_CompactRoundNumber(result)
-end
-----------------------------------------------------------------
 function E.func_GetSpellDescription(spellID)
 	local result = GetSpellSubtext(spellID)
 	return result
-end
-----------------------------------------------------------------
-function E.func_GetSpellCooldown(spellID)
-	local start = GetSpellCooldown(spellID).startTime
-	local duration = GetSpellCooldown(spellID).duration
-	local result = 0
-	if start > 0 and duration > 0 then
-		result = (start + duration - GetTime())
-	end
-	return E.func_CompactRoundNumber(result)
 end
 ----------------------------------------------------------------
 function E.func_RGB2Hex(r, g, b, a)
@@ -220,74 +55,59 @@ function E.func_RGB2Hex(r, g, b, a)
 	if not a then
 		a = 1
 	end
-	return "|c"..string.format("%02x", math.floor(a*255))..utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c" .. string.format("%02x", math.floor(a*255)) .. utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 ----------------------------------------------------------------
-
-
 function E.func_Hex2RGBA(hex, forcedAlpha)
 	if type(hex) ~= "string" then
 		return 1, 1, 1, 1
 	end
-
 	-- Приводим к нижнему регистру для удобства
 	hex = hex:lower()
-
 	-- |cffRRGGBB или |caarrggbb
 	if hex:sub(1,2) == "|c" then
 		if #hex < 10 then
 			return 1, 1, 1, 1
 		end
-
 		local a = tonumber(hex:sub(3,4), 16) or 255
 		local r = tonumber(hex:sub(5,6), 16) or 255
 		local g = tonumber(hex:sub(7,8), 16) or 255
 		local b = tonumber(hex:sub(9,10), 16) or 255
-
 		if not (r and g and b and a) then
 			return 1, 1, 1, 1
 		end
-
 		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or a/255
 	end
-
 	-- RRGGBB
 	if #hex == 6 then
 		local r = tonumber(hex:sub(1,2), 16)
 		local g = tonumber(hex:sub(3,4), 16)
 		local b = tonumber(hex:sub(5,6), 16)
-
 		if not (r and g and b) then
 			return 1, 1, 1, 1
 		end
-
 		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or 1
 	end
-
 	if #hex == 8 then
 		local a = tonumber(hex:sub(1,2), 16)
 		local r = tonumber(hex:sub(3,4), 16)
 		local g = tonumber(hex:sub(5,6), 16)
 		local b = tonumber(hex:sub(7,8), 16)
-
 		if not (r and g and b and a) then
 			return 1, 1, 1, 1
 		end
-
 		return r/255, g/255, b/255, forcedAlpha ~= nil and forcedAlpha or a/255
 	end
-
 	return 1, 1, 1, 1
 end
 ----------------------------------------------------------------
 function E.func_RGB2HexString(r, g, b, a)
 	a = a or 1
-
 	return string.upper(string.format("%02x%02x%02x%02x",
-		math.floor(a * 255),
-		math.floor(r * 255),
-		math.floor(g * 255),
-		math.floor(b * 255)
+			math.floor(a * 255),
+			math.floor(r * 255),
+			math.floor(g * 255),
+			math.floor(b * 255)
 	))
 end
 ----------------------------------------------------------------
@@ -299,14 +119,8 @@ end
 function E.func_GetNextResetTime(time)
 	local time = time or 1
 	local daytime = 86400
-	local thursdayReset = GetWeeklyResetStartTime and GetWeeklyResetStartTime() or 0
+	local thursdayReset = E.func_GetWeeklyResetStartTime()
 	return (math.ceil((GetServerTime() - thursdayReset)/(daytime*time))*daytime*time)+thursdayReset
-end
-function E.func_GetSecondsToWeeklyReset()
-	return GetSecondsUntilWeeklyReset and GetSecondsUntilWeeklyReset() or 0
-end
-function E.func_IsOnQuest(id)
-	return IsOnQuest(id)
 end
 function E.func_IsAchievementCompleted(id)
 	if not id then
@@ -340,41 +154,15 @@ end
 function E.func_ReversSort(a, b)
 	return b < a
 end
-function E.func_GetMaxRenownLevel(reputationID)
-	local levels = C_MajorFactions.GetRenownLevels(reputationID)
-	if levels then
-		return levels[#levels].level
-	end
-end
-function E.func_GetNumQuestLogEntries()
-	local numShownEntries, numQuests = C_QuestLog.GetNumQuestLogEntries()
-	return numShownEntries
-end
 -- /run E.func_GetQuestLogCount()
 function E.func_GetQuestLogCount()
 	local numQuests = 0
 	local numShownEntries = E.func_GetNumQuestLogEntries()
 	for i = 1, numShownEntries do
-		local info = GetInfo(i)
+		local info = E.func_GetInfo(i)
 		numQuests = numQuests + (info and info.frequency and info.questID ~= 0 and not info.isHeader and not info.isHidden and 1 or 0)
 	end
 	return numQuests
-end
-function E.func_GetMaxNumQuestsCanAccept()
-	local result = GetMaxNumQuestsCanAccept()
-	return result
-end
-function E.func_GetAddOnMetadata(name, variable)
-	return GetAddOnMetadata(name, variable)
-end
-function E.func_IsAddOnLoaded(AddonNameOrIndex)
-	return IsAddOnLoaded(AddonNameOrIndex)
-end
-function E.func_LoadAddOnForced(AddonName)
-	if DoesAddOnExist(AddonName) and not E.func_IsAddOnLoaded(AddonName) then
-		EnableAddOn(AddonName)
-		LoadAddOn(AddonName)
-	end
 end
 function E.func_GetCurrentExpansion()
 	if LE_EXPANSION_LEVEL_CURRENT ~= nil then
@@ -387,7 +175,7 @@ function E.func_FormatLastSeen(time, color)
 	if not time then
 		return L["FRIENDS_LIST_OFFLINE"]
 	else
-		return string.format(L["BNET_LAST_ONLINE_TIME"], color..E.func_FormatTimeAgo(time).."|r")
+		return string.format(L["BNET_LAST_ONLINE_TIME"], color .. E.func_FormatTimeAgo(time) .. "|r")
 	end
 end
 function E.func_FormatTimeAgo(timeDiff, isAbsolute)
@@ -426,7 +214,7 @@ function E.func_GetTextWithColor(fontstring)
 	if not fontstring then return nil end
 	local text = fontstring:GetText()
 	if not text or text == "" then return nil end
-	return E.func_RGB2Hex(fontstring:GetTextColor())..text.."|r"
+	return E.func_RGB2Hex(fontstring:GetTextColor()) .. text .. "|r"
 end
 function E.func_FormatDateTwoDigits(date)
 	local result = ("%.2d"):format(date)
@@ -499,12 +287,9 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, frameString)
-	local iconName = AddonName:gsub("^Octo_", "")
-	-- local qwe = E.func_GetAddOnMetadata(AddonName, "Title")
-	-- local zxc = E.func_GetAddOnMetadata(AddonName, "Interface")
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
-			icon = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\IconTexture\\"..iconName,
+			icon = "Interface\\AddOns\\" .. E.MainAddonName .. "\\Media\\IconTexture\\" .. AddonName,
 			OnClick = function(self, button)
 				if button == "LeftButton" then
 					-- if not InCombatLockdown() then
@@ -518,16 +303,11 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				end
 			end,
 			OnTooltipShow = function(tooltip)
-				-- local version = E.func_GetAddOnMetadata(AddonName, "Version")
-				-- local title = E.func_GetAddOnMetadata(AddonName, "Title")
-				-- tooltip:AddLine(("%s (|cffff7f3f%s|r)"):format(title, version))
 				local addonNameNEW = E.func_AddonNameForOptions(AddonName)
 				tooltip:AddLine(addonNameNEW)
 				tooltip:AddLine(" ")
-				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON..L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
-				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON..L["RMB:"], L["OPTIONS"])
-				-- tooltip:AddLine(" ")
-				-- tooltip:AddLine(E.COLOR_RED..L["Temporarily disabled in combat"].."|r")
+				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON .. L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
+				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON .. L["RMB:"], L["OPTIONS"])
 			end,
 	})
 	if type(Saved_Variables.LibDataBroker) ~= "table" then
@@ -552,12 +332,12 @@ function E.func_Gradient(text, firstColor, secondColor)
 		local g3 = g1
 		local b3 = b1
 		for i = 1, total do
-			str = str..E.func_RGB2Hex(r3, g3, b3)..utf8sub(text, i, i).."|r"
+			str = str .. E.func_RGB2Hex(r3, g3, b3) .. utf8sub(text, i, i) .. "|r"
 			r3 = r3 + rdelta
 			g3 = g3 + gdelta
 			b3 = b3 + bdelta
 		end
-		result = str..secondColor..utf8sub(text, utf8len(text)).."|r"
+		result = str .. secondColor .. utf8sub(text, utf8len(text)) .. "|r"
 		return result
 	else
 		return text
@@ -802,7 +582,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 		for q, w in ipairs(smth) do
 			for k, value in pairs(tbl) do
 				if value == w then -- Точное совпадение значения
-					E.func_PrintMessage(k, E.COLOR_YELLOW..tostring(value).."|r")
+					E.func_PrintMessage(k, E.COLOR_YELLOW .. tostring(value) .. "|r")
 					tbl[k] = nil -- Удаляем значение
 				elseif type(value) == "table" then
 					E.func_RemoveZeroValues(value, w) -- Рекурсия для вложенных таблиц
@@ -814,7 +594,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 	elseif type(smth) == "number" then
 		for k, value in pairs(tbl) do
 			if value == smth then
-				E.func_PrintMessage(k, E.COLOR_PURPLE..tostring(value).."|r")
+				E.func_PrintMessage(k, E.COLOR_PURPLE .. tostring(value) .. "|r")
 				tbl[k] = nil
 			elseif type(value) == "table" then
 				E.func_RemoveZeroValues(value, smth) -- Рекурсия
@@ -826,7 +606,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 		for k, value in pairs(tbl) do
 			-- Специальный случай для любых числовых значений
 			if value and smth == "anynumber" and type(value) == "number" then
-				E.func_PrintMessage(k, E.COLOR_WOW_TOKEN..tostring(value).."|r")
+				E.func_PrintMessage(k, E.COLOR_WOW_TOKEN .. tostring(value) .. "|r")
 				tbl[k] = nil
 			else
 				E.func_RemoveZeroValues(value, smth)
@@ -834,7 +614,7 @@ function E.func_RemoveZeroValues(tbl, smth)
 			-- Поиск по строковому шаблону
 			if value and type(value) == "string" then
 				if string.find(value, smth) then
-					E.func_PrintMessage(k, E.COLOR_MAGENTA..tostring(value).."|r")
+					E.func_PrintMessage(k, E.COLOR_MAGENTA .. tostring(value) .. "|r")
 					tbl[k] = nil
 				end
 			else
@@ -864,8 +644,8 @@ end
 function E.func_AddonNameForOptions(addonName)
 	-- local icon = E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))
 	local name = E.func_GetAddOnMetadata(addonName, "Title")
-	local vers = E.COLOR_GRAY..E.func_GetAddOnMetadata(addonName, "Version").."|r" -- ORANGE = ff7f3f
-	local result = name.." "..vers
+	local vers = E.COLOR_GRAY .. E.func_GetAddOnMetadata(addonName, "Version") .. "|r" -- ORANGE = ff7f3f
+	local result = name .. " " .. vers
 	return result
 end
 ----------------------------------------------------------------
@@ -888,12 +668,12 @@ function E.func_RequestUIUpdate(event_name)
 						E.updateScheduledFlag = false
 						if Octo_MainFrame and Octo_MainFrame:IsShown() then
 							-- E.func_TODO_CreateDataProvider()
-							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_GREEN, E.COLOR_YELLOW)..event_name)
+							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_GREEN, E.COLOR_YELLOW) .. event_name)
 						end
 				end)
 			end
 		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_RED, E.COLOR_PURPLE)..event_name)
+			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_RED, E.COLOR_PURPLE) .. event_name)
 		end
 	end
 end
@@ -913,18 +693,18 @@ function E.func_FormatExpansion(expID, iconSide, fullName)
 	local expansion = E.OctoTable_Expansions[expID]
 	local expIcon = E.func_texturefromIcon(expansion.icon, 16, 32)
 	local color = expansion.color
-	local expName = color.. (fullName and expansion.name or expansion.nameVeryShort)
+	local expName = color .. (fullName and expansion.name or expansion.nameVeryShort)
 	if iconSide == "LEFT" then
-		return expIcon..expName.."|r"
+		return expIcon .. expName .. "|r"
 	end
 	-- По умолчанию RIGHT
-	return expName..expIcon.."|r"
+	return expName .. expIcon .. "|r"
 end
 ----------------------------------------------------------------
 function E.func_GetCurrentRegionName()
 	local result = GetCurrentRegionName()
 	if result == "" then
-		result = "PTR "..E.buildVersion
+		result = "PTR " .. E.buildVersion
 	end
 	return result
 end
@@ -966,7 +746,7 @@ end
 function E.func_GetPlayerRealm()
 	local result = GetRealmName()
 	if E.IsRemix then
-		result = result.." (Remix)"
+		result = result .. " (Remix)"
 	end
 	return result
 end
@@ -1007,12 +787,12 @@ end
 function E.func_PrintMessage(...)
 	-- Используем стандартное сообщение WoW или создаем свое
 	-- UIErrorsFrame:AddMessage(E.func_Gradient(text), 1.0, 1.0, 1.0, 1.0, UIERRORS_HOLD_TIME)
-	-- DEFAULT_CHAT_FRAME:AddMessage(E.func_GetAddOnMetadata(E.MainAddonName, "Title")..": "..text)
+	-- DEFAULT_CHAT_FRAME:AddMessage(E.func_GetAddOnMetadata(E.MainAddonName, "Title") .. ": " .. text)
 	-- DEFAULT_CHAT_FRAME:AddMessage(...)
 	print(...)
 end
 function E.InitGlobalDB(addonName)
-	local savedVarName = addonName.."_DB"
+	local savedVarName = addonName .. "_DB"
 	_G[savedVarName] = _G[savedVarName] or {}
 	-- Защита от повторов
 	for _, entry in ipairs(E.OctoTable_SavedVariables or {}) do
@@ -1032,19 +812,19 @@ function E.InitGlobalDB(addonName)
 	return _G[savedVarName], savedVarName
 end
 function E.func_FormatMountInfo(mountID)
-	local mountIconNumber = E.func_GetMountTexture(mountID)
-	local mountIcon = E.func_texturefromIcon(mountIconNumber)
-	local mountName = mountIcon..E.func_GetMountCollectedColor(mountID)..E.func_GetName("mount", mountID).."|r"
+	local mountIcon = E.func_GetIcon("mount", mountID)
+	local mountTexture = E.func_texturefromIcon(mountIcon)
+	local mountName = mountTexture .. E.func_GetMountCollectedColor(mountID) .. E.func_GetName("mount", mountID) .. "|r"
 	return mountName
 end
 function E.func_FormatMoney(number)
 	if not number then return 0 end
 	if number > 10000 then
-		return E.func_CompactFormatNumber(number/10000).."|r".."|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
+		return E.func_CompactFormatNumber(number/10000) .. "|r" .. "|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
 	elseif number > 100 then
-		return E.func_CompactFormatNumber(number/100).."|r".."|TInterface\\MoneyFrame\\UI-SilverIcon:12:12|t"
+		return E.func_CompactFormatNumber(number/100) .. "|r" .. "|TInterface\\MoneyFrame\\UI-SilverIcon:12:12|t"
 	else
-		return E.func_CompactFormatNumber(number).."|r".."|TInterface\\MoneyFrame\\UI-CopperIcon:12:12|t"
+		return E.func_CompactFormatNumber(number) .. "|r" .. "|TInterface\\MoneyFrame\\UI-CopperIcon:12:12|t"
 	end
 end
 function E.func_CompactRoundNumber(number)
@@ -1068,41 +848,41 @@ function E.func_SecondsToClock(time, allwaysShowSeconds)
 	local ms = time - math.floor(time)
 	local parts = {}
 	if years > 0 then
-		table.insert(parts, years..L["y"].." ")
-		table.insert(parts, days..L["d"].." ")
-		table.insert(parts, hours..L["h"].." ")
-		table.insert(parts, mins..L["m"])
+		table.insert(parts, years .. L["y"] .. " ")
+		table.insert(parts, days .. L["d"] .. " ")
+		table.insert(parts, hours .. L["h"] .. " ")
+		table.insert(parts, mins .. L["m"])
 		if allwaysShowSeconds then
-			table.insert(parts, " "..secs..L["s"])
+			table.insert(parts, " " .. secs .. L["s"])
 		end
 	elseif days > 0 then
-		table.insert(parts, days..L["d"].." ")
-		table.insert(parts, hours..L["h"].." ")
-		table.insert(parts, mins..L["m"])
+		table.insert(parts, days .. L["d"] .. " ")
+		table.insert(parts, hours .. L["h"] .. " ")
+		table.insert(parts, mins .. L["m"])
 		if allwaysShowSeconds then
-			table.insert(parts, " "..secs..L["s"])
+			table.insert(parts, " " .. secs .. L["s"])
 		end
 	elseif hours > 0 then
-		table.insert(parts, hours..L["h"].." ")
-		table.insert(parts, string.format("%02d", mins)..L["m"])
+		table.insert(parts, hours .. L["h"] .. " ")
+		table.insert(parts, string.format("%02d", mins) .. L["m"])
 		if allwaysShowSeconds then
-			table.insert(parts, " "..string.format("%02d", secs)..L["s"])
+			table.insert(parts, " " .. string.format("%02d", secs) .. L["s"])
 		end
 	elseif time >= 60 then
-		table.insert(parts, mins..L["m"].." ")
+		table.insert(parts, mins .. L["m"] .. " ")
 		if time < 600 or allwaysShowSeconds then
-			table.insert(parts, secs..L["s"])
+			table.insert(parts, secs .. L["s"])
 		end
 	elseif time >= 1 then
-		table.insert(parts, secs..L["s"])
+		table.insert(parts, secs .. L["s"])
 	else
-		table.insert(parts, string.format("%.3f", time).."ms")
+		table.insert(parts, string.format("%.3f", time) .. "ms")
 	end
 	return table.concat(parts)
 end
 function E.func_texturefromIconEVENT(icon, iconSize)
 	iconSize = iconSize or 16
-	return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconSize)..":"..(iconSize)..":::128:128:0:91:0:91|t "
+	return "|T" .. (icon or E.ICON_QUESTION_MARK) .. ":" .. (iconSize) .. ":" .. (iconSize) .. ":::128:128:0:91:0:91|t "
 end
 function E.func_GetPlayerLocation()
 	-- Получаем текстовые данные о местоположении
@@ -1113,11 +893,11 @@ function E.func_GetPlayerLocation()
 	-- Получаем ID карты для игрока
 	local uiMapID = MapUtil.GetDisplayableMapForPlayer()
 	if uiMapID ~= 0 then
-		local mapInfo = C_Map.GetMapInfo(uiMapID)
+		local mapInfo = E.func_GetMapInfo(uiMapID)
 		if mapInfo then
-			local mapGroupID = C_Map.GetMapGroupID(uiMapID)
-			if mapGroupID then
-				local mapGroupInfo = C_Map.GetMapGroupMembersInfo(mapGroupID)
+			local uiMapGroupID = E.func_GetMapGroupID(uiMapID)
+			if uiMapGroupID then
+				local mapGroupInfo = E.func_GetMapGroupMembersInfo(uiMapGroupID)
 				if mapGroupInfo then
 					for _, mapGroupMemberInfo in ipairs(mapGroupInfo) do
 						if mapGroupMemberInfo.mapID == uiMapID then
@@ -1129,11 +909,11 @@ function E.func_GetPlayerLocation()
 			end
 			-- Логика определения текста для возврата
 			if FIRSTtext == "" then
-				return E.COLOR_RED..mapInfo.name.."|r", false
+				return E.COLOR_RED .. mapInfo.name .. "|r", false
 			elseif FIRSTtext == SECONDtext then
 				return FIRSTtext, true
 			else
-				return SECONDtext ~= "" and FIRSTtext.." ("..SECONDtext..")" or FIRSTtext, true
+				return SECONDtext ~= "" and FIRSTtext .. " (" .. SECONDtext .. ")" or FIRSTtext, true
 			end
 		end
 	end
@@ -1146,20 +926,20 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 	-- красный не сделан
 	-- желтный делается
 	-- фиолетовый можно сдать
-	if IsFailed(questID) then
-		result = E.COLOR_RED..L["FAILED"].."|r"
-	elseif IsQuestFlaggedCompleted(questID) then
+	if E.func_IsFailed(questID) then
+		result = E.COLOR_RED .. L["FAILED"] .. "|r"
+	elseif E.func_IsQuestFlaggedCompleted(questID) then
 		if forceBoolean then
 			result = true
 		else
 			result = E.DONE
 		end
-	elseif IsComplete(questID) then
-		result = E.COLOR_PURPLE..">"..L["QUEST_WATCH_QUEST_READY"].."<|r"
+	elseif E.func_IsComplete(questID) then
+		result = E.COLOR_PURPLE .. ">" .. L["QUEST_WATCH_QUEST_READY"] .. "<|r"
 	elseif not E.func_IsOnQuest(questID) then
 		result = nil
 	else
-		local objectives = GetQuestObjectives(questID)
+		local objectives = E.func_GetQuestObjectives(questID)
 		if not objectives then
 			result = ""
 		else
@@ -1171,9 +951,9 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 					local color = finished and E.COLOR_YELLOW or E.COLOR_RED
 					local text
 					if objectiveType == "progressbar" then
-						text = color..GetQuestProgressBarPercent(questID).."%|r"
+						text = color .. GetQuestProgressBarPercent(questID) .. "%|r"
 					else
-						text = color..objective.numFulfilled.."/"..objective.numRequired.."|r"
+						text = color .. objective.numFulfilled .. "/" .. objective.numRequired .. "|r"
 					end
 					table.insert(parts, text)
 				end
@@ -1188,11 +968,11 @@ function E.func_GetRealmShortName(text)
 	local isRemix = E.IsRemix and " (Remix)" or ""
 	local output
 	if b then
-		output = utf8sub(a, 1, 1):upper()..utf8sub(b, 1, 1):upper()
+		output = utf8sub(a, 1, 1):upper() .. utf8sub(b, 1, 1):upper()
 	else
-		output = utf8sub(a, 1, 1):upper()..utf8sub(a, 2, 3):lower()
+		output = utf8sub(a, 1, 1):upper() .. utf8sub(a, 2, 3):lower()
 	end
-	return output..isRemix
+	return output .. isRemix
 end
 E.curServerShort = E.func_GetRealmShortName(GetRealmName())
 function E.func_TableRemoveDuplicates(table1)
@@ -1229,13 +1009,13 @@ function E.func_FormatResetType(text)
 	if not text then return end
 	local result = ""
 	if text == "Regular" then
-		result = E.COLOR_YELLOW.."O|r"
+		result = E.COLOR_YELLOW .. "O|r"
 	elseif text == "Daily" then
-		result = E.COLOR_BLUE.."D|r"
+		result = E.COLOR_BLUE .. "D|r"
 	elseif text == "Weekly" then
-		result = E.COLOR_PURPLE.."W|r"
+		result = E.COLOR_PURPLE .. "W|r"
 	elseif text == "Month" then
-		result = E.COLOR_RED.."M|r"
+		result = E.COLOR_RED .. "M|r"
 	end
 	return result
 end
@@ -1322,7 +1102,7 @@ function E.func_CompactFormatNumber(num)
 			i = i + 1
 		end
 		local rounded = math.floor(num + 0.5) * sign
-		return tostring(rounded)..suffixes[i]
+		return tostring(rounded) .. suffixes[i]
 	end
 	----------------------------------------------------------------
 	local i = 1
@@ -1335,52 +1115,16 @@ function E.func_CompactFormatNumber(num)
 		num = num / step
 		i = i + 1
 	end
-	local rounded = tonumber(string.format("%."..DECIMALS.."f", num))
+	local rounded = tonumber(string.format("%." .. DECIMALS .. "f", num))
 	if rounded >= step and i < #suffixes then
 		rounded = rounded / step
 		i = i + 1
 	end
 	rounded = rounded * sign
 	local s = tostring(rounded):gsub("%.0$", "")
-	return s..suffixes[i]
+	return s .. suffixes[i]
 end
--- /run opde(GetFactionInfo(76))
--- /dump GetFactionInfo(76)
 ----------------------------------------------------------------
-function E.func_GetFactionDataByID(id)
-	local data
-	if GetFactionDataByID and GetFactionDataByID(id) then
-		data = GetFactionDataByID(id)
-	elseif GetFactionInfo then
-		data = GetFactionInfo(id)
-	end
-	return data
-end
-function E.func_GetFactionParagonInfo(id)
-	return GetFactionParagonInfo(id)
-end
-function E.func_GetMajorFactionData(id)
-	return GetMajorFactionData(id)
-end
-function E.func_GetFriendshipReputationRanks(id)
-	return GetFriendshipReputationRanks(id)
-end
-function E.func_IsFactionParagon(id)
-	return IsFactionParagon(id)
-end
-function E.func_IsFactionParagonForCurrentPlayer(id)
-	if IsFactionParagonForCurrentPlayer then
-		return IsFactionParagonForCurrentPlayer(id)
-	elseif IsFactionParagon then
-		return IsFactionParagon(id)
-	end
-end
-function E.func_GetFriendshipReputation(id)
-	return GetFriendshipReputation(id)
-end
-function E.func_IsMajorFaction(id)
-	return IsMajorFaction(id)
-end
 ----------------------------------------------------------------
 function E.func_SI_to_EJ(id) -- jInstanceID func_SI_to_EJ
 	if not id then return end
@@ -1431,7 +1175,7 @@ function E.func_GetSlotNameForEmptySlot(slotID)
 	if slotAPIName then
 		return _G[slotAPIName] or slotAPIName
 	end
-	return "Slot "..slotID
+	return "Slot " .. slotID
 end
 ----------------------------------------------------------------
 function E.func_GetEmptySlotIcon(slotID)
@@ -1481,7 +1225,7 @@ function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needI
 	if needIcon and texture then
 		iconPart = E.func_texturefromIcon(texture)
 	end
-	local result = iconPart..colorPart..levelPart .." ".. namePart.."|r"
+	local result = iconPart .. colorPart .. levelPart .. " " .. namePart .. "|r"
 	return result
 end
 function E.func_DB_FRAME_Color(frame, Type, r, g, b, a, UseFaction, UseClass)
@@ -1605,7 +1349,7 @@ function E.func_DB_REP_COLOR(repType, reaction)
 	else
 		color = E.COLOR_DARKGRAY:gsub("^|c", "")
 	end
-	return "|c"..color
+	return "|c" .. color
 end
 ----------------------------------------------------------------
 function E.func_DB_COV_COLOR(covenantID)
@@ -1838,36 +1582,36 @@ function E.func_GetOrder()
 end
 ----------------------------------------------------------------
 function E.func_AutoKey()
-	return tostring("key_"..E.func_GetOrder())
+	return tostring("key_" .. E.func_GetOrder())
 end
 ----------------------------------------------------------------
-local soundFile_OnEnter = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\OnEnter.ogg"
+local soundFile_OnEnter = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\OnEnter.ogg"
 function E.sound_OnEnter()
 	PlaySoundFile(soundFile_OnEnter, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_OnClick = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\OnClick.ogg"
+local soundFile_OnClick = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\OnClick.ogg"
 function E.sound_OnClick()
 	PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 	-- PlaySoundFile(soundFile_OnClick, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_Slider_OnValueChanged = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\Slider_OnValueChanged.ogg"
+local soundFile_Slider_OnValueChanged = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\Slider_OnValueChanged.ogg"
 function E.sound_Slider_OnValueChanged()
 	PlaySoundFile(soundFile_Slider_OnValueChanged, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_DropDown_Close = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\DropDown_Close.ogg"
+local soundFile_DropDown_Close = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\DropDown_Close.ogg"
 function E.sound_DropDown_Close()
 	PlaySoundFile(soundFile_DropDown_Close, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_DropDown_Open = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\DropDown_Open.ogg"
+local soundFile_DropDown_Open = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\DropDown_Open.ogg"
 function E.sound_DropDown_Open()
 	PlaySoundFile(soundFile_DropDown_Open, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_DropDown_Select = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\sound\\DropDown_Select.ogg"
+local soundFile_DropDown_Select = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\DropDown_Select.ogg"
 function E.sound_DropDown_Select()
 	PlaySoundFile(soundFile_DropDown_Select, "Master")
 end
@@ -1885,7 +1629,7 @@ local function RandomString(len)
 end
 function E.func_GenerateID()
 	counter = counter + 1
-	local result = GlobalAddonName.."_"..RandomString(8).."_"..counter
+	local result = GlobalAddonName .. "_" .. RandomString(8) .. "_" .. counter
 	return result
 end
 ----------------------------------------------------------------
@@ -1910,7 +1654,7 @@ function E.GetItemRankFromLink(ItemLink)
 	-- Проходим строки тултипа
 	for i = 1, scanner:NumLines() do
 		-- if i == 2 then
-		local line = _G["RankScannerTooltipTextLeft"..i]
+		local line = _G["RankScannerTooltipTextLeft" .. i]
 		if line then
 			local text = line:GetText()
 			if text then
@@ -1932,157 +1676,6 @@ function E.GetItemRankFromLink(ItemLink)
 	return nil
 end
 ----------------------------------------------------------------
--- 4592 ms
--- function E.func_BUILD_DUNG_DB_OLD()
--- local serverTime = GetServerTime()
--- -- if Octo_Cache_DB and Octo_Cache_DB.LastUpdateDB then
--- -- if Octo_Cache_DB.LastUpdateDB > serverTime then
--- -- return
--- -- else
--- -- end
--- -- end
--- -- E.DEBUG_START()
--- local allDifficultyIDs = {}
--- for diffID, v in next, (E.OctoTable_Difficulties) do
--- table.insert(allDifficultyIDs, diffID)
--- end
--- -- local allDifficultyIDs = {
--- -- 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 15, 16, 17, 18, 19, 20,
--- -- 23, 24, 33, 34, 150, 151, 205, 216, 220
--- -- }
--- -- SEARCH_DB_LOADED <- этот ивент?
--- local function CollectAllInstancesWithDifficultiesAsync(callback)
--- local result = {}
--- local backupTier = EJ_GetCurrentTier()
--- local backupDifficulty = EJ_GetDifficulty()
--- local numTiers = EJ_GetNumTiers()
--- if not numTiers or numTiers < 1 then
--- callback(result)
--- return
--- end
--- -- Создаем очередь задач
--- local tasks = {}
--- local currentTask = 1
--- ----------------------------------------------------------------
--- -- Генерируем все задачи
--- ----------------------------------------------------------------
--- for tier = 1, numTiers do
--- for j = 1, 2 do
--- local isRaid = j == 2
--- -- local isRaid = true -- Только рейды
--- -- local isRaid = false -- Только подземелья
--- local index = 1
--- EJ_SelectTier(tier)
--- local jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
--- while jInstanceID do
--- table.insert(tasks, {
--- tier = tier,
--- isRaid = isRaid,
--- jInstanceID = jInstanceID
--- })
--- index = index + 1
--- jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
--- end
--- end
--- end
--- ----------------------------------------------------------------
--- ----------------------------------------------------------------
--- ----------------------------------------------------------------
--- -- Функция для подсчета боссов на определенной сложности
--- local function CountBossesForDifficulty(difficultyID)
--- local count = 0
--- local encounterIndex = 1
--- local encounterID = EJ_GetEncounterInfoByIndex(encounterIndex)
--- while encounterID do
--- count = count + 1
--- encounterIndex = encounterIndex + 1
--- encounterID = EJ_GetEncounterInfoByIndex(encounterIndex)
--- end
--- return count
--- end
--- -- Функция для обработки одной задачи
--- local function ProcessNextTask()
--- if currentTask > #tasks then
--- -- Завершаем
--- EJ_SetDifficulty(backupDifficulty)
--- EJ_SelectTier(backupTier)
--- -- E.DEBUG_STOP()
--- callback(result)
--- return
--- end
--- local task = tasks[currentTask]
--- currentTask = currentTask + 1
--- -- Обрабатываем одну инстанцию
--- EJ_SelectTier(task.tier)
--- EJ_SelectInstance(task.jInstanceID)
--- local name, _, _, _, _, _, _, _, _, instanceID, _, isRaid = EJ_GetInstanceInfo()
--- local difficulties = {}
--- -- Для каждой сложности считаем боссов
--- for diffID, v in next, (E.OctoTable_Difficulties) do
--- -- for _, diffID in ipairs(allDifficultyIDs) do
--- EJ_SetDifficulty(diffID)
--- if EJ_IsValidInstanceDifficulty(diffID) then
--- local bossCount = CountBossesForDifficulty(diffID)
--- if bossCount > 0 then
--- difficulties[diffID] = bossCount
--- end
--- end
--- end
--- result[instanceID] = {
--- -- SI_ID = instanceID,
--- -- JI_ID = task.jInstanceID,
--- -- name = name,
--- -- tier = task.tier,
--- -- isRaid = isRaid,
--- difficulties = difficulties, -- diffID -> количество боссов
--- }
--- -- Планируем следующую задачу на следующий кадр
--- C_Timer.After(0, ProcessNextTask)
--- end
--- -- Начинаем обработку
--- ProcessNextTask()
--- end
--- local tbl1 = {}
--- local tbl2 = {}
--- local function setActualInstances()
--- local numTiers = EJ_GetNumTiers()
--- if numTiers < 1 then
--- return
--- end
--- local backupTier = EJ_GetCurrentTier()
--- for tier = 1, numTiers do
--- EJ_SelectTier(tier)
--- for j = 1, 2 do
--- local isRaid = j == 2
--- local index = 1
--- local jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
--- while jInstanceID do
--- local name, _, _, _, _, _, _, _, _, instanceID = EJ_GetInstanceInfo(jInstanceID)
--- tbl1[instanceID] = jInstanceID
--- tbl2[jInstanceID] = instanceID
--- index = index + 1
--- jInstanceID = EJ_GetInstanceByIndex(index, isRaid)
--- end
--- end
--- end
--- EJ_SelectTier(backupTier)
--- return tbl1, tbl2
--- end
--- if Octo_Cache_DB.SavedInstanceID_to_EJInstance then
--- wipe(Octo_Cache_DB.SavedInstanceID_to_EJInstance)
--- end
--- if Octo_Cache_DB.EJInstance_to_SavedInstanceID then
--- wipe(Octo_Cache_DB.EJInstance_to_SavedInstanceID)
--- end
--- Octo_Cache_DB.SavedInstanceID_to_EJInstance, Octo_Cache_DB.EJInstance_to_SavedInstanceID = setActualInstances()
--- -- Пример использования:
--- CollectAllInstancesWithDifficultiesAsync(function(result)
--- Octo_Cache_DB.Octo_Table_SI_IDS = result
--- -- E.Octo_Table_SI_IDS = result
--- Octo_Cache_DB.LastUpdateDB = C_DateAndTime.GetSecondsUntilDailyReset() + serverTime
--- -- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
--- end)
--- end
 ----------------------------------------------------------------
 -- 38 ms
 function E.func_BUILD_DUNG_DB()
@@ -2097,14 +1690,14 @@ function E.func_BUILD_DUNG_DB()
 	-- Octo_Cache_DB.LastUpdateDB = nil
 	local backupTier = EJ_GetCurrentTier()
 	local backupDifficulty = EJ_GetDifficulty()
-	local numTiers = EJ_GetNumTiers()
-	if not numTiers or numTiers < 1 then
+	local maxTiers = EJ_GetNumTiers()
+	if not maxTiers or maxTiers < 1 then
 		return
 	end
 	local SI_to_EJ = {}
 	local EJ_to_SI = {}
 	local result = {}
-	local currentSeason = {}
+	-- local currentSeason = {}
 	local function CountEncounters()
 		local i = 1
 		while EJ_GetEncounterInfoByIndex(i) do
@@ -2112,12 +1705,15 @@ function E.func_BUILD_DUNG_DB()
 		end
 		return i - 1
 	end
-
-	for tier = 1, numTiers do
-		EJ_SelectTier(tier)
-		local tierName = EJ_GetTierInfo(tier)
-		local realTierNumber = E.OctoTable_Expansions_Tiers[tierName]
-		if realTierNumber then
+	for tier = 1, maxTiers do
+		if maxTiers == 11 and tier ~= 10 or tier ~= maxTiers then
+			EJ_SelectTier(tier)
+			if maxTiers == 11 and tier == maxTiers then
+				tier = tier - 1
+			end
+			-- local tierName = EJ_GetTierInfo(tier)
+			-- local realTierNumber = E.OctoTable_Expansions_Tiers[tierName]
+			-- if realTierNumber then
 			for pass = 1, 2 do
 				local isRaid = (pass == 2)
 				-- local isRaid = true -- Только рейды 38 ms
@@ -2143,49 +1739,47 @@ function E.func_BUILD_DUNG_DB()
 						end
 					end
 					if diffTable then
-						-- if tierName == E.currentExpansionName and E.OctoTable_Expansions_Names[tierName] and not isRaid then
-						if tierName == E.currentExpansionName and not isRaid then -- and savedInstanceID ~= 3029 then
-							if currentSeason[savedInstanceID] == nil then currentSeason[savedInstanceID] = {
-									difficulties = diffTable,
-									-- name = name,
-									tier = realTierNumber,
-								}
-							end
-						end
 
-						-- if E.OctoTable_Expansions_Names[tierName] then
-							if result[savedInstanceID] == nil then result[savedInstanceID] = {
-									difficulties = diffTable,
-									isRaid = isRaid,
-									-- name = name,
-									tier = realTierNumber,
-								}
-							end
+						-- if tierName == E.currentExpansionName and not isRaid then -- and savedInstanceID ~= 3029 then
+						-- if tierName == E.currentExpansionName and not isRaid then -- and savedInstanceID ~= 3029 then
+						-- if currentSeason[savedInstanceID] == nil then currentSeason[savedInstanceID] = {
+						-- difficulties = diffTable,
+						-- -- name = name,
+						-- tier = tier,
+						-- }
 						-- end
-
-
-						-- elseif tier == numTiers and not isRaid and savedInstanceID ~= 3029 then
-						-- 	currentSeason[savedInstanceID] = {
-						-- 		difficulties = diffTable,
-						-- 		isRaid = isRaid,
-						-- 		-- name = name
-						-- 	}
+						-- end
+						-- if E.OctoTable_Expansions_Names[tierName] then
+						if result[savedInstanceID] == nil then result[savedInstanceID] = {
+								difficulties = diffTable,
+								isRaid = isRaid,
+								-- name = name,
+								tier = tier,
+							}
+						end
+						-- end
+						-- elseif tier == maxTiers and not isRaid and savedInstanceID ~= 3029 then
+						-- currentSeason[savedInstanceID] = {
+						-- difficulties = diffTable,
+						-- isRaid = isRaid,
+						-- -- name = name
+						-- }
 					end
 					index = index + 1
 					ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
 				end
+				-- end
 			end
 		end
 	end
 	EJ_SetDifficulty(backupDifficulty)
 	EJ_SelectTier(backupTier)
-	Octo_Cache_DB.Octo_Table_currentSeason = currentSeason
+	-- Octo_Cache_DB.Octo_Table_currentSeason = currentSeason
 	-- opde(Octo_Cache_DB.Octo_Table_currentSeason)
 	Octo_Cache_DB.Octo_Table_SI_IDS = result
 	-- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
 	Octo_Cache_DB.SavedInstanceID_to_EJInstance = SI_to_EJ
 	Octo_Cache_DB.EJInstance_to_SavedInstanceID = EJ_to_SI
-	-- Octo_Cache_DB.LastUpdateDB = serverTime + C_DateAndTime.GetSecondsUntilDailyReset()
 	-- E.DEBUG_STOP()
 end
 ----------------------------------------------------------------
@@ -2218,7 +1812,7 @@ function E.func_texturefromIcon(icon, iconWidth, iconHeight)
 	if E.func_isAtlas(icon) then
 		return E.func_GetAtlasIcon(icon, iconWidth, iconHeight)
 	else
-		return "|T"..(icon or E.ICON_QUESTION_MARK)..":"..(iconWidth)..":"..(iconHeight)..":::64:64:6:58:6:58|t "
+		return "|T" .. (icon or E.ICON_QUESTION_MARK) .. ":" .. (iconWidth) .. ":" .. (iconHeight) .. ":::64:64:6:58:6:58|t "
 	end
 end
 ----------------------------------------------------------------
@@ -2234,48 +1828,34 @@ function E.func_Header(lay_out, text)
 	end
 end
 ----------------------------------------------------------------
-function E.func_IsAccountWideReputation(id)
-	return IsAccountWideReputation and IsAccountWideReputation(id)
-end
 ----------------------------------------------------------------
-function E.func_IsAccountWideCurrency(id)
-	if id == 2032 then return true end
-	return IsAccountWideCurrency and IsAccountWideCurrency(id)
-end
 ----------------------------------------------------------------
-function E.func_IsAccountTransferableCurrency(id)
-	return IsAccountTransferableCurrency and IsAccountTransferableCurrency(id)
-end
 ----------------------------------------------------------------
-
 local RIO_COLORS = {
-	{ threshold = 0,    color = "GRAY" },    -- E.COLOR_GRAY
-	{ threshold = 1,    color = "WHITE" },   -- E.COLOR_WHITE
-	{ threshold = 1000, color = "GREEN" },   -- E.COLOR_GREEN
-	{ threshold = 1500, color = "BLUE" },    -- E.COLOR_BLUE
-	{ threshold = 2000, color = "PURPLE" },  -- E.COLOR_PURPLE
-	{ threshold = 2500, color = "ORANGE" },  -- E.COLOR_ORANGE
-	{ threshold = 3000, color = "YELLOW" },  -- E.COLOR_YELLOW
-	{ threshold = 3500, color = "PINK" },    -- E.COLOR_PINK
+	{ threshold = 0, color = "GRAY" }, -- E.COLOR_GRAY
+	{ threshold = 1, color = "WHITE" }, -- E.COLOR_WHITE
+	{ threshold = 1000, color = "GREEN" }, -- E.COLOR_GREEN
+	{ threshold = 1500, color = "BLUE" }, -- E.COLOR_BLUE
+	{ threshold = 2000, color = "PURPLE" }, -- E.COLOR_PURPLE
+	{ threshold = 2500, color = "ORANGE" }, -- E.COLOR_ORANGE
+	{ threshold = 3000, color = "YELLOW" }, -- E.COLOR_YELLOW
+	{ threshold = 3500, color = "PINK" }, -- E.COLOR_PINK
 }
-
 function E.func_RioColor(score)
 	if not score or score == 0 then
 		return E.COLOR_GRAY
 	end
-
 	for i = #RIO_COLORS, 1, -1 do
 		if score >= RIO_COLORS[i].threshold then
 			return E["COLOR_" .. RIO_COLORS[i].color]
 		end
 	end
-
 	return E.COLOR_YELLOW
 end
 ----------------------------------------------------------------
 function E.func_defaultValue_tooltip(value, reloadRequare)
-	local text = L["CURSOR_SIZE_DEFAULT"]..": "
-	local reloadText = E.COLOR_RED.."|n|n"..L["Changes require a ReloadUI"].."|r"
+	local text = L["CURSOR_SIZE_DEFAULT"] .. ": "
+	local reloadText = E.COLOR_RED .. "|n|n" .. L["Changes require a ReloadUI"] .. "|r"
 	if type(value) == "boolean" then
 		text = text .. (value and L["YES"] or L["NO"])
 	elseif type(value) == "string" then
@@ -2283,12 +1863,9 @@ function E.func_defaultValue_tooltip(value, reloadRequare)
 	elseif type(value) == "number" then
 		text = text .. tostring(value)
 	end
-
 	if reloadRequare then
 		text = text .. reloadText
 	end
-
-
 	return text
 end
 ----------------------------------------------------------------
@@ -2307,20 +1884,20 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 -- function E.func_RegisterEvents(frame, MyEventsTable)
---  local stack = debugstack(2)
---  local STR = stack:match("Interface/AddOns/(.-):%d+") or L["UNKNOWN"]
---  local DebugPath = STR:gsub("]", "")
---  for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
---  frame:SetScript("OnEvent",
---   function(self, event, ...)
---    if self[event] then
---     self[event](self, ...)
---    else
---     DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
---     self:UnregisterEvent(event)
---     self.event = nil
---    end
---  end)
+-- local stack = debugstack(2)
+-- local STR = stack:match("Interface/AddOns/(.-):%d+") or L["UNKNOWN"]
+-- local DebugPath = STR:gsub("]", "")
+-- for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
+-- frame:SetScript("OnEvent",
+-- function(self, event, ...)
+-- if self[event] then
+-- self[event](self, ...)
+-- else
+-- DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT .. event .. "|r" .. tostring(DebugPath))
+-- self:UnregisterEvent(event)
+-- self.event = nil
+-- end
+-- end)
 -- end
 function E.func_RegisterEvents(frame, MyEventsTable)
 	local stack = debugstack(2)
@@ -2335,9 +1912,9 @@ function E.func_RegisterEvents(frame, MyEventsTable)
 		else
 			-- Ошибка регистрации (как в вашем случае с ACCOUNT_MONEY)
 			-- DEFAULT_CHAT_FRAME:AddMessage(string.format(
-			--     "|cffff0000[Ошибка]|r Событие '%s' не существует в этой версии WoW\n%s",
-			--     event,
-			--     tostring(err)
+			-- "|cffff0000[Ошибка]|r Событие '%s' не существует в этой версии WoW\n%s",
+			-- event,
+			-- tostring(err)
 			-- ))
 		end
 	end
@@ -2346,7 +1923,7 @@ function E.func_RegisterEvents(frame, MyEventsTable)
 			if self[event] then
 				self[event](self, ...)
 			else
-				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT..event.."|r"..tostring(DebugPath))
+				DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT .. event .. "|r" .. tostring(DebugPath))
 				pcall(function() self:UnregisterEvent(event) end)
 				self.event = nil
 			end

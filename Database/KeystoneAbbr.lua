@@ -33,25 +33,13 @@ E.OctoTable_KeystoneAbbr = {
 	[244] = {abbreviation = "AD", portal = 424187}, -- Atal'Dazar
 	[245] = {abbreviation = "FH", portal = 410071}, -- Freehold
 	[246] = {abbreviation = "TD", portal = 000000}, -- Tol Dagor
-
-
-	[247] = {abbreviation = "ML", portal = 467553, f = "Alliance"}, -- The MOTHERLODE!!
-	[247] = {abbreviation = "ML", portal = 467555, f = "Horde"}, -- The MOTHERLODE!!
-
-
+	[247] = {abbreviation = "ML", Horde = 467555, Alliance = 467553,}, -- The MOTHERLODE!!
 	[248] = {abbreviation = "WM", portal = 424167}, -- Waycrest Manor
 	[249] = {abbreviation = "KR", portal = 000000}, -- Kings' Rest
 	[250] = {abbreviation = "ToS", portal = 000000}, -- Temple of Sethraliss
 	[251] = {abbreviation = "UNDR", portal = 410074}, -- The Underrot
 	[252] = {abbreviation = "SOTS", portal = 000000}, -- Shrine of the Storm
-
-
-
-	[353] = {abbreviation = "SIEGE", portal = 445418, f = "Alliance"}, -- Siege of Boralus
-	[353] = {abbreviation = "SIEGE", portal = 464256, f = "Horde"}, -- Siege of Boralus
-
-
-
+	[353] = {abbreviation = "SIEGE", Horde = 464256, Alliance = 445418,}, -- Siege of Boralus
 	[369] = {abbreviation = "OMJ", portal = 373274}, -- Operation: Mechagon - Junkyard
 	[370] = {abbreviation = "OMW", portal = 373274}, -- Operation: Mechagon - Workshop
 	-- Shadowlands
@@ -74,8 +62,8 @@ E.OctoTable_KeystoneAbbr = {
 	[404] = {abbreviation = "NELT", portal = 393276}, -- Neltharus
 	[405] = {abbreviation = "BH", portal = 393267}, -- Brackenhide Hollow
 	[406] = {abbreviation = "HOI", portal = 393283}, -- Halls of Infusion
-	[463] = {abbreviation = "FALL", portal = 424197}, -- Dawn of the Infinites: Galakrond's Fall
-	[464] = {abbreviation = "RISE", portal = 424197}, -- Dawn of the Infinites: Murozond's Rise
+	[463] = {abbreviation = "FALL", portal = 424197}, -- Dawn of the Infinite: Galakrond's Fall
+	[464] = {abbreviation = "RISE", portal = 424197}, -- Dawn of the Infinite: Murozond's Rise
 	-- The War Within
 	[499] = {abbreviation = "PSF", portal = 445444}, -- Priory of the Sacred Flame /PRIO
 	[500] = {abbreviation = "ROOK", portal = 445443}, -- The Rookery
@@ -106,4 +94,82 @@ E.OctoTable_KeystoneAbbr = {
 	[558] = {abbreviation = "MT", portal = 1254572}, -- Magisters' Terrace
 	[559] = {abbreviation = "NPX", portal = 1254563}, -- Nexus-Point Xenas
 	[560] = {abbreviation = "MC", portal = 1254559}, -- Maisara Caverns
+
+	[583] = {abbreviation = "SotT", portal = 000000}, -- "Seat of the Triumvirate"
+	[541] = {abbreviation = "TS?", portal = 000000}, -- "The Stonecore"
 }
+function E.ValidateMplusDatabase()
+	local currentSeasonMaps = {}
+	local allExistingMaps = {}
+	local mapNameById = {}
+
+	for mapId = 1, 2000 do
+		local name, id, timeLimit = C_ChallengeMode.GetMapUIInfo(mapId)
+		if name then
+			allExistingMaps[id] = true
+			mapNameById[id] = name
+			if timeLimit then
+				currentSeasonMaps[id] = true
+			end
+		end
+	end
+
+	local totalCurrent = 0
+	for _ in pairs(currentSeasonMaps) do
+		totalCurrent = totalCurrent + 1
+	end
+
+	local totalMine = 0
+	for mapId in pairs(E.OctoTable_KeystoneAbbr) do
+		if currentSeasonMaps[mapId] then
+			totalMine = totalMine + 1
+		end
+	end
+
+	-- Недостающие ID
+	local missingIds = {}
+	for mapId in pairs(currentSeasonMaps) do
+		if not E.OctoTable_KeystoneAbbr[mapId] then
+			missingIds[mapId] = mapNameById[mapId]
+		end
+	end
+
+	-- Несуществующие ID
+	local invalidIds = {}
+	local invalidCount = 0
+	for mapId in pairs(E.OctoTable_KeystoneAbbr) do
+		if not allExistingMaps[mapId] then
+			invalidIds[mapId] = true
+			invalidCount = invalidCount + 1
+		end
+	end
+
+	local missingCount = 0
+	for _ in pairs(missingIds) do missingCount = missingCount + 1 end
+
+	print("TOTAL M+:", totalCurrent)
+	print("In my table:", totalMine)
+	print("missing:", missingCount)
+	print("MUST TO DELETE:", invalidCount)
+
+	if next(missingIds) then
+		print("\n--- NEED TO ADD ---")
+		for mapId, name in pairs(missingIds) do
+			print(string.format("[%d] = \"%s\",", mapId, name))
+		end
+	end
+
+	if next(invalidIds) then
+		print("\n--- MUST TO DELETE ---")
+		for mapId in pairs(invalidIds) do
+			print(mapId)
+		end
+	end
+
+	opde(mapNameById)
+	return missingIds, invalidIds
+end
+
+-- C_Timer.After(1, function()
+-- 	E.ValidateMplusDatabase()
+-- end)

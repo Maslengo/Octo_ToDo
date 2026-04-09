@@ -53,7 +53,7 @@ local function Collect_Character_Info()
 	local classColor = RAID_CLASS_COLORS[classFilename] and RAID_CLASS_COLORS[classFilename].colorStr:sub(3) or "ffffff"
 	collectPlayerData.classColor = classColor -- E.classColor
 
-	local classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
+	local classColorHexCurrent = E.func_GetClassColor_HEX(E.classFilename)
 	collectPlayerData.classColorHex = classColorHexCurrent -- E.classColorHexCurrent
 
 	local CurrentRegion = GetCurrentRegion()
@@ -77,10 +77,10 @@ local function Collect_Character_Info()
 	collectPlayerData.IsTrialAccount = E.func_Save(E.IsTrialAccount)
 	collectPlayerData.IsVeteranTrialAccount = E.func_Save(E.IsVeteranTrialAccount)
 
-	collectPlayerData.MythicPlus_seasonID = E.func_Save(C_MythicPlus.GetCurrentSeason()) -- E.MythicPlus_seasonID
+	collectPlayerData.MythicPlus_seasonID = E.func_Save(E.MythicPlus_seasonID)
 
 
-	collectPlayerData.CharDBVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)"))
+	collectPlayerData.CharDBVersion = tonumber(E.func_GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)"))
 
 
 

@@ -133,8 +133,8 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				-- {C_IslandsQueue.GetIslandsWeeklyQuestID()},
-				{53435, FactionOrClass = {Horde = true,},}, -- /dump C_QuestLog.IsOnQuest(53435)
-				{53436, FactionOrClass = {Alliance = true,},}, -- /dump C_QuestLog.IsOnQuest(53436)
+				{53435, FactionOrClass = {Horde = true,},},
+				{53436, FactionOrClass = {Alliance = true,},},
 			},
 			-- forcedMaxQuest = 1,
 		},

@@ -5,21 +5,25 @@ local function Collect_Quests()
 	if not E:func_CanCollectData() then return end
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not collectMASLENGO or not collectPlayerData then return end
 	----------------------------------------------------------------
-	wipe(collectMASLENGO.ListOfQuests)
+	collectMASLENGO.ListOfQuests = collectMASLENGO.ListOfQuests or {}
+	collectMASLENGO.ListOfParagonQuests = collectMASLENGO.ListOfParagonQuests or {}
+	collectMASLENGO.OctoTable_QuestID = collectMASLENGO.OctoTable_QuestID or {}
+	wipe(collectMASLENGO.ListOfQuests) -- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.ListOfParagonQuests)
-	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.ListOfQuests)
 	wipe(collectMASLENGO.OctoTable_QuestID)
+
 	for questID in next,(E.OctoTable_QuestID) do
 		-- for questID in next,(E.ALL_Quests) do
-		if C_QuestLog.IsQuestFlaggedCompleted(questID) then
+		if E.func_IsQuestFlaggedCompleted(questID) then
 			collectMASLENGO.OctoTable_QuestID[questID] = true
 		end
 	end
 	local numShownEntries = E.func_GetNumQuestLogEntries()
 	local numQuests = 0
 	for i = 1, numShownEntries do
-		local info = C_QuestLog.GetInfo(i)
+		local info = E.func_GetInfo(i)
 		-- if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
 		if info and info.frequency and info.questID ~= 0 and not info.isHeader and not info.isHidden then
 			numQuests = numQuests + 1
@@ -43,25 +47,6 @@ local function Collect_Quests()
 		E.func_SafeUpdate_AbandonButton()
 	end
 end
--- function E.func_GetCountedQuests()
---     local counted = 0
---     local total = C_QuestLog.GetNumQuestLogEntries()
---     for i = 1, total do
---         local info = C_QuestLog.GetInfo(i)
---         if info and not info.isHeader then
---             if not info.isCampaign
---                and not info.isHidden
---                and not info.isTask
---                and not info.isBounty
---                and not info.isLegendaryQuest
---                and not info.isCalling
---                and not info.isImportant then
---                 counted = counted + 1
---             end
---         end
---     end
---     return counted
--- end
 local function Collect_Quests_Universal()
 	if not E:func_CanCollectData() then return end
 	local curCharInfo = Octo_ToDo_DB_Levels[E.curGUID]
@@ -92,7 +77,7 @@ local function Collect_Quests_Universal()
 					if not FactionOrClass
 					or (FactionOrClass[collectPlayerData.Faction]
 						or  FactionOrClass[collectPlayerData.classFilename]) then
-						local isCompleted = C_QuestLog.IsQuestFlaggedCompleted(questID)
+						local isCompleted = E.func_IsQuestFlaggedCompleted(questID)
 						local status = E.func_GetQuestStatus(questID, true)
 						totalQUEST = totalQUEST + 1
 						questDataTable[questID] = status

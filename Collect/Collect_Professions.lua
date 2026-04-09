@@ -71,8 +71,8 @@ local function Collect_Professions()
 			end
 			if collectENABLEmoreprof then
 				if i == 1 or i == 2 then
-					for index, skillLineID in ipairs(C_TradeSkillUI.GetAllProfessionTradeSkillLines()) do
-						local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+					for index, skillLineID in ipairs(E.func_GetAllProfessionTradeSkillLines()) do
+						local info = E.func_GetProfessionInfoBySkillLineID(skillLineID)
 						local QWEprofessionName = info.professionName
 						local QWEskillLevel = info.skillLevel
 						local QWEmaxSkillLevel = info.maxSkillLevel
@@ -103,7 +103,7 @@ local function Collect_Professions()
 				end
 				if i == 4 or i == 5 then
 					for index, skillLineID in next, (prof34) do
-						local info = C_TradeSkillUI.GetProfessionInfoBySkillLineID(skillLineID)
+						local info = E.func_GetProfessionInfoBySkillLineID(skillLineID)
 						local QWEprofessionName = info.professionName
 						local QWEskillLevel = info.skillLevel
 						local QWEmaxSkillLevel = info.maxSkillLevel

@@ -70,9 +70,9 @@ function E.func_CharInfo_Mail(CharInfo)
 	local hasMail = pd.hasMail or false
 	if hasMail then
 		if pd.levelCapped20 then
-			result = result..E.func_texturefromIcon(E.ATLAS_MAIL_GRAY, nil, nil, true)
+			result = result..E.func_texturefromIcon(E.ATLAS_MAIL_GRAY)
 		else
-			result = result..E.func_texturefromIcon(E.ATLAS_MAIL, nil, nil, true)
+			result = result..E.func_texturefromIcon(E.ATLAS_MAIL)
 		end
 	end
 	return result
@@ -88,8 +88,7 @@ function E.func_CharInfo_Durability(CharInfo, showIcon, whenShow)
 	if PlayerDurability < whenShow then
 		result = result..durColor..PlayerDurability.."%|r"
 		if showIcon then
-			-- result = result..E.func_texturefromIcon(E.ICON_DURABILITY)
-			result = result..E.func_texturefromIcon(E.ATLAS_REPAIR, nil, nil, true)
+			result = result..E.func_texturefromIcon(E.ATLAS_REPAIR)
 		end
 	end
 	return tostring(result)

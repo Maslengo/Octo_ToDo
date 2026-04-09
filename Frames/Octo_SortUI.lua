@@ -68,7 +68,7 @@ function SortUI:CreatePresets(parent)
 		end
 		b:SetScript("OnClick", function()
 				-- тут ты потом подставишь ApplyPreset(name)
-				print("Preset:", name)
+				E.func_PrintMessage("Preset:", name)
 		end)
 		last = b
 	end

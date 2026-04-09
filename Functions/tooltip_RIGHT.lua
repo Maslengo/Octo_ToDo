@@ -192,7 +192,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 	end
 	if id == "GreatVault" then
-
 		if pd.HasAvailableRewards then
 			-- L["REWARD"]
 			tooltip[#tooltip+1] = {E.COLOR_BLUE .. ">" .. L["REWARD"] .."<|r"} -- L["WEEKLY_REWARDS_RETURN_TO_CLAIM"]
@@ -201,7 +200,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local ID = E.Enum_Activities_table[j]
 			local vaultData = cm.GreatVault and cm.GreatVault[ID]
 			local rewards = vaultData and vaultData.rewards or {}
-			local activities = C_WeeklyRewards.GetActivities(ID)
+			local activities = E.func_GetActivities(ID)
 			local max1 = activities and activities[1] and activities[1].threshold or 0
 			local max2 = activities and activities[2] and activities[2].threshold or 0
 			local max3 = activities and activities[3] and activities[3].threshold or 0
@@ -255,10 +254,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					tooltip[#tooltip+1] = {" ", " "}
 				end
 				-- if RIO_weeklyBest > 0 then
-					tooltip[#tooltip+1] = {L["Weekly Best"], rioColor..RIO_weeklyBest.."|r"}
+					tooltip[#tooltip+1] = {L["BEST"], rioColor..RIO_weeklyBest.."|r"}
 				-- end
 				if RIO_Score > 0 then
-					tooltip[#tooltip+1] = {L["PROVING_GROUNDS_SCORE"], rioColor..RIO_Score.."|r"}
+					tooltip[#tooltip+1] = {L["RATING"], rioColor..RIO_Score.."|r"}
 				end
 			end
 		end
@@ -270,7 +269,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				tooltip[#tooltip+1] = {" "}
 				tooltip[#tooltip+1] = {L["TOTAL"]..":", totalRuns}
 				for index = 1, totalRuns do
-					local run = runHistory[index];
+					local run = runHistory[index]
 					local mapChallengeModeID = run.mapChallengeModeID -- 402,
 					local name = E.func_GetName("challenge", mapChallengeModeID)
 					local completed = run.completed -- "false",
@@ -300,11 +299,17 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				-- Populate runs by dungeon text section
 				for name, _ in pairs(runsByDungeon) do
 					local dungeonRuns = ""
+					local mapChallengeModeID
 					for index, run in ipairs(runsByDungeon[name]) do
+						mapChallengeModeID = run.mapChallengeModeID -- 402,
 						dungeonRuns = dungeonRuns .. (run.completed and E.COLOR_GREEN or E.COLOR_RED) .. "+" .. run.level .. "|r"
 						if index ~= #runsByDungeon[name] then
 							dungeonRuns = dungeonRuns .. ", "
 						end
+					end
+					if mapChallengeModeID then
+						local icon = E.func_GetIcon("challenge", mapChallengeModeID)
+						name = E.func_texturefromIcon(icon) .. name
 					end
 					tooltip[#tooltip+1] = {name, dungeonRuns}
 				end
@@ -402,10 +407,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			if id == tonumber(currencyID) and id ~= 1166 then
 				local mounts = {}
 				for mountID, price in next, (dataTBL) do
-					local mountIconNumber = E.func_GetMountTexture(mountID)
+					local mountIconNumber = E.func_GetIcon("mount", mountID)
 					local mountIcon = E.func_texturefromIcon(mountIconNumber)
 					local mountName = E.func_GetName("mount", mountID)
-					local isCollected = select(11, C_MountJournal.GetMountInfoByID(mountID))
+					local isCollected = select(11, E.func_GetMountInfoByID(mountID))
 					local color = isCollected and E.COLOR_WHITE or E.COLOR_RED
 					local mountLeftText = mountIcon .. color .. mountName .. "|r"
 					table.insert(mounts, {
@@ -498,7 +503,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 			local IsAccountWideReputation = E.func_IsAccountWideReputation(id)
 			if IsAccountWideReputation then
-				firstTEXT = firstTEXT .. E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE, nil, nil, true)
+				firstTEXT = firstTEXT .. E.func_texturefromIcon(E.ATLAS_ACCOUNT_WIDE)
 			end
 			firstTEXT = firstTEXT .. E.func_GetName("reputation", id)
 			local secondTEXT = FIRST .. "/" .. SECOND
@@ -552,7 +557,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local skillLineID = charProf[i].skillLine
 				local skillModifier = charProf[i].skillModifier
 
-				local row1Text = E.func_ProfessionIcon(skillLineID)
+				local row1Text = E.func_texturefromIcon(E.func_GetTradeSkillTexture(skillLineID))
 				local row2Text = E.func_GetName("profession", skillLineID)
 
 				local row3Text = charProf[i].skillLevel
@@ -566,13 +571,13 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 
 				-- local DFCURRENCY = E.Octo_Table_ProfCurr[skillLineID].DRAGONFLIGHT
-				local row6Text = ""
-				if DFCURRENCY then
-					local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
-					if count then
-						row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
-					end
-				end
+				-- local row6Text = ""
+				-- if DFCURRENCY then
+				-- 	local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
+				-- 	if count then
+				-- 		row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
+				-- 	end
+				-- end
 				local row = { row1Text }
 
 				table.insert(profData, {
@@ -581,27 +586,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 						row3Text = row3Text,
 						row4Text = row4Text,
 						row5Text = row5Text,
-						row6Text = row6Text,
+						-- row6Text = row6Text,
 						sortValue = i,
 				})
-
-
-
-				-- local leftText = E.func_ProfessionIcon(skillLineID) .. " " .. E.func_GetName("profession", skillLineID)
-				-- local rightText = charProf[i].skillLevel .. "/" .. charProf[i].maxSkillLevel
-				-- if skillModifier then
-				-- 	rightText = charProf[i].skillLevel .. E.COLOR_GREEN .. "+" .. skillModifier .. "|r" .. "/" .. charProf[i].maxSkillLevel
-				-- end
-				-- tooltip[#tooltip+1] = {leftText, rightText}
-				-- if charProf[i].child then
-				-- 	for expIndex = #charProf[i].child, 1, -1 do
-				-- 		local v = charProf[i].child[expIndex]
-				-- 		if v.QWEskillLevel and v.QWEprofessionName then
-				-- 			local j = E.OctoTable_Expansions[expIndex]
-				-- 			tooltip[#tooltip+1] = {E.func_FormatExpansion(expIndex), v.QWEskillLevel .. "/" .. v.QWEmaxSkillLevel}
-				-- 		end
-				-- 	end
-				-- end
 			end
 		end
 
@@ -616,21 +603,21 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			end)
 			for _, d in ipairs(profData) do
 				d.row[2] = {d.row2Text, "LEFT"}
-				d.row[3] = d.row3Text
+				d.row[3] = {d.row3Text, "RIGHT"}
 				d.row[4] = d.row4Text
-				d.row[5] = d.row5Text
-				d.row[6] = d.row6Text
+				d.row[5] = {d.row5Text, "LEFT"}
+				-- d.row[6] = d.row6Text
 				table.insert(tooltip, d.row)
 			end
-			local header1 = {
-				"1",
-				"2",
-				"3",
-				"4",
-				"5",
-				"6",
-			}
-			table.insert(tooltip, 1, header1)
+			-- local header1 = {
+			-- 	"1",
+			-- 	"2",
+			-- 	"3",
+			-- 	"4",
+			-- 	"5",
+			-- 	"6",
+			-- }
+			-- table.insert(tooltip, 1, header1)
 		end
 
 
@@ -793,16 +780,18 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					local color = defeatedBosses == totalBosses and E.COLOR_GREEN or (lastBossDefeated and E.COLOR_YELLOW or E.COLOR_WHITE)
 					local difficultyName = E.func_GetName("difficulty", difficultyID)
 					-- local name = w.name
-					local name = E.func_GetName("dungeon", SI_ID)
-					local EJ_ID = E.func_SI_to_EJ(SI_ID)
-					local _, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
+					local LeftText = E.func_GetName("dungeon", SI_ID)
+					local Image = E.func_GetIcon("dungeon", SI_ID)
 					local icon
-					if isRaid then
-						icon = E.func_texturefromIcon(buttonImage2) .. E.func_texturefromIcon(E.ATLAS_RAID, nil, nil, true)
-					else
-						icon = E.func_texturefromIcon(buttonImage2) .. E.func_texturefromIcon(E.ATLAS_DUNGEON, nil, nil, true)
+					local isRaid = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].isRaid
+					if isRaid == true then
+						icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_RAID)
+					elseif isRaid == false then
+						icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_DUNGEON)
 					end
-					local LeftText = icon .. name
+					if icon then
+						LeftText = icon .. LeftText
+					end
 					local status = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
 					table.insert(combinedTooltip, {
 							LeftText = LeftText,
@@ -818,7 +807,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local instanceReset = v.instanceReset
 				if instanceReset then
 					local name = cm.LFGInstance[dungeonID].name .. E.debugInfo(dungeonID)
-					local icon = E.func_texturefromIcon(E.ATLAS_DUNGEON, nil, nil, true)
+					local icon = E.func_texturefromIcon(E.ATLAS_DUNGEON)
 					local textureFilename = v.textureFilename
 					if textureFilename then
 						icon = E.func_texturefromIcon(textureFilename) .. icon
@@ -837,7 +826,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local instanceReset = v.instanceReset
 			if instanceReset then
 				local name = v.name .. E.debugInfo(worldBossID)
-				local icon = E.func_texturefromIcon(E.ATLAS_WORLDBOSS, nil, nil, true)
+				local icon = E.func_texturefromIcon(E.ATLAS_WORLDBOSS)
 				local LeftText = icon .. name
 				table.insert(combinedTooltip, {
 						LeftText = LeftText,
@@ -966,7 +955,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 						end
 						if addText then
 							if addText.IconVignette then
-								Output_LEFT = E.func_texturefromIcon(addText.IconVignette, nil, nil, true) .. Output_LEFT
+								Output_LEFT = E.func_texturefromIcon(addText.IconVignette) .. Output_LEFT
 							end
 							if addText.Icon then
 								Output_LEFT = E.func_texturefromIcon(addText.Icon) .. Output_LEFT

@@ -74,7 +74,7 @@ local function Collect_JournalInstance()
 	----------------------------------------------------------------
 	-- RandomDungeons
 	----------------------------------------------------------------
-	local SecondsUntilDailyReset = C_DateAndTime.GetSecondsUntilDailyReset()
+	local SecondsUntilDailyReset = E.func_GetSecondsUntilDailyReset()
 	collectMASLENGO.LFGInstance = {}
 	for index = 1, GetNumRandomDungeons() do
 		local dungeonID, name, typeID, _, _, _, _, _, _, _, _, textureFilename, difficultyID = GetLFGRandomDungeonInfo(index)

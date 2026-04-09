@@ -29,7 +29,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	local realTotalTime = pd.realTotalTime or 0
 	-- local specIcon = pd.specIcon or 0
 	local specId = pd.specId or 72 -- FURY WARRIOR
-	local specIcon = E.func_SpecIcon(specId)
+	local specIcon = E.func_GetIcon("specialization", specId)
 	local Chromie_inChromieTime = pd.Chromie_inChromieTime or false
 	local specTexture = E.func_texturefromIcon(specIcon)
 	local durColor = E.func_GetColorGradient(PlayerDurability, 0, 100)

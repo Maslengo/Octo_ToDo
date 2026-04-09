@@ -55,17 +55,4 @@ function E.func_option_DEV2(category, layout)
 		end
 	end
 	----------------------------------------------------------------
-	-- 1 Config_Hide_ActionStatusText
-	----------------------------------------------------------------
-	-- do
-	-- 	local variable = E.func_GenerateID()
-	-- 	local variableKey = "Config_Hide_ActionStatusText"
-	-- 	local name = variableKey -- "Текст статуса действий"
-	-- 	local defaultValue = E.Octo_Moduls_DB_defaultOptions[variableKey]
-	-- 	local setting = Settings.RegisterAddOnSetting(category, variable, variableKey, db, type(defaultValue), name, defaultValue)
-	-- 	setting:SetValueChangedCallback(E.func_UpdateGlobals)
-	-- 	local tooltip = L["CURSOR_SIZE_DEFAULT"]..": "..(defaultValue and L["YES"] or L["NO"]) -- "This is a tooltip for the checkbox."
-	-- 	Settings.CreateCheckbox(category, setting, tooltip)
-	-- end
-	----------------------------------------------------------------
 end

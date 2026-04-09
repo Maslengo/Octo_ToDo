@@ -1,0 +1,11 @@
+["CUURENTKEY"] = {
+	BEST
+	RIO
+	HISTORY
+}
+
+
+
+["GREATVAULT"] = {
+
+}

@@ -97,9 +97,6 @@ local func_OnAcquiredLeft do
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
 	function func_OnAcquiredLeft(owner, frame, node, new)
-		-- if not C_AddOns.IsAddOnLoaded("Blizzard_CurrencyTransfer") then
-		-- C_AddOns.LoadAddOn("Blizzard_CurrencyTransfer")
-		-- end
 		if not new then return end
 		local frameData = node:GetData()
 		Create_SettingsButton(frame)
@@ -290,21 +287,22 @@ local function func_Setup_Items(frame, id)
 end
 ----------------------------------------------------------------
 local function func_Setup_Raids(frame, id)
-	local EJ_ID = E.func_SI_to_EJ(id) -- SI_ID
-	local name, _, _, _, _, buttonImage2, _, _, _, _, _, isRaid = EJ_GetInstanceInfo(EJ_ID)
+	-- local name = E.func_GetName("dungeon", id)
+	local icon = E.func_GetIcon("dungeon", id)
+	local isRaid2 = Octo_Cache_DB and Octo_Cache_DB.Octo_Table_SI_IDS and Octo_Cache_DB.Octo_Table_SI_IDS[id] and Octo_Cache_DB.Octo_Table_SI_IDS[id].isRaid or nil
 
 	if Octo_ToDo_DB_Vars.CONFIG_RAIDS_ICON  then
-		frame.icon1texture:SetTexture(buttonImage2)
+		frame.icon1texture:SetTexture(icon)
 	else
 		frame.icon1texture:SetTexture(E.ICON_EMPTY)
 		frame.icon1frame:Hide()
 	end
 
 	if Octo_ToDo_DB_Vars.CONFIG_RAIDS_EXTRA_ICON  then
-		if isRaid then
+		if isRaid2 then
 			frame.icon2frame:Show()
 			frame.icon2texture:SetAtlas(E.ATLAS_RAID)
-		else
+		elseif isRaid2 == false then
 			frame.icon2frame:Show()
 			frame.icon2texture:SetAtlas(E.ATLAS_DUNGEON)
 		end
@@ -519,7 +517,7 @@ function EventFrame:func_InitCenter(frame, node)
 end
 ----------------------------------------------------------------
 local function HeaderFrameLeft_OnShow(frame)
-	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsToWeeklyReset(), false).."|r"
+	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsUntilWeeklyReset(), false).."|r"
 	frame.Text1:SetText(text)
 end
 ----------------------------------------------------------------

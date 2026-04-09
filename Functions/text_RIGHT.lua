@@ -428,7 +428,7 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 		TextCenter = "" -- обнуляем перед циклом
 		for j = 1, #E.Enum_Activities_table do
 			local ID = E.Enum_Activities_table[j]
-			local activities = C_WeeklyRewards.GetActivities(ID)
+			local activities = E.func_GetActivities(ID)
 			local max = activities and activities[3] and activities[3].threshold or 0
 			local vaultData = cm.GreatVault and cm.GreatVault[ID]
 			local vaultMin = vaultData and vaultData.min or 0
@@ -640,7 +640,7 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		for i = 1, 5 do
 			if charProf[i] and charProf[i].skillLine then
 				if i == 1 or i == 2 then
-					TextCenter = TextCenter .. E.func_ProfessionIcon(charProf[i].skillLine) -- .. " "
+					TextCenter = TextCenter .. E.func_texturefromIcon(E.func_GetTradeSkillTexture(charProf[i].skillLine)) -- .. " "
 				end
 			end
 		end

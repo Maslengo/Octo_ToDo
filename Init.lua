@@ -1,8 +1,6 @@
-local GlobalAddonName, E = ... -- ns
+local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-E.MainAddonName = GlobalAddonName
-OctoEngine = E -- в других аддонах
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
@@ -73,23 +71,26 @@ E.TEXTURE_HIGHLIGHT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Tex
 E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
+-- E.LEFT_MOUSE_ICON = "newplayertutorial-icon-mouse-leftbutton"
+-- E.RIGHT_MOUSE_ICON = "newplayertutorial-icon-mouse-rightbutton"
+-- E.MIDDLE_MOUSE_ICON = "newplayertutorial-icon-mouse-middlebutton"
 E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
-E.classColorHexCurrent = C_ClassColor.GetClassColor(E.classFilename):GenerateHexColorMarkup()
+E.classColorHexCurrent = E.func_GetClassColor_HEX(E.classFilename)
 E.curCharName = UnitFullName("PLAYER")
-E.Class_Warrior_Color = C_ClassColor.GetClassColor("WARRIOR"):GenerateHexColorMarkup()
-E.Class_Paladin_Color = C_ClassColor.GetClassColor("PALADIN"):GenerateHexColorMarkup()
-E.Class_Hunter_Color = C_ClassColor.GetClassColor("HUNTER"):GenerateHexColorMarkup()
-E.Class_Rogue_Color = C_ClassColor.GetClassColor("ROGUE"):GenerateHexColorMarkup()
-E.Class_Priest_Color = C_ClassColor.GetClassColor("PRIEST"):GenerateHexColorMarkup()
-E.Class_Shaman_Color = C_ClassColor.GetClassColor("SHAMAN"):GenerateHexColorMarkup()
-E.Class_Mage_Color = C_ClassColor.GetClassColor("MAGE"):GenerateHexColorMarkup()
-E.Class_Warlock_Color = C_ClassColor.GetClassColor("WARLOCK"):GenerateHexColorMarkup()
-E.Class_Monk_Color = C_ClassColor.GetClassColor("MONK"):GenerateHexColorMarkup()
-E.Class_Druid_Color = C_ClassColor.GetClassColor("DRUID"):GenerateHexColorMarkup()
-E.Class_DemonHunter_Color = C_ClassColor.GetClassColor("DEMONHUNTER"):GenerateHexColorMarkup()
-E.Class_DeathKnight_Color = C_ClassColor.GetClassColor("DEATHKNIGHT"):GenerateHexColorMarkup()
-E.Class_Evoker_Color = C_ClassColor.GetClassColor("EVOKER"):GenerateHexColorMarkup()
+E.Class_Warrior_Color = E.func_GetClassColor_HEX("WARRIOR")
+E.Class_Paladin_Color = E.func_GetClassColor_HEX("PALADIN")
+E.Class_Hunter_Color = E.func_GetClassColor_HEX("HUNTER")
+E.Class_Rogue_Color = E.func_GetClassColor_HEX("ROGUE")
+E.Class_Priest_Color = E.func_GetClassColor_HEX("PRIEST")
+E.Class_Shaman_Color = E.func_GetClassColor_HEX("SHAMAN")
+E.Class_Mage_Color = E.func_GetClassColor_HEX("MAGE")
+E.Class_Warlock_Color = E.func_GetClassColor_HEX("WARLOCK")
+E.Class_Monk_Color = E.func_GetClassColor_HEX("MONK")
+E.Class_Druid_Color = E.func_GetClassColor_HEX("DRUID")
+E.Class_DemonHunter_Color = E.func_GetClassColor_HEX("DEMONHUNTER")
+E.Class_DeathKnight_Color = E.func_GetClassColor_HEX("DEATHKNIGHT")
+E.Class_Evoker_Color = E.func_GetClassColor_HEX("EVOKER")
 E.TEXT_SPACE = " "
 -- E.ICON_QUESTNORMAL = "Crosshair_Quest_64"
 -- E.ICON_QUESTDAILY = "Crosshair_Recurring_64"
@@ -276,18 +277,13 @@ E.ICON_MONEY = "Coin-Gold" -- 133784
 -- challenges-medal-small-bronze challenges-medal-bronze
 -- challenges-medal-small-silver challenges-medal-silver
 -- challenges-medal-small-gold   challenges-medal-gold
-E.ICON_DURABILITY = 132281 -- 136241
-E.ATLAS_REPAIR = "Crosshair_repairnpc_32"
+E.ATLAS_REPAIR = "Repair" -- "SpellIcon-256x256-RepairAll" -- "Crosshair_repairnpc_32" -- 132281 -- 136241
 E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
 E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
 E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
 E.ATLAS_RAID = "Raid"
 E.ATLAS_DUNGEON = "Dungeon"
 E.ICON_FIRSTRAID = 136346 -- 7480127
--- E.ATLAS_RAID = "questlog-questtypeicon-raid"
--- E.ATLAS_DUNGEON = "questlog-questtypeicon-dungeon"
--- E.ATLAS_RAID = "worldquest-icon-raid"
--- E.ATLAS_DUNGEON = "worldquest-icon-dungeon"
 E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
 -- UI-HUD-Minimap-Mail-New-Flipbook-2x
 -- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
@@ -348,7 +344,7 @@ E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
 E.OctoTable_Covenant = {
 	[1] = {
 		prefix = "SL_KYRIAN",
-		name = C_Covenants.GetCovenantData(1).name,
+		name = "Kyrian",
 		icon = E.ICON_KYRIAN,
 		color = E.COLOR_KYRIAN,
 		r = E.COLOR_KYRIAN_R,
@@ -357,7 +353,7 @@ E.OctoTable_Covenant = {
 	},
 	[2] = {
 		prefix = "SL_VENTHYR",
-		name = C_Covenants.GetCovenantData(2).name,
+		name = "Venthyr",
 		icon = E.ICON_VENTHYR,
 		color = E.COLOR_VENTHYR,
 		r = E.COLOR_VENTHYR_R,
@@ -366,7 +362,7 @@ E.OctoTable_Covenant = {
 	},
 	[3] = {
 		prefix = "SL_NIGHTFAE",
-		name = C_Covenants.GetCovenantData(3).name,
+		name = "Night fae",
 		icon = E.ICON_NIGHTFAE,
 		color = E.COLOR_NIGHTFAE,
 		r = E.COLOR_NIGHTFAE_R,
@@ -375,7 +371,7 @@ E.OctoTable_Covenant = {
 	},
 	[4] = {
 		prefix = "SL_NECROLORD",
-		name = C_Covenants.GetCovenantData(4).name,
+		name = "Necrolord",
 		icon = E.ICON_NECROLORD,
 		color = E.COLOR_NECROLORD,
 		r = E.COLOR_NECROLORD_R,
@@ -551,23 +547,7 @@ E.editorThemes = {
 
 
 E.cur_gender = UnitSex("PLAYER")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- addon mem: 6.16 MB
-
-
 E.OctoTable_Prefixes = {
 	"Русский",
 	"Deutsch",

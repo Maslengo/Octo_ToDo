@@ -1,12 +1,9 @@
 local GlobalAddonName, E = ...
+----------------------------------------------------------------
 local time = time
 local GetCVarBool, SetCVar = GetCVarBool, SetCVar
-local GetHolidayInfo = C_Calendar.GetHolidayInfo
-local GetDayEvent = C_Calendar.GetDayEvent
-local GetMonthInfo = C_Calendar.GetMonthInfo
-local SetAbsMonth = C_Calendar.SetAbsMonth
-local GetNumDayEvents = C_Calendar.GetNumDayEvents
-local GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
+local GetHolidayInfo = GetHolidayInfo or C_Calendar.GetHolidayInfo
+----------------------------------------------------------------
 local getCalendarTime do
 	local t = {}
 	function getCalendarTime(eTime)
@@ -18,6 +15,7 @@ local getCalendarTime do
 		return time(t)
 	end
 end
+----------------------------------------------------------------
 local function function_setBackup(backup)
 	if CalendarFrame then
 		CalendarFrame:UnregisterEvent("CALENDAR_UPDATE_EVENT_LIST")
@@ -36,9 +34,10 @@ local function function_setBackup(backup)
 			SetCVar(cvar, "1")
 		end
 	end
-	backup.dateBackup = GetMonthInfo()
+	backup.dateBackup = E.func_GetMonthInfo()
 	return backup
 end
+----------------------------------------------------------------
 local function function_restoreBackup(backup)
 	for cvar, value in pairs(backup) do
 		if type(value) == "string" and cvar ~= "dateBackup" then
@@ -46,13 +45,14 @@ local function function_restoreBackup(backup)
 		end
 	end
 	if backup.dateBackup then
-		SetAbsMonth(backup.dateBackup.month, backup.dateBackup.year)
+		E.func_SetAbsMonth(backup.dateBackup.month, backup.dateBackup.year)
 	end
 	if CalendarFrame then
 		CalendarFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
 		CalendarEventPickerFrame:RegisterEvent("CALENDAR_UPDATE_EVENT_LIST")
 	end
 end
+----------------------------------------------------------------
 local function generateEventKey(eventID, startTime)
 	return string.format("id:%d %02d_%02d_%02d",
 		eventID,
@@ -60,28 +60,27 @@ local function generateEventKey(eventID, startTime)
 		startTime.month,
 		startTime.year)
 end
+----------------------------------------------------------------
 function E.Collect_Holidays()
-	if not (GetHolidayInfo and E.ActiveHoliday and E.Holiday) then
-		return
-	end
+	if not (GetHolidayInfo and E.ActiveHoliday and E.Holiday) then return end
 	local backup = {}
 	backup = function_setBackup(backup)
-	local currentCalendarTime = GetCurrentCalendarTime()
+	local currentCalendarTime = E.func_GetCurrentCalendarTime()
 	local minute, hour = currentCalendarTime.minute, currentCalendarTime.hour
 	local monthDay, month = currentCalendarTime.monthDay, currentCalendarTime.month
 	local year = currentCalendarTime.year
 	local curTime = getCalendarTime(currentCalendarTime)
-	local monthInfo = GetMonthInfo()
+	local monthInfo = E.func_GetMonthInfo()
 	local priority = 1
-	SetAbsMonth(month, year)
+	E.func_SetAbsMonth(month, year)
 	for day = 1, monthInfo.numDays do
-		local numEvents = GetNumDayEvents(0, day)
+		local numEvents = E.func_GetNumDayEvents(0, day)
 		for i = 1, numEvents do
-			local event = GetDayEvent(0, day, i)
+			local event = E.func_GetDayEvent(0, day, i)
 			if not event or event.calendarType ~= "HOLIDAY" then
 				break
 			end
-			local eInfo = GetHolidayInfo(0, day, i)
+			local eInfo = E.func_GetHolidayInfo(0, day, i)
 			if not eInfo then
 				break
 			end
@@ -106,7 +105,7 @@ function E.Collect_Holidays()
 					holiday.sequenceType = event.sequenceType
 				end
 			elseif event.sequenceType ~= "ONGOING" and (not holiday.sequenceType or holiday.sequenceType == "ONGOING") then
-				holiday.iconTexture = (GetHolidayInfo(0, day, i) or {}).texture or holiday.iconTexture
+				holiday.iconTexture = (E.func_GetHolidayInfo(0, day, i) or {}).texture or holiday.iconTexture
 			end
 			if day == monthDay then
 				local secondsToEvent
@@ -130,3 +129,4 @@ function E.Collect_Holidays()
 	end
 	function_restoreBackup(backup)
 end
+----------------------------------------------------------------

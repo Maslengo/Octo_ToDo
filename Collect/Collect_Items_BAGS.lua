@@ -28,8 +28,6 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 -- },
 ----------------------------------------------------------------
--- local GetItemInfo = GetItemInfo or C_Item.GetItemInfo
-local GetItemInfoInstant = GetItemInfoInstant or C_Item.GetItemInfoInstant
 local OctoTable_PlayerBags = E.OctoTable_PlayerBags
 local function Collect_Items_BAGS()
 	----------------------------------------------------------------
@@ -47,10 +45,10 @@ local function Collect_Items_BAGS()
 	-- local seenSlots = {}
 	for _, bagID in next, (OctoTable_PlayerBags) do
 		-- for bagID = BACKPACK_CONTAINER, NUM_TOTAL_EQUIPPED_BAG_SLOTS do
-		local numSlots = C_Container.GetContainerNumSlots(bagID)
+		local numSlots = E.func_GetContainerNumSlots(bagID)
 		if numSlots > 0 then
 			totalSlots_BAGS = totalSlots_BAGS+numSlots
-			local free, bagType = C_Container.GetContainerNumFreeSlots(bagID)
+			local free, bagType = E.func_GetContainerNumFreeSlots(bagID)
 			if bagType == 0 then
 				usedSlots_BAGS = usedSlots_BAGS+(numSlots - free)
 			end
@@ -90,7 +88,7 @@ local function Collect_Items_BAGS()
 					-- 	end
 					end
 				end
-				local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
+				local info = E.func_GetContainerItemInfo(bagID, slotIndex)
 				if info then
 					local itemID = info.itemID
 					local stack = info.stackCount or 1
@@ -123,8 +121,8 @@ local function Collect_Items_BAGS()
 					end
 					-- Usable items cache
 					if OctoTable_itemID_ItemsUsable and not OctoTable_itemID_ItemsUsable[itemID] then
-						-- local _, _, _, _, _, itemType, itemSubType = GetItemInfo(itemID)
-						local _, itemType, itemSubType = GetItemInfoInstant(itemID)
+						-- local _, _, _, _, _, itemType, itemSubType = E.func_GetItemInfo(itemID)
+						local _, itemType, itemSubType = E.func_GetItemInfoInstant(itemID)
 						if itemType == AUCTION_CATEGORY_HOUSING
 						or itemType == BINDING_HEADER_HOUSING_SYSTEM
 						or itemSubType == HOUSING_ITEM_TOAST_TYPE_DECOR

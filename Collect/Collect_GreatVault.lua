@@ -4,32 +4,6 @@ local L = E.L
 E.Enum_Activities_table = {}
 E.GW_Start = true
 ----------------------------------------------------------------
-local GetMapTable = GetMapTable or C_ChallengeMode.GetMapTable
-local GetWeeklyChestRewardLevel = GetWeeklyChestRewardLevel or C_MythicPlus.GetWeeklyChestRewardLevel
-local GetWeeklyBestForMap = GetWeeklyBestForMap or C_MythicPlus.GetWeeklyBestForMap
-local HasAvailableRewards = HasAvailableRewards or C_WeeklyRewards.HasAvailableRewards
-local HasGeneratedRewards = HasGeneratedRewards or C_WeeklyRewards.HasGeneratedRewards
-local GetCurrentSeason = GetCurrentSeason or C_MythicPlus.GetCurrentSeason
-local GetRunHistory = GetRunHistory or C_MythicPlus.GetRunHistory
-local GetActivities = GetActivities or C_WeeklyRewards.GetActivities
-local GetNumCompletedDungeonRuns = GetNumCompletedDungeonRuns or C_WeeklyRewards.GetNumCompletedDungeonRuns
-local affixIDs = C_MythicPlus.GetCurrentAffixes() -- tbl
-local challengeMapID = C_MythicPlus.GetOwnedKeystoneChallengeMapID()
-local seasonID = C_MythicPlus.GetCurrentUIDisplaySeason()
-local challengeMapId, level = C_MythicPlus.GetLastWeeklyBestInformation()
-
-
-local OnUIInteract = OnUIInteract or C_WeeklyRewards.OnUIInteract
-local RequestRewards = RequestRewards or C_MythicPlus.RequestRewards
-local RequestMapInfo = RequestMapInfo or C_MythicPlus.RequestMapInfo
-local GetEndOfRunGearSequenceLevel = GetEndOfRunGearSequenceLevel or C_MythicPlus.GetEndOfRunGearSequenceLevel
-
-
-
-
--- local sequenceLevel = GetEndOfRunGearSequenceLevel(keystoneLevel)
-
-
 E.name_activities = setmetatable({
 		[0] = E.NONE, -- "None"
 		[1] = L["DUNGEONS"],                    -- Enum.WeeklyRewardChestThresholdType.Activities
@@ -49,21 +23,11 @@ E.name_activities = setmetatable({
 			return tostring(k)
 		end
 })
-local CurrentSeason = GetCurrentSeason() or 1
-if CurrentSeason == nil or CurrentSeason == false or CurrentSeason == 0 or CurrentSeason == -1 then
-	E.MythicPlus_seasonID = 1
-else
-	E.MythicPlus_seasonID = CurrentSeason
-end
-
-
-
-
 local function Collect_GreatVault()
+	E.MythicPlus_seasonID = E.func_GetCurrentSeason()
 	if E.GW_Start then
-		-- /run C_AddOns.LoadAddOn("Blizzard_WeeklyRewards"); WeeklyRewardsFrame:Show()
 		for name, ID in next, (Enum.WeeklyRewardChestThresholdType) do
-			local activities = GetActivities(ID)
+			local activities = E.func_GetActivities(ID)
 			if activities[1] then
 				E.Enum_Activities_table[#E.Enum_Activities_table+1] = ID
 			end
@@ -81,34 +45,28 @@ local function Collect_GreatVault()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
 	----------------------------------------------------------------
+	----------------------------------------------------------------
+	E.func_OnUIInteract()
+	E.func_RequestRewards()
+	E.func_RequestMapInfo()
 
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	-- local numHeroic, numMythic, numMythicPlus = GetNumCompletedDungeonRuns()
-	----------------------------------------------------------------
-	OnUIInteract()
-	RequestRewards()
-	RequestMapInfo()
-
-	local mapChallengeModeIDs = GetMapTable()
-	local currentWeekBestLevel = GetWeeklyChestRewardLevel()
+	local mapChallengeModeIDs = E.func_GetMapTable()
+	local currentWeekBestLevel = E.func_GetWeeklyChestRewardLevel()
 	for i = 1, #mapChallengeModeIDs do
-		local _, level = GetWeeklyBestForMap(mapChallengeModeIDs[i])
+		local _, level = E.func_GetWeeklyBestForMap(mapChallengeModeIDs[i])
 		if level and level > currentWeekBestLevel then
 			currentWeekBestLevel = level
 		end
 	end
-	local overallScore = C_ChallengeMode.GetOverallDungeonScore()
+	local overallScore = E.func_GetOverallDungeonScore()
 	----------------------------------------------------------------
 	collectMASLENGO.GreatVault = collectMASLENGO.GreatVault or {}
 	wipe(collectMASLENGO.GreatVault)
 	----------------------------------------------------------------
 	collectMASLENGO.RunHistory = collectMASLENGO.RunHistory or {}
 	wipe(collectMASLENGO.RunHistory)
-	local RunHistory = GetRunHistory(false, true)
-	-- /run opde(C_MythicPlus.GetRunHistory(true, true))
+	local RunHistory = E.func_GetRunHistory(false, true)
 	collectMASLENGO.RunHistory = RunHistory
-	-- opde(collectMASLENGO.RunHistory)
 	collectMASLENGO.totalRuns = RunHistory and #RunHistory or 0
 	----------------------------------------------------------------
 	collectPlayerData.MythicPlus = collectPlayerData.MythicPlus or {}
@@ -122,8 +80,7 @@ local function Collect_GreatVault()
 	if #E.Enum_Activities_table > 0 then
 		for j = 1, #E.Enum_Activities_table do
 			local ID = E.Enum_Activities_table[j]
-			-- /dump GetActivities(6) 1 3 6
-			local activityInfo = GetActivities(ID)
+			local activityInfo = E.func_GetActivities(ID)
 			if activityInfo then
 				local tbl = {}
 				local hasRewards = false
@@ -136,14 +93,34 @@ local function Collect_GreatVault()
 					end
 				end
 				-- Rewards
+				-- for i = 1, #activityInfo do
+				-- 	local rewards = E.func_GetDetailedItemLevelInfo(E.func_GetExampleRewardItemHyperlinks(activityInfo[i].id))
+				-- 	if rewards then
+				-- 		tbl.rewards = tbl.rewards or {}
+				-- 		tbl.rewards[i] = rewards
+				-- 		hasRewards = true
+				-- 	end
+				-- end
 				for i = 1, #activityInfo do
-					local rewards = E.func_GetItemLevelDetails(C_WeeklyRewards.GetExampleRewardItemHyperlinks(activityInfo[i].id))
-					if rewards then
-						tbl.rewards = tbl.rewards or {}
-						tbl.rewards[i] = rewards
-						hasRewards = true
+					local required = activityInfo[i].threshold or activityInfo[i].requiredCount or 0
+					local currentProgress = activityInfo[1].progress or 0 -- общий прогресс для этой категории
+
+					-- Проверяем, достигнут ли порог для этой награды
+					if required > 0 and currentProgress >= required then
+						local rewards = E.func_GetDetailedItemLevelInfo(E.func_GetExampleRewardItemHyperlinks(activityInfo[i].id))
+						if rewards then
+							tbl.rewards = tbl.rewards or {}
+							tbl.rewards[i] = rewards
+							hasRewards = true
+						end
+					else
+						-- Опционально: явно ставим nil (можно и не делать, поле просто не создастся)
+						if tbl.rewards then
+							tbl.rewards[i] = nil
+						end
 					end
 				end
+
 				-- Сохраняем только если есть данные
 				if tbl.min and hasRewards then
 					-- local resetReward = nil
@@ -156,8 +133,8 @@ local function Collect_GreatVault()
 		end
 	end
 	----------------------------------------------------------------
-	collectPlayerData.HasAvailableRewards = E.func_Save(HasAvailableRewards())
-	collectPlayerData.HasGeneratedRewards = E.func_Save(HasGeneratedRewards())
+	collectPlayerData.HasAvailableRewards = E.func_Save(E.func_HasAvailableRewards())
+	collectPlayerData.HasGeneratedRewards = E.func_Save(E.func_HasGeneratedRewards())
 
 	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GreatVault)
 end

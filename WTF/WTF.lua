@@ -31,9 +31,9 @@ function EventFrame:func_CacheGameData()
 		E.ALL_Quests[questID] = true
 	end
 	-- QuestLog квесты
-	local numQuests = C_QuestLog.GetNumQuestLogEntries()
-	for i = 1, numQuests do
-		local info = C_QuestLog.GetInfo(i)
+	local numShownEntries = E.func_GetNumQuestLogEntries()
+	for i = 1, numShownEntries do
+		local info = E.func_GetInfo(i)
 		if info and not info.isHeader and not info.isHidden and info.questID ~= 0 then
 			E.ALL_Quests[info.questID] = true
 		end
@@ -102,7 +102,7 @@ function EventFrame:func_CacheGameData()
 			-- E.func_GetName("quest", ID)
 			-- elseif TYPE == "item" then
 			-- E.func_GetName("item", ID)
-			-- -- C_Item.GetItemQualityByID(ID)
+			-- -- E.func_GetItemQualityByID(ID)
 			-- end
 	end)
 	----------------------------------------------------------------
@@ -291,7 +291,7 @@ function E.init_Octo_ToDo_DB_Levels()
 		IsRestrictedAccount = false,
 		specPrimaryStat = 0, -- НЕ ТАК
 		MythicPlus = {
-			[C_MythicPlus.GetCurrentSeason()] = {
+			[E.MythicPlus_seasonID] = {
 			},
 		},
 		currentXP = 0,
@@ -308,7 +308,7 @@ function E.init_Octo_ToDo_DB_Levels()
 		BindLocation = E.NONE,
 		UnitXPPercent = 0,
 		GetRestrictedAccountData_rMoney = 0,
-		MythicPlus_seasonID = C_MythicPlus.GetCurrentSeason(), -- 0
+		MythicPlus_seasonID = E.MythicPlus_seasonID, -- 0
 		GetRestrictedAccountData_rLevel = 0,
 		specRole = "DAMAGER", -- не так
 		classId = 0, -- не так
@@ -326,9 +326,9 @@ function E.init_Octo_ToDo_DB_Levels()
 		Chromie_UnitChromieTimeID = 0,
 		Chromie_name = "",
 		Chromie_canEnter = false,
-		tmstp_Daily = 0, -- C_DateAndTime.GetSecondsUntilDailyReset() + GetServerTime(),
-		tmstp_Weekly = 0, -- C_DateAndTime.GetSecondsUntilWeeklyReset() + GetServerTime(),
-		time = GetServerTime(), -- GetServerTime()
+		tmstp_Daily = 0,
+		tmstp_Weekly = 0,
+		time = GetServerTime(),
 	}
 	local MASLENGO_DEFAULTS = {
 		Currency = {},
@@ -581,6 +581,7 @@ function EventFrame:func_Weekly_Reset()
 				cm.SavedWorldBoss = {}
 				cm.LFGInstance = {}
 				cm.GreatVault = {}
+				cm.RunHistory = {}
 				for _, data in next, (E.ALL_UniversalQuests) do
 					if data.reset == "Weekly" then
 						-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
@@ -618,16 +619,9 @@ end
 
 function E.Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
-	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
 	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
 	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
 	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
-	Octo_Cache_DB = Octo_Cache_DB or {}
-	if Octo_Cache_DB.interfaceVersionForReset ~= E.interfaceVersion then
-		Octo_Cache_DB = {}
-	end
-	Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
-	----------------------------------------------------------------
 end
 
 E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
@@ -753,14 +747,7 @@ function E.WTF_func_CheckAll()
 	E.func_setOldChanges()
 end
 function EventFrame:func_ScheduleResetTimer()
-	local function func_GetTimeToReset()
-		if C_DateAndTime and C_DateAndTime.GetSecondsUntilDailyReset then
-			return C_DateAndTime.GetSecondsUntilDailyReset()
-		else
-			return GetQuestResetTime()
-		end
-	end
-	local seconds = func_GetTimeToReset()
+	local seconds = E.func_GetSecondsUntilDailyReset()
 	if seconds and seconds > 0 then
 		if timerHandle then
 			timerHandle:Cancel()
@@ -788,21 +775,26 @@ function EventFrame:ADDON_LOADED(addonName)
 	if addonName ~= GlobalAddonName then return end
 	self:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
-
-
-	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
-
-
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	E.Init_Octo_Cache_DB()
-	E.init_Octo_profileKeys()
-	E.init_Octo_profileColors()
-	E.func_UpdateGlobals()
+	-- E.Init_Octo_Cache_DB()
+	-- E.init_Octo_profileKeys()
+	-- E.init_Octo_profileColors()
+	-- E.func_UpdateGlobals()
 end
 function EventFrame:VARIABLES_LOADED()
+	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	EventFrame:func_DatabaseClear()
-	E.WTF_func_CheckAll()
+	E.init_Octo_DevTool_DB()
+	E.init_Octo_profileColors()
+	E.init_Octo_profileKeys()
+	E.func_RemoveDuplicateCharacters()
+	E.init_Octo_ToDo_DB_Levels()
+	E.init_Octo_ToDo_DB_Vars()
+	E.Init_Octo_Cache_DB()
+	E.init_Octo_ToDo_DB_AccountData()
+	E.func_setOldChanges()
+	E.func_UpdateGlobals()
 end
 function EventFrame:PLAYER_LOGIN()
 	EventFrame:func_CacheGameData()

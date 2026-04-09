@@ -110,12 +110,10 @@ local function CreateGreatVaultButton(frame, anchor)
 			if InCombatLockdown() then
 				return
 			end
-			if not C_AddOns.IsAddOnLoaded("Blizzard_WeeklyRewards") then
-				C_AddOns.LoadAddOn("Blizzard_WeeklyRewards")
+			if not E.func_IsAddOnLoaded("Blizzard_WeeklyRewards") then
+				E.func_LoadAddOn("Blizzard_WeeklyRewards")
 			end
-			if WeeklyRewards_ShowUI then
-				WeeklyRewards_ShowUI()
-			end
+			E.func_WeeklyRewards_ShowUI()
 		end
 	)
 	button:SetPoint("RIGHT", anchor, "LEFT", -BUTTON_SPACING, 0)
@@ -143,7 +141,7 @@ E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:VARIABLES_LOADED()
 	C_Timer.After(0, function()
 			for _, frame in ipairs(E.OctoTable_Frames_ICONS) do
-				E.func_CreateUtilsButton(frame, "ToDo")
+				E.func_CreateUtilsButton(frame, GlobalAddonName)
 			end
 			CreateCloseButton(Octo_EquipmentsFrame, Octo_EquipmentsFrame)
 	end)

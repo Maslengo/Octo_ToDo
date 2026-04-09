@@ -8,7 +8,7 @@ local function Collect_Garrison()
 	----------------------------------------------------------------
 	local collectGARRISON = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.GARRISON
 	if not collectGARRISON then return end
-	collectGARRISON.cacheSize = C_QuestLog.IsQuestFlaggedCompleted(37485) and 1000 or 500
+	collectGARRISON.cacheSize = E.func_IsQuestFlaggedCompleted(37485) and 1000 or 500
 end
 local function Collect_lastCacheTime(...)
 	local rt, rl, q, _4, _5, _6, source = ...

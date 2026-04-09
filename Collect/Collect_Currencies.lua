@@ -1,8 +1,5 @@
 local GlobalAddonName, E = ...
 
-local IsAccountWideCurrency = IsAccountWideCurrency or C_CurrencyInfo.IsAccountWideCurrency
-local FetchCurrencyDataFromAccountCharacters = FetchCurrencyDataFromAccountCharacters or C_CurrencyInfo.FetchCurrencyDataFromAccountCharacters
-
 ----------------------------------------------------------------
 local function Collect_Currencies()
 	----------------------------------------------------------------
@@ -27,8 +24,8 @@ local function Collect_Currencies()
 
 
 			-- Получаем кэш данных аккаунтных валют
-			if not currencyCache[currencyID] and FetchCurrencyDataFromAccountCharacters then
-				currencyCache[currencyID] = FetchCurrencyDataFromAccountCharacters(currencyID)
+			if not currencyCache[currencyID] then
+				currencyCache[currencyID] = E.func_FetchCurrencyDataFromAccountCharacters(currencyID)
 			end
 			local rosterCurrencyData = currencyCache[currencyID]
 			if rosterCurrencyData then
@@ -97,8 +94,8 @@ local function Collect_Currencies_Account()
 
 
 			-- Получаем кэш данных аккаунтных валют
-			if not currencyCache[currencyID] and FetchCurrencyDataFromAccountCharacters then
-				currencyCache[currencyID] = FetchCurrencyDataFromAccountCharacters(currencyID)
+			if not currencyCache[currencyID] then
+				currencyCache[currencyID] = E.func_FetchCurrencyDataFromAccountCharacters(currencyID)
 			end
 			local rosterCurrencyData = currencyCache[currencyID]
 			if rosterCurrencyData then
@@ -216,22 +213,16 @@ end
 function E.func_DEBUG_CURRENCY_TRANSFER()
 	if not E.DEBUG then return end
 	local foundNewCharacter = false
-	-- local numTokenTypes = C_CurrencyInfo.GetCurrencyListSize();
-	-- local currencyDataReady = not C_CurrencyInfo.DoesCurrentFilterRequireAccountCurrencyData() or C_CurrencyInfo.IsAccountCharacterCurrencyDataReady();
-	-- if not currencyDataReady then
-	--     return;
-	-- end
 
 	for currencyID in next, (E.ALL_Currencies) do
-		local IsAccountTransferableCurrency = C_CurrencyInfo.IsAccountTransferableCurrency(currencyID)
+		local IsAccountTransferableCurrency = E.func_IsAccountTransferableCurrency(currencyID)
 		if IsAccountTransferableCurrency then
-			local accountCurrencyData = FetchCurrencyDataFromAccountCharacters(currencyID)
+			local accountCurrencyData = E.func_FetchCurrencyDataFromAccountCharacters(currencyID)
 			if accountCurrencyData then
-
 				for q, v in ipairs(accountCurrencyData) do
-					local characterGUID = v.characterGUID or "L["NONE"]"
-					-- local characterName = v.characterName or "L["NONE"]"
-					local fullCharacterName = v.fullCharacterName or "L["NONE"]-PIZDA"
+					local characterGUID = v.characterGUID or L["NONE"]
+					-- local characterName = v.characterName or L["NONE"]
+					local fullCharacterName = v.fullCharacterName or L["UNKNOWN"]
 					local quantity = v.quantity or 0
 					-- local Server = fullCharacterName:gsub("-", "")
 					-- local part1, Server = fullCharacterName:match("([^-]+)-([^-]+)")

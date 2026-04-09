@@ -192,12 +192,6 @@ local function updateGlobal(DBVersion)
 		end
 	end
 	----------------------------------------------------------------
-	if compareVersion(113.7, DBVersion) then
-		Octo_Cache_DB = {}
-		E.Init_Octo_Cache_DB()
-		-- Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING = true
-	end
-	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 function E.func_setOldChanges()
@@ -214,8 +208,16 @@ function E.func_setOldChanges()
 	end
 	-- E.DEBUG_STOP("E.func_setOldChanges")
 	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
-	Octo_ToDo_DB_Vars.GlobalDBVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
-	updateGlobal(Octo_ToDo_DB_Vars.GlobalDBVersion)
+	local oldGlobalVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
+	local interfaceVersionForReset = Octo_Cache_DB and Octo_Cache_DB.interfaceVersionForReset or 1
+	updateGlobal(oldGlobalVersion)
+	if currentVersion ~= oldGlobalVersion or interfaceVersionForReset ~= E.interfaceVersion then
+	-- if currentVersion ~= oldGlobalVersion then
+		Octo_Cache_DB = nil
+		E.Init_Octo_Cache_DB()
+		E.func_BUILD_DUNG_DB()
+		Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
+	end
 	Octo_ToDo_DB_Vars.GlobalDBVersion = currentVersion
 end
 ----------------------------------------------------------------

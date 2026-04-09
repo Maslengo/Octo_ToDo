@@ -51,10 +51,10 @@ local function Collect_Items_BANK()
 			-- L["BANK"]
 			-- local seenSlots = {}
 			for _, bagID in next, (OctoTable_bankTabs) do
-				local numSlots = C_Container.GetContainerNumSlots(bagID)
+				local numSlots = E.func_GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
 					totalSlots_BANK = totalSlots_BANK + numSlots
-					local free = C_Container.GetContainerNumFreeSlots(bagID)
+					local free = E.func_GetContainerNumFreeSlots(bagID)
 					usedSlots_BANK = usedSlots_BANK + (numSlots - free)
 					for slotIndex = 1, numSlots do
 				-- local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex)
@@ -93,7 +93,7 @@ local function Collect_Items_BANK()
 					-- 	end
 					end
 				end
-						local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
+						local info = E.func_GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1
@@ -138,13 +138,13 @@ local function Collect_Items_AccountBank()
 			----------------------------------------------------------------
 			-- ACCOUNT L["BANK"]
 			for _, bagID in next, (OctoTable_Account_bankTabs) do
-				local numSlots = C_Container.GetContainerNumSlots(bagID)
+				local numSlots = E.func_GetContainerNumSlots(bagID)
 				if numSlots and numSlots > 0 then
 					totalSlots_AccountBank = totalSlots_AccountBank + numSlots
-					local free = C_Container.GetContainerNumFreeSlots(bagID)
+					local free = E.func_GetContainerNumFreeSlots(bagID)
 					usedSlots_AccountBank = usedSlots_AccountBank + (numSlots - free)
 					for slotIndex = 1, numSlots do
-						local info = C_Container.GetContainerItemInfo(bagID, slotIndex)
+						local info = E.func_GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID
 							local stack = info.stackCount or 1

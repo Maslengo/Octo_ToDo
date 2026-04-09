@@ -8,21 +8,21 @@ local function Collect_Covenants()
 	----------------------------------------------------------------
 	local covenantID = C_Covenants.GetActiveCovenantID()
 	if covenantID and covenantID > 0 then
-		local renownLevel = C_CovenantSanctumUI.GetRenownLevel()
-		local currencyInfo = C_CurrencyInfo.GetCurrencyInfo(1813)
-		local curAnimaAmount = currencyInfo.quantity
+		local renownLevel = E.func_GetRenownLevel()
+		local currencyInfo = E.func_GetCurrencyInfo(1813)
+		local quantity1813 = currencyInfo.quantity
 		collectPlayerData.SL_covenantID = covenantID
 		if covenantID == 1 then -- 1 Kyrian
-			collectPlayerData.SL_KYRIAN_Anima = E.func_Save(curAnimaAmount)
+			collectPlayerData.SL_KYRIAN_Anima = E.func_Save(quantity1813)
 			collectPlayerData.SL_KYRIAN_Renown = E.func_Save(renownLevel)
 		elseif covenantID == 2 then -- 2 Venthyr
-			collectPlayerData.SL_VENTHYR_Anima = E.func_Save(curAnimaAmount)
+			collectPlayerData.SL_VENTHYR_Anima = E.func_Save(quantity1813)
 			collectPlayerData.SL_VENTHYR_Renown = E.func_Save(renownLevel)
 		elseif covenantID == 3 then -- 3 NightFae
-			collectPlayerData.SL_NIGHTFAE_Anima = E.func_Save(curAnimaAmount)
+			collectPlayerData.SL_NIGHTFAE_Anima = E.func_Save(quantity1813)
 			collectPlayerData.SL_NIGHTFAE_Renown = E.func_Save(renownLevel)
 		elseif covenantID == 4 then -- 4 Necrolord
-			collectPlayerData.SL_NECROLORD_Anima = E.func_Save(curAnimaAmount)
+			collectPlayerData.SL_NECROLORD_Anima = E.func_Save(quantity1813)
 			collectPlayerData.SL_NECROLORD_Renown = E.func_Save(renownLevel)
 		end
 	end

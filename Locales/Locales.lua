@@ -15,63 +15,45 @@ function E.func_translit(text)
 	if type(text) ~= "string" or text == "" then
 		return text
 	end
-	-- нет кириллицы → не трогаем
 	if not text:find("[А-Яа-яЁё]") then
 		return text
 	end
 	local result = LibTranslit:Transliterate(text)
-	-- защита от пустых строк
 	if not result or result == "" then
 		return text
 	end
 	return result
 end
 ----------------------------------------------------------------
--- метатаблица с кешем через rawset
 local meta_t = {
-    __index = function(self, key)
-        local translationTable = E.translations[key]
-
-        -- Нет ключа
-        if not translationTable then
-            if DebugLocalization_Key then
-                DEFAULT_CHAT_FRAME:AddMessage(color_red.."No key:|r "..key)
-            end
-            rawset(self, key, key)
-            return key
-        end
-
-        local raw
-
-        -- Определяем источник строки
-        if type(translationTable) == "string" then
-            raw = translationTable
-        elseif type(translationTable) == "table" then
-            if not translationTable[curLocaleLang] and DebugLocalization_Lang then
-                DEFAULT_CHAT_FRAME:AddMessage(color_red..curLocaleLang..":|r "..key)
-            end
-            raw = translationTable[curLocaleLang] or key
-        else
-            raw = tostring(translationTable)
-        end
-
-        -- Финальная обработка
-        local translation = E.func_translit(raw)
-
-        -- Подстраховка (на случай если translit вернёт мусор)
-        if not translation or translation == "" then
-            translation = raw
-        end
-
-        -- Кеш
-        rawset(self, key, translation)
-
-        return translation
-    end
+	__index = function(self, key)
+		local translationTable = E.translations[key]
+		if not translationTable then
+			if DebugLocalization_Key then
+				DEFAULT_CHAT_FRAME:AddMessage(color_red.."No key:|r "..key)
+			end
+			rawset(self, key, key)
+			return key
+		end
+		local raw
+		if type(translationTable) == "string" then
+			raw = translationTable
+		elseif type(translationTable) == "table" then
+			if not translationTable[curLocaleLang] and DebugLocalization_Lang then
+				DEFAULT_CHAT_FRAME:AddMessage(color_red..curLocaleLang..":|r "..key)
+			end
+			raw = translationTable[curLocaleLang] or key
+		else
+			raw = tostring(translationTable)
+		end
+		local translation = E.func_translit(raw)
+		if not translation or translation == "" then
+			translation = raw
+		end
+		rawset(self, key, translation)
+		return translation
+	end
 }
 ----------------------------------------------------------------
 setmetatable(L, meta_t)
 ----------------------------------------------------------------
--- local L = E.L
--- DEFAULT_CHAT_FRAME:AddMessage(L["qwe"])
--- DEFAULT_CHAT_FRAME:AddMessage(L["Weekly Reset"])

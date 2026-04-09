@@ -13,8 +13,8 @@ local function Collect_LoginTime()
 	collectPlayerData.needResetDaily = nil
 	collectPlayerData.needResetMonth = nil
 	collectPlayerData.time = time()
-	collectPlayerData.tmstp_Daily = C_DateAndTime.GetSecondsUntilDailyReset() + GetServerTime()
-	collectPlayerData.tmstp_Weekly = C_DateAndTime.GetSecondsUntilWeeklyReset() + GetServerTime()
+	collectPlayerData.tmstp_Daily = E.func_GetSecondsUntilDailyReset() + GetServerTime()
+	collectPlayerData.tmstp_Weekly = E.func_GetSecondsUntilWeeklyReset() + GetServerTime()
 end
 ----------------------------------------------------------------
 function E.Collect_LoginTime()

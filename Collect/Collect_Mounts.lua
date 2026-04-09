@@ -6,16 +6,15 @@ local function Collect_Mounts()
 	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
-	local GetMountIDs = C_MountJournal.GetMountIDs
-	local GetMountInfoExtraByID = C_MountJournal.GetMountInfoExtraByID
 	local cache_1166 = E.func_Mounts_1166()
 	E.OctoTable_ALL_Mounts[1166] = E.OctoTable_ALL_Mounts[1166] or {}
 	local cache_3252 = E.func_Mounts_3252()
 	E.OctoTable_ALL_Mounts[3252] = E.OctoTable_ALL_Mounts[3252] or {}
 	local cache_2778 = E.func_Mounts_2778()
 	E.OctoTable_ALL_Mounts[2778] = E.OctoTable_ALL_Mounts[2778] or {}
-	for _, mountID in ipairs(GetMountIDs()) do
-		local _, _, source = GetMountInfoExtraByID(mountID)
+	for _, mountID in ipairs(E.func_GetMountIDs()) do
+
+		local source = select(3, E.func_GetMountInfoExtraByID(mountID))
 		source = source:gsub(" ", "") -- mountID == 645
 		source = source:gsub(",", "") -- mountID == 645
 		source = source:gsub(" ", "") -- mountID == 645
@@ -36,7 +35,7 @@ local function Collect_Mounts()
 		-- таймволк
 		for i, v in ipairs(cache_1166) do
 			if v.itemID then
-				local mountID = v.mountID or C_MountJournal.GetMountFromItem(v.itemID)
+				local mountID = v.mountID or E.func_GetMountFromItem(v.itemID)
 				if mountID then
 					E.OctoTable_ALL_Mounts[1166][mountID] = v.price
 				end
@@ -45,7 +44,7 @@ local function Collect_Mounts()
 		-- Бронза (legion)
 		for i, v in ipairs(cache_3252) do
 			if v.itemID then
-				local mountID = v.mountID or C_MountJournal.GetMountFromItem(v.itemID)
+				local mountID = v.mountID or E.func_GetMountFromItem(v.itemID)
 				if mountID then
 					E.OctoTable_ALL_Mounts[3252][mountID] = v.price
 				end
@@ -54,7 +53,7 @@ local function Collect_Mounts()
 		-- Бронза (panda)
 		for i, v in ipairs(cache_2778) do
 			if v.itemID then
-				local mountID = v.mountID or C_MountJournal.GetMountFromItem(v.itemID)
+				local mountID = v.mountID or E.func_GetMountFromItem(v.itemID)
 				if mountID then
 					E.OctoTable_ALL_Mounts[2778][mountID] = v.price
 				end
