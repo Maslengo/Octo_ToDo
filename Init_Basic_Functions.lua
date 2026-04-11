@@ -42,7 +42,8 @@ end
 ----------------------------------------------------------------
 -- C_AddOns ----------------------------------------------------
 ----------------------------------------------------------------
-local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
+-- local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
+local DoesAddOnExist = C_AddOns and C_AddOns.DoesAddOnExist or DoesAddOnExist
 function E.func_DoesAddOnExist(AddonName)
 	if DoesAddOnExist then
 		return DoesAddOnExist(AddonName)
@@ -830,7 +831,12 @@ function E.func_GetOwnedKeystoneChallengeMapID() -- 401
 	end
 end
 ----------------------------------------------------------------
--- local GetLastWeeklyBestInformation = GetLastWeeklyBestInformation or C_MythicPlus.GetLastWeeklyBestInformation
+local GetLastWeeklyBestInformation = GetLastWeeklyBestInformation or C_MythicPlus.GetLastWeeklyBestInformation
+function E.func_GetLastWeeklyBestInformation()
+	if GetLastWeeklyBestInformation then
+		return GetLastWeeklyBestInformation()
+	end
+end
 ----------------------------------------------------------------
 local RequestRewards = RequestRewards or C_MythicPlus.RequestRewards
 function E.func_RequestRewards()

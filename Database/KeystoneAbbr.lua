@@ -98,77 +98,77 @@ E.OctoTable_KeystoneAbbr = {
 	[583] = {abbreviation = "SotT", portal = 000000}, -- "Seat of the Triumvirate"
 	[541] = {abbreviation = "TS?", portal = 000000}, -- "The Stonecore"
 }
-function E.ValidateMplusDatabase()
-	local currentSeasonMaps = {}
-	local allExistingMaps = {}
-	local mapNameById = {}
+-- function E.ValidateMplusDatabase()
+-- 	local currentSeasonMaps = {}
+-- 	local allExistingMaps = {}
+-- 	local mapNameById = {}
 
-	for mapId = 1, 2000 do
-		local name, id, timeLimit = C_ChallengeMode.GetMapUIInfo(mapId)
-		if name then
-			allExistingMaps[id] = true
-			mapNameById[id] = name
-			if timeLimit then
-				currentSeasonMaps[id] = true
-			end
-		end
-	end
+-- 	for mapId = 1, 2000 do
+-- 		local name, id, timeLimit = C_ChallengeMode.GetMapUIInfo(mapId)
+-- 		if name then
+-- 			allExistingMaps[id] = true
+-- 			mapNameById[id] = name
+-- 			if timeLimit then
+-- 				currentSeasonMaps[id] = true
+-- 			end
+-- 		end
+-- 	end
 
-	local totalCurrent = 0
-	for _ in pairs(currentSeasonMaps) do
-		totalCurrent = totalCurrent + 1
-	end
+-- 	local totalCurrent = 0
+-- 	for _ in pairs(currentSeasonMaps) do
+-- 		totalCurrent = totalCurrent + 1
+-- 	end
 
-	local totalMine = 0
-	for mapId in pairs(E.OctoTable_KeystoneAbbr) do
-		if currentSeasonMaps[mapId] then
-			totalMine = totalMine + 1
-		end
-	end
+-- 	local totalMine = 0
+-- 	for mapId in pairs(E.OctoTable_KeystoneAbbr) do
+-- 		if currentSeasonMaps[mapId] then
+-- 			totalMine = totalMine + 1
+-- 		end
+-- 	end
 
-	-- Недостающие ID
-	local missingIds = {}
-	for mapId in pairs(currentSeasonMaps) do
-		if not E.OctoTable_KeystoneAbbr[mapId] then
-			missingIds[mapId] = mapNameById[mapId]
-		end
-	end
+-- 	-- Недостающие ID
+-- 	local missingIds = {}
+-- 	for mapId in pairs(currentSeasonMaps) do
+-- 		if not E.OctoTable_KeystoneAbbr[mapId] then
+-- 			missingIds[mapId] = mapNameById[mapId]
+-- 		end
+-- 	end
 
-	-- Несуществующие ID
-	local invalidIds = {}
-	local invalidCount = 0
-	for mapId in pairs(E.OctoTable_KeystoneAbbr) do
-		if not allExistingMaps[mapId] then
-			invalidIds[mapId] = true
-			invalidCount = invalidCount + 1
-		end
-	end
+-- 	-- Несуществующие ID
+-- 	local invalidIds = {}
+-- 	local invalidCount = 0
+-- 	for mapId in pairs(E.OctoTable_KeystoneAbbr) do
+-- 		if not allExistingMaps[mapId] then
+-- 			invalidIds[mapId] = true
+-- 			invalidCount = invalidCount + 1
+-- 		end
+-- 	end
 
-	local missingCount = 0
-	for _ in pairs(missingIds) do missingCount = missingCount + 1 end
+-- 	local missingCount = 0
+-- 	for _ in pairs(missingIds) do missingCount = missingCount + 1 end
 
-	print("TOTAL M+:", totalCurrent)
-	print("In my table:", totalMine)
-	print("missing:", missingCount)
-	print("MUST TO DELETE:", invalidCount)
+-- 	print("TOTAL M+:", totalCurrent)
+-- 	print("In my table:", totalMine)
+-- 	print("missing:", missingCount)
+-- 	print("MUST TO DELETE:", invalidCount)
 
-	if next(missingIds) then
-		print("\n--- NEED TO ADD ---")
-		for mapId, name in pairs(missingIds) do
-			print(string.format("[%d] = \"%s\",", mapId, name))
-		end
-	end
+-- 	if next(missingIds) then
+-- 		print("\n--- NEED TO ADD ---")
+-- 		for mapId, name in pairs(missingIds) do
+-- 			print(string.format("[%d] = \"%s\",", mapId, name))
+-- 		end
+-- 	end
 
-	if next(invalidIds) then
-		print("\n--- MUST TO DELETE ---")
-		for mapId in pairs(invalidIds) do
-			print(mapId)
-		end
-	end
+-- 	if next(invalidIds) then
+-- 		print("\n--- MUST TO DELETE ---")
+-- 		for mapId in pairs(invalidIds) do
+-- 			print(mapId)
+-- 		end
+-- 	end
 
-	opde(mapNameById)
-	return missingIds, invalidIds
-end
+-- 	opde(mapNameById)
+-- 	return missingIds, invalidIds
+-- end
 
 -- C_Timer.After(1, function()
 -- 	E.ValidateMplusDatabase()

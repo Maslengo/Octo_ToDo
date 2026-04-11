@@ -146,6 +146,33 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
+				-- return E.func_GetName("quest", 93593)
+				return E.func_GetName("map", 2393)..": "..L["Weekend Event"]
+			end,
+			name_save = "ArchmageAethasSunreaver", -- https://www.wowhead.com/npc=256212/archmage-aethas-sunreaver
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- {93593}, -- A Call to Battle
+				{93611}, -- A Shattered Path Through Time
+				{93595}, -- A Call to Delves
+				{93598}, -- Emissary of War
+			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 250117, rewTYPE = "item", rewSIZE = 1 }, -- Cache of Quel'Thalas Treasures
+				-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
+				-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
+				-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
+			},
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
 				return L["Midnight: Meta Quests"] -- https://www.wowhead.com/npc=256203/lady-liadrin
 			end,
 			name_save = "MidnightMetaQuest",
@@ -181,28 +208,28 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return DELVES_LABEL..": " .. E.func_GetName("quest", 93595)
-			end,
-			name_save = "ACalltoDelves",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{93595},
-			},
-			-- rewards = {
-				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				-- {rewID = 137642, rewTYPE = "item", rewSIZE = 1 }, -- Mark of Honor
-				-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
-				-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
-				-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
-			-- },
-			forcedMaxQuest = 1,
-		},
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return DELVES_LABEL..": " .. E.func_GetName("quest", 93595)
+		-- 	end,
+		-- 	name_save = "ACalltoDelves",
+		-- 	defS = true,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{93595},
+		-- 	},
+		-- 	-- rewards = {
+		-- 		-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+		-- 		-- {rewID = 137642, rewTYPE = "item", rewSIZE = 1 }, -- Mark of Honor
+		-- 		-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
+		-- 		-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
+		-- 		-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
+		-- 	-- },
+		-- 	forcedMaxQuest = 1,
+		-- },
 		----------------------------------------------------------------
 		{
 			sorted = false,

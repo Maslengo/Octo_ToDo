@@ -783,7 +783,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					local LeftText = E.func_GetName("dungeon", SI_ID)
 					local Image = E.func_GetIcon("dungeon", SI_ID)
 					local icon
-					local isRaid = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].isRaid
+					local isRaid = E.func_DungeonOrRaid(SI_ID)
 					if isRaid == true then
 						icon = E.func_texturefromIcon(Image) .. E.func_texturefromIcon(E.ATLAS_RAID)
 					elseif isRaid == false then

@@ -1,8 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
-local GetSpellName = GetSpellName or C_Spell.GetSpellName
-----------------------------------------------------------------
 local function GetOrCreateCache_Name(category)
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	Octo_Cache_DB[category] = Octo_Cache_DB[category] or {}

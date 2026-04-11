@@ -97,28 +97,30 @@ local function tempFunction()
 			forcedMaxQuest = 1, -- any
 		},
 		----------------------------------------------------------------
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("quest", 93593)
-			end,
-			name_save = "ACalltoBattle",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{93593},
-			},
-			rewards = {
-				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
-				{rewID = 137642, rewTYPE = "item", rewSIZE = 5 }, -- Mark of Honor
-				-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
-				-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
-				-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
-			},
-			forcedMaxQuest = 1,
-		},
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetName("quest", 93593)
+		-- 	end,
+		-- 	name_save = "ACalltoBattle", -- BonusEvent
+		-- 	defS = true,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{93593}, -- A Call to Battle
+		-- 		-- {93595}, -- A Call to Delves
+		-- 		-- {93598}, -- Emissary of War
+		-- 	},
+		-- 	rewards = {
+		-- 		-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+		-- 		{rewID = 137642, rewTYPE = "item", rewSIZE = 5 }, -- Mark of Honor
+		-- 		-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
+		-- 		-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
+		-- 		-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
+		-- 	},
+		-- 	forcedMaxQuest = 1,
+		-- },
 		----------------------------------------------------------------
 		{
 			sorted = true,

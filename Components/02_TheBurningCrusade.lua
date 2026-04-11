@@ -90,6 +90,39 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+		{
+			isAccount = false,
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return L["The Ring of Blood"]
+			end,
+			name_save = "TheRingofBlood",
+			defS = true,
+			reset = "Normal",
+			desc = categoryKey,
+			quests = {
+				{9962}, -- the-ring-of-blood-brokentoe
+				{9967}, -- the-ring-of-blood-the-blue-brothers
+				{9970}, -- the-ring-of-blood-rokdar-the-sundered-lord
+				{9972}, -- the-ring-of-blood-skragath
+				{9973}, -- the-ring-of-blood-the-warmaul-champion
+				{9977}, -- the-ring-of-blood-the-final-challenge
+			},
+			rewards = {
+				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				{rewID = 25759, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 25760, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 25761, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 25762, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 25763, rewTYPE = "item", rewSIZE = 1,}, --
+				{rewID = 25764, rewTYPE = "item", rewSIZE = 1,}, --
+				-- {rewID = 157980, rewTYPE = "spell", rewSIZE = 1500,}, --
+			},
+			-- forcedMaxQuest = 1, -- any
+		},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {

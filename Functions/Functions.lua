@@ -16,11 +16,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_GetLastWeeklyBestInformation()
-	if GetLastWeeklyBestInformation then
-		return GetLastWeeklyBestInformation()
-	end
-end
 function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	local iconWidth = iconWidth or 16
@@ -575,7 +570,6 @@ function E.func_SetOrNil(tbl, key, val)
 end
 ----------------------------------------------------------------
 function E.func_RemoveZeroValues(tbl, smth)
-	-- Проверка входных параметров
 	if not tbl or not smth or type(tbl) ~= "table" then return end
 	-- Обработка случая когда smth - таблица значений для удаления
 	if type(smth) == "table" then
@@ -1875,6 +1869,12 @@ function E.func_auctionator_price(itemID)
 	return price or 0
 end
 ----------------------------------------------------------------
+function E.func_DungeonOrRaid(SI_ID)
+	if Octo_Cache_DB and Octo_Cache_DB.Octo_Table_SI_IDS and Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID] then
+		local isRaid = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].isRaid
+		return isRaid
+	end
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

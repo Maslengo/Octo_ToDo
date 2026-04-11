@@ -196,10 +196,13 @@ function E.func_Options_CreateColorSwatch(category, variableKey, variableTbl, na
 				local r, g, b, a = UpdateSwatch()
 
 				swatch:SetScript("OnClick", function()
-					-- сбрасываем возможное залипшее состояние пикера
 					ColorPickerFrame:Hide()
 
-					local r, g, b, a = UpdateSwatch()
+					-- ПОЛУЧАЕМ ТЕКУЩИЕ ЗНАЧЕНИЯ
+					local currentR, currentG, currentB, currentA = UpdateSwatch()
+
+					-- СОХРАНЯЕМ ЗНАЧЕНИЯ ДЛЯ ОТМЕНЫ (копия из переменной)
+					local canceledValue = variableTbl[variableKey]  -- сохраняем старое значение
 
 					local function SwatchFunc()
 						local newR, newG, newB = ColorPickerFrame:GetColorRGB()
@@ -208,21 +211,28 @@ function E.func_Options_CreateColorSwatch(category, variableKey, variableTbl, na
 						swatch.Color:SetColorTexture(newR, newG, newB)
 
 						local colorStr = E.func_RGB2HexString(newR, newG, newB, newA)
-						SetValue(colorStr)
+						SetValue(colorStr)  -- сохраняем в переменную
 					end
 
 					local function CancelFunc()
-						UpdateSwatch()
+						-- ВОССТАНАВЛИВАЕМ СТАРОЕ ЗНАЧЕНИЕ В ПЕРЕМЕННУЮ
+						if canceledValue then
+							variableTbl[variableKey] = canceledValue
+							E.func_UpdateGlobals()
+						end
+
+						-- ВОССТАНАВЛИВАЕМ ВИЗУАЛЬНОЕ ОТОБРАЖЕНИЕ
+						local r, g, b, a = UpdateSwatch()
 					end
 
 					ColorPickerFrame:SetupColorPickerAndShow({
 						swatchFunc = SwatchFunc,
 						cancelFunc = CancelFunc,
 						hasOpacity = true,
-						opacity = a,
-						r = r,
-						g = g,
-						b = b,
+						opacity = currentA,
+						r = currentR,
+						g = currentG,
+						b = currentB,
 						parent = swatch,
 					})
 				end)
