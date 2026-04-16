@@ -196,7 +196,7 @@ function E.func_ProfessionsTooltipLeft(visiblePlayers)
 					prof[i].Icon = ""
 					prof[i].Text = ""
 					if cmP[i] and cmP[i].skillLevel and cmP[i].maxSkillLevel then
-						prof[i].Icon = E.func_GetTradeSkillTexture(cmP[i].skillLine)
+						prof[i].Icon = E.func_GetIcon("profession", cmP[i].skillLine)
 						prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel) .. "/" .. E.func_CompactFormatNumber(cmP[i].maxSkillLevel)
 						if cmP[i].skillModifier then
 							prof[i].Text = E.func_CompactFormatNumber(cmP[i].skillLevel) .. E.COLOR_GREEN .. "+" .. E.func_CompactFormatNumber(cmP[i].skillModifier) .. "|r" .. "/" .. E.func_CompactFormatNumber(cmP[i].maxSkillLevel)

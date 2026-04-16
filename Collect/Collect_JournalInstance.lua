@@ -29,11 +29,9 @@ local function Collect_JournalInstance()
 		for index = 1, NumSavedInstances do
 			local name, _, instanceReset, instanceDifficulty, locked, _, _, _, _, _, totalBosses, defeatedBosses, _, SI_ID = GetSavedInstanceInfo(index)
 			if locked then
-				local EJ_ID = E.func_SI_to_EJ(SI_ID)
 				collectMASLENGO.journalInstance[SI_ID] = collectMASLENGO.journalInstance[SI_ID] or {}
 				collectMASLENGO.journalInstance[SI_ID][instanceDifficulty] = collectMASLENGO.journalInstance[SI_ID][instanceDifficulty] or {}
 				local ji = collectMASLENGO.journalInstance[SI_ID][instanceDifficulty]
-				ji.EJ_ID = EJ_ID
 				ji.SI_ID = SI_ID
 				-- wipe(ji)
 				local lastBossDefeated = select(3, GetSavedInstanceEncounterInfo(index, totalBosses))

@@ -210,6 +210,31 @@ E.translations = {
 	-- L["Export"]
 	-- L["Import"]
 
+	["Show on hover"] = {
+		["ruRU"] = "Показывать при наведении",
+		["deDE"] = "Bei Überfahren anzeigen",
+		["esES"] = "Al pasar el ratón",
+		["esMX"] = "Al pasar el ratón",
+		["frFR"] = "Au survol",
+		["itIT"] = "Al passaggio del mouse",
+		["ptBR"] = "Ao passar o mouse",
+		["koKR"] = "마우스 오버 시 표시",
+		["zhCN"] = "悬停时显示",
+		["zhTW"] = "懸停時顯示",
+	},
+
+	["Show frame automatically when mouse is over the minimap button"] = {
+		["ruRU"] = "Автоматически показывать окно при наведении на кнопку миникарты",
+		["deDE"] = "Fenster automatisch anzeigen, wenn sich die Maus über dem Minikarten-Symbol befindet",
+		["esES"] = "Mostrar la ventana automáticamente al pasar el ratón sobre el botón del minimapa",
+		["esMX"] = "Mostrar la ventana automáticamente al pasar el ratón sobre el botón del minimapa",
+		["frFR"] = "Afficher la fenêtre automatiquement lors du survol du bouton de la minicarte",
+		["itIT"] = "Mostra automaticamente la finestra quando il mouse è sul pulsante della minimappa",
+		["ptBR"] = "Mostrar a janela automaticamente ao passar o mouse sobre o botão do minimapa",
+		["koKR"] = "미니맵 버튼에 마우스를 올리면 창을 자동으로 표시합니다",
+		["zhCN"] = "鼠标悬停在小地图按钮上时自动显示窗口",
+		["zhTW"] = "滑鼠懸停在小地圖按鈕上時自動顯示視窗",
+	},
 
 	["Value"] = { -- ["VALUE"] = {
 		["ruRU"] = "Значение",

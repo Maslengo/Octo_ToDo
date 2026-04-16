@@ -42,8 +42,15 @@ end
 ----------------------------------------------------------------
 -- C_AddOns ----------------------------------------------------
 ----------------------------------------------------------------
--- local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
-local DoesAddOnExist = C_AddOns and C_AddOns.DoesAddOnExist or DoesAddOnExist
+local GetAddOnInfo = GetAddOnInfo or C_AddOns.GetAddOnInfo
+function E.func_GetAddOnInfo(AddonName)
+	if GetAddOnInfo then
+		return GetAddOnInfo(AddonName)
+	end
+end
+----------------------------------------------------------------
+local DoesAddOnExist = DoesAddOnExist or C_AddOns.DoesAddOnExist
+-- local DoesAddOnExist = C_AddOns and C_AddOns.DoesAddOnExist or DoesAddOnExist
 function E.func_DoesAddOnExist(AddonName)
 	if DoesAddOnExist then
 		return DoesAddOnExist(AddonName)
@@ -244,6 +251,13 @@ local GetProfessionInfoBySkillLineID = GetProfessionInfoBySkillLineID or C_Trade
 function E.func_GetProfessionInfoBySkillLineID(id)
 	if GetProfessionInfoBySkillLineID then
 		return GetProfessionInfoBySkillLineID(id)
+	end
+end
+----------------------------------------------------------------
+local GetProfessionInfo = GetProfessionInfo -- https://warcraft.wiki.gg/wiki/API_GetProfessionInfo
+function E.func_GetProfessionInfo(index) -- GetProfessions()
+	if GetProfessionInfo then
+		return GetProfessionInfo(index) -- name, icon, skillLevel, maxSkillLevel, numAbilities, spelloffset, skillLine, skillModifier, specializationIndex, specializationOffset, skillLineName
 	end
 end
 ----------------------------------------------------------------

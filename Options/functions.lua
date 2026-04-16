@@ -21,7 +21,7 @@ function E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name,
 		local initializer = Settings.CreateCheckbox(category, setting, tooltipTEXT)
 		if needBlock then
 			initializer:AddModifyPredicate(function()
-					return Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS or false
+					return E.DEBUG or false
 			end)
 		end
 	elseif E.interfaceVersion > 10000 then -- WoW 10.2.7 используем CreateCheckBox (большая B)
@@ -37,7 +37,7 @@ function E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name,
 		local initializer = Settings.CreateCheckBox(category, setting, tooltipTEXT)
 		if needBlock then
 			initializer:AddModifyPredicate(function()
-					return Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS or false
+					return E.DEBUG or false
 			end)
 		end
 	end

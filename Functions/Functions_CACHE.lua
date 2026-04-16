@@ -694,14 +694,20 @@ function E.func_GetIcon(category, id)
 			icon = texture
 		elseif category == "dungeon" then
 			local EJ_ID = E.func_SI_to_EJ(id) -- SI_ID
-			local texture = select(6, EJ_GetInstanceInfo(EJ_ID))
-			icon = texture
+			if EJ_ID > 0 then
+				local texture = select(6, EJ_GetInstanceInfo(EJ_ID))
+				if texture and texture ~= "" then
+					icon = texture
+				end
+			end
 		elseif category == "covenant" then
 			icon = E.OctoTable_Covenant[id].icon
 		elseif category == "mount" then
 			icon = select(3, E.func_GetMountInfoByID(id))
 		elseif category == "specialization" then
 			icon = select(4, GetSpecializationInfoByID(id))
+		elseif category == "profession" then
+			icon = E.func_GetTradeSkillTexture(id) -- skillLineID
 		end
 	end
 

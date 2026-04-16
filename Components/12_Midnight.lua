@@ -154,8 +154,8 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				-- {93593}, -- A Call to Battle
-				{93611}, -- A Shattered Path Through Time
+				{93593}, -- A Call to Battle
+				{93611, addText = {expansionText = E.func_FormatExpansion(4, "LEFT")}}, -- 4 Cataclysm (A Shattered Path Through Time)
 				{93595}, -- A Call to Delves
 				{93598}, -- Emissary of War
 			},

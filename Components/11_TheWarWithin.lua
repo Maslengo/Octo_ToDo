@@ -592,7 +592,6 @@ local function tempFunction()
 				{83465}, -- Ara-Kara, City of Echoes
 				{83469}, -- City of Threads
 				{86203}, -- Operation: Floodgate
-				-- {86203, addText = {text = E.COLOR_GRAY.." ("..EJ_GetInstanceInfo(1268)..")|r"},}, -- Operation: Floodgate
 			},
 			rewards = {
 				-- {rewID = 1239744, rewTYPE = "spell", rewSIZE = nil,}, --

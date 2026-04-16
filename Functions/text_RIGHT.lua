@@ -92,7 +92,6 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	local cm = CharInfo.MASLENGO
 	local JI_ID = tonumber(id)
-	-- local SI_ID = E.func_EJ_to_SI(JI_ID)
 	local instanceData = cm.journalInstance[JI_ID]
 	if instanceData then
 		-- Собираем все сложности в массив для сортировки
@@ -529,17 +528,14 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 
 		local selectedSeasons = {}
 		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
-		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
 			if ExpansionToShowTBL[tier] then
 				selectedSeasons[tier] = true
 			end
 		end
-
-
-
-		-- Считаем общее количество инстансов в Octo_Cache_DB.Octo_Table_SI_IDS
-		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+		-- Считаем общее количество инстансов в E.Octo_Table_SI_IDS
+		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
 			local isRaid = v.isRaid
 			local difficulties = v.difficulties
@@ -547,8 +543,8 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 				totalInstances = totalInstances + 1
 			end
 		end
-		-- Проверяем каждый инстанс из Octo_Cache_DB.Octo_Table_SI_IDS
-		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+		-- Проверяем каждый инстанс из E.Octo_Table_SI_IDS
+		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
 			local isRaid = v.isRaid
 			local difficulties = v.difficulties
@@ -638,9 +634,11 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 	if id == "Professions" then
 		local charProf = cm.professions
 		for i = 1, 5 do
-			if charProf[i] and charProf[i].skillLine then
+			local skillLineID = charProf[i] and charProf[i].skillLine
+			if skillLineID then
 				if i == 1 or i == 2 then
-					TextCenter = TextCenter .. E.func_texturefromIcon(E.func_GetTradeSkillTexture(charProf[i].skillLine)) -- .. " "
+					local icon = E.func_GetIcon("profession", skillLineID)
+					TextCenter = TextCenter .. E.func_texturefromIcon(icon) -- .. " "
 				end
 			end
 		end

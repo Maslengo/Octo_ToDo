@@ -13,7 +13,21 @@ E.OctoTable_itemID_MECHAGON = {
 -- /run E.func_itemslistToSetText_12(E.OctoTable_itemID_ALL, "true")
 ----------------------------------------------------------------
 E.OctoTable_itemID_ALL = {
+	[197921] = true, -- PVE
+	[198046] = true, -- PVE
+	[204682] = true, -- PVE
+	[204697] = true, -- PVE
+	[206960] = true, -- PVE
+	[206961] = true, -- PVE
+	[211518] = true, -- PVE
+	[211519] = true, -- PVE
 
+	[204190] = true, -- PVP
+	[204187] = true, -- PVP
+	[212540] = true, -- PVP
+	[212537] = true, -- PVP
+	[211688] = true, -- PVP
+	[211685] = true, -- PVP
 
 	[208396] = true,
 

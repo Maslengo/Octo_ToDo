@@ -254,7 +254,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					tooltip[#tooltip+1] = {" ", " "}
 				end
 				-- if RIO_weeklyBest > 0 then
-					tooltip[#tooltip+1] = {L["BEST"], rioColor..RIO_weeklyBest.."|r"}
+				tooltip[#tooltip+1] = {L["BEST"], rioColor..RIO_weeklyBest.."|r"}
 				-- end
 				if RIO_Score > 0 then
 					tooltip[#tooltip+1] = {L["RATING"], rioColor..RIO_Score.."|r"}
@@ -286,14 +286,14 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					end
 				end
 				-- for name, v in pairs(runsByDungeon) do
-				-- 	for index, run in ipairs(runsByDungeon[name]) do
-				-- 		dungeonRuns = dungeonRuns .. name
-				-- 	end
-				-- 	tooltip[#tooltip+1] = {name, colorByCompleted(v[1].level, v[1].completed)}
+				--     for index, run in ipairs(runsByDungeon[name]) do
+				--         dungeonRuns = dungeonRuns .. name
+				--     end
+				--     tooltip[#tooltip+1] = {name, colorByCompleted(v[1].level, v[1].completed)}
 
-				-- 	-- for index, run in ipairs(runsByDungeon[name]) do
-				-- 	-- 	tooltip[#tooltip+1] = {name, colorByCompleted(run.level, run.completed)}
-				-- 	-- end
+				--     -- for index, run in ipairs(runsByDungeon[name]) do
+				--     --     tooltip[#tooltip+1] = {name, colorByCompleted(run.level, run.completed)}
+				--     -- end
 				-- end
 
 				-- Populate runs by dungeon text section
@@ -336,28 +336,28 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				local count = cm.Items and cm.Items.Bags and cm.Items.Bags[v.itemID] or 0
 				local row = {}
 				table.insert(inventoryData, {
-					row = row,
-					ItemLink = v.ItemLink,
-					itemID = v.itemID,
-					Quality = v.Quality,
-					Icon = v.Icon,
-					inBank = false,
-					count = count,
-					price = E.func_auctionator_price(v.itemID)
+						row = row,
+						ItemLink = v.ItemLink,
+						itemID = v.itemID,
+						Quality = v.Quality,
+						Icon = v.Icon,
+						inBank = false,
+						count = count,
+						price = E.func_auctionator_price(v.itemID)
 				})
 			end
 			if #inventoryData > 0 then
 				table.sort( inventoryData, function(a, b)
-					if a.price ~= b.price then
-						return a.price > b.price
-					end
-					if a.Quality ~= b.Quality then
-						return a.Quality > b.Quality
-					end
-					if a.count ~= b.count then
-						return a.count > b.count
-					end
-					return a.itemID < b.itemID
+						if a.price ~= b.price then
+							return a.price > b.price
+						end
+						if a.Quality ~= b.Quality then
+							return a.Quality > b.Quality
+						end
+						if a.count ~= b.count then
+							return a.count > b.count
+						end
+						return a.itemID < b.itemID
 				end)
 				local totalPrice = 0
 				for _, d in ipairs(inventoryData) do
@@ -556,8 +556,9 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			if charProf[i] and charProf[i].skillLine then
 				local skillLineID = charProf[i].skillLine
 				local skillModifier = charProf[i].skillModifier
+				local icon = E.func_GetIcon("profession", skillLineID)
 
-				local row1Text = E.func_texturefromIcon(E.func_GetTradeSkillTexture(skillLineID))
+				local row1Text = E.func_texturefromIcon(icon)
 				local row2Text = E.func_GetName("profession", skillLineID)
 
 				local row3Text = charProf[i].skillLevel
@@ -573,10 +574,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				-- local DFCURRENCY = E.Octo_Table_ProfCurr[skillLineID].DRAGONFLIGHT
 				-- local row6Text = ""
 				-- if DFCURRENCY then
-				-- 	local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
-				-- 	if count then
-				-- 		row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
-				-- 	end
+				--     local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
+				--     if count then
+				--         row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
+				--     end
 				-- end
 				local row = { row1Text }
 
@@ -610,12 +611,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				table.insert(tooltip, d.row)
 			end
 			-- local header1 = {
-			-- 	"1",
-			-- 	"2",
-			-- 	"3",
-			-- 	"4",
-			-- 	"5",
-			-- 	"6",
+			--     "1",
+			--     "2",
+			--     "3",
+			--     "4",
+			--     "5",
+			--     "6",
 			-- }
 			-- table.insert(tooltip, 1, header1)
 		end
@@ -670,8 +671,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 		local selectedSeasons = {}
 		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
-		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
-			local difficulties = v.difficulties
+		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
 			if ExpansionToShowTBL[tier] then
 				selectedSeasons[tier] = true
@@ -679,18 +679,19 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 		end
 
 		-- Сначала собираем все данные
-		for SI_ID, v in next,(Octo_Cache_DB.Octo_Table_SI_IDS) do
+		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do
 			local tier = v.tier
-			local isRaid = v.isRaid
+			local isRaid = E.func_DungeonOrRaid(SI_ID)
 			local difficulties = v.difficulties
+
 			if difficulties and difficulties[mythicDifID] and not isRaid and selectedSeasons[tier] then
 				local name = E.func_GetName("dungeon", SI_ID)
+				local texture = E.func_GetIcon("dungeon", SI_ID)
+
 				local defeatedBosses = 0
 				local totalBosses = difficulties and difficulties[mythicDifID] or 0
 				local hasData = false
-				local EJ_ID = E.func_SI_to_EJ(SI_ID)
-				local _, _, _, _, _, buttonImage2 = EJ_GetInstanceInfo(EJ_ID)
-				local icon = E.func_texturefromIcon(buttonImage2) or ""
+				local icon = E.func_texturefromIcon(texture)
 				if cm.journalInstance and cm.journalInstance[SI_ID] then
 					local v = cm.journalInstance[SI_ID]
 					if v[mythicDifID] and type(v[mythicDifID]) == "table" then
@@ -713,7 +714,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					color = E.COLOR_RED
 				end
 				local bossProgress = color .. defeatedBosses .. "/" .. totalBosses .. "|r"
-				local tier = v.tier -- E.func_GetDungTier(SI_ID)
+				local tier = v.tier
 				local CurrentExpansion = E.func_GetCurrentExpansion()
 				local source = E.func_FormatExpansion(tier, "LEFT")
 				-- Сохраняем данные вместе с tier для сортировки
@@ -769,7 +770,6 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	end
 	if SettingsType == "AdditionallyBOTTOM#LFGInstance" then
 		local combinedTooltip = {}
-		-- for EJ_ID, v in next, (cm.journalInstance) do
 		for SI_ID, v in next, (cm.journalInstance) do
 			for difficultyID, w in next, (v) do
 				local instanceReset = w.instanceReset
@@ -850,10 +850,13 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			}
 		end
 	end
+
+
+
+
 	if dataType == "UniversalQuests" then
 		for _, data in next, (E.ALL_UniversalQuests) do
 			if data.quests then
-				-- local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
 				local questKey = data.questKey
 				local showTooltip = data.showTooltip or false
 				if showTooltip and id == questKey then
@@ -862,15 +865,21 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					for _, questData in ipairs(data.quests) do
 						if type(questData[1]) == "number" then
 							local FactionOrClass = questData.FactionOrClass
-							local class = questData.class
+							local prof = questData.prof
 							if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
-								if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
-									totalQuest = totalQuest+1
-								elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
-									totalQuest = forcedMaxQuest
-									break
-								else
-									totalQuest = totalQuest+1
+								local hasProf = true
+								if prof then
+									hasProf = pd.professions and pd.professions[prof]
+								end
+								if hasProf then
+									if forcedMaxQuest and type(forcedMaxQuest) == "string" and forcedMaxQuest == "all" then
+										totalQuest = totalQuest+1
+									elseif forcedMaxQuest and type(forcedMaxQuest) == "number" then
+										totalQuest = forcedMaxQuest
+										break
+									else
+										totalQuest = totalQuest+1
+									end
 								end
 							end
 						end
@@ -889,15 +898,15 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 						local TextLeft = tostringall(E.func_FormatResetType(data.reset) .. " " .. output)
 						tooltip[#tooltip+1] = {" ", " ", L["TOTAL"] .. ": " .. totalQuest}
 					end
+
 					local questsToShow = {}
 					for _, questData in ipairs(data.quests) do
-						-- if type(questData[1]) == "number" then
 						local FactionOrClass = questData.FactionOrClass
 						if not FactionOrClass or (FactionOrClass[pd.Faction] or FactionOrClass[pd.classFilename]) then
 							table.insert(questsToShow, questData)
 						end
-						-- end
 					end
+
 					if data.sorted ~= false then
 						table.sort(questsToShow, function(a, b)
 								local function getName(entry)
@@ -914,110 +923,135 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 								return getName(a) < getName(b)
 						end)
 					end
+
+					local currentHeader = nil
 					for _, questData in ipairs(questsToShow) do
 						local questID = questData[1]
 						local FactionOrClass = questData.FactionOrClass
 						local forcedText = questData.forcedText
-						local forcedIcon = questData.forcedIcon
 						local addText = questData.addText
+						local prof = questData.prof
+						local header = questData.HEADER
 						local Output_LEFT = ""
 						local Output_CENT = ""
 						local Output_RIGHT = ""
-						if questID then
-							local status = cm.UniversalQuest and cm.UniversalQuest[questKey] and cm.UniversalQuest[questKey][questID] or E.COLOR_GRAY .. L["NONE"] .. "|r"
-							if status and type(status) == "boolean" then
-								status = E.DONE
+
+						-- Проверка профессии (только для статуса)
+						local skipThisQuest = false
+						if prof then
+							if not (pd.professions and pd.professions[prof]) then
+								skipThisQuest = true
+							else
+								local icon = E.func_GetIcon("profession", prof)
+								Output_LEFT = Output_LEFT .. E.func_texturefromIcon(icon)
 							end
-							Output_RIGHT = status
 						end
-						if forcedText then
-							if forcedText.text then
-								-- ЕСЛИ ФУНКЦИЯ, ТО .. .
-								Output_LEFT = Output_LEFT .. forcedText.text .. " "
+
+						if not skipThisQuest then
+							-- Если header изменился, выводим новый заголовок
+							if header and header ~= currentHeader then
+								currentHeader = header
+								tooltip[#tooltip+1] = {E.COLOR_SKYBLUE .. header .. "|r", " ", " "}
 							end
-							if forcedText.npcID then
-								Output_LEFT = Output_LEFT .. E.func_GetName("npc", forcedText.npcID) .. " "
-							end
-							if forcedText.achievementID then
-								Output_LEFT = Output_LEFT .. E.func_GetName("achievement", forcedText.achievementID) .. " "
-							end
-							if forcedText.itemID then
-								Output_LEFT = Output_LEFT .. E.func_texturefromIcon(E.func_GetIcon("item", forcedText.itemID)) .. E.func_GetName("item", forcedText.itemID) .. " "
-							end
-							if forcedText.Icon then
-								Output_LEFT = E.func_texturefromIcon(forcedText.Icon) .. Output_LEFT
-							end
-							Output_LEFT = Output_LEFT:match("^(.-)%s*$")
-						else
+
+							-- Статус квеста (общая логика)
 							if questID then
-								Output_LEFT = Output_LEFT .. E.func_GetName("quest", questID)
+								local status = cm.UniversalQuest and cm.UniversalQuest[questKey] and cm.UniversalQuest[questKey][questID] or E.COLOR_GRAY .. L["NONE"] .. "|r"
+								if status and type(status) == "boolean" then
+									status = E.DONE
+								end
+								Output_RIGHT = status
 							end
+
+							-- Формирование Output_LEFT (общая логика)
+							if forcedText then
+								if forcedText.text then
+									Output_LEFT = Output_LEFT .. forcedText.text .. " "
+								end
+								if forcedText.npcID then
+									Output_LEFT = Output_LEFT .. E.func_GetName("npc", forcedText.npcID) .. " "
+								end
+								if forcedText.achievementID then
+									Output_LEFT = Output_LEFT .. E.func_GetName("achievement", forcedText.achievementID) .. " "
+								end
+								if forcedText.itemID then
+									Output_LEFT = Output_LEFT .. E.func_texturefromIcon(E.func_GetIcon("item", forcedText.itemID)) .. E.func_GetName("item", forcedText.itemID) .. " "
+								end
+								if forcedText.Icon then
+									Output_LEFT = E.func_texturefromIcon(forcedText.Icon) .. Output_LEFT
+								end
+								Output_LEFT = Output_LEFT:match("^(.-)%s*$")
+							else
+								if questID then
+									Output_LEFT = Output_LEFT .. E.func_GetName("quest", questID)
+								end
+							end
+
+							-- Формирование Output_CENT и дополнение Output_LEFT (общая логика)
+							if addText then
+								if addText.IconVignette then
+									Output_LEFT = E.func_texturefromIcon(addText.IconVignette) .. Output_LEFT
+								end
+								if addText.Icon then
+									Output_LEFT = E.func_texturefromIcon(addText.Icon) .. Output_LEFT
+								end
+								if addText.mount then
+									Output_CENT = Output_CENT .. E.COLOR_PURPLE .. " +" .. string.format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)) .. "|r"
+								end
+								if addText.expansionText then
+									Output_CENT = Output_CENT .. addText.expansionText
+								end
+								if addText.notes then
+									Output_LEFT = Output_LEFT .. addText.notes
+								end
+								if addText.mapID then
+									Output_LEFT = Output_LEFT .. E.COLOR_GRAY .. " (" .. E.func_GetName("map", addText.mapID) .. ")|r"
+								end
+								if addText.spellID then
+									Output_LEFT = Output_LEFT .. E.COLOR_PINK .. E.func_GetName("spell", addText.spellID) .. "|r"
+								end
+								if addText.text then
+									Output_LEFT = Output_LEFT .. addText.text
+								end
+								if addText.itemID then
+									Output_LEFT = Output_LEFT .. E.func_texturefromIcon(E.func_GetIcon("item", addText.itemID)) .. E.func_GetName("item", addText.itemID)
+								end
+								if addText.coords then
+									local x, y = E.func_UnpackCoordinates(addText.coords)
+									local coordsText = E.func_FormatCoordinates(x, y)
+									Output_CENT = Output_CENT .. coordsText
+								end
+							end
+
+							-- Иконка фракции/класса (общая логика)
+							if FactionOrClass and FactionOrClass[pd.Faction] then
+								Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(pd.Faction)) .. Output_LEFT
+							elseif FactionOrClass and FactionOrClass[pd.classFilename] then
+								Output_LEFT = E.func_texturefromIcon(pd.specIcon) .. Output_LEFT
+							end
+
+							tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
 						end
-						if addText then
-							if addText.IconVignette then
-								Output_LEFT = E.func_texturefromIcon(addText.IconVignette) .. Output_LEFT
-							end
-							if addText.Icon then
-								Output_LEFT = E.func_texturefromIcon(addText.Icon) .. Output_LEFT
-							end
-							if addText.mount then
-								Output_CENT = Output_CENT .. E.COLOR_PURPLE .. " +" .. string.format(RENOWN_REWARD_MOUNT_NAME_FORMAT, E.func_FormatMountInfo(addText.mount)) .. "|r"
-							end
-							if addText.expansionText then
-								Output_CENT = Output_CENT .. addText.expansionText
-							end
-							if addText.notes then
-								Output_LEFT = Output_LEFT .. addText.notes
-							end
-							if addText.mapID then
-								Output_LEFT = Output_LEFT .. E.COLOR_GRAY .. " (" .. E.func_GetName("map", addText.mapID) .. ")|r"
-							end
-							if addText.spellID then
-								Output_LEFT = Output_LEFT .. E.COLOR_PINK .. E.func_GetName("spell", addText.spellID) .. "|r"
-							end
-							if addText.text then
-								-- ЕСЛИ ФУНКЦИЯ, ТО .. .
-								Output_LEFT = Output_LEFT .. addText.text
-							end
-							if addText.itemID then
-								Output_LEFT = Output_LEFT .. E.func_texturefromIcon(E.func_GetIcon("item", addText.itemID)) .. E.func_GetName("item", addText.itemID)
-							end
-							if addText.coords then
-								local x, y = E.func_UnpackCoordinates(addText.coords)
-								local coordsText = E.func_FormatCoordinates(x, y)
-								Output_CENT = Output_CENT .. coordsText
-							end
-						end
-						if FactionOrClass and FactionOrClass[pd.Faction] then
-							Output_LEFT = E.func_texturefromIcon(E.func_GetFactionIcon(pd.Faction)) .. Output_LEFT
-						elseif FactionOrClass and FactionOrClass[pd.classFilename] then
-							Output_LEFT = E.func_texturefromIcon(pd.specIcon) .. Output_LEFT
-						end
-						-- if Output_CENT ~= "" then
-						tooltip[#tooltip+1] = {Output_LEFT, {Output_CENT, "LEFT"}, Output_RIGHT}
-						-- else
-						-- tooltip[#tooltip+1] = {Output_LEFT, " ", Output_RIGHT}
-						-- end
 					end
 				end
 			end
 		end
 	end
+
+
+
+
+
 	if dataType == "RaidsOrDungeons" then
-		if not Octo_Cache_DB and not Octo_Cache_DB.Octo_Table_SI_IDS then return end
-		-- local EJ_ID = tonumber(id)
-		-- local SI_ID = E.func_EJ_to_SI(EJ_ID)
-		-- local instanceData = cm.journalInstance and cm.journalInstance[EJ_ID] or {}
-		local SI_ID = tonumber(id)
-		local instanceData = cm.journalInstance and cm.journalInstance[SI_ID] or {}
+		if type(id) ~= "number" then return end
+		local instanceData = cm.journalInstance and cm.journalInstance[id] or {}
 		local completedDiffs = {}
 		local bosses = {}
 		local resetTime
 		-- 1. получаем список всех сложностей для инстанса
 		local difficulties
-		for idQWE, v in next, (Octo_Cache_DB.Octo_Table_SI_IDS) do -- E.Octo_Table_SI_IDS
-			-- if SI_ID == v.SI_ID then
-			if SI_ID == idQWE then
+		for SI_ID, v in next, (E.Octo_Table_SI_IDS) do -- E.Octo_Table_SI_IDS
+			if SI_ID == id then
 				difficulties = v.difficulties
 				break
 			end

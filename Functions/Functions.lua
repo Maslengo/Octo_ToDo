@@ -43,13 +43,10 @@ function E.func_GetSpellDescription(spellID)
 end
 ----------------------------------------------------------------
 function E.func_RGB2Hex(r, g, b, a)
-	local r = r or 1
-	local g = g or 1
-	local b = b or 1
-	local a = a or 1
-	if not a then
-		a = 1
-	end
+	r = r ~= nil and r or 1
+	g = g ~= nil and g or 1
+	b = b ~= nil and b or 1
+	a = a ~= nil and a or 1
 	return "|c" .. string.format("%02x", math.floor(a*255)) .. utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
 end
 ----------------------------------------------------------------
@@ -281,18 +278,36 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+EventFrame.timer = 0
+local HIDE_DELAY_TIMER = 1
+function E.func_toogleFrame(frame)
+	frame.clicked = not frame.clicked or nil
+	frame:SetShown(frame.clicked)
+	-- frame:SetShown(not frame:IsShown())
+	if frame:IsShown() then
+		E.func_CloseSettings()
+	end
+end
 function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, frameString)
+	local function hideFrame(_, elapsed)
+		EventFrame.timer = EventFrame.timer - elapsed
+		if EventFrame.timer <= 0 then
+			frame:Hide()
+			EventFrame:SetScript("OnUpdate", nil)
+		end
+	end
+	frame:HookScript("OnHide", function(frame)
+			frame.clicked = nil
+	end)
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
 			icon = "Interface\\AddOns\\" .. E.MainAddonName .. "\\Media\\IconTexture\\" .. AddonName,
 			OnClick = function(self, button)
 				if button == "LeftButton" then
-					-- if not InCombatLockdown() then
 					Octo_profileKeys.isSettingsEnabled = nil
 					if frame then
-						E.func_toogleMainFrame(frame)
+						E.func_toogleFrame(frame)
 					end
-					-- end
 				elseif button == "RightButton" then
 					E.func_OpenToCategory(frame)
 				end
@@ -303,6 +318,16 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON .. L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON .. L["RMB:"], L["OPTIONS"])
+				if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER then
+					frame:Show() -- E.func_toogleFrame(frame)
+				end
+				EventFrame:SetScript("OnUpdate", nil)
+			end,
+			OnLeave = function()
+				if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER and not frame.clicked then
+					EventFrame.timer = HIDE_DELAY_TIMER
+					EventFrame:SetScript("OnUpdate", hideFrame)
+				end
 			end,
 	})
 	if type(Saved_Variables.LibDataBroker) ~= "table" then
@@ -313,30 +338,70 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 	end
 	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, Saved_Variables.LibDataBroker)
 end
+-- function E.func_Gradient_OLD(text, firstColor, secondColor)
+-- firstColor = firstColor or E.COLOR_ADDON_LEFT or "|cffD177FF"
+-- secondColor = secondColor or E.COLOR_ADDON_RIGHT or "|cff63A4E0"
+-- local str = ""
+-- local total = utf8len(text)-1
+-- if total > 0 then
+-- local r1, g1, b1 = E.func_Hex2RGBA(firstColor)
+-- local r2, g2, b2 = E.func_Hex2RGBA(secondColor)
+-- local rdelta, gdelta, bdelta = (r2 - r1) / total, (g2 - g1) / total, (b2 - b1) / total
+-- local r3 = r1
+-- local g3 = g1
+-- local b3 = b1
+-- for i = 1, total do
+-- str = str .. E.func_RGB2Hex(r3, g3, b3) .. utf8sub(text, i, i) .. "|r"
+-- r3 = r3 + rdelta
+-- g3 = g3 + gdelta
+-- b3 = b3 + bdelta
+-- end
+-- return str .. secondColor .. utf8sub(text, utf8len(text)) .. "|r"
+-- else
+-- return text
+-- end
+-- end
+-- function E.func_Gradient_OLD_2(text, firstColor, secondColor)
+-- firstColor = firstColor or E.COLOR_ADDON_LEFT or "|cffD177FF"
+-- secondColor = secondColor or E.COLOR_ADDON_RIGHT or "|cff63A4E0"
+-- local len = utf8len(text)
+-- if len <= 1 then return text end
+-- local r1, g1, b1 = E.func_Hex2RGBA(firstColor)
+-- local r2, g2, b2 = E.func_Hex2RGBA(secondColor)
+-- local dr, dg, db = (r2 - r1) / (len - 1), (g2 - g1) / (len - 1), (b2 - b1) / (len - 1)
+-- local parts = {}
+-- for i = 1, len do
+-- local t = (i - 1) / (len - 1) -- от 0 до 1
+-- local r = r1 + dr * (i - 1) -- или r1 + (r2-r1) * t
+-- local g = g1 + dg * (i - 1)
+-- local b = b1 + db * (i - 1)
+-- parts[i] = E.func_RGB2Hex(r, g, b) .. utf8sub(text, i, i) .. "|r"
+-- end
+-- return table.concat(parts)
+-- end
 function E.func_Gradient(text, firstColor, secondColor)
-	if not firstColor then firstColor = E.COLOR_ADDON_LEFT or "|cffD177FF" end
-	if not secondColor then secondColor = E.COLOR_ADDON_RIGHT or "|cff63A4E0" end
-	local result = ""
-	local str = ""
-	local total = utf8len(text)-1
-	if total > 0 then
-		local r1, g1, b1 = E.func_Hex2RGBA(firstColor)
-		local r2, g2, b2 = E.func_Hex2RGBA(secondColor)
-		local rdelta, gdelta, bdelta = (r2-r1)/total, (g2-g1)/total, (b2-b1)/total
-		local r3 = r1
-		local g3 = g1
-		local b3 = b1
-		for i = 1, total do
-			str = str .. E.func_RGB2Hex(r3, g3, b3) .. utf8sub(text, i, i) .. "|r"
-			r3 = r3 + rdelta
-			g3 = g3 + gdelta
-			b3 = b3 + bdelta
-		end
-		result = str .. secondColor .. utf8sub(text, utf8len(text)) .. "|r"
-		return result
-	else
-		return text
+	if type(text) ~= "string" or text == "" then
+		return ""
 	end
+	firstColor = firstColor or E.COLOR_ADDON_LEFT or "|cffD177FF"
+	secondColor = secondColor or E.COLOR_ADDON_RIGHT or "|cff63A4E0"
+	local startR, startG, startB = E.func_Hex2RGBA(firstColor)
+	local endR, endG, endB = E.func_Hex2RGBA(secondColor)
+	local segments = {}
+	local chars = {}
+	for char in text:gmatch("[%z\1-\127\194-\244][\128-\191]*") do
+		chars[#chars + 1] = char
+	end
+	local textLength = #chars
+	if textLength <= 1 then return text end
+	for i = 1, textLength do
+		local factor = (i - 1) / (textLength - 1)
+		local r = startR + (endR - startR) * factor
+		local g = startG + (endG - startG) * factor
+		local b = startB + (endB - startB) * factor
+		segments[i] = E.func_RGB2Hex(r, g, b) .. chars[i] .. "|r"
+	end
+	return table.concat(segments)
 end
 function E.func_CountVisibleCharacters()
 	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
@@ -636,7 +701,6 @@ function E.func_CopyTableDeep(orig)
 end
 ----------------------------------------------------------------
 function E.func_AddonNameForOptions(addonName)
-	-- local icon = E.func_texturefromIcon(E.func_GetAddOnMetadata(addonName, "IconTexture"))
 	local name = E.func_GetAddOnMetadata(addonName, "Title")
 	local vers = E.COLOR_GRAY .. E.func_GetAddOnMetadata(addonName, "Version") .. "|r" -- ORANGE = ff7f3f
 	local result = name .. " " .. vers
@@ -1119,19 +1183,6 @@ function E.func_CompactFormatNumber(num)
 	return s .. suffixes[i]
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
-function E.func_SI_to_EJ(id) -- jInstanceID func_SI_to_EJ
-	if not id then return end
-	local newID = Octo_Cache_DB.SavedInstanceID_to_EJInstance[id] or 0 -- jInstanceID
-	return newID
-end
-----------------------------------------------------------------
-function E.func_EJ_to_SI(id) -- 721 Чертоги доблести
-	if not id then return end
-	local newID = Octo_Cache_DB.EJInstance_to_SavedInstanceID[id] or 0 -- instanceID
-	return newID
-end
-----------------------------------------------------------------
 function E.func_GetSpecializationIconSafe()
 	local specIndex = GetSpecialization()
 	if specIndex then
@@ -1541,8 +1592,10 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 end
 ----------------------------------------------------------------
 function E.func_Create_Highlight(frame, owner)
-	frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoPropagateTemplate")
-	E.func_ApplyHighlightTemplate(frame.Highlight, frame)
+	if E.ENABLE_HIGHTLIGHT then
+		frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoPropagateTemplate")
+		E.func_ApplyHighlightTemplate(frame.Highlight, frame)
+	end
 end
 ----------------------------------------------------------------
 function E.func_CloseSettings()
@@ -1561,12 +1614,6 @@ function E.func_OpenToCategory(frame)
 	end
 	local id = E.main_category:GetID()
 	Settings.OpenToCategory(id, GlobalAddonName)
-end
-function E.func_toogleMainFrame(frame)
-	frame:SetShown(not frame:IsShown())
-	if frame:IsShown() then
-		E.func_CloseSettings()
-	end
 end
 ----------------------------------------------------------------
 local order_index = 0
@@ -1670,113 +1717,6 @@ function E.GetItemRankFromLink(ItemLink)
 	return nil
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
--- 38 ms
-function E.func_BUILD_DUNG_DB()
-	-- local serverTime = GetServerTime()
-	-- if Octo_Cache_DB.LastUpdateDB and Octo_Cache_DB.LastUpdateDB > serverTime then
-	-- return
-	-- end
-	-- E.DEBUG_START()
-	-- wipe(Octo_Cache_DB.Octo_Table_SI_IDS)
-	-- wipe(Octo_Cache_DB.SavedInstanceID_to_EJInstance)
-	-- wipe(Octo_Cache_DB.EJInstance_to_SavedInstanceID)
-	-- Octo_Cache_DB.LastUpdateDB = nil
-	local backupTier = EJ_GetCurrentTier()
-	local backupDifficulty = EJ_GetDifficulty()
-	local maxTiers = EJ_GetNumTiers()
-	if not maxTiers or maxTiers < 1 then
-		return
-	end
-	local SI_to_EJ = {}
-	local EJ_to_SI = {}
-	local result = {}
-	-- local currentSeason = {}
-	local function CountEncounters()
-		local i = 1
-		while EJ_GetEncounterInfoByIndex(i) do
-			i = i + 1
-		end
-		return i - 1
-	end
-	for tier = 1, maxTiers do
-		if maxTiers == 11 and tier ~= 10 or tier ~= maxTiers then
-			EJ_SelectTier(tier)
-			if maxTiers == 11 and tier == maxTiers then
-				tier = tier - 1
-			end
-			-- local tierName = EJ_GetTierInfo(tier)
-			-- local realTierNumber = E.OctoTable_Expansions_Tiers[tierName]
-			-- if realTierNumber then
-			for pass = 1, 2 do
-				local isRaid = (pass == 2)
-				-- local isRaid = true -- Только рейды 38 ms
-				-- local isRaid = false -- Только подземелья 70 ms
-				local index = 1
-				local ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
-				while ejInstanceID do
-					EJ_SelectInstance(ejInstanceID)
-					local _, _, _, _, _, _, _, _, _, savedInstanceID = EJ_GetInstanceInfo(ejInstanceID)
-					if savedInstanceID then
-						SI_to_EJ[savedInstanceID] = ejInstanceID
-						EJ_to_SI[ejInstanceID] = savedInstanceID
-					end
-					local diffTable = nil
-					for diffID in next, (E.OctoTable_Difficulties) do
-						if EJ_IsValidInstanceDifficulty(diffID) then
-							EJ_SetDifficulty(diffID)
-							local bossCount = CountEncounters()
-							if bossCount > 0 then
-								diffTable = diffTable or {}
-								diffTable[diffID] = bossCount
-							end
-						end
-					end
-					if diffTable then
-
-						-- if tierName == E.currentExpansionName and not isRaid then -- and savedInstanceID ~= 3029 then
-						-- if tierName == E.currentExpansionName and not isRaid then -- and savedInstanceID ~= 3029 then
-						-- if currentSeason[savedInstanceID] == nil then currentSeason[savedInstanceID] = {
-						-- difficulties = diffTable,
-						-- -- name = name,
-						-- tier = tier,
-						-- }
-						-- end
-						-- end
-						-- if E.OctoTable_Expansions_Names[tierName] then
-						if result[savedInstanceID] == nil then result[savedInstanceID] = {
-								difficulties = diffTable,
-								isRaid = isRaid,
-								-- name = name,
-								tier = tier,
-							}
-						end
-						-- end
-						-- elseif tier == maxTiers and not isRaid and savedInstanceID ~= 3029 then
-						-- currentSeason[savedInstanceID] = {
-						-- difficulties = diffTable,
-						-- isRaid = isRaid,
-						-- -- name = name
-						-- }
-					end
-					index = index + 1
-					ejInstanceID = EJ_GetInstanceByIndex(index, isRaid)
-				end
-				-- end
-			end
-		end
-	end
-	EJ_SetDifficulty(backupDifficulty)
-	EJ_SelectTier(backupTier)
-	-- Octo_Cache_DB.Octo_Table_currentSeason = currentSeason
-	-- opde(Octo_Cache_DB.Octo_Table_currentSeason)
-	Octo_Cache_DB.Octo_Table_SI_IDS = result
-	-- opde(Octo_Cache_DB.Octo_Table_SI_IDS)
-	Octo_Cache_DB.SavedInstanceID_to_EJInstance = SI_to_EJ
-	Octo_Cache_DB.EJInstance_to_SavedInstanceID = EJ_to_SI
-	-- E.DEBUG_STOP()
-end
-----------------------------------------------------------------
 function E.func_isAtlas(TextureOrAtlas)
 	if not TextureOrAtlas then return false end
 	if not C_Texture or not C_Texture.GetAtlasInfo then
@@ -1808,12 +1748,6 @@ function E.func_texturefromIcon(icon, iconWidth, iconHeight)
 	else
 		return "|T" .. (icon or E.ICON_QUESTION_MARK) .. ":" .. (iconWidth) .. ":" .. (iconHeight) .. ":::64:64:6:58:6:58|t "
 	end
-end
-----------------------------------------------------------------
-function E.func_GetDungTier(SI_ID)
-	if not Octo_Cache_DB or not Octo_Cache_DB.Octo_Table_SI_IDS then return 1 end
-	local tier = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID] and Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].tier or 1
-	return tier
 end
 ----------------------------------------------------------------
 function E.func_Header(lay_out, text)
@@ -1869,10 +1803,10 @@ function E.func_auctionator_price(itemID)
 	return price or 0
 end
 ----------------------------------------------------------------
-function E.func_DungeonOrRaid(SI_ID)
-	if Octo_Cache_DB and Octo_Cache_DB.Octo_Table_SI_IDS and Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID] then
-		local isRaid = Octo_Cache_DB.Octo_Table_SI_IDS[SI_ID].isRaid
-		return isRaid
+function E.func_SetFlattensRenderLayers_OnAllFrames()
+	-- SetFlattensRenderLayers()
+	for k, frame in next, (E.OctoTable_ColoredFrames) do
+		frame:SetFlattensRenderLayers(true)
 	end
 end
 ----------------------------------------------------------------
@@ -1940,6 +1874,7 @@ function E.func_RunAfterCombat()
 end
 local MyEventsTable = {
 	"PLAYER_REGEN_ENABLED",
+	"PLAYER_LOGIN",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
@@ -1947,3 +1882,6 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 	E.func_RunAfterCombat()
 end
 ----------------------------------------------------------------
+function EventFrame:PLAYER_LOGIN()
+	E.func_SetFlattensRenderLayers_OnAllFrames()
+end

@@ -289,7 +289,7 @@ end
 local function func_Setup_Raids(frame, id)
 	-- local name = E.func_GetName("dungeon", id)
 	local icon = E.func_GetIcon("dungeon", id)
-	local isRaid2 = E.func_DungeonOrRaid(id)
+	local isRaid = E.func_DungeonOrRaid(id)
 
 	if Octo_ToDo_DB_Vars.CONFIG_RAIDS_ICON  then
 		frame.icon1texture:SetTexture(icon)
@@ -299,10 +299,10 @@ local function func_Setup_Raids(frame, id)
 	end
 
 	if Octo_ToDo_DB_Vars.CONFIG_RAIDS_EXTRA_ICON  then
-		if isRaid2 == true then
+		if isRaid == true then
 			frame.icon2frame:Show()
 			frame.icon2texture:SetAtlas(E.ATLAS_RAID)
-		elseif isRaid2 == false then
+		elseif isRaid == false then
 			frame.icon2frame:Show()
 			frame.icon2texture:SetAtlas(E.ATLAS_DUNGEON)
 		end

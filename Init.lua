@@ -9,10 +9,16 @@ if E.curLocaleLang == "ruRU" or E.curLocaleLang == "enUS" then
 	E.DefaultFont = "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
 end
 ----------------------------------------------------------------
+E.ENABLE_HIGHTLIGHT = true
+E.ENABLE_EXPANSIONCOLOR = true
+----------------------------------------------------------------
 E.DEBUG = false
 E.DEBUG_NAME = false
 E.DEBUG_CURRENCY_TOOLTIP = false
 ----------------------------------------------------------------
+E.Octo_Table_SI_IDS = {}
+E.SavedInstanceID_to_EJInstance = {}
+E.EJInstance_to_SavedInstanceID = {}
 E.OctoTable_ColoredFrames = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}

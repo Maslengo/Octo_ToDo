@@ -30,7 +30,6 @@ local function tempFunction()
 		{id = 2245, defS = true,}, -- Added in patch 10.1.0 "Embers of Neltharion"
 		{id = 2122, defS = true,}, -- Added in patch 10.0.0 "Dragonflight"
 		{id = 2118, defS = true,}, -- Added in patch 10.0.0 "Dragonflight"
-
 		{id = 2812, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
 		{id = 2809, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
 		{id = 2807, defS = false,}, -- Added in patch 10.2.6 "Plunderstorm" (УСТАРЕЛО АСПЕКТЫ)
@@ -44,12 +43,18 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
-		{id = 209856, defS = false,},
-		{id = 207002, defS = false,},
-		{id = 210254, defS = false,},
-		{id = 213089, defS = false,},
-		{id = 211516, defS = false,},
-		{id = 211515, defS = false,},
+		{id = 209856, defS = false,}, -- Dilated Time Pod
+		{id = 207002, defS = false,}, -- Encapsulated Destiny
+		{id = 210254, defS = false,}, -- Dreamsurge Cocoon
+		{id = 213089, defS = false,}, -- Antique Bronze Bullion (Priceless)
+		{id = 211515, defS = false,}, -- Splintered Spark of Awakening (Dragonflight Season 4)
+		{id = 208396, defS = false,}, -- Splintered Spark of Dreams (Dragonflight Season 3)
+		{id = 204717, defS = false,}, -- Splintered Spark of Shadowflame (Dragonflight Season 2)
+
+		{id = 211516, defS = false,}, -- Spark of Awakening (Dragonflight Season 4)
+		{id = 206959, defS = false,}, -- Spark of Dreams (Dragonflight Season 3)
+		{id = 204440, defS = false,}, -- Spark of Shadowflame (Dragonflight Season 2)
+		{id = 190453, defS = false,}, -- Spark of Ingenuity (Dragonflight Season 1)
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
@@ -135,7 +140,6 @@ local function tempFunction()
 				{rewID = 2106, rewTYPE = "currency", rewSIZE = 500,}, --
 				{rewID = 2108, rewTYPE = "currency", rewSIZE = 500,}, --
 				{rewID = 2109, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			forcedMaxQuest = 1,
 		},
@@ -180,7 +184,6 @@ local function tempFunction()
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
-
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -278,7 +281,6 @@ local function tempFunction()
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				{rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			forcedMaxQuest = 1,
 		},
@@ -301,7 +303,6 @@ local function tempFunction()
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			forcedMaxQuest = 1,
 		},
@@ -323,7 +324,6 @@ local function tempFunction()
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			forcedMaxQuest = 1,
 		},
@@ -419,7 +419,6 @@ local function tempFunction()
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			forcedMaxQuest = 1,
 		},
@@ -520,8 +519,6 @@ local function tempFunction()
 				{rewID = 205985, rewTYPE = "item", rewSIZE = 1,},
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				{rewID = 2420, rewTYPE = "currency", rewSIZE = 500,}, -- Loamm Niffen
-
-
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -675,7 +672,6 @@ local function tempFunction()
 				{rewID = 205370, rewTYPE = "item", rewSIZE = 1, addText = L["MAW_BUFF_QUALITY_STRING_COMMON"]}, -- 205373
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 2652, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			-- forcedMaxQuest = 4,
 		},
@@ -735,7 +731,6 @@ local function tempFunction()
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				{rewID = 202196, rewTYPE = "item", rewSIZE = 1}, -- 205372
 				{rewID = 2118, rewTYPE = "currency", rewSIZE = 600,}, --
-
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -755,7 +750,6 @@ local function tempFunction()
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				-- {rewID = 202196, rewTYPE = "item", rewSIZE = 1}, -- 205372
-
 				-- +1000 reputation with Sabellian or Wrathion
 				{rewID = 2518, rewTYPE = "reputation", rewSIZE = 1000,}, -- Sabellian
 				{rewID = 2517, rewTYPE = "reputation", rewSIZE = 1000,}, -- Wrathion
@@ -854,7 +848,6 @@ local function tempFunction()
 				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
 				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
 				-- {rewID = 3056, rewTYPE = "currency", rewSIZE = 2000,}, -- Kej
-
 			},
 			forcedMaxQuest = 1,
 		},
@@ -908,7 +901,6 @@ local function tempFunction()
 				-- {rewID = 2106, rewTYPE = "currency", rewSIZE = 500,}, --
 				-- {rewID = 2108, rewTYPE = "currency", rewSIZE = 500,}, --
 				-- {rewID = 2109, rewTYPE = "currency", rewSIZE = 500,}, --
-
 			},
 			-- forcedMaxQuest = 1,
 		},
@@ -926,7 +918,6 @@ local function tempFunction()
 		-- 		{72135}, -- Neltharus: Secrets Within
 		-- 		{76146}, -- Dawn of the Infinite: Chrono-Lord Deios
 		-- 		{66119}, -- Ruby Life Pools: Primalist Invasion
-
 		-- 		{72193},
 		-- 		{71155},
 		-- 		{66586},
@@ -946,9 +937,173 @@ local function tempFunction()
 		-- 	},
 		-- 	-- forcedMaxQuest = 1,
 		-- },
+		----------------------------------------------------------------
+		{
+			sorted = false,
+			showTooltip = true,
+			TextLeft = function()
+				return TRADE_SKILLS
+			end,
+			name_save = "ProfessionWeeklies",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				-- CHEST
+				{66373, prof = 171, HEADER = "chest"},
+				{66374, prof = 171, HEADER = "chest"},
+				{66381, prof = 164, HEADER = "chest"},
+				{66382, prof = 164, HEADER = "chest"},
+				{66377, prof = 333, HEADER = "chest"},
+				{66378, prof = 333, HEADER = "chest"},
+				{66379, prof = 202, HEADER = "chest"},
+				{66380, prof = 202, HEADER = "chest"},
+				{66375, prof = 773, HEADER = "chest"},
+				{66376, prof = 773, HEADER = "chest"},
+				{66388, prof = 755, HEADER = "chest"},
+				{66389, prof = 755, HEADER = "chest"},
+				{66384, prof = 165, HEADER = "chest"},
+				{66385, prof = 165, HEADER = "chest"},
+				{66386, prof = 197, HEADER = "chest"},
+				{66387, prof = 197, HEADER = "chest"},
 
+				-- CRAFT ORDER
+				{70589, prof = 164, HEADER = "craftOrder"},
+				{70591, prof = 202, HEADER = "craftOrder"},
+				{70592, prof = 773, HEADER = "craftOrder"},
+				{70593, prof = 755, HEADER = "craftOrder"},
+				{70594, prof = 165, HEADER = "craftOrder"},
+				{70595, prof = 197, HEADER = "craftOrder"},
 
+				-- DROPS
+				{72160, prof = 186, HEADER = "drops"},
+				{72161, prof = 186, HEADER = "drops"},
+				{72162, prof = 186, HEADER = "drops"},
+				{72163, prof = 186, HEADER = "drops"},
+				{72164, prof = 186, HEADER = "drops"},
+				{72165, prof = 186, HEADER = "drops"},
+				{71857, prof = 182, HEADER = "drops"},
+				{71858, prof = 182, HEADER = "drops"},
+				{71859, prof = 182, HEADER = "drops"},
+				{71860, prof = 182, HEADER = "drops"},
+				{71861, prof = 182, HEADER = "drops"},
+				{71864, prof = 182, HEADER = "drops"},
+				{70511, prof = 171, HEADER = "drops"},
+				{70504, prof = 171, HEADER = "drops"},
+				{70513, prof = 164, HEADER = "drops"},
+				{70512, prof = 164, HEADER = "drops"},
+				{70515, prof = 333, HEADER = "drops"},
+				{70514, prof = 333, HEADER = "drops"},
+				{70517, prof = 202, HEADER = "drops"},
+				{70516, prof = 202, HEADER = "drops"},
+				{70519, prof = 773, HEADER = "drops"},
+				{70518, prof = 773, HEADER = "drops"},
+				{70521, prof = 755, HEADER = "drops"},
+				{70520, prof = 755, HEADER = "drops"},
+				{70523, prof = 165, HEADER = "drops"},
+				{70522, prof = 165, HEADER = "drops"},
+				{70381, prof = 393, HEADER = "drops"},
+				{70383, prof = 393, HEADER = "drops"},
+				{70384, prof = 393, HEADER = "drops"},
+				{70385, prof = 393, HEADER = "drops"},
+				{70386, prof = 393, HEADER = "drops"},
+				{70389, prof = 393, HEADER = "drops"},
+				{70524, prof = 197, HEADER = "drops"},
+				{70525, prof = 197, HEADER = "drops"},
 
+				-- PROF QUEST
+				{70617, prof = 186, HEADER = "profQuest"},
+				{70618, prof = 186, HEADER = "profQuest"},
+				{72157, prof = 186, HEADER = "profQuest"},
+				{72156, prof = 186, HEADER = "profQuest"},
+				{70614, prof = 182, HEADER = "profQuest"},
+				{70613, prof = 182, HEADER = "profQuest"},
+				{70616, prof = 182, HEADER = "profQuest"},
+				{70615, prof = 182, HEADER = "profQuest"},
+				{70530, prof = 171, HEADER = "profQuest"},
+				{66940, prof = 171, HEADER = "profQuest"},
+				{66938, prof = 171, HEADER = "profQuest"},
+				{72427, prof = 171, HEADER = "profQuest"},
+				{70532, prof = 171, HEADER = "profQuest"},
+				{70531, prof = 171, HEADER = "profQuest"},
+				{70533, prof = 171, HEADER = "profQuest"},
+				{66937, prof = 171, HEADER = "profQuest"},
+				{66941, prof = 164, HEADER = "profQuest"},
+				{70233, prof = 164, HEADER = "profQuest"},
+				{66517, prof = 164, HEADER = "profQuest"},
+				{66897, prof = 164, HEADER = "profQuest"},
+				{70235, prof = 164, HEADER = "profQuest"},
+				{72398, prof = 164, HEADER = "profQuest"},
+				{70234, prof = 164, HEADER = "profQuest"},
+				{70211, prof = 164, HEADER = "profQuest"},
+				{66884, prof = 333, HEADER = "profQuest"},
+				{66900, prof = 333, HEADER = "profQuest"},
+				{66935, prof = 333, HEADER = "profQuest"},
+				{72155, prof = 333, HEADER = "profQuest"},
+				{72172, prof = 333, HEADER = "profQuest"},
+				{72173, prof = 333, HEADER = "profQuest"},
+				{72175, prof = 333, HEADER = "profQuest"},
+				{72423, prof = 333, HEADER = "profQuest"},
+				{72396, prof = 202, HEADER = "profQuest"},
+				{70545, prof = 202, HEADER = "profQuest"},
+				{66891, prof = 202, HEADER = "profQuest"},
+				{70540, prof = 202, HEADER = "profQuest"},
+				{66890, prof = 202, HEADER = "profQuest"},
+				{66942, prof = 202, HEADER = "profQuest"},
+				{70557, prof = 202, HEADER = "profQuest"},
+				{70539, prof = 202, HEADER = "profQuest"},
+				{66943, prof = 773, HEADER = "profQuest"},
+				{66944, prof = 773, HEADER = "profQuest"},
+				{70559, prof = 773, HEADER = "profQuest"},
+				{70561, prof = 773, HEADER = "profQuest"},
+				{70558, prof = 773, HEADER = "profQuest"},
+				{70560, prof = 773, HEADER = "profQuest"},
+				{66945, prof = 773, HEADER = "profQuest"},
+				{72438, prof = 773, HEADER = "profQuest"},
+				{66516, prof = 755, HEADER = "profQuest"},
+				{70565, prof = 755, HEADER = "profQuest"},
+				{66950, prof = 755, HEADER = "profQuest"},
+				{66949, prof = 755, HEADER = "profQuest"},
+				{72428, prof = 755, HEADER = "profQuest"},
+				{70564, prof = 755, HEADER = "profQuest"},
+				{70563, prof = 755, HEADER = "profQuest"},
+				{70562, prof = 755, HEADER = "profQuest"},
+				{66364, prof = 165, HEADER = "profQuest"},
+				{66951, prof = 165, HEADER = "profQuest"},
+				{70569, prof = 165, HEADER = "profQuest"},
+				{70568, prof = 165, HEADER = "profQuest"},
+				{70567, prof = 165, HEADER = "profQuest"},
+				{70571, prof = 165, HEADER = "profQuest"},
+				{72407, prof = 165, HEADER = "profQuest"},
+				{66363, prof = 165, HEADER = "profQuest"},
+				{70620, prof = 393, HEADER = "profQuest"},
+				{72159, prof = 393, HEADER = "profQuest"},
+				{70619, prof = 393, HEADER = "profQuest"},
+				{72158, prof = 393, HEADER = "profQuest"},
+				{72410, prof = 197, HEADER = "profQuest"},
+				{70587, prof = 197, HEADER = "profQuest"},
+				{66952, prof = 197, HEADER = "profQuest"},
+				{70586, prof = 197, HEADER = "profQuest"},
+				{70572, prof = 197, HEADER = "profQuest"},
+				{70582, prof = 197, HEADER = "profQuest"},
+				{66953, prof = 197, HEADER = "profQuest"},
+				{66899, prof = 197, HEADER = "profQuest"},
+
+				-- TREATISE
+				{74106, prof = 186, HEADER = "treatise"},
+				{74107, prof = 182, HEADER = "treatise"},
+				{74108, prof = 171, HEADER = "treatise"},
+				{74109, prof = 164, HEADER = "treatise"},
+				{74110, prof = 333, HEADER = "treatise"},
+				{74111, prof = 202, HEADER = "treatise"},
+				{74105, prof = 773, HEADER = "treatise"},
+				{74112, prof = 755, HEADER = "treatise"},
+				{74113, prof = 165, HEADER = "treatise"},
+				{74114, prof = 393, HEADER = "treatise"},
+				{74115, prof = 197, HEADER = "treatise"},
+			}
+			-- forcedMaxQuest = 2,
+		},
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------

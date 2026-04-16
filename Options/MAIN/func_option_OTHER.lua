@@ -56,4 +56,16 @@ function E.func_option_OTHER(category, layout)
 		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
+	-- 3. Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER -----------------
+	----------------------------------------------------------------
+	do
+		local variable = E.func_GenerateID()
+		local variableKey = "SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER"
+		local variableTbl = Octo_ToDo_DB_Vars
+		local name = L["Show on hover"]
+		local tooltip = L["Show frame automatically when mouse is over the minimap button"]
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue, tooltip)
+	end
+	----------------------------------------------------------------
 end

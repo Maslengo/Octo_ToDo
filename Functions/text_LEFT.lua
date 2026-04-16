@@ -49,9 +49,7 @@ end
 function E.func_Otrisovka_LEFT_RaidsOrDungeons(categoryKey, CharInfo, dataType, id)
 	if not categoryKey then return end
 	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, nil, nil
-	local name = E.func_GetName("dungeon", id) -- EJ_GetInstanceInfo(id)
-	-- local JI_ID = tonumber(id)
-	-- local SI_ID = E.func_EJ_to_SI(JI_ID)
+	local name = E.func_GetName("dungeon", id)
 	TextLeft = name
 	SettingsType = dataType.."#"..id
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey

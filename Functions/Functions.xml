@@ -2,6 +2,7 @@
 	<Script file="Functions\Functions.lua"/>
 	<Script file="Functions\Functions_CACHE.lua"/>
 	<Script file="Functions\Functions_DEBUG.lua"/>
+	<Script file="Functions\Functions_DUNGEONS.lua"/>
 	<Script file="Functions\Functions_profileColors.lua"/>
 	<Script file="Functions\Functions_profileKeys.lua"/>
 

@@ -55,16 +55,9 @@ local function Collect_Quests_Universal()
 	-- Два пула
 	local tempUniversalChar = {}
 	local tempUniversalAccount = {}
-
-
-
-
-
-
 	for _, data in ipairs(E.ALL_UniversalQuests) do
 		local questKey = data.questKey
 		if data.quests and questKey then
-			-- local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
 			local forcedMaxQuest = data.forcedMaxQuest
 			local questDataTable = {}
 			local count = 0
@@ -74,19 +67,29 @@ local function Collect_Quests_Universal()
 				if type(questData[1]) == "number" then
 					local questID = questData[1]
 					local FactionOrClass = questData.FactionOrClass
-					if not FactionOrClass
-					or (FactionOrClass[collectPlayerData.Faction]
-						or  FactionOrClass[collectPlayerData.classFilename]) then
-						local isCompleted = E.func_IsQuestFlaggedCompleted(questID)
-						local status = E.func_GetQuestStatus(questID, true)
-						totalQUEST = totalQUEST + 1
-						questDataTable[questID] = status
-						if isCompleted then
-							count = count + 1
+					local prof = questData.prof
+
+					-- Проверка профессии (если указана)
+					local skipThisQuest = false
+					if prof then
+						if not (collectPlayerData.professions and collectPlayerData.professions[prof]) then
+							skipThisQuest = true
 						end
-						if (forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
-							questDataTable.TextCenter = status
-							hasSingleQuestOutput = true
+					end
+
+					if not skipThisQuest then
+						if not FactionOrClass or (FactionOrClass[collectPlayerData.Faction] or FactionOrClass[collectPlayerData.classFilename]) then
+							local isCompleted = E.func_IsQuestFlaggedCompleted(questID)
+							local status = E.func_GetQuestStatus(questID, true)
+							totalQUEST = totalQUEST + 1
+							questDataTable[questID] = status
+							if isCompleted then
+								count = count + 1
+							end
+							if (forcedMaxQuest == 1 or #data.quests == 1) and E.func_IsOnQuest(questID) then
+								questDataTable.TextCenter = status
+								hasSingleQuestOutput = true
+							end
 						end
 					end
 				end
@@ -103,16 +106,13 @@ local function Collect_Quests_Universal()
 					questDataTable.TextCenter = nil
 				end
 			end
-			-- if next(questDataTable) ~= nil then
-				if data.isAccount then
-					tempUniversalAccount[questKey] = questDataTable
-				else
-					tempUniversalChar[questKey] = questDataTable
-				end
-			-- end
+			if data.isAccount then
+				tempUniversalAccount[questKey] = questDataTable
+			else
+				tempUniversalChar[questKey] = questDataTable
+			end
 		end
 	end
-	-- opde(tempUniversalAccount)
 	local currentRegion = collectPlayerData.CurrentRegionName or E.CurrentRegionName
 	-- Распространение по базе
 	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
@@ -133,8 +133,6 @@ local function Collect_Quests_Universal()
 			end
 		end
 	end
-	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.UniversalQuest)
-	-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.UniversalQuest)
 end
 ----------------------------------------------------------------
 function E.Collect_Quests()

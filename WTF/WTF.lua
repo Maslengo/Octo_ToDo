@@ -412,6 +412,7 @@ E.Octo_ToDo_DB_Vars_DEFAULTS = {
 		Config_DebugID_ALL = false, -- /run Octo_ToDo_DB_Vars.Config_DebugID_ALL = true
 		Config_ADDON_HEIGHT = 20,
 		Config_ClampedToScreen = false,
+		SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = false,
 		Config_MountsInTooltip = true,
 		CONFIG_SPAM_TIME = 2,
 		CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,
@@ -619,18 +620,10 @@ end
 
 function E.Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
-	E.func_InitSubTable(Octo_Cache_DB, "SavedInstanceID_to_EJInstance")
-	E.func_InitSubTable(Octo_Cache_DB, "EJInstance_to_SavedInstanceID")
-	E.func_InitSubTable(Octo_Cache_DB, "Octo_Table_SI_IDS")
 end
 
 E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 	["CONFIG_DEBUG"] = {
-		{
-			name = L["OPTIONS"], -- /run Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS = true
-			variableKey = "CONFIG_DEBUG_OPTIONS", -- Octo_DevTool_DB.CONFIG_DEBUG_OPTIONS
-			defaultValue = false,
-		},
 		{
 			name = L["DEBUG"],
 			variableKey = "CONFIG_DEBUG_DEBUG", -- Octo_DevTool_DB.CONFIG_DEBUG_ENABLED
@@ -681,6 +674,11 @@ E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 			variableKey = "CONFIG_DEBUG_UNIVERSAL",
 			defaultValue = false,
 		},
+		{
+			name = L["FUNCTION_TIMERS"],
+			variableKey = "FUNCTION_TIMERS",
+			defaultValue = false,
+		}
 	},
 	-- ["Quests Changed"] = {
 	-- {
@@ -801,7 +799,6 @@ function EventFrame:PLAYER_LOGIN()
 
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()
-	-- C_Timer.After(2, E.func_BUILD_DUNG_DB)
 
 	EventFrame:func_Daily_Reset()
 	EventFrame:func_Weekly_Reset()

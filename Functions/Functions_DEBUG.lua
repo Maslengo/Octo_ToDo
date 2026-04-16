@@ -2,10 +2,12 @@ local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
 function E.DEBUG_START()
+	if not Octo_DevTool_DB.FUNCTION_TIMERS then return end
 	local timer = debugprofilestart()
 	return timer
 end
 function E.DEBUG_STOP(funcName)
+	if not Octo_DevTool_DB.FUNCTION_TIMERS then return end
 	if not funcName then funcName = "" end
 	local timer = E.func_CompactRoundNumber(debugprofilestop())
 	local result = funcName.." "..E.func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")

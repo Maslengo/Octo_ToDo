@@ -171,6 +171,18 @@ local function updateChars(pd, cm, DBVersion)
 		pd.HasAvailableRewards = nil
 	end
 	----------------------------------------------------------------
+	if compareVersion(114.1, DBVersion) then
+		pd.professions = pd.professions or {}
+		if cm.professions then
+			for i = 1, 5 do
+				local skillLine = cm.professions[i] and cm.professions[i].skillLine
+				if skillLine then
+					pd.professions[skillLine] = true
+				end
+			end
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
