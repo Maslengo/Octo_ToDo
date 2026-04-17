@@ -877,10 +877,10 @@ function E.func_KeyTooltip_LEFT(SettingsType)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
-	local sortedPlayersTBL = E.func_SortCharacters()
+	local sortedCharacters = E.func_SortCharacters()
 	local visiblePlayers = {}
-	for _, charInfo in ipairs(sortedPlayersTBL) do
-		visiblePlayers[charInfo.PlayerData.GUID] = true
+	for CharIndex, CharInfo in ipairs(sortedCharacters) do
+		visiblePlayers[CharInfo.PlayerData.GUID] = true
 	end
 	if dataType == "UniversalQuests" then
 		for _, data in next, (E.ALL_UniversalQuests) do

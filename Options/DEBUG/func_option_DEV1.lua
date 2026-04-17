@@ -21,6 +21,7 @@ function E.func_option_DEV1(category, layout)
 				local maxValue = tbl.maxValue
 				local step = tbl.step
 				local TYPE = type(defaultValue)
+				local tooltip
 				-- local values = tbl.values or E.editorThemes or {}
 				if TYPE == "boolean" then
 					----------------------------------------------------------------

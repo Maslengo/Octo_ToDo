@@ -278,8 +278,7 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-EventFrame.timer = 0
-local HIDE_DELAY_TIMER = 1
+
 function E.func_toogleFrame(frame)
 	frame.clicked = not frame.clicked or nil
 	frame:SetShown(frame.clicked)
@@ -313,19 +312,20 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				end
 			end,
 			OnTooltipShow = function(tooltip)
+				EventFrame.timer = 0
 				local addonNameNEW = E.func_AddonNameForOptions(AddonName)
 				tooltip:AddLine(addonNameNEW)
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON .. L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON .. L["RMB:"], L["OPTIONS"])
-				if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER then
+				if Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER then
 					frame:Show() -- E.func_toogleFrame(frame)
 				end
 				EventFrame:SetScript("OnUpdate", nil)
 			end,
 			OnLeave = function()
-				if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER and not frame.clicked then
-					EventFrame.timer = HIDE_DELAY_TIMER
+				if Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER and Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION and not frame.clicked then
+					EventFrame.timer = Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION
 					EventFrame:SetScript("OnUpdate", hideFrame)
 				end
 			end,
@@ -402,110 +402,6 @@ function E.func_Gradient(text, firstColor, secondColor)
 		segments[i] = E.func_RGB2Hex(r, g, b) .. chars[i] .. "|r"
 	end
 	return table.concat(segments)
-end
-function E.func_CountVisibleCharacters()
-	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
-	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
-	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
-	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
-	local count = 0
-	local curGUID = E.curGUID
-	local curFaction = E.FACTION_CURRENT
-	local curServer = E.func_GetPlayerRealm()
-	local CurrentRegionName = E.CurrentRegionName
-	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
-	local checkCurrentServer = isOnlyCurrentServer and curServer
-	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
-	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if CharInfo.PlayerData then
-			local PlayerData = CharInfo.PlayerData
-			if GUID == curGUID then
-				count = count + 1
-			else
-				if PlayerData.isShownPlayer and
-				PlayerData.UnitLevel and
-				PlayerData.CurrentRegionName and
-				PlayerData.curServer and
-				PlayerData.Faction and
-				PlayerData.BattleTag then -- Добавляем проверку BattleTag
-					local unitLevel = PlayerData.UnitLevel
-					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
-					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
-					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
-					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
-					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
-					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
-						count = count + 1
-					end
-				end
-			end
-		end
-	end
-	return count > 0 and count or 1
-end
-function E.func_SortCharacters()
-	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
-	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
-	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
-	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
-	local sorted = {}
-	local curGUID = E.curGUID
-	local curFaction = E.FACTION_CURRENT
-	local curServer = E.func_GetPlayerRealm()
-	local CurrentRegionName = E.CurrentRegionName
-	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
-	local checkCurrentServer = isOnlyCurrentServer and curServer
-	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
-	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if not CharInfo.PlayerData then
-			-- Пропускаем, если нет PlayerData
-		else
-			local PlayerData = CharInfo.PlayerData
-			if GUID == curGUID then
-				sorted[#sorted + 1] = CharInfo
-			else
-				if PlayerData.isShownPlayer and
-				PlayerData.UnitLevel and
-				PlayerData.CurrentRegionName and
-				PlayerData.curServer and
-				PlayerData.Faction and
-				PlayerData.BattleTag then -- Добавляем проверку BattleTag
-					local unitLevel = PlayerData.UnitLevel
-					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
-					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
-					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
-					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
-					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
-					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
-						sorted[#sorted + 1] = CharInfo
-					end
-				end
-			end
-		end
-	end
-	table.sort(sorted, function(a, b)
-			local aData, bData = a.PlayerData, b.PlayerData
-			local aLevel = aData.UnitLevel or 0
-			local bLevel = bData.UnitLevel or 0
-			if aLevel ~= bLevel then
-				return aLevel > bLevel
-			end
-			local aItemLevel = aData.avgItemLevelEquipped or 0
-			local bItemLevel = bData.avgItemLevelEquipped or 0
-			if aItemLevel ~= bItemLevel then
-				return aItemLevel > bItemLevel
-			end
-			local aName = aData.Name or "noname"
-			local bName = bData.Name or "noname"
-			return aName < bName
-	end)
-	return sorted
 end
 ----------------------------------------------------------------
 function E.func_GetColorGradient(value, minValue, maxValue)
@@ -1809,6 +1705,162 @@ function E.func_SetFlattensRenderLayers_OnAllFrames()
 		frame:SetFlattensRenderLayers(true)
 	end
 end
+----------------------------------------------------------------
+function E.func_CountVisibleCharacters()
+	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
+	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
+	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
+	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
+	local count = 0
+	local curGUID = E.curGUID
+	local curFaction = E.FACTION_CURRENT
+	local curServer = E.func_GetPlayerRealm()
+	local CurrentRegionName = E.CurrentRegionName
+	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
+	local checkCurrentServer = isOnlyCurrentServer and curServer
+	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
+	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if CharInfo.PlayerData then
+			local PlayerData = CharInfo.PlayerData
+			if GUID == curGUID then
+				count = count + 1
+			else
+				if PlayerData.isShownPlayer and
+				PlayerData.UnitLevel and
+				PlayerData.CurrentRegionName and
+				PlayerData.curServer and
+				PlayerData.Faction and
+				PlayerData.BattleTag then -- Добавляем проверку BattleTag
+					local unitLevel = PlayerData.UnitLevel
+					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
+					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
+					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
+					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
+					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
+						count = count + 1
+					end
+				end
+			end
+		end
+	end
+	return count > 0 and count or 1
+end
+----------------------------------------------------------------
+function E.func_SortCharacters()
+	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
+	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
+	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
+	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
+	local sorted = {}
+	local curGUID = E.curGUID
+	local curFaction = E.FACTION_CURRENT
+	local curServer = E.func_GetPlayerRealm()
+	local CurrentRegionName = E.CurrentRegionName
+	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
+	local checkCurrentServer = isOnlyCurrentServer and curServer
+	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
+	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if not CharInfo.PlayerData then
+			-- Пропускаем, если нет PlayerData
+		else
+			local PlayerData = CharInfo.PlayerData
+			if GUID == curGUID then
+				sorted[#sorted + 1] = CharInfo
+			else
+				if PlayerData.isShownPlayer and
+				PlayerData.UnitLevel and
+				PlayerData.CurrentRegionName and
+				PlayerData.curServer and
+				PlayerData.Faction and
+				PlayerData.BattleTag then -- Добавляем проверку BattleTag
+					local unitLevel = PlayerData.UnitLevel
+					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
+					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
+					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
+					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
+					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
+						sorted[#sorted + 1] = CharInfo
+					end
+				end
+			end
+		end
+	end
+	table.sort(sorted, function(a, b)
+			local aData, bData = a.PlayerData, b.PlayerData
+			local aLevel = aData.UnitLevel or 0
+			local bLevel = bData.UnitLevel or 0
+			if aLevel ~= bLevel then
+				return aLevel > bLevel
+			end
+			local aItemLevel = aData.avgItemLevelEquipped or 0
+			local bItemLevel = bData.avgItemLevelEquipped or 0
+			if aItemLevel ~= bItemLevel then
+				return aItemLevel > bItemLevel
+			end
+			local aName = aData.Name or "noname"
+			local bName = bData.Name or "noname"
+			return aName < bName
+	end)
+	return sorted
+end
+----------------------------------------------------------------
+function E.func_GetCounts()
+	local numServers, numRegions, numBtags, numPlayers = 0, 0, 0, 0
+
+	local seenServers = {}
+	local seenRegions = {}
+	local seenBtags = {}
+
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		local pd = CharInfo.PlayerData
+		if pd then
+			local server = pd.curServer
+			local btag = pd.BattleTag
+			local region = pd.CurrentRegionName
+
+			if btag and not seenBtags[btag] then
+				seenBtags[btag] = true
+				numBtags = numBtags + 1
+			end
+
+			if region and not seenRegions[region] then
+				seenRegions[region] = true
+				numRegions = numRegions + 1
+			end
+
+			if server and not seenServers[server] then
+				seenServers[server] = true
+				numServers = numServers + 1
+			end
+
+			numPlayers = numPlayers + 1
+		end
+	end
+
+	return numServers, numRegions, numBtags, numPlayers
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

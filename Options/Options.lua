@@ -40,7 +40,7 @@ local MyEventsTable = {
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
-	-- 0 -----------------------------------------------------------
+	-- MAIN --------------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
@@ -51,13 +51,23 @@ function EventFrame:PLAYER_LOGIN()
 			if E.func_option_OTHER then
 				E.func_option_OTHER(main_category, main_layout)
 			end
-			if E.func_option_CHARACTER then
-				E.func_option_CHARACTER(main_category, main_layout)
+		end
+	end
+	----------------------------------------------------------------
+	-- CHARACTERS --------------------------------------------------
+	----------------------------------------------------------------
+	do
+		local enable = true
+		if enable then
+			local tabName = L["Characters"]
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+			if E.func_option_CHARACTERS then
+				E.func_option_CHARACTERS(category, layout)
 			end
 		end
 	end
 	----------------------------------------------------------------
-	-- 2 -----------------------------------------------------------
+	-- CURRENCY ----------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
@@ -80,7 +90,7 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
-	-- 5 -----------------------------------------------------------
+	-- ITEMS -------------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
@@ -97,7 +107,7 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
-	-- 3 -----------------------------------------------------------
+	-- REPUTATION --------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
@@ -123,7 +133,7 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
-	-- 4 -----------------------------------------------------------
+	-- RAIDS -------------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
@@ -140,7 +150,7 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
-	-- 10 -----------------------------------------------------------
+	-- COLORS ------------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
@@ -149,7 +159,7 @@ function EventFrame:PLAYER_LOGIN()
 			-- local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
 			-- E.func_option_COLOR_PROFILE(category, layout)
 			-- E.func_option_COLOR_MAIN(category, layout)
-			if E.func_option_COLORS then
+			if width and E.func_option_COLORS then
 				local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
 				local leftText = L["COLORS"]
 				local rightText = L["COLORS"]
@@ -158,24 +168,25 @@ function EventFrame:PLAYER_LOGIN()
 			end
 		end
 	end
+
 	----------------------------------------------------------------
 	-- 11 ---------------------------------------------------------
 	----------------------------------------------------------------
-	-- do
-	-- 	local enable = true
-	-- 	if enable and E.func_option_COLOR_PROFILE and E.func_option_COLOR_MAIN then
-	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
-	-- 		E.func_option_COLOR_PROFILE(category, layout)
-	-- 		E.func_option_COLOR_MAIN(category, layout)
-	-- 	end
-	-- end
+	do
+		local enable = true
+		if enable and E.func_option_COLOR_PROFILE and E.func_option_COLOR_MAIN then
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
+			E.func_option_COLOR_PROFILE(category, layout)
+			E.func_option_COLOR_MAIN(category, layout)
+		end
+	end
 	----------------------------------------------------------------
-	-- 999 ---------------------------------------------------------
+	-- DEBUG -------------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
 		if enable then
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, L["BINDING_HEADER_DEBUG"]) -- BINDING_HEADER_DEBUG
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, E.COLOR_GRAY .. L["BINDING_HEADER_DEBUG"] .. "|r") -- BINDING_HEADER_DEBUG
 			if E.func_option_DEBUG then
 				E.func_option_DEBUG(category, layout)
 			end

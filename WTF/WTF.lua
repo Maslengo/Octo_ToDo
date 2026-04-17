@@ -403,6 +403,12 @@ E.Octo_ToDo_DB_Vars_DEFAULTS = {
 	Config_numberFormatMode = 1,
 	GlobalDBVersion = 0,
 
+
+		CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = false,
+		CONFIG_HOVER_SHOW_DURATION = 1,
+
+
+
 		Config_LevelToShow = 1,
 		Config_LevelToShowMAX = 90,
 		isOnlyCurrentBtag = false,
@@ -412,7 +418,6 @@ E.Octo_ToDo_DB_Vars_DEFAULTS = {
 		Config_DebugID_ALL = false, -- /run Octo_ToDo_DB_Vars.Config_DebugID_ALL = true
 		Config_ADDON_HEIGHT = 20,
 		Config_ClampedToScreen = false,
-		SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = false,
 		Config_MountsInTooltip = true,
 		CONFIG_SPAM_TIME = 2,
 		CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,

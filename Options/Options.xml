@@ -2,7 +2,8 @@
 	<Script file="Options\functions.lua"/>
 	<Script file="Options\Options.lua"/>
 
-	<Script file="Options\MAIN\func_option_CHARACTER.lua"/>
+	<Script file="Options\CHARACTERS\func_option_CHARACTERS.lua"/>
+
 	<Script file="Options\MAIN\func_option_FONT.lua"/>
 	<Script file="Options\MAIN\func_option_OTHER.lua"/>
 

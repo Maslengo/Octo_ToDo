@@ -204,6 +204,12 @@ local function updateGlobal(DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	if compareVersion(114.2, DBVersion) then
+		if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER ~= nil then
+			Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 function E.func_setOldChanges()

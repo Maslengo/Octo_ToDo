@@ -1,12 +1,12 @@
 ## Interface: 120007, 120005, 120001
-## Version: v114.1
+## Version: v114.2
 # (12.0.5)(17.04.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 # Title: |cffD177FFO|r|cffC37CFBc|r|cffB582F7t|r|cffA787F3o|r|cff998DEF_|r|cff8C93EBT|r|cff7E98E7o|r|cff709EE3D|r|cff63A4E0o|r
 # Title: Octo_ToDo
 
-## Author: Octo
+## Author: Octo#21447
 ## IconTexture: Interface\AddOns\Octo_ToDo\Media\IconTexture\Octo_ToDo.tga
 
 ## SavedVariables: Octo_DevTool_DB

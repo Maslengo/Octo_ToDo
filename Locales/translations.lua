@@ -14,16 +14,31 @@ local GlobalAddonName, E = ...
 -- },
 -- Таблица с переводами
 E.translations = {
+
+
+
+
 	----------------------------------------------------------------
-	["NEW"] = NEW,
-	-- CREATE_PROFESSION - Создать
-	-- CREATE_ARENA_TEAM - Создать
-	-- CALENDAR_CREATE - Создать
-	-- LEGENDARY_CRAFTING_CRAFT_ITEM - Создать
-	-- NEW - Создать
-	-- COMMUNITIES_CREATE - Создать
-	-- BATTLETAG_CREATE - Создать
-	-- CREATE_COMPACT_UNIT_FRAME_PROFILE - Создать
+	-- COMPACT_UNIT_FRAME_PROFILE_SORTBY - Сортировка:
+	-- CLUB_FINDER_SORT_BY - Сортировка
+	-- BAG_FILTER_CLEANUP - Сортировка
+	-- PERKS_PROGRAM_SORT_BY - Сортировка
+	-- RAID_FRAME_SORT_LABEL - Сортировка
+	-- BAG_FILTER_TITLE_SORTING - Сортировка
+	-- HUD_EDIT_MODE_SETTING_UNIT_FRAME_SORT_BY - Сортировка
+	-- STABLE_FILTER_SORT_BY_LABEL - Сортировка
+	----------------------------------------------------------------
+	["SECONDS_FLOAT_ABBR"] = SECONDS_FLOAT_ABBR, -- %.1f сек.
+	["TIME_LABEL"] = TIME_LABEL, -- Время.
+	["NEW"] = NEW, -- Создать
+	-- CREATE_PROFESSION -- Создать
+	-- CREATE_ARENA_TEAM -- Создать
+	-- CALENDAR_CREATE -- Создать
+	-- LEGENDARY_CRAFTING_CRAFT_ITEM -- Создать
+	-- NEW -- Создать
+	-- COMMUNITIES_CREATE -- Создать
+	-- BATTLETAG_CREATE -- Создать
+	-- CREATE_COMPACT_UNIT_FRAME_PROFILE -- Создать
 	----------------------------------------------------------------
 	["SYSTEM"] = SYSTEM,  -- Настройки
 	-- ["MAIN_MENU"] = MAIN_MENU,  -- Настройки

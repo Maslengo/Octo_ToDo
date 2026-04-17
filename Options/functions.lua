@@ -507,3 +507,7 @@ function E.func_Options_CreateDropdown_FontStyle(category, layout)
 	end
 end
 ----------------------------------------------------------------
+function E.func_Create(category, layout)
+
+end
+----------------------------------------------------------------
