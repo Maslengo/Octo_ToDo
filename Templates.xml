@@ -150,9 +150,12 @@
 		<FontString inherits="GameFontHighlightSmall" justifyH="Center"/>
 		<Scripts>
 			<OnLoad>
-				self:SetBackdrop(E.menuBackdrop)
-				self:SetBackdropColor(0, 0, 0, .5)
-				self:SetBackdropBorderColor(.3, .3, .3, .8)
+				local E = OctoEngine
+				if E and E.menuBackdrop then
+					self:SetBackdrop(E.menuBackdrop)
+					self:SetBackdropColor(0, 0, 0, .5)
+					self:SetBackdropBorderColor(.3, .3, .3, .8)
+				end
 			</OnLoad>
 			<OnEnterPressed function="EditBox_ClearFocus"/>
 			<OnEnter>if self:IsEnabled() then self:SetBackdropBorderColor(.5, .5, .5, .8) end</OnEnter>
@@ -189,6 +192,16 @@
 		</Scripts>
 	</Frame>
 
+
+	<Frame name="OctoBackdropPropagateTemplate" inherits="OctoRectTemplate,OctoBackdropTemplate" virtual="true">
+	</Frame>
+
+
+
+
+
+
+
 	<Frame name="OctoTooltipBackdropTemplate" propagateMouseInput="Clicks" inherits="BackdropTemplate" virtual="true">
 		<Scripts>
 			<OnShow>
@@ -205,6 +218,8 @@
 	<Frame name="OctoSettingsDropdownControlTemplate" inherits="SettingsDropdownControlTemplate" virtual="true">
 		<Scripts>
 			<OnLoad inherit="prepend">
+				local E = OctoEngine
+				if E and LibStub then
 					local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 					local Center = self.Control.Dropdown
 					LibSFDropDown:SetMixin(Center)
@@ -213,20 +228,138 @@
 					Center:ddSetNoGlobalMouseEvent(true)
 					Center:ddSetMinMenuWidth(Center:GetWidth()-24)
 					Center:SetScript("OnClick", function(dd)
-						if E and E.sound_OnClick then
+						if E.sound_OnClick then
 							E.sound_OnClick()
 						end
 						dd:ddToggle(1, nil, dd, -2, 0)
 					end)
+				end
 			</OnLoad>
 		</Scripts>
 	</Frame>
 
-	<Frame name="ColorOverride" mixin="ColorOverrideMixin" inherits="ColorOverrideTemplate" virtual="true">
+
+
+	<Frame name="OctoSliderFrameTemplate" hidden="true" virtual="true">
+		<Size x="200" y="31"/>
+		<Frames>
+			<EditBox parentKey="edit" inherits="OctoEditBoxTemplate" letters="3">
+				<Size x="28" y="17"/>
+				<Anchors>
+					<Anchor point="RIGHT" x="-1" y="-4"/>
+				</Anchors>
+				<Scripts>
+					<OnTextChanged>
+						if userInput then
+							local int, dec = self:GetText():gsub(",", "."):match("(%-?%d*)(%.?%d*)")
+							if int == "" and dec ~= "" then int = "0" end
+							self:SetText(int..dec)
+						end
+					</OnTextChanged>
+					<OnEnterPressed>
+						local parent = self:GetParent()
+						local slider = parent.slider
+						local value = tonumber(self:GetText()) or 0
+						if not parent.noLimit then
+							local min, max = slider:GetMinMaxValues()
+							if min > value then value = min
+							elseif value > max then value = max end
+						end
+						slider:GetScript("OnValueChanged")(slider, value, true)
+						self:ClearFocus()
+					</OnEnterPressed>
+					<OnEditFocusLost>
+						self:SetNumber(self.curValue)
+					</OnEditFocusLost>
+					<OnMouseWheel>
+						local parent = self:GetParent()
+						local slider = parent.slider
+						local value = (tonumber(self:GetText()) or 0) + parent.step * delta
+						if not parent.noLimit then
+							local min, max = slider:GetMinMaxValues()
+							if min > value then value = min
+							elseif value > max then value = max end
+						end
+						slider:GetScript("OnValueChanged")(slider, value, true)
+					</OnMouseWheel>
+				</Scripts>
+			</EditBox>
+			<Slider parentKey="slider" inherits="MinimalSliderTemplate">
+				<Size y="17"/>
+				<Anchors>
+					<Anchor point="BOTTOMLEFT" x="0" y="2"/>
+					<Anchor point="RIGHT" relativeKey="$parent.edit" relativePoint="LEFT" x="-4"/>
+				</Anchors>
+				<HitRectInsets left="0" right="0" top="-4" bottom="-4"/>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString parentKey="text" inherits="GameFontNormalSmall">
+							<Anchors>
+								<Anchor point="BOTTOM" relativePoint="TOP" y="1"/>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnLoad inherit="prepend">
+						hooksecurefunc(self, "SetValue", function(self, value)
+							local edit = self:GetParent().edit
+							edit.curValue = value
+							edit:SetNumber(value)
+							edit:SetCursorPosition(0)
+						end)
+					</OnLoad>
+					<OnValueChanged>
+						if not userInput then return end
+						local parent = self:GetParent()
+						local step = 1 / parent.step
+						value = math.floor(value * step + .5) / step
+						self:SetValue(value)
+						parent:onValueChanged(value)
+					</OnValueChanged>
+					<OnMouseWheel>
+						local edit = self:GetParent().edit
+						edit:GetScript("OnMouseWheel")(edit, delta)
+					</OnMouseWheel>
+					<OnDisable>
+						self.text:SetVertexColor(GRAY_FONT_COLOR:GetRGB())
+					</OnDisable>
+					<OnEnable>
+						self.text:SetVertexColor(NORMAL_FONT_COLOR:GetRGB())
+					</OnEnable>
+				</Scripts>
+			</Slider>
+		</Frames>
 		<Scripts>
 			<OnLoad>
+				self.setOnChanged = function(self, func)
+				self.onValueChanged = func
+				end
+				self.step = 1
+				self.setStep = function(self, step)
+				self.step = step
+				end
+				self.setMinMax = function(self, min, max)
+				self.slider:SetMinMaxValues(min, max)
+				end
+				self.setValue = function(self, value)
+				self.slider:SetValue(value)
+				end
+				self.setText = function(self, text)
+				self.slider.text:SetText(text)
+				end
+				self.setMaxLetters = function(self, value)
+				self.edit:SetWidth(value * 7 + 7)
+				self.edit:SetMaxLetters(value)
+				end
+				self.SetEnabled = function(self, value)
+				self.edit:SetEnabled(value)
+				self.slider:SetEnabled(value)
+				end
 			</OnLoad>
 		</Scripts>
 	</Frame>
+
+
 
 </Ui>

@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
+local issecretvalue = issecretvalue
 ----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
@@ -68,12 +69,6 @@ E.DataProvider_Otrisovka = {}
 E.TEXT_DEFAULT = "Default" -- L["DEFAULT"]
 E.TEXT_DEFAULT_DARK = "Default (Dark)" -- L["DEFAULT"]
 E.UNIVERSAL = "UNIVERSAL_"
-E.TEXTURE_ADDON = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\ToDo.tga"
-E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga"
-E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\LeftFrame.tga"
-E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CharFrame.tga"
-E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
-E.TEXTURE_HIGHLIGHT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\Highlight.tga"
 E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
 E.MIDDLE_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-middlebutton") and "|A:newplayertutorial-icon-mouse-middlebutton:0:0|a " or ""
@@ -98,23 +93,6 @@ E.Class_DemonHunter_Color = E.func_GetClassColor_HEX("DEMONHUNTER")
 E.Class_DeathKnight_Color = E.func_GetClassColor_HEX("DEATHKNIGHT")
 E.Class_Evoker_Color = E.func_GetClassColor_HEX("EVOKER")
 E.TEXT_SPACE = " "
--- E.ICON_QUESTNORMAL = "Crosshair_Quest_64"
--- E.ICON_QUESTDAILY = "Crosshair_Recurring_64"
--- E.ICON_QUESTWEEKLY = "Crosshair_Wrapper_64"
--- E.ICON_QUESTMONTHLY = "warbands-icon" -- "cursor_Wrapper_64"
-
-E.ICON_QUESTNORMAL = "QuestNormal"
-E.ICON_QUESTDAILY = "questlog-questtypeicon-daily"
-E.ICON_QUESTWEEKLY = "questlog-questtypeicon-weekly"
-E.ICON_QUESTMONTHLY = "questlog-questtypeicon-monthly"
-E.ICON_QUESTWEEKLY_ACCOUNT = "worldquest-tracker-questmarker-gray"
-
-E.RESET_INFO = {
-	Normal = {icon = E.ICON_QUESTNORMAL, string = L["ITEM_QUALITY1_DESC"]},
-	Daily = {icon = E.ICON_QUESTDAILY, string = L["DAILY"]},
-	Weekly = {icon = E.ICON_QUESTWEEKLY, string = L["WEEKLY"]},
-	Monthly = {icon = E.ICON_QUESTMONTHLY, string = L["CALENDAR_REPEAT_MONTHLY"]},
-}
 
 
 
@@ -152,13 +130,11 @@ E.OctoFont11:CopyFontObject(GameTooltipText)
 E.OctoFont22 = CreateFont("OctoFont22")
 E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
 E.OctoFont22:SetFont(E.Octo_font, 22, "OUTLINE")
-E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT]
 E.IsPublicBuild = IsPublicBuild()
 E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
 E.buildNumber = tonumber(E.buildNumber)
-E.interfaceVersion_PTR = 110200
 E.currentTier = tonumber(GetBuildInfo():match("(.-)%."))
 E.GetRestrictedAccountData_rLevel, E.GetRestrictedAccountData_rMoney = GetRestrictedAccountData()
 E.IsAccountSecured = IsAccountSecured()
@@ -172,7 +148,6 @@ E.CURRENT_REGION_ID = GetCurrentRegion()
 E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU"
 if E.CURRENT_REGION_NAME == "" then E.CURRENT_REGION_NAME = "US" end
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
-E.BattleTagLocal = E.BTAG.." ("..E.GameVersion..")"
 E.curGUID = UnitGUID("PLAYER")
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
 E.PHYSICAL_SCREEN_WIDTH, E.PHYSICAL_SCREEN_HEIGHT = GetPhysicalScreenSize()
@@ -272,56 +247,14 @@ E.COLOR_REPSIMPLE_8 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
 
 E.FACTION_CURRENT = UnitFactionGroup("PLAYER")
 E.FACTION_OPPOSITE = E.FACTION_CURRENT == "Alliance" and "Horde" or "Alliance"
-E.ICON_TABARD = 135026
-E.ICON_KYRIAN = "CovenantChoice-Panel-Sigil-Kyrian" -- 3641395
-E.ICON_NECROLORD = "CovenantChoice-Panel-Sigil-Necrolords" -- 3752259 -- 3641396
-E.ICON_NIGHTFAE = "CovenantChoice-Panel-Sigil-NightFae" -- 3752258 -- 3641394
-E.ICON_VENTHYR = "CovenantChoice-Panel-Sigil-Venthyr" -- 3257751 -- 3641397
-E.ICON_WORLDBOSS = "worldquest-icon-boss" -- 3528312
-E.ICON_RARES = "nameplates-icon-rareelite" -- 135903 -- "UI-HUD-UnitFrame-Target-PortraitOn-Boss-Rare-Star" "UI-HUD-UnitFrame-Target-PortraitOn-Boss-Rare"
-E.ICON_MONEY = "Coin-Gold" -- 133784
--- challenges-medal-small-bronze challenges-medal-bronze
--- challenges-medal-small-silver challenges-medal-silver
--- challenges-medal-small-gold   challenges-medal-gold
-E.ATLAS_REPAIR = "Repair" -- "SpellIcon-256x256-RepairAll" -- "Crosshair_repairnpc_32" -- 132281 -- 136241
-E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
-E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
-E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
-E.ATLAS_RAID = "Raid"
-E.ATLAS_DUNGEON = "Dungeon"
-E.ICON_FIRSTRAID = 136346 -- 7480127
-E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
--- UI-HUD-Minimap-Mail-New-Flipbook-2x
--- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
-
-
--- interface/warbands/uiwarbandsicons
-E.ATLAS_ACCOUNT_WIDE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-icon" -- "warbands-icon"
-E.ATLAS_ACCOUNT_TRANSFERABLE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-transferable-icon" -- "warbands-transferable-icon"
 
 
 
-E.ATLAS_GREATVAULT = "greatvault-dragonflight-32x32" -- GreatVault-32x32
--- "greatVault-whole-normal"
 
 
 E.COLOR_HORDE = "|cffC41E3A"
 E.COLOR_ALLIANCE = "|cff0070DD"
 E.COLOR_NEUTRAL = E.Class_Monk_Color
-
-E.ICON_HORDE = "HordeEmblem" -- "GarrMission_ClassIcon-Horde" -- 255142-- 2565244
-E.ICON_ALLIANCE = "AllianceEmblem" -- "GarrMission_ClassIcon-Alliance" -- 255140-- 2565243
-E.ICON_NEUTRAL = 775462
-if E.FACTION_CURRENT == "Horde" then
-	E.ICON_CURRENT_FACTION = E.ICON_HORDE
-	E.COLOR_FACTION = E.COLOR_HORDE
-elseif E.FACTION_CURRENT == "Alliance" then
-	E.ICON_CURRENT_FACTION = E.ICON_ALLIANCE
-	E.COLOR_FACTION = E.COLOR_ALLIANCE
-else
-	E.ICON_CURRENT_FACTION = 775462
-	E.COLOR_FACTION = E.Class_Monk_Color
-end
 
 E.COLOR_KYRIAN_R = 0.44
 E.COLOR_KYRIAN_G = 0.66
@@ -342,49 +275,6 @@ E.NONE = E.COLOR_GRAY..L["NONE"].."|r"
 E.TRUE = E.COLOR_GREEN.."true|r"
 E.FALSE = E.COLOR_RED.."false|r"
 E.NIL = E.COLOR_RED.."nil|r"
-E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
-E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
-E.ICON_EMPTY = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\ICON_EMPTY"
-E.ICON_DEBUG = 7448162 -- "poi-torghast" -- ATLAS
-E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
-E.OctoTable_Covenant = {
-	[1] = {
-		prefix = "SL_KYRIAN",
-		name = "Kyrian",
-		icon = E.ICON_KYRIAN,
-		color = E.COLOR_KYRIAN,
-		r = E.COLOR_KYRIAN_R,
-		g = E.COLOR_KYRIAN_G,
-		b = E.COLOR_KYRIAN_B,
-	},
-	[2] = {
-		prefix = "SL_VENTHYR",
-		name = "Venthyr",
-		icon = E.ICON_VENTHYR,
-		color = E.COLOR_VENTHYR,
-		r = E.COLOR_VENTHYR_R,
-		g = E.COLOR_VENTHYR_G,
-		b = E.COLOR_VENTHYR_B,
-	},
-	[3] = {
-		prefix = "SL_NIGHTFAE",
-		name = "Night fae",
-		icon = E.ICON_NIGHTFAE,
-		color = E.COLOR_NIGHTFAE,
-		r = E.COLOR_NIGHTFAE_R,
-		g = E.COLOR_NIGHTFAE_G,
-		b = E.COLOR_NIGHTFAE_B,
-	},
-	[4] = {
-		prefix = "SL_NECROLORD",
-		name = "Necrolord",
-		icon = E.ICON_NECROLORD,
-		color = E.COLOR_NECROLORD,
-		r = E.COLOR_NECROLORD_R,
-		g = E.COLOR_NECROLORD_G,
-		b = E.COLOR_NECROLORD_B,
-	},
-}
 -- E.CovenantData = {
 --   [1] = { prefix = "SL_KYRIAN" },
 --   [2] = { prefix = "SL_VENTHYR" },
@@ -392,7 +282,6 @@ E.OctoTable_Covenant = {
 --   [4] = { prefix = "SL_NECROLORD" },
 -- }
 E.LIST_MAX_SIZE = 30
-E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
 E.func_IsClassic = E.interfaceVersion > 10000 and E.interfaceVersion < 20000
 E.func_IsBC = E.interfaceVersion > 20000 and E.interfaceVersion < 30000
 E.func_IsWOTLK = E.interfaceVersion > 30000 and E.interfaceVersion < 40000
@@ -583,3 +472,261 @@ E.OctoTable_Launguages = {
 E.CompressionMethod = Enum.CompressionMethod and Enum.CompressionMethod.Deflate or 0
 E.CompressionLevel = Enum.CompressionLevel and Enum.CompressionLevel.OptimizeForSize or 2
 E.Base64Variant = Enum.Base64Variant and Enum.Base64Variant.StandardUrlSafe or 1
+
+----------------------------------------------------------------
+local Octo_MeasureFrame = CreateFrame("FRAME", "Octo_MeasureFrame", UIParent)
+Octo_MeasureFrame:Hide()
+Octo_MeasureFrame:SetScale(UIParent:GetEffectiveScale())
+----------------------------------------------------------------
+Octo_MeasureFrame.measureText = Octo_MeasureFrame:CreateFontString()
+Octo_MeasureFrame.measureText:SetFontObject(OctoFont11)
+Octo_MeasureFrame.measureText:SetWordWrap(false)
+----------------------------------------------------------------
+E.ICON_ABOUT = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_ABOUT.tga"
+E.ICON_CLOSE = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_CLOSE.tga"
+E.ICON_DELETE = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_DELETE.tga" -- transmog-icon-remove
+E.ICON_DOWN = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_DOWN.tga"
+E.ICON_EMPTY = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_EMPTY.tga"
+E.ICON_FAVORITE = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_FAVORITE.tga"
+E.ICON_FIRST = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_FIRST.tga"
+E.ICON_LAST = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_LAST.tga"
+E.ICON_NEXT = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_NEXT.tga"
+E.ICON_OPTIONS = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_OPTIONS.tga"
+E.ICON_PREVIOUS = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_PREVIOUS.tga"
+E.ICON_REDO = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_REDO.tga"
+E.ICON_REFRESH = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_REFRESH.tga"
+E.ICON_RGBA = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_RGBA.tga"
+E.ICON_SAVE = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_SAVE.tga"
+E.ICON_SEARCH = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_SEARCH.tga"
+E.ICON_TRASH = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_TRASH.tga"
+E.ICON_UNDO = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_UNDO.tga"
+E.ICON_UP = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_UP.tga"
+E.ICON_ZOOM100 = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_ZOOM100.tga"
+E.ICON_ZOOMIN = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_ZOOMIN.tga"
+E.ICON_ZOOMOUT = "Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_ZOOMOUT.tga"
+----------------------------------------------------------------
+E.ICON_SETTINGS_GREEN = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_GREEN"
+E.ICON_SETTINGS_RED = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_RED"
+E.ICON_SETTINGS_GRAY = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_GRAY"
+E.ICON_SETTINGS_DARKGRAY = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_DARKGRAY"
+
+E.ICON_SETTINGS_ACTIVE = "checkmark-minimal"
+E.ICON_SETTINGS_INACTIVE = E.ICON_EMPTY
+E.ICON_SETTINGS_BACKGROUD = "checkbox-minimal"
+E.ICON_SETTINGS_DISABLED = "checkmark-minimal-disabled"
+E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
+-- interface/warbands/uiwarbandsicons
+E.TEXTURE_ADDON = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\ToDo.tga"
+E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga"
+E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\LeftFrame.tga"
+E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CharFrame.tga"
+E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
+E.TEXTURE_HIGHLIGHT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\Highlight.tga"
+E.ATLAS_ACCOUNT_WIDE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-icon" -- "warbands-icon"
+E.ATLAS_ACCOUNT_TRANSFERABLE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-transferable-icon" -- "warbands-transferable-icon"
+E.ICON_DEBUG = 7448162 -- "poi-torghast" -- ATLAS
+----------------------------------------------------------------
+
+-- E.ICON_QUESTNORMAL = "Crosshair_Quest_64"
+-- E.ICON_QUESTDAILY = "Crosshair_Recurring_64"
+-- E.ICON_QUESTWEEKLY = "Crosshair_Wrapper_64"
+-- E.ICON_QUESTMONTHLY = "warbands-icon" -- "cursor_Wrapper_64"
+
+E.ICON_QUESTNORMAL = "QuestNormal"
+E.ICON_QUESTDAILY = "questlog-questtypeicon-daily"
+E.ICON_QUESTWEEKLY = "questlog-questtypeicon-weekly"
+E.ICON_QUESTMONTHLY = "questlog-questtypeicon-monthly"
+E.ICON_QUESTWEEKLY_ACCOUNT = "worldquest-tracker-questmarker-gray"
+
+E.RESET_INFO = {
+	Normal = {icon = E.ICON_QUESTNORMAL, string = L["ITEM_QUALITY1_DESC"]},
+	Daily = {icon = E.ICON_QUESTDAILY, string = L["DAILY"]},
+	Weekly = {icon = E.ICON_QUESTWEEKLY, string = L["WEEKLY"]},
+	Monthly = {icon = E.ICON_QUESTMONTHLY, string = L["CALENDAR_REPEAT_MONTHLY"]},
+}
+E.ICON_TABARD = 135026
+E.ICON_KYRIAN = "CovenantChoice-Panel-Sigil-Kyrian" -- 3641395
+E.ICON_NECROLORD = "CovenantChoice-Panel-Sigil-Necrolords" -- 3752259 -- 3641396
+E.ICON_NIGHTFAE = "CovenantChoice-Panel-Sigil-NightFae" -- 3752258 -- 3641394
+E.ICON_VENTHYR = "CovenantChoice-Panel-Sigil-Venthyr" -- 3257751 -- 3641397
+E.ICON_WORLDBOSS = "worldquest-icon-boss" -- 3528312
+E.ICON_RARES = "nameplates-icon-rareelite" -- 135903 -- "UI-HUD-UnitFrame-Target-PortraitOn-Boss-Rare-Star" "UI-HUD-UnitFrame-Target-PortraitOn-Boss-Rare"
+E.ICON_MONEY = "Coin-Gold" -- 133784
+-- challenges-medal-small-bronze challenges-medal-bronze
+-- challenges-medal-small-silver challenges-medal-silver
+-- challenges-medal-small-gold   challenges-medal-gold
+E.ATLAS_REPAIR = "Repair" -- "SpellIcon-256x256-RepairAll" -- "Crosshair_repairnpc_32" -- 132281 -- 136241
+E.ATLAS_REPAIR_GRAY = "Crosshair_unablerepairnpc_32"
+E.ATLAS_MAIL = "Crosshair_mail_32" -- "UI-HUD-Minimap-Mail-Up"
+E.ATLAS_MAIL_GRAY = "Crosshair_unablemail_32"
+E.ATLAS_RAID = "Raid"
+E.ATLAS_DUNGEON = "Dungeon"
+E.ICON_FIRSTRAID = 136346 -- 7480127
+E.ATLAS_WORLDBOSS = "worldquest-icon-boss"
+-- UI-HUD-Minimap-Mail-New-Flipbook-2x
+-- UI-HUD-Minimap-Mail-Reminder-Flipbook-2x
+E.ATLAS_GREATVAULT = "greatvault-dragonflight-32x32" -- GreatVault-32x32
+-- "greatVault-whole-normal"
+E.ICON_HORDE = "HordeEmblem" -- "GarrMission_ClassIcon-Horde" -- 255142-- 2565244
+E.ICON_ALLIANCE = "AllianceEmblem" -- "GarrMission_ClassIcon-Alliance" -- 255140-- 2565243
+E.ICON_NEUTRAL = 775462
+if E.FACTION_CURRENT == "Horde" then
+	E.ICON_CURRENT_FACTION = E.ICON_HORDE
+	E.COLOR_FACTION = E.COLOR_HORDE
+elseif E.FACTION_CURRENT == "Alliance" then
+	E.ICON_CURRENT_FACTION = E.ICON_ALLIANCE
+	E.COLOR_FACTION = E.COLOR_ALLIANCE
+else
+	E.ICON_CURRENT_FACTION = 775462
+	E.COLOR_FACTION = E.Class_Monk_Color
+end
+
+E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
+E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
+E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
+E.OctoTable_Covenant = {
+	[1] = {
+		prefix = "SL_KYRIAN",
+		name = "Kyrian",
+		icon = E.ICON_KYRIAN,
+		color = E.COLOR_KYRIAN,
+		r = E.COLOR_KYRIAN_R,
+		g = E.COLOR_KYRIAN_G,
+		b = E.COLOR_KYRIAN_B,
+	},
+	[2] = {
+		prefix = "SL_VENTHYR",
+		name = "Venthyr",
+		icon = E.ICON_VENTHYR,
+		color = E.COLOR_VENTHYR,
+		r = E.COLOR_VENTHYR_R,
+		g = E.COLOR_VENTHYR_G,
+		b = E.COLOR_VENTHYR_B,
+	},
+	[3] = {
+		prefix = "SL_NIGHTFAE",
+		name = "Night fae",
+		icon = E.ICON_NIGHTFAE,
+		color = E.COLOR_NIGHTFAE,
+		r = E.COLOR_NIGHTFAE_R,
+		g = E.COLOR_NIGHTFAE_G,
+		b = E.COLOR_NIGHTFAE_B,
+	},
+	[4] = {
+		prefix = "SL_NECROLORD",
+		name = "Necrolord",
+		icon = E.ICON_NECROLORD,
+		color = E.COLOR_NECROLORD,
+		r = E.COLOR_NECROLORD_R,
+		g = E.COLOR_NECROLORD_G,
+		b = E.COLOR_NECROLORD_B,
+	},
+}
+E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
+
+E.SORT_OPTIONS = {
+	----------------------------------------------------------------
+	["UnitLevel"] = {name = L["LEVEL"], defaultValue = 1, reverse = false, }, -- 20,
+	["Name"] = {name = L["CHARACTER_NAME_PROMPT"], defaultValue = 3, reverse = false, },
+	----------------------------------------------------------------
+	["Faction"] = {name = L["FACTION"], reverse = false, },
+	----------------------------------------------------------------
+	["BattleTag"] = {name = L["BATTLETAG"], reverse = false, },
+	["WarMode"] = {name = L["PVP_LABEL_WAR_MODE"], reverse = false, },
+	["RELOAD_COUNT"] = {name = "RELOAD_COUNT", reverse = false, }, -- 0,
+	----------------------------------------------------------------
+	-- ["specIcon"] = {name = "specIcon", reverse = false, }, -- 135940,
+	["specId"] = {name =  L["SPECIALIZATION"] .. " (" .. L["NAME"] .. ")|r", reverse = false,  formatter = function(data) return E.func_GetName("specialization", data)  end}, -- 35,
+	-- ["specId"] = {name = "specId", reverse = false, }, -- 256,
+	-- ["specName"] = {name = "specName", reverse = false, },
+	-- ["specPrimaryStat"] = {name = "specPrimaryStat", reverse = false, }, -- 4,
+	-- ["specRole"] = {name = "specRole", reverse = false, },
+	----------------------------------------------------------------
+	["avgItemLevelEquipped"] = {name = L["STAT_AVERAGE_ITEM_LEVEL"], defaultValue = 2, reverse = false, }, -- 25,
+	-- ["avgItemLevel"] = {name = "avgItemLevel", reverse = false, }, -- 25,
+	["avgItemLevelPvp"] = {name = L["STAT_AVERAGE_ITEM_LEVEL"] .. " PVP", reverse = false, }, -- 25,
+	----------------------------------------------------------------
+	["classColor"] = {name =  L["CLASS"] .. " (" .. L["COLOR"] .. ")|r", reverse = false, },
+	-- ["classColorHex"] = {name =  L["CLASS"] .. "classColorHex", reverse = false, },
+	-- ["classFilename"] = {name =  L["CLASS"] .. "classFilename", reverse = false, },
+	["classId"] = {name =  L["CLASS"] .. " (" .. L["ID"] .. ")|r", reverse = false, }, -- 5,
+	["className"] = {name =  L["CLASS"] .. " (" .. L["NAME"] .. ")|r", reverse = false, },
+	----------------------------------------------------------------
+	-- ["currentXP"] = {name = "currentXP", reverse = false, }, -- 15457,
+	-- ["UnitXPMax"] = {name = "UnitXPMax", reverse = false, }, -- 22195,
+	-- ["UnitXPPercent"] = {name = "UnitXPPercent", reverse = false, }, -- 70,
+	----------------------------------------------------------------
+	-- ["Chromie_canEnter"] = {name = "Chromie_canEnter", reverse = false, },
+	-- ["Chromie_inChromieTime"] = {name = "Chromie_inChromieTime", reverse = false, },
+	-- ["Chromie_name"] = {name = "Chromie_name", reverse = false, },
+	-- ["Chromie_UnitChromieTimeID"] = {name = "Chromie_UnitChromieTimeID", reverse = false, }, -- 15,
+	----------------------------------------------------------------
+	-- ["CurrentRegion"] = {name = "CurrentRegion", reverse = false, }, -- 3,
+	-- ["CurrentRegionName"] = {name = "CurrentRegionName", reverse = false, },
+	----------------------------------------------------------------
+	["curServer"] = {name = L["Realm"], reverse = false, },
+	-- ["curServerShort"] = {name = "curServerShort", reverse = false, },
+	----------------------------------------------------------------
+	["GUID"] = {name = L["GUID"], reverse = false, },
+	----------------------------------------------------------------
+	-- ["loginDate"] = {name = "loginDate", reverse = false, },
+	-- ["loginDay"] = {name = "loginDay", reverse = false, },
+	-- ["loginHour"] = {name = "loginHour", reverse = false, },
+	----------------------------------------------------------------
+	["Money"] = {name = L["MONEY"], reverse = false,  formatter = function(data) return E.func_FormatMoney(data)  end}, -- 72345,
+	----------------------------------------------------------------
+	["PlayerDurability"] = {name = L["HUD_EDIT_MODE_DURABILITY_FRAME_LABEL"], reverse = false, }, -- 100,
+	----------------------------------------------------------------
+	-- ["RaceEnglish"] = {name = L["RACE"] .. " (" .. ..")" "RaceEnglish", reverse = false, },
+	-- ["RaceID"] = {name = L["RACE"] .. " (" .. L["ID"]..")", reverse = false, }, -- 35,
+	["RaceID"] = {name = L["RACE"] .. " (" .. L["NAME"]..")", reverse = false,  formatter = function(data) return E.func_GetName("race", data)  end}, -- 35,
+	-- ["RaceLocal"] = {name = L["RACE"] .. " (" .. L["NAME"] ..")", reverse = false, },
+	----------------------------------------------------------------
+	["realLevelTime"] = {name = L["Time Played"] .. " (" .. L["LEVEL"] .. ")", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	["realTotalTime"] = {name = L["Total Time Played"], reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	----------------------------------------------------------------
+	["SL_covenantID"] = {name = L["COVENANT"], reverse = false,  formatter = function(data) return E.func_GetName("covenant", data)  end}, -- 35,
+	----------------------------------------------------------------
+	-- ["time"] = {name = "time", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	-- ["tmstp_Daily"] = {name = "tmstp_Daily", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	-- ["tmstp_Month"] = {name = "tmstp_Month", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	-- ["tmstp_Weekly"] = {name = "tmstp_Weekly", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	----------------------------------------------------------------
+	-- ["UnitSex"] = {name = "UnitSex", reverse = false, }, -- 3,
+	----------------------------------------------------------------
+	-- ["totalSlots_BAGS"] = {name = "totalSlots_BAGS", reverse = false, }, -- 114,
+	-- ["usedSlots_BAGS"] = {name = "usedSlots_BAGS", reverse = false, }, -- 15,
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	----------------------------------------------------------------
+	-- ["CONFIG_SHOW_PLAYER"] = {name = "CONFIG_SHOW_PLAYER", reverse = false, },
+	-- ["buildDate"] = {name = "buildDate", reverse = false, },
+	-- ["buildNumber"] = {name = "buildNumber", reverse = false, }, -- 66838,
+	-- ["buildVersion"] = {name = "buildVersion", reverse = false, },
+	-- ["CharDBVersion"] = {name = "CharDBVersion", reverse = false, }, -- 114.3,
+	-- ["GameLimitedMode_IsActive"] = {name = "GameLimitedMode_IsActive", reverse = false, },
+	-- ["GetRestrictedAccountData_rLevel"] = {name = "GetRestrictedAccountData_rLevel", reverse = false, }, -- 20,
+	-- ["GetRestrictedAccountData_rMoney"] = {name = "GetRestrictedAccountData_rMoney", reverse = false, }, -- 10000000,
+	-- ["DBVersion"] = {name = "DBVersion", reverse = false, }, -- 103.8,
+	-- ["interfaceVersion"] = {name = "interfaceVersion", reverse = false, }, -- 120001,
+	-- ["IsPublicBuild"] = {name = "IsPublicBuild", reverse = false, },
+	-- ["IsRestrictedAccount"] = {name = "IsRestrictedAccount", reverse = false, },
+	-- ["IsVeteranTrialAccount"] = {name = "IsVeteranTrialAccount", reverse = false, },
+	-- ["levelCapped20"] = {name = "levelCapped20", reverse = false, },
+	-- ["LuaVersion"] = {name = "LuaVersion", reverse = false, },
+	-- ["maxNumQuestsCanAccept"] = {name = "maxNumQuestsCanAccept", reverse = false, }, -- 35,
+	-- ["MoneyOnDaily"] = {name = "MoneyOnDaily", reverse = false, }, -- 72345,
+	-- ["MoneyOnLogin"] = {name = "MoneyOnLogin", reverse = false, }, -- 72345,
+	-- ["MoneyOnWeekly"] = {name = "MoneyOnWeekly", reverse = false, }, -- 72345,
+	-- ["MythicPlus_seasonID"] = {name = "MythicPlus_seasonID", reverse = false, }, -- 17,
+	-- ["numQuests"] = {name = "numQuests", reverse = false, }, -- 2,
+	-- ["numShownEntries"] = {name = "numShownEntries", reverse = false, }, -- 18,
+	-- ["SL_KYRIAN_Anima"] = {name = "SL_KYRIAN_Anima", reverse = false, }, -- 105,
+	-- ["SL_KYRIAN_Renown"] = {name = "SL_KYRIAN_Renown", reverse = false, }, -- 1,
+	-- ["SL_NECROLORD_Renown"] = {name = "SL_NECROLORD_Renown", reverse = false, }, -- 1,
+	-- ["SL_NIGHTFAE_Renown"] = {name = "SL_NIGHTFAE_Renown", reverse = false, }, -- 1,
+	-- ["SL_VENTHYR_Renown"] = {name = "SL_VENTHYR_Renown", reverse = false, }, -- 1,
+	----------------------------------------------------------------
+}
+E.TOTAL_CHARS = 0
+E.IS_HEADER_TOOLTIP = false

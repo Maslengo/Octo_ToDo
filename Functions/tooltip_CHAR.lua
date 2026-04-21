@@ -3,7 +3,10 @@ local L = E.L
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.func_Tooltip_Chars(CharInfo)
+function E.func_Tooltip_Chars(CharInfo, isMainFrame)
+
+	E.IS_HEADER_TOOLTIP = isMainFrame or false
+
 	local tooltip = {}
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
@@ -15,12 +18,10 @@ function E.func_Tooltip_Chars(CharInfo)
 	local guildRankName = pd.guildRankName or ""
 	local guildRankIndex = pd.guildRankIndex or 0
 	local PlayerDurability = pd.PlayerDurability or 100
-	local RaceLocal = pd.RaceLocal or ""
 	local UnitLevel = pd.UnitLevel or 0
 	local UnitXPPercent = pd.UnitXPPercent or 0
 	local WarMode = pd.WarMode or false
 	local Chromie_name = pd.Chromie_name or ""
-	local curLocation = pd.curLocation or ""
 	local usedSlots_BAGS = pd.usedSlots_BAGS or 0
 	local totalSlots_BAGS = pd.totalSlots_BAGS or 0
 	local usedSlots_BANK = pd.usedSlots_BANK
@@ -58,32 +59,12 @@ function E.func_Tooltip_Chars(CharInfo)
 			durability
 		}
 	end
-	-- if RaceLocal ~= "" then
-	--     if UnitLevel ~= E.currentMaxLevel and UnitXPPercent > 0 then
-	--         tooltip[#tooltip + 1] = {
-	--             format(TOOLTIP_UNIT_LEVEL_RACE, UnitLevel, RaceLocal)
-	--         }
-	--     else
-	--         tooltip[#tooltip + 1] = { RaceLocal, "" }
-	--     end
-	-- end
-	-- if WarMode then
-	--     tooltip[#tooltip + 1] = {
-	--         E.COLOR_SKYBLUE..L["ERR_PVP_WARMODE_TOGGLE_ON"].."|r"
-	--     }
-	-- end
 	if Chromie_inChromieTime and Chromie_name ~= "" then
 		-- tooltip[#tooltip + 1] = { " ", " " }
 		tooltip[#tooltip + 1] = {
 			E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_GetName("npc", 167032)..": "..E.COLOR_GREEN..Chromie_name.."|r"
 		}
 	end
-	-- if curLocation ~= "" then
-	--     -- tooltip[#tooltip + 1] = { " ", " " }
-	--     tooltip[#tooltip + 1] = {
-	--         E.func_texturefromIcon(132319)..L["FRIENDS_LIST_ZONE"]..classColorHex..curLocation.."|r"
-	--     }
-	-- end
 	-- if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
 	--     local icon = E.func_texturefromIcon(133634)
 	--     local textLeft = icon..L["BAG_NAME_BACKPACK"]..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
@@ -105,10 +86,7 @@ function E.func_Tooltip_Chars(CharInfo)
 	--         CharInfo.MASLENGO.Items.Bags[122284]
 	--     }
 	-- end
-	-- tooltip[#tooltip+1] = {"---"}
-	if cm.InventoryType then
-		tooltip[#tooltip+1] = {"Shift +"..E.LEFT_MOUSE_ICON..L["LMB"]}
-	end
+
 	if Octo_DevTool_DB.CONFIG_DEBUG_CHARACTERTOOLTIP then
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color..E.DEVTEXT.."|r", ""}
@@ -148,10 +126,6 @@ function E.func_Tooltip_Chars(CharInfo)
 			color.."BattleTag|r",
 			E.COLOR_BLUE..pd.BattleTag.."|r"
 		}
-		tooltip[#tooltip+1] = {
-			color.."BattleTagLocal|r",
-			E.COLOR_BLUE..pd.BattleTagLocal.."|r"
-		}
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {
 			color.."GameLimitedMode_IsActive|r",
@@ -171,7 +145,6 @@ function E.func_Tooltip_Chars(CharInfo)
 		tooltip[#tooltip+1] = {color.."buildDate|r", classColorHex..pd.buildDate.."|r"}
 		tooltip[#tooltip+1] = {color.."interfaceVersion|r", classColorHex..pd.interfaceVersion.."|r"}
 		tooltip[#tooltip+1] = {" ", ""}
-		tooltip[#tooltip+1] = {color.."currentTier|r", classColorHex..pd.currentTier.."|r"}
 		tooltip[#tooltip+1] = {
 			color.."IsPublicBuild|r",
 			pd.IsPublicBuild and E.TRUE or color.."false|r"

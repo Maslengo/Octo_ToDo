@@ -16,6 +16,20 @@ function E.func_GetClassInfo(classID)
 	end
 end
 ----------------------------------------------------------------
+local GetRaceInfo = C_CreatureInfo and C_CreatureInfo.GetRaceInfo or GetRaceInfo
+-- /dump E.func_GetName("race", 5)
+function E.func_GetRaceInfo(raceID)
+	local raceData = GetRaceInfo(raceID)
+	if raceData then
+		if type(raceData) == "table" then
+			return raceData.raceName, raceData.clientFileString -- , raceData.raceID
+		elseif type(raceData) == "string" then
+			return GetRaceInfo(raceID)
+		end
+	end
+end
+
+----------------------------------------------------------------
 -- C_Texture ---------------------------------------------------
 ----------------------------------------------------------------
 local GetAtlasInfo = GetAtlasInfo or C_Texture.GetAtlasInfo
@@ -183,6 +197,10 @@ local GetSpellName = GetSpellName or C_Spell.GetSpellName
 function E.func_GetSpellName(id)
 	if GetSpellName then
 		return GetSpellName(id)
+		-- elseif GetSpellInfo and GetSpellInfo(id) then
+		-- 	result = GetSpellInfo(id)
+		-- 	-- /dump GetSpellInfo(20271)
+		-- end
 	end
 end
 ----------------------------------------------------------------
@@ -193,6 +211,8 @@ function E.func_GetSpellInfo(id)
 		return spellData.name, spellData.iconID, spellData.originalIconID, spellData.castTime, spellData.minRange, spellData.maxRange, spellData.spellID
 	elseif type(spellData) == "string" then
 		return GetSpellInfo(id) -- name, subtext, icon, castTime, minRange, maxRange, spellID, originalIcon
+	else
+		return E.func_GetSpellName(id)
 	end
 end
 ----------------------------------------------------------------

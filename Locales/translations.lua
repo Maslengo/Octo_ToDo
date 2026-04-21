@@ -14,16 +14,203 @@ local GlobalAddonName, E = ...
 -- },
 -- Таблица с переводами
 E.translations = {
+	["Ascending"] = {
+		["ruRU"] = "По возрастанию",
+		["deDE"] = "Aufsteigend",
+		["esES"] = "Ascendente",
+		["esMX"] = "Ascendente",
+		["frFR"] = "Croissant",
+		["itIT"] = "Crescente",
+		["ptBR"] = "Crescente",
+		["koKR"] = "오름차순",
+		["zhCN"] = "升序",
+		["zhTW"] = "升序",
+	},
+
+	["Descending"] = {
+		["ruRU"] = "По убыванию",
+		["deDE"] = "Absteigend",
+		["esES"] = "Descendente",
+		["esMX"] = "Descendente",
+		["frFR"] = "Décroissant",
+		["itIT"] = "Decrescente",
+		["ptBR"] = "Decrescente",
+		["koKR"] = "내림차순",
+		["zhCN"] = "降序",
+		["zhTW"] = "降序",
+	},
+	["Are you sure you want to delete this character?"] = {
+		["ruRU"] = "Вы уверены, что хотите удалить персонажа?",
+		["deDE"] = "Möchten Sie diesen Charakter wirklich löschen?",
+		["esES"] = "¿Seguro que quieres eliminar este personaje?",
+		["esMX"] = "¿Seguro que quieres eliminar este personaje?",
+		["frFR"] = "Voulez-vous vraiment supprimer ce personnage ?",
+		["itIT"] = "Vuoi davvero eliminare questo personaggio?",
+		["ptBR"] = "Tem certeza de que deseja excluir este personagem?",
+		["koKR"] = "이 캐릭터를 삭제하시겠습니까?",
+		["zhCN"] = "确定要删除该角色吗？",
+		["zhTW"] = "確定要刪除此角色嗎？",
+	},
+	["Are you sure you want to reset settings? This action cannot be undone."] = {
+		["ruRU"] = "Вы уверены, что хотите сбросить настройки? Это действие нельзя отменить.",
+		["deDE"] = "Möchten Sie die Einstellungen wirklich zurücksetzen? Diese Aktion kann nicht rückgängig gemacht werden.",
+		["esES"] = "¿Seguro que quieres restablecer la configuración? Esta acción no se puede deshacer.",
+		["esMX"] = "¿Seguro que quieres restablecer la configuración? Esta acción no se puede deshacer.",
+		["frFR"] = "Voulez-vous vraiment réinitialiser les paramètres ? Cette action est irréversible.",
+		["itIT"] = "Vuoi davvero reimpostare le impostazioni? Questa azione non può essere annullata.",
+		["ptBR"] = "Tem certeza de que deseja redefinir as configurações? Esta ação não pode ser desfeita.",
+		["koKR"] = "설정을 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
+		["zhCN"] = "确定要重置设置吗？此操作无法撤销。",
+		["zhTW"] = "確定要重置設定嗎？此操作無法復原。",
+	},
+	["Show current character first"] = {
+	    ["ruRU"] = "Показывать текущего персонажа первым",
+	    ["deDE"] = "Aktuellen Charakter zuerst anzeigen",
+	    ["frFR"] = "Afficher le personnage actuel en premier",
+	    ["esES"] = "Mostrar personaje actual primero",
+	    ["esMX"] = "Mostrar personaje actual primero",
+	    ["itIT"] = "Mostra personaggio attuale primo",
+	    ["ptBR"] = "Mostrar personagem atual primeiro",
+	    ["koKR"] = "현재 캐릭터 먼저 표시",
+	    ["zhCN"] = "优先显示当前角色",
+	    ["zhTW"] = "優先顯示目前角色",
+	    ["enUS"] = "Show current character first",
+	    ["enGB"] = "Show current character first",
+	},
+	["TIME_PLAYED_ALERT"] = TIME_PLAYED_ALERT, -- Вы находитесь в игре уже %s. Не стоит чрезмерно увлекаться игрой в ущерб вашей реальной жизни.
+	["TIME_PLAYED_TOTAL"] = TIME_PLAYED_TOTAL, -- Общее время игры: %s
+	["TIME_PLAYED_LEVEL"] = TIME_PLAYED_LEVEL, -- Время игры на этом уровне: %s
+
+	["Total Time Played"] = {
+		["ruRU"] = "Общее время игры",
+		["deDE"] = "Gesamtspielzeit",
+		["esES"] = "Tiempo de juego total",
+		["esMX"] = "Tiempo total jugado",
+		["frFR"] = "Temps de jeu total",
+		["itIT"] = "Tempo di gioco totale",
+		["ptBR"] = "Tempo total de jogo",
+		["koKR"] = "총 플레이 시간",
+		["zhCN"] = "总游戏时间",
+		["zhTW"] = "總遊戲時間",
+	},
+	["Time Played"] = {
+		["ruRU"] = "Время игры",
+		["deDE"] = "Spielzeit",
+		["esES"] = "Tiempo de juego",
+		["esMX"] = "Tiempo de juego",
+		["frFR"] = "Temps de jeu",
+		["itIT"] = "Tempo di gioco",
+		["ptBR"] = "Tempo de jogo",
+		["koKR"] = "플레이 시간",
+		["zhCN"] = "游戏时间",
+		["zhTW"] = "遊戲時間",
+	},
+	["Time Played (Level)"] = {
+		["ruRU"] = "Время игры на этом уровне",
+		["deDE"] = "Spielzeit auf dieser Stufe",
+		["esES"] = "Tiempo de juego en este nivel",
+		["esMX"] = "Tiempo de juego en este nivel",
+		["frFR"] = "Temps de jeu à ce niveau",
+		["itIT"] = "Tempo di gioco a questo livello",
+		["ptBR"] = "Tempo de jogo neste nível",
+		["koKR"] = "현재 레벨 플레이 시간",
+		["zhCN"] = "本等级游戏时间",
+		["zhTW"] = "本等級遊戲時間",
+	},
+	----------------------------------------------------------------
+	-- NEIGHBORHOOD_ROSTER_COLUMN_TITLE_NAME - Название
+	-- CALENDAR_EVENT_NAME - Название
+	-- AUCTION_HOUSE_BROWSE_HEADER_NAME - Название
+	-- HUD_CLASS_TALENTS_EDIT_LOADOUT_DIALOG_EDIT_BOX_LABEL - Название
+	-- HUD_CLASS_TALENTS_NEW_LOADOUT_DIALOG_EDIT_BOX_LABEL - Название
+	-- AUCTION_HOUSE_SEARCH_BAR_NAME_LABEL - Название
+	-- LFG_LIST_TITLE - Название
+	-- COMMUNITIES_SETTINGS_NAME_LABEL - Название
+	-- ARENA_ENTER_TEAM_NAME - Название
+	-- PERKS_PROGRAM_NAME - Название
+	----------------------------------------------------------------
+	-- ["INSPECT_GUILD_REALM"] = INSPECT_GUILD_REALM, -- Игровой мир: %s
+	-- ["FRIENDS_LIST_REALM"] = FRIENDS_LIST_REALM, -- Игровой мир:
+	-- ["BNET_FRIEND_TOOLTIP_ZONE_AND_REALM"] = BNET_FRIEND_TOOLTIP_ZONE_AND_REALM, -- |cffffd200Зона: |r%1$s|n|cffffd200Игровой мир: |r%2$s
+	-- ["CLUB_FINDER_REALM_NAME"] = CLUB_FINDER_REALM_NAME, -- Игровой мир: |cffffffff%s|r
+	["Realm"] = {
+		["ruRU"] = "Игровой мир",
+		["deDE"] = "Realm",
+		["esES"] = "Reino",
+		["esMX"] = "Reino",
+		["frFR"] = "Royaume",
+		["itIT"] = "Reame",
+		["ptBR"] = "Reino",
+		["koKR"] = "서버",
+		["zhCN"] = "服务器",
+		["zhTW"] = "伺服器",
+	},
+	----------------------------------------------------------------
+	["CHARACTER_NAME_PROMPT"] = CHARACTER_NAME_PROMPT, -- Имя персонажа
+	-- ["REPORTING_MINOR_CATEGORY_CHARACTER_NAME"] = REPORTING_MINOR_CATEGORY_CHARACTER_NAME, -- Имя персонажа
+	----------------------------------------------------------------
+	-- ["CLUB_FINDER_SPEC"] = CLUB_FINDER_SPEC, -- Специализация
+	-- ["STABLE_SORT_SPECIALIZATION_LABEL"] = STABLE_SORT_SPECIALIZATION_LABEL, -- Специализация
+	-- ["PROFESSIONS_SPECIALIZATION"] = PROFESSIONS_SPECIALIZATION, -- Специализация
+	-- ["PET_SPECIALIZATION_TEMPLATE"] = PET_SPECIALIZATION_TEMPLATE, -- Специализация: "%s"
+	-- ["TALENT_FRAME_TAB_LABEL_SPEC"] = TALENT_FRAME_TAB_LABEL_SPEC, -- Специализация
+	["SPECIALIZATION"] = SPECIALIZATION, -- Специализация
+	----------------------------------------------------------------
 
 
 
 
+	["MONEY"] = MONEY, -- Деньги
+	----------------------------------------------------------------
+	["BONUS_ROLL_REWARD_MONEY"] = BONUS_ROLL_REWARD_MONEY, -- Золото
+	-- CDMSND_WAR3_GOLD - Золото
+	-- WORLD_QUEST_REWARD_FILTERS_GOLD - Золото
+	----------------------------------------------------------------
+	["COVENANT"] = COVENANT or {
+		["enUs"] = "Covenant",
+		["ruRU"] = "Ковенант",
+		["deDE"] = "Pakt",
+		["esES"] = "Curia",
+		["esMX"] = "Curia",
+		["frFR"] = "Congrégation",
+		["itIT"] = "Congrega",
+		["ptBR"] = "Pacto",
+		["koKR"] = "성약단",
+		["zhCN"] = "盟约",
+		["zhTW"] = "誓盟",
+	},
+	----------------------------------------------------------------
+	-- ["BODY_1"] = BODY_1, -- Телосложение 1
+	-- ["BODY_2"] = BODY_2, -- Телосложение 2
+	----------------------------------------------------------------
+	["CATALOG_SHOP_RACE"] = CATALOG_SHOP_RACE, -- Раса
+	["RACE"] = RACE, -- Раса
+	----------------------------------------------------------------
+	["DURABILITY"] = DURABILITY, -- Прочность
+	["HUD_EDIT_MODE_DURABILITY_FRAME_LABEL"] = HUD_EDIT_MODE_DURABILITY_FRAME_LABEL, -- Прочность снаряжения
+	----------------------------------------------------------------
+	["GUID"] = GUID or "GUID",
+	----------------------------------------------------------------
+
+
+
+
+	["CLASS"] = CLASS, -- Класс
+	["BATTLETAG"] = BATTLETAG, -- BattleTag
+	["PVP_LABEL_WAR_MODE"] = PVP_LABEL_WAR_MODE, -- Режим войны
+	["ERR_PVP_WARMODE_TOGGLE_OFF"] = ERR_PVP_WARMODE_TOGGLE_OFF, -- Режим войны отключен.
+	["ERR_PVP_WARMODE_TOGGLE_ON"] = ERR_PVP_WARMODE_TOGGLE_ON, -- Режим войны включен.
+	["FACTION"] = FACTION, -- Фракция
+	["LEVEL"] = LEVEL, -- Уровень
+	["NAME"] = NAME, -- Имя
+	["ADD"] = ADD, -- Добавить
+	["SECONDARY"] = SECONDARY, -- Дополнительно
 	----------------------------------------------------------------
 	-- COMPACT_UNIT_FRAME_PROFILE_SORTBY - Сортировка:
 	-- CLUB_FINDER_SORT_BY - Сортировка
 	-- BAG_FILTER_CLEANUP - Сортировка
 	-- PERKS_PROGRAM_SORT_BY - Сортировка
-	-- RAID_FRAME_SORT_LABEL - Сортировка
+	["RAID_FRAME_SORT_LABEL"] = RAID_FRAME_SORT_LABEL, -- Сортировка
 	-- BAG_FILTER_TITLE_SORTING - Сортировка
 	-- HUD_EDIT_MODE_SETTING_UNIT_FRAME_SORT_BY - Сортировка
 	-- STABLE_FILTER_SORT_BY_LABEL - Сортировка
@@ -77,7 +264,7 @@ E.translations = {
 	["RELOADUI"] = RELOADUI, -- Перезагрузка
 	["REQUIRES_RELOAD"] = REQUIRES_RELOAD, -- Перезагрузите интерф.
 	["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] = CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL,
-	["CUSTOM"] = CUSTOM,
+	["CUSTOM"] = CUSTOM, -- Вручную
 	["ACCESSIBILITY_MOUNT_LABEL"] = ACCESSIBILITY_MOUNT_LABEL,
 	["ID"] = ID,
 	["FACTION_STANDING_LABEL1"] = FACTION_STANDING_LABEL1,
@@ -123,7 +310,6 @@ E.translations = {
 	["BAG_NAME_BACKPACK"] = BAG_NAME_BACKPACK,
 	["BANK"] = BANK,
 	["BNET_LAST_ONLINE_TIME"] = BNET_LAST_ONLINE_TIME,
-	["BONUS_ROLL_REWARD_MONEY"] = BONUS_ROLL_REWARD_MONEY,
 	["CALENDAR_REPEAT_MONTHLY"] = CALENDAR_REPEAT_MONTHLY,
 	["CANCEL"] = CANCEL,
 	["CURRENCY_SEASON_TOTAL"] = CURRENCY_SEASON_TOTAL,
@@ -134,7 +320,6 @@ E.translations = {
 	["DELETE"] = DELETE,
 	["DELVES_GREAT_VAULT_LABEL"] = DELVES_GREAT_VAULT_LABEL,
 	["DONE"] = DONE,
-	["ERR_PVP_WARMODE_TOGGLE_ON"] = ERR_PVP_WARMODE_TOGGLE_ON,
 	["FAILED"] = FAILED,
 	["FRIENDS_LIST_OFFLINE"] = FRIENDS_LIST_OFFLINE,
 	["FRIENDS_LIST_ONLINE"] = FRIENDS_LIST_ONLINE,
@@ -165,18 +350,21 @@ E.translations = {
 	["RETRIEVING_DATA"] = RETRIEVING_DATA,
 	["REWARD"] = REWARD,
 	["REWARDS"] = REWARDS,
-	["STAT_AVERAGE_ITEM_LEVEL"] = STAT_AVERAGE_ITEM_LEVEL,
-	["TIME_PLAYED_ALERT"] = TIME_PLAYED_ALERT,
-	["TIME_PLAYED_TOTAL"] = TIME_PLAYED_TOTAL,
+	["STAT_AVERAGE_ITEM_LEVEL"] = STAT_AVERAGE_ITEM_LEVEL, -- LFG_LIST_ITEM_LEVEL_INSTR_SHORT Уровень предметов
+
 	["TOTAL"] = TOTAL,
 	["UNKNOWN"] = UNKNOWN,
 	["WEEKLY"] = WEEKLY,
 	["WEEKLY_REWARDS_RETURN_TO_CLAIM"] = WEEKLY_REWARDS_RETURN_TO_CLAIM,
-
+	["HIDE"] = HIDE,
+	["GEAR"] = GEAR or { -- EQUIPMENT
+		["enUs"] = "Gear",
+		["ruRU"] = "Экипировка",
+	},
 
 	["REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE"] = REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE or {
-		["ruRU"] = "Отряд",
 		["enUs"] = "Warband",
+		["ruRU"] = "Отряд",
 	},
 
 

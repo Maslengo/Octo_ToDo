@@ -279,13 +279,29 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 
+----------------------------------------------------------------
+function E.func_CloseSettings()
+	if InCombatLockdown() then return end
+	if SettingsPanel:IsVisible() then
+		HideUIPanel(SettingsPanel)
+	end
+	if GameMenuFrame:IsVisible() then
+		HideUIPanel(GameMenuFrame)
+	end
+end
+function E.func_OpenToCategory(frame)
+	if InCombatLockdown() then return end
+	if frame and frame:IsShown() then
+		frame:Hide()
+	end
+	local id = E.main_category:GetID()
+	Settings.OpenToCategory(id, GlobalAddonName)
+end
 function E.func_toogleFrame(frame)
 	frame.clicked = not frame.clicked or nil
 	frame:SetShown(frame.clicked)
+	frame:SetAlpha(1)
 	-- frame:SetShown(not frame:IsShown())
-	if frame:IsShown() then
-		E.func_CloseSettings()
-	end
 end
 function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, frameString)
 	local function hideFrame(_, elapsed)
@@ -297,6 +313,9 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 	end
 	frame:HookScript("OnHide", function(frame)
 			frame.clicked = nil
+	end)
+	frame:HookScript("OnShow", function(frame)
+		E.func_CloseSettings()
 	end)
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
 			type = "data source",
@@ -319,6 +338,9 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON .. L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON .. L["RMB:"], L["OPTIONS"])
 				if Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER then
+					if not frame.clicked then
+						frame:SetAlpha(Octo_ToDo_DB_Vars.CONFIG_FRAME_ALPHA_ON_HOVER/100 or .8)
+					end
 					frame:Show() -- E.func_toogleFrame(frame)
 				end
 				EventFrame:SetScript("OnUpdate", nil)
@@ -690,7 +712,6 @@ function E.func_RegisterFrame_ICONS(frame)
 	end)
 end
 function E.func_RegisterFrame_SIMPLE(frame)
-	E.OctoTable_Frames_ICONS = E.OctoTable_Frames_ICONS or {}
 	E.OctoTable_Frames_SIMPLE = E.OctoTable_Frames_SIMPLE or {}
 	if not frame or frame.insertIn_SecuredFrames_SequredFrames then return end
 	frame.insertIn_SecuredFrames_SequredFrames = true
@@ -772,7 +793,7 @@ function E.func_FormatMountInfo(mountID)
 	return mountName
 end
 function E.func_FormatMoney(number)
-	if not number then return 0 end
+	if not number or type(number) ~= "number" then return 0 end
 	if number > 10000 then
 		return E.func_CompactFormatNumber(number/10000) .. "|r" .. "|TInterface\\MoneyFrame\\UI-GoldIcon:12:12|t"
 	elseif number > 100 then
@@ -1088,15 +1109,6 @@ function E.func_GetSpecializationIconSafe()
 	return nil
 end
 ----------------------------------------------------------------
-function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
-	minWidth = minWidth or 1
-	local result = type(textToMeasure) == "function" and textToMeasure() or textToMeasure
-	local text = tostring(result or "")
-	Octo_MeasureFrame.measureText:SetText(text)
-	local width = math.max(math.ceil(Octo_MeasureFrame.measureText:GetStringWidth()), minWidth) -- 8 indent
-	return width
-end
-----------------------------------------------------------------
 function E.func_UpdateFont()
 	local Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
 	local Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
@@ -1141,6 +1153,7 @@ function E.func_RefreshTranslations()
 end
 ----------------------------------------------------------------
 function E.func_Save(v)
+	if v and issecretvalue(v) then return end
 	if v == false or v == 0 then
 		return nil
 	end
@@ -1238,9 +1251,6 @@ local function func_UpdateGlobals()
 				for k, frame in next, (E.OctoTable_ColoredFrames) do
 					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
 				end
-				for k, frame in next, (E.OctoFrames_Dropdowns) do
-					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
-				end
 			end
 			----------------------------------------------------------------
 			do
@@ -1266,6 +1276,9 @@ local function func_UpdateGlobals()
 				local UseFaction = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseFaction_CONFIG
 				local UseClass = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseClass_CONFIG
 				E.func_DB_FRAME_Color(Octo_TooltipFrame, "frame", r, g, b, a, UseFaction, UseClass)
+				for k, frame in next, (E.OctoFrames_Dropdowns) do
+					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
+				end
 			end
 			----------------------------------------------------------------
 		end
@@ -1490,26 +1503,10 @@ end
 function E.func_Create_Highlight(frame, owner)
 	if E.ENABLE_HIGHTLIGHT then
 		frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoPropagateTemplate")
+		-- frame.Highlight:SetFrameLevel(500)
+		-- frame.Highlight:SetFrameStrata("TOOLTIP")
 		E.func_ApplyHighlightTemplate(frame.Highlight, frame)
 	end
-end
-----------------------------------------------------------------
-function E.func_CloseSettings()
-	if InCombatLockdown() then return end
-	if SettingsPanel:IsVisible() then
-		HideUIPanel(SettingsPanel)
-	end
-	if GameMenuFrame:IsVisible() then
-		HideUIPanel(GameMenuFrame)
-	end
-end
-function E.func_OpenToCategory(frame)
-	if InCombatLockdown() then return end
-	if frame and frame:IsShown() then
-		frame:Hide()
-	end
-	local id = E.main_category:GetID()
-	Settings.OpenToCategory(id, GlobalAddonName)
 end
 ----------------------------------------------------------------
 local order_index = 0
@@ -1626,6 +1623,28 @@ function E.func_isAtlas(TextureOrAtlas)
 	return false
 end
 ----------------------------------------------------------------
+function E.func_SetupTextureToFrame(frame, texture)
+	local isAtlas = E.func_isAtlas(texture)
+	if isAtlas then
+		frame:SetAtlas(texture)
+	else
+		frame:SetTexture(texture)
+	end
+end
+
+function E.func_SetupTextureToToggleFrameWithValue(frame, value, isDiabled)
+	if not frame then return end
+	if value == true then
+		E.func_SetupTextureToFrame(frame, E.ICON_SETTINGS_ACTIVE) -- ON
+	elseif value == false then
+		E.func_SetupTextureToFrame(frame, E.ICON_SETTINGS_INACTIVE) -- OFF
+	else
+		E.func_SetupTextureToFrame(frame, E.ICON_SETTINGS_DISABLED) -- GRAY
+	end
+	-- if not frameBG then return end
+	-- E.func_SetupTextureToFrame(frameBG, E.ICON_SETTINGS_BACKGROUD) -- BG
+end
+----------------------------------------------------------------
 function E.func_setTexture(frame, TextureOrAtlas, UseAtlasSize)
 	if not frame or not TextureOrAtlas then return end
 	local m = getmetatable(frame).__index
@@ -1704,42 +1723,54 @@ function E.func_SetFlattensRenderLayers_OnAllFrames()
 	for k, frame in next, (E.OctoTable_ColoredFrames) do
 		frame:SetFlattensRenderLayers(true)
 	end
+	for k, frame in next, (E.OctoFrames_Dropdowns) do
+		frame:SetFlattensRenderLayers(true)
+	end
 end
 ----------------------------------------------------------------
 function E.func_CountVisibleCharacters()
-	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
-	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
-	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
-	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
+	local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION or false
+	local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN or 1
+	local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX or 90
+	local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
+	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
+	local CONFIG_SHOW_ALWAYS_AS_FIRST = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST or false
+
 	local count = 0
 	local curGUID = E.curGUID
 	local curFaction = E.FACTION_CURRENT
 	local curServer = E.func_GetPlayerRealm()
 	local CurrentRegionName = E.CurrentRegionName
-	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
-	local checkCurrentServer = isOnlyCurrentServer and curServer
-	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
-	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
+	local curBattleTag = E.curBattleTag
+
+	local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
+	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
+	local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local PlayerData = CharInfo.PlayerData
+
+			-- Текущий персонаж всегда считается, если включена опция
+			-- if CONFIG_SHOW_ALWAYS_AS_FIRST and GUID == curGUID then
+			-- 	count = count + 1
+			-- else
 			if GUID == curGUID then
 				count = count + 1
 			else
-				if PlayerData.isShownPlayer and
+				if PlayerData.CONFIG_SHOW_PLAYER and
 				PlayerData.UnitLevel and
 				PlayerData.CurrentRegionName and
 				PlayerData.curServer and
 				PlayerData.Faction and
-				PlayerData.BattleTag then -- Добавляем проверку BattleTag
+				PlayerData.BattleTag then
 					local unitLevel = PlayerData.UnitLevel
-					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
-					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
+					local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
+					local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.Faction == curFaction
 					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
 					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
-					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag
 					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
 						count = count + 1
 					end
@@ -1751,66 +1782,206 @@ function E.func_CountVisibleCharacters()
 end
 ----------------------------------------------------------------
 function E.func_SortCharacters()
-	local isOnlyCurrentServer = Octo_ToDo_DB_Vars.isOnlyCurrentServer
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
-	local Config_LevelToShow = Octo_ToDo_DB_Vars.Config_LevelToShow
-	local Config_LevelToShowMAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
-	local isOnlyCurrentFaction = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
-	local isOnlyCurrentBtag = Octo_ToDo_DB_Vars.isOnlyCurrentBtag -- Добавляем новую переменную
+	local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION or false
+	local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN or 1
+	local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX or 90
+	local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
+	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
+	local CONFIG_SHOW_ALWAYS_AS_FIRST = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST or false
+	local CONFIG_SORTING_CUSTOM = Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM or false
+
+
 	local sorted = {}
+	local unsorted = {}
 	local curGUID = E.curGUID
 	local curFaction = E.FACTION_CURRENT
 	local curServer = E.func_GetPlayerRealm()
 	local CurrentRegionName = E.CurrentRegionName
-	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
-	local checkCurrentServer = isOnlyCurrentServer and curServer
-	local checkCurrentRegion = ShowOnlyCurrentRegion and CurrentRegionName
-	local checkCurrentBtag = isOnlyCurrentBtag and curBattleTag
+	local curBattleTag = E.curBattleTag
+	local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
+	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
+	local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
+
+
+	-- Если включена кастомная сортировка
+	if CONFIG_SORTING_CUSTOM and Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.GUID_order then
+		-- Выводим в порядке GUID_order, учитывая только CONFIG_SHOW_PLAYER
+		for _, GUID in ipairs(Octo_ToDo_DB_Options.GUID_order) do
+			local CharInfo = Octo_ToDo_DB_Levels and Octo_ToDo_DB_Levels[GUID]
+			if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CONFIG_SHOW_PLAYER then
+				sorted[#sorted + 1] = CharInfo
+			end
+		end
+		return sorted, unsorted
+	end
+
+
+
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if not CharInfo.PlayerData then
-			-- Пропускаем, если нет PlayerData
-		else
+		if CharInfo.PlayerData then
 			local PlayerData = CharInfo.PlayerData
 			if GUID == curGUID then
 				sorted[#sorted + 1] = CharInfo
 			else
-				if PlayerData.isShownPlayer and
+				if PlayerData.CONFIG_SHOW_PLAYER and
 				PlayerData.UnitLevel and
 				PlayerData.CurrentRegionName and
 				PlayerData.curServer and
 				PlayerData.Faction and
-				PlayerData.BattleTag then -- Добавляем проверку BattleTag
+				PlayerData.BattleTag then
 					local unitLevel = PlayerData.UnitLevel
-					local meetsLevel = unitLevel >= Config_LevelToShow and unitLevel <= Config_LevelToShowMAX
-					local meetsFaction = not isOnlyCurrentFaction or PlayerData.Faction == curFaction
+					local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
+					local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.Faction == curFaction
 					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
 					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
-					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag
 					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
 						sorted[#sorted + 1] = CharInfo
 					end
+				else
+					unsorted[#unsorted+1] = CharInfo
 				end
 			end
 		end
 	end
+
+	-- Создаем словарь для быстрого доступа к TYPE
+	local sortOptionsType = {}
+	for vars, opt in pairs(E.SORT_OPTIONS) do
+		sortOptionsType[vars] = opt.TYPE
+	end
+
+	-- Получаем порядок сортировки из настроек
+	local sortOrder = Octo_ToDo_DB_Options.sort_order or {}
+	local sortOrderActived = Octo_ToDo_DB_Options.sort_order_ACTIVED or {}
+	local sortReverse = Octo_ToDo_DB_Options.sort_reverse or {}
+
+	-- Функция получения значения для сортировки по ключу
+	local function getSortValue(charData, sortKey)
+		return charData[sortKey]
+	end
+
+	-- Сортировка по правилам из sort_order (только для активных критериев)
 	table.sort(sorted, function(a, b)
-			local aData, bData = a.PlayerData, b.PlayerData
-			local aLevel = aData.UnitLevel or 0
-			local bLevel = bData.UnitLevel or 0
-			if aLevel ~= bLevel then
-				return aLevel > bLevel
+		local aData, bData = a.PlayerData, b.PlayerData
+
+		-- Если включен CONFIG_SHOW_ALWAYS_AS_FIRST, текущий игрок всегда первый
+		if CONFIG_SHOW_ALWAYS_AS_FIRST then
+			local aIsCurrent = aData.GUID == curGUID
+			local bIsCurrent = bData.GUID == curGUID
+			if aIsCurrent ~= bIsCurrent then
+				return aIsCurrent  -- текущий игрок идет первым
 			end
-			local aItemLevel = aData.avgItemLevelEquipped or 0
-			local bItemLevel = bData.avgItemLevelEquipped or 0
-			if aItemLevel ~= bItemLevel then
-				return aItemLevel > bItemLevel
+		end
+
+		for _, sortKey in ipairs(sortOrder) do
+			-- Пропускаем выключенные критерии
+			if sortOrderActived[sortKey] then
+				local aVal = getSortValue(aData, sortKey)
+				local bVal = getSortValue(bData, sortKey)
+				-- local valType = sortOptionsType[sortKey]
+				local valType = type(aVal)
+				local reverse = sortReverse[sortKey]
+
+				if valType == "number" then
+					aVal = aVal or 0
+					bVal = bVal or 0
+
+					if aVal ~= bVal then
+						if reverse then
+							return aVal < bVal   -- возрастание
+						else
+							return aVal > bVal   -- убывание
+						end
+						-- if reverse then
+						--     return aVal > bVal   -- убывание
+						-- else
+						--     return aVal < bVal   -- возрастание
+						-- end
+					end
+				else -- string
+					aVal = tostring(aVal or "")
+					bVal = tostring(bVal or "")
+					if aVal ~= bVal then
+						if reverse then
+							return aVal > bVal
+						else
+							return aVal < bVal
+						end
+					end
+				end
 			end
-			local aName = aData.Name or "noname"
-			local bName = bData.Name or "noname"
-			return aName < bName
+		end
+
+		-- Если все критерии равны, сортируем по имени
+		return (aData.Name or "") < (bData.Name or "")
 	end)
-	return sorted
+
+	return sorted, unsorted
 end
+-- function E.func_SortCharacters()
+-- 	local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER
+-- 	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
+-- 	local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN
+-- 	local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX
+-- 	local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION
+-- 	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG -- Добавляем новую переменную
+-- 	local sorted = {}
+-- 	local curGUID = E.curGUID
+-- 	local curFaction = E.FACTION_CURRENT
+-- 	local curServer = E.func_GetPlayerRealm()
+-- 	local CurrentRegionName = E.CurrentRegionName
+-- 	local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
+-- 	local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
+-- 	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
+-- 	local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
+-- 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+-- 		if not CharInfo.PlayerData then
+-- 			-- Пропускаем, если нет PlayerData
+-- 		else
+-- 			local PlayerData = CharInfo.PlayerData
+-- 			if GUID == curGUID then
+-- 				sorted[#sorted + 1] = CharInfo
+-- 			else
+-- 				if PlayerData.CONFIG_SHOW_PLAYER and
+-- 				PlayerData.UnitLevel and
+-- 				PlayerData.CurrentRegionName and
+-- 				PlayerData.curServer and
+-- 				PlayerData.Faction and
+-- 				PlayerData.BattleTag then -- Добавляем проверку BattleTag
+-- 					local unitLevel = PlayerData.UnitLevel
+-- 					local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
+-- 					local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.Faction == curFaction
+-- 					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
+-- 					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
+-- 					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
+-- 					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
+-- 						sorted[#sorted + 1] = CharInfo
+-- 					end
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- 	table.sort(sorted, function(a, b)
+-- 			local aData, bData = a.PlayerData, b.PlayerData
+-- 			local aLevel = aData.UnitLevel or 0
+-- 			local bLevel = bData.UnitLevel or 0
+-- 			if aLevel ~= bLevel then
+-- 				return aLevel > bLevel
+-- 			end
+-- 			local aItemLevel = aData.avgItemLevelEquipped or 0
+-- 			local bItemLevel = bData.avgItemLevelEquipped or 0
+-- 			if aItemLevel ~= bItemLevel then
+-- 				return aItemLevel > bItemLevel
+-- 			end
+-- 			local aName = aData.Name or "noname"
+-- 			local bName = bData.Name or "noname"
+-- 			return aName < bName
+-- 	end)
+-- 	return sorted
+-- end
 ----------------------------------------------------------------
 function E.func_GetCounts()
 	local numServers, numRegions, numBtags, numPlayers = 0, 0, 0, 0
@@ -1847,10 +2018,205 @@ function E.func_GetCounts()
 
 	return numServers, numRegions, numBtags, numPlayers
 end
+	----------------------------------------------------------------
+do
+	local function updateState(self)
+		-- if self:IsEnabled() then
+		-- 	if self.down and self.over then
+		-- 		self.Icon:SetAtlas("common-dropdown-a-button-pressedhover", true)
+		-- 	elseif self.over then
+		-- 		self.Icon:SetAtlas("common-dropdown-a-button-hover", true)
+		-- 	elseif self.down then
+		-- 		self.Icon:SetAtlas("common-dropdown-a-button-pressed", true)
+		-- 	else
+		-- 		self.Icon:SetAtlas("common-dropdown-a-button", true)
+		-- 	end
+		-- else
+		-- 	self.Icon:SetAtlas("common-dropdown-a-button-disabled", true)
+		-- end
+	end
+
+	local function OnEnter(self, tooltipFunc)
+		self.over = true
+		self.tooltip = tooltipFunc
+		E.func_Octo_TooltipFrame_OnEnter(self, { "BOTTOMLEFT", "TOPRIGHT" })
+		self:SetAlpha(1)
+		updateState(self)
+	end
+
+	local function OnLeave(self)
+		self.over = nil
+		self:SetAlpha(.8)
+		updateState(self)
+	end
+
+	local function OnShow(self)
+		self:SetAlpha(.8)
+		Octo_TooltipFrame:Hide()
+	end
+
+	local function OnHide(self)
+		Octo_TooltipFrame:Hide()
+	end
+
+	local function OnMouseDown(self)
+		self.down = true
+		self.Icon:ClearAllPoints()
+		self.Icon:SetPoint("TOPLEFT", 1, -1)
+		self.Icon:SetPoint("BOTTOMRIGHT", 1, -1)
+		updateState(self)
+	end
+
+	local function OnMouseUp(self)
+		self.down = nil
+		self.Icon:ClearAllPoints()
+		self.Icon:SetPoint("TOPLEFT", 0, 0)
+		self.Icon:SetPoint("BOTTOMRIGHT", 0, 0)
+		updateState(self)
+	end
+
+	local function OnEnable(self)
+		self.Icon:SetDesaturated()
+		updateState(self)
+	end
+
+	local function OnDisable(self)
+		self.Icon:SetDesaturated(true)
+		updateState(self)
+	end
+
+	function E.func_CreateUtilityButton(parent, texture, width, height, tooltipFunc, clickFunc, isToggle, frameName)
+		local btn = CreateFrame("BUTTON", frameName, parent)
+		btn:SetSize(width or 20, height or 20)
+
+		btn.Icon = btn:CreateTexture(nil, "ARTWORK")
+		btn.Icon:SetAllPoints()
+
+		if isToggle then
+			btn.IconBG = btn:CreateTexture(nil, "BACKGROUND")
+			btn.IconBG:SetAllPoints()
+			E.func_SetupTextureToFrame(btn.IconBG, E.ICON_SETTINGS_BACKGROUD)
+		end
+
+		if texture then
+			if E.func_isAtlas(texture) then
+				btn.Icon:SetAtlas(texture)
+			else
+				btn.Icon:SetTexture(texture)
+			end
+		end
+
+		-- Скрипты
+		btn:SetScript("OnEnter", function(self) OnEnter(self, tooltipFunc) end)
+		btn:SetScript("OnLeave", OnLeave)
+		btn:SetScript("OnShow", OnShow)
+		btn:SetScript("OnHide", OnHide)
+		btn:SetScript("OnMouseDown", OnMouseDown)
+		btn:SetScript("OnMouseUp", OnMouseUp)
+		btn:SetScript("OnEnable", OnEnable)
+		btn:SetScript("OnDisable", OnDisable)
+		btn:SetMotionScriptsWhileDisabled(true)
+
+		-- btn:SetCollapsesLayout(true)
+
+		-- Для обычных кнопок (не toggle) - сразу вешаем clickFunc
+		if not isToggle and clickFunc then
+			btn:SetScript("OnClick", function(self)
+				clickFunc(self)
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+			end)
+		end
+
+		-- Метод для установки данных и обновления иконки (для toggle кнопок)
+		btn.SetData = function(self, targetTable, targetKey, onClickCallback)
+			self.targetTable = targetTable
+			self.targetKey = targetKey
+			local value = targetTable and targetTable[targetKey] or false
+			E.func_SetupTextureToToggleFrameWithValue(self.Icon, value)
+
+			self:SetScript("OnClick", function()
+				if not self.targetTable then return end
+				local newValue = not self.targetTable[self.targetKey]
+				self.targetTable[self.targetKey] = newValue
+				E.func_SetupTextureToToggleFrameWithValue(self.Icon, newValue)
+				if onClickCallback then onClickCallback() end
+				PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
+			end)
+		end
+
+		return btn, btn.Icon
+	end
+end
 ----------------------------------------------------------------
+function E.func_CreateUtilitySlider(parent, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
+
+		local MySlider = CreateFrame("Frame", nil, parent, "MinimalSliderWithSteppersTemplate")
+		MySlider:SetPoint("TOPLEFT", 0, -20)
+		-- MySlider:SetSize(200, 40) -- 250, 40
+		local formatters = {
+			[MinimalSliderWithSteppersMixin.Label.Min] = function(value) return minValue end,  -- текст у минимального значения
+			[MinimalSliderWithSteppersMixin.Label.Max] = function(value) return maxValue end,  -- текст у максимального значения
+			[MinimalSliderWithSteppersMixin.Label.Left] = function(value) return LeftText end,  -- левый текст (Low)
+			[MinimalSliderWithSteppersMixin.Label.Right] = function(value) return tostring(math.floor(value)) end,  -- правый текст (значение)
+			[MinimalSliderWithSteppersMixin.Label.Top] = function(value) return name end,  -- текст сверху
+		}
+		local currentValue = variableTbl[variableKey] or defaultValue or 1
+		MySlider:Init(currentValue, 1, 100, step, formatters)
+		MySlider:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+				local rounded = math.floor(value)
+				variableTbl[variableKey] = rounded
+				-- MySlider.MinText:SetText(minValue)
+				-- MySlider.MaxText:SetText(maxValue)
+				-- MySlider.LeftText:SetText(LeftText)
+				-- MySlider.RightText:SetText(tostring(math.floor(value)))
+				-- MySlider.TopText:SetText(name)-- текст сверху
+		end)
+end
 ----------------------------------------------------------------
+function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
+	minWidth = minWidth or 1
+	indent = indent or 0
+
+	local measureText = Octo_MeasureFrame.measureText
+	local width = 0
+
+	if type(textToMeasure) == "table" then
+		for i = 1, #textToMeasure do
+			local v = textToMeasure[i]
+			if type(v) == "function" then
+				v = v()
+			end
+
+			measureText:SetText(tostring(v or ""))
+			width = math.max(width, measureText:GetStringWidth())
+		end
+	else
+		local v = type(textToMeasure) == "function" and textToMeasure() or textToMeasure
+		measureText:SetText(tostring(v or ""))
+		width = measureText:GetStringWidth()
+	end
+
+	return math.max(math.ceil(width) + indent, minWidth)
+end
+
 ----------------------------------------------------------------
-----------------------------------------------------------------
+function E.func_DELETEPERS(GUID)
+	if not GUID or not Octo_ToDo_DB_Levels then return end
+
+	-- Удаляем из основной таблицы
+	Octo_ToDo_DB_Levels[GUID] = nil
+
+	-- Удаляем из GUID_order (кастомный порядок сортировки)
+	if Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.GUID_order then
+		for i = #Octo_ToDo_DB_Options.GUID_order, 1, -1 do
+			if Octo_ToDo_DB_Options.GUID_order[i] == GUID then
+				table.remove(Octo_ToDo_DB_Options.GUID_order, i)
+				break
+			end
+		end
+	end
+	E.TOTAL_CHARS = #Octo_ToDo_DB_Options.GUID_order
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

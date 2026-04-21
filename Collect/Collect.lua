@@ -15,7 +15,6 @@ local function func_Collect_All()
 		{func = E.Collect_Items_BAGS, name = "Collect_Items_BAGS",},
 		{func = E.Collect_Items_MythicKeystone, name = "Collect_Items_MythicKeystone",},
 		{func = E.Collect_JournalInstance, name = "Collect_JournalInstance",},
-		{func = E.Collect_Locations, name = "Collect_Locations",},
 		{func = E.Collect_LoginTime, name = "Collect_LoginTime",},
 		{func = E.Collect_Mail, name = "Collect_Mail",},
 		{func = E.Collect_Money_AYE, name = "Collect_Money_AYE",},
@@ -99,7 +98,6 @@ local MyEventsTable = {
 	-- "GARRISON_SHIPYARD_NPC_OPENED",
 	-- "GARRISON_UPDATE",
 	-- "GARRISON_UPGRADEABLE_RESULT",
-	"HEARTHSTONE_BOUND",
 	"MAIL_INBOX_UPDATE",
 	"MAIL_SHOW",
 	"PLAYER_DEAD",
@@ -125,7 +123,6 @@ local MyEventsTable = {
 	"UPDATE_INVENTORY_DURABILITY",
 	"UPDATE_PENDING_MAIL",
 	"ZONE_CHANGED",
-	"ZONE_CHANGED_NEW_AREA",
 	"ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED",
 	"CURRENCY_TRANSFER_INITIATED",
 	"CURRENCY_TRANSFER_FAILED",
@@ -234,18 +231,9 @@ function EventFrame:PLAYER_SPECIALIZATION_CHANGED()
 	E.Collect_Character_Info()
 	E.func_RequestUIUpdate("PLAYER_SPECIALIZATION_CHANGED")
 end
-function EventFrame:HEARTHSTONE_BOUND()
-	E.Collect_Locations()
-	E.func_RequestUIUpdate("HEARTHSTONE_BOUND")
-end
 function EventFrame:ZONE_CHANGED()
-	E.Collect_Locations()
 	E.Collect_GreatVault()
 	E.func_RequestUIUpdate("ZONE_CHANGED")
-end
-function EventFrame:ZONE_CHANGED_NEW_AREA()
-	E.Collect_Locations()
-	E.func_RequestUIUpdate("ZONE_CHANGED_NEW_AREA")
 end
 function EventFrame:SPELLS_CHANGED()
 	E.Collect_WarMode()

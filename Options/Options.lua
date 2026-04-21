@@ -54,13 +54,30 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
+	-- CHARACTERS_OLD ----------------------------------------------
+	----------------------------------------------------------------
+	-- do
+	-- 	local enable = true
+	-- 	if enable then
+	-- 		local tabName = L["Characters"]
+	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+	-- 		if E.func_option_CHARACTERS_OLD then
+	-- 			E.func_option_CHARACTERS_OLD(category, layout)
+	-- 		end
+	-- 	end
+	-- end
+	----------------------------------------------------------------
 	-- CHARACTERS --------------------------------------------------
 	----------------------------------------------------------------
 	do
 		local enable = true
 		if enable then
-			local tabName = L["Characters"]
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+			local sortCategoryName = L["RAID_FRAME_SORT_LABEL"] -- L["Characters"]
+			local layout = CreateFrame("FRAME", GlobalAddonName.."CHARACTERS_LAYOUT") -- СОЗДАЁМ FRAME
+			layout:Hide()
+			local category = Settings.RegisterCanvasLayoutSubcategory(parentCategory, layout, sortCategoryName) -- РЕГИСТРИРУЕМ КАК ПОДКАТЕГОРИЮ (без RegisterAddOnCategory)
+			category.ID = sortCategoryName
+
 			if E.func_option_CHARACTERS then
 				E.func_option_CHARACTERS(category, layout)
 			end
@@ -95,7 +112,7 @@ function EventFrame:PLAYER_LOGIN()
 	do
 		local enable = true
 		if enable then
-			-- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081))  -- (49778 sword) (2362 shield)
+			-- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081)) -- (49778 sword) (2362 shield)
 			local tabName = L["ITEMS"]
 			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- L["ITEMS"]
 			if E.func_option_ITEMS_ICONS then

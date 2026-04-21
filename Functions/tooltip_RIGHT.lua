@@ -454,7 +454,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			local renownMaxLevel = cm.Reputation[id].renownMaxLevel
 			local gender = pd.UnitSex or 1
 			-- local color = E.COLOR_BLACK
-			local color = E.func_DB_REP_COLOR(repType, reaction)
+			local color = E.func_DB_REP_COLOR(repType, reaction) or E.COLOR_GRAY
 			local TEXT_STANDINGS = ""
 			if repType == 2 then -- FRIENDSHIP
 				if rankInfocurrentLevel and rankInfomaxLevel then

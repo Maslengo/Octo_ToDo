@@ -1,5 +1,6 @@
 local GlobalAddonName, E = ...
 local L = E.L
+----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 EventFrame.searchFilter = nil
@@ -32,7 +33,7 @@ end
 ----------------------------------------------------------------
 local func_OnAcquiredLeft do
 	local function Create_SettingsButton(frame)
-		frame.SettingsButton = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
+		frame.SettingsButton = CreateFrame("BUTTON", nil, frame, "OctoRectTemplate")
 		frame.SettingsButton:Hide()
 		frame.SettingsButton:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 		frame.SettingsButton:SetPoint("LEFT", 1, -1)
@@ -146,7 +147,7 @@ local func_OnAcquiredCenter do
 		frame.columnFrames = setmetatable({}, {
 				__index = function(self, key)
 					if type(key) == "number" then
-						local columnFrame = CreateFrame("BUTTON", nil, frame, "OctoPropagateTemplate")
+						local columnFrame = CreateFrame("BUTTON", nil, frame, "OctoRectTemplate")
 						columnFrame:Hide()
 						Create_CurrentCharBackground(columnFrame)
 						Create_ReputationBackground(columnFrame)
@@ -166,19 +167,29 @@ local func_OnAcquiredCenter do
 	end
 end
 ----------------------------------------------------------------
-local function func_SettingsButton_OnClick(button, frameData)
-	local dataType, id = ("#"):split(frameData.SettingsType)
+local function func_SettingsButton_OnClick(button, dataType, id, frame)
 	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
 		id = tonumber(id)
 	end
-	if not Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType] then
-		Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType] = {}
+	local Current_profile = Octo_profileKeys and Octo_profileKeys.Current_profile
+	if not Current_profile then return end
+
+	local profile = Octo_profileKeys.profiles and Octo_profileKeys.profiles[Current_profile]
+	if not profile then return end
+
+	if not profile[dataType] then
+		profile[dataType] = {}
 	end
-	local settingsTable = Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType]
-	local newValue = not (settingsTable[id] or false)
+
+	local settingsTable = profile[dataType]
+	local newValue = not settingsTable[id]
 	settingsTable[id] = newValue
-	local texture = newValue and "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen" or "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
-	button:GetParent().SettingsTexture:SetTexture(texture)
+
+	local texture = newValue and E.ICON_SETTINGS_GREEN or E.ICON_SETTINGS_RED
+
+	if frame and frame.SettingsTexture then
+		frame.SettingsTexture:SetTexture(texture)
+	end
 end
 ----------------------------------------------------------------
 local function instullTEXTURE(frameTexture, frame, ICON)
@@ -229,9 +240,9 @@ local function func_Setup_Reputations(frame, id)
 	end
 
 	-- if E.func_isAtlas(E.ICON_TABARD) then
-	-- 	frame.icon1texture:SetAtlas(E.ICON_TABARD, false)
+	--     frame.icon1texture:SetAtlas(E.ICON_TABARD, false)
 	-- else
-	-- 	frame.icon1texture:SetTexture(E.ICON_TABARD)
+	--     frame.icon1texture:SetTexture(E.ICON_TABARD)
 	-- end
 
 
@@ -264,9 +275,9 @@ local function func_Setup_Reputations(frame, id)
 	if warbandICON then
 		instullTEXTURE(frame.icon3texture, frame.icon3frame, warbandICON)
 		-- if E.func_isAtlas(warbandICON) then
-		-- 	frame.icon3texture:SetAtlas(warbandICON, false)
+		--     frame.icon3texture:SetAtlas(warbandICON, false)
 		-- else
-		-- 	frame.icon3texture:SetTexture(warbandICON)
+		--     frame.icon3texture:SetTexture(warbandICON)
 		-- end
 		-- frame.icon3frame:Show()
 	else
@@ -398,9 +409,9 @@ function EventFrame:func_InitLEFT(frame, node)
 			local texture = E.ICON_EMPTY
 			if Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType] and Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType][id] ~= nil then
 				if Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType][id] or Octo_profileKeys.profiles[Octo_profileKeys.Current_profile][dataType][tonumber(id)] then
-					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonONgreen"
+					texture = E.ICON_SETTINGS_GREEN
 				else
-					texture = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\buttonOFFred"
+					texture = E.ICON_SETTINGS_RED
 				end
 			end
 			frame.SettingsTexture:SetTexture(texture)
@@ -409,7 +420,7 @@ function EventFrame:func_InitLEFT(frame, node)
 			frame.SettingsButton:Hide()
 		end
 		frame.SettingsButton:SetScript("OnClick", function(self)
-				func_SettingsButton_OnClick(self, frameData)
+				func_SettingsButton_OnClick(self, dataType, id, frame)
 		end)
 		if type(frameData.TextLeft) == "function" then
 			frame.TextLeft:SetText(frameData.TextLeft())
@@ -574,7 +585,7 @@ function EventFrame:func_CreateMainFrame()
 	local scrollContentFrame = CreateFrame("FRAME", "scrollContentFrame")
 	Octo_MainFrame.scrollContentFrame = scrollContentFrame
 	horizontalScrollFrame:SetScrollChild(scrollContentFrame)
-	Octo_MainFrame.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame, "WowScrollBoxList,OctoPropagateTemplate")
+	Octo_MainFrame.ScrollBoxLEFT = CreateFrame("FRAME", nil, Octo_MainFrame, "WowScrollBoxList,OctoRectTemplate")
 	Octo_MainFrame.ScrollBoxLEFT:SetWidth(INDENT_TEXT+MIN_COLUMN_WIDTH_LEFT)
 	Octo_MainFrame.ScrollBoxLEFT:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame.ScrollBoxLEFT:SetPoint("BOTTOMLEFT")
@@ -584,9 +595,9 @@ function EventFrame:func_CreateMainFrame()
 	horizontalScrollFrame:SetPoint("BOTTOMRIGHT")
 	Octo_MainFrame.ViewLeft = CreateScrollBoxListTreeListView(0)
 	Octo_MainFrame.ViewLeft:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame.ViewLeft:SetElementInitializer("OctoPropagateTemplate", function(...) EventFrame:func_InitLEFT(...) end)
+	Octo_MainFrame.ViewLeft:SetElementInitializer("OctoRectTemplate", function(...) EventFrame:func_InitLEFT(...) end)
 	Octo_MainFrame.ViewLeft:RegisterCallback(Octo_MainFrame.ViewLeft.Event.OnAcquiredFrame, func_OnAcquiredLeft, Octo_MainFrame)
-	Octo_MainFrame.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList,OctoPropagateTemplate") -- OctoRectTemplate
+	Octo_MainFrame.ScrollBoxCenter = CreateFrame("FRAME", nil, scrollContentFrame, "WowScrollBoxList,OctoRectTemplate") -- OctoRectTemplate
 	Octo_MainFrame.ScrollBoxCenter:SetPoint("TOPLEFT", 0, -E.HEADER_HEIGHT)
 	Octo_MainFrame.ScrollBoxCenter:SetPoint("BOTTOMRIGHT")
 	-- Octo_MainFrame.ScrollBoxCenter:GetScrollTarget():SetPropagateMouseClicks(true)
@@ -595,7 +606,7 @@ function EventFrame:func_CreateMainFrame()
 	Octo_MainFrame.ScrollBarCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame, "BOTTOMRIGHT", 6, 0)
 	Octo_MainFrame.ViewCenter = CreateScrollBoxListTreeListView(0)
 	Octo_MainFrame.ViewCenter:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_MainFrame.ViewCenter:SetElementInitializer("OctoPropagateTemplate", function(...) EventFrame:func_InitCenter(...) end)
+	Octo_MainFrame.ViewCenter:SetElementInitializer("OctoRectTemplate", function(...) EventFrame:func_InitCenter(...) end)
 	Octo_MainFrame.ViewCenter:RegisterCallback(Octo_MainFrame.ViewCenter.Event.OnAcquiredFrame, func_OnAcquiredCenter, Octo_MainFrame)
 	ScrollUtil.InitScrollBoxListWithScrollBar(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter, Octo_MainFrame.ViewLeft)
 	ScrollUtil.AddManagedScrollBarVisibilityBehavior(Octo_MainFrame.ScrollBoxLEFT, Octo_MainFrame.ScrollBarCenter)
@@ -660,7 +671,7 @@ function EventFrame:func_CreateMainFrame()
 		self.CharTexture:SetAllPoints()
 		self.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
 	end
-	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, "OctoPropagateTemplate", ResetPoolFrame, false, InitializePoolFrame)
+	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, "OctoRectTemplate", ResetPoolFrame, false, InitializePoolFrame)
 end
 ----------------------------------------------------------------
 function E.func_main_frame_toggle()
@@ -765,12 +776,8 @@ local function func_calculateColumnWidthsCenter(node)
 	return columnWidthsCenter
 end
 ----------------------------------------------------------------
-local function func_calculateColumnWidthsCenter_HEADER(frame, nicknameTEXT, serverTEXT)
-	local textToMeasure1 = nicknameTEXT
-	local width1 = E.func_MeasureTextWidth(textToMeasure1, MIN_COLUMN_WIDTH_Center)
-	local textToMeasure2 = serverTEXT
-	local width2 = E.func_MeasureTextWidth(textToMeasure2, MIN_COLUMN_WIDTH_Center)
-	return math.max(width1, width2)
+local function func_calculateColumnWidthsCenter_HEADER(nicknameTEXT, serverTEXT)
+	return E.func_MeasureTextWidth({nicknameTEXT, serverTEXT}, MIN_COLUMN_WIDTH_Center)
 end
 ----------------------------------------------------------------
 local function func_UPDATE_MAINFRAME()
@@ -853,20 +860,24 @@ function EventFrame:CreateDataProvider()
 	for CharIndex, CharInfo in ipairs(sortedCharacters) do
 		local nicknameTEXT = E.func_CharInfo_NickName(CharInfo)
 		local serverTEXT = ""
-		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
-			serverTEXT = ""
-		else
-			serverTEXT = E.func_CharInfo_Server(CharInfo)
-		end
-		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(HeaderFrameCenter, nicknameTEXT, serverTEXT)
+		-- if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER then
+		-- 	serverTEXT = ""
+		-- else
+		-- 	serverTEXT = E.func_CharInfo_Server(CharInfo)
+		-- end
+		columnWidthsCenter[CharIndex] = func_calculateColumnWidthsCenter_HEADER(nicknameTEXT, serverTEXT)
 	end
 	Octo_MainFrame.pool:Release(HeaderFrameCenter)
 	-- Локальная функция для обработки данных (чтобы избежать дублирования кода)
 	local function processData(categoryKey, dataType, dataList)
 		for i, id in next, (dataList) do
 			local questKey
+			local interfaceVersion_MAX
+			local interfaceVersion_MIN
 			if dataType == "UniversalQuests" then
 				questKey = id.questKey
+				interfaceVersion_MAX = id.interfaceVersion_MAX
+				interfaceVersion_MIN = id.interfaceVersion_MIN
 				-- questKey = E.UNIVERSAL..id.desc.."_"..id.name_save.."_"..id.reset
 			end
 			local canDraw = false
@@ -874,6 +885,9 @@ function EventFrame:CreateDataProvider()
 				canDraw = E.func_ShouldShow(id, dataType, Octo_profileKeys.Current_profile)
 			else
 				canDraw = E.func_ShouldShow(questKey, dataType, Octo_profileKeys.Current_profile)
+			end
+			if interfaceVersion_MAX and interfaceVersion_MAX < E.interfaceVersion then
+				canDraw = false
 			end
 			if canDraw then
 				local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey =
@@ -1000,21 +1014,22 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
-		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
+		-- HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
+		HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, 0)
 		HeaderFrameCenter.Nickname:SetWordWrap(false)
 		HeaderFrameCenter.Nickname:SetJustifyV("MIDDLE")
 		HeaderFrameCenter.Nickname:SetJustifyH("CENTER")
-		HeaderFrameCenter.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
-		HeaderFrameCenter.Server:SetWordWrap(false)
-		HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
-		HeaderFrameCenter.Server:SetJustifyH("CENTER")
+		-- HeaderFrameCenter.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
+		-- HeaderFrameCenter.Server:SetWordWrap(false)
+		-- HeaderFrameCenter.Server:SetJustifyV("BOTTOM")
+		-- HeaderFrameCenter.Server:SetJustifyH("CENTER")
 		HeaderFrameCenter.Nickname:SetText(E.func_CharInfo_NickName(CharInfo))
-		if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
-			HeaderFrameCenter.Nickname:SetPoint("CENTER")
-			HeaderFrameCenter.Server:SetText("")
-		else
-			HeaderFrameCenter.Server:SetText(E.func_CharInfo_Server(CharInfo))
-		end
+		-- if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER then
+		-- 	HeaderFrameCenter.Nickname:SetPoint("CENTER")
+		-- 	HeaderFrameCenter.Server:SetText("")
+		-- else
+		-- 	HeaderFrameCenter.Server:SetText(E.func_CharInfo_Server(CharInfo))
+		-- end
 		HeaderFrameCenter.Mail:SetPoint("TOPRIGHT")
 		HeaderFrameCenter.Mail:SetWordWrap(false)
 		HeaderFrameCenter.Mail:SetJustifyV("MIDDLE")
@@ -1039,13 +1054,24 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
 		HeaderFrameCenter.CharTexture:SetVertexColor(r, g, b, a)
 		HeaderFrameCenter:SetScript("OnEnter", function(self)
-				HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo)
+				HeaderFrameCenter.tooltip = E.func_Tooltip_Chars(CharInfo, true)
 				SafeTooltipShow(HeaderFrameCenter, {"BOTTOMLEFT", "TOPRIGHT"})
 		end)
 		HeaderFrameCenter:SetScript("OnClick", function(self, button)
-				if button == "LeftButton" and IsShiftKeyDown() then -- IsLeftShiftKeyDown
+				if button == "LeftButton" and IsShiftKeyDown() then -- IsLeftShiftKeyDown -- https://warcraft.wiki.gg/wiki/API_IsModifierKeyDown
 					local GUID = pd.GUID
 					E.Toggle_Octo_EquipmentsFrame(GUID)
+				end
+				if button == "LeftButton" and IsControlKeyDown() then -- IsLeftControlKeyDown -- https://warcraft.wiki.gg/wiki/API_IsModifierKeyDown
+					local GUID = pd.GUID
+					local PlayerName = E.func_CharInfo_NickName(CharInfo, nil, true)
+					local PlayerServer = E.func_CharInfo_Server(CharInfo, true, false)
+					-- local text = E.func_Gradient(L["HIDE"].. ":")
+					-- E.func_PrintMessage(text, PlayerName, PlayerServer)
+					pd.CONFIG_SHOW_PLAYER = false
+					EventFrame:CreateDataProvider()
+					-- func_UPDATE_MAINFRAME()
+					-- E.func_UPDATE_MAINFRAME()
 				end
 		end)
 		HeaderFrameCenter:Show()

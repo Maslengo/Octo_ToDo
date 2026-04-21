@@ -626,9 +626,47 @@ handler.expansion = function(Cache_Name, Cache_Quality, category, id)
 	return name
 
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.race = function(Cache_Name, Cache_Quality, category, id)
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		local n = E.func_GetRaceInfo(id)
+		if n and n ~= "" then
+			name = func_Cache_Name(id, Cache_Name, n, category)
+		end
+	end
+	return name
 
-
-
+end
+-- /dump C_CreatureInfo.GetRaceInfo(5)
+-- /dump C_AlliedRaces.GetRaceInfoByID(5)
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+handler.sex = function(Cache_Name, Cache_Quality, category, id)
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		-- /dump E.func_GetName("sex", 5)
+		local n = ""
+		for k, v in next, (Enum.UnitSex) do
+			if v == id then
+				n = k
+			end
+		end
+		if n and n ~= "" then
+			name = func_Cache_Name(id, Cache_Name, n, category)
+		end
+	end
+	return name
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

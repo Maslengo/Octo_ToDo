@@ -8,6 +8,7 @@ local function Collect_Money_PLAYER_LOGIN()
 	----------------------------------------------------------------
 	local Money = GetMoney()
 	collectPlayerData.MoneyOnLogin = Money
+	collectPlayerData.RELOAD_COUNT = (collectPlayerData.RELOAD_COUNT or 0) + 1
 end
 ----------------------------------------------------------------
 function E.Collect_Money_PLAYER_LOGIN()

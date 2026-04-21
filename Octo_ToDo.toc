@@ -1,6 +1,6 @@
 ## Interface: 120007, 120005, 120001
-## Version: v114.2
-# (12.0.5)(17.04.2026)
+## Version: v114.3
+# (12.0.5)(21.04.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 # Title: |cffD177FFO|r|cffC37CFBc|r|cffB582F7t|r|cffA787F3o|r|cff998DEF_|r|cff8C93EBT|r|cff7E98E7o|r|cff709EE3D|r|cff63A4E0o|r
@@ -15,6 +15,8 @@
 ## SavedVariables: Octo_ToDo_DB_Levels, Octo_ToDo_DB_Vars, Octo_Cache_DB
 
 ## SavedVariables: Octo_ToDo_DB_AccountData
+
+## SavedVariables: Octo_ToDo_DB_Options
 
 ## X-Wago-ID: 4N2mBVGL
 ## X-Curse-Project-ID: 1405495

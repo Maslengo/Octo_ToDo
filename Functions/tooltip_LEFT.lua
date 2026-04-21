@@ -126,9 +126,9 @@ function E.func_ItemLevelTooltipLeft(visiblePlayers)
 	local tooltip = {}
 	local characterData = {}
 	local avgILVL = 0
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local avgItemLevelEquipped = pd.avgItemLevelEquipped or 0
 			local avgItemLevel = pd.avgItemLevel or 0
@@ -181,9 +181,9 @@ end
 function E.func_ProfessionsTooltipLeft(visiblePlayers)
 	local tooltip = {}
 	local characterData = {}
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local cmP = CharInfo.MASLENGO.professions
 			local hasData = cmP[1] and cmP[1].skillLine
@@ -238,7 +238,7 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
 	local total = 0
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	local IsAccountWideCurrency = E.func_IsAccountWideCurrency(id) -- ACCOUNT_LEVEL_CURRENCY
 	-- local IsAccountTransferableCurrency = E.func_IsAccountTransferableCurrency(id) -- ACCOUNT_TRANSFERRABLE_CURRENCY
 	local REGION = {}
@@ -246,7 +246,7 @@ function E.func_CurrenciesTooltipLeft(visiblePlayers, id)
 		REGION[CharInfo.PlayerData.CurrentRegionName] = true
 	end
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local cm = CharInfo.MASLENGO
 			local curquantity = cm.Currency[id] and cm.Currency[id].quantity or 0
@@ -305,9 +305,9 @@ function E.func_MoneyTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
 	local total = 0
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local curMoney = pd.Money or 0
 			local hasData = curMoney > 0
@@ -371,9 +371,9 @@ function E.func_LastOnlineTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
 	local total = 0
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local curTime = pd.realTotalTime or 0
 			local hasData = curTime > 0
@@ -418,9 +418,9 @@ end
 function E.func_CurrentKeyTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
 			if seasonData then
@@ -486,7 +486,7 @@ end
 function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 	local tooltip = {}
 	local characterData = {}
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 
 	-- header активности
 	local header_ids_tbl = {}
@@ -495,7 +495,7 @@ function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 	end
 
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 
 			local pd = CharInfo.PlayerData
 			local cm = CharInfo.MASLENGO
@@ -608,7 +608,7 @@ end
 -- function E.func_GreatVaultTooltipLeft(visiblePlayers, id)
 -- 	local tooltip = {}
 -- 	local characterData = {}
--- 	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+-- 	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 
 -- 	-- header активности (один раз)
 -- 	local header_ids_tbl = {}
@@ -617,7 +617,7 @@ end
 -- 	end
 
 -- 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
--- 		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+-- 		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 
 -- 			local pd = CharInfo.PlayerData
 -- 			local cm = CharInfo.MASLENGO
@@ -750,9 +750,9 @@ function E.func_ReputationsTooltipLeft(visiblePlayers, id)
 			})
 		end
 	else
-		local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+		local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+			if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 				local pd = CharInfo.PlayerData
 				local cm = CharInfo.MASLENGO
 				local DONEPERS = cm.ListOfParagonQuests and cm.ListOfParagonQuests[paragonQuest] and 1 or 0
@@ -795,9 +795,9 @@ function E.func_ItemsTooltipLeft(visiblePlayers, id)
 	local total_BAGS = 0
 	local total_BANK = 0
 	local total_AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank[id] or 0
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		if (not ShowOnlyCurrentRegion) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or CharInfo.PlayerData.CurrentRegionName == E.CurrentRegionName then
 			local pd = CharInfo.PlayerData
 			local cm = CharInfo.MASLENGO
 			local itemCount_Bags = cm.Items.Bags[id] or 0

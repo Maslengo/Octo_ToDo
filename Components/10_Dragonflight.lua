@@ -815,20 +815,20 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
-		-- {
-		-- showTooltip = true,
-		-- TextLeft = function()
-		-- return E.func_GetName("quest", 77251, false)
-		-- end,
-		-- name_save = "ShapingtheDreamsurge",
-		-- defS = false,
-		-- reset = "Weekly",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {77251},
-		-- },
-		-- forcedMaxQuest = 1,
-		-- },
+		{
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("quest", 77251, false)
+			end,
+			name_save = "ShapingtheDreamsurge",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{77251},
+			},
+			forcedMaxQuest = 1,
+		},
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -888,6 +888,7 @@ local function tempFunction()
 			quests = {
 				{72528},
 			},
+			interfaceVersion_MAX = 100207,
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
 				-- {rewID = 200073, rewTYPE = "item", rewSIZE = 1,},

@@ -10,12 +10,12 @@ local function Collect_Character_ItemLevels()
 	collectPlayerData.avgItemLevel = math.floor(avgItemLevel)
 	collectPlayerData.avgItemLevelEquipped = math.floor(avgItemLevelEquipped)
 	collectPlayerData.avgItemLevelPvp = math.floor(avgItemLevelPvp)
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	----------------------------------------------------------------
 	local tempTable_ItemLevels = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
-		if (not ShowOnlyCurrentRegion) or pd.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or pd.CurrentRegionName == E.CurrentRegionName then
 			local avgItemLevelEquipped = pd.avgItemLevelEquipped or 0
 			table.insert(tempTable_ItemLevels, {sortValue = avgItemLevelEquipped})
 		end

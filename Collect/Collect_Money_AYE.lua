@@ -7,12 +7,12 @@ local function Collect_Money_AYE()
 	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 	----------------------------------------------------------------
 	collectPlayerData.Money = GetMoney() or 0
-	local ShowOnlyCurrentRegion = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 	----------------------------------------------------------------
 	local tempTable_Money = {}
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
-		if (not ShowOnlyCurrentRegion) or pd.CurrentRegionName == E.CurrentRegionName then
+		if (not CONFIG_SHOW_ONLY_CURRENT_REGION) or pd.CurrentRegionName == E.CurrentRegionName then
 			local Money = pd.Money or 0
 			table.insert(tempTable_Money, {sortValue = Money})
 		end

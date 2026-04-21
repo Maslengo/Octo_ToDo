@@ -33,7 +33,7 @@ function E.func_option_OTHER(category, layout)
 		E.func_Options_CreateDropdown(category, variableKey, variableTbl, name, defaultValue, values, tooltip)
 	end
 	----------------------------------------------------------------
-	-- 2. Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT
+	-- Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT -----------------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "Config_ADDON_HEIGHT"
@@ -47,7 +47,7 @@ function E.func_option_OTHER(category, layout)
 		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	end
 	----------------------------------------------------------------
-	-- 3. Octo_ToDo_DB_Vars.Config_ClampedToScreen -----------------
+	-- Octo_ToDo_DB_Vars.Config_ClampedToScreen --------------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "Config_ClampedToScreen"
@@ -68,18 +68,32 @@ function E.func_option_OTHER(category, layout)
 		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue, tooltip)
 	end
 	----------------------------------------------------------------
-	-- 2. Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION
+	-- Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION ----------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "CONFIG_HOVER_SHOW_DURATION"
 		local variableTbl = Octo_ToDo_DB_Vars
-		local defaultValue = 1
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
 		local name = L["Show on hover"]
 		local minValue = 0
 		local maxValue = 10
 		if E.DEBUG then maxValue = 100 end
 		local step = 1
-		local tooltip = L["TIME_LABEL"] -- .. string.format(L["SECONDS_FLOAT_ABBR"], Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION)
+		local tooltip -- = L["TIME_LABEL"] -- .. string.format(L["SECONDS_FLOAT_ABBR"], Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION)
+		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
+	end
+	----------------------------------------------------------------
+	-- Octo_ToDo_DB_Vars.CONFIG_FRAME_ALPHA_ON_HOVER ---------------
+	----------------------------------------------------------------
+	do
+		local variableKey = "CONFIG_FRAME_ALPHA_ON_HOVER"
+		local variableTbl = Octo_ToDo_DB_Vars
+		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
+		local name = L["Alpha"] .. " %"
+		local minValue = 50
+		local maxValue = 100
+		local step = 1
+		local tooltip
 		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	end
 	----------------------------------------------------------------

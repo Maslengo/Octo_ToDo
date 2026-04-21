@@ -1,11 +1,7 @@
 <Ui>
-	<Script file="Frames\Octo_MeasureFrame.lua"/>
-
 	<Script file="Frames\Octo_TooltipFrame.lua"/>
 	<Script file="Frames\Octo_MainFrame.lua"/>
 	<Script file="Frames\Octo_EquipmentsFrame.lua"/>
-	<Script file="Frames\Octo_SettingsFrame.lua"/>
-	<Script file="Frames\Octo_SortUI.lua"/>
 	<Script file="Frames\Octo_DebugFrame.lua"/>
 
 	<Script file="Frames\UtilityFrames.lua"/>

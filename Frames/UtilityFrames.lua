@@ -8,56 +8,20 @@ local BUTTON_SIZE = 20
 local BUTTON_SPACING = 4
 ------------------------------------------------------------
 -- helpers
-------------------------------------------------------------
-local function CreateUtilityButton(parent, name, texture, size, tooltipFunc, clickFunc)
-	local button = CreateFrame("BUTTON", nil, parent)
-	button:SetSize(size, size)
-	button.icon = button:CreateTexture(nil, "BACKGROUND")
-	button.icon:SetAllPoints()
-	-- atlas or texture path
-	if texture:find("\\") then
-		button.icon:SetTexture(texture)
-	else
-		button.icon:SetAtlas(texture)
-	end
-	button:SetScript("OnMouseDown", function(self)
-			self.icon:SetAlpha(0.7)
-	end)
-	button:SetScript("OnMouseUp", function(self)
-			self.icon:SetAlpha(1)
-	end)
-	button:SetScript("OnLeave", function(self)
-			self.icon:SetAlpha(1)
-			self.tooltip = nil
-	end)
-	if tooltipFunc then
-		button:SetScript("OnEnter", function(self)
-				self.tooltip = tooltipFunc()
-				E.func_Octo_TooltipFrame_OnEnter(self, { "BOTTOMLEFT", "TOPRIGHT" })
-		end)
-	end
-	if clickFunc then
-		button:SetScript("OnClick", function(self)
-				clickFunc(self)
-				self.tooltip = nil
-		end)
-	end
-	return button
-end
+
 ------------------------------------------------------------
 -- buttons
 ------------------------------------------------------------
 local function CreateCloseButton(frame, anchor)
-	local button = CreateUtilityButton(
+	local button = E.func_CreateUtilityButton(
 		frame,
-		"CloseButton",
-
-		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\Close.tga",
+		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\Textures\\ICON_CLOSE.tga",
 
 		-- "common-icon-redx",
 		-- "decor-controls-exit-active",
 		-- "128-RedButton-Exit",
-		BUTTON_SIZE,
+		BUTTON_SIZE-2,
+		BUTTON_SIZE-2,
 		function()
 			return { { E.classColorHexCurrent .. L["CLOSE"] .. "|r" } }
 		end,
@@ -72,10 +36,8 @@ local function CreateCloseButton(frame, anchor)
 	return button
 end
 local function CreateOptionsButton(frame, anchor, addonIconTexture)
-	local button = CreateUtilityButton(
+	local button = E.func_CreateUtilityButton(
 		frame,
-		"OptionsButton",
-
 		"Interface\\AddOns\\" .. GlobalAddonName .. "\\Media\\IconTexture\\" .. addonIconTexture,
 		-- "QuestLog-icon-setting",
 
@@ -83,7 +45,8 @@ local function CreateOptionsButton(frame, anchor, addonIconTexture)
 		-- "decor-controls-settings-active",
 		-- "QuestLog-icon-Expand", -- ПЛЮС
 		-- "QuestLog-icon-shrink", -- МИНУС
-		18,
+		18-2,
+		18-2,
 		function()
 			return { { E.classColorHexCurrent .. L["OPTIONS"] .. "|r" } }
 		end,
@@ -95,11 +58,11 @@ local function CreateOptionsButton(frame, anchor, addonIconTexture)
 	return button
 end
 local function CreateGreatVaultButton(frame, anchor)
-	local button = CreateUtilityButton(
+	local button = E.func_CreateUtilityButton(
 		frame,
-		"GreatVaultButton",
 		E.ATLAS_GREATVAULT,
-		BUTTON_SIZE,
+		BUTTON_SIZE-2,
+		BUTTON_SIZE-2,
 		function()
 			if InCombatLockdown() then
 				return { { ERR_NOT_IN_COMBAT } }

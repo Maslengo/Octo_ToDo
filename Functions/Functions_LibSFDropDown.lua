@@ -24,9 +24,10 @@ end
 -- Общие функции
 ----------------------------------------------------------------
 E.OctoFrames_Dropdowns = {}
-local function CreateBaseDropDown(frame, providerfunc)
+function E.func_CreateBaseDropDown(frame, text)
 	local DropDown = CreateFrame("BUTTON", nil, frame, "OctoBackdropTemplate")
-	table.insert(E.OctoTable_ColoredFrames, DropDown)
+	-- table.insert(E.OctoTable_ColoredFrames, DropDown)
+	table.insert(E.OctoFrames_Dropdowns, DropDown)
 	DropDown:SetSize(E.GLOBAL_LINE_WIDTH_LEFT/2, E.GLOBAL_LINE_HEIGHT)
 	DropDown.ExpandArrow = DropDown:CreateTexture(nil, "ARTWORK")
 	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
@@ -37,7 +38,7 @@ local function CreateBaseDropDown(frame, providerfunc)
 	DropDown.text:SetJustifyV("MIDDLE")
 	DropDown.text:SetJustifyH("CENTER")
 	-- DropDown.text:SetTextColor(1, 1, 1, 1)
-	local text = L["OPTIONS"]
+	local text = text or L["OPTIONS"]
 	DropDown.text:SetText(text)
 	local width = math.max(math.ceil(DropDown.text:GetStringWidth())+50, 90)
 	if width % 2 == 1 then
@@ -128,7 +129,7 @@ local function GetCharactersData(serverName, regionName)
 					UnitLevel = pd.UnitLevel,
 					avgItemLevel = pd.avgItemLevel,
 					specIcon = pd.specIcon,
-					isShownPlayer = pd.isShownPlayer,
+					CONFIG_SHOW_PLAYER = pd.CONFIG_SHOW_PLAYER,
 					curServer = curServer
 			})
 		end
@@ -151,13 +152,13 @@ end
 ----------------------------------------------------------------
 local function CreateCharactersMenu(dropdown, providerfunc)
 	local function selectFunctionisShownPlayer(menuButton, _, _, checked)
-		Octo_ToDo_DB_Levels[menuButton.value].PlayerData.isShownPlayer = checked
+		Octo_ToDo_DB_Levels[menuButton.value].PlayerData.CONFIG_SHOW_PLAYER = checked
 		providerfunc()
 	end
 	local function RemoveGuid(menuButton, arg1)
-		local guid = menuButton.value
-		Octo_ToDo_DB_Levels[guid] = nil
-		C_Timer.After(1, providerfunc)
+	    local guid = menuButton.value
+	    E.func_DELETEPERS(guid)
+	    C_Timer.After(1, providerfunc)
 	end
 	return function(self, level, value)
 		if level == 2 then
@@ -183,9 +184,9 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				local servers = GetServersData(regionName)
 				for _, serverName in ipairs(servers) do
 					local output = serverName
-					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (regionName ~= E.CurrentRegionName or
-						Octo_ToDo_DB_Vars.isOnlyCurrentServer and serverName ~= E.func_GetPlayerRealm()) or
-					not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.isOnlyCurrentServer and
+					if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION and (regionName ~= E.CurrentRegionName or
+						Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER and serverName ~= E.func_GetPlayerRealm()) or
+					not Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION and Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER and
 					serverName ~= E.func_GetPlayerRealm() then
 						output = E.COLOR_GRAY..output.."|r"
 					elseif serverName == E.func_GetPlayerRealm() then
@@ -196,8 +197,10 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					self:ddAddButton(info, level)
 				end
 			end
+			----------------------------------------------------------------
 			-- Разделитель после иерархии персонажей
 			self:ddAddSeparator(level)
+			----------------------------------------------------------------
 			-- Затем кнопки фильтров
 			local info = {}
 			info.fontObject = OctoFont11
@@ -205,34 +208,38 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			info.hasArrow = nil
 			info.keepShownOnClick = false
 			info.notCheckable = true
+			----------------------------------------------------------------
 			info.text = L["Show All"] -- INTERACT_ICONS_SHOW_ALL
 			info.func = function(_, _, _, checked)
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					local pd = CharInfo.PlayerData
-					pd.isShownPlayer = true
+					pd.CONFIG_SHOW_PLAYER = true
 				end
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
+			----------------------------------------------------------------
 			info.text = L["Hide All"]
 			info.func = function(_, _, _, checked)
 				for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 					local pd = CharInfo.PlayerData
-					pd.isShownPlayer = false
+					pd.CONFIG_SHOW_PLAYER = false
 				end
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
+			----------------------------------------------------------------
 			self:ddAddSeparator(level)
+			----------------------------------------------------------------
 			-- Фильтры
 			info.keepShownOnClick = true
 			info.notCheckable = false
 			info.isNotRadio = true
 			-- Только текущий сервер
 			info.text = L["Only Current Server"]
-			info.checked = Octo_ToDo_DB_Vars.isOnlyCurrentServer
+			info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER
 			info.func = function(_, _, _, checked)
-				Octo_ToDo_DB_Vars.isOnlyCurrentServer = checked
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER = checked
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
@@ -242,18 +249,18 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			else
 				info.text = E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"]
 			end
-			info.checked = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+			info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION
 			info.func = function(_, _, _, checked)
-				Octo_ToDo_DB_Vars.isOnlyCurrentFaction = checked
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION = checked
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
 			-- Только текущий регион
 			if countRegions > 1 then
 				info.text = L["Only Current Region"]
-				info.checked = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+				info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
 				info.func = function(_, _, _, checked)
-					Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = checked
+					Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION = checked
 					providerfunc()
 				end
 				self:ddAddButton(info, level)
@@ -270,9 +277,9 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				local servers = GetServersData(value)
 				for _, serverName in ipairs(servers) do
 					local output = serverName
-					if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and (value ~= E.CurrentRegionName or
-						Octo_ToDo_DB_Vars.isOnlyCurrentServer and serverName ~= E.func_GetPlayerRealm()) or
-					not Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion and Octo_ToDo_DB_Vars.isOnlyCurrentServer and
+					if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION and (value ~= E.CurrentRegionName or
+						Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER and serverName ~= E.func_GetPlayerRealm()) or
+					not Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION and Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER and
 					serverName ~= E.func_GetPlayerRealm() then
 						output = E.COLOR_GRAY..output.."|r"
 					elseif serverName == E.func_GetPlayerRealm() then
@@ -303,7 +310,7 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					info.text = char.Name
 					info.value = char.GUID
 					info.func = selectFunctionisShownPlayer
-					info.checked = char.isShownPlayer
+					info.checked = char.CONFIG_SHOW_PLAYER
 					info.arg1 = {self, level, value}
 					if char.GUID ~= E.curGUID then
 						info.remove = RemoveGuid
@@ -336,7 +343,7 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 					info.text = char.Name
 					info.value = char.GUID
 					info.func = selectFunctionisShownPlayer
-					info.checked = char.isShownPlayer
+					info.checked = char.CONFIG_SHOW_PLAYER
 					info.arg1 = {self, level, value}
 					if char.GUID ~= E.curGUID then
 						info.remove = RemoveGuid
@@ -690,7 +697,7 @@ end
 -- Основная функция меню ToDo
 ----------------------------------------------------------------
 function E.func_Create_DDframe_ToDo(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, providerfunc)
+	local DropDown = E.func_CreateBaseDropDown(frame)
 	-- Создаем обработчики для каждого типа меню
 	local charactersMenu = CreateCharactersMenu(DropDown, providerfunc)
 	local expansionsMenu = CreateExpansionsMenu(DropDown, providerfunc)
@@ -751,7 +758,7 @@ end
 -- Меню Achievements
 ----------------------------------------------------------------
 function E.func_Create_DDframe_Achievements(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, providerfunc)
+	local DropDown = E.func_CreateBaseDropDown(frame)
 	local function selectFunctionAchievementToShow(menuButton, _, arg2, checked)
 		Octo_Achievements_DB.Config_Achievements.AchievementToShow[menuButton.value] = checked or nil
 		if arg2 == 2 then
@@ -841,7 +848,7 @@ end
 -- Меню QuestsChanged
 ----------------------------------------------------------------
 function E.func_Create_DDframe_QuestsChanged(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, providerfunc)
+	local DropDown = E.func_CreateBaseDropDown(frame)
 	DropDown:ddSetInitFunc(function(self, level, value)
 			local info = {}
 			info.fontObject = OctoFont11
@@ -888,7 +895,7 @@ end
 -- Меню editFrame
 ----------------------------------------------------------------
 function E.func_Create_DDframe_editFrame(frame, hex, providerfunc)
-	local DropDown = CreateBaseDropDown(frame, providerfunc)
+	local DropDown = E.func_CreateBaseDropDown(frame)
 	local editBox = E.editBox:GetEditBox()
 	local handlerCache = setmetatable({}, { __mode = "kv" }) -- (ПОФИКСИТЬ) Weak table с __mode = "v" работает только со значениями, но ключи могут накапливаться. Лучше использовать __mode = "kv" или очищать периодически.
 	local function makeThemeHandler(themeName)

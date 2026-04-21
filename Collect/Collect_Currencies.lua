@@ -200,10 +200,10 @@ end
 
 
 local function GetRaceIDByEnglishRace(englishRace)
-	for raceID = 1, 100 do
-		local info = C_CreatureInfo.GetRaceInfo(raceID)
+	for RaceID = 1, 100 do
+		local info = C_CreatureInfo.GetRaceInfo(RaceID)
 		if info and info.clientFileString == englishRace then
-			return raceID
+			return RaceID
 		end
 	end
 end
@@ -244,7 +244,6 @@ function E.func_DEBUG_CURRENCY_TRANSFER()
 						pd.curServer = realmName
 						pd.className = localizedClass
 						pd.classFilename = englishClass
-						pd.RaceLocal = localizedRace -- эльфийка крови
 						pd.RaceEnglish = englishRace -- BloodElf
 						pd.UnitSex = sex -- 3
 						local classColor, classColorHex = GetClassColorData(englishClass)

@@ -183,6 +183,13 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	if compareVersion(114.3, DBVersion) then
+		if pd.isShownPlayer ~= nil then
+			pd.CONFIG_SHOW_PLAYER = pd.isShownPlayer
+			pd.isShownPlayer = nil
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
@@ -208,6 +215,35 @@ local function updateGlobal(DBVersion)
 		if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER ~= nil then
 			Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER
 		end
+	end
+	----------------------------------------------------------------
+	if compareVersion(114.3, DBVersion) then
+		if Octo_ToDo_DB_Vars.Config_LevelToShow ~= nil then
+			Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Vars.Config_LevelToShow
+			Octo_ToDo_DB_Vars.Config_LevelToShow = nil
+		end
+
+		if Octo_ToDo_DB_Vars.Config_LevelToShowMAX ~= nil then
+			Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
+			Octo_ToDo_DB_Vars.Config_LevelToShowMAX = nil
+		end
+		if Octo_ToDo_DB_Vars.isOnlyCurrentBtag ~= nil then
+			Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Vars.isOnlyCurrentBtag
+			Octo_ToDo_DB_Vars.isOnlyCurrentBtag = nil
+		end
+		if Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion ~= nil then
+			Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion
+			Octo_ToDo_DB_Vars.ShowOnlyCurrentRegion = nil
+		end
+		if Octo_ToDo_DB_Vars.isOnlyCurrentServer ~= nil then
+			Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Vars.isOnlyCurrentServer
+			Octo_ToDo_DB_Vars.isOnlyCurrentServer = nil
+		end
+		if Octo_ToDo_DB_Vars.isOnlyCurrentFaction ~= nil then
+			Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
+			Octo_ToDo_DB_Vars.isOnlyCurrentFaction = nil
+		end
+
 	end
 	----------------------------------------------------------------
 end

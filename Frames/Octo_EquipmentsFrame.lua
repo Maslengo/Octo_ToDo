@@ -108,7 +108,7 @@ local func_OnAcquired do
 			frame.columnFrames = setmetatable({}, {
 					__index = function(self, key)
 						if key then
-							local columnFrame = CreateFrame("BUTTON", "columnFrame"..key, frame, "OctoPropagateTemplate")
+							local columnFrame = CreateFrame("BUTTON", "columnFrame"..key, frame, "OctoRectTemplate")
 							columnFrame:Hide()
 							columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
 							local colType = EventFrame.columnTypes[key]
@@ -248,7 +248,7 @@ function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInf
 	NameHeader.ItemLevel:SetJustifyH("RIGHT")
 	----------------------------------------------------------------
 	NameHeader.Nickname:SetText(E.func_CharInfo_NickName(CharInfo))
-	if Octo_ToDo_DB_Vars.isOnlyCurrentServer then
+	if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER then
 		NameHeader.Nickname:SetPoint("CENTER")
 		NameHeader.Server:SetText("")
 	else
@@ -490,7 +490,7 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	Octo_EquipmentsFrame:SetScript("OnClick", function(self)
 			self:Hide()
 	end)
-	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList") -- OctoPropagateTemplate
+	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList") -- OctoRectTemplate
 	Octo_EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
 	Octo_EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
 	-- Octo_EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
@@ -501,7 +501,7 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	Octo_EquipmentsFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_EquipmentsFrame.ScrollBox, "BOTTOMRIGHT", 6, 0)
 	Octo_EquipmentsFrame.view = CreateScrollBoxListTreeListView()
 	Octo_EquipmentsFrame.view:SetElementExtent(E.GLOBAL_LINE_HEIGHT)
-	Octo_EquipmentsFrame.view:SetElementInitializer("OctoPropagateTemplate",
+	Octo_EquipmentsFrame.view:SetElementInitializer("OctoRectTemplate",
 		function(...)
 			self:Octo_Frame_init(...)
 	end)
