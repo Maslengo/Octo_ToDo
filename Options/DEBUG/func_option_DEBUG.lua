@@ -49,8 +49,9 @@ function E.func_option_DEBUG(category, layout)
 		local buttonText = L["RESET"] .. ": " .. L["BAG_FILTER_TITLE_SORTING"]
 		local tooltip = "table: Octo_ToDo_DB_Options"
 		local function buttonClick()
-			Octo_ToDo_DB_Options = nil
-			E.init_Octo_ToDo_DB_Options()
+				wipe(Octo_ToDo_DB_Options)
+				E.init_Octo_ToDo_DB_Options()
+				E.func_CreateDataProvider_SORTUI()
 		end
 		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 	end

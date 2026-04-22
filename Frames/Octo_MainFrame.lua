@@ -669,7 +669,8 @@ function EventFrame:func_CreateMainFrame()
 		self.Text:SetTextColor(textR, textG, textB, textA)
 		self.CharTexture = self:CreateTexture(nil, "BACKGROUND", nil, -3)
 		self.CharTexture:SetAllPoints()
-		self.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
+		-- self.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
+		self.CharTexture:SetTexture(E.TEXTURE_HEADER)
 	end
 	Octo_MainFrame.pool = CreateFramePool("BUTTON", scrollContentFrame, "OctoRectTemplate", ResetPoolFrame, false, InitializePoolFrame)
 end

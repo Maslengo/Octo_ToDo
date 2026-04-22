@@ -51,10 +51,10 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 	-- scrollContentFrame_RIGHT.BG:SetAllPoints()
 	-- scrollContentFrame_RIGHT.BG:SetColorTexture(.1, .1, .1, 0)
 	----------------------------------------------------------------
-	local dragFrame_LEFT = CreateFrame("FRAME", nil, UIParent, "OctoBackdropPropagateTemplate")
-	dragFrame_LEFT:SetBackdrop(E.menuBackdrop)
-	local dragFrame_RIGHT = CreateFrame("FRAME", nil, UIParent, "OctoBackdropPropagateTemplate")
-	dragFrame_RIGHT:SetBackdrop(E.menuBackdrop)
+	local dragFrame_LEFT = CreateFrame("FRAME", nil, UIParent, "OctoPropagateTemplate")
+	-- dragFrame_LEFT:SetBackdrop(E.menuBackdrop)
+	local dragFrame_RIGHT = CreateFrame("FRAME", nil, UIParent, "OctoPropagateTemplate")
+	-- dragFrame_RIGHT:SetBackdrop(E.menuBackdrop)
 	----------------------------------------------------------------
 	layout:SetScript("OnShow", function()
 			scrollContentFrame_LEFT:Show()
@@ -167,7 +167,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 		function E.Create_BACKGROUND_LEFT(frame)
 			frame.BACKGROUND_LEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -2)
 			frame.BACKGROUND_LEFT:SetAllPoints()
-			E.func_SetupTextureToFrame(frame.BACKGROUND_LEFT, E.TEXTURE_CENTRAL_PATH)
+			E.func_SetupTextureToFrame(frame.BACKGROUND_LEFT, E.TEXTURE_HEADER)
 			-- frame.BACKGROUND_LEFT:Hide()
 		end
 		local function func_OnDragStart_LEFT(frame)
@@ -199,13 +199,14 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				E.func_3_LEFT(dragFrame_LEFT, key, index) -- DELETE
 				E.func_4_LEFT(dragFrame_LEFT, index, order) -- UP
 				E.func_5_LEFT(dragFrame_LEFT, index, order) -- DOWN
-				E.func_BACKGROUND_LEFT(dragFrame_LEFT)
+				E.func_text_LEFT(dragFrame_LEFT, key)
+				E.func_BACKGROUND_LEFT(dragFrame_LEFT, key)
 			end
 		end
 		function func_OnAcquiredLEFT(owner, frame, node, new)
 			if not new then return end
 			local frameData = node:GetData()
-			frame:SetBackdrop(E.menuBackdrop)
+			-- frame:SetBackdrop(E.menuBackdrop)
 			----------------
 			do
 				frame:SetWidth(WIDTH_ROW)
@@ -291,7 +292,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 		function E.Create_BACKGROUND_RIGHT(frame)
 			frame.BACKGROUND_RIGHT = frame:CreateTexture(nil, "BACKGROUND", nil, -2)
 			frame.BACKGROUND_RIGHT:SetAllPoints()
-			E.func_SetupTextureToFrame(frame.BACKGROUND_RIGHT, E.TEXTURE_CENTRAL_PATH)
+			E.func_SetupTextureToFrame(frame.BACKGROUND_RIGHT, E.TEXTURE_HEADER)
 			frame.BACKGROUND_RIGHT:Hide()
 		end
 		local function func_OnDragStart_RIGHT(frame)
@@ -333,7 +334,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 		function func_OnAcquiredRIGHT(owner, frame, node, new)
 			if not new then return end
 			local frameData = node:GetData()
-			frame:SetBackdrop(E.menuBackdrop)
+			-- frame:SetBackdrop(E.menuBackdrop)
 			----------------
 			do
 				frame:SetWidth(WIDTH_ROW)
@@ -428,9 +429,34 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 					end
 			end)
 		end
-		function E.func_BACKGROUND_LEFT(frame)
+
+		function E.func_text_LEFT(frame, key)
+			local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+			local isActiveSettings = Octo_ToDo_DB_Options.sort_order_ACTIVED[key]
+			local isCustomSoring = Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM
+
+			local displayName = E.SORT_OPTIONS[key].name
+
+
+			local color = E.COLOR_WHITE
+			if not isActiveSettings or isCustomSoring then
+				color = E.COLOR_GRAY
+			end
+			frame.TEXTLEFT:SetText(color .. displayName .. "|r")
+
+		end
+		function E.func_BACKGROUND_LEFT(frame, key)
+			local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+			local isActiveSettings = Octo_ToDo_DB_Options.sort_order_ACTIVED[key]
+			local isCustomSoring = Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM
 			frame.BACKGROUND_LEFT:Show()
-			frame.BACKGROUND_LEFT:SetVertexColor(.1, .1, .1, .4)
+			-- local r, g, b, a = .5, .3, .1, .5
+			local r, g, b, a = 1, 1, 1, .5
+			local _, _, _, a = E.func_DB_HEADER_COLOR(CharInfo)
+			if not isActiveSettings or isCustomSoring then
+				r, g, b = .2,.2,.2
+			end
+			frame.BACKGROUND_LEFT:SetVertexColor(r, g, b, a)
 		end
 		----------------------------------------------------------------
 		function func_InitLEFT(frame, node, isDrag)
@@ -438,31 +464,24 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 			frame:Show()
 			local index = frameData.index
 			local key = frameData.key
-			local displayName = E.SORT_OPTIONS[key].name
-			local isActiveSettings = Octo_ToDo_DB_Options.sort_order_ACTIVED[key]
+
 			local isReverse = Octo_ToDo_DB_Options.sort_reverse[key]
-			local color = E.COLOR_WHITE
-			if Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM then color = E.COLOR_GRAY end
-			if isActiveSettings then
-				-- if isReverse then
-				-- color = E.COLOR_GREEN
-				-- end
-			else
-				color = E.COLOR_GRAY
-			end
-			frame.TEXTLEFT:SetText(color .. displayName .. "|r")
+
 			local order = Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.sort_order
 			-- ОБНОВЛЯЕМ ИНДЕКС ПРИ КАЖДОМ ВЫЗОВЕ
 			frame.index = index
 			frame.key = key
 			frame.order = order
+
 			do
+
 				E.func_1_LEFT(frame, key) -- ACTIVE
 				E.func_2_LEFT(frame, key) -- REVERSE
 				E.func_3_LEFT(frame, key, index) -- DELETE
 				E.func_4_LEFT(frame, index, order) -- UP
 				E.func_5_LEFT(frame, index, order) -- DOWN
-				E.func_BACKGROUND_LEFT(frame) -- BACKGROUND_LEFT
+				E.func_text_LEFT(frame, key)
+				E.func_BACKGROUND_LEFT(frame, key) -- BACKGROUND_LEFT
 			end
 			-- EventFrame.cover_LEFT:Hide()
 			if EventFrame.cover_LEFT.index == frame.index then
@@ -535,15 +554,17 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				CustomColor = E.COLOR_GRAY
 			end
 			-- (CharInfo, alwaysShowLevel, forceHideLevel, CustomColor, markPlayer)
-			local Nickname = E.func_CharInfo_NickName(CharInfo, true, false, nil, true)
+			-- local Nickname = E.func_CharInfo_NickName(CharInfo, true, false, nil, true)
+			local Nickname = E.func_CharInfo_NickName(CharInfo, true, false, CustomColor, true)
 			-- (CharInfo, alwaysShowServer, useShortServer, CustomColor)
-			local Server = E.func_CharInfo_Server(CharInfo, true, false, nil)
+			-- local Server = E.func_CharInfo_Server(CharInfo, true, false, nil)
+			local Server = E.func_CharInfo_Server(CharInfo, true, false, CustomColor)
 			frame.TEXT_RIGHT:SetText(Nickname .. " " .. Server)
 		end
 		function E.func_BACKGROUND_RIGHT(frame, GUID, CharInfo, pd)
 			-- frame.BACKGROUND_RIGHT:Hide()
 			local isPlayerMustBeShown = pd.CONFIG_SHOW_PLAYER
-			local r, g, b, a = .1, .1, .1, .2
+			local r, g, b, a = .1, .1, .1, .5
 			if isPlayerMustBeShown or GUID == E.curGUID then
 				r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
 				-- else
@@ -552,7 +573,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 			-- local r, g, b, a = E.func_Hex2RGBA(color)
 			-- local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
 			frame.BACKGROUND_RIGHT:Show()
-			frame.BACKGROUND_RIGHT:SetVertexColor(r, g, b, .3)
+			frame.BACKGROUND_RIGHT:SetVertexColor(r, g, b, a)
 		end
 		----------------------------------------------------------------
 		function func_InitRIGHT(frame, node)
@@ -716,7 +737,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 			scrollContentFrame_LEFT.ScrollBarLEFT:SetPoint("BOTTOMLEFT", scrollContentFrame_LEFT, "BOTTOMRIGHT", INDENT_SCROLL, 0)
 			scrollContentFrame_LEFT.ViewLEFT = CreateScrollBoxListTreeListView(0)
 			scrollContentFrame_LEFT.ViewLEFT:SetElementExtent(HEIGHT_ROW)
-			scrollContentFrame_LEFT.ViewLEFT:SetElementInitializer("OctoBackdropPropagateTemplate", function(...) func_InitLEFT(...) end)
+			scrollContentFrame_LEFT.ViewLEFT:SetElementInitializer("OctoPropagateTemplate", function(...) func_InitLEFT(...) end)
 			scrollContentFrame_LEFT.ViewLEFT:RegisterCallback(scrollContentFrame_LEFT.ViewLEFT.Event.OnAcquiredFrame, func_OnAcquiredLEFT, scrollContentFrame_LEFT)
 			ScrollUtil.InitScrollBoxListWithScrollBar(scrollContentFrame_LEFT.ScrollBoxLEFT, scrollContentFrame_LEFT.ScrollBarLEFT, scrollContentFrame_LEFT.ViewLEFT)
 			ScrollUtil.AddManagedScrollBarVisibilityBehavior(scrollContentFrame_LEFT.ScrollBoxLEFT, scrollContentFrame_LEFT.ScrollBarLEFT)
@@ -960,7 +981,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 			scrollContentFrame_RIGHT.ScrollBarRIGHT:SetPoint("BOTTOMLEFT", scrollContentFrame_RIGHT, "BOTTOMRIGHT", INDENT_SCROLL, 0)
 			scrollContentFrame_RIGHT.ViewRIGHT = CreateScrollBoxListTreeListView(0)
 			scrollContentFrame_RIGHT.ViewRIGHT:SetElementExtent(HEIGHT_ROW)
-			scrollContentFrame_RIGHT.ViewRIGHT:SetElementInitializer("OctoBackdropPropagateTemplate", function(...) func_InitRIGHT(...) end)
+			scrollContentFrame_RIGHT.ViewRIGHT:SetElementInitializer("OctoPropagateTemplate", function(...) func_InitRIGHT(...) end)
 			scrollContentFrame_RIGHT.ViewRIGHT:RegisterCallback(scrollContentFrame_RIGHT.ViewRIGHT.Event.OnAcquiredFrame, func_OnAcquiredRIGHT, scrollContentFrame_RIGHT)
 			ScrollUtil.InitScrollBoxListWithScrollBar(scrollContentFrame_RIGHT.ScrollBoxRIGHT, scrollContentFrame_RIGHT.ScrollBarRIGHT, scrollContentFrame_RIGHT.ViewRIGHT)
 			ScrollUtil.AddManagedScrollBarVisibilityBehavior(scrollContentFrame_RIGHT.ScrollBoxRIGHT, scrollContentFrame_RIGHT.ScrollBarRIGHT)

@@ -1809,7 +1809,7 @@ function E.func_SortCharacters()
 				end
 			end
 		end
-		E.func_ApplySort(visible, curGUID, CONFIG_SHOW_ALWAYS_AS_FIRST)
+		-- E.func_ApplySort(visible, curGUID, CONFIG_SHOW_ALWAYS_AS_FIRST)
 		E.func_ApplySort(hidden, curGUID, false)
 		return visible, hidden, filtered
 	end
@@ -1829,10 +1829,19 @@ function E.func_SortCharacters()
 				local meetsRegion = not checkCurrentRegion or pd.CurrentRegionName == CurrentRegionName
 				local meetsBtag = not checkCurrentBtag or pd.BattleTag == curBattleTag
 				local passedFilters = meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag
-				if not passedFilters then
-					filtered[#filtered + 1] = CharInfo
-				elseif GUID == curGUID then
+				-- if not passedFilters then
+				-- 	filtered[#filtered + 1] = CharInfo
+				-- elseif GUID == curGUID then
+				-- 	visible[#visible + 1] = CharInfo
+				-- elseif pd.CONFIG_SHOW_PLAYER then
+				-- 	visible[#visible + 1] = CharInfo
+				-- else
+				-- 	hidden[#hidden + 1] = CharInfo
+				-- end
+				if GUID == curGUID then
 					visible[#visible + 1] = CharInfo
+				elseif not passedFilters then
+					filtered[#filtered + 1] = CharInfo
 				elseif pd.CONFIG_SHOW_PLAYER then
 					visible[#visible + 1] = CharInfo
 				else

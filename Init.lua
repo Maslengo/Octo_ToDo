@@ -518,6 +518,7 @@ E.IconTexture = C_AddOns.GetAddOnMetadata(GlobalAddonName, "IconTexture")
 -- interface/warbands/uiwarbandsicons
 E.TEXTURE_ADDON = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\ToDo.tga"
 E.TEXTURE_CENTRAL_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga"
+E.TEXTURE_HEADER = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CentralFrame.tga" -- HEADER
 E.TEXTURE_LEFT_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\LeftFrame.tga"
 E.TEXTURE_CHAR_PATH = "Interface\\Addons\\"..GlobalAddonName.."\\Media\\Textures\\CharFrame.tga"
 E.TEXTURE_HIGHLIGHT_ATLAS = "auctionhouse-ui-row-highlight"
