@@ -1843,71 +1843,62 @@ function E.func_SortCharacters()
 	end
 	E.func_ApplySort(visible, curGUID, CONFIG_SHOW_ALWAYS_AS_FIRST)
 	E.func_ApplySort(hidden, curGUID, false)
-	-- filtered не сортируем, нахуй не надо
 	return visible, hidden, filtered
 end
 function E.func_ApplySort(list, curGUID, alwaysFirst)
-    local sortOrder = Octo_ToDo_DB_Options.sort_order or {}
-    local sortOrderActived = Octo_ToDo_DB_Options.sort_order_ACTIVED or {}
-    local sortReverse = Octo_ToDo_DB_Options.sort_reverse or {}
-
-    table.sort(list, function(a, b)
-        local aData, bData = a.PlayerData, b.PlayerData
-        if not aData or not bData then return false end
-
-        if alwaysFirst then
-            local aIsCurrent = aData.GUID == curGUID
-            local bIsCurrent = bData.GUID == curGUID
-            if aIsCurrent ~= bIsCurrent then
-                return aIsCurrent
-            end
-        end
-
-        for _, sortKey in ipairs(sortOrder) do
-            if sortOrderActived[sortKey] then
-                local aVal = aData[sortKey]
-                local bVal = bData[sortKey]
-                local reverse = sortReverse[sortKey]
-
-                -- Если значения nil, заменяем на дефолтные
-                if aVal == nil then aVal = (type(bVal) == "number") and 0 or "" end
-                if bVal == nil then bVal = (type(aVal) == "number") and 0 or "" end
-
-                local aType = type(aVal)
-                local bType = type(bVal)
-
-                -- Приводим к одному типу для сравнения
-                if aType == "number" and bType ~= "number" then
-                    bVal = tonumber(bVal) or 0
-                elseif aType ~= "number" and bType == "number" then
-                    aVal = tonumber(aVal) or 0
-                    aType = "number"
-                end
-
-                if aType == "number" then
-                    if aVal ~= bVal then
-                        if reverse then
-                            return aVal < bVal
-                        else
-                            return aVal > bVal
-                        end
-                    end
-                else
-                    aVal = tostring(aVal)
-                    bVal = tostring(bVal)
-                    if aVal ~= bVal then
-                        if reverse then
-                            return aVal > bVal
-                        else
-                            return aVal < bVal
-                        end
-                    end
-                end
-            end
-        end
-
-        return (aData.Name or "") < (bData.Name or "")
-    end)
+	local sortOrder = Octo_ToDo_DB_Options.sort_order or {}
+	local sortOrderActived = Octo_ToDo_DB_Options.sort_order_ACTIVED or {}
+	local sortReverse = Octo_ToDo_DB_Options.sort_reverse or {}
+	table.sort(list, function(a, b)
+		local aData, bData = a.PlayerData, b.PlayerData
+		if not aData or not bData then return false end
+		if alwaysFirst then
+			local aIsCurrent = aData.GUID == curGUID
+			local bIsCurrent = bData.GUID == curGUID
+			if aIsCurrent ~= bIsCurrent then
+				return aIsCurrent
+			end
+		end
+		for _, sortKey in ipairs(sortOrder) do
+			if sortOrderActived[sortKey] then
+				local aVal = aData[sortKey]
+				local bVal = bData[sortKey]
+				local reverse = sortReverse[sortKey]
+				-- Если значения nil, заменяем на дефолтные
+				if aVal == nil then aVal = (type(bVal) == "number") and 0 or "" end
+				if bVal == nil then bVal = (type(aVal) == "number") and 0 or "" end
+				local aType = type(aVal)
+				local bType = type(bVal)
+				-- Приводим к одному типу для сравнения
+				if aType == "number" and bType ~= "number" then
+					bVal = tonumber(bVal) or 0
+				elseif aType ~= "number" and bType == "number" then
+					aVal = tonumber(aVal) or 0
+					aType = "number"
+				end
+				if aType == "number" then
+					if aVal ~= bVal then
+						if reverse then
+							return aVal < bVal
+						else
+							return aVal > bVal
+						end
+					end
+				else
+					aVal = tostring(aVal)
+					bVal = tostring(bVal)
+					if aVal ~= bVal then
+						if reverse then
+							return aVal > bVal
+						else
+							return aVal < bVal
+						end
+					end
+				end
+			end
+		end
+		return (aData.Name or "") < (bData.Name or "")
+	end)
 end
 -- function E.func_SortCharacters()
 --     local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER or false

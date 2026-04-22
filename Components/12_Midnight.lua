@@ -21,6 +21,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
+		{id = 3418, defS = true,}, -- Nebulous Voidcore (12.0.5 "Midnight")
 		-- фиол
 		{id = 3400, defS = false,}, -- Uncontaminated Void Sample
 		{id = 3379, defS = false,}, -- Brimming Arcana
@@ -67,6 +68,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Items = {
+		{id = 265695, defS = false,}, -- Elementarer Leerenkernsplitter
 		{id = 232875, defS = false,}, -- Spark of Radiance (Midnight Season 1)
 	}
 	----------------------------------------------------------------
@@ -91,6 +93,7 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Reputations = {
+		{id = 2792, defS = false,}, -- Места првоедения Ритуалов
 		{id = 2710, defS = false,}, -- Silvermoon Court (Двор Луносвета)
 		{id = 2696, defS = false,}, -- Amani Tribe (Племя Амани)
 		{id = 2704, defS = false,}, -- Hara'ti (Хара'ти)

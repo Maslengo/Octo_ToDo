@@ -52,8 +52,8 @@ function E.func_BUILD_DUNG_DB()
 		end)
 	end
 	-- if not E.DEBUG then return end
-	local funcName = "func_BUILD_DUNG_DB"
-	E.DEBUG_START()
+	-- local funcName = "func_BUILD_DUNG_DB"
+	-- E.DEBUG_START()
 	local backupTier = EJ_GetCurrentTier()
 	local backupDifficulty = EJ_GetDifficulty()
 	local maxTiers = EJ_GetNumTiers()
@@ -106,7 +106,7 @@ function E.func_BUILD_DUNG_DB()
 	EJ_SetDifficulty(backupDifficulty)
 	EJ_SelectTier(backupTier)
 	E.Octo_Table_SI_IDS = instanceDB
-	E.DEBUG_STOP(funcName)
+	-- E.DEBUG_STOP(funcName)
 	-- opde(instanceDB)
 end
 ----------------------------------------------------------------
