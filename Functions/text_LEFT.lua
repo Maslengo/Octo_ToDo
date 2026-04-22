@@ -146,7 +146,7 @@ function E.func_Otrisovka_LEFT_AdditionallyBOTTOM(categoryKey, CharInfo, dataTyp
 		TextLeft = L["STAT_AVERAGE_ITEM_LEVEL"]
 	end
 	if id == "Money" then
-		TextLeft = L["BONUS_ROLL_REWARD_MONEY"]
+		TextLeft = L["MONEY"] --  L["BONUS_ROLL_REWARD_MONEY"]
 	end
 	if id == "LastOnline" then
 		TextLeft = L["Last online"]

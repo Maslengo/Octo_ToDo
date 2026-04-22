@@ -235,6 +235,7 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 			info.keepShownOnClick = true
 			info.notCheckable = false
 			info.isNotRadio = true
+			----------------------------------------------------------------
 			-- Только текущий сервер
 			info.text = L["Only Current Server"]
 			info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER
@@ -243,11 +244,14 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
+			----------------------------------------------------------------
 			-- Только текущая фракция
 			if E.FACTION_CURRENT == "Horde" then
 				info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
-			else
+			elseif E.FACTION_CURRENT == "Alliance" then
 				info.text = E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"]
+			else
+				info.text = E.func_texturefromIcon(E.ICON_NEUTRAL)..L["Only Neutral"]
 			end
 			info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION
 			info.func = function(_, _, _, checked)
@@ -255,6 +259,7 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				providerfunc()
 			end
 			self:ddAddButton(info, level)
+			----------------------------------------------------------------
 			-- Только текущий регион
 			if countRegions > 1 then
 				info.text = L["Only Current Region"]
@@ -265,6 +270,30 @@ local function CreateCharactersMenu(dropdown, providerfunc)
 				end
 				self:ddAddButton(info, level)
 			end
+			----------------------------------------------------------------
+			-- -- Только текущий BattleTag
+			-- info.text = L["Only Current BattleTag"]
+			-- info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG
+			-- info.func = function(_, _, _, checked)
+			-- 	Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = checked
+			-- 	E.func_CreateDataProvider_SORTUI()
+			-- end
+			-- self:ddAddButton(info, level)
+
+			----------------------------------------------------------------
+			-- Всегда показывать текущего персонажа первым
+			info.text = L["Show current character first"]
+			info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST
+			info.func = function(_, _, _, checked)
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST = checked
+				E.func_CreateDataProvider_SORTUI()
+			end
+			self:ddAddButton(info, level)
+			----------------------------------------------------------------
+
+
+
+
 		elseif level == 3 then
 			if type(value) == "string" then
 				-- Третий уровень: сервера региона

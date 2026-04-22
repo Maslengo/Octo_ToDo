@@ -35,7 +35,16 @@ function E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, Cust
 	local result = ""
 	local curServer = pd.curServer
 	local curServerShort = pd.curServerShort
-	local color = CustomColor or E.COLOR_SKYBLUE
+	local color = CustomColor
+
+	if not color then
+		if curServer == E.curServer then
+			color = E.COLOR_SKYBLUE
+		else
+			color = E.COLOR_STEELBLUE
+		end
+	end
+
 	if E.DEBUG_NAME then
 		curServer = "Server"
 	end
@@ -114,12 +123,12 @@ function E.func_CharInfo_ItemLevel(CharInfo)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local NickName =   E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, CustomColor)
-local Server =     E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, CustomColor)
-local Guild =      E.func_CharInfo_Guild(CharInfo)
-local Mail =       E.func_CharInfo_Mail(CharInfo)
-local durability = E.func_CharInfo_Durability(CharInfo, showIcon)
-local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
+-- local NickName =   E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, CustomColor)
+-- local Server =     E.func_CharInfo_Server(CharInfo, alwaysShowServer, useShortServer, CustomColor)
+-- local Guild =      E.func_CharInfo_Guild(CharInfo)
+-- local Mail =       E.func_CharInfo_Mail(CharInfo)
+-- local durability = E.func_CharInfo_Durability(CharInfo, showIcon)
+-- local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

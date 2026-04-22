@@ -72,7 +72,7 @@ function EventFrame:PLAYER_LOGIN()
 	do
 		local enable = true
 		if enable then
-			local sortCategoryName = L["RAID_FRAME_SORT_LABEL"] -- L["Characters"]
+			local sortCategoryName = L["BAG_FILTER_TITLE_SORTING"] -- L["Characters"]
 			local layout = CreateFrame("FRAME", GlobalAddonName.."CHARACTERS_LAYOUT") -- СОЗДАЁМ FRAME
 			layout:Hide()
 			local category = Settings.RegisterCanvasLayoutSubcategory(parentCategory, layout, sortCategoryName) -- РЕГИСТРИРУЕМ КАК ПОДКАТЕГОРИЮ (без RegisterAddOnCategory)

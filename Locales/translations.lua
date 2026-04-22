@@ -14,6 +14,35 @@ local GlobalAddonName, E = ...
 -- },
 -- Таблица с переводами
 E.translations = {
+	["Drag to reorder"] = {
+		["ruRU"] = "Перетащите, чтобы изменить порядок",
+		["deDE"] = "Ziehen, um die Reihenfolge zu ändern",
+		["esES"] = "Arrastra para reordenar",
+		["esMX"] = "Arrastra para reordenar",
+		["frFR"] = "Faites glisser pour réorganiser",
+		["itIT"] = "Trascina per riordinare",
+		["ptBR"] = "Arraste para reordenar",
+		["koKR"] = "드래그하여 순서 변경",
+		["zhCN"] = "拖动以重新排序",
+		["zhTW"] = "拖曳以重新排序",
+	},
+	["DRAG_MODEL"] = DRAG_MODEL, -- Drag
+	-- ["GEAR"] = GEAR or { -- EQUIPMENT
+	-- 	["enUS"] = "Gear",
+	-- 	["ruRU"] = "Экипировка",
+	-- },
+	["Gear"] = {
+		["ruRU"] = "Экипировка",
+		["deDE"] = "Ausrüstung",
+		["esES"] = "Equipo",
+		["esMX"] = "Equipo",
+		["frFR"] = "Équipement",
+		["itIT"] = "Equipaggiamento",
+		["ptBR"] = "Equipamento",
+		["koKR"] = "장비",
+		["zhCN"] = "装备",
+		["zhTW"] = "裝備",
+	},
 	["Ascending"] = {
 		["ruRU"] = "По возрастанию",
 		["deDE"] = "Aufsteigend",
@@ -69,12 +98,11 @@ E.translations = {
 	    ["frFR"] = "Afficher le personnage actuel en premier",
 	    ["esES"] = "Mostrar personaje actual primero",
 	    ["esMX"] = "Mostrar personaje actual primero",
-	    ["itIT"] = "Mostra personaggio attuale primo",
+	    ["itIT"] = "Mostra prima il personaggio attuale",
 	    ["ptBR"] = "Mostrar personagem atual primeiro",
 	    ["koKR"] = "현재 캐릭터 먼저 표시",
 	    ["zhCN"] = "优先显示当前角色",
 	    ["zhTW"] = "優先顯示目前角色",
-	    ["enUS"] = "Show current character first",
 	    ["enGB"] = "Show current character first",
 	},
 	["TIME_PLAYED_ALERT"] = TIME_PLAYED_ALERT, -- Вы находитесь в игре уже %s. Не стоит чрезмерно увлекаться игрой в ущерб вашей реальной жизни.
@@ -113,7 +141,7 @@ E.translations = {
 		["frFR"] = "Temps de jeu à ce niveau",
 		["itIT"] = "Tempo di gioco a questo livello",
 		["ptBR"] = "Tempo de jogo neste nível",
-		["koKR"] = "현재 레벨 플레이 시간",
+		["koKR"] = "현재 레벨의 플레이 시간", -- ["koKR"] = "현재 레벨 플레이 시간",
 		["zhCN"] = "本等级游戏时间",
 		["zhTW"] = "本等級遊戲時間",
 	},
@@ -156,10 +184,6 @@ E.translations = {
 	-- ["TALENT_FRAME_TAB_LABEL_SPEC"] = TALENT_FRAME_TAB_LABEL_SPEC, -- Специализация
 	["SPECIALIZATION"] = SPECIALIZATION, -- Специализация
 	----------------------------------------------------------------
-
-
-
-
 	["MONEY"] = MONEY, -- Деньги
 	----------------------------------------------------------------
 	["BONUS_ROLL_REWARD_MONEY"] = BONUS_ROLL_REWARD_MONEY, -- Золото
@@ -167,7 +191,7 @@ E.translations = {
 	-- WORLD_QUEST_REWARD_FILTERS_GOLD - Золото
 	----------------------------------------------------------------
 	["COVENANT"] = COVENANT or {
-		["enUs"] = "Covenant",
+		["enUS"] = "Covenant",
 		["ruRU"] = "Ковенант",
 		["deDE"] = "Pakt",
 		["esES"] = "Curia",
@@ -210,8 +234,8 @@ E.translations = {
 	-- CLUB_FINDER_SORT_BY - Сортировка
 	-- BAG_FILTER_CLEANUP - Сортировка
 	-- PERKS_PROGRAM_SORT_BY - Сортировка
-	["RAID_FRAME_SORT_LABEL"] = RAID_FRAME_SORT_LABEL, -- Сортировка
-	-- BAG_FILTER_TITLE_SORTING - Сортировка
+	-- ["RAID_FRAME_SORT_LABEL"] = RAID_FRAME_SORT_LABEL, -- Сортировка
+	["BAG_FILTER_TITLE_SORTING"] = BAG_FILTER_TITLE_SORTING, -- Сортировка
 	-- HUD_EDIT_MODE_SETTING_UNIT_FRAME_SORT_BY - Сортировка
 	-- STABLE_FILTER_SORT_BY_LABEL - Сортировка
 	----------------------------------------------------------------
@@ -357,13 +381,9 @@ E.translations = {
 	["WEEKLY"] = WEEKLY,
 	["WEEKLY_REWARDS_RETURN_TO_CLAIM"] = WEEKLY_REWARDS_RETURN_TO_CLAIM,
 	["HIDE"] = HIDE,
-	["GEAR"] = GEAR or { -- EQUIPMENT
-		["enUs"] = "Gear",
-		["ruRU"] = "Экипировка",
-	},
 
 	["REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE"] = REPUTATION_STATUS_BAR_LABEL_ACCOUNT_WIDE or {
-		["enUs"] = "Warband",
+		["enUS"] = "Warband",
 		["ruRU"] = "Отряд",
 	},
 
@@ -2594,6 +2614,18 @@ E.translations = {
 		["koKR"] = "얼라이언스만",
 		["zhCN"] = "仅联盟",
 		["zhTW"] = "僅限聯盟",
+	},
+	["Only Neutral"] = {
+		["ruRU"] = "Только нейтральная фракция",
+		["deDE"] = "Nur neutrale Fraktion",
+		["esES"] = "Solo facción neutral",
+		["esMX"] = "Solo facción neutral",
+		["frFR"] = "Faction neutre uniquement",
+		["itIT"] = "Solo fazione neutrale",
+		["ptBR"] = "Somente facção neutra",
+		["koKR"] = "중립 진영만",
+		["zhCN"] = "仅中立阵营",
+		["zhTW"] = "僅限中立陣營",
 	},
 	["About"] = {
 		["ruRU"] = "Об аддоне",

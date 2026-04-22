@@ -46,7 +46,7 @@ function E.func_option_DEBUG(category, layout)
 	----------------------------------------------------------------
 	do
 		local name = nil
-		local buttonText = L["RESET"] .. ": " .. L["RAID_FRAME_SORT_LABEL"]
+		local buttonText = L["RESET"] .. ": " .. L["BAG_FILTER_TITLE_SORTING"]
 		local tooltip = "table: Octo_ToDo_DB_Options"
 		local function buttonClick()
 			Octo_ToDo_DB_Options = nil

@@ -367,7 +367,7 @@ function EventFrame:Create_AdditionalInfoTooltipFrame()
 
 	local text1 = E.COLOR_SKYBLUE .. L["HIDE"] .. "|r" .. " [ctrl+LMB]"
 	local cm = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local text2 = cm.InventoryType and E.COLOR_SKYBLUE .. L["GEAR"] .. "|r" .. " [shift+LMB]" or ""
+	local text2 = cm.InventoryType and E.COLOR_SKYBLUE .. L["Gear"] .. "|r" .. " [shift+LMB]" or ""
 
 	local width = E.func_MeasureTextWidth({text1, text2})
 	frame:SetWidth(width)

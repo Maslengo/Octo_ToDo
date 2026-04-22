@@ -4,17 +4,23 @@ local LibSFDropDown = LibStub("LibSFDropDown-1.5")
 ----------------------------------------------------------------
 local WIDTH_FRAME = 660 -- ШИРИНА
 local HEIGHT_FRAME = 560 -- ВЫСОТА
-local WIDTH_ROW = WIDTH_FRAME / 2.5 -- ШИРИНА
-local HEIGHT_ROW = 38 -- ВЫСОТА
+local WIDTH_ROW = WIDTH_FRAME / 2.2 -- ШИРИНА
+local HEIGHT_ROW = 32 -- ВЫСОТА
 local WIDTH_BUTTON_BIG = 120 -- ШИРИНА
-local WIDTH_BUTTON = 24 -- HEIGHT_ROW-2 -- ШИРИНА
-local HEIGHT_BUTTON = 24 -- HEIGHT_ROW-2 -- ВЫСОТА
+local WIDTH_BUTTON = 20 -- HEIGHT_ROW-2 -- ШИРИНА
+local HEIGHT_BUTTON = 20 -- HEIGHT_ROW-2 -- ВЫСОТА
 local INDENT_CONTAINER = 16
 local INDENT_ROW = 0
 local WIDTH_DATAPROVIDER = WIDTH_ROW -- ШИРИНА
 local WIDTH_BUTTON_BIG = WIDTH_DATAPROVIDER/2 - INDENT_CONTAINER -- ШИРИНА
 local HEIGHT_DATAPROVIDER = 400 -- ВЫСОТА
 local INDENT_SCROLL = 6
+----------------------------------------------------------------
+local ALPHA_DISABLE = .5
+local ALPHA_ENABLE = 1
+local ALPHA_DRAG = .7
+----------------------------------------------------------------
+local dragText = E.classColorHexCurrent .. L["Drag to reorder"] .. "|r"
 ----------------------------------------------------------------
 -- local ICON_SETTINGS_GREEN = E.ICON_SETTINGS_GREEN
 -- local ICON_SETTINGS_RED = E.ICON_SETTINGS_RED
@@ -51,9 +57,9 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 	dragFrame_RIGHT:SetBackdrop(E.menuBackdrop)
 	----------------------------------------------------------------
 	layout:SetScript("OnShow", function()
-		scrollContentFrame_LEFT:Show()
-		scrollContentFrame_RIGHT:Show()
-		RunNextFrame(E.func_CreateDataProvider_SORTUI_FAST) -- C_Timer.After(0, E.func_CreateDataProvider_SORTUI_FAST)
+			scrollContentFrame_LEFT:Show()
+			scrollContentFrame_RIGHT:Show()
+			RunNextFrame(E.func_CreateDataProvider_SORTUI_FAST) -- C_Timer.After(0, E.func_CreateDataProvider_SORTUI_FAST)
 	end)
 	----------------------------------------------------------------
 	-- Функция для показа подтверждения удаления персонажа
@@ -528,9 +534,11 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 			else
 				CustomColor = E.COLOR_GRAY
 			end
-			local Nickname = E.func_CharInfo_NickName(CharInfo, forceServ, true, CustomColor, markPlayer)
-			local Server = E.func_CharInfo_Server(CharInfo, true, true, CustomColor)
-			frame.TEXT_RIGHT:SetText(Nickname .. " - " .. Server)
+			-- (CharInfo, alwaysShowLevel, forceHideLevel, CustomColor, markPlayer)
+			local Nickname = E.func_CharInfo_NickName(CharInfo, true, false, nil, true)
+			-- (CharInfo, alwaysShowServer, useShortServer, CustomColor)
+			local Server = E.func_CharInfo_Server(CharInfo, true, false, nil)
+			frame.TEXT_RIGHT:SetText(Nickname .. " " .. Server)
 		end
 		function E.func_BACKGROUND_RIGHT(frame, GUID, CharInfo, pd)
 			-- frame.BACKGROUND_RIGHT:Hide()
@@ -661,6 +669,11 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 							}, level)
 						end
 				end)
+				EventFrame.hintLeft = scrollContentFrame_LEFT:CreateFontString()
+				EventFrame.hintLeft:SetFontObject(OctoFont11)
+				EventFrame.hintLeft:SetPoint("BOTTOM", scrollContentFrame_LEFT, "TOP", 0, 0)
+				EventFrame.hintLeft:SetJustifyH("CENTER")
+				EventFrame.hintLeft:SetWidth(WIDTH_DATAPROVIDER)
 				return DropDownFrame_LEFT
 			end
 			local function Create_ResetFrame_LEFT(layout, scrollContentFrame_LEFT)
@@ -766,8 +779,10 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 						-- Только текущая фракция
 						if E.FACTION_CURRENT == "Horde" then
 							info.text = E.func_texturefromIcon(E.ICON_HORDE)..L["Only Horde"]
-						else
+						elseif E.FACTION_CURRENT == "Alliance" then
 							info.text = E.func_texturefromIcon(E.ICON_ALLIANCE)..L["Only Alliance"]
+						else
+							info.text = E.func_texturefromIcon(E.ICON_NEUTRAL)..L["Only Neutral"]
 						end
 						info.checked = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION
 						info.func = function(_, _, _, checked)
@@ -853,6 +868,11 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 						self:ddAddButton(info, level)
 						----------------------------------------------------------------
 				end)
+				EventFrame.hintRight = scrollContentFrame_RIGHT:CreateFontString()
+				EventFrame.hintRight:SetFontObject(OctoFont11)
+				EventFrame.hintRight:SetPoint("BOTTOM", scrollContentFrame_RIGHT, "TOP", 0, 0)
+				EventFrame.hintRight:SetJustifyH("CENTER")
+				EventFrame.hintRight:SetWidth(WIDTH_DATAPROVIDER)
 				return DropDownFrame_RIGHT
 			end
 			function E.disableButtonsUpdate()
@@ -860,25 +880,25 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				if Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM then
 					color = E.COLOR_GRAY
 					EventFrame.DropDownFrame_LEFT:SetEnabled(false)
-					EventFrame.DropDownFrame_LEFT:SetAlpha(0.5)
+					EventFrame.DropDownFrame_LEFT:SetAlpha(ALPHA_DISABLE)
 					EventFrame.DropDownFrame_RIGHT:SetEnabled(false)
-					EventFrame.DropDownFrame_RIGHT:SetAlpha(0.5)
+					EventFrame.DropDownFrame_RIGHT:SetAlpha(ALPHA_DISABLE)
 					if ResetFrame_LEFT then
 						ResetFrame_LEFT:SetEnabled(false)
-						ResetFrame_LEFT:SetAlpha(0.5)
+						ResetFrame_LEFT:SetAlpha(ALPHA_DISABLE)
 					end
-					scrollContentFrame_LEFT:SetAlpha(0.5)
+					scrollContentFrame_LEFT:SetAlpha(ALPHA_DISABLE)
 				else
 					color = E.COLOR_WHITE
 					EventFrame.DropDownFrame_LEFT:SetEnabled(true)
-					EventFrame.DropDownFrame_LEFT:SetAlpha(1)
+					EventFrame.DropDownFrame_LEFT:SetAlpha(ALPHA_ENABLE)
 					EventFrame.DropDownFrame_RIGHT:SetEnabled(true)
-					EventFrame.DropDownFrame_RIGHT:SetAlpha(1)
+					EventFrame.DropDownFrame_RIGHT:SetAlpha(ALPHA_ENABLE)
 					if ResetFrame_LEFT then
 						ResetFrame_LEFT:SetEnabled(true)
-						ResetFrame_LEFT:SetAlpha(1)
+						ResetFrame_LEFT:SetAlpha(ALPHA_ENABLE)
 					end
-					scrollContentFrame_LEFT:SetAlpha(1)
+					scrollContentFrame_LEFT:SetAlpha(ALPHA_ENABLE)
 				end
 				EventFrame.DropDownFrame_LEFT.text:SetText(color..L["ADD"].."|r")
 				EventFrame.DropDownFrame_RIGHT.text:SetText(color..L["OPTIONS"].."|r")
@@ -889,6 +909,13 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				if ResetFrame_RIGHT and ResetFrame_RIGHT.textUP and #sorted > 0 then
 					local text = #sorted .. "/" .. E.TOTAL_CHARS
 					ResetFrame_RIGHT.textUP:SetText(text)
+					if Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM then
+						EventFrame.hintLeft:SetText("")
+						EventFrame.hintRight:SetText(dragText)
+					else
+						EventFrame.hintLeft:SetText(dragText)
+						EventFrame.hintRight:SetText("")
+					end
 				end
 			end
 			local function Create_ResetFrame_RIGHT(layout, scrollContentFrame_LEFT)
@@ -909,8 +936,6 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				ResetFrame_RIGHT.textUP:SetText(L["CUSTOM"])
 				ResetFrame_RIGHT:HookScript("OnClick", E.disableButtonsUpdate)
 				ResetFrame_RIGHT:HookScript("OnShow", E.disableButtonsUpdate)
-
-
 				-- ResetFrame_RIGHT:SetScript("OnClick", function(selfBtn)
 				--         wipe(Octo_ToDo_DB_Options)
 				--         E.init_Octo_ToDo_DB_Options()
@@ -958,7 +983,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				E.Create_BACKGROUND_LEFT(dragFrame_LEFT)
 			end
 			----------------
-			dragFrame_LEFT:SetAlpha(0.7)
+			dragFrame_LEFT:SetAlpha(ALPHA_DRAG)
 			dragFrame_LEFT:SetMovable(true)
 			dragFrame_LEFT:SetMouseClickEnabled(false)
 			dragFrame_LEFT:SetMouseMotionEnabled(true)
@@ -1067,7 +1092,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 				E.Create_BACKGROUND_RIGHT(dragFrame_RIGHT)
 			end
 			----------------
-			dragFrame_RIGHT:SetAlpha(0.7)
+			dragFrame_RIGHT:SetAlpha(ALPHA_DRAG)
 			dragFrame_RIGHT:SetMovable(true)
 			dragFrame_RIGHT:SetMouseClickEnabled(false)
 			dragFrame_RIGHT:SetMouseMotionEnabled(true)
