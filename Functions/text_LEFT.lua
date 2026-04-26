@@ -160,3 +160,12 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+function E.func_Otrisovka_LEFT_Quests(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
+	TextLeft = E.func_GetName("quest", id)
+ 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

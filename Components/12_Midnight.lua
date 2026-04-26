@@ -158,9 +158,11 @@ local function tempFunction()
 			desc = categoryKey,
 			quests = {
 				{93593}, -- A Call to Battle
-				{93611, addText = {expansionText = E.func_FormatExpansion(4, "LEFT")}}, -- 4 Cataclysm (A Shattered Path Through Time)
+				-- {93611, addText = {expansionText = E.func_FormatExpansion(4, "LEFT")}}, -- 4 Cataclysm (A Shattered Path Through Time)
+				{93611}, -- 4 Cataclysm (A Shattered Path Through Time)
 				{93595}, -- A Call to Delves
 				{93598}, -- Emissary of War
+				{93600}, -- The Arena Calls
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
@@ -168,6 +170,30 @@ local function tempFunction()
 				-- {rewID = 2123, rewTYPE = "currency", rewSIZE = 50,}, -- Bloody Tokens
 				-- {rewID = 1792, rewTYPE = "currency", rewSIZE = 50,}, -- Honor
 				-- {rewID = 3410, rewTYPE = "currency", rewSIZE = 100,}, -- Slayer's Duellum
+			},
+			forcedMaxQuest = 1,
+		},
+
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return  E.func_GetName("map", 2393)..": "..E.func_GetName("quest", 94446) -- A Nightmarish Task
+			end,
+			name_save = "ANightmarishTask",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{94446},
+			},
+			rewards = {
+				{rewID = 253342, rewTYPE = "item", rewSIZE = 1,},
+				{rewID = 3316, rewTYPE = "currency", rewSIZE = 500,}, --
+				{rewID = 3345, rewTYPE = "currency", rewSIZE = 20,}, --
+				{rewID = 3346, rewTYPE = "currency", rewSIZE = 20,}, --
+				{rewID = 3392, rewTYPE = "currency", rewSIZE = 50,}, --
 			},
 			forcedMaxQuest = 1,
 		},
@@ -260,10 +286,39 @@ local function tempFunction()
 				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
 			},
 
+			forcedMaxQuest = 1,
+		},
+		----------------------------------------------------------------
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Void Assaults"]
+			end,
+			name_save = "VoidAssaults",
+			defS = true,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{94385}, -- Added in patch 12.0.5 "Midnight" (12.0.5.66330)
+				{94386}, -- Added in patch 12.0.5 "Midnight" (12.0.5.66330)
 
-
-
-
+				-- {nil, addText = {mapID = 2393},}, -- Void Assaults: Silvermoon City
+				-- {94385, addText = {mapID = 2395},}, -- Void Assaults: Eversong Woods
+				-- {94386, addText = {mapID = 2437},}, -- Void Assaults: Zul'Aman
+				-- {nil, addText = {mapID = 2413},}, -- Void Assaults: Harandar
+				-- {nil, addText = {mapID = 2405},}, -- Void Assaults: Voidstorm
+				-- {nil, addText = {mapID = 2424},}, -- Void Assaults: Isle of Quel'Danas
+			},
+			rewards = {
+				-- {rewID = 2803, rewTYPE = "currency", rewSIZE = 750,}, -- Undercoin
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				{rewID = 264914, rewTYPE = "item", rewSIZE = 1,}, -- Ranger's Cache
+				{rewID = 272125, rewTYPE = "item", rewSIZE = 1,}, -- Recruit's Cache
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
@@ -1020,6 +1075,16 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {

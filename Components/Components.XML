@@ -20,6 +20,7 @@
 	<Script file="Components\54_TEST_UNIVERSAL.lua"/>
 	<Script file="Components\55_Holidays.lua"/>
 	<Script file="Components\56_PLAYER_INVENTORY.lua"/>
+	<Script file="Components\57_ALL_Quests.lua"/>
 
 	<Script file="Components\96_MPLUS.lua"/>
 	<Script file="Components\97_PVP.lua"/>

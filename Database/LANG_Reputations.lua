@@ -23,8 +23,10 @@ E.OctoTable_Reputations_DB = {
 		["zhCN"] = "仪式场地",
 		["zhTW"] = "儀式地點",
 		expansion = "Midnight",
-		AddedInPatch = "12.0.5",
+		AddedInPatch = "12.0.5.67088",
 		icon = "majorfactions_icons_RitualSites512",
+		itemCache = 269234,
+		paragonQuest = 95391,
 	},
 	[2774] = {
 		["enUS"] = "Slayer's Duellum (Paragon)",

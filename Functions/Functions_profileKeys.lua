@@ -41,13 +41,13 @@ local function func_InitializeProfileStructure_profileKeys(profileName)
 		-- [97] = false, -- PVP
 		[99] = true -- OTHER
 	})
-	for _, section in ipairs(E.dataDisplayOrder) do
-		E.func_InitSubTable(profile, section)
+	for _, dataType in ipairs(E.dataDisplayOrder) do
+		E.func_InitSubTable(profile, dataType)
 	end
 	E.func_InitSubTable(db.profiles, "Default")
 	local defaultProfile = db.profiles.Default
-	for _, section in ipairs(E.dataDisplayOrder) do
-		E.func_InitSubTable(defaultProfile, section)
+	for _, dataType in ipairs(E.dataDisplayOrder) do
+		E.func_InitSubTable(defaultProfile, dataType)
 	end
 	return db
 end

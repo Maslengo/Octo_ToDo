@@ -12,8 +12,19 @@ local GlobalAddonName, E = ...
 -- ["zhCN"] = "",
 -- ["zhTW"] = "",
 -- },
--- Таблица с переводами
 E.translations = {
+	["Void Assaults"] = {
+		["ruRU"] = "Натиски Бездны",
+		["deDE"] = "Angriffe der Leere",
+		["esES"] = "Asaltos del Vacío",
+		["esMX"] = "Asaltos del Vacío",
+		["frFR"] = "Assauts du Vide",
+		["itIT"] = "Assalti del Vuoto",
+		["ptBR"] = "Investidas do Caos",
+		["koKR"] = "공허 공세",
+		["zhCN"] = "虚空侵袭",
+		-- ["zhTW"] = "", -- https://www.wowhead.com/tw/quest=94386/void-assaults-zulaman
+	},
 	["Drag to reorder"] = {
 		["ruRU"] = "Перетащите, чтобы изменить порядок",
 		["deDE"] = "Ziehen, um die Reihenfolge zu ändern",

@@ -376,6 +376,7 @@ E.dataDisplayOrder = {
 	"Currencies",
 	"Items",
 	"RaidsOrDungeons",
+	"Quests",
 	"UniversalQuests",
 	"Reputations",
 	"AdditionallyBOTTOM",
@@ -688,7 +689,7 @@ E.SORT_OPTIONS = {
 	----------------------------------------------------------------
 	["SL_covenantID"] = {name = L["COVENANT"], reverse = false,  formatter = function(data) return E.func_GetName("covenant", data)  end}, -- 35,
 	----------------------------------------------------------------
-	-- ["time"] = {name = "time", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
+	["time"] = {name = L["Last online"], reverse = false,  formatter = function(data) return E.func_SecondsToClock(GetServerTime()-data)  end}, -- 35,
 	-- ["tmstp_Daily"] = {name = "tmstp_Daily", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
 	-- ["tmstp_Month"] = {name = "tmstp_Month", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
 	-- ["tmstp_Weekly"] = {name = "tmstp_Weekly", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,

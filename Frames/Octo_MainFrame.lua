@@ -168,7 +168,7 @@ local func_OnAcquiredCenter do
 end
 ----------------------------------------------------------------
 local function func_SettingsButton_OnClick(button, dataType, id, frame)
-	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
+	if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" or dataType == "Quests" then
 		id = tonumber(id)
 	end
 	local Current_profile = Octo_profileKeys and Octo_profileKeys.Current_profile
@@ -297,6 +297,12 @@ local function func_Setup_Items(frame, id)
 	end
 end
 ----------------------------------------------------------------
+local function func_Setup_Quests(frame, id)
+	local icon1 = E.func_GetIcon("quest", id)
+
+
+end
+----------------------------------------------------------------
 local function func_Setup_Raids(frame, id)
 	-- local name = E.func_GetName("dungeon", id)
 	local icon = E.func_GetIcon("dungeon", id)
@@ -370,7 +376,7 @@ function EventFrame:func_InitLEFT(frame, node)
 		end)
 	else
 		local dataType, id = ("#"):split(frameData.SettingsType)
-		if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
+		if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" or dataType == "Quests" then
 			id = tonumber(id)
 		end
 		frame.SettingsButton:Show()
@@ -391,6 +397,9 @@ function EventFrame:func_InitLEFT(frame, node)
 		end
 		if dataType == "Currencies" then
 			func_Setup_Currencies(frame, id)
+		end
+		if dataType == "Quests" then
+			func_Setup_Quests(frame, id)
 		end
 		if dataType == "Items" then
 			func_Setup_Items(frame, id)
@@ -462,7 +471,7 @@ function EventFrame:func_InitCenter(frame, node)
 		end
 	else
 		local dataType, id = ("#"):split(frameData.SettingsType)
-		if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" then
+		if dataType == "Currencies" or dataType == "Items" or dataType == "Reputations" or dataType == "RaidsOrDungeons" or dataType == "Quests" then
 			id = tonumber(id)
 		end
 		local accumulatedWidth = 0
@@ -841,6 +850,7 @@ local function CalculateFullRightWidth(columnWidthsCenter, maxColumns)
 end
 ----------------------------------------------------------------
 function EventFrame:CreateDataProvider()
+	-- if Octo_profileKeys.isSettingsEnabled then print ("return") return end
 	if not E.OctoTables_Vibor then return end
 	local DataProvider = CreateTreeDataProvider()
 	local totalLines = 0
@@ -1081,7 +1091,10 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 end
 ----------------------------------------------------------------
 function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
-	for _, frame in ipairs(Octo_MainFrame.ViewCenter:GetFrames()) do
+	local frames = Octo_MainFrame.ViewCenter:GetFrames()
+	if not frames or #frames == 0 then return end
+
+	for _, frame in ipairs(frames) do
 		local accumulatedWidth = 0
 		for i = 1, #columnWidthsCenter do
 			if frame.columnFrames[i] then
@@ -1091,12 +1104,6 @@ function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 				accumulatedWidth = accumulatedWidth + columnWidthsCenter[i]
 			end
 		end
-	end
-end
-----------------------------------------------------------------
-local function Toggle_Octo_MainFrame_TestFrame(frame)
-	if Octo_MainFrame then
-		Octo_MainFrame:SetShown(not Octo_MainFrame:IsShown())
 	end
 end
 ----------------------------------------------------------------
