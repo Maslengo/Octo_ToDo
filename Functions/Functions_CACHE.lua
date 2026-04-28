@@ -465,13 +465,13 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-handler.difficulty = function(Cache_Name, Cache_Quality, category, id)
+handler.difficulty = function(Cache_Name, Cache_Quality, category, id, fullDifficultyName)
 	----------
 	-- NAME --
 	----------
 	local name
 	local cached_Name = func_cached_Name(Cache_Name, id)
-	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS then
+	if not fullDifficultyName and Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS then
 		name = E.OctoTable_Difficulties and E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_Cache_Name(id, Cache_Name, GetDifficultyInfo(id), category)
 	else
 		if cached_Name then
@@ -670,13 +670,30 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+handler.encounter = function(Cache_Name, Cache_Quality, category, id)
+	local name
+	local cached_Name = func_cached_Name(Cache_Name, id)
+	if cached_Name then
+		name = cached_Name
+	else
+		-- /dump E.func_GetName("sex", 5)
+		local n = EJ_GetEncounterInfo(id)
+		if n and n ~= "" then
+			name = func_Cache_Name(id, Cache_Name, n, category)
+		end
+	end
+	return name
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 -- /dump E.func_GetName("global", L["DONE"])
 -- handler.global = function(Cache_Name, Cache_Quality, category, id)
 -- local name = func_Cache_Name(id, Cache_Name, specName, category)
 -- return name
 -- end
 ----------------------------------------------------------------
-function E.func_GetName(category, id, forcedQuality)
+function E.func_GetName(category, id, forcedQuality, fullDifficultyName)
 	if not id then return "no id" end
 	id = tonumber(id)
 	if type(id) ~= "number" then return "wrong id type" end
@@ -691,7 +708,7 @@ function E.func_GetName(category, id, forcedQuality)
 	-- else
 	local h = handler[category] or handler[category:lower()]
 	if h then
-		name = h(Cache_Name, Cache_Quality, category, id)
+		name = h(Cache_Name, Cache_Quality, category, id, fullDifficultyName)
 	end
 	-- end
 	if forcedQuality and name then
@@ -746,6 +763,8 @@ function E.func_GetIcon(category, id)
 			icon = select(4, GetSpecializationInfoByID(id))
 		elseif category == "profession" then
 			icon = E.func_GetTradeSkillTexture(id) -- skillLineID
+		-- elseif category == "encounter" then
+		-- 	icon = select(4, EJ_GetEncounterInfo(id)) -- НЕ ТО
 		end
 	end
 

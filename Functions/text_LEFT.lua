@@ -99,6 +99,19 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 		TextLeft = L["RATED_PVP_WEEKLY_VAULT"]
 		IconLeft = E.ATLAS_GREATVAULT
 	end
+
+
+
+	for i = 1, 3 do
+		if id == "GreatVault"..i then
+			local ID = E.Enum_Activities_table[i]
+			TextLeft = E.name_activities[ID] or "?"
+			IconLeft = E.ATLAS_GREATVAULT
+		end
+	end
+
+
+
 	if id == "CurrentKey" then
 		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ITEMS_COLOREDNAME then
 			TextLeft = E.COLOR_WOW_EPIC..L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"].."|r"

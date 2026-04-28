@@ -106,12 +106,17 @@ E.borderColorG = 0
 E.borderColorB = 0
 E.borderColorA = 1
 E.edgeSize = 1
-E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
-E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga"
+E.bgFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga" -- "Interface/Buttons/UI-SliderBar-Background"
+E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\Borders\\Octo.tga" -- "Interface/Buttons/UI-SliderBar-Border"
 E.menuBackdrop = {
 	bgFile = E.bgFile,
 	edgeFile = E.edgeFile,
-	edgeSize = E.edgeSize,
+
+	-- tile = true,
+	-- -- tileEdge = true,
+	-- tileSize = 8,
+	edgeSize = E.edgeSize, -- 2
+
 	insets = {left = E.edgeSize, right = E.edgeSize, top = E.edgeSize, bottom = E.edgeSize}
 }
 E.MAX_DISPLAY_LINES = 30
@@ -176,6 +181,15 @@ E.COLOR_TIME = "|cff9999FF"
 -- E.COLOR_THEWARWITHIN = "|cff90CCDD"
 -- E.COLOR_MIDNIGHT = "|cffB580FF"
 -- E.COLOR_THELASTTITAN = "|cffF4C263"
+
+
+
+E.COLOR_GREEN = "|cff4FFF79" -- "|cff00FF00"
+E.COLOR_YELLOW = "|cffFFF371" -- "|cffFFFF00"
+E.COLOR_RED = "|cffFF4C4F" -- "|cffFF0000"
+E.COLOR_BLUE ="|cff00A3FF" -- "|cff0000FF"
+
+
 E.COLOR_WORLDOFWARCRAFT = "|cffD0B070"
 E.COLOR_THEBURNINGCRUSADE = "|cffD45565"
 E.COLOR_WRATHOFTHELICHKING = "|cff6CB8D8"
@@ -209,15 +223,11 @@ E.COLOR_LIGHTGRAY = "|cff909090"
 E.COLOR_WHITE = "|cffFFFFFF"
 E.COLOR_ADDON_LEFT = "|cffD177FF"
 E.COLOR_ADDON_RIGHT = "|cff63A4E0"
-E.COLOR_RED = "|cffFF4C4F"
 E.COLOR_ORANGE = "|cffFF661A"
 E.COLOR_DARKORANGE = "|cffFF8C00"
 E.COLOR_GOLD = "|cffFFD600"
-E.COLOR_YELLOW = "|cffFFF371"
 E.COLOR_LIME = "|cffACFF2F"
-E.COLOR_GREEN = "|cff4FFF79"
 E.COLOR_CYAN = "|cff00FFFF"
-E.COLOR_BLUE = "|cff00A3FF"
 E.COLOR_PURPLE = "|cffAF61FF"
 E.COLOR_INDIGO = "|cff4B0082"
 E.COLOR_MAGENTA = "|cffFF00FF"
@@ -732,3 +742,19 @@ E.SORT_OPTIONS = {
 }
 E.TOTAL_CHARS = 0
 E.IS_HEADER_TOOLTIP = false
+-- E.ZEBRA_MODE = {
+-- 	NONE = 0,      -- без чередования
+-- 	ROWS = 1,      -- только строки
+-- 	COLUMNS = 2,   -- только столбцы
+-- }
+
+E.ZEBRA_MODE = {
+	{value = 0, text = L["NONE"],},
+	{value = 1, text = L["Rows"],},
+	{value = 2, text = L["Columns"],},
+}
+
+E.ID_MYTHIC = 16
+
+
+-- /dump STANDARD_TEXT_FONT

@@ -51,6 +51,9 @@ function EventFrame:PLAYER_LOGIN()
 			if E.func_option_OTHER then
 				E.func_option_OTHER(main_category, main_layout)
 			end
+			if E.func_option_MINIMAP then
+				E.func_option_MINIMAP(main_category, main_layout)
+			end
 		end
 	end
 	----------------------------------------------------------------
@@ -163,6 +166,24 @@ function EventFrame:PLAYER_LOGIN()
 			end
 			if E.func_option_RAIDS_TOOLTIP then
 				E.func_option_RAIDS_TOOLTIP(category, layout)
+			end
+		end
+	end
+	----------------------------------------------------------------
+	-- MPLUS -------------------------------------------------------
+	----------------------------------------------------------------
+	do
+		local enable = false
+		if enable then
+			-- local iconID = E.func_texturefromIcon(E.ATLAS_RAID)
+			local fullDifficultyName = true
+			local tabName = E.func_GetName("difficulty", E.ID_MYTHIC, nil, fullDifficultyName) .. "+"
+			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+			if E.func_option_MYTHICKEYSTONE then
+				E.func_option_MYTHICKEYSTONE(category, layout)
+			end
+			if E.func_option_GREATVAULT then
+				E.func_option_GREATVAULT(category, layout)
 			end
 		end
 	end

@@ -767,6 +767,13 @@ function E.func_GetActivities(id)
 	end
 end
 ----------------------------------------------------------------
+local GetActivityEncounterInfo = GetActivityEncounterInfo or C_WeeklyRewards.GetActivityEncounterInfo
+function E.func_GetActivityEncounterInfo(vaultTypeid, index)
+	if GetActivityEncounterInfo then
+		return GetActivityEncounterInfo(vaultTypeid, index)
+	end
+end
+----------------------------------------------------------------
 local OnUIInteract = OnUIInteract or C_WeeklyRewards.OnUIInteract
 function E.func_OnUIInteract()
 	if OnUIInteract then

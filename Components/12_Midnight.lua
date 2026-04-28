@@ -21,7 +21,7 @@ local function tempFunction()
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 3418, defS = true,}, -- Nebulous Voidcore (12.0.5 "Midnight")
+		{id = 3418, defS = true,}, -- Nebulous Voidcore (12.0.5 "Midnight") (3513 same, but useless)
 		-- фиол
 		{id = 3400, defS = false,}, -- Uncontaminated Void Sample
 		{id = 3379, defS = false,}, -- Brimming Arcana
@@ -198,6 +198,32 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetName("map", 2405)..": "..E.func_GetName("currency", 3418, E.COLOR_WHITE) -- A Nightmarish Task
+		-- 	end,
+		-- 	name_save = "NebulousVoidcoresCoins",
+		-- 	defS = true,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{95279}, -- Nebulous Voidcores: Gold
+		-- 		{95304}, -- Nebulous Voidcores: Veteran Dawncrest
+		-- 		{95290}, -- Nebulous Voidcores: Voidlight Marl
+		-- 	},
+		-- 	rewards = {
+		-- 		{rewID = 3418, rewTYPE = "currency", rewSIZE = 2,}, -- Nebulous Voidcore
+		-- 		-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+		-- 		-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+		-- 		-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+		-- 		-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
+		-- 		-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+		-- 	},
+		-- 	forcedMaxQuest = 1,
+		-- },
+		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
@@ -236,6 +262,11 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+
+
+
+
 		----------------------------------------------------------------
 		-- {
 		-- 	sorted = true,
@@ -1075,16 +1106,6 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {

@@ -155,9 +155,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
 -- local GetText = GetText
 local _G = _G
 local standingCache = {}
@@ -168,10 +165,8 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 	if not categoryKey or not cm then return end
 	local rep = cm.Reputation
 	if rep and type(rep) == "table" and rep[id] and rep[id].FIRST and rep[id].SECOND then
-
 		local func_CompactFormatNumber = E.func_CompactFormatNumber
 		local func_DB_REP_COLOR = E.func_DB_REP_COLOR
-
 		local FIRST = rep[id].FIRST
 		local SECOND = rep[id].SECOND
 		-- local ParagonCount = rep[id].ParagonCount or 0
@@ -181,7 +176,6 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		local rankInfomaxLevel = rep[id].rankInfomaxLevel
 		local renownLevel = rep[id].renownLevel
 		local renownMaxLevel = rep[id].renownMaxLevel
-
 		----------------------------------------------------------------
 		local showValue
 		local showPercentage
@@ -263,9 +257,7 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 			elseif repType == 1 then
 				if reaction and reaction > 0 then
 					local gender = E.cur_gender or 3
-
 					standingCache[reaction] = standingCache[reaction] or {}
-
 					local cached = standingCache[reaction][gender]
 					if not cached then
 						-- cached = GetText("FACTION_STANDING_LABEL" .. reaction, gender)
@@ -308,8 +300,6 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		-- if TEXT_MAXREACTION_SIMPLE then
 		--     parts[#parts+1] = TEXT_MAXREACTION_SIMPLE
 		-- end
-
-
 		----------------------------------------------------------------
 		-- CURRENT VALUE -----------------------------------------------
 		----------------------------------------------------------------
@@ -370,7 +360,6 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		end
 		----------------------------------------------------------------
 		----------------------------------------------------------------
-
 		if FIRST > 0 and FIRST == SECOND then
 			test_1 = L["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"]
 			test_2 = nil
@@ -393,8 +382,6 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		if test_4 then
 			parts[#parts+1] = ColorCenter..test_4.."|r"
 		end
-
-
 		-- local FIRST/SECOND
 		-- local renownlevel(rep3, rep4) + reaction(rep1 + FORCED/8) + rankInfocurrentlevel(rep2)
 		-- local TEXT_STANDING(rep1), (fromat:renown(rep3)), reaction(type"string"(rep2)),
@@ -457,13 +444,100 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 			TextCenter = ""
 		end
 	end
+	----------------------------------------------------------------
+	for index, activityID in ipairs(E.Enum_Activities_table) do
+		if id == "GreatVault" .. index then
+			local vaultData = cm.GreatVault and cm.GreatVault[activityID]
+				-- RAID
+			if activityID == 3 then
+				local activities = vaultData and vaultData.activities or {}
+				local parts, hasData = {}, false
+				for slot = 1, 3 do -- #activities
+					local levelID = activities[slot] and activities[slot].level
+					local text, color
+					if not levelID or levelID == 0 then
+						text, color = "-", E.COLOR_GRAY
+					else
+						local info = E.OctoTable_Difficulties[levelID]
+						text = info and info.abbr or "?"
+						color = info and info.color or E.COLOR_GRAY
+					end
+					if text ~= "-" then
+						hasData = true
+					end
+					parts[slot] = color .. text .. "|r"
+				end
+				TextCenter = hasData and table.concat(parts, " ") or ""
+			end
+			-- DUNGEON
+			if activityID == 1 then
+			    local activities = vaultData and vaultData.activities or {}
+			    local parts, hasData = {}, false
+
+			    for slot = 1, 3 do
+			        local level = activities[slot] and activities[slot].level
+			        local text, color
+
+			        if not level or level == 0 then
+			            text, color = "-", E.COLOR_GRAY
+			        else
+			            text = tostring(level)
+			            -- цвет в зависимости от того, открыт ли слот (есть ли награда)
+			            local rewards = vaultData and vaultData.rewards or {}
+			            color = rewards[slot] and E.COLOR_WHITE or E.COLOR_GRAY
+			        end
+
+			        if text ~= "-" then
+			            hasData = true
+			        end
+			        parts[slot] = color .. text .. "|r"
+			    end
+
+			    TextCenter = hasData and table.concat(parts, " ") or ""
+			end
+
+			-- WORLD
+			if activityID == 6 then
+
+				local activities = E.func_GetActivities(activityID)
+				local current = vaultData and vaultData.min or 0
+				local required = activities and activities[3] and activities[3].threshold or 0
+				if current > 0 and required > 0 then
+					local color = (current >= required) and E.COLOR_WHITE or E.COLOR_YELLOW
+					TextCenter = color .. current .. "/" .. required .. "|r"
+				else
+					TextCenter = ""
+				end
+
+
+			end
+
+			-- else
+				-- DUNGEON / WORLD
+				-- local activities = E.func_GetActivities(activityID)
+				-- local current = vaultData and vaultData.min or 0
+				-- local required = activities and activities[3] and activities[3].threshold or 0
+				-- if current > 0 and required > 0 then
+				-- 	local color = (current >= required) and E.COLOR_GREEN or E.COLOR_YELLOW
+				-- 	TextCenter = color .. current .. "/" .. required .. "|r"
+				-- else
+				-- 	TextCenter = ""
+				-- end
+			-- end
+			break
+		end
+	end
+	----------------------------------------------------------------
 	if id == "CurrentKey" then
 		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
 			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
+
+
 			if seasonData then
 				-- local color = E.func_RioColor(seasonData.RIO_Score)
-				local color = E.COLOR_PURPLE
-				local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, false, false, color)
+				local rioColor = E.COLOR_PURPLE -- E.func_RioColor(seasonData.RIO_Score)
+				-- local color = E.COLOR_PURPLE
+				local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, false, false, rioColor)
 				TextCenter = keyName
 			end
 		end
@@ -491,7 +565,6 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	if id == "PlayerBANK" then
 		TextCenter = "TextCenter_PlayerBANK"
 	end
-
 	if id == "HeartofAzeroth" then
 		if pd.azeriteLVL and pd.azeriteEXP then
 			TextCenter = E.COLOR_GREEN .. pd.azeriteLVL .. "|r" .. "+" .. E.COLOR_GRAY .. pd.azeriteEXP .. "|r"
@@ -525,7 +598,6 @@ function E.func_Otrisovka_Center_AdditionallyBOTTOM(categoryKey, CharInfo, dataT
 		local countMZ = 0
 		local totalInstances = 0
 		local mythicDifID = 23
-
 		local selectedSeasons = {}
 		local ExpansionToShowTBL = E.func_GetData_profileKeys("ExpansionToShow")
 		for SI_ID, v in next,(E.Octo_Table_SI_IDS) do

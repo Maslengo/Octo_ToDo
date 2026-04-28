@@ -25,6 +25,23 @@ local LEFT_TEXTURE_ALPHA = .05 -- 0.1
 local charR, charG, charB = 1, 1, 1
 local WeeklyResetFrameLeft = CreateFrame("FRAME", nil, Octo_MainFrame)
 ----------------------------------------------------------------
+local function GetZebraColor(index, num)
+	if E.PROFTBL then
+		if (E.PROFTBL and E.PROFTBL.CONFIG_ZEBRA_MODE or 0) ~= num then return 0, 0, 0, 0 end
+
+		local r = E.PROFTBL.ConfigColor_ZEBRA_RGBA_r or 0
+		local g = E.PROFTBL.ConfigColor_ZEBRA_RGBA_g or 0
+		local b = E.PROFTBL.ConfigColor_ZEBRA_RGBA_b or 0
+		local a = E.PROFTBL.ConfigColor_ZEBRA_RGBA_a or 0
+		if index % 2 == 0 then
+			return 0, 0, 0, 0
+		else
+			-- return 0, 1, 0, 1
+			return r, g, b, a
+		end
+	end
+end
+----------------------------------------------------------------
 local function SafeTooltipShow(frame, ...)
 	if Octo_MainFrame:IsShown() then
 		E.func_Octo_TooltipFrame_OnEnter(frame, ...)
@@ -97,15 +114,22 @@ local func_OnAcquiredLeft do
 		frame.TextureLeft:SetAllPoints()
 		frame.TextureLeft:SetTexture(E.TEXTURE_LEFT_PATH)
 	end
+	local function Create_zebraBG_LEFT(frame)
+		frame.zebraBG_LEFT = frame:CreateTexture(nil, "BACKGROUND", nil, -8)
+		frame.zebraBG_LEFT:SetAllPoints()
+	end
 	function func_OnAcquiredLeft(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
+
 		Create_SettingsButton(frame)
 		Create_icon1frame(frame)
 		Create_icon2frame(frame)
 		Create_icon3frame(frame)
 		Create_TextLeft(frame)
 		Create_TextureLeft(frame)
+		Create_zebraBG_LEFT(frame)  -- ВЫЗОВ
+
 		E.func_Create_Highlight(frame, owner)
 		-- AdditionalSettings(frame, "func_OnAcquiredLeft")
 		if frame.Highlight then
@@ -120,15 +144,15 @@ local func_OnAcquiredCenter do
 		columnFrame.CurrentCharBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
 		columnFrame.CurrentCharBackground:SetAllPoints()
 		columnFrame.CurrentCharBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
-		columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, .1)
+		-- columnFrame.CurrentCharBackground:SetVertexColor(classR, classG, classB, .1)
 		columnFrame.CurrentCharBackground:Hide()
 	end
 	local function Create_ReputationBackground(columnFrame)
 		columnFrame.ReputationBackground = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -2)
-		columnFrame.ReputationBackground:SetPoint("LEFT")
+		columnFrame.ReputationBackground:SetPoint("TOPLEFT")
 		columnFrame.ReputationBackground:SetHeight(E.GLOBAL_LINE_HEIGHT)
 		columnFrame.ReputationBackground:SetTexture(E.TEXTURE_CENTRAL_PATH)
-		columnFrame.ReputationBackground:SetVertexColor(classR, classG, classB, .1)
+		-- columnFrame.ReputationBackground:SetVertexColor(classR, classG, classB, .1)
 		columnFrame.ReputationBackground:Hide()
 	end
 	local function Create_TextCenter(columnFrame)
@@ -140,25 +164,45 @@ local func_OnAcquiredCenter do
 		columnFrame.TextCenter:SetJustifyH("CENTER")
 		columnFrame.TextCenter:SetTextColor(textR, textG, textB, textA)
 	end
+	local function Create_zebraBG_RIGHT(columnFrame)
+		columnFrame.zebraBG_RIGHT = columnFrame:CreateTexture(nil, "BACKGROUND", nil, -3)
+		-- columnFrame.zebraBG_RIGHT:SetTexture(E.TEXTURE_CENTRAL_PATH)
+		columnFrame.zebraBG_RIGHT:SetAllPoints()
+		columnFrame.zebraBG_RIGHT:Hide()
+	end
 	function func_OnAcquiredCenter(owner, frame, node, new)
 		if not new then return end
 		local frameData = node:GetData()
-		-- AdditionalSettings(frame, "func_OnAcquiredCenter")
 		frame.columnFrames = setmetatable({}, {
 				__index = function(self, key)
 					if type(key) == "number" then
 						local columnFrame = CreateFrame("BUTTON", nil, frame, "OctoRectTemplate")
 						columnFrame:Hide()
+						-- columnFrame:SetFrameLevel(frame:GetFrameLevel())
+						-- columnFrame:SetFrameLevel(2)
+
+
+
 						Create_CurrentCharBackground(columnFrame)
 						Create_ReputationBackground(columnFrame)
 						Create_TextCenter(columnFrame)
-						-- AdditionalSettings(columnFrame, "func_OnAcquiredCenter METATABLE")
+						Create_zebraBG_RIGHT(columnFrame)
+
 						columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
-						columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0)
+						-- columnFrame:SetPoint("LEFT", frame, "LEFT", 0, 0) -- chto eto?  -- RKN
+						if key == 1 then
+							columnFrame:SetPoint("TOPLEFT", frame, "TOPLEFT", 0, 0) -- chto eto?  -- RKN
+						else
+							columnFrame:SetPoint("TOPLEFT", self[key-1], "TOPRIGHT", 0, 0)
+						end
+
+
+
 						columnFrame:SetScript("OnHide", function()
 								columnFrame:Hide()
 						end)
 						columnFrame.CurrentCharBackground:SetScript("OnHide", columnFrame.CurrentCharBackground.Hide)
+						columnFrame.zebraBG_RIGHT:SetScript("OnHide", columnFrame.zebraBG_RIGHT.Hide)
 						rawset(self, key, columnFrame)
 						return columnFrame
 					end
@@ -355,6 +399,19 @@ end
 ----------------------------------------------------------------
 function EventFrame:func_InitLEFT(frame, node)
 	local frameData = node:GetData()
+	local rowIndex = node.rowIndex or 0
+
+
+	frame.zebraBG_LEFT:Hide()
+	-- ОБНОВЛЕНИЕ ЦВЕТА zebraBG_LEFT ДЛЯ ЛЕВОЙ ЧАСТИ
+	if frame.zebraBG_LEFT then
+		if (E.PROFTBL and E.PROFTBL.CONFIG_ZEBRA_MODE or 0) == 1 then
+			local r, g, b, a = GetZebraColor(rowIndex, 1)
+			frame.zebraBG_LEFT:SetColorTexture(r, g, b, a)
+			frame.zebraBG_LEFT:Show()
+		end
+	end
+
 	if EventFrame.columnWidthsLeft and EventFrame.columnWidthsLeft[1] then
 		local newLeftWidth = math.max(MIN_COLUMN_WIDTH_LEFT, EventFrame.columnWidthsLeft[1])
 		Octo_MainFrame.ScrollBoxLEFT:SetWidth(newLeftWidth+INDENT_TEXT)
@@ -456,6 +513,28 @@ end
 ----------------------------------------------------------------
 function EventFrame:func_InitCenter(frame, node)
 	local frameData = node:GetData()
+	local rowIndex = node.rowIndex or 0
+
+	for i = 1, (frameData.totalColumns or 0) do
+		local columnFrame = frame.columnFrames[i]
+		if columnFrame and columnFrame.zebraBG_RIGHT then
+			if (E.PROFTBL and E.PROFTBL.CONFIG_ZEBRA_MODE or 0) == 1 then
+				local r, g, b, a = GetZebraColor(rowIndex, 1)
+				columnFrame.zebraBG_RIGHT:SetColorTexture(r, g, b, a)
+				columnFrame.zebraBG_RIGHT:Show()
+			elseif (E.PROFTBL and E.PROFTBL.CONFIG_ZEBRA_MODE or 0) == 2 then
+				local r, g, b, a = GetZebraColor(i, 2)
+				columnFrame.zebraBG_RIGHT:SetColorTexture(r, g, b, a)
+				columnFrame.zebraBG_RIGHT:Show()
+			else
+				columnFrame.zebraBG_RIGHT:Hide()
+			end
+		end
+	end
+
+
+
+
 	if not frameData.SettingsType then
 		for i = 1, (frameData.totalColumns or 0) do
 			local columnFrames = frame.columnFrames[i]
@@ -481,8 +560,12 @@ function EventFrame:func_InitCenter(frame, node)
 			if not columnFrames then
 				columnFrames = frame.columnFrames[i]
 			end
+
+
+
 			columnFrames:ClearAllPoints()
-			columnFrames:SetPoint("LEFT", frame, "LEFT", accumulatedWidth, 0)
+			columnFrames:SetPoint("TOPLEFT", frame, "TOPLEFT", accumulatedWidth, 0) -- RKN
+
 			local columnWidth = columnWidthsCenter[i] or MIN_COLUMN_WIDTH_Center
 			columnFrames:SetWidth(columnWidth)
 			accumulatedWidth = accumulatedWidth + columnWidth
@@ -509,6 +592,7 @@ function EventFrame:func_InitCenter(frame, node)
 				end
 				columnFrames.TextCenter:SetText(TextCenter)
 				if frameData.totalColumns > 1 and i == frameData.currentCharacterIndex then
+				-- if frameData.totalColumns > 1 then
 					local r, g, b, a = E.func_DB_CHARLINE_COLOR()
 					columnFrames.CurrentCharBackground:SetVertexColor(r, g, b, a)
 					columnFrames.CurrentCharBackground:Show()
@@ -932,6 +1016,7 @@ function EventFrame:CreateDataProvider()
 						rowData.SecondReputation[CharIndex] = SECOND or 0
 					end
 					local node = DataProvider:Insert(rowData)
+					node.rowIndex = totalLines
 					for j, w in ipairs(func_calculateColumnWidthsLEFT(node)) do
 						columnWidthsLeft[j] = math.max(MIN_COLUMN_WIDTH_LEFT, w, columnWidthsLeft[j] or 0)
 					end
@@ -983,6 +1068,7 @@ function EventFrame:CreateDataProvider()
 			totalColumns = totalColumns > 0 and totalColumns or 1,
 		}
 		local node = DataProvider:Insert(rowData)
+		node.rowIndex = totalLines
 		columnWidthsLeft[1] = math.max(MIN_COLUMN_WIDTH_LEFT, columnWidthsLeft[1] or MIN_COLUMN_WIDTH_LEFT)
 		for j, w in ipairs(func_calculateColumnWidthsLEFT(node)) do
 			columnWidthsLeft[j] = math.max(MIN_COLUMN_WIDTH_LEFT, w, columnWidthsLeft[j] or 0)
@@ -1022,7 +1108,10 @@ function EventFrame:CreateColumnHeaders(sortedCharacters, columnWidthsCenter)
 		local pd = CharInfo.PlayerData
 		local HeaderFrameCenter = Octo_MainFrame.pool:Acquire()
 		local columnWidth = columnWidthsCenter[count] or MIN_COLUMN_WIDTH_Center
-		HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT)
+		-- HeaderFrameCenter:SetPoint("BOTTOMLEFT", Octo_MainFrame.scrollContentFrame, "TOPLEFT", accumulatedWidth, -E.HEADER_HEIGHT-1)
+		HeaderFrameCenter:SetPoint("TOPLEFT", Octo_MainFrame.scrollContentFrame, "TOPLEFT", accumulatedWidth, -1)
+
+
 		HeaderFrameCenter:SetSize(columnWidth, E.HEADER_HEIGHT)
 		accumulatedWidth = accumulatedWidth + columnWidth
 		-- HeaderFrameCenter.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
@@ -1099,7 +1188,7 @@ function EventFrame:UpdateCenterColumnPositions(columnWidthsCenter)
 		for i = 1, #columnWidthsCenter do
 			if frame.columnFrames[i] then
 				frame.columnFrames[i]:ClearAllPoints()
-				frame.columnFrames[i]:SetPoint("LEFT", frame, "LEFT", accumulatedWidth, 0)
+				frame.columnFrames[i]:SetPoint("TOPLEFT", frame, "TOPLEFT", accumulatedWidth, 0) -- RKN
 				frame.columnFrames[i]:SetWidth(columnWidthsCenter[i])
 				accumulatedWidth = accumulatedWidth + columnWidthsCenter[i]
 			end

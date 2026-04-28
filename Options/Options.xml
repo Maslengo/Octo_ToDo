@@ -7,6 +7,7 @@
 
 	<Script file="Options\MAIN\func_option_FONT.lua"/>
 	<Script file="Options\MAIN\func_option_OTHER.lua"/>
+	<Script file="Options\MAIN\func_option_MINIMAP.lua"/>
 
 	<Script file="Options\CURRENCY\func_option_CURRENCY_ICONS.lua"/>
 	<Script file="Options\CURRENCY\func_option_CURRENCY_COLORS.lua"/>
@@ -21,6 +22,9 @@
 
 	<Script file="Options\RAIDS\func_option_RAIDS_ICONS.lua"/>
 	<Script file="Options\RAIDS\func_option_RAIDS_TOOLTIP.lua"/>
+
+	<Script file="Options\MPLUS\func_option_MYTHICKEYSTONE.lua"/>
+	<Script file="Options\MPLUS\func_option_GREATVAULT.lua"/>
 
 	<Script file="Options\ITEMS\func_option_ITEMS_ICONS.lua"/>
 	<Script file="Options\ITEMS\func_option_ITEMS_COLORS.lua"/>

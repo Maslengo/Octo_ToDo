@@ -170,7 +170,7 @@ local function TooltipOnShow()
 	end
 end
 local function TooltipOnHide()
-    E.IS_HEADER_TOOLTIP = false
+	E.IS_HEADER_TOOLTIP = false
 end
 function EventFrame:Create_Octo_TooltipFrame()
 	Octo_TooltipFrame:SetScript("OnEnter", TooltipOnEnter)
@@ -319,7 +319,7 @@ function E.func_Octo_TooltipFrame_OnEnter(frame, point)
 	E.Octo_TooltipFrame_GLOBAL_TABLE = tooltip
 	EventFrame:CreateDataProvider(tooltip)
 	Octo_TooltipFrame:Show()
-    E.IS_HEADER_TOOLTIP = false
+	E.IS_HEADER_TOOLTIP = false
 	if not frame.initScripts then
 		frame.initScripts = true
 		frame:HookScript("OnLeave", function()

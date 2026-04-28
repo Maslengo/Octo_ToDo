@@ -5,13 +5,13 @@ local GlobalAddonName, E = ...
 E.OctoTable_Difficulties = {
 	-- 1. Looking For Raid / Story
 	[151] = {prior = 1, abbr = "LFR"}, -- Looking For Raid (Timewalking)
-	[17] = {prior = 2, abbr = "LFR"}, -- Looking For Raid
+	[17] = {prior = 2, abbr = "LFR", color = E.COLOR_GREEN}, -- Looking For Raid
 	[7] = {prior = 3, abbr = "LFR"}, -- Looking For Raid (Legacy)
 	[220] = {prior = 4, abbr = "Solo"}, -- Story (solo) raid
 	-- 2. Normal
 	[1] = {prior = 5, abbr = "N"}, -- Normal (party)
 	[150] = {prior = 6, abbr = "N"}, -- Normal (party)
-	[14] = {prior = 7, abbr = "N"}, -- Normal (raid)
+	[14] = {prior = 7, abbr = "N", color = E.COLOR_BLUE}, -- Normal (raid)
 	[3] = {prior = 8, abbr = "10N"}, -- 10 Player (Normal)
 	[4] = {prior = 9, abbr = "25N"}, -- 25 Player (Normal)
 	[9] = {prior = 10, abbr = "40N"}, -- 40 Player (Normal)
@@ -20,7 +20,7 @@ E.OctoTable_Difficulties = {
 	[147] = {prior = 13, abbr = "N"}, -- Normal (Warfronts)
 	-- 3. Heroic
 	[2] = {prior = 14, abbr = "H"}, -- Heroic (party)
-	[15] = {prior = 15, abbr = "H"}, -- Heroic (raid)
+	[15] = {prior = 15, abbr = "H", color = E.COLOR_PURPLE}, -- Heroic (raid)
 	[5] = {prior = 16, abbr = "10H"}, -- 10 Player (Heroic)
 	[6] = {prior = 17, abbr = "25H"}, -- 25 Player (Heroic)
 	[11] = {prior = 18, abbr = "HS"}, -- Heroic Scenario
@@ -29,7 +29,7 @@ E.OctoTable_Difficulties = {
 	[230] = {prior = 21, abbr = "H"}, -- Heroic (none)
 	-- 4. Mythic
 	[23] = {prior = 22, abbr = "M"}, -- Mythic (party)
-	[16] = {prior = 23, abbr = "M"}, -- Mythic (raid)
+	[16] = {prior = 23, abbr = "M", color = E.COLOR_ORANGE}, -- Mythic (raid)
 	[40] = {prior = 24, abbr = "MS"}, -- Mythic Scenario
 	-- 5. Mythic Keystone
 	[8] = {prior = 25, abbr = "M+"}, -- Mythic Keystone

@@ -87,7 +87,7 @@ function E.func_BUILD_DUNG_DB()
 							-- if instanceDB[savedInstanceID] == nil then
 							if not instanceDB[savedInstanceID] then
 								instanceDB[savedInstanceID] = {
-									-- EJ_ID = EJ_ID,
+									EJ_ID = EJ_ID,
 									difficulties = diffTable,
 									-- icon = icon,
 									isRaid = isRaid,
@@ -116,11 +116,11 @@ function E.func_SI_to_EJ(id) -- ONLY FOR ICONS (M+0)
 	return newID
 end
 ----------------------------------------------------------------
--- function E.func_EJ_to_SI(id) -- USELESS
--- 	if not id then return 0 end
--- 	local newID = E.EJInstance_to_SavedInstanceID[id] or 0
--- 	return newID
--- end
+function E.func_EJ_to_SI(id) -- USELESS
+	if not id then return 0 end
+	local newID = E.EJInstance_to_SavedInstanceID[id] or 0
+	return newID
+end
 ----------------------------------------------------------------
 function E.func_DungeonOrRaid(SI_ID)
 	return E.Octo_Table_SI_IDS[SI_ID] and E.Octo_Table_SI_IDS[SI_ID].isRaid or false

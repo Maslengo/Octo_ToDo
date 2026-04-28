@@ -190,6 +190,13 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
+	if compareVersion(114.9, DBVersion) then
+		if cm.bossDifficulties then
+			cm.GreatVaultbossDifficulties = cm.bossDifficulties
+		end
+		cm.bossDifficulties = nil
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)

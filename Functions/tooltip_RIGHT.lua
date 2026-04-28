@@ -3,6 +3,29 @@ local L = E.L
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+local function GetVaultProgress(vaultMin, max3)
+	if max3 == 0 then
+		return E.COLOR_GRAY, vaultMin .. "/" .. max3
+	end
+
+	if vaultMin >= max3 then
+		return E.COLOR_GREEN, vaultMin .. "/" .. max3
+	end
+
+	if vaultMin > 0 then
+		return E.COLOR_YELLOW, vaultMin .. "/" .. max3
+	end
+
+	return E.COLOR_GRAY, vaultMin .. "/" .. max3
+end
+local function GetRewardText(rewards, index, max)
+	if rewards and rewards[index] then
+		return E.COLOR_WHITE .. rewards[index] .. "|r"
+	end
+	return E.COLOR_GRAY .. "0/" .. max .. "|r"
+end
+local function Safe(v) return v or 0 end
+
 ----------------------------------------------------------------
 function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 	if not GUID or not SettingsType then return end
@@ -191,6 +214,96 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 			tooltip[#tooltip+1] = {E.func_FormatMountInfo(mountID), {source, "LEFT"}, E.func_CompactFormatNumber(price) .. icon}
 		end
 	end
+	if id == "CurrentKey" then
+		local rioColor
+		local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
+		if seasonData then
+			rioColor = E.func_RioColor(seasonData.RIO_Score)
+		end
+		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
+			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, true)
+			tooltip[#tooltip+1] = {keyName}
+		end
+		if seasonData then
+			local RIO_Score = tonumber(seasonData.RIO_Score or 0)
+			local RIO_weeklyBest = tonumber(seasonData.RIO_weeklyBest or 0)
+			if RIO_Score > 0 or RIO_weeklyBest > 0 then
+				-- if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
+				-- 	tooltip[#tooltip+1] = {" ", " "}
+				-- end
+				-- if RIO_weeklyBest > 0 then
+				tooltip[#tooltip+1] = {L["BEST"], rioColor..RIO_weeklyBest.."|r"}
+				-- end
+				if RIO_Score > 0 then
+					tooltip[#tooltip+1] = {L["RATING"], rioColor..RIO_Score.."|r"}
+				end
+			end
+		end
+
+
+
+		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ADVANCED_TOOLTIP_MYTHICKEYSTONE then
+
+
+			local runHistory = cm.RunHistory
+			if runHistory then
+				local totalRuns = #runHistory
+				if totalRuns > 0 then
+					local runsByDungeon = {}
+					tooltip[#tooltip+1] = {"---"}
+					tooltip[#tooltip+1] = {L["TOTAL"]..":", totalRuns}
+					for index = 1, totalRuns do
+						local run = runHistory[index]
+						local mapChallengeModeID = run.mapChallengeModeID -- 402,
+						local name = E.func_GetName("challenge", mapChallengeModeID)
+						local completed = run.completed -- "false",
+						local level = run.level -- 22,
+						local vaultRewardLevel = math.min(level, 20)
+
+						local thisWeek = run.thisWeek -- "true",
+						local runScore = run.runScore -- 165,
+
+						if runsByDungeon[name] == nil then
+							runsByDungeon[name] = {run}
+						else
+							tinsert(runsByDungeon[name], run)
+						end
+					end
+					-- for name, v in pairs(runsByDungeon) do
+					-- for index, run in ipairs(runsByDungeon[name]) do
+					-- dungeonRuns = dungeonRuns .. name
+					-- end
+					-- tooltip[#tooltip+1] = {name, colorByCompleted(v[1].level, v[1].completed)}
+
+					-- -- for index, run in ipairs(runsByDungeon[name]) do
+					-- -- tooltip[#tooltip+1] = {name, colorByCompleted(run.level, run.completed)}
+					-- -- end
+					-- end
+
+					-- Populate runs by dungeon text section
+					for name, _ in pairs(runsByDungeon) do
+						local dungeonRuns = ""
+						local mapChallengeModeID
+						for index, run in ipairs(runsByDungeon[name]) do
+							mapChallengeModeID = run.mapChallengeModeID -- 402,
+							dungeonRuns = dungeonRuns .. (run.completed and E.COLOR_GREEN or E.COLOR_RED) .. "+" .. run.level .. "|r"
+							if index ~= #runsByDungeon[name] then
+								dungeonRuns = dungeonRuns .. ", "
+							end
+						end
+						if mapChallengeModeID then
+							local icon = E.func_GetIcon("challenge", mapChallengeModeID)
+							name = E.func_texturefromIcon(icon) .. name
+						end
+						tooltip[#tooltip+1] = {name, dungeonRuns}
+					end
+
+
+				end
+			end
+		end
+	end
+
 	if id == "GreatVault" then
 		if pd.HasAvailableRewards then
 			-- L["REWARD"]
@@ -220,110 +333,200 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 
 			local progressText = progressColor .. vaultMin .. "/" .. max3 .. "|r"
 
+tooltip[#tooltip+1] = {
+    E.name_activities[ID] or "?",
+    " ",
+    " ",
+    progressText,
+    " ",
+    " ",
+    rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. vaultMin .. "/" .. max1 .. "|r",
+    rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. vaultMin .. "/" .. max2 .. "|r",
+    rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. vaultMin .. "/" .. max3 .. "|r"
+}
+		end
+
+	end
+
+	-- Новый блок для GreatVault1, GreatVault2, GreatVault3
+	for i = 1, 3 do
+		if id == "GreatVault" .. i then
+
+			local ID = E.Enum_Activities_table[i]
+			local vaultData = cm.GreatVault and cm.GreatVault[ID] or {}
+			local rewards = vaultData.rewards or {}
+
+			local activities = E.func_GetActivities(ID)
+
+			local max1 = Safe(activities and activities[1] and activities[1].threshold)
+			local max2 = Safe(activities and activities[2] and activities[2].threshold)
+			local max3 = Safe(activities and activities[3] and activities[3].threshold)
+
+			local vaultMin = Safe(vaultData.min)
+
+			local color, progressText = GetVaultProgress(vaultMin, max3)
+			progressText = color .. progressText .. "|r"
+
+			local reward1 = rewards[1] and (E.COLOR_WHITE .. rewards[1] .. "|r") or (E.COLOR_GRAY .. vaultMin .. "/" .. max1 .. "|r")
+			local reward2 = rewards[2] and (E.COLOR_WHITE .. rewards[2] .. "|r") or (E.COLOR_GRAY .. vaultMin .. "/" .. max2 .. "|r")
+			local reward3 = rewards[3] and (E.COLOR_WHITE .. rewards[3] .. "|r") or (E.COLOR_GRAY .. vaultMin .. "/" .. max3 .. "|r")
+
 			tooltip[#tooltip+1] = {
-				E.name_activities[ID] or "?",
-				" ",
-				" ",
-				progressText,
-				" ",
-				" ",
-				rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "0/"..max1.."|r",
-				rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "0/"..max2.."|r",
-				rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "0/"..max3.."|r"
-				-- rewards[1] and E.COLOR_WHITE .. rewards[1] .. "|r" or E.COLOR_GRAY .. "-|r",
-				-- rewards[2] and E.COLOR_WHITE .. rewards[2] .. "|r" or E.COLOR_GRAY .. "-|r",
-				-- rewards[3] and E.COLOR_WHITE .. rewards[3] .. "|r" or E.COLOR_GRAY .. "-|r"
+			    E.name_activities[ID] or "?",
+			    progressText,
+			    reward1 .. " " .. reward2 .. " " .. reward3
 			}
-		end
-	end
-	if id == "CurrentKey" then
-		local rioColor
-		local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
-		if seasonData then
-			rioColor = E.func_RioColor(seasonData.RIO_Score)
-		end
-		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
-			local keyName = E.func_formatMplusKey(pd.OwnedKeystoneLevel, pd.OwnedKeystoneChallengeMapID, true, true)
-			tooltip[#tooltip+1] = {keyName}
-		end
-		if seasonData then
-			local RIO_Score = tonumber(seasonData.RIO_Score or 0)
-			local RIO_weeklyBest = tonumber(seasonData.RIO_weeklyBest or 0)
-			if RIO_Score > 0 or RIO_weeklyBest > 0 then
-				if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
-					tooltip[#tooltip+1] = {" ", " "}
-				end
-				-- if RIO_weeklyBest > 0 then
-				tooltip[#tooltip+1] = {L["BEST"], rioColor..RIO_weeklyBest.."|r"}
-				-- end
-				if RIO_Score > 0 then
-					tooltip[#tooltip+1] = {L["RATING"], rioColor..RIO_Score.."|r"}
+
+
+			-- tooltip[#tooltip+1] = {
+			-- 	E.name_activities[ID] or "?",
+			-- 	progressText,
+			-- 	GetRewardText(rewards, 1, max1) .. " " .. GetRewardText(rewards, 2, max2) .. " " .. GetRewardText(rewards, 3, max3)
+			-- }
+
+
+			-- tooltip[#tooltip+1] = {
+			-- 	E.name_activities[ID] or "?",
+			-- 	" ", " ",
+			-- 	progressText,
+			-- 	" ", " ",
+			-- 	GetRewardText(rewards, 1, max1),
+			-- 	GetRewardText(rewards, 2, max2),
+			-- 	GetRewardText(rewards, 3, max3)
+			-- }
+
+			-- RAID block (оставлен, но структурирован)
+			if ID == 3 and Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ADVANCED_TOOLTIP_GREATVAULT and cm.GreatVaultbossDifficulties  then
+				tooltip[#tooltip+1] = {"---"}
+				for instanceID, bosses in pairs(cm.GreatVaultbossDifficulties) do
+					local sorted = {}
+
+					for encounterID, data in pairs(bosses) do
+						sorted[#sorted+1] = {
+							id = encounterID,
+							order = data.order,
+							difficulty = data.difficulty
+						}
+					end
+
+					table.sort(sorted, function(a, b)
+							return a.order < b.order
+					end)
+
+					local SI_ID = E.func_EJ_to_SI(instanceID)
+					local instanceName = E.func_GetName("dungeon", SI_ID)
+					local instanceIcon = E.func_GetIcon("dungeon", SI_ID)
+
+					tooltip[#tooltip+1] = {
+						E.func_texturefromIcon(instanceIcon)
+						.. E.COLOR_GOLD .. instanceName .. "|r"
+					}
+
+					for _, boss in ipairs(sorted) do
+					    local encounterName = E.func_GetName("encounter", boss.id)
+
+					    local diffColor = E.COLOR_GRAY
+					    local diffName = "-"
+					    local nameColor = E.COLOR_GRAY
+
+					    if boss.difficulty > 0 then
+					        nameColor = E.COLOR_WHITE
+					        local diffInfo = E.OctoTable_Difficulties[boss.difficulty]
+					        diffColor = diffInfo and diffInfo.color or E.COLOR_WHITE
+					        diffName = E.func_GetName("difficulty", boss.difficulty, nil, true)
+					    end
+
+					    tooltip[#tooltip+1] = {
+					        nameColor .. encounterName .. "|r",
+					        "",
+					        diffColor .. diffName .. "|r"
+					    }
+					end
 				end
 			end
-		end
-		local runHistory = cm.RunHistory
-		if runHistory then
-			local totalRuns = #runHistory
-			if totalRuns > 0 then
-				local runsByDungeon = {}
-				tooltip[#tooltip+1] = {" "}
-				tooltip[#tooltip+1] = {L["TOTAL"]..":", totalRuns}
-				for index = 1, totalRuns do
-					local run = runHistory[index]
-					local mapChallengeModeID = run.mapChallengeModeID -- 402,
-					local name = E.func_GetName("challenge", mapChallengeModeID)
-					local completed = run.completed -- "false",
-					local level = run.level -- 22,
-					local vaultRewardLevel = math.min(level, 20)
 
-					local thisWeek = run.thisWeek -- "true",
-					local runScore = run.runScore -- 165,
-
-					if runsByDungeon[name] == nil then
-						runsByDungeon[name] = {run}
-					else
-						tinsert(runsByDungeon[name], run)
-					end
-				end
-				-- for name, v in pairs(runsByDungeon) do
-				--     for index, run in ipairs(runsByDungeon[name]) do
-				--         dungeonRuns = dungeonRuns .. name
-				--     end
-				--     tooltip[#tooltip+1] = {name, colorByCompleted(v[1].level, v[1].completed)}
-
-				--     -- for index, run in ipairs(runsByDungeon[name]) do
-				--     --     tooltip[#tooltip+1] = {name, colorByCompleted(run.level, run.completed)}
-				--     -- end
-				-- end
-
-				-- Populate runs by dungeon text section
-				for name, _ in pairs(runsByDungeon) do
-					local dungeonRuns = ""
-					local mapChallengeModeID
-					for index, run in ipairs(runsByDungeon[name]) do
-						mapChallengeModeID = run.mapChallengeModeID -- 402,
-						dungeonRuns = dungeonRuns .. (run.completed and E.COLOR_GREEN or E.COLOR_RED) .. "+" .. run.level .. "|r"
-						if index ~= #runsByDungeon[name] then
-							dungeonRuns = dungeonRuns .. ", "
-						end
-					end
-					if mapChallengeModeID then
-						local icon = E.func_GetIcon("challenge", mapChallengeModeID)
-						name = E.func_texturefromIcon(icon) .. name
-					end
-					tooltip[#tooltip+1] = {name, dungeonRuns}
-				end
+			-- MYTHIC+ block (чуть чище, без логики в каше)
 
 
+			-- if ID == 1 and Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ADVANCED_TOOLTIP_MYTHICKEYSTONE then
+			-- 	local runHistory = cm.RunHistory
+			-- 	local vaultDataAll = cm.GreatVault and cm.GreatVault[1]
+			-- 	local rewards = vaultDataAll and vaultDataAll.rewards or {}
+
+			-- 	local activities = E.func_GetActivities(1)
+			-- 	local thresholds = {
+			-- 		Safe(activities and activities[1] and activities[1].threshold),
+			-- 		Safe(activities and activities[2] and activities[2].threshold),
+			-- 		Safe(activities and activities[3] and activities[3].threshold),
+			-- 	}
+
+			-- 	local limit = thresholds[3] > 0 and thresholds[3] or 8
+
+			-- 	-- Всегда показываем заголовок
+			-- 	tooltip[#tooltip+1] = {"---"}
+
+			-- 	-- Создаём массив результатов
+			-- 	local results = {}
+
+			-- 	-- Заполняем топ раны если есть
+			-- 	if runHistory and #runHistory > 0 then
+			-- 		local thisWeekRuns = {}
+			-- 		for _, run in ipairs(runHistory) do
+			-- 			if run.thisWeek then
+			-- 				thisWeekRuns[#thisWeekRuns + 1] = run
+			-- 			end
+			-- 		end
+
+			-- 		table.sort(thisWeekRuns, function(a, b)
+			-- 			return a.level > b.level
+			-- 		end)
+
+			-- 		for i = 1, math.min(limit, #thisWeekRuns) do
+			-- 			results[i] = thisWeekRuns[i]
+			-- 		end
+			-- 	end
+
+			-- 	-- Всегда выводим limit строк
+			-- 	local highlight = {}
+			-- 	if thresholds[1] > 0 then highlight[thresholds[1]] = color end
+			-- 	if thresholds[2] > 0 then highlight[thresholds[2]] = color end
+			-- 	if thresholds[3] > 0 then highlight[thresholds[3]] = color end
+
+			-- 	for pos = 1, limit do
+			-- 		local run = results[pos]
+			-- 		local NEWcolor = highlight[pos] or E.COLOR_GRAY
+
+			-- 		if run then
+			-- 			local name = E.func_GetName("challenge", run.mapChallengeModeID)
+			-- 			local rewardIlvl = ""
+			-- 			if highlight[pos] then
+			-- 				local ilvl = 0
+			-- 				if pos == thresholds[3] then
+			-- 					ilvl = rewards[3] or 0
+			-- 				elseif pos == thresholds[2] then
+			-- 					ilvl = rewards[2] or 0
+			-- 				elseif pos == thresholds[1] then
+			-- 					ilvl = rewards[1] or 0
+			-- 				end
+			-- 				rewardIlvl = "(".. ilvl .. ") "
+			-- 			end
+			-- 			tooltip[#tooltip+1] = {
+			-- 				{NEWcolor .. run.level .. " - " .. name .. "|r" .. rewardIlvl, "LEFT"}
+			-- 			}
+			-- 		else
+			-- 			-- Пустая строка
+			-- 			tooltip[#tooltip+1] = {
+			-- 				{NEWcolor .. "-|r", "LEFT"}
+			-- 			}
+			-- 		end
+			-- 	end
+			-- end
 
 
 
 
-
-			end
 		end
 	end
-
 
 
 
@@ -574,10 +777,10 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				-- local DFCURRENCY = E.Octo_Table_ProfCurr[skillLineID].DRAGONFLIGHT
 				-- local row6Text = ""
 				-- if DFCURRENCY then
-				--     local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
-				--     if count then
-				--         row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
-				--     end
+				-- local count = cm.Currency[DFCURRENCY] and cm.Currency[DFCURRENCY].quantity
+				-- if count then
+				-- row6Text = E.func_texturefromIcon(E.func_GetIcon("currency", DFCURRENCY)) .. E.func_GetName("currency", DFCURRENCY) .. count
+				-- end
 				-- end
 				local row = { row1Text }
 
@@ -611,12 +814,12 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 				table.insert(tooltip, d.row)
 			end
 			-- local header1 = {
-			--     "1",
-			--     "2",
-			--     "3",
-			--     "4",
-			--     "5",
-			--     "6",
+			-- "1",
+			-- "2",
+			-- "3",
+			-- "4",
+			-- "5",
+			-- "6",
 			-- }
 			-- table.insert(tooltip, 1, header1)
 		end

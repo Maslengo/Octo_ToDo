@@ -1504,7 +1504,7 @@ end
 ----------------------------------------------------------------
 function E.func_Create_Highlight(frame, owner)
 	if E.ENABLE_HIGHTLIGHT then
-		frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoPropagateTemplate")
+		frame.Highlight = CreateFrame("FRAME", nil, owner, "OctoRectTemplate")
 		-- frame.Highlight:SetFrameLevel(500)
 		-- frame.Highlight:SetFrameStrata("TOOLTIP")
 		E.func_ApplyHighlightTemplate(frame.Highlight, frame)

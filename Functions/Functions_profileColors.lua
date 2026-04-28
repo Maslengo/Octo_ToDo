@@ -66,10 +66,6 @@ local function defaults_tbl()
 	local ALLR, ALLG, ALLB, ALLA = E.func_Hex2RGBA("|cff0070DD")
 	local NEUR, NEUG, NEUB, NEUA = E.func_Hex2RGBA(E.Class_Monk_Color)
 	local tbl = {
-		ConfigColor_MAIN_MainFrame_r = 0.08,
-		ConfigColor_MAIN_MainFrame_g = 0.08,
-		ConfigColor_MAIN_MainFrame_b = 0.08,
-		ConfigColor_MAIN_MainFrame_a = 0.8,
 		ConfigColor_MAIN_MainFrame_UseFaction_CONFIG = false,
 		ConfigColor_MAIN_MainFrame_UseClass_CONFIG = false,
 		ConfigColor_MAIN_Border_r = 0,
@@ -78,6 +74,18 @@ local function defaults_tbl()
 		ConfigColor_MAIN_Border_a = 1,
 		ConfigColor_MAIN_Border_UseFaction_CONFIG = false,
 		ConfigColor_MAIN_Border_UseClass_CONFIG = false,
+
+		ConfigColor_MAIN_MainFrame_r = 0.08,
+		ConfigColor_MAIN_MainFrame_g = 0.08,
+		ConfigColor_MAIN_MainFrame_b = 0.08,
+		ConfigColor_MAIN_MainFrame_a = 0.8,
+
+		CONFIG_ZEBRA_MODE = 0,
+		ConfigColor_ZEBRA_RGBA_r = 0.08,
+		ConfigColor_ZEBRA_RGBA_g = 0.08,
+		ConfigColor_ZEBRA_RGBA_b = 0.08,
+		ConfigColor_ZEBRA_RGBA_a = 0.4,
+
 		ConfigColor_TOOLTIP_TooltipFrame_r = 0.15, -- 0.08,
 		ConfigColor_TOOLTIP_TooltipFrame_g = 0.15, -- 0.08,
 		ConfigColor_TOOLTIP_TooltipFrame_b = 0.15, -- 0.08,
@@ -186,10 +194,20 @@ local function OctoUI_tbl()
 		ConfigColor_MAIN_Border_r = 0.3333333432674408,
 		ConfigColor_MAIN_Border_UseClass_CONFIG = false,
 		ConfigColor_MAIN_Border_UseFaction_CONFIG = false,
-		ConfigColor_MAIN_MainFrame_a = 0.8671879768371582,
-		ConfigColor_MAIN_MainFrame_b = 0.1647058874368668,
-		ConfigColor_MAIN_MainFrame_g = 0.1411764770746231,
+
 		ConfigColor_MAIN_MainFrame_r = 0.1137254983186722,
+		ConfigColor_MAIN_MainFrame_g = 0.1411764770746231,
+		ConfigColor_MAIN_MainFrame_b = 0.1647058874368668,
+		ConfigColor_MAIN_MainFrame_a = 0.8,
+
+		CONFIG_ZEBRA_MODE = 0,
+		ConfigColor_ZEBRA_RGBA_r = 0.1137254983186722,
+		ConfigColor_ZEBRA_RGBA_g = 0.1411764770746231,
+		ConfigColor_ZEBRA_RGBA_b = 0.1647058874368668,
+		ConfigColor_ZEBRA_RGBA_a = 0.4,
+
+
+
 		ConfigColor_MAIN_MainFrame_UseClass_CONFIG = false,
 		ConfigColor_MAIN_MainFrame_UseFaction_CONFIG = false,
 		ConfigColor_NECROLORD_a = 1,
@@ -218,6 +236,10 @@ local function OctoUI_tbl()
 		ConfigColor_TOOLTIP_min_RGBA_b = 0.5647059082984924,
 		ConfigColor_TOOLTIP_min_RGBA_g = 0.5647059082984924,
 		ConfigColor_TOOLTIP_min_RGBA_r = 0.5647059082984924,
+
+
+
+
 		ConfigColor_TOOLTIP_TooltipFrame_a = 1,
 		ConfigColor_TOOLTIP_TooltipFrame_b = 0.1647058874368668,
 		ConfigColor_TOOLTIP_TooltipFrame_g = 0.1411764770746231,

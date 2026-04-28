@@ -313,6 +313,7 @@ function E.init_Octo_ToDo_DB_Levels()
 	local MASLENGO_DEFAULTS = {
 		Currency = {},
 		GARRISON = {},
+		GreatVaultbossDifficulties = {},
 		GreatVault = {},
 		Items = {},
 		journalInstance = {},
@@ -507,6 +508,10 @@ end
 E.Octo_ToDo_DB_Vars_DEFAULTS = {
 	Config_numberFormatMode = 1,
 	GlobalDBVersion = 0,
+		CONFIG_ADVANCED_TOOLTIP_MYTHICKEYSTONE = true,
+		CONFIG_ADVANCED_TOOLTIP_GREATVAULT = true,
+
+
 		CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = false,
 		CONFIG_HOVER_SHOW_DURATION = 1,
 		CONFIG_FRAME_ALPHA_ON_HOVER = 80,
@@ -677,6 +682,7 @@ function EventFrame:func_Weekly_Reset()
 				cm.SavedWorldBoss = {}
 				cm.LFGInstance = {}
 				cm.GreatVault = {}
+				cm.GreatVaultbossDifficulties = {}
 				cm.RunHistory = {}
 				for _, data in next, (E.ALL_UniversalQuests) do
 					if data.reset == "Weekly" then

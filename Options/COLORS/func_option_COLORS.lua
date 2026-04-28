@@ -390,6 +390,73 @@ function E.func_option_COLORS(width, tabName)
 					-------------------------------------------------
 				}
 			},
+
+		-------------------------------------------------
+		-- Zebra
+		-------------------------------------------------
+		[E.func_AutoKey()] = {
+			type = "group",
+			name = L["Alternating Colors"],
+			inline = true,
+			order = E.func_GetOrder(),
+			args = {
+				-------------------------------------------------
+				[E.func_AutoKey()] = {
+					type = "select",
+					name = L["TYPE"],
+					-- desc = L["CURSOR_SIZE_DEFAULT"]..": "..L["YES"].."|n|n"..L["Use gradient values in tooltip"],
+
+					values = function()
+						local t = {}
+						for _, v in ipairs(E.ZEBRA_MODE) do
+							t[v.value] = v.text
+						end
+						return t
+					end,
+
+					get = function()
+						if E.PROFTBL then
+							return E.PROFTBL.CONFIG_ZEBRA_MODE
+						end
+					end,
+					set = function(_, value)
+						if E.PROFTBL then
+							E.PROFTBL.CONFIG_ZEBRA_MODE = value
+							E.func_UpdateGlobals()
+						end
+					end,
+					width = width,
+					order = E.func_GetOrder(),
+				},
+				-------------------------------------------------
+				[E.func_AutoKey()] = {
+					type = "color",
+					name = L["COLOR"],
+					hasAlpha = true,
+					get = function()
+						local r = E.PROFTBL.ConfigColor_ZEBRA_RGBA_r
+						local g = E.PROFTBL.ConfigColor_ZEBRA_RGBA_g
+						local b = E.PROFTBL.ConfigColor_ZEBRA_RGBA_b
+						local a = E.PROFTBL.ConfigColor_ZEBRA_RGBA_a
+						return r, g, b, a
+					end,
+					set = function(_, r, g, b, a)
+						E.PROFTBL.ConfigColor_ZEBRA_RGBA_r = r
+						E.PROFTBL.ConfigColor_ZEBRA_RGBA_g = g
+						E.PROFTBL.ConfigColor_ZEBRA_RGBA_b = b
+						E.PROFTBL.ConfigColor_ZEBRA_RGBA_a = a
+						E.func_UpdateGlobals()
+					end,
+					width = width,
+					order = E.func_GetOrder(),
+				},
+				-------------------------------------------------
+			},
+		},
+
+
+
+
 			-------------------------------------------------
 			-- Градиент
 			-------------------------------------------------

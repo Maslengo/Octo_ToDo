@@ -13,6 +13,67 @@ local GlobalAddonName, E = ...
 -- ["zhTW"] = "",
 -- },
 E.translations = {
+	["Hide Delay (sec.)"] = {
+		["ruRU"] = "Задержка скрытия (сек.)",
+		["deDE"] = "Ausblendverzögerung (Sek.)",
+		["esES"] = "Retraso de ocultación (seg.)",
+		["esMX"] = "Retraso de ocultación (seg.)",
+		["frFR"] = "Délai de masquage (sec.)",
+		["itIT"] = "Ritardo di nascondimento (sec.)",
+		["ptBR"] = "Atraso de ocultação (seg.)",
+		["koKR"] = "숨김 지연 (초)",
+		["zhCN"] = "隐藏延迟（秒）",
+		["zhTW"] = "隱藏延遲（秒）",
+	},
+	["Hide Delay"] = {
+		["ruRU"] = "Задержка скрытия",
+		["deDE"] = "Ausblendverzögerung",
+		["esES"] = "Retraso de ocultación",
+		["esMX"] = "Retraso de ocultación",
+		["frFR"] = "Délai de masquage",
+		["itIT"] = "Ritardo di nascondimento",
+		["ptBR"] = "Atraso de ocultação",
+		["koKR"] = "숨김 지연",
+		["zhCN"] = "隐藏延迟",
+		["zhTW"] = "隱藏延遲",
+	},
+	["Alternating Colors"] = {
+		["ruRU"] = "Чередование цветов",
+		["deDE"] = "Abwechselnde Farben",
+		["esES"] = "Colores alternos",
+		["esMX"] = "Colores alternos",
+		["frFR"] = "Couleurs alternées",
+		["itIT"] = "Colori alternati",
+		["ptBR"] = "Cores alternadas",
+		["koKR"] = "색상 교차",
+		["zhCN"] = "交替颜色",
+		["zhTW"] = "交替顏色",
+	},
+	["Rows"] = {
+		["ruRU"] = "Строки",
+		["deDE"] = "Zeilen",
+		["esES"] = "Filas",
+		["esMX"] = "Filas",
+		["frFR"] = "Lignes",
+		["itIT"] = "Righe",
+		["ptBR"] = "Linhas",
+		["koKR"] = "행",
+		["zhCN"] = "行",
+		["zhTW"] = "行",
+	},
+
+	["Columns"] = {
+		["ruRU"] = "Столбцы",
+		["deDE"] = "Spalten",
+		["esES"] = "Columnas",
+		["esMX"] = "Columnas",
+		["frFR"] = "Colonnes",
+		["itIT"] = "Colonne",
+		["ptBR"] = "Colunas",
+		["koKR"] = "열",
+		["zhCN"] = "列",
+		["zhTW"] = "列",
+	},
 	["Void Assaults"] = {
 		["ruRU"] = "Натиски Бездны",
 		["deDE"] = "Angriffe der Leere",
@@ -240,6 +301,21 @@ E.translations = {
 	["NAME"] = NAME, -- Имя
 	["ADD"] = ADD, -- Добавить
 	["SECONDARY"] = SECONDARY, -- Дополнительно
+
+
+
+
+
+
+	----------------------------------------------------------------
+	-- ["DELVES_GREAT_VAULT_LABEL"] = DELVES_GREAT_VAULT_LABEL,
+	["RATED_PVP_WEEKLY_VAULT"] = RATED_PVP_WEEKLY_VAULT,
+	----------------------------------------------------------------
+	-- BINDING_NAME_MINIMAPZOOMIN - Мини-карта: приближение
+	-- BINDING_NAME_MINIMAPZOOMOUT - Мини-карта: отдаление
+	-- BINDING_NAME_TOGGLEMINIMAP - Мини-карта
+	-- HUD_EDIT_MODE_MINIMAP_LABEL - Мини-карта
+	["MINIMAP_LABEL"] = MINIMAP_LABEL, -- Мини-карта
 	----------------------------------------------------------------
 	-- COMPACT_UNIT_FRAME_PROFILE_SORTBY - Сортировка:
 	-- CLUB_FINDER_SORT_BY - Сортировка
@@ -353,7 +429,6 @@ E.translations = {
 	["DAILY"] = DAILY,
 	["DEFAULT"] = DEFAULT,
 	["DELETE"] = DELETE,
-	["DELVES_GREAT_VAULT_LABEL"] = DELVES_GREAT_VAULT_LABEL,
 	["DONE"] = DONE,
 	["FAILED"] = FAILED,
 	["FRIENDS_LIST_OFFLINE"] = FRIENDS_LIST_OFFLINE,
@@ -371,6 +446,7 @@ E.translations = {
 	["ITEMS"] = ITEMS,
 	["LFG_LIST_ITEM_LEVEL_CURRENT_PVP"] = LFG_LIST_ITEM_LEVEL_CURRENT_PVP,
 	["NONE"] = NONE,
+	["TYPE"] = TYPE,
 	["PLAYER_DIFFICULTY1"] = PLAYER_DIFFICULTY1,
 	["PLAYER_DIFFICULTY2"] = PLAYER_DIFFICULTY2,
 	["PLAYER_DIFFICULTY3"] = PLAYER_DIFFICULTY3,
@@ -380,7 +456,6 @@ E.translations = {
 	["TRADE_SKILLS"] = TRADE_SKILLS,
 	["QUESTS_LABEL"] = QUESTS_LABEL,
 	["QUEST_WATCH_QUEST_READY"] = QUEST_WATCH_QUEST_READY,
-	["RATED_PVP_WEEKLY_VAULT"] = RATED_PVP_WEEKLY_VAULT,
 	["RESET"] = RESET,
 	["RETRIEVING_DATA"] = RETRIEVING_DATA,
 	["REWARD"] = REWARD,
@@ -1329,6 +1404,18 @@ E.translations = {
 		["koKR"] = "툴팁 색상",
 		["zhCN"] = "提示信息颜色",
 		["zhTW"] = "提示資訊顏色",
+	},
+	["Advanced Tooltip"] = {
+		["ruRU"] = "Расширенный тултип",
+		["deDE"] = "Erweiterter Tooltip",
+		["esES"] = "Información emergente avanzada",
+		["esMX"] = "Información emergente avanzada",
+		["frFR"] = "Info-bulle avancée",
+		["itIT"] = "Tooltip avanzato",
+		["ptBR"] = "Dica avançada",
+		["koKR"] = "고급 툴팁",
+		["zhCN"] = "高级提示",
+		["zhTW"] = "進階提示",
 	},
 	["Tooltip"] = {
 		["ruRU"] = "Тултип",
