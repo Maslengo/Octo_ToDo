@@ -222,7 +222,7 @@ function E.func_DEBUG_CURRENCY_TRANSFER()
 				for q, v in ipairs(accountCurrencyData) do
 					local characterGUID = v.characterGUID or L["NONE"]
 					-- local characterName = v.characterName or L["NONE"]
-					local fullCharacterName = v.fullCharacterName or L["UNKNOWN"]
+					local fullCharacterName = v.fullCharacterName or E.TEXT_UNKNOWN
 					local quantity = v.quantity or 0
 					-- local Server = fullCharacterName:gsub("-", "")
 					-- local part1, Server = fullCharacterName:match("([^-]+)-([^-]+)")

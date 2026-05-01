@@ -884,7 +884,7 @@ function E.func_GetPlayerLocation()
 			end
 		end
 	end
-	return L["UNKNOWN"], true
+	return E.TEXT_UNKNOWN, true
 end
 function E.func_GetQuestStatus(questID, forceBoolean)
 	if not questID then return end
@@ -1174,7 +1174,7 @@ function E.func_formatMplusKey(keyStoneLevel, OwnedKeystoneChallengeMapID, needI
 	if fullName then
 		namePart = name
 	elseif not fullName and E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID] then -- dungeonID
-		namePart = E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID].abbreviation or L["UNKNOWN"]
+		namePart = E.OctoTable_KeystoneAbbr[OwnedKeystoneChallengeMapID].abbreviation or E.TEXT_UNKNOWN
 	else
 		namePart = name
 	end
@@ -2328,7 +2328,7 @@ end
 ----------------------------------------------------------------
 -- function E.func_RegisterEvents(frame, MyEventsTable)
 -- local stack = debugstack(2)
--- local STR = stack:match("Interface/AddOns/(.-):%d+") or L["UNKNOWN"]
+-- local STR = stack:match("Interface/AddOns/(.-):%d+") or E.TEXT_UNKNOWN
 -- local DebugPath = STR:gsub("]", "")
 -- for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
 -- frame:SetScript("OnEvent",
@@ -2344,7 +2344,7 @@ end
 -- end
 function E.func_RegisterEvents(frame, MyEventsTable)
 	local stack = debugstack(2)
-	local STR = stack:match("Interface/AddOns/(.-):%d+") or L["UNKNOWN"]
+	local STR = stack:match("Interface/AddOns/(.-):%d+") or E.TEXT_UNKNOWN
 	local DebugPath = STR:gsub("]", "")
 	for _, event in ipairs(MyEventsTable) do
 		local success, err = pcall(function()

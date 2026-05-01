@@ -64,7 +64,7 @@ function E.func_option_CHARACTERS(category, layout) -- layout
 	----------------------------------------------------------------
 	-- Функция для показа подтверждения удаления персонажа
 	local function ConfirmCharacterDelete(GUID, CharInfo, callback)
-		local name = CharInfo.PlayerData.Name or "Unknown"
+		local name = CharInfo.PlayerData.Name or E.TEXT_UNKNOWN
 		local curServer = CharInfo.PlayerData.curServer or ""
 		local fullName = name .. " - " .. curServer
 		StaticPopup_Show("CONFIRM_DELETE_CHARACTER", fullName, nil, {

@@ -42,7 +42,7 @@ local function func_Cache_Name(id, Cache_Name, name, debugLabel)
 	if entry and type(entry) == "table" and type(entry[E.curLocaleLang]) == "string" then
 		return entry[E.curLocaleLang]
 	else
-		return E.COLOR_DARKORANGE..L["UNKNOWN"].."|r"
+		return E.TEXT_UNKNOWN
 	end
 end
 ----------------------------------------------------------------
@@ -118,7 +118,7 @@ handler.item = function(Cache_Name, Cache_Quality, category, id)
 		if type(name) == "string" and name ~= "" and quality then
 		    name = E.func_GetQualityHexColor(quality) .. name .. "|r"
 		else
-		    name = E.COLOR_PURPLE .. L["UNKNOWN"].."|r"
+		    name = E.TEXT_UNKNOWN
 		end
 	end
 	-----------
@@ -715,7 +715,7 @@ function E.func_GetName(category, id, forcedQuality, fullDifficultyName)
 		name = func_ForcedQuality(name, forcedQuality)
 	end
 	local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
-	name = name or E.COLOR_RED..L["UNKNOWN"].."|r"
+	name = name or E.TEXT_UNKNOWN
 	----------------
 	if category == "currency" then
 		local hasMount = Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_MountsInTooltip and E.OctoTable_CurrencyMountForFuncCurName[id] or false

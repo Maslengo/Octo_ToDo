@@ -83,7 +83,9 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
 		-- Raid
-		-- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
+
+		{id = 1592, defS = true,}, -- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
+
 		{id = 2913, defS = true,}, -- March on Quel'Danas
 		{id = 2912, defS = true,}, -- The Voidspire
 		{id = 2939, defS = true,}, -- The Dreamrift

@@ -43,7 +43,7 @@ local function tempFunction()
 	-- for id = 1, 3474 do
 	for id = 1, 5000 do
 		local info = E.func_GetCurrencyInfo(id)
-		-- if E.func_GetName("currency", id) ~= E.COLOR_RED..L["UNKNOWN"].."|r" then
+		-- if E.func_GetName("currency", id) ~= E.TEXT_UNKNOWN then
 		if info and info.name then
 			tinsert(sorted, id)
 		end

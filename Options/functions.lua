@@ -45,7 +45,7 @@ end
 ----------------------------------------------------------------
 function E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	local variable = E.func_GenerateID()
-	name = name or L["UNKNOWN"]
+	name = name or E.TEXT_UNKNOWN
 	minValue = minValue or 0
 	maxValue = maxValue or 1
 	step = step or 1

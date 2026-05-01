@@ -762,92 +762,163 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+-- function E.func_TextCenter_Currency(CharInfo, id, itemID)
+-- 	local pd = CharInfo.PlayerData
+-- 	local cm = CharInfo.MASLENGO
+-- 	local data = cm.Currency
+-- 	-- if not data[id] then return "" end
+-- 	if not data[id] then data[id] = {} end
+-- 	local result = ""
+-- 	local quantity = data[id].quantity or 0
+-- 	local totalEarned = data[id].totalEarned
+-- 	local maxQuantity = data[id].maxQuantity
+-- 	local quantityEarnedThisWeek = data[id].quantityEarnedThisWeek or 0
+-- 	local maxWeeklyQuantity = data[id].maxWeeklyQuantity or 0
+-- 	local useTotalEarnedForMaxQty = data[id].useTotalEarnedForMaxQty
+-- 	local CONFIG_CURRENCY_SHOW_BRACKETS = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_BRACKETS or false -- Показывать прогресс в скобках (заработано/максимум)
+-- 	local COLOR_BRACKETS = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_BRACKETS or E.COLOR_BLUE
+-- 	local CONFIG_CURRENCY_SHOW_REMAINING = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING or false -- Показывать сколько осталось заработать (+123)
+-- 	local COLOR_REMAINING = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_REMAINING or E.COLOR_YELLOW
+-- 	local CONFIG_CURRENCY_SHOW_ZERO = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_ZERO or false
+-- 	if quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO then
+-- 		-- Main currency display logic
+-- 		if useTotalEarnedForMaxQty then
+-- 			-- Season-based currency
+-- 			if maxQuantity then
+-- 				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "|r"
+-- 				-- HIDE IF ZERO
+-- 				-- result = color .. quantity .. "|r"
+-- 				if totalEarned and totalEarned ~= 0 then
+-- 					-- PERENES SUDA
+-- 					result = result .. E.func_CompactFormatNumber(quantity)
+-- 					-- result = result .. string.format(L["CURRENCY_SEASON_TOTAL_MAXIMUM"], color, maxWeeklyQuantity, totalEarned)
+-- 					-- result = result .. E.COLOR_BLUE .. "*|r"
+-- 					if CONFIG_CURRENCY_SHOW_BRACKETS then
+-- 						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(totalEarned) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. ")|r"
+-- 					end
+-- 					if CONFIG_CURRENCY_SHOW_REMAINING then
+-- 						if maxQuantity ~= totalEarned then
+-- 							local canEarn = maxQuantity - totalEarned
+-- 							result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
+-- 						end
+-- 					end
+-- 				end
+-- 			else
+-- 				result = result .. E.func_CompactFormatNumber(quantity)
+-- 				if CONFIG_CURRENCY_SHOW_BRACKETS then
+-- 					if quantityEarnedThisWeek ~= 0 and quantityEarnedThisWeek ~= quantity then
+-- 						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. ")|r"
+-- 					end
+-- 				end
+-- 			end
+-- 		else
+-- 			-- Regular currency
+-- 			if maxQuantity then
+-- 				-- Has maximum limit
+-- 				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "/" .. maxQuantity .. "|r"
+-- 				local color = E.COLOR_WHITE
+-- 				if quantity == maxQuantity then
+-- 					color = E.COLOR_GREEN
+-- 				end
+-- 				result = result .. color .. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. "|r"
+-- 			else
+-- 				-- Simple display: just "Total: 123"
+-- 				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "|r"
+-- 				result = result .. E.func_CompactFormatNumber(quantity)
+-- 			end
+-- 		end
+-- 		if CONFIG_CURRENCY_SHOW_BRACKETS then
+-- 			-- Weekly cap display (always show if exists)
+-- 			if maxWeeklyQuantity ~= 0 then
+-- 				-- result = result .. {string.format(L["CURRENCY_WEEKLY_CAP"], color, quantity, maxWeeklyQuantity)}
+-- 				result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
+-- 			end
+-- 		end
+-- 		if CONFIG_CURRENCY_SHOW_REMAINING then
+-- 			if maxWeeklyQuantity ~= 0 then
+-- 				if maxWeeklyQuantity ~= quantityEarnedThisWeek then
+-- 					local canEarn = maxWeeklyQuantity - quantityEarnedThisWeek
+-- 					result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
+-- 				end
+-- 			end
+-- 		end
+-- 	end
+-- 	if itemID then
+-- 		result = result .. E.COLOR_GREEN .. E.func_TextCenter_Items(CharInfo, itemID, true) .. "|r"
+-- 	end
+-- 	return result
+-- end
+----------------------------------------------------------------
+
+
 function E.func_TextCenter_Currency(CharInfo, id, itemID)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local data = cm.Currency
-	-- if not data[id] then return "" end
 	if not data[id] then data[id] = {} end
-	local result = ""
+	local parts = {}
+
 	local quantity = data[id].quantity or 0
 	local totalEarned = data[id].totalEarned
 	local maxQuantity = data[id].maxQuantity
 	local quantityEarnedThisWeek = data[id].quantityEarnedThisWeek or 0
 	local maxWeeklyQuantity = data[id].maxWeeklyQuantity or 0
 	local useTotalEarnedForMaxQty = data[id].useTotalEarnedForMaxQty
-	local CONFIG_CURRENCY_SHOW_BRACKETS = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_BRACKETS or false -- Показывать прогресс в скобках (заработано/максимум)
+	local CONFIG_CURRENCY_SHOW_BRACKETS = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_BRACKETS or false
 	local COLOR_BRACKETS = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_BRACKETS or E.COLOR_BLUE
-	local CONFIG_CURRENCY_SHOW_REMAINING = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING or false -- Показывать сколько осталось заработать (+123)
+	local CONFIG_CURRENCY_SHOW_REMAINING = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING or false
 	local COLOR_REMAINING = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_REMAINING or E.COLOR_YELLOW
 	local CONFIG_CURRENCY_SHOW_ZERO = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_ZERO or false
+
+	-- Main quantity display
 	if quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO then
-		-- Main currency display logic
 		if useTotalEarnedForMaxQty then
-			-- Season-based currency
-			if maxQuantity then
-				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "|r"
-				-- HIDE IF ZERO
-				-- result = color .. quantity .. "|r"
-				if totalEarned and totalEarned ~= 0 then
-					-- PERENES SUDA
-					result = result .. E.func_CompactFormatNumber(quantity)
-					-- result = result .. string.format(L["CURRENCY_SEASON_TOTAL_MAXIMUM"], color, maxWeeklyQuantity, totalEarned)
-					-- result = result .. E.COLOR_BLUE .. "*|r"
-					if CONFIG_CURRENCY_SHOW_BRACKETS then
-						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(totalEarned) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. ")|r"
-					end
-					if CONFIG_CURRENCY_SHOW_REMAINING then
-						if maxQuantity ~= totalEarned then
-							local canEarn = maxQuantity - totalEarned
-							result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
-						end
-					end
-				end
-			else
-				result = result .. E.func_CompactFormatNumber(quantity)
-				if CONFIG_CURRENCY_SHOW_BRACKETS then
-					if quantityEarnedThisWeek ~= 0 and quantityEarnedThisWeek ~= quantity then
-						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. ")|r"
-					end
-				end
-			end
+			parts[#parts+1] = E.func_CompactFormatNumber(quantity)
 		else
-			-- Regular currency
 			if maxQuantity then
-				-- Has maximum limit
-				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "/" .. maxQuantity .. "|r"
 				local color = E.COLOR_WHITE
 				if quantity == maxQuantity then
 					color = E.COLOR_GREEN
 				end
-				result = result .. color .. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. "|r"
+				parts[#parts+1] = color .. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. "|r"
 			else
-				-- Simple display: just "Total: 123"
-				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "|r"
-				result = result .. E.func_CompactFormatNumber(quantity)
-			end
-		end
-		if CONFIG_CURRENCY_SHOW_BRACKETS then
-			-- Weekly cap display (always show if exists)
-			if maxWeeklyQuantity ~= 0 then
-				-- result = result .. {string.format(L["CURRENCY_WEEKLY_CAP"], color, quantity, maxWeeklyQuantity)}
-				result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
-			end
-		end
-		if CONFIG_CURRENCY_SHOW_REMAINING then
-			if maxWeeklyQuantity ~= 0 then
-				if maxWeeklyQuantity ~= quantityEarnedThisWeek then
-					local canEarn = maxWeeklyQuantity - quantityEarnedThisWeek
-					result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
-				end
+				parts[#parts+1] = E.func_CompactFormatNumber(quantity)
 			end
 		end
 	end
+
+	-- Season-based brackets (totalEarned/maxQuantity)
+	if useTotalEarnedForMaxQty and maxQuantity and totalEarned and totalEarned ~= 0 then
+		if CONFIG_CURRENCY_SHOW_BRACKETS then
+			parts[#parts+1] = COLOR_BRACKETS .. "(" .. E.func_CompactFormatNumber(totalEarned) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. ")|r"
+		end
+		if CONFIG_CURRENCY_SHOW_REMAINING then
+			if maxQuantity ~= totalEarned then
+				local canEarn = maxQuantity - totalEarned
+				parts[#parts+1] = COLOR_REMAINING .. "+" .. canEarn .. "|r"
+			end
+		end
+	end
+
+	-- Weekly cap for regular currencies
+	if not useTotalEarnedForMaxQty and (quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO) then
+		if CONFIG_CURRENCY_SHOW_BRACKETS and maxWeeklyQuantity ~= 0 then
+			parts[#parts+1] = COLOR_BRACKETS .. "(" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
+		end
+		if CONFIG_CURRENCY_SHOW_REMAINING and maxWeeklyQuantity ~= 0 and maxWeeklyQuantity ~= quantityEarnedThisWeek then
+			local canEarn = maxWeeklyQuantity - quantityEarnedThisWeek
+			parts[#parts+1] = COLOR_REMAINING .. "+" .. canEarn .. "|r"
+		end
+	end
+
+	local result = table.concat(parts, " ")
+
 	if itemID then
 		result = result .. E.COLOR_GREEN .. E.func_TextCenter_Items(CharInfo, itemID, true) .. "|r"
 	end
 	return result
 end
-----------------------------------------------------------------
+
+
 ----------------------------------------------------------------
 ----------------------------------------------------------------

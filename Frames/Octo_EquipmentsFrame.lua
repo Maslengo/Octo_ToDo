@@ -333,7 +333,7 @@ function EventFrame:CreateDataProvider(GUID)
 		-- local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
 		-- if ItemID then
 		-- 	local tempName = E.func_GetName("item", ItemID, Quality)
-		-- 	if strfind(tempName, L["UNKNOWN"]) then
+		-- 	if strfind(tempName, E.TEXT_UNKNOWN) then
 		-- 		if ItemLink then
 		-- 			ItemName = ItemLink
 		-- 		elseif v.ItemName then
@@ -350,7 +350,7 @@ function EventFrame:CreateDataProvider(GUID)
 
 
 		local function IsValidName(name)
-			return name and not string.find(name, L["UNKNOWN"], 1, true)
+			return name and not string.find(name, E.TEXT_UNKNOWN, 1, true)
 		end
 
 		local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"

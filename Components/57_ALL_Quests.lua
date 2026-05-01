@@ -46,10 +46,14 @@ local function tempFunction()
 	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	-- }
 	----------------------------------------------------------------
-
+	local TYPE = "quest"
 	local sorted = {}
 	for id = 93000, 96000 do
-		tinsert(sorted, id)
+		local name = E.func_GetName(TYPE, id)
+		local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
+		if name ~= E.TEXT_UNKNOWN .. debugTEXT then
+			tinsert(sorted, id)
+		end
 	end
 
 	table.sort(sorted, E.func_ReversSort)
