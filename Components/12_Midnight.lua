@@ -29,6 +29,7 @@ local function tempFunction()
 		{id = 3212, defS = false,}, -- Radiant Spark Dust (Midnight Season 1)
 		{id = 3028, defS = false,}, -- Restored Coffer Key (Midnight Season 1)
 		{id = 3310, defS = false,}, -- Coffer Key Shards
+		{id = 3405, defS = false,}, -- Field Accolade
 		-- https://www.wowhead.com/currencies/season-1#0+1+3
 		{id = 3347, defS = true,}, -- Myth Dawncrest (Midnight Season 1 up to item levels 276-289)
 		{id = 3345, defS = true,}, -- Hero Dawncrest (Midnight Season 1 up to item levels 263-276)
@@ -48,6 +49,14 @@ local function tempFunction()
 		{id = 3363, defS = false,}, -- Community Coupons
 		-- белый
 		{id = 3316, defS = false,}, -- Voidlight Marl
+
+
+
+
+		{id = 3393, defS = false,}, -- Illusionary Coin
+
+
+
 		-- {id = 3349, defS = false,}, -- [DNT] [PH] Evergreen Initiative Currency
 		-- {id = 3319, defS = false,}, -- Twilight's Blade Insignia -- MIDNIGHT PREPATCH (REMOVED)
 		-- {id = 3356, defS = false,}, -- Untainted Mana-Crystals
