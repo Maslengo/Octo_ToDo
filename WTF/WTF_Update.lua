@@ -197,6 +197,10 @@ local function updateChars(pd, cm, DBVersion)
 		cm.bossDifficulties = nil
 	end
 	----------------------------------------------------------------
+	if compareVersion(115.3, DBVersion) then
+		pd.HasAvailableRewards = nil
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)

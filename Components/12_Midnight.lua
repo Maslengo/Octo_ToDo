@@ -174,6 +174,7 @@ local function tempFunction()
 				{93595}, -- A Call to Delves
 				{93598}, -- Emissary of War
 				{93600}, -- The Arena Calls
+				{93605}, -- The World Awaits
 			},
 			rewards = {
 				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
@@ -208,6 +209,40 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+		----------------------------------------------------------------
+
+
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("map", 2393)..": "..E.func_GetName("quest", 91277) -- Prey: Preferential Killing
+			end,
+			name_save = "PreyPreferentialKilling",
+			defS = false,
+			reset = "Weekly",
+			desc = categoryKey,
+			quests = {
+				{91277},
+			},
+			-- rewards = {
+			-- 	-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+			-- 		-- {rewID = 263037, rewTYPE = "item", rewSIZE = 1 }, --
+			-- 	-- {rewID = 263467, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+			-- 	-- {rewID = 268487, rewTYPE = "item", rewSIZE = 1, addText = "Level 90–90"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Preseason)
+			-- 	-- {rewID = 269703, rewTYPE = "item", rewSIZE = 1, addText = "Level 80–89"}, -- Avid Learner's Supply Pack (Pinnacle Cache - Midnight Season 1)
+			-- 	{rewID = 3310, rewTYPE = "currency", rewSIZE = 25,}, -- Coffer Key Shards
+
+			-- 	{rewID = 3316, rewTYPE = "currency", rewSIZE = 50,}, -- Voidlight Marl
+			-- 	{rewID = 3370, rewTYPE = "currency", rewSIZE = 250,}, -- The Amani Tribe
+			-- 	{rewID = 3383, rewTYPE = "currency", rewSIZE = 10,}, -- Adventurer Dawncrest
+			-- },
+			-- forcedMaxQuest = 1,
+		},
+
+
+
 		----------------------------------------------------------------
 		-- {
 		-- 	sorted = true,
@@ -878,6 +913,7 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 4,
 		},
+
 		----------------------------------------------------------------
 		{
 			sorted = true,

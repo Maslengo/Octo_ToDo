@@ -149,6 +149,9 @@ local function CollectPlayerData(db)
 		end
 	end
 	player.MythicPlus[E.MythicPlus_seasonID].RIO_weeklyBest = E.func_Save(currentWeekBestLevel)
+
+	player.HasAvailableRewards = E.func_Save(E.func_HasAvailableRewards())
+	player.HasGeneratedRewards = E.func_Save(E.func_HasGeneratedRewards())
 end
 ----------------------------------------------------------------
 -- Collect_GreatVault ------------------------------------------
@@ -167,6 +170,7 @@ local function Collect_GreatVault()
 	CollectRunHistory(db)
 	CollectBossDifficulties(db)
 	CollectGreatVault(db)
+
 end
 ----------------------------------------------------------------
 function E.Collect_GreatVault()
