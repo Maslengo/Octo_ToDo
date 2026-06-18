@@ -1,4 +1,4 @@
-local GlobalAddonName, E = ...
+local GlobalAddonName, E =  ...
 ----------------------------------------------------------------
 local L = E.L
 local HOUR = 3600 -- 60*60
@@ -11,8 +11,8 @@ local function CreateTimer(baseTime, interval, duration, label)
 	end
 	local displayTime
 	local color
-	local now = GetServerTime()
-	local elapsed = tonumber(now) - baseTime
+	local ServerTime = E.TIME_SERVER()
+	local elapsed = tonumber(ServerTime) - baseTime
 	local timeToNext = interval - math.fmod(elapsed, interval)
 	local isActive = duration and timeToNext > (interval - duration)
 	if isActive then
@@ -23,7 +23,7 @@ local function CreateTimer(baseTime, interval, duration, label)
 		color = E.COLOR_RED
 	end
 	displayTime = max(0, displayTime)
-	return color..E.func_SecondsToClock(displayTime).."|r "..(label or "")
+	return color .. E.func_SecondsToClock(displayTime) .. "|r " .. (label or "")
 end
 function E.Timers.BfA_Assault()
 	local TIMER = {
@@ -145,28 +145,28 @@ end
 -- 		CN = 1762434000 + 741600,
 -- 	}
 -- 	local INTERVAL = 66600
--- 	local now = GetServerTime()
+-- 	local ServerTime = E.TIME_SERVER()
 -- 	for index, zone in ipairs(ZONE_CYCLE) do
 -- 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(zone.poiID)
 -- 		if sec and sec > 0 then
 -- 			local currentName = E.func_GetName("map", zone.mapID) or "???"
 -- 			local nextIndex = index % #ZONE_CYCLE + 1
 -- 			local nextName = E.func_GetName("map", ZONE_CYCLE[nextIndex].mapID) or "???"
--- 			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..currentName..E.COLOR_GRAY.." -> "..nextName.."|r"
+-- 			return E.COLOR_GREEN .. E.func_SecondsToClock(sec) .. "|r " .. currentName .. E.COLOR_GRAY .. " -> " .. nextName .. "|r"
 -- 		end
 -- 	end
 -- 	local baseTime = BASE_TIME[E.CURRENT_REGION_NAME]
 -- 	if not baseTime then
--- 		return E.COLOR_RED.."--:--|r "..L["Legion Invasion"]
+-- 		return E.COLOR_RED .. "--:--|r " .. L["Legion Invasion"]
 -- 	end
--- 	local elapsed = now - baseTime
+-- 	local elapsed = ServerTime - baseTime
 -- 	local cyclesCompleted = math.floor(elapsed / INTERVAL)
 -- 	local nextZoneIndex = cyclesCompleted % #ZONE_CYCLE + 1
 -- 	local afterNextIndex = nextZoneIndex % #ZONE_CYCLE + 1
 -- 	local nextTime = baseTime + (cyclesCompleted + 1) * INTERVAL
 -- 	local nextZoneName = E.func_GetName("map", ZONE_CYCLE[nextZoneIndex].mapID) or "???"
 -- 	local afterNextName = E.func_GetName("map", ZONE_CYCLE[afterNextIndex].mapID) or "???"
--- 	return E.COLOR_RED..E.func_SecondsToClock(nextTime - now).."|r "..L["Legion Invasion"]..E.COLOR_GRAY.." -> "..afterNextName.."|r"
+-- 	return E.COLOR_RED .. E.func_SecondsToClock(nextTime - ServerTime) .. "|r " .. L["Legion Invasion"] .. E.COLOR_GRAY .. " -> " .. afterNextName .. "|r"
 -- end
 function E.Timers.Legion_Invasion()
 	local ZONE_DATA = {
@@ -185,21 +185,23 @@ function E.Timers.Legion_Invasion()
 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(ZONE_DATA[i].poiID)
 		if sec then
 			local zoneName = E.func_GetName("map", ZONE_DATA[i].mapID)
-			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..zoneName
+			return E.COLOR_GREEN .. E.func_SecondsToClock(sec) .. "|r " .. zoneName
 		end
 	end
 	local baseTime = BASE_TIME[E.CURRENT_REGION_NAME]
-	if not baseTime then return end
-	local now = time() --GetServerTime()
-	while baseTime <= now do
+	if not baseTime then
+		return E.COLOR_RED .. "--:--|r " .. L["Legion Invasion"]
+	end
+	local ServerTime = E.TIME_SERVER()
+	while baseTime <= ServerTime do
 		baseTime = baseTime + INVASION_INTERVAL
 	end
-	local nextIn = baseTime - now
-	-- local elapsed = now - baseTime
+	local nextIn = (baseTime - ServerTime) or 0
+	-- local elapsed = ServerTime - baseTime
 	-- local cyclesCompleted = math.floor(elapsed / INTERVAL)
 	-- local nextInvasionTime = baseTime + (cyclesCompleted + 1) * INTERVAL
-	-- local timeToNext = nextInvasionTime - now
-	return E.COLOR_RED..E.func_SecondsToClock(nextIn).."|r "..L["Legion Invasion"]
+	-- local timeToNext = nextInvasionTime - ServerTime
+	return E.COLOR_RED .. E.func_SecondsToClock(nextIn) .. "|r " .. L["Legion Invasion"]
 end
 function E.Timers.BfA_Invasion()
 	local ZONE_CYCLE = {
@@ -217,7 +219,7 @@ function E.Timers.BfA_Invasion()
 	}
 	local INTERVAL = 68400
 	local DURATION = 25200
-	local now = GetServerTime()
+	local ServerTime = E.TIME_SERVER()
 	for index, zone in ipairs(ZONE_CYCLE) do
 		local sec = C_AreaPoiInfo.GetAreaPOISecondsLeft(zone.poiID)
 		if sec and sec > 0 and sec <= DURATION then
@@ -225,22 +227,22 @@ function E.Timers.BfA_Invasion()
 			local nextIndex = index % #ZONE_CYCLE + 1
 			local nextZone = ZONE_CYCLE[nextIndex]
 			local nextName = E.func_GetName("map", nextZone.mapID) or "???"
-			return E.COLOR_GREEN..E.func_SecondsToClock(sec).."|r "..currentName..E.COLOR_GRAY.." -> "..nextName.."|r"
+			return E.COLOR_GREEN .. E.func_SecondsToClock(sec) .. "|r " .. currentName .. E.COLOR_GRAY .. " -> " .. nextName .. "|r"
 		end
 	end
 	local baseTime = BASE_TIME[E.CURRENT_REGION_NAME]
 	if not baseTime then
-		return E.COLOR_RED.."--:--|r "..L["Faction Assault"]
+		return E.COLOR_RED .. "--:--|r " .. L["Faction Assault"]
 	end
-	local elapsed = now - baseTime
+	local elapsed = ServerTime - baseTime
 	local cyclesCompleted = math.floor(elapsed / INTERVAL)
 	local nextZoneIndex = cyclesCompleted % #ZONE_CYCLE + 1
 	local afterNextIndex = nextZoneIndex % #ZONE_CYCLE + 1
 	local nextTime = baseTime + (cyclesCompleted + 1) * INTERVAL
-	local timeToNext = nextTime - now
+	local timeToNext = nextTime - ServerTime
 	local nextZone = ZONE_CYCLE[nextZoneIndex]
 	local afterNextZone = ZONE_CYCLE[afterNextIndex]
 	local nextZoneName = nextZone.name or E.func_GetName("map", nextZone.mapID) or "???"
 	local afterNextName = afterNextZone.name or E.func_GetName("map", afterNextZone.mapID) or "???"
-	return E.COLOR_RED..E.func_SecondsToClock(timeToNext).."|r "..L["Faction Assault"]..E.COLOR_GRAY.." -> "..afterNextName.."|r"
+	return E.COLOR_RED .. E.func_SecondsToClock(timeToNext) .. "|r " .. L["Faction Assault"] .. E.COLOR_GRAY .. " -> " .. afterNextName .. "|r"
 end

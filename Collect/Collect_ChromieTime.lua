@@ -2,41 +2,40 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_ChromieTime()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
 	local expansionOptions = C_ChromieTime.GetChromieTimeExpansionOptions()
 	if C_PlayerInfo.IsPlayerInChromieTime() then
-		collectPlayerData.Chromie_inChromieTime = C_PlayerInfo.IsPlayerInChromieTime()
+		E.pd.Chromie_inChromieTime = C_PlayerInfo.IsPlayerInChromieTime()
 	else
-		collectPlayerData.Chromie_inChromieTime = nil
+		E.pd.Chromie_inChromieTime = nil
 	end
 	if C_PlayerInfo.CanPlayerEnterChromieTime() then
-		collectPlayerData.Chromie_canEnter = C_PlayerInfo.CanPlayerEnterChromieTime()
+		E.pd.Chromie_canEnter = C_PlayerInfo.CanPlayerEnterChromieTime()
 	else
-		collectPlayerData.Chromie_canEnter = nil
+		E.pd.Chromie_canEnter = nil
 	end
 	if E.GameLimitedMode_IsActive then
-		collectPlayerData.GameLimitedMode_IsActive = E.GameLimitedMode_IsActive
+		E.pd.GameLimitedMode_IsActive = E.GameLimitedMode_IsActive
 	else
-		collectPlayerData.GameLimitedMode_IsActive = nil
+		E.pd.GameLimitedMode_IsActive = nil
 	end
 	local UnitChromieTimeID = UnitChromieTimeID("player")
 	if UnitChromieTimeID ~= 0 then
-		collectPlayerData.Chromie_UnitChromieTimeID = UnitChromieTimeID
+		E.pd.Chromie_UnitChromieTimeID = UnitChromieTimeID
 		for i = 1, #expansionOptions do
 			if expansionOptions[i].id == UnitChromieTimeID then
 				local expansionChromie = expansionOptions[i].name
-				collectPlayerData.Chromie_name = tostring(expansionChromie)
+				E.pd.Chromie_name = tostring(expansionChromie)
 			end
 		end
 	else
-		collectPlayerData.Chromie_UnitChromieTimeID = nil
-		collectPlayerData.Chromie_name = nil
+		E.pd.Chromie_UnitChromieTimeID = nil
+		E.pd.Chromie_name = nil
 	end
 end
 ----------------------------------------------------------------
 function E.Collect_ChromieTime()
 	E.func_SpamBlock(Collect_ChromieTime, true)
 end
+----------------------------------------------------------------

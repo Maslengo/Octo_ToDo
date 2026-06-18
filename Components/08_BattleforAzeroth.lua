@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_BattleforAzeroth_available = E.Is_BattleforAzeroth_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_BattleforAzeroth_available then return end;
+----------------------------------------------------------------
+if not E.Is_BfA_available then return end
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -91,37 +90,88 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
-			end,
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{52196, addText = {mapID = 864}, }, -- Занесенные песком кости (Вол'дун)
-				{52169, addText = {mapID = 862}, }, -- Матриарх (Дикие земли)
-				{52181, addText = {mapID = 863}, }, -- Дым и тени (Назмир)
-				{52166, addText = {mapID = 942}, }, -- Безликий глашатай (Долина Штормов)
-				{52163, addText = {mapID = 895}, }, -- Крылатый тайфун (Тирагардское поморье)
-				{52157, addText = {mapID = 896}, }, -- Леденящая встреча (Друствар)
-				{nil},
-				{52848, addText = {mapID = 14}, FactionOrClass = {Horde = true,}}, -- "Львиный рык" (Нагорье Арати)
-				{52847, addText = {mapID = 14}, FactionOrClass = {Alliance = true,}}, -- "Гибельный вой" (Нагорье Арати)
-				{54896, addText = {mapID = 62}, FactionOrClass = {Horde = true,}}, -- Ивус Лесной Властелин (Темные берега)
-				{54895, addText = {mapID = 62}, FactionOrClass = {Alliance = true,}}, -- Ивус Трухлявый (Темные берега)
-				{nil},
-				{58705, addText = {mapID = 390}, }, -- Великая императрица Шек'зара (Вечноцветущий дол)
-				{55466, addText = {mapID = 1527}, }, -- Вук'лаз Землелом (Ульдум)
-				{nil},
-				{56057, addText = {mapID = 1355}, forcedText = {npcID = 152697},}, -- Страж душ (Назжатар)
-				{56056, addText = {mapID = 1355}, }, -- Глубинный ужас (Назжатар)
-			},
-			forcedMaxQuest = 4,
-		},
+    {
+        sorted = true,
+        showTooltip = true,
+        TextLeft = function()
+            return L["RAID_INFO_WORLD_BOSS"]
+        end,
+        name_save = "WorldBoss",
+        defS = true,
+        reset = "Weekly",
+        desc = categoryKey,
+        questpools = {
+            {
+                {
+                    52196, -- Занесенные песком кости (Вол'дун)
+                    addText = {mapID = E.MapID_Voldun},
+                },
+                {
+                    52169, -- Матриарх (Дикие земли)
+                    addText = {mapID = E.MapID_Zuldazar},
+                },
+                {
+                    52181, -- Дым и тени (Назмир)
+                    addText = {mapID = E.MapID_Nazmir},
+                },
+                {
+                    52166, -- Безликий глашатай (Долина Штормов)
+                    addText = {mapID = E.MapID_StormsongValley},
+                },
+                {
+                    52163, -- Крылатый тайфун (Тирагардское поморье)
+                    addText = {mapID = E.MapID_TiragardeSound},
+                },
+                {
+                    52157, -- Леденящая встреча (Друствар)
+                    addText = {mapID = E.MapID_Drustvar},
+                },
+            },
+            {
+                {
+                    52848, -- "Львиный рык" (Нагорье Арати)
+                    addText = {mapID = E.MapID_ArathiHighlands},
+                    FactionOrClass = {Horde = true},
+                },
+                {
+                    52847, -- "Гибельный вой" (Нагорье Арати)
+                    addText = {mapID = E.MapID_ArathiHighlands},
+                    FactionOrClass = {Alliance = true},
+                },
+                {
+                    54896, -- Ивус Лесной Властелин (Темные берега)
+                    addText = {mapID = E.MapID_Darkshore},
+                    FactionOrClass = {Horde = true},
+                },
+                {
+                    54895, -- Ивус Трухлявый (Темные берега)
+                    addText = {mapID = E.MapID_Darkshore},
+                    FactionOrClass = {Alliance = true},
+                },
+            },
+            {
+                {
+                    58705, -- Великая императрица Шек'зара (Вечноцветущий дол)
+                    addText = {mapID = E.MapID_ValeofEternalBlossoms},
+                },
+                {
+                    55466, -- Вук'лаз Землелом (Ульдум)
+                    addText = {mapID = E.MapID_Uldum_BFA},
+                },
+            },
+            {
+                {
+                    56057, -- Страж душ (Назжатар)
+                    addText = {mapID = E.MapID_Nazjatar},
+                    forcedText = {npcID = 152697},
+                },
+                {
+                    56056, -- Глубинный ужас (Назжатар)
+                    addText = {mapID = E.MapID_Nazjatar},
+                },
+            },
+        },
+    },
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -247,7 +297,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 62)..": ".."Rares"
+				return E.func_GetName("map", E.MapID_Darkshore)..": ".."Rares"
 			end,
 			name_save = "DarkshoreRares",
 			defS = false,
@@ -343,7 +393,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		-- TextLeft = function()
-		--     return E.func_GetName("map", 1462)..": "..E.func_GetName("quest", 54088, false)
+		--     return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("quest", 54088, false)
 		-- end,
 		--     name_save = "TheMechagonianThreat",
 		-- defS = true,
@@ -384,7 +434,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1462)..": Rares"
+				return E.func_GetName("map", E.MapID_Mechagon)..": Rares"
 			end,
 			name_save = "MechagonRares",
 			defS = false,
@@ -435,7 +485,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1462)..": Treasures"
+				return E.func_GetName("map", E.MapID_Mechagon)..": Treasures"
 			end,
 			name_save = "MechagonTREASURE",
 			defS = false,
@@ -563,7 +613,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1462)..": Dailies Visitor Quests"
+				return E.func_GetName("map", E.MapID_Mechagon)..": Dailies Visitor Quests"
 			end,
 			name_save = "DAILY_VISITOR_QUESTS",
 			defS = false,
@@ -610,7 +660,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1462)..": Daily WQ"
+				return E.func_GetName("map", E.MapID_Mechagon)..": Daily WQ"
 			end,
 			name_save = "MechagonDAILYWQ",
 			defS = false,
@@ -626,7 +676,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1462)..": "..E.func_GetName("achievement", 13489)
+				return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13489)
 			end,
 			name_save = "MechagonSecretFish",
 			defS = false,
@@ -650,7 +700,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1462)..": "..E.func_GetName("achievement", 13791)
+				return E.func_GetName("map", E.MapID_Mechagon)..": "..E.func_GetName("achievement", 13791)
 			end,
 			name_save = "MechagonMakingAMount",
 			defS = false,
@@ -674,6 +724,10 @@ local function tempFunction()
 		},
 	}
 	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyCENTER = {
+		{id = "BountiesBattleforAzeroth", defS = true,},
+	}
+	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
 		{id = "HeartofAzeroth", defS = true,}, -- https://www.wowhead.com/item=158075/heart-of-azeroth
 		{id = "Ashjrakamas", defS = true,}, -- https://www.wowhead.com/item=169223/ashjrakamas-shroud-of-resolve
@@ -685,26 +739,3 @@ local function tempFunction()
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
-local function localfunc2()
-	local OctoTable_Otrisovka_TextCenter = {}
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	if Octo_ToDo_DB_Vars.Items then
-		table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
-				----------------------------------------------------------------
-				local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, false, nil
-				TooltipKey = "BfA_mechagonItems"
-				TextCenter = E.COLOR_GRAY..L["ITEMS"].."|r"
-				----------------------------------------------------------------
-				TextLeft = "МЕХАГОН"
-				ColorLeft = E.OctoTable_Expansions[categoryKey].color
-				----------------------------------------------------------------
-				return IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation
-				----------------------------------------------------------------
-		end)
-	end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-	return OctoTable_Otrisovka_TextCenter
-end

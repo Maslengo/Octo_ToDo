@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 57
-----------------------------------------------------------------
-local L = E.L
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_DataOtrisovka = {}
@@ -56,7 +55,7 @@ local function tempFunction()
 		end
 	end
 
-	table.sort(sorted, E.func_ReversSort)
+	E.func_SortRecords(sorted, true)
 	for i, id in ipairs(sorted) do
 		tinsert(OctoTables_DataOtrisovka[categoryKey].Quests, {id = id, defS = true,})
 	end

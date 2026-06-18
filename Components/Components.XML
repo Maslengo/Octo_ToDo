@@ -1,4 +1,6 @@
 <Ui>
+	<Script file="Components\00_Init.lua"/>
+
 	<Script file="Components\01_WorldofWarcraft.lua"/>
 	<Script file="Components\02_TheBurningCrusade.lua"/>
 	<Script file="Components\03_WrathoftheLichKing.lua"/>
@@ -13,14 +15,15 @@
 	<Script file="Components\12_Midnight.lua"/>
 	<Script file="Components\13_TheLastTitan.lua"/>
 
-	<Script file="Components\50_ALL_Currencies.lua"/>
-	<Script file="Components\51_ALL_Items.lua"/>
-	<Script file="Components\52_ALL_Reputations.lua"/>
-	<Script file="Components\53_ALL_RaidsOrDungeons.lua"/>
-	<Script file="Components\54_TEST_UNIVERSAL.lua"/>
-	<Script file="Components\55_Holidays.lua"/>
-	<Script file="Components\56_PLAYER_INVENTORY.lua"/>
-	<Script file="Components\57_ALL_Quests.lua"/>
+	<Script file="Components\50_DEBUG_Currencies.lua"/>
+	<Script file="Components\51_DEBUG_Items.lua"/>
+	<Script file="Components\52_DEBUG_Reputations.lua"/>
+	<Script file="Components\53_DEBUG_RaidsAndDungeons.lua"/>
+	<Script file="Components\54_DEBUG_UNIVERSAL.lua"/>
+	<Script file="Components\55_DEBUG_Holidays.lua"/>
+	<Script file="Components\56_DEBUG_PLAYER_INVENTORY.lua"/>
+	<Script file="Components\57_DEBUG_Quests.lua"/>
+	<Script file="Components\58_DEBUG_Maps.lua"/>
 
 	<Script file="Components\96_MPLUS.lua"/>
 	<Script file="Components\97_PVP.lua"/>

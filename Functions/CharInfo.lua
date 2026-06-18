@@ -26,6 +26,9 @@ function E.func_CharInfo_NickName(CharInfo, alwaysShowLevel, forceHideLevel, Cus
 			result = result.." "..levelColor..pd.UnitLevel.."|r"
 		end
 	end
+	if pd.IsXPUserDisabled then
+		result = result .. E.COLOR_RED .. "*|r"
+	end
 	return E.func_translit(result)
 end
 ----------------------------------------------------------------

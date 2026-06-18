@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Cataclysm_available = E.Is_Cataclysm_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_Cataclysm_available then return end;
+----------------------------------------------------------------
+if not E.Is_Cata_available then return end
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------

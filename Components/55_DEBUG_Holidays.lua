@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 55
-----------------------------------------------------------------
-local L = E.L
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_DataOtrisovka = {}
@@ -511,15 +510,15 @@ table.insert(E.Components, tempFunction)
 -- ----------------------------------------------------------------
 -- ----------------------------------------------------------------
 -- ----------------------------------------------------------------
--- if Octo_ToDo_DB_Vars.Holidays then
+-- if E.func_GetProfile_SETTINGS_CURRENT().Holidays then
 -- if E.ActiveHoliday[181] then
 -- E.func_Otrisovka_UniversalQuests(OctoTable_Otrisovka_TextCenter, "HolidaysNoblegarden")
 -- table.insert(OctoTable_Otrisovka_TextCenter, function(CharInfo)
 -- ----------------------------------------------------------------
 -- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
 -- ----------------------------------------------------------------
--- if CharInfo.MASLENGO.ItemsInBag[44791] then
--- TextCenter = CharInfo.MASLENGO.ItemsInBag[44791]
+-- if E.cm.ItemsInBag[44791] then
+-- TextCenter = E.cm.ItemsInBag[44791]
 -- end
 -- ----------------------------------------------------------------
 -- TextLeft = E.func_GetName("item", 44791)
@@ -532,8 +531,8 @@ table.insert(E.Components, tempFunction)
 -- ----------------------------------------------------------------
 -- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
 -- ----------------------------------------------------------------
--- if CharInfo.MASLENGO.ItemsInBag[45072] then
--- TextCenter = CharInfo.MASLENGO.ItemsInBag[45072]
+-- if E.cm.ItemsInBag[45072] then
+-- TextCenter = E.cm.ItemsInBag[45072]
 -- end
 -- ----------------------------------------------------------------
 -- TextLeft = E.func_GetName("item", 45072)
@@ -587,8 +586,8 @@ table.insert(E.Components, tempFunction)
 -- ----------------------------------------------------------------
 -- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
 -- ----------------------------------------------------------------
--- if CharInfo.MASLENGO.LFGInstance[286] then
--- TextCenter = "CharInfo.MASLENGO.LFGInstance[286]"
+-- if E.cm.LFGInstance[286] then
+-- TextCenter = "E.cm.LFGInstance[286]"
 -- end
 -- ----------------------------------------------------------------
 -- TextLeft = E.func_texturefromIcon(E.func_GetIcon("item", 23247))..E.func_texturefromIcon(E.ICON_LFG) .. E.func_GetLFGDungeonName(286)
@@ -601,8 +600,8 @@ table.insert(E.Components, tempFunction)
 -- ----------------------------------------------------------------
 -- local IconLeft, TextLeft, ColorLeft, TextCenter, SettingsType, ColorCenter, TooltipKey, FirstReputation, SecondReputation = nil, "", nil, "", nil, nil, nil, nil, nil
 -- ----------------------------------------------------------------
--- if CharInfo.MASLENGO.ItemsInBag[23247] then
--- TextCenter = CharInfo.MASLENGO.ItemsInBag[23247]
+-- if E.cm.ItemsInBag[23247] then
+-- TextCenter = E.cm.ItemsInBag[23247]
 -- end
 -- ----------------------------------------------------------------
 -- TextLeft = E.func_GetName("item", 23247)

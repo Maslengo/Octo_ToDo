@@ -8,14 +8,14 @@ function E.func_option_FONT(category, layout)
 	E.func_Header(layout, L["Font"])
 	----------------------------------------------------------------
 	-- 1 Кастомный Dropdown
-	-- Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
+	-- E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang].Config_FontStyle
 	----------------------------------------------------------------
 	do
 		E.func_Options_CreateDropdown_FontStyle(category, layout)
 	end
 	----------------------------------------------------------------
 	-- 2 Settings.CreateSlider
-	-- Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
+	-- E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang].Config_FontSize
 	----------------------------------------------------------------
 	do
 		local name = L["FONT_SIZE"]
@@ -23,26 +23,25 @@ function E.func_option_FONT(category, layout)
 		local minValue = 8
 		local maxValue = 32
 		local step = 1
-		Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
-		Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
-		Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-		local variableTbl = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang]
+		E.func_GetProfile_SETTINGS_CURRENT().FontOption = E.func_GetProfile_SETTINGS_CURRENT().FontOption or {}
+		E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang] = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang] or {}
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
 		local variableKey = "Config_FontSize"
 		-- local function GetValue()
-		-- 	return Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or defaultValue
+		-- 	return E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang].Config_FontSize or defaultValue
 		-- end
 		-- local function SetValue(value)
-		-- 	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = value
+		-- 	E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang].Config_FontSize = value
 		-- end
 		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	end
 	----------------------------------------------------------------
 	-- 3 Settings.CreateDropdown
-	-- Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
+	-- E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang].Config_FontFlags
 	----------------------------------------------------------------
 	do
 		local variableKey = "Config_FontFlags"
-		local variableTbl = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang]
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
 		local name = L["Font Outline"]
 		local defaultValue = "OUTLINE"
 		-- local tbl = {

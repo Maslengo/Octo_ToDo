@@ -4,17 +4,12 @@ local EventFrame = CreateFrame("FRAME")
 local Octo_TooltipFrame = CreateFrame("BUTTON", "Octo_TooltipFrame", UIParent, "OctoTooltipBackdropTemplate")
 Octo_TooltipFrame:Hide()
 E.func_RegisterFrame_SIMPLE(Octo_TooltipFrame)
+
+table.insert(E.OctoTable_ColoredTooltips, Octo_TooltipFrame)
+
 local TEXT_PADDING = 6
 local SEPARATOR_HEIGHT = 2
-local SEPARATOR_KEY = "---"
-local INDENT_TEXT = 4
 local INDENT_SCROLL = 20
-local MAX_DISPLAY_LINES = 20 -- 27
-local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
-local LINES_TOTAL = math.floor((math.floor(select(2, GetPhysicalScreenSize()) / E.GLOBAL_LINE_HEIGHT))*.7)
-if MAX_DISPLAY_LINES > LINES_TOTAL then
-	MAX_DISPLAY_LINES = LINES_TOTAL
-end
 local classR, classG, classB = GetClassColor(E.classFilename)
 EventFrame.COLUMN_SIZES = {}
 EventFrame.columns = 0
@@ -29,7 +24,7 @@ local func_OnAcquired do
 						local f = CreateFrame("BUTTON", nil, frame, "OctoRectTemplate")
 						f:SetHeight(E.GLOBAL_LINE_HEIGHT)
 						if key == 1 then
-							f:SetPoint("TOPLEFT", frame, "TOPLEFT", INDENT_TEXT + 1, 0)
+							f:SetPoint("TOPLEFT", frame, "TOPLEFT", E.INDENT_TEXT + 1, 0)
 						else
 							local prevFrame = rawget(self, key - 1)
 							f:SetPoint("TOPLEFT", prevFrame, "TOPRIGHT", 0, 0)
@@ -51,7 +46,7 @@ local func_OnAcquired do
 			frame:SetScript("OnShow", function() frame.Highlight:Show() end)
 		end
 		local frameData = data:GetData()
-		local isSeparator = frameData and frameData[1] == SEPARATOR_KEY
+		local isSeparator = frameData and frameData[1] == E.SEPARATOR_KEY
 		if isSeparator then
 			frame.Highlight:Hide()
 		else
@@ -62,7 +57,7 @@ end
 function EventFrame:Octo_Frame_init(frame, node)
 	local frameData = node:GetData()
 	local lineFrames = frame.lineFrames
-	if frameData[1] == SEPARATOR_KEY then
+	if frameData[1] == E.SEPARATOR_KEY then
 		for i = 1, #lineFrames do
 			if lineFrames[i] then
 				lineFrames[i]:Hide()
@@ -72,8 +67,8 @@ function EventFrame:Octo_Frame_init(frame, node)
 			frame.separator = frame:CreateTexture(nil, "BACKGROUND")
 			frame.separator:SetColorTexture(.8, .8, .8, .8)
 			frame.separator:SetHeight(SEPARATOR_HEIGHT)
-			frame.separator:SetPoint("LEFT", frame, "LEFT", INDENT_TEXT, 0)
-			frame.separator:SetPoint("RIGHT", frame, "RIGHT", -INDENT_TEXT, 0)
+			frame.separator:SetPoint("LEFT", frame, "LEFT", E.INDENT_TEXT, 0)
+			frame.separator:SetPoint("RIGHT", frame, "RIGHT", -E.INDENT_TEXT, 0)
 			frame.separator:SetPoint("CENTER", 0, 0)
 		end
 		frame.separator:Show()
@@ -146,11 +141,11 @@ end
 local function TooltipOnEnter()
 	if EventFrame.shouldShowScrollBar then
 		Octo_TooltipFrame:Show()
-		if not InCombatLockdown() and E.IsMidnight then
+		if not InCombatLockdown() and E.func_IsMN_current then
 			Octo_TooltipFrame:SetPropagateMouseMotion(false)
 		end
 	else
-		if not InCombatLockdown() and E.IsMidnight then
+		if not InCombatLockdown() and E.func_IsMN_current then
 			Octo_TooltipFrame:SetPropagateMouseMotion(true)
 		end
 	end
@@ -183,16 +178,15 @@ function EventFrame:Create_Octo_TooltipFrame()
 	Octo_TooltipFrame:SetFrameStrata("TOOLTIP")
 	Octo_TooltipFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_TooltipFrame, "WowScrollBoxList,OctoRectTemplate")
 	Octo_TooltipFrame.ScrollBox:SetAllPoints()
-	if not InCombatLockdown() and E.IsMidnight then
+	if not InCombatLockdown() and E.func_IsMN_current then
 		Octo_TooltipFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
 		Octo_TooltipFrame.ScrollBox:GetScrollTarget():SetPropagateMouseMotion(true)
 	end
-	-- Octo_TooltipFrame.ScrollBox:Layout()
 	Octo_TooltipFrame.ScrollBox:SetFrameLevel(Octo_TooltipFrame.ScrollBox:GetFrameLevel() + 1)
 	Octo_TooltipFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_TooltipFrame, "MinimalScrollBar,OctoRectTemplate")
 	Octo_TooltipFrame.ScrollBar:SetPoint("TOPLEFT", Octo_TooltipFrame.ScrollBox, "TOPRIGHT", -15, -3)
 	Octo_TooltipFrame.ScrollBar:SetPoint("BOTTOMLEFT", Octo_TooltipFrame.ScrollBox, "BOTTOMRIGHT", -15, 3)
-	if not InCombatLockdown() and E.IsMidnight then
+	if not InCombatLockdown() and E.func_IsMN_current then
 		local scrollBar = Octo_TooltipFrame.ScrollBar
 		if scrollBar.Back then scrollBar.Back:SetPropagateMouseMotion(true) end
 		if scrollBar.Forward then scrollBar.Forward:SetPropagateMouseMotion(true) end
@@ -212,7 +206,7 @@ function EventFrame:Create_Octo_TooltipFrame()
 end
 local function calculateColumnWidths(node)
 	local frameData = node:GetData()
-	if frameData and frameData[1] == SEPARATOR_KEY then
+	if frameData and frameData[1] == E.SEPARATOR_KEY then
 		return {}
 	end
 	local columnWidths = {}
@@ -238,8 +232,8 @@ function EventFrame:CreateDataProvider(tbl)
 	local maxColumns = 0
 	for stroka, v in ipairs(tbl) do
 		local zxc = {}
-		if type(v) == "string" and v == SEPARATOR_KEY then
-			zxc = {SEPARATOR_KEY}
+		if type(v) == "string" and v == E.SEPARATOR_KEY then
+			zxc = {E.SEPARATOR_KEY}
 		else
 			maxColumns = math.max(maxColumns, #v)
 			for indexColumn = 1, #v do
@@ -273,7 +267,7 @@ function EventFrame:CreateDataProvider(tbl)
 		end
 		if #zxc > 0 then
 			local node = DataProvider:Insert(zxc)
-			if type(v) ~= "string" or v ~= SEPARATOR_KEY then
+			if type(v) ~= "string" or v ~= E.SEPARATOR_KEY then
 				local widths = calculateColumnWidths(node)
 				for j, w in ipairs(widths) do
 					COLUMN_SIZES[j] = math.max(w, COLUMN_SIZES[j] or 0)
@@ -283,19 +277,19 @@ function EventFrame:CreateDataProvider(tbl)
 	end
 	EventFrame.COLUMN_SIZES = COLUMN_SIZES
 	EventFrame.columns = maxColumns
-	local total_width = INDENT_TEXT * 2
+	local total_width = E.INDENT_TEXT * 2
 	for i = 1, maxColumns do
 		total_width = total_width + (COLUMN_SIZES[i] or 0)
 	end
-	local shouldShowScrollBar = MAX_DISPLAY_LINES < lines
+	local shouldShowScrollBar = E.MAX_DISPLAY_LINES_TOOLTIP < lines
 	EventFrame.shouldShowScrollBar = shouldShowScrollBar
 	if shouldShowScrollBar then
 		total_width = total_width + INDENT_SCROLL
 	end
 	Octo_TooltipFrame.view:SetDataProvider(DataProvider, ScrollBoxConstants.RetainScrollPosition)
 	local totalHeight = lines * E.GLOBAL_LINE_HEIGHT
-	if lines > MAX_DISPLAY_LINES then
-		totalHeight = E.GLOBAL_LINE_HEIGHT * MAX_DISPLAY_LINES
+	if lines > E.MAX_DISPLAY_LINES_TOOLTIP then
+		totalHeight = E.GLOBAL_LINE_HEIGHT * E.MAX_DISPLAY_LINES_TOOLTIP
 	elseif lines == 0 then
 		totalHeight = E.GLOBAL_LINE_HEIGHT
 	end
@@ -307,10 +301,8 @@ function E.func_Octo_TooltipFrame_OnEnter(frame, point)
 	if type(tooltip) == "function" then
 		tooltip = tooltip()
 	end
-	-- if type(tooltip) == "table" and #tooltip == 0 then return end
 	if type(tooltip) == "table" and not next(tooltip) then return end
-	if not tooltip then return end -- если функция вернёт nil
-
+	if not tooltip then return end
 	if type(point) == "table" then
 		EventFrame:func_SmartAnchorTo(frame, point)
 	else
@@ -334,54 +326,37 @@ function E.func_Octo_TooltipFrame_OnEnter(frame, point)
 		end)
 	end
 end
-
-
-
-
-----------------------------------------------------------------
+function E.func_Octo_TooltipFrame_OnLeave(frame)
+	frame.tooltip = nil
+end
 function EventFrame:Create_AdditionalInfoTooltipFrame()
-
-
 	local SIZE = E.GLOBAL_LINE_HEIGHT
-
 	local frame = CreateFrame("FRAME", "AdditionalInfoTooltipFrame", Octo_TooltipFrame, "OctoRectTemplate")
 	frame:SetSize(200, SIZE*2)
 	frame:SetPoint("BOTTOMRIGHT", Octo_TooltipFrame, "BOTTOMLEFT", 0, 0)
 	frame:SetAlpha(.7)
-
 	frame.TEXT1 = frame:CreateFontString()
 	frame.TEXT1:SetFontObject(OctoFont11)
 	frame.TEXT1:SetPoint("RIGHT", 0, -SIZE/2)
 	frame.TEXT1:SetWordWrap(false)
 	frame.TEXT1:SetJustifyV("MIDDLE")
 	frame.TEXT1:SetJustifyH("CENTER")
-
 	frame.TEXT2 = frame:CreateFontString()
 	frame.TEXT2:SetFontObject(OctoFont11)
 	frame.TEXT2:SetPoint("RIGHT", 0, SIZE/2)
 	frame.TEXT2:SetWordWrap(false)
 	frame.TEXT2:SetJustifyV("MIDDLE")
 	frame.TEXT2:SetJustifyH("CENTER")
-
-
-
 	local text1 = E.COLOR_SKYBLUE .. L["HIDE"] .. "|r" .. " [ctrl+LMB]"
-	local cm = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local text2 = cm.InventoryType and E.COLOR_SKYBLUE .. L["Gear"] .. "|r" .. " [shift+LMB]" or ""
-
+	local text2 = E.cm and E.cm.InventoryType and E.COLOR_SKYBLUE .. L["Gear"] .. "|r" .. " [shift+LMB]" or ""
 	local width = E.func_MeasureTextWidth({text1, text2})
 	frame:SetWidth(width)
-
 	frame.TEXT1:SetText(text1)
 	frame.TEXT2:SetText(text2)
-
 	Octo_TooltipFrame:HookScript("OnShow", function()
-		frame:SetShown(E.IS_HEADER_TOOLTIP)
+			frame:SetShown(E.IS_HEADER_TOOLTIP)
 	end)
 end
-
-----------------------------------------------------------------
-
 local MyEventsTable = {
 	"PLAYER_LOGIN",
 	"PLAYER_REGEN_DISABLED",
@@ -396,4 +371,3 @@ end
 function EventFrame:PLAYER_REGEN_DISABLED()
 	Octo_TooltipFrame:Hide()
 end
-----------------------------------------------------------------

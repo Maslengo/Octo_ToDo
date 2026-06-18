@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 50
-----------------------------------------------------------------
-local L = E.L
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_DataOtrisovka = {}
@@ -37,20 +36,16 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	local sorted = {}
-	-- for id in next, (E.ALL_Currencies) do
-	-- 	tinsert(sorted, id)
-	-- end
-	-- for id = 1, 3474 do
 	for id = 1, 5000 do
-		local info = E.func_GetCurrencyInfo(id)
-		-- if E.func_GetName("currency", id) ~= E.TEXT_UNKNOWN then
-		if info and info.name then
-			tinsert(sorted, id)
-		end
+	    local info = E.func_GetCurrencyInfo(id)
+	    if info and info.name then
+	        tinsert(sorted, id)
+	    end
 	end
-	table.sort(sorted, E.func_ReversSort)
+	E.func_SortRecords(sorted, true)
+
 	for i, id in ipairs(sorted) do
-		tinsert(OctoTables_DataOtrisovka[categoryKey].Currencies, {id = id, defS = true,})
+	    tinsert(OctoTables_DataOtrisovka[categoryKey].Currencies, {id = id, defS = true})
 	end
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end

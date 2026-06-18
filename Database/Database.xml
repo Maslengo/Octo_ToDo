@@ -11,4 +11,5 @@
 	<Script file="Database\LANG_NPC.lua"/>
 	<Script file="Database\LANG_Reputations.lua"/>
 	<Script file="Database\Professions.lua"/>
+	<Script file="Database\MapIDs.lua"/>
 </Ui>

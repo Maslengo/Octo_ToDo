@@ -1,48 +1,18 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
--- /run opde(Enum.BagIndex)
--- [1] = {
-----------------------------------------------------------------
---     ["Characterbanktab"] = -2,
---     ["CharacterBankTab_1"] = 6,
---     ["CharacterBankTab_6"] = 11,
---     ["CharacterBankTab_2"] = 7,
---     ["CharacterBankTab_3"] = 8,
---     ["CharacterBankTab_5"] = 10,
---     ["CharacterBankTab_4"] = 9,
-----------------------------------------------------------------
---     ["Accountbanktab"] = -3,
---     ["AccountBankTab_1"] = 12,
---     ["AccountBankTab_2"] = 13,
---     ["AccountBankTab_3"] = 14,
---     ["AccountBankTab_4"] = 15,
---     ["AccountBankTab_5"] = 16,
-----------------------------------------------------------------
---     ["Keyring"] = -1,
---     ["Backpack"] = 0,
---     ["Bag_1"] = 1,
---     ["Bag_2"] = 2,
---     ["Bag_3"] = 3,
---     ["Bag_4"] = 4,
---     ["ReagentBag"] = 5,
-----------------------------------------------------------------
--- },
-----------------------------------------------------------------
 local OctoTable_bankTabs = E.OctoTable_bankTabs
 local OctoTable_Account_bankTabs = E.OctoTable_Account_bankTabs
 local function Collect_Items_BANK()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
 	C_Timer.After(0, function()
 			if not BankFrame or not BankFrame:IsShown() then return end
 			local usedSlots_BANK, totalSlots_BANK = 0, 0
 			----------------------------------------------------------------
-			collectMASLENGO.Items = collectMASLENGO.Items or {}
-			collectMASLENGO.Items.Bank = {}
-			collectMASLENGO.Items.Bank_FULL = {}
+			E.cm.Items = E.cm.Items or {}
+			E.cm.Items.Bank = {}
+			E.cm.Items.Bank_FULL = {}
 			----------------------------------------------------------------
 			-- ПРОВЕРКА
 			----------------------------------------------------------------
@@ -57,42 +27,42 @@ local function Collect_Items_BANK()
 					local free = E.func_GetContainerNumFreeSlots(bagID)
 					usedSlots_BANK = usedSlots_BANK + (numSlots - free)
 					for slotIndex = 1, numSlots do
-				-- local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex)
-				local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
-				if itemLocation and C_Item.DoesItemExist(itemLocation) then
-					local ItemName = C_Item.GetItemName(itemLocation)
-					if ItemName then
-						local current_Durability, maximum_Durability = GetInventoryItemDurability(slotIndex)
-						local itemID = C_Item.GetItemID(itemLocation)
-						local Icon = C_Item.GetItemIcon(itemLocation)
-						local ItemLink = C_Item.GetItemLink(itemLocation)
-						local Quality = C_Item.GetItemQuality(itemLocation)
-						local CurrentItemLevel = C_Item.GetCurrentItemLevel(itemLocation)
-						local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
-						local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
-						-- local xyz = tostring(bagID)..tostring(slotIndex)
-						collectMASLENGO.Items.Bank_FULL[itemID] = {
-							itemID = itemID,
-							ItemName = ItemName,
-							Icon = Icon,
-							ItemLink = ItemLink,
-							Quality = Quality,
-							CurrentItemLevel = CurrentItemLevel,
-							ItemInventoryType = ItemInventoryType,
-							RequestLoadItemData = RequestLoadItemData,
-							-- ItemDataCached = ItemDataCached,
-							current_Durability = current_Durability,
-							maximum_Durability = maximum_Durability,
-						}
-					-- else
-					-- 	-- данные не загружены, оставляем старые и помечаем для подгрузки
-					-- 	local existing = collectMASLENGO.Items.Bank_FULL[itemID]
-					-- 	if existing then
-					-- 		existing.RequestLoadItemData = true
-					-- 		seenSlots[slotID] = true
-					-- 	end
-					end
-				end
+						-- local itemLocation = ItemLocation:CreateFromEquipmentSlot(slotIndex)
+						local itemLocation = ItemLocation:CreateFromBagAndSlot(bagID, slotIndex)
+						if itemLocation and C_Item.DoesItemExist(itemLocation) then
+							local ItemName = C_Item.GetItemName(itemLocation)
+							if ItemName then
+								local current_Durability, maximum_Durability = GetInventoryItemDurability(slotIndex)
+								local itemID = C_Item.GetItemID(itemLocation)
+								local Icon = C_Item.GetItemIcon(itemLocation)
+								local ItemLink = C_Item.GetItemLink(itemLocation)
+								local Quality = C_Item.GetItemQuality(itemLocation)
+								local CurrentItemLevel = C_Item.GetCurrentItemLevel(itemLocation)
+								local ItemInventoryType = C_Item.GetItemInventoryType(itemLocation)
+								local RequestLoadItemData = C_Item.RequestLoadItemData(itemLocation) -- or false
+								-- local xyz = tostring(bagID)..tostring(slotIndex)
+								E.cm.Items.Bank_FULL[itemID] = {
+									itemID = itemID,
+									ItemName = ItemName,
+									Icon = Icon,
+									ItemLink = ItemLink,
+									Quality = Quality,
+									CurrentItemLevel = CurrentItemLevel,
+									ItemInventoryType = ItemInventoryType,
+									RequestLoadItemData = RequestLoadItemData,
+									-- ItemDataCached = ItemDataCached,
+									current_Durability = current_Durability,
+									maximum_Durability = maximum_Durability,
+								}
+								-- else
+								--     -- данные не загружены, оставляем старые и помечаем для подгрузки
+								--     local existing = E.cm.Items.Bank_FULL[itemID]
+								--     if existing then
+								--         existing.RequestLoadItemData = true
+								--         seenSlots[slotID] = true
+								--     end
+							end
+						end
 						local info = E.func_GetContainerItemInfo(bagID, slotIndex)
 						if info then
 							local itemID = info.itemID
@@ -102,27 +72,23 @@ local function Collect_Items_BANK()
 								if itemLocation:IsValid() and C_Item.DoesItemExist(itemLocation) then
 									local itemLink = C_Item.GetItemLink(itemLocation)
 									local rank = E.GetItemRankFromLink(itemLink)
-									collectPlayerData.cloak_lvl = rank
+									E.pd.cloak_lvl = rank
 								end
 							end
-							collectMASLENGO.Items.Bank[itemID] = (collectMASLENGO.Items.Bank[itemID] or 0) + stack
+							E.cm.Items.Bank[itemID] = (E.cm.Items.Bank[itemID] or 0) + stack
 						end
 					end
 				end
 			end
 			----------------------------------------------------------------
-			collectPlayerData.usedSlots_BANK = E.func_Save(usedSlots_BANK)
-			collectPlayerData.totalSlots_BANK = E.func_Save(totalSlots_BANK)
-			----------------------------------------------------------------
-			-- opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Items)
+			E.pd.usedSlots_BANK = E.func_Save(usedSlots_BANK)
+			E.pd.totalSlots_BANK = E.func_Save(totalSlots_BANK)
 			----------------------------------------------------------------
 	end)
 end
 local function Collect_Items_AccountBank()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
 	C_Timer.After(0, function()
 			if not BankFrame or not BankFrame:IsShown() then return end
@@ -156,8 +122,6 @@ local function Collect_Items_AccountBank()
 			----------------------------------------------------------------
 			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].usedSlots_AccountBank = E.func_Save(usedSlots_AccountBank)
 			Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].totalSlots_AccountBank = E.func_Save(totalSlots_AccountBank)
-			----------------------------------------------------------------
-			-- opde(Octo_ToDo_DB_AccountData)
 			----------------------------------------------------------------
 	end)
 end

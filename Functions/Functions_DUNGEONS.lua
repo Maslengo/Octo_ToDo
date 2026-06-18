@@ -78,7 +78,7 @@ function E.func_BUILD_DUNG_DB()
 				local EJ_ID = EJ_GetInstanceByIndex(index, isRaid)
 				while EJ_ID do
 					EJ_SelectInstance(EJ_ID)
-					local _, _, _, _, _, icon, _, _, _, savedInstanceID = EJ_GetInstanceInfo(EJ_ID)
+					local _, _, _, _, _, _, _, _, _, savedInstanceID = EJ_GetInstanceInfo(EJ_ID)
 					if savedInstanceID then
 						E.SavedInstanceID_to_EJInstance[savedInstanceID] = EJ_ID
 						E.EJInstance_to_SavedInstanceID[EJ_ID] = savedInstanceID
@@ -107,7 +107,6 @@ function E.func_BUILD_DUNG_DB()
 	EJ_SelectTier(backupTier)
 	E.Octo_Table_SI_IDS = instanceDB
 	-- E.DEBUG_STOP(funcName)
-	-- opde(instanceDB)
 end
 ----------------------------------------------------------------
 function E.func_SI_to_EJ(id) -- ONLY FOR ICONS (M+0)

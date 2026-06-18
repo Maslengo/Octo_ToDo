@@ -1,15 +1,10 @@
 local GlobalAddonName, E = ...
-	----------------------------------------------------------------
-	-- local avgItemLevel, avgItemLevelEquipped, avgItemLevelPvp = GetAverageItemLevel()
-	-- local slots = Enum.InventoryType
-	----------------------------------------------------------------
+----------------------------------------------------------------
 local function Collect_Equipments()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
-	collectMASLENGO.InventoryType = collectMASLENGO.InventoryType or {}
+	E.cm.InventoryType = E.cm.InventoryType or {}
 	-- Таблица для слотов, которые реально есть сейчас
 	local seenSlots = {}
 	for slotID in next, E.OctoTable_SlotMapping do
@@ -32,9 +27,9 @@ local function Collect_Equipments()
 				end
 				if itemID == 169223 then
 					local rank = E.GetItemRankFromLink(ItemLink)
-					collectPlayerData.cloak_lvl = rank
+					E.pd.cloak_lvl = rank
 				end
-				collectMASLENGO.InventoryType[slotID] = {
+				E.cm.InventoryType[slotID] = {
 					itemID = itemID,
 					ItemName = ItemName,
 					Icon = Icon,
@@ -50,7 +45,7 @@ local function Collect_Equipments()
 				seenSlots[slotID] = true
 			else
 				-- данные не загружены, оставляем старые и помечаем для подгрузки
-				local existing = collectMASLENGO.InventoryType[slotID]
+				local existing = E.cm.InventoryType[slotID]
 				if existing then
 					existing.RequestLoadItemData = true
 					seenSlots[slotID] = true
@@ -59,9 +54,9 @@ local function Collect_Equipments()
 		end
 	end
 	-- Убираем слоты, которых больше нет на персонаже
-	for slotID in pairs(collectMASLENGO.InventoryType) do
+	for slotID in pairs(E.cm.InventoryType) do
 		if not seenSlots[slotID] then
-			collectMASLENGO.InventoryType[slotID] = nil
+			E.cm.InventoryType[slotID] = nil
 		end
 	end
 end

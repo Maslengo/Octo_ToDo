@@ -65,7 +65,7 @@ local function CreateGreatVaultButton(frame, anchor)
 		BUTTON_SIZE-2,
 		function()
 			if InCombatLockdown() then
-				return { { ERR_NOT_IN_COMBAT } }
+				return { { L["ERR_NOT_IN_COMBAT"] } }
 			end
 			return { { E.classColorHexCurrent .. L["RATED_PVP_WEEKLY_VAULT"] .. "|r" } }
 		end,
@@ -109,3 +109,4 @@ function EventFrame:VARIABLES_LOADED()
 			CreateCloseButton(Octo_EquipmentsFrame, Octo_EquipmentsFrame)
 	end)
 end
+------------------------------------------------------------

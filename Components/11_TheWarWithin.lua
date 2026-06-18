@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_TheWarWithin_available = E.Is_TheWarWithin_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_TheWarWithin_available then return end;
+----------------------------------------------------------------
+if not E.Is_TWW_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -172,36 +171,63 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		----------------------------------------------------------------------------
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
-			end,
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{81630, forcedText = {npcID = 221084}, addText = {mapID = 2248},}, -- Кордак (221084) Остров Дорн
-				{82653, addText = {mapID = 2214},}, -- Гулкие глубины.
-				{81653, forcedText = {npcID = 221224}, addText = {mapID = 2215},}, -- Шуррай (221224) Тайносводье
-				{81624, forcedText = {npcID = 221067}, addText = {mapID = 2213},}, -- Орта (221067) Город Нитей
-				{nil},
-				{85088, forcedText = {npcID = 231821}, addText = {mapID = 2346},}, -- Гоблионе (231821) Нижняя Шахта
-				{nil},
-				{87354, forcedText = {npcID = 238319}, addText = {mapID = 2371},}, -- Reshanor (238319) К'ареш
-			},
-			forcedMaxQuest = 3,
-		},
+	    {
+	        sorted = true,
+	        showTooltip = true,
+	        TextLeft = function()
+	            return L["RAID_INFO_WORLD_BOSS"]
+	        end,
+	        name_save = "WorldBoss",
+	        defS = true,
+	        reset = "Weekly",
+	        desc = categoryKey,
+	        questpools = {
+	            {
+	                {
+	                    81630,
+	                    forcedText = {npcID = 221084}, -- Кордак (221084) Остров Дорн
+	                    addText = {mapID = E.MapID_IsleOfDorn},
+	                },
+	                {
+	                    82653,
+	                    forcedText = {npcID = 220999}, -- Скопище кошмаров (220999) Гулкие глубины
+	                    addText = {mapID = E.MapID_TheRingingDeeps},
+	                },
+	                {
+	                    81653,
+	                    forcedText = {npcID = 221224}, -- Шуррай (221224) Тайносводье
+	                    addText = {mapID = E.MapID_Hallowfall},
+	                },
+	                {
+	                    81624,
+	                    forcedText = {npcID = 221067}, -- Орта (221067) Город Нитей
+	                    addText = {mapID = E.MapID_CityOfThreads},
+	                },
+	            },
+	            {
+	                {
+	                    85088,
+	                    forcedText = {npcID = 231821}, -- Гоблионе (231821) Нижняя Шахта
+	                    addText = {mapID = E.MapID_Undermine},
+	                },
+	            },
+	            {
+	                {
+	                    87354,
+	                    forcedText = {npcID = 238319}, -- Reshanor (238319) К'ареш
+	                    addText = {mapID = E.MapID_Karesh},
+	                },
+	            },
+	        },
+	    },
 		----------------------------------------------------------------
-		-- 2255 Аз-Кахет
+		-- E.MapID_AzjKahet Аз-Кахет
 		----------------------------------------------------------------
 		-- {
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2255)..": ".."Rares" -- Azj-Kahet
+		--         return E.func_GetName("map", E.MapID_AzjKahet)..": ".."Rares" -- Azj-Kahet
 		--     end,
 		--     name_save = "Rares2255",
 		--     defS = false,
@@ -223,7 +249,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2255)..": "..L["Treasures"] -- azj_kahet
+		--         return E.func_GetName("map", E.MapID_AzjKahet)..": "..L["Treasures"] -- azj_kahet
 		--     end,
 		--     name_save = "Treasures2255",
 		--     defS = false,
@@ -246,7 +272,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2255)..": "..L["Underworld Operative"] -- The Severed Threads
+				return E.func_GetName("map", E.MapID_AzjKahet)..": "..L["Underworld Operative"] -- The Severed Threads
 			end,
 			name_save = "UnderworldOperative",
 			defS = false,
@@ -269,13 +295,13 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		-- 2248 Остров Дорн
+		-- E.MapID_IsleOfDorn Остров Дорн
 		----------------------------------------------------------------
 		-- {
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2248)..": ".."Rares" -- Isle of Dorn
+		--         return E.func_GetName("map", E.MapID_IsleOfDorn)..": ".."Rares" -- Isle of Dorn
 		--     end,
 		--     name_save = "Rares2248",
 		--     defS = false,
@@ -298,7 +324,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2248)..": "..L["Treasures"] -- isle_of_dorn
+		--         return E.func_GetName("map", E.MapID_IsleOfDorn)..": "..L["Treasures"] -- isle_of_dorn
 		--     end,
 		--     name_save = "Treasures2248",
 		--     defS = false,
@@ -324,7 +350,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2248)..": "..E.Timers.TWW_BeledarCycle()..E.func_GetName("quest", 83240, false)
+				return E.func_GetName("map", E.MapID_IsleOfDorn)..": "..E.Timers.TWW_BeledarCycle()..E.func_GetName("quest", 83240, false)
 			end,
 			name_save = "TheTheaterTroupe", -- The Theater Troupe
 			defS = false,
@@ -345,13 +371,13 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		-- 2214 Гулкие Глубины
+		-- E.MapID_TheRingingDeeps Гулкие Глубины
 		----------------------------------------------------------------
 		-- {
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2214)..": ".."Rares" -- Ringing Deeps
+		--         return E.func_GetName("map", E.MapID_TheRingingDeeps)..": ".."Rares" -- Ringing Deeps
 		--     end,
 		--     name_save = "Rares2214",
 		--     defS = false,
@@ -375,7 +401,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2214)..": "..L["Treasures"] -- ringing_deeps
+		--         return E.func_GetName("map", E.MapID_TheRingingDeeps)..": "..L["Treasures"] -- ringing_deeps
 		--     end,
 		--     name_save = "Treasures2214",
 		--     defS = false,
@@ -398,7 +424,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2214)..": "..E.func_GetName("quest", 83333, false)
+				return E.func_GetName("map", E.MapID_TheRingingDeeps)..": "..E.func_GetName("quest", 83333, false)
 			end,
 			name_save = "GearingUpforTrouble", -- Gearing Up for Trouble
 			defS = false,
@@ -423,7 +449,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2214)..": "..E.func_GetName("quest", 82946, false)
+				return E.func_GetName("map", E.MapID_TheRingingDeeps)..": "..E.func_GetName("quest", 82946, false)
 			end,
 			name_save = "RollinDownintheDeeps",
 			defS = false,
@@ -441,13 +467,13 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		-- 2339 Дорногал
+		-- E.MapID_Dornogal Дорногал
 		----------------------------------------------------------------
 		{ -- https://www.wowhead.com/npc=226919/archivist-frithrun
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2339)..": "..L["Weekend Event"]
+				return E.func_GetName("map", E.MapID_Dornogal)..": "..L["Weekend Event"]
 			end,
 			name_save = "ArchivistFrithrun",
 			defS = false,
@@ -486,7 +512,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2339)..": "..L["Worldsoul"]
+				return E.func_GetName("map", E.MapID_Dornogal)..": "..L["Worldsoul"]
 			end,
 			name_save = "TheCalloftheWorldsoul", -- The Call of the Worldsoul
 			defS = false,
@@ -551,7 +577,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2339)..": "..L["Archives"]
+				return E.func_GetName("map", E.MapID_Dornogal)..": "..L["Archives"]
 			end,
 			name_save = "Archives",
 			defS = false,
@@ -576,7 +602,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2339)..": "..L["Weekly quests"].." ("..L["DUNGEONS"]..")" -- https://www.wowhead.com/npc=226623/biergoth
+				return E.func_GetName("map", E.MapID_Dornogal)..": "..L["Weekly quests"].." ("..L["DUNGEONS"]..")" -- https://www.wowhead.com/npc=226623/biergoth
 			end,
 			name_save = "BiergothDungeonQuest",
 			defS = false,
@@ -604,13 +630,13 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		-- 2369 Siren Isle
+		-- E.MapID_SirenIsle Siren Isle
 		----------------------------------------------------------------
 		-- {
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2369)..": ".."Rares" -- Siren Isle
+		--         return E.func_GetName("map", E.MapID_SirenIsle)..": ".."Rares" -- Siren Isle
 		--     end,
 		--     name_save = "Rares2369",
 		--     defS = false,
@@ -631,7 +657,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2369)..": "..L["Treasures"]
+		--         return E.func_GetName("map", E.MapID_SirenIsle)..": "..L["Treasures"]
 		--     end,
 		--     name_save = "Treasures2369",
 		--     defS = false,
@@ -655,7 +681,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2369)..": "..L["Weekly quests"]
+				return E.func_GetName("map", E.MapID_SirenIsle)..": "..L["Weekly quests"]
 			end,
 			name_save = "SirenIsleWeekly", -- Siren Isle Weekly
 			defS = false,
@@ -689,13 +715,13 @@ local function tempFunction()
 			forcedMaxQuest = 6, -- nadoutichnit
 		},
 		----------------------------------------------------------------
-		-- 2346 Нижняя Шахта
+		-- E.MapID_Undermine Нижняя Шахта
 		----------------------------------------------------------------
 		-- {
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2346)..": ".."Rares" -- Undermine
+		--         return E.func_GetName("map", E.MapID_Undermine)..": ".."Rares" -- Undermine
 		--     end,
 		--     name_save = "Rares2346",
 		--     defS = false,
@@ -727,7 +753,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2346)..": "..L["Treasures"] -- undermine
+		--         return E.func_GetName("map", E.MapID_Undermine)..": "..L["Treasures"] -- undermine
 		--     end,
 		--     name_save = "Treasure2346",
 		--     defS = false,
@@ -770,7 +796,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2346)..": ".."Free C.H.E.T.T. List"
+				return E.func_GetName("map", E.MapID_Undermine)..": ".."Free C.H.E.T.T. List"
 			end,
 			name_save = "FreeCHETTList",
 			defS = false,
@@ -785,7 +811,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2346)..": ".."C.H.E.T.T. List"
+				return E.func_GetName("map", E.MapID_Undermine)..": ".."C.H.E.T.T. List"
 			end,
 			name_save = "CHETTList",
 			defS = false,
@@ -812,7 +838,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2346)..": "..E.func_GetName("quest", 86775, false)
+				return E.func_GetName("map", E.MapID_Undermine)..": "..E.func_GetName("quest", 86775, false)
 			end,
 			name_save = "UrgetoSurge",
 			defS = false,
@@ -836,7 +862,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2346)..": "..E.func_GetName("quest", 85869, false)
+				return E.func_GetName("map", E.MapID_Undermine)..": "..E.func_GetName("quest", 85869, false)
 			end,
 			name_save = "ManyJobsHandleIt",
 			defS = false,
@@ -860,7 +886,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2346)..": "..E.func_GetName("quest", 85879, false)
+				return E.func_GetName("map", E.MapID_Undermine)..": "..E.func_GetName("quest", 85879, false)
 			end,
 			name_save = "ReduceReuseResell",
 			defS = false,
@@ -881,13 +907,13 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		-- 2215 Тайносводье
+		-- E.MapID_Hallowfall Тайносводье
 		----------------------------------------------------------------
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2215)..": "..E.func_GetName("quest", 76586, false)
+				return E.func_GetName("map", E.MapID_Hallowfall)..": "..E.func_GetName("quest", 76586, false)
 			end,
 			name_save = "SpreadingTheLight",
 			defS = false,
@@ -902,7 +928,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2215)..": "..E.func_GetName("quest", 91173, false) -- tww-nightfall-scenario
+				return E.func_GetName("map", E.MapID_Hallowfall)..": "..E.func_GetName("quest", 91173, false) -- tww-nightfall-scenario
 			end,
 			name_save = "TheFlameBurnsEternal",
 			defS = false,
@@ -925,7 +951,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2215)..": "..L["Incursion"] -- Daily incursions in Hollowfall or Azj-Kahet
+				return E.func_GetName("map", E.MapID_Hallowfall)..": "..L["Incursion"] -- Daily incursions in Hollowfall or Azj-Kahet
 			end,
 			name_save = "Incursion",
 			defS = false,
@@ -953,7 +979,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2215)..": "..L["Major Keyflames"]
+				return E.func_GetName("map", E.MapID_Hallowfall)..": "..L["Major Keyflames"]
 			end,
 			name_save = "MajorKeyflames",
 			defS = false,
@@ -975,7 +1001,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2215)..": "..L["Lesser Keyflames"] -- MinorKeyflames
+				return E.func_GetName("map", E.MapID_Hallowfall)..": "..L["Lesser Keyflames"] -- MinorKeyflames
 			end,
 			name_save = "LesserKeyflame",
 			defS = false,
@@ -1033,7 +1059,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2215)..": ".."Rares" -- Hallowfall
+		--         return E.func_GetName("map", E.MapID_Hallowfall)..": ".."Rares" -- Hallowfall
 		--     end,
 		--     name_save = "Rares2215",
 		--     defS = false,
@@ -1056,7 +1082,7 @@ local function tempFunction()
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2215)..": "..L["Treasures"] -- hallowfall
+		--         return E.func_GetName("map", E.MapID_Hallowfall)..": "..L["Treasures"] -- hallowfall
 		--     end,
 		--     name_save = "Treasures2215",
 		--     defS = false,
@@ -1078,24 +1104,24 @@ local function tempFunction()
 		--     },
 		-- },
 		----------------------------------------------------------------
-		-- 2371 К'ареш
+		-- E.MapID_Karesh К'ареш
 		----------------------------------------------------------------
 		-- {
 		--     sorted = false,
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 2371)..": ".."Rares" -- Karesh
+		--         return E.func_GetName("map", E.MapID_Karesh)..": ".."Rares" -- Karesh
 		--     end,
 		--     name_save = "Rares2371",
 		--     defS = false,
 		--     reset = "Normal", -- "Daily",
 		--     desc = categoryKey,
 		--     quests = {
-		--         {90587, forcedText = {npcID = 232098}, addText = {mapID = 2472},},
-		--         {90696, forcedText = {npcID = 241956}, addText = {mapID = 2472},},
-		--         {90698, forcedText = {npcID = 238540}, addText = {mapID = 2472},},
-		--         {nil, forcedText = {npcID = 235104}, addText = {mapID = 2472},},
-		--         {86464, forcedText = {npcID = 235087}, addText = {mapID = 2472, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
+		--         {90587, forcedText = {npcID = 232098}, addText = {mapID = E.MapID_Tazavesh},},
+		--         {90696, forcedText = {npcID = 241956}, addText = {mapID = E.MapID_Tazavesh},},
+		--         {90698, forcedText = {npcID = 238540}, addText = {mapID = E.MapID_Tazavesh},},
+		--         {nil, forcedText = {npcID = 235104}, addText = {mapID = E.MapID_Tazavesh},},
+		--         {86464, forcedText = {npcID = 235087}, addText = {mapID = E.MapID_Tazavesh, mount = 2602},}, -- Devoured Energy-Pod -- 91435, _, 91311, 91289
 		--         {nil},
 		--         {91276, forcedText = {npcID = 245998}, },
 		--         {91275, forcedText = {npcID = 245997}, },
@@ -1126,7 +1152,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2371)..": "..E.func_GetName("quest", 85460, false)
+				return E.func_GetName("map", E.MapID_Karesh)..": "..E.func_GetName("quest", 85460, false)
 			end,
 			name_save = "EcologicalSuccession", -- Ecological Succession
 			defS = false,
@@ -1141,7 +1167,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2371)..": "..E.func_GetName("quest", 91093, false)
+				return E.func_GetName("map", E.MapID_Karesh)..": "..E.func_GetName("quest", 91093, false)
 			end,
 			name_save = "MoreThanJustaPhase", -- More Than Just a Phase
 			defS = false,
@@ -1161,13 +1187,13 @@ local function tempFunction()
 			forcedMaxQuest = 1,
 		},
 		----------------------------------------------------------------
-		-- 2472 Тазавеш
+		-- E.MapID_Tazavesh Тазавеш
 		----------------------------------------------------------------
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2472)..": "..L["Warrant"]
+				return E.func_GetName("map", E.MapID_Tazavesh)..": "..L["Warrant"]
 			end,
 			name_save = "KareshWarrants",
 			defS = false,
@@ -1239,22 +1265,22 @@ local function tempFunction()
 			reset = "Normal",
 			desc = categoryKey,
 			quests = {
-				{nil, addText = {mapID = 2248},}, -- Isle of Dorn
+				{nil, addText = {mapID = E.MapID_IsleOfDorn},}, -- Isle of Dorn
 				{85648},
 				{83759},
 				{83758},
 				{nil},
-				{nil, addText = {mapID = 2215},}, -- Hallowfall
+				{nil, addText = {mapID = E.MapID_Hallowfall},}, -- Hallowfall
 				{83768},
 				{85664},
 				{83767},
 				{83769},
 				{nil},
-				{nil, addText = {mapID = 2214},}, -- The Ringing Deeps (Гулкие глубины.)
+				{nil, addText = {mapID = E.MapID_TheRingingDeeps},}, -- The Ringing Deeps (Гулкие глубины.)
 				{85649},
 				{83766},
 				{nil},
-				{nil, addText = {mapID = 2255},}, -- Azj-Kahet
+				{nil, addText = {mapID = E.MapID_AzjKahet},}, -- Azj-Kahet
 				{83770},
 				{83771},
 				{85667},
@@ -1298,7 +1324,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return TRADE_SKILLS..": "..L["Algari Treatise"]
+				return L["TRADE_SKILLS"] .. ": " .. L["Algari Treatise"]
 			end,
 			name_save = "AlgariTreatise",
 			defS = false,
@@ -1323,39 +1349,39 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2339)..": "..TRADE_SKILLS
+				return E.func_GetName("map", E.MapID_Dornogal)..": "..TRADE_SKILLS
 			end,
 			name_save = "ProfessionWeeklies",
 			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{84127, addText = {IconVignette = "Mobile-Blacksmithing",}, }, -- Blacksmithing Services Requested
-				{84128, addText = {IconVignette = "Mobile-Enginnering",}, },  -- Engineering Services Requested
-				{84129, addText = {IconVignette = "Mobile-Inscription",}, },  -- Inscription Services Requested
-				{84130, addText = {IconVignette = "Mobile-Jewelcrafting",}, },  -- Jewelcrafting Services Requested
-				{84131, addText = {IconVignette = "Mobile-Leatherworking",}, },  -- Leatherworking Services Requested
-				{84132, addText = {IconVignette = "Mobile-Tailoring",}, },  -- Tailoring Services Requested
-				{84133, addText = {IconVignette = "Mobile-Alchemy",}, },  -- Alchemy Services Requested
+				{84127, prof = 164, }, -- Blacksmithing Services Requested
+				{84128, prof = 202, },  -- Engineering Services Requested
+				{84129, prof = 773, },  -- Inscription Services Requested
+				{84130, prof = 755, },  -- Jewelcrafting Services Requested
+				{84131, prof = 165, },  -- Leatherworking Services Requested
+				{84132, prof = 197, },  -- Tailoring Services Requested
+				{84133, prof = 171, },  -- Alchemy Services Requested
 				{nil},
-				{83102, addText = {IconVignette = "Mobile-Mining",}, },  -- Bismuth is Business -- горняка
-				{83103, addText = {IconVignette = "Mobile-Mining",}, },  -- Acquiring Aqirite -- горняка
-				{83104, addText = {IconVignette = "Mobile-Mining",}, },  -- Identifying Ironclaw -- горняка
-				{83105, addText = {IconVignette = "Mobile-Mining",}, },  -- Rush-order Requisition -- горняка
-				{83106, addText = {IconVignette = "Mobile-Mining",}, },  -- Null Pebble Excavation -- горняка
-				{82992, addText = {IconVignette = "Mobile-Skinning",}, },  -- Stormcharged Goods -- шкуродера
-				{82993, addText = {IconVignette = "Mobile-Skinning",}, },  -- From Shadows -- шкуродера
-				{83097, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cinder and Storm -- шкуродера
-				{83098, addText = {IconVignette = "Mobile-Skinning",}, },  -- Snap and Crackle -- шкуродера
-				{83100, addText = {IconVignette = "Mobile-Skinning",}, },  -- Cracking the Shell -- шкуродера
-				{84084, addText = {IconVignette = "Mobile-Enchanting",}, },  -- Just a Pinch -- зачаровывателя
-				{84085, addText = {IconVignette = "Mobile-Enchanting",}, },  -- The Power of Potential -- зачаровывателя
-				{84086, addText = {IconVignette = "Mobile-Enchanting",}, },  -- A Rare Necessity -- зачаровывателя
-				{82916, addText = {IconVignette = "Mobile-Herbalism",}, },  -- When Fungi Bloom -- травника
-				{82958, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Little Blessings -- травника
-				{82962, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Handful of Luredrops -- травника
-				{82965, addText = {IconVignette = "Mobile-Herbalism",}, },  -- Light and Shadow -- травника
-				{82970, addText = {IconVignette = "Mobile-Herbalism",}, },  -- A Bloom and A Blossom -- травника
+				{83102, prof = 186, },  -- Bismuth is Business -- горняка
+				{83103, prof = 186, },  -- Acquiring Aqirite -- горняка
+				{83104, prof = 186, },  -- Identifying Ironclaw -- горняка
+				{83105, prof = 186, },  -- Rush-order Requisition -- горняка
+				{83106, prof = 186, },  -- Null Pebble Excavation -- горняка
+				{82992, prof = 393, },  -- Stormcharged Goods -- шкуродера
+				{82993, prof = 393, },  -- From Shadows -- шкуродера
+				{83097, prof = 393, },  -- Cinder and Storm -- шкуродера
+				{83098, prof = 393, },  -- Snap and Crackle -- шкуродера
+				{83100, prof = 393, },  -- Cracking the Shell -- шкуродера
+				{84084, prof = 333, },  -- Just a Pinch -- зачаровывателя
+				{84085, prof = 333, },  -- The Power of Potential -- зачаровывателя
+				{84086, prof = 333, },  -- A Rare Necessity -- зачаровывателя
+				{82916, prof = 182, },  -- When Fungi Bloom -- травника
+				{82958, prof = 182, },  -- Little Blessings -- травника
+				{82962, prof = 182, },  -- A Handful of Luredrops -- травника
+				{82965, prof = 182, },  -- Light and Shadow -- травника
+				{82970, prof = 182, },  -- A Bloom and A Blossom -- травника
 			},
 			forcedMaxQuest = 2,
 		},
@@ -1424,24 +1450,24 @@ local function tempFunction()
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
-				{82355, addText = {mapID = 2248},}, -- Остров Дорн
-				{81647, addText = {mapID = 2248},}, -- Остров Дорн
-				{81649, addText = {mapID = 2248},}, -- Остров Дорн
-				{81650, addText = {mapID = 2248},}, -- Остров Дорн
-				{81691, addText = {mapID = 2214},}, -- Гулкие глубины
-				{83229, addText = {mapID = 2214},}, -- Гулкие глубины
-				{82787, addText = {mapID = 2215},}, -- Тайносводье
-				{82852, addText = {mapID = 2215},}, -- Тайносводье
-				{82414, addText = {mapID = 2256},}, -- Аз-Кахет
-				{82531, addText = {mapID = 2256},}, -- Аз-Кахет
+				{82355, addText = {mapID = E.MapID_IsleOfDorn},}, -- Остров Дорн
+				{81647, addText = {mapID = E.MapID_IsleOfDorn},}, -- Остров Дорн
+				{81649, addText = {mapID = E.MapID_IsleOfDorn},}, -- Остров Дорн
+				{81650, addText = {mapID = E.MapID_IsleOfDorn},}, -- Остров Дорн
+				{81691, addText = {mapID = E.MapID_TheRingingDeeps},}, -- Гулкие глубины
+				{83229, addText = {mapID = E.MapID_TheRingingDeeps},}, -- Гулкие глубины
+				{82787, addText = {mapID = E.MapID_Hallowfall},}, -- Тайносводье
+				{82852, addText = {mapID = E.MapID_Hallowfall},}, -- Тайносводье
+				{82414, addText = {mapID = E.MapID_AzjKahet},}, -- Аз-Кахет
+				{82531, addText = {mapID = E.MapID_AzjKahet},}, -- Аз-Кахет
 				{nil},
-				{85113, addText = {mapID = 2369},}, -- Siren Isle #2369 11.0.7 (ITEM=235548)
+				{85113, addText = {mapID = E.MapID_SirenIsle},}, -- Siren Isle #E.MapID_SirenIsle 11.0.7 (ITEM=235548)
 				{nil},
-				{85487, addText = {mapID = 2346},}, -- Undermine #2346 11.1.0
-				{85488, addText = {mapID = 2346},}, -- Undermine #2346
+				{85487, addText = {mapID = E.MapID_Undermine},}, -- Undermine #E.MapID_Undermine 11.1.0
+				{85488, addText = {mapID = E.MapID_Undermine},}, -- Undermine #E.MapID_Undermine
 				{nil},
-				{89294, addText = {mapID = 2371},}, -- K'aresh #2371 11.2.0
-				{89293, addText = {mapID = 2371},}, -- K'aresh #2371
+				{89294, addText = {mapID = E.MapID_Karesh},}, -- K'aresh #E.MapID_Karesh 11.2.0
+				{89293, addText = {mapID = E.MapID_Karesh},}, -- K'aresh #E.MapID_Karesh
 			},
 
 

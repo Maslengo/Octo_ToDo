@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = false
-local Is_TheLastTitan_available = E.Is_TheLastTitan_available
-----------------------------------------------------------------
 if not enable then return end
--- if not Is_TheLastTitan_available then return end;
+----------------------------------------------------------------
+if not E.Is_TLT_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------

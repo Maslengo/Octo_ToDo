@@ -1,6 +1,18 @@
 <Ui>
+	<Script file="Frames\Octo_Frame\01 Core.lua"/>
+	<Script file="Frames\Octo_Frame\03 ScrollHandlers.lua"/>
+	<Script file="Frames\Octo_Frame\04 Octo_SearchBox.lua"/>
+	<Script file="Frames\Octo_Frame\05 WeeklyResetFrameLeft.lua"/>
+	<Script file="Frames\Octo_Frame\06 DataProvider.lua"/>
+	<Script file="Frames\Octo_Frame\07 ColumnHeaders.lua"/>
+	<Script file="Frames\Octo_Frame\08 Acquired.lua"/>
+	<Script file="Frames\Octo_Frame\09 Init.lua"/>
+	<Script file="Frames\Octo_Frame\99 EventHandlers.lua"/>
+
+
+
 	<Script file="Frames\Octo_TooltipFrame.lua"/>
-	<Script file="Frames\Octo_MainFrame.lua"/>
+	<!-- <Script file="Frames\Octo_Frame.lua"/> -->
 	<Script file="Frames\Octo_EquipmentsFrame.lua"/>
 	<Script file="Frames\Octo_DebugFrame.lua"/>
 

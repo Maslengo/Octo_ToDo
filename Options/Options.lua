@@ -1,5 +1,5 @@
 local GlobalAddonName, E = ...
--- if not E.IsMidnight then return end
+-- if not E.func_IsMN_current then return end
 local L = E.L
 ----------------------------------------------------------------
 local AceConfigRegistry = LibStub("AceConfigRegistry-3.0")
@@ -57,19 +57,6 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
-	-- CHARACTERS_OLD ----------------------------------------------
-	----------------------------------------------------------------
-	-- do
-	-- 	local enable = true
-	-- 	if enable then
-	-- 		local tabName = L["Characters"]
-	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
-	-- 		if E.func_option_CHARACTERS_OLD then
-	-- 			E.func_option_CHARACTERS_OLD(category, layout)
-	-- 		end
-	-- 	end
-	-- end
-	----------------------------------------------------------------
 	-- CHARACTERS --------------------------------------------------
 	----------------------------------------------------------------
 	do
@@ -89,69 +76,69 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	-- CURRENCY ----------------------------------------------------
 	----------------------------------------------------------------
-	do
-		local enable = true
-		if enable then
-			-- local iconID = E.func_texturefromIcon(E.func_GetIcon("currency", 1166))
-			local tabName = L["CURRENCY"]
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- CURRENCY
-			if E.func_option_CURRENCY_ICONS then
-				E.func_option_CURRENCY_ICONS(category, layout)
-			end
-			if E.func_option_CURRENCY_COLORS then
-				E.func_option_CURRENCY_COLORS(category, layout)
-			end
-			if E.func_option_CURRENCY_OTHER then
-				E.func_option_CURRENCY_OTHER(category, layout)
-			end
-			if E.func_option_CURRENCY_TOOLTIP then
-				E.func_option_CURRENCY_TOOLTIP(category, layout)
-			end
-		end
-	end
+	-- do
+	-- 	local enable = true
+	-- 	if enable then
+	-- 		-- local iconID = E.func_texturefromIcon(E.func_GetIcon("currency", 1166))
+	-- 		local tabName = L["CURRENCY"]
+	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- CURRENCY
+	-- 		if E.func_option_CURRENCY_ICONS then
+	-- 			E.func_option_CURRENCY_ICONS(category, layout)
+	-- 		end
+	-- 		if E.func_option_CURRENCY_COLORS then
+	-- 			E.func_option_CURRENCY_COLORS(category, layout)
+	-- 		end
+	-- 		if E.func_option_CURRENCY_OTHER then
+	-- 			E.func_option_CURRENCY_OTHER(category, layout)
+	-- 		end
+	-- 		if E.func_option_CURRENCY_TOOLTIP then
+	-- 			E.func_option_CURRENCY_TOOLTIP(category, layout)
+	-- 		end
+	-- 	end
+	-- end
 	----------------------------------------------------------------
 	-- ITEMS -------------------------------------------------------
 	----------------------------------------------------------------
-	do
-		local enable = true
-		if enable then
-			-- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081)) -- (49778 sword) (2362 shield)
-			local tabName = L["ITEMS"]
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- L["ITEMS"]
-			if E.func_option_ITEMS_ICONS then
-				E.func_option_ITEMS_ICONS(category, layout)
-			end
-			if E.func_option_ITEMS_COLORS then
-				E.func_option_ITEMS_COLORS(category, layout)
-			end
-		end
-	end
+	-- do
+	-- 	local enable = true
+	-- 	if enable then
+	-- 		-- local iconID = E.func_texturefromIcon(E.func_GetIcon("item", 5081)) -- (49778 sword) (2362 shield)
+	-- 		local tabName = L["ITEMS"]
+	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- L["ITEMS"]
+	-- 		if E.func_option_ITEMS_ICONS then
+	-- 			E.func_option_ITEMS_ICONS(category, layout)
+	-- 		end
+	-- 		if E.func_option_ITEMS_COLORS then
+	-- 			E.func_option_ITEMS_COLORS(category, layout)
+	-- 		end
+	-- 	end
+	-- end
 	----------------------------------------------------------------
 	-- REPUTATION --------------------------------------------------
 	----------------------------------------------------------------
-	do
-		local enable = true
-		if enable then
-			-- local iconID = E.func_texturefromIcon(E.ICON_TABARD)
-			local tabName = L["REPUTATION"]
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- REPUTATION
-			if E.func_option_REPUTATION_ICONS then
-				E.func_option_REPUTATION_ICONS(category, layout)
-			end
-			if E.func_option_REPUTATION_PARAGON then
-				E.func_option_REPUTATION_PARAGON(category, layout)
-			end
-			if E.func_option_REPUTATION_MAJOR then
-				E.func_option_REPUTATION_MAJOR(category, layout)
-			end
-			if E.func_option_REPUTATION_FRIEND then
-				E.func_option_REPUTATION_FRIEND(category, layout)
-			end
-			if E.func_option_REPUTATION_SIMPLE then
-				E.func_option_REPUTATION_SIMPLE(category, layout)
-			end
-		end
-	end
+	-- do
+	-- 	local enable = true
+	-- 	if enable then
+	-- 		-- local iconID = E.func_texturefromIcon(E.ICON_TABARD)
+	-- 		local tabName = L["REPUTATION"]
+	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName) -- REPUTATION
+	-- 		if E.func_option_REPUTATION_ICONS then
+	-- 			E.func_option_REPUTATION_ICONS(category, layout)
+	-- 		end
+	-- 		if E.func_option_REPUTATION_PARAGON then
+	-- 			E.func_option_REPUTATION_PARAGON(category, layout)
+	-- 		end
+	-- 		if E.func_option_REPUTATION_MAJOR then
+	-- 			E.func_option_REPUTATION_MAJOR(category, layout)
+	-- 		end
+	-- 		if E.func_option_REPUTATION_FRIEND then
+	-- 			E.func_option_REPUTATION_FRIEND(category, layout)
+	-- 		end
+	-- 		if E.func_option_REPUTATION_SIMPLE then
+	-- 			E.func_option_REPUTATION_SIMPLE(category, layout)
+	-- 		end
+	-- 	end
+	-- end
 	----------------------------------------------------------------
 	-- RAIDS -------------------------------------------------------
 	----------------------------------------------------------------

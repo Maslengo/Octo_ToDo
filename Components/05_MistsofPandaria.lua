@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_MistsofPandaria_available = E.Is_MistsofPandaria_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_MistsofPandaria_available then return end;
+----------------------------------------------------------------
+if not E.Is_MoP_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -97,30 +96,66 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		{
-			showTooltip = true,
-			TextLeft = function()
-				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
-			end,
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{33118, forcedText = {npcID = 72057}, addText = {mapID = 554}, }, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
-				{33117, forcedText = {achievementID = 7333}, addText = {mapID = 554}, }, -- Celestrials (Вневременный остров)
-				{32519, forcedText = {npcID = 69161}, addText = {mapID = 507}, }, -- "Oondasta" (Остров Великанов
-				-- {33109}, -- Nalak HIDDEN
-				{32518, forcedText = {npcID = 69099}, addText = {mapID = 504}, }, -- "Nalak, The Storm Lord" (Остров Грома)
-				{32098, forcedText = {npcID = 62346}, addText = {mapID = 376}, }, -- "Salyis's Warband" (Долина Четырех Ветров)
-				{32099, forcedText = {npcID = 60491}, addText = {mapID = 379}, }, -- "Sha of Anger" (Вершина Кунь-Лай)
+	{
+		sorted = true,
+		showTooltip = true,
+		TextLeft = function()
+			return L["RAID_INFO_WORLD_BOSS"]
+		end,
+		name_save = "WorldBoss",
+		defS = true,
+		reset = "Weekly",
+		desc = categoryKey,
+		questpools = {
+			{
+				{
+					33118, -- Ordos <Fire-God of the Yaungol> (Вневременный остров)
+					forcedText = {npcID = 72057},
+					addText = {mapID = E.MapID_TimelessIsle},
+				},
 			},
-			-- forcedMaxQuest = 6,
+			{
+				{
+					33117, -- Celestrials (Вневременный остров)
+					forcedText = {achievementID = 7333},
+					addText = {mapID = E.MapID_TimelessIsle},
+				},
+			},
+			{
+				{
+					32519, -- "Oondasta" (Остров Великанов)
+					forcedText = {npcID = 69161},
+					addText = {mapID = E.MapID_IsleofGiants},
+				},
+			},
+			{
+				-- {33109}, -- Nalak HIDDEN
+				{
+					32518, -- "Nalak, The Storm Lord" (Остров Грома)
+					forcedText = {npcID = 69099},
+					addText = {mapID = E.MapID_IsleofThunder},
+				},
+			},
+			{
+				{
+					32098, -- "Salyis's Warband" (Долина Четырех Ветров)
+					forcedText = {npcID = 62346},
+					addText = {mapID = E.MapID_ValleyOfFourWinds},
+				},
+			},
+			{
+				{
+					32099, -- "Sha of Anger" (Вершина Кунь-Лай)
+					forcedText = {npcID = 60491},
+					addText = {mapID = E.MapID_KunLaiSummit},
+				},
+			},
 		},
+	},
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 504)..": "..E.func_GetName("quest", 32641, false)
+				return E.func_GetName("map", E.MapID_IsleofThunder)..": "..E.func_GetName("quest", 32641, false)
 			end,
 			name_save = "ChampionsoftheThunderKing",
 			defS = true,
@@ -135,7 +170,7 @@ local function tempFunction()
 		-- { -- no longer weekly
 		--     showTooltip = true,
 		--     TextLeft = function()
-		--         return E.func_GetName("map", 390)..": "..E.func_GetName("quest", 32641, false)
+		--         return E.func_GetName("map", E.MapID_ValeofEternalBlossoms)..": "..E.func_GetName("quest", 32641, false)
 		--     end,
 		--     name_save = "WarforgedSeals",
 		--     defS = true,
@@ -150,7 +185,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 554)..": "..E.func_GetName("quest", 33338, false)
+				return E.func_GetName("map", E.MapID_TimelessIsle)..": "..E.func_GetName("quest", 33338, false)
 			end,
 			name_save = "EmpoweringtheHourglass",
 			defS = true,
@@ -164,7 +199,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 554)..": "..E.func_GetName("quest", 33334, false)
+				return E.func_GetName("map", E.MapID_TimelessIsle)..": "..E.func_GetName("quest", 33334, false)
 			end,
 			name_save = "StrongEnoughToSurvive",
 			defS = true,

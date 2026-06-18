@@ -2,6 +2,8 @@
 	<Script file="Collect\Collect.lua"/>
 
 	<Script file="Collect\Collect_BFA_HeartOfAzeroth.lua"/>
+	<Script file="Collect\Collect_Bounties.lua"/>
+	<Script file="Collect\Collect_Callings.lua"/>
 	<Script file="Collect\Collect_Character_Info.lua"/>
 	<Script file="Collect\Collect_Character_ItemLevels.lua"/>
 	<Script file="Collect\Collect_Character_TimePlayed.lua"/>
@@ -27,6 +29,5 @@
 	<Script file="Collect\Collect_Professions.lua"/>
 	<Script file="Collect\Collect_Quests.lua"/>
 	<Script file="Collect\Collect_Reputations.lua"/>
-	<Script file="Collect\Collect_Statistics.lua"/>
 	<Script file="Collect\Collect_WarMode.lua"/>
 </Ui>

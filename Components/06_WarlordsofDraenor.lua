@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_WarlordsofDraenor_available = E.Is_WarlordsofDraenor_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_WarlordsofDraenor_available then return end;
+----------------------------------------------------------------
+if not E.Is_WoD_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -74,25 +73,90 @@ local function tempFunction()
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
 		{
-			sorted = false,
+			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
+				return L["RAID_INFO_WORLD_BOSS"]
 			end,
 			name_save = "WorldBoss",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
-			quests = {
-				{37460, forcedText = {npcID = 81252}, addText = {mapID = 543}, }, -- Drov the Ruiner (Горгронд)
-				{37462, forcedText = {npcID = 81535}, addText = {mapID = 543}, }, -- Tarlna the Ageless (Горгронд)
-				{37464, forcedText = {npcID = 87493}, addText = {mapID = 542}, }, -- Rukhmar (Пики Аррака)
-				{39380, forcedText = {npcID = 94015}, addText = {mapID = 534}, }, -- Supreme Lord Kazzak (Джунгли)
+			questpools = {
+				{
+					{
+						37460, -- Drov the Ruiner (Горгронд)
+						forcedText = {npcID = 81252},
+						addText = {mapID = E.MapID_Gorgrond},
+					},
+				},
+				{
+					{
+						37462, -- Tarlna the Ageless (Горгронд)
+						forcedText = {npcID = 81535},
+						addText = {mapID = E.MapID_Gorgrond},
+					},
+				},
+				{
+					{
+						37464, -- Rukhmar (Пики Аррака)
+						forcedText = {npcID = 87493},
+						addText = {mapID = E.MapID_SpiresOfArak},
+					},
+				},
+				{
+					{
+						39380, -- Supreme Lord Kazzak (Джунгли)
+						forcedText = {npcID = 94015},
+						addText = {mapID = E.MapID_TanaanJungle},
+					},
+				},
+
+
+				{
+					{
+						99999, -- фиктивный questID для теста
+						forcedText = {
+							text = "Тестовый текст",
+							npcID = 81535,
+							achievementID = 7333,
+							itemID = 252415,
+							Icon = "Interface\\Icons\\inv_misc_questionmark"
+						},
+						addText = {
+							align = "CENT",           -- можно LEFT, CENT, RIGHT
+							IconVignette = "Mobile-Blacksmithing",
+							Icon = "Interface\\Icons\\inv_misc_questionmark",
+							notes = "Заметка",
+							mapID = 14,               -- Arathi Highlands
+							spellID = 1262418,
+							text = "Доп. текст",
+							itemID = 250117,
+							timestamp = 3600,
+							mount = 12345,            -- любой mountID
+							expansionText = "|cff00ff00Cataclysm|r",
+							coords = {12345, 67890}
+						},
+						prof = 164,                   -- Mining
+						HEADER = "Заголовок группы",
+						-- FactionOrClass = {
+							-- Horde = true,
+							-- Alliance = true,
+							-- или classFilename = "MAGE"
+						-- }
+					},
+				},
+
+
+
+
+
+
+
 			},
-			forcedMaxQuest = 4,
 		},
 		{
-			sorted = true,
+			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
 				-- return E.func_GetName("quest", 38242, false) -- Раскопанная магия
@@ -103,6 +167,7 @@ local function tempFunction()
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
+				-- 16
 				{36649, FactionOrClass = {Alliance = true,},},
 				{36679, FactionOrClass = {Alliance = true,},},
 				{36676, FactionOrClass = {Alliance = true,},},
@@ -115,24 +180,11 @@ local function tempFunction()
 				{36678, FactionOrClass = {Alliance = true,},},
 				{36685, FactionOrClass = {Alliance = true,},},
 				{36684, FactionOrClass = {Alliance = true,},},
-				{38201, FactionOrClass = {Alliance = true,},},
-				{38196, FactionOrClass = {Alliance = true,},},
-				{38192, FactionOrClass = {Alliance = true,},},
-				{38198, FactionOrClass = {Alliance = true,},},
-				{38189, FactionOrClass = {Alliance = true,},},
-				{38190, FactionOrClass = {Alliance = true,},},
-				{38197, FactionOrClass = {Alliance = true,},},
-				{38193, FactionOrClass = {Alliance = true,},},
-				{38200, FactionOrClass = {Alliance = true,},},
-				{40944, FactionOrClass = {Alliance = true,},},
-				{40942, FactionOrClass = {Alliance = true,},},
-				{38199, FactionOrClass = {Alliance = true,},},
-				{38191, FactionOrClass = {Alliance = true,},},
 				{36686, FactionOrClass = {Alliance = true,},},
 				{36682, FactionOrClass = {Alliance = true,},},
 				{36674, FactionOrClass = {Alliance = true,},},
 				{36687, FactionOrClass = {Alliance = true,},},
-				{38195, FactionOrClass = {Alliance = true,},},
+				-- 16
 				{36667, FactionOrClass = {Horde = true,},},
 				{36692, FactionOrClass = {Horde = true,},},
 				{36695, FactionOrClass = {Horde = true,},},
@@ -144,25 +196,11 @@ local function tempFunction()
 				{36699, FactionOrClass = {Horde = true,},},
 				{36698, FactionOrClass = {Horde = true,},},
 				{36700, FactionOrClass = {Horde = true,},},
-				{38187, FactionOrClass = {Horde = true,},},
-				{38182, FactionOrClass = {Horde = true,},},
-				{38179, FactionOrClass = {Horde = true,},},
-				{38176, FactionOrClass = {Horde = true,},},
-				{38177, FactionOrClass = {Horde = true,},},
-				{38183, FactionOrClass = {Horde = true,},},
-				{38186, FactionOrClass = {Horde = true,},},
-				{40943, FactionOrClass = {Horde = true,},},
-				{38181, FactionOrClass = {Horde = true,},},
-				{40941, FactionOrClass = {Horde = true,},},
-				{38185, FactionOrClass = {Horde = true,},},
-				{38178, FactionOrClass = {Horde = true,},},
 				{36701, FactionOrClass = {Horde = true,},},
 				{36689, FactionOrClass = {Horde = true,},},
 				{36696, FactionOrClass = {Horde = true,},},
 				{36690, FactionOrClass = {Horde = true,},},
 				{36691, FactionOrClass = {Horde = true,},},
-				{38184, FactionOrClass = {Horde = true,},},
-				{38180, FactionOrClass = {Horde = true,},},
 			},
 			rewards = {
 				{rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
@@ -174,6 +212,9 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+
+
 		{
 			sorted = true,
 			showTooltip = true,
@@ -248,6 +289,66 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+
+
+
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return L["Missive"]
+			end,
+			name_save = "Missive",
+			defS = false,
+			reset = "Recurring",
+			desc = categoryKey,
+			quests = {
+				{38187, FactionOrClass = {Horde = true,},},
+				{38185, FactionOrClass = {Horde = true,},},
+				{38179, FactionOrClass = {Horde = true,},},
+				{38183, FactionOrClass = {Horde = true,},},
+				{38184, FactionOrClass = {Horde = true,},},
+				{40943, FactionOrClass = {Horde = true,},},
+				{40941, FactionOrClass = {Horde = true,},},
+				{38180, FactionOrClass = {Horde = true,},},
+				{38186, FactionOrClass = {Horde = true,},},
+				{38177, FactionOrClass = {Horde = true,},},
+				{38181, FactionOrClass = {Horde = true,},},
+				{38182, FactionOrClass = {Horde = true,},},
+				{38176, FactionOrClass = {Horde = true,},},
+				{38178, FactionOrClass = {Horde = true,},},
+				-- {38194, FactionOrClass = {Horde = true,},}, -- NEW
+				{40944, FactionOrClass = {Alliance = true,},},
+				{38197, FactionOrClass = {Alliance = true,},},
+				{38201, FactionOrClass = {Alliance = true,},},
+				{40942, FactionOrClass = {Alliance = true,},},
+				{38200, FactionOrClass = {Alliance = true,},},
+				{38199, FactionOrClass = {Alliance = true,},},
+				{38192, FactionOrClass = {Alliance = true,},},
+				{38193, FactionOrClass = {Alliance = true,},},
+				{38195, FactionOrClass = {Alliance = true,},},
+				{38191, FactionOrClass = {Alliance = true,},},
+				{38196, FactionOrClass = {Alliance = true,},},
+				{38198, FactionOrClass = {Alliance = true,},},
+				{38189, FactionOrClass = {Alliance = true,},},
+				{38190, FactionOrClass = {Alliance = true,},},
+				-- {38202, FactionOrClass = {Alliance = true,},}, -- NEW
+			},
+			rewards = {
+				{rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal
+				-- {rewID = 3316, rewTYPE = "currency", rewSIZE = 150,}, -- Voidlight Marl
+				-- {rewID = 3318, rewTYPE = "currency", rewSIZE = 1500,}, -- Delver's Journey
+				-- {rewID = 1262418, rewTYPE = "spell", rewSIZE = nil,}, -- Spark of Radiance
+				-- {rewID = 268490, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Season 1)
+				-- {rewID = 254677, rewTYPE = "item", rewSIZE = 1,}, -- Apex Cache (Pinnacle Cache - Midnight Preseason)
+			},
+			-- forcedMaxQuest = 1,
+		},
+
+
+
+
 		{
 			sorted = false,
 			showTooltip = true,
@@ -337,26 +438,26 @@ local function tempFunction()
 			reset = "Normal",
 			desc = categoryKey,
 			quests = { -- https://www.wowhead.com/ru/guide/garrisons/buildings/guide-to-the-garrison-lunarfall-inn-frostwall-tavern
-				{37167, addText = {itemID = 118924},},
-				{37159, addText = {itemID = 119093},},
-				{37165, addText = {itemID = 118935},},
-				{37160, addText = {itemID = 118937},},
-				{37151, addText = {itemID = 118918},},
-				{37152, addText = {itemID = 119083},},
-				{37162, addText = {itemID = 118927},},
-				{37161, addText = {itemID = 118926},},
-				{37157, addText = {itemID = 119092},},
-				{37150, addText = {itemID = 118921},},
-				{37158, addText = {itemID = 118928},},
-				{37148, addText = {itemID = 118922},},
-				{37163, addText = {itemID = 119003},},
-				{37155, addText = {itemID = 118925},},
-				{37154, addText = {itemID = 118931},},
-				{37164, addText = {itemID = 118923},},
-				{37156, addText = {itemID = 119039},},
-				{37149, addText = {itemID = 118936},},
-				{37153, addText = {itemID = 118929},},
-				{37166, addText = {itemID = 118930},},
+				{37167, addText_CENT = {itemID = 118924},},
+				{37159, addText_CENT = {itemID = 119093},},
+				{37165, addText_CENT = {itemID = 118935},},
+				{37160, addText_CENT = {itemID = 118937},},
+				{37151, addText_CENT = {itemID = 118918},},
+				{37152, addText_CENT = {itemID = 119083},},
+				{37162, addText_CENT = {itemID = 118927},},
+				{37161, addText_CENT = {itemID = 118926},},
+				{37157, addText_CENT = {itemID = 119092},},
+				{37150, addText_CENT = {itemID = 118921},},
+				{37158, addText_CENT = {itemID = 118928},},
+				{37148, addText_CENT = {itemID = 118922},},
+				{37163, addText_CENT = {itemID = 119003},},
+				{37155, addText_CENT = {itemID = 118925},},
+				{37154, addText_CENT = {itemID = 118931},},
+				{37164, addText_CENT = {itemID = 118923},},
+				{37156, addText_CENT = {itemID = 119039},},
+				{37149, addText_CENT = {itemID = 118936},},
+				{37153, addText_CENT = {itemID = 118929},},
+				{37166, addText_CENT = {itemID = 118930},},
 			},
 			-- rewards = {
 			-- {rewID = 823, rewTYPE = "currency", rewSIZE = "800-1000",}, -- Apexis Crystal

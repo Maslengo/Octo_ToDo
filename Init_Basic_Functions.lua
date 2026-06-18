@@ -1,6 +1,210 @@
 local GlobalAddonName, E = ...
+local L = E.L
 E.MainAddonName = GlobalAddonName
-OctoEngine = E -- в других аддонах
+----------------------------------------------------------------
+local issecretvalue = issecretvalue or function() end
+function E.func_issecretvalue(v)
+	return issecretvalue(v)
+end
+----------------------------------------------------------------
+-- local function apiProxy(apiTable, methodName, fallbackGlobal)
+--     local impl = (apiTable and apiTable[methodName]) or (fallbackGlobal and _G[fallbackGlobal])
+--     return function(...)
+--         if impl then
+--             return impl(...)
+--         end
+--     end
+-- end
+
+-- E.func_GetContainerNumSlots = apiProxy(C_Container, "GetContainerNumSlots", "GetContainerNumSlots")
+-- ...
+----------------------------------------------------------------
+-- C_CovenantCallings -----------------------------------------------
+----------------------------------------------------------------
+
+local AreCallingsUnlocked = C_CovenantCallings and C_CovenantCallings.AreCallingsUnlocked or AreCallingsUnlocked
+function E.func_AreCallingsUnlocked()
+	local result = AreCallingsUnlocked and AreCallingsUnlocked() or false
+	return result
+end
+----------------------------------------------------------------
+-- C_AzeriteItem -----------------------------------------------
+----------------------------------------------------------------
+local FindActiveAzeriteItem = C_AzeriteItem and C_AzeriteItem.FindActiveAzeriteItem or FindActiveAzeriteItem
+function E.func_FindActiveAzeriteItem()
+	if FindActiveAzeriteItem then
+		return FindActiveAzeriteItem()
+	end
+end
+----------------------------------------------------------------
+-- local GetAzeriteItemXPInfo = C_AzeriteItem and C_AzeriteItem.GetAzeriteItemXPInfo or GetAzeriteItemXPInfo
+function E.func_GetAzeriteItemXPInfo(azeriteItemLocation)
+	local result1, result2 = 0, 0
+	if GetAzeriteItemXPInfo and azeriteItemLocation then
+		-- Проверяем, что переданный location действительно указывает на азеритовый предмет
+		if C_AzeriteItem and C_AzeriteItem.IsAzeriteItem and C_AzeriteItem.IsAzeriteItem(azeriteItemLocation) then
+			result1, result2 = GetAzeriteItemXPInfo(azeriteItemLocation)
+		end
+	end
+	return result1, result2
+end
+----------------------------------------------------------------
+local GetPowerLevel = C_AzeriteItem and C_AzeriteItem.GetPowerLevel or GetPowerLevel
+function E.func_GetPowerLevel(azeriteItemLocation)
+	local azeriteLVL = 1
+	if GetPowerLevel then
+		azeriteLVL = GetPowerLevel(azeriteItemLocation)
+	end
+	return azeriteLVL
+end
+----------------------------------------------------------------
+-- C_TaskQuest -------------------------------------------------
+----------------------------------------------------------------
+local GetQuestsOnMap = C_TaskQuest and C_TaskQuest.GetQuestsOnMap or GetQuestsOnMap
+function E.func_GetQuestsOnMap_INFO(uiMapID)
+	local info = {}
+	if GetQuestsOnMap then
+		info = GetQuestsOnMap(uiMapID)
+	end
+	return info
+end
+----------------------------------------------------------------
+local GetQuestTimeLeftSeconds = C_TaskQuest and C_TaskQuest.GetQuestTimeLeftSeconds or GetQuestTimeLeftSeconds
+function E.func_GetQuestTimeLeftSeconds(questID)
+	local result = 0
+	if GetQuestTimeLeftSeconds then
+		result = GetQuestTimeLeftSeconds(questID)
+	end
+	return result
+end
+----------------------------------------------------------------
+local GetQuestTimeLeftMinutes = C_TaskQuest and C_TaskQuest.GetQuestTimeLeftMinutes or GetQuestTimeLeftMinutes
+function E.func_GetQuestTimeLeftMinutes(questID)
+	local result = 0
+	if GetQuestTimeLeftMinutes then
+		result = GetQuestTimeLeftMinutes(questID)
+	end
+	return result
+end
+----------------------------------------------------------------
+-- LinkUtil ----------------------------------------------------
+----------------------------------------------------------------
+-- local RegisterLinkHandler = LinkUtil and LinkUtil.RegisterLinkHandler or RegisterLinkHandler
+-- function E.func_RegisterLinkHandler()
+-- 	if RegisterLinkHandler then
+-- 		return RegisterLinkHandler()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local ExtractNydusLink = LinkUtil and LinkUtil.ExtractNydusLink or ExtractNydusLink
+-- function E.func_ExtractNydusLink()
+-- 	if ExtractNydusLink then
+-- 		return ExtractNydusLink()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local IsLinkHandlerRegistered = LinkUtil and LinkUtil.IsLinkHandlerRegistered or IsLinkHandlerRegistered
+-- function E.func_IsLinkHandlerRegistered()
+-- 	if IsLinkHandlerRegistered then
+-- 		return IsLinkHandlerRegistered()
+-- 	end
+-- end
+----------------------------------------------------------------
+local ExtractLink = LinkUtil and LinkUtil.ExtractLink or ExtractLink
+function E.func_ExtractLink(link)
+	if ExtractLink then
+		return ExtractLink(link)
+	end
+end
+----------------------------------------------------------------
+-- local SplitLink = LinkUtil and LinkUtil.SplitLink or SplitLink
+-- function E.func_SplitLink()
+-- 	if SplitLink then
+-- 		return SplitLink()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local FormatLink = LinkUtil and LinkUtil.FormatLink or FormatLink
+-- function E.func_FormatLink()
+-- 	if FormatLink then
+-- 		return FormatLink()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local IsLinkType = LinkUtil and LinkUtil.IsLinkType or IsLinkType
+-- function E.func_IsLinkType()
+-- 	if IsLinkType then
+-- 		return IsLinkType()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local SplitLinkData = LinkUtil and LinkUtil.SplitLinkData or SplitLinkData
+-- function E.func_SplitLinkData()
+-- 	if SplitLinkData then
+-- 		return SplitLinkData()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local SplitLinkOptions = LinkUtil and LinkUtil.SplitLinkOptions or SplitLinkOptions
+-- function E.func_SplitLinkOptions()
+-- 	if SplitLinkOptions then
+-- 		return SplitLinkOptions()
+-- 	end
+-- end
+-- ----------------------------------------------------------------
+-- local ProcessLink = LinkUtil and LinkUtil.ProcessLink or ProcessLink
+-- function E.func_ProcessLink()
+-- 	if ProcessLink then
+-- 		return ProcessLink()
+-- 	end
+-- end
+----------------------------------------------------------------
+-- C_PlayerInfo ------------------------------------------------
+----------------------------------------------------------------
+local GetGlidingInfo = C_PlayerInfo and C_PlayerInfo.GetGlidingInfo or GetGlidingInfo
+function E.func_GetGlidingInfo()
+	if GetGlidingInfo then
+		return GetGlidingInfo()
+	end
+end
+----------------------------------------------------------------
+-- C_SummonInfo ------------------------------------------------
+----------------------------------------------------------------
+local GetSummonConfirmSummoner = C_SummonInfo and C_SummonInfo.GetSummonConfirmSummoner or GetSummonConfirmSummoner
+function E.func_GetSummonConfirmSummoner()
+	if GetSummonConfirmSummoner then
+		return GetSummonConfirmSummoner()
+	else
+		return E.TEXT_UNKNOWN
+	end
+end
+----------------------------------------------------------------
+-- C_VignetteInfo ----------------------------------------------
+----------------------------------------------------------------
+local GetVignettePosition = C_VignetteInfo and C_VignetteInfo.GetVignettePosition or GetVignettePosition
+function E.func_GetVignettePosition_INFO(vignetteGUID, mapID)
+	local info = {}
+	if GetVignettePosition then
+		info = GetVignettePosition(vignetteGUID, mapID)
+	end
+	return info
+end
+----------------------------------------------------------------
+local GetVignettes = C_VignetteInfo and C_VignetteInfo.GetVignettes or GetVignettes
+function E.func_GetVignettes()
+	if GetVignettes then
+		return GetVignettes()
+	end
+end
+----------------------------------------------------------------
+local GetVignetteInfo = C_VignetteInfo and C_VignetteInfo.GetVignetteInfo or GetVignetteInfo
+function E.func_GetVignetteInfo_INFO(instanceid)
+	local result = {}
+	if GetVignetteInfo then
+		result = GetVignetteInfo(instanceid)
+	end
+	return result
+end
 ----------------------------------------------------------------
 -- C_CreatureInfo ----------------------------------------------
 ----------------------------------------------------------------
@@ -24,7 +228,8 @@ function E.func_GetRaceInfo(raceID)
 		if type(raceData) == "table" then
 			return raceData.raceName, raceData.clientFileString -- , raceData.raceID
 		elseif type(raceData) == "string" then
-			return GetRaceInfo(raceID)
+			-- return GetRaceInfo(raceID)
+			return raceData
 		end
 	end
 end
@@ -188,7 +393,7 @@ end
 --     local duration = GetSpellCooldown(spellID).duration
 --     local result = 0
 --     if start > 0 and duration > 0 then
---         result = (start + duration - GetTime())
+--         result = (start + duration - E.TIME_SERVER())
 --     end
 --     return E.func_CompactRoundNumber(result)
 -- end
@@ -234,6 +439,13 @@ local GetSpellTexture = GetSpellTexture or C_Spell.GetSpellTexture
 function E.func_GetSpellTexture(id)
 	if GetSpellTexture then
 		return GetSpellTexture(id)
+	end
+end
+----------------------------------------------------------------
+local GetSpellDescription = GetSpellDescription or C_Spell.GetSpellDescription
+function E.func_GetSpellDescription(id)
+	if GetSpellDescription then
+		return GetSpellDescription(id)
 	end
 end
 ----------------------------------------------------------------
@@ -299,20 +511,20 @@ function E.func_GetSecondsUntilWeeklyReset()
 	end
 end
 ----------------------------------------------------------------
-local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
-function E.func_GetWeeklyResetStartTime()
-	if GetWeeklyResetStartTime then
-		return GetWeeklyResetStartTime()
-	else
-		return 0
-	end
-end
-----------------------------------------------------------------
 local GetSecondsUntilDailyReset = GetSecondsUntilDailyReset or C_DateAndTime.GetSecondsUntilDailyReset
 function E.func_GetSecondsUntilDailyReset()
 	local func = GetSecondsUntilDailyReset or GetQuestResetTime
 	if func then
 		return func()
+	else
+		return 0
+	end
+end
+----------------------------------------------------------------
+local GetWeeklyResetStartTime = GetWeeklyResetStartTime or C_DateAndTime.GetWeeklyResetStartTime
+function E.func_GetWeeklyResetStartTime()
+	if GetWeeklyResetStartTime then
+		return GetWeeklyResetStartTime()
 	else
 		return 0
 	end
@@ -547,9 +759,12 @@ function E.func_IsComplete(id)
 end
 ----------------------------------------------------------------
 local IsOnQuest = IsOnQuest or C_QuestLog.IsOnQuest
-function E.func_IsOnQuest(id)
+function E.func_IsOnQuest(questID)
+	if not questID or type(questID) ~= "number" then
+		return false
+	end
 	if IsOnQuest then
-		return IsOnQuest(id)
+		return IsOnQuest(questID)
 	end
 end
 ----------------------------------------------------------------
@@ -560,11 +775,13 @@ function E.func_GetQuestObjectives(id)
 	end
 end
 ----------------------------------------------------------------
-local GetInfo = GetInfo or C_QuestLog.GetInfo
+local GetInfo = C_QuestLog and C_QuestLog.GetInfo or GetInfo
 function E.func_GetInfo(id)
+	local info = {}
 	if GetInfo then
-		return GetInfo(id)
+		info = GetInfo(id)
 	end
+	return info
 end
 ----------------------------------------------------------------
 local IsAccountQuest = IsAccountQuest or C_QuestLog.IsAccountQuest
@@ -641,6 +858,59 @@ function E.func_GetMaxRenownLevel(id)
 end
 ----------------------------------------------------------------
 -- C_GossipInfo ------------------------------------------------
+----------------------------------------------------------------
+local SelectAvailableQuest = C_GossipInfo and C_GossipInfo.SelectAvailableQuest or SelectAvailableQuest
+function E.func_SelectAvailableQuest(questID)
+	if SelectAvailableQuest then
+		SelectAvailableQuest(questID)
+	end
+end
+----------------------------------------------------------------
+local GetAvailableQuests = C_GossipInfo and C_GossipInfo.GetAvailableQuests or GetAvailableQuests
+function E.func_GetAvailableQuests_INFO()
+	local info = {}
+	if GetAvailableQuests then
+		info = GetAvailableQuests()
+	end
+	return info
+end
+----------------------------------------------------------------
+local GetActiveQuests = C_GossipInfo and C_GossipInfo.GetActiveQuests or GetActiveQuests
+function E.func_GetActiveQuests_INFO()
+	local info = {}
+	if GetActiveQuests then
+		info = GetActiveQuests()
+	end
+	return info
+end
+----------------------------------------------------------------
+local GetNumActiveQuests = C_GossipInfo and C_GossipInfo.GetNumActiveQuests or GetNumActiveQuests
+function E.func_GetNumActiveQuests()
+	local result = 0
+	if GetNumActiveQuests then
+		result = GetNumActiveQuests()
+	end
+	return result
+end
+----------------------------------------------------------------
+local GetNumAvailableQuests = C_GossipInfo and C_GossipInfo.GetNumAvailableQuests or GetNumAvailableQuests
+function E.func_GetNumAvailableQuests()
+	local result = 0
+	if GetNumAvailableQuests then
+		result = GetNumAvailableQuests()
+	end
+	return result
+end
+----------------------------------------------------------------
+function E.func_NumActiveQuests()
+	local NumActiveQuests = 0
+	if E.func_GetNumActiveQuests() > 0 then
+		NumActiveQuests = E.func_GetNumActiveQuests()
+	-- elseif E.func_GetActiveQuests_INFO() > 0 then
+	-- 	NumActiveQuests = E.func_GetActiveQuests_INFO()
+	end
+	return NumActiveQuests
+end
 ----------------------------------------------------------------
 local GetFriendshipReputationRanks = GetFriendshipReputationRanks or C_GossipInfo.GetFriendshipReputationRanks
 function E.func_GetFriendshipReputationRanks(id)
@@ -922,14 +1192,14 @@ end
 local GetBestMapForUnit = GetBestMapForUnit or C_Map.GetBestMapForUnit
 function E.func_GetBestMapForUnit(unit)
 	if GetBestMapForUnit then
-		return GetBestMapForUnit(unit or "player")
+		return GetBestMapForUnit(unit or "PLAYER")
 	end
 end
 ----------------------------------------------------------------
 local GetPlayerMapPosition = GetPlayerMapPosition or C_Map.GetPlayerMapPosition
 function E.func_GetPlayerMapPosition(mapID, unit)
 	if GetPlayerMapPosition then
-		return GetPlayerMapPosition(mapID, unit or "player")
+		return GetPlayerMapPosition(mapID, unit or "PLAYER")
 	end
 end
 ----------------------------------------------------------------

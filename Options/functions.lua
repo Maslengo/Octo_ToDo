@@ -240,7 +240,7 @@ function E.func_Options_CreateColorSwatch(category, variableKey, variableTbl, na
 				if tooltipText then
 					swatch:SetScript("OnEnter", function()
 						GameTooltip:SetOwner(swatch, "ANCHOR_RIGHT")
-						GameTooltip:SetText(tooltipText, nil, nil, nil, nil, true)
+						GameTooltip:SetText(tooltipText, 1, 1, 1, nil, true)
 						GameTooltip:Show()
 					end)
 					swatch:SetScript("OnLeave", function()
@@ -321,8 +321,10 @@ end
 ----------------------------------------------------------------
 function E.func_Options_CreateDropdown_FontStyle(category, layout)
 	local variable = E.func_GenerateID()
-	local variableTbl = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang]
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	local variableTbl = settingsProfile.FontOption[E.curLocaleLang]
 	local variableKey = "Config_FontStyle"
+	local defaultValue = E.DefaultFont
 	local function GetValue()
 		return variableTbl[variableKey] or defaultValue
 	end
@@ -331,7 +333,6 @@ function E.func_Options_CreateDropdown_FontStyle(category, layout)
 		E.func_UpdateFont()
 	end
 	local name = L["Font"]
-	local defaultValue = E.DefaultFont
 	local fontsList = LibSharedMedia:List("font")
 	local tooltipText = E.func_defaultValue_tooltip(defaultValue)
 	if E.interfaceVersion > 120000 then

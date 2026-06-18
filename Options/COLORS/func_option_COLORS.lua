@@ -20,20 +20,20 @@ function E.func_option_COLORS(width, tabName)
 				values = function()
 					local t = {}
 					local names = {}
-					for name in pairs(Octo_profileColors.profiles) do
+					for name in pairs(Octo_Todo_DB_Profiles.SETTINGS.profiles) do
 						names[#names + 1] = name
 					end
-					table.sort(names)
+					E.func_SortRecords(names)
 					for _, name in ipairs(names) do
 						t[name] = name
 					end
 					return t
 				end,
 				get = function()
-					return Octo_profileColors.Current_profile
+					return Octo_Todo_DB_Profiles.SETTINGS.CURRENT
 				end,
 				set = function(_, value)
-					Octo_profileColors.Current_profile = value
+					Octo_Todo_DB_Profiles.SETTINGS.CURRENT = value
 					E.func_UpdateGlobals()
 				end,
 				width = width,
@@ -46,8 +46,8 @@ function E.func_option_COLORS(width, tabName)
 				confirm = true,
 				confirmText = L["Are you sure?"],
 				func = function()
-					wipe(Octo_profileColors)
-					E.init_Octo_profileColors()
+					wipe(Octo_Todo_DB_Profiles.SETTINGS)
+					E.init_Octo_Todo_DB_Profiles()
 					E.func_UpdateGlobals()
 					return
 				end,

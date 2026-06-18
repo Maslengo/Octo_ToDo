@@ -3,6 +3,9 @@ local EventFrame = CreateFrame("FRAME")
 local funcName = GlobalAddonName.."WTF"
 local L = E.L
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:func_CacheGameData()
 	----------------------------------------------------------------
 	-- E.DEBUG_START()
@@ -111,39 +114,25 @@ function EventFrame:func_CacheGameData()
 	E.UniversalQuestMap = {}
 	E.ALL_UniversalQuests = {}
 	-- заранее построенный lookup
-	for _, componentFunc in next, (E.Components) do
-		local _, OctoTables_DataOtrisovka = componentFunc()
-		for _, categoryData in next, (OctoTables_DataOtrisovka) do
-			for dataType, dataEntries in next, (categoryData) do
-				if dataType == "UniversalQuests" then
-					for _, data in next, (dataEntries) do
-						if data.quests and data.reset then
-							local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-							data.questKey = questKey -- ← ВОТ ЭТО ГЛАВНОЕ
-							table.insert(E.ALL_UniversalQuests, data)
-							-- local questKey = data.questKey
-							E.UniversalQuestMap[questKey] = data
-						end
-					end
-				end
-			end
-		end
+	for _, categoryData in next, (E.OctoTables_DataOtrisovka) do
+	    for dataType, dataEntries in next, (categoryData) do
+	        if dataType == "UniversalQuests" then
+	            for _, data in next, (dataEntries) do
+	                if (data.quests or data.questpools) and data.reset then
+	                    local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+	                    data.questKey = questKey
+	                    table.insert(E.ALL_UniversalQuests, data)
+	                    E.UniversalQuestMap[questKey] = data
+	                end
+	            end
+	        end
+	    end
 	end
 	-- opde(E.UniversalQuestMap)
-	-- for categoryKey, categoryData in next, (E.OctoTables_DataOtrisovka) do
-	-- for dataType, dataEntries in next, (categoryData) do
-	--  E.DataProvider_Otrisovka[categoryKey] = E.DataProvider_Otrisovka[categoryKey] or {}
-	--  E.DataProvider_Otrisovka[categoryKey][dataType] = E.DataProvider_Otrisovka[categoryKey][dataType] or {}
-	--  if dataType ~= "UniversalQuests" then
-	--   func_ProcessStandardData_profileKeys(categoryKey, dataType, dataEntries, Current_profile, defaultProfile)
-	--  else
-	--   func_ProcessUniversalQuests_profileKeys(categoryKey, dataEntries, Current_profile, defaultProfile)
-	--  end
-	-- end
-	-- end
-	-- E.UniversalQuestMap[id] = data
-	-- E.ALL_UniversalQuests
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_RemoveDuplicateCharacters()
 	if not Octo_ToDo_DB_Levels then return end
 	local currentGUID = E.curGUID
@@ -151,8 +140,8 @@ function E.func_RemoveDuplicateCharacters()
 	local currentRealm = E.func_GetPlayerRealm()
 	local foundDuplicates = false
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local pd = CharInfo and CharInfo.PlayerData
-		local cm = CharInfo and CharInfo.MASLENGO
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
 		if pd then
 			if pd.Name and pd.curServer and
 			pd.Name == currentName and
@@ -166,8 +155,8 @@ function E.func_RemoveDuplicateCharacters()
 	end
 	if foundDuplicates then
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			local pd = CharInfo and CharInfo.PlayerData
-			local cm = CharInfo and CharInfo.MASLENGO
+			local pd = CharInfo.PlayerData
+			local cm = CharInfo.MASLENGO
 			if pd then
 				if pd.Name and pd.curServer and
 				pd.Name == currentName and
@@ -183,14 +172,17 @@ function E.func_RemoveDuplicateCharacters()
 		end
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:func_DatabaseClear()
 	local enable = false
 	if not enable then return end
 	if Octo_ToDo_DB_Levels then
 		E.func_RemoveZeroValues(Octo_ToDo_DB_Levels, "^0/")
 		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-			if CharInfo.MASLENGO and CharInfo.MASLENGO.CurrencyID_Total then
-				E.func_RemoveZeroValues(CharInfo.MASLENGO.CurrencyID_Total, "anynumber")
+			if CharInfo and CharInfo.MASLENGO and CharInfo.MASLENGO.CurrencyID_Total then
+				E.func_RemoveZeroValues(E.cm.CurrencyID_Total, "anynumber")
 			end
 			if string.find(CharInfo.PlayerData.Name, "^WTF:") then
 				E.func_PrintMessage("Remove: ", CharInfo.PlayerData.Name)
@@ -217,25 +209,25 @@ function EventFrame:func_DatabaseClear()
 			"CharInfo",
 		}
 	}
-	E.func_CleanDeepTable(Octo_profileColors, rules)
-	E.func_CleanDeepTable(Octo_profileKeys, rules)
+	E.func_CleanDeepTable(Octo_Todo_DB_Profiles, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_Levels, rules)
-	E.func_CleanDeepTable(Octo_ToDo_DB_Vars, rules)
 	E.func_CleanDeepTable(Octo_Cache_DB, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_AccountData, rules)
-	-- E.func_CleanDeepTable(Octo_ToDo_DB_Options, rules)
 	E.func_CleanDeepTable(Octo_Achievements_DB, rules)
 	E.func_CleanDeepTable(Octo_DevTool_DB, rules)
 	E.func_CleanDeepTable(Octo_Moduls_DB, rules)
 	E.func_CleanDeepTable(Octo_QuestsChanged_DB, rules)
 	E.func_CleanDeepTable(Octo_TalentsFrameArt_DB, rules)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.init_Octo_ToDo_DB_Levels()
 	local curGUID = UnitGUID("player")
 	if not curGUID then return end
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	Octo_ToDo_DB_Levels[curGUID] = Octo_ToDo_DB_Levels[curGUID] or {}
-	local serverTime = GetServerTime()
+	local ServerTime = E.TIME_SERVER()
 	local currentDate = date("%d.%m.%Y")
 	local currentTime = date("%H:%M")
 	local currentDateTime = date("%d.%m.%Y %H:%M:%S")
@@ -249,15 +241,14 @@ function E.init_Octo_ToDo_DB_Levels()
 		className = E.className,
 		classFilename = E.classFilename,
 		CurrentRegion = GetCurrentRegion(),
-		CurrentRegionName = E.CurrentRegionName,
+		REGION_NAME = E.CURRENT_REGION_NAME,
 		curServer = E.func_GetPlayerRealm(),
 		curServerShort = E.curServerShort, -- E.func_GetRealmShortName(GetRealmName())
-		Faction = "Neutral",
+		FACTION = E.FACTION_CURRENT,
 		GUID = curGUID,
 		guildName = "",
 		guildRankName = "",
 		interfaceVersion = E.interfaceVersion,
-		CONFIG_SHOW_PLAYER = true,
 		loginDate = currentDateTime,
 		loginDay = currentDate,
 		loginHour = currentTime,
@@ -306,9 +297,9 @@ function E.init_Octo_ToDo_DB_Levels()
 		Chromie_UnitChromieTimeID = 0,
 		Chromie_name = "",
 		Chromie_canEnter = false,
-		tmstp_Daily = 0,
-		tmstp_Weekly = 0,
-		time = GetServerTime(),
+		-- tmstp_Daily = 0,
+		-- tmstp_Weekly = 0,
+		time = E.TIME_SERVER(),
 	}
 	local MASLENGO_DEFAULTS = {
 		Currency = {},
@@ -361,7 +352,7 @@ function E.init_Octo_ToDo_DB_Levels()
 		for k, v in next, (GARRISON_default) do
 			E.func_InitField(cm.GARRISON, k, v)
 		end
-		pd.time = pd.time or pd.tmstp_Daily or serverTime
+		pd.time = pd.time or pd.tmstp_Daily or ServerTime
 		pd.MoneyOnLogin = pd.MoneyOnLogin or pd.Money
 		pd.MoneyOnDaily = pd.MoneyOnDaily or pd.Money
 		pd.MoneyOnWeekly = pd.MoneyOnWeekly or pd.Money
@@ -374,277 +365,98 @@ function E.init_Octo_ToDo_DB_Levels()
 			cm.GreatVault[i] = cm.GreatVault[i] or {}
 		end
 	end
+	E.cm = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
+	E.pd = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.init_Octo_ToDo_DB_AccountData()
 	Octo_ToDo_DB_AccountData = Octo_ToDo_DB_AccountData or {}
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME] or {}
 	Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank = Octo_ToDo_DB_AccountData[E.CURRENT_REGION_NAME].AccountBank or {}
 end
-function E.init_Octo_ToDo_DB_Options()
-	Octo_ToDo_DB_Options = Octo_ToDo_DB_Options or {}
-
-	-- Валидные ключи
-	local validKeys = {}
-	for vars in next, E.SORT_OPTIONS do
-		validKeys[vars] = true
-	end
-
-	-- Очистка невалидных ключей в таблице
-	local function cleanInvalidKeys(tbl)
-		if not tbl then return end
-		for key in pairs(tbl) do
-			if not validKeys[key] then
-				tbl[key] = nil
-			end
-		end
-	end
-
-	-- 1. sort_reverse
-	cleanInvalidKeys(Octo_ToDo_DB_Options.sort_reverse)
-	for vars, opt in next, E.SORT_OPTIONS do
-		E.func_InitField(Octo_ToDo_DB_Options, "sort_reverse", {})
-		E.func_InitField(Octo_ToDo_DB_Options.sort_reverse, vars, opt.reverse)
-	end
-
-	-- 2. sort_order (список) - НОВАЯ ЛОГИКА с числовым defaultValue
-	if not Octo_ToDo_DB_Options.sort_order then
-		Octo_ToDo_DB_Options.sort_order = {}
-		-- Собираем все опции с числовым defaultValue
-		local orderMap = {}
-		for vars, opt in next, E.SORT_OPTIONS do
-			if opt.defaultValue and type(opt.defaultValue) == "number" and opt.defaultValue > 0 then
-				orderMap[opt.defaultValue] = vars
-			end
-		end
-		-- Вставляем в порядке возрастания ключей
-		for i = 1, math.max(table.maxn(orderMap) or 0) do
-			if orderMap[i] then
-				tinsert(Octo_ToDo_DB_Options.sort_order, orderMap[i])
-			end
-		end
-	else
-		-- Фильтрация и дедупликация существующего порядка
-		local cleaned = {}
-		local seen = {}
-		for _, key in ipairs(Octo_ToDo_DB_Options.sort_order) do
-			if validKeys[key] and not seen[key] then
-				seen[key] = true
-				tinsert(cleaned, key)
-			end
-		end
-
-		-- Добавляем недостающие опции с числовым defaultValue
-		local orderMap = {}
-		for vars, opt in next, E.SORT_OPTIONS do
-			if opt.defaultValue and type(opt.defaultValue) == "number" and opt.defaultValue > 0 and not seen[vars] then
-				orderMap[opt.defaultValue] = vars
-			end
-		end
-		-- Вставляем новые в порядке их defaultOrder
-		for i = 1, math.max(table.maxn(orderMap) or 0) do
-			if orderMap[i] then
-				tinsert(cleaned, orderMap[i])
-			end
-		end
-
-		Octo_ToDo_DB_Options.sort_order = cleaned
-	end
-
-	-- 3. sort_order_ACTIVED
-	cleanInvalidKeys(Octo_ToDo_DB_Options.sort_order_ACTIVED)
-	for vars, opt in next, E.SORT_OPTIONS do
-		E.func_InitField(Octo_ToDo_DB_Options, "sort_order_ACTIVED", {})
-		-- Включены только те, у кого есть числовой defaultValue
-		local isActive = opt.defaultValue and type(opt.defaultValue) == "number" and opt.defaultValue > 0
-		E.func_InitField(Octo_ToDo_DB_Options.sort_order_ACTIVED, vars, isActive)
-	end
-	----------------------------------------------------------------
-	-- 4. GUID_order -----------------------------------------------
-	----------------------------------------------------------------
-	E.func_InitField(Octo_ToDo_DB_Options, "GUID_order", {})
-
-	-- Собираем все текущие GUID из Octo_ToDo_DB_Levels
-	local currentGuids = {}
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
-	    currentGuids[GUID] = true
-	end
-
-	-- Удаляем несуществующих персонажей из порядка
-	for i = #Octo_ToDo_DB_Options.GUID_order, 1, -1 do
-	    local GUID = Octo_ToDo_DB_Options.GUID_order[i]
-	    if not currentGuids[GUID] then
-	        table.remove(Octo_ToDo_DB_Options.GUID_order, i)
-	    else
-	        currentGuids[GUID] = nil -- помечаем как уже существующий в порядке
-	    end
-	end
-
-	-- Добавляем новых персонажей в конец
-	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
-	    if currentGuids[GUID] then -- если GUID не был в порядке (остался в таблице)
-	        tinsert(Octo_ToDo_DB_Options.GUID_order, GUID)
-	    end
-	end
-
-	-- Если всё еще пусто (первый запуск)
-	if #Octo_ToDo_DB_Options.GUID_order == 0 then
-	    for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
-	        tinsert(Octo_ToDo_DB_Options.GUID_order, GUID)
-	    end
-	end
-	----------------------------------------------------------------
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER = false end
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION = false end
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN = 1 end
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX = 90 end
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION = false end
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = false end
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST == nil then Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST = false end
-	if Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM == nil then Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM = false end
-	----------------------------------------------------------------
-	----------------------------------------------------------------
-end
-
-E.Octo_ToDo_DB_Vars_DEFAULTS = {
-	Config_numberFormatMode = 1,
-	GlobalDBVersion = 0,
-		CONFIG_ADVANCED_TOOLTIP_MYTHICKEYSTONE = true,
-		CONFIG_ADVANCED_TOOLTIP_GREATVAULT = true,
-
-
-		CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER = false,
-		CONFIG_HOVER_SHOW_DURATION = 1,
-		CONFIG_FRAME_ALPHA_ON_HOVER = 80,
-		-- CONFIG_SHOW_LEVEL_MIN = 1,
-		-- CONFIG_SHOW_LEVEL_MAX = 90,
-		-- CONFIG_SHOW_ONLY_CURRENT_SERVER = false,
-		-- CONFIG_SHOW_ONLY_CURRENT_FACTION = false,
-		-- CONFIG_SHOW_ONLY_CURRENT_REGION = false,
-		-- CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = false,
-		-- CONFIG_SHOW_ALWAYS_AS_FIRST = false,
-		-- CONFIG_SORTING_CUSTOM = false,
-
-		Config_DebugID_ALL = false, -- /run Octo_ToDo_DB_Vars.Config_DebugID_ALL = true
-		Config_ADDON_HEIGHT = 20,
-		Config_ClampedToScreen = false,
-		Config_MountsInTooltip = true,
-		CONFIG_SPAM_TIME = 2,
-		CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,
-		Currencies = true,
-		CONFIG_RAIDS_ICON = true,
-		CONFIG_RAIDS_EXTRA_ICON = false,
-		CONFIG_RAIDS_DIFFICULTIES_ALL = true,
-		CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS = true,
-		Config_ShowAllDifficulties = true,
-		Config_DifficultyAbbreviation = true,
-		CONFIG_ITEMS_COLOREDNAME = true,
-		CONFIG_ITEMS_ICON = true,
-		CONFIG_CURRENCY_ICON = true,
-		CONFIG_CURRENCY_WARBAND_ICON = true,
-		CONFIG_CURRENCY_COLOREDNAME = true,
-		CONFIG_CURRENCY_SHOW_BRACKETS = false,
-		CONFIG_CURRENCY_COLOR_BRACKETS = E.COLOR_ADDON_LEFT:gsub("^|cff", "80"),
-		CONFIG_CURRENCY_SHOW_REMAINING = true,
-		CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_ADDON_RIGHT:gsub("^|cff", "80"),
-		CONFIG_CURRENCY_SHOW_ZERO = false,
-		CONFIG_CURRENCY_COLOR_ZERO = E.COLOR_GRAY:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_ICON = false,
-		CONFIG_REPUTATION_EXTRA_ICON = true,
-		CONFIG_REPUTATION_FACTION_ICON = true,
-		CONFIG_REPUTATION_WARBAND_ICON = true,
-		CONFIG_REPUTATION_ZERO = false,
-		CONFIG_REPUTATION_COLOREDNAME = false,
-		CONFIG_REPUTATION_VALUE_PARAGON = true,
-		CONFIG_REPUTATION_PERCENTAGE_PARAGON = false,
-		CONFIG_REPUTATION_REACTION_PARAGON = false,
-		CONFIG_REPUTATION_STANDINGS_PARAGON = false,
-		CONFIG_REPUTATION_PARAGON_COLOR = E.COLOR_REPPARAGON:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_VALUE_MAJOR = true,
-		CONFIG_REPUTATION_PERCENTAGE_MAJOR = false,
-		CONFIG_REPUTATION_REACTION_MAJOR = true,
-		CONFIG_REPUTATION_STANDINGS_MAJOR = false,
-		CONFIG_REPUTATION_MAJOR_COLOR = E.COLOR_REPMAJOR:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_VALUE_FRIEND = true,
-		CONFIG_REPUTATION_PERCENTAGE_FRIEND = false,
-		CONFIG_REPUTATION_REACTION_FRIEND = true,
-		CONFIG_REPUTATION_STANDINGS_FRIEND = false,
-		CONFIG_REPUTATION_FRIEND_COLOR = E.COLOR_REPFRIEND:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_VALUE_SIMPLE = true,
-		CONFIG_REPUTATION_PERCENTAGE_SIMPLE = false,
-		CONFIG_REPUTATION_REACTION_SIMPLE = false,
-		CONFIG_REPUTATION_STANDINGS_SIMPLE = false,
-		CONFIG_REPUTATION_SIMPLE_COLOR_1 = E.COLOR_REPSIMPLE_1:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_2 = E.COLOR_REPSIMPLE_2:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_3 = E.COLOR_REPSIMPLE_3:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_4 = E.COLOR_REPSIMPLE_4:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_5 = E.COLOR_REPSIMPLE_5:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_6 = E.COLOR_REPSIMPLE_6:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_7 = E.COLOR_REPSIMPLE_7:gsub("^|cff", "80"),
-		CONFIG_REPUTATION_SIMPLE_COLOR_8 = E.COLOR_REPSIMPLE_8:gsub("^|cff", "80"),
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local fields = {
+	"SETTINGS",		-- E.SETTINGS_CURRENT
+	"KEYS",			-- E.KEYS_CURRENT
+	"CHARACTERS",	-- E.CHARACTERS_CURRENT
 }
-function E.init_Octo_ToDo_DB_Vars()
-	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
-	for k, v in next, (E.Octo_ToDo_DB_Vars_DEFAULTS) do
-		E.func_InitField(Octo_ToDo_DB_Vars, k, v)
+----------------------------------------------------------------
+function E.func_UpdateGlobalNSforProfiles()
+	Octo_Todo_DB_Profiles = Octo_Todo_DB_Profiles or {}
+	for _, field in ipairs(fields) do
+		Octo_Todo_DB_Profiles[field] = Octo_Todo_DB_Profiles[field] or {}
+		Octo_Todo_DB_Profiles[field].CURRENT = Octo_Todo_DB_Profiles[field].CURRENT or E.TEXT_ENG_DEFAULT
+		E[field .. "_CURRENT"] = Octo_Todo_DB_Profiles[field].CURRENT
 	end
-	--------------------------------------------------------------------------------
-	--------------------------------------------------------------------------------
-	--------------------------------------------------------------------------------
-	--------------------------------------------------------------------------------
-	-- opde(Octo_ToDo_DB_Vars)
-	Octo_ToDo_DB_Vars.FontOption = Octo_ToDo_DB_Vars.FontOption or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang] or {}
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle or E.DefaultFont
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize or 11
-	Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags or "OUTLINE"
 end
-function E.init_Octo_profileColors()
-	Octo_profileColors = Octo_profileColors or {}
-	local db = Octo_profileColors
-	db.profiles = db.profiles or {}
-	db.Current_profile = db.Current_profile or E.TEXT_DEFAULT
-	E.func_CreateNew_profileColors(E.TEXT_DEFAULT)
-	if db and db.profiles then
-		for profileName in next, (db.profiles) do
-			if profileName ~= E.TEXT_DEFAULT then
-				E.func_CreateNew_profileColors(E.TEXT_DEFAULT)
+
+
+
+function E.func_INIT_Components()
+	-- E.DEBUG_START()
+	----------------------------------------------------------------
+	E.OctoTables_Vibor = {}
+	E.OctoTables_DataOtrisovka = {}
+	----------------------------------------------------------------
+	for i, componentFunc in next, (E.Components) do
+		local OctoTables_Vibor, OctoTables_DataOtrisovka = componentFunc()
+		for key, value in next, (OctoTables_Vibor) do
+			if E.OctoTables_Vibor[key] == nil then
+				E.OctoTables_Vibor[key] = value
+			end
+		end
+		for key, value in next, (OctoTables_DataOtrisovka) do
+			if E.OctoTables_DataOtrisovka[key] == nil then
+				E.OctoTables_DataOtrisovka[key] = value
 			end
 		end
 	end
-	E.func_CheckALL_profileColors()
-	-- C_Timer.After(1, function()
-	-- opde(db)
-	-- end)
-	E.PROFTBL = db.profiles[db.Current_profile]
+	----------------------------------------------------------------
+	-- E.DEBUG_STOP("func_INIT_Components")
 end
-function E.init_Octo_profileKeys()
-	Octo_profileKeys = Octo_profileKeys or {}
-	local db = Octo_profileKeys
-	E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
-	if Octo_profileKeys and Octo_profileKeys.profiles then
-		for profileName in next, (Octo_profileKeys.profiles) do
-			if profileName ~= E.TEXT_DEFAULT then
-				E.func_CreateNew_profileKeys(profileName)
-			end
+
+----------------------------------------------------------------
+function E.init_Octo_Todo_DB_Profiles()
+	Octo_Todo_DB_Profiles = Octo_Todo_DB_Profiles or {}
+	----------------------------------------------------------------
+	for _, field in ipairs(fields) do
+		Octo_Todo_DB_Profiles[field] = Octo_Todo_DB_Profiles[field] or {}
+		Octo_Todo_DB_Profiles[field].CURRENT = Octo_Todo_DB_Profiles[field].CURRENT or E.TEXT_ENG_DEFAULT
+		Octo_Todo_DB_Profiles[field].profiles = Octo_Todo_DB_Profiles[field].profiles or {}
+		Octo_Todo_DB_Profiles[field].profiles[E.TEXT_ENG_DEFAULT] = Octo_Todo_DB_Profiles[field].profiles[E.TEXT_ENG_DEFAULT] or {}
+		for profileName in next, (Octo_Todo_DB_Profiles[field].profiles) do
+			E.func_CreateProfile(field, profileName, true)
 		end
 	end
-	if not Octo_ToDo_DB_Levels then return end
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local pd = CharInfo and CharInfo.PlayerData
-		if pd and pd.Name and pd.curServer then
-			local key = pd.Name .. " - " .. pd.curServer
-			db.profileKeys[key] = db.profileKeys[key] or E.TEXT_DEFAULT
-		end
-	end
+	----------------------------------------------------------------
+	E.func_UpdateGlobalNSforProfiles()
+	----------------------------------------------------------------
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:func_Daily_Reset()
-	local serverTime = GetServerTime()
+	local ServerTime = E.TIME_SERVER()
 	E.Reset_JournalInstance()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
-		if pd.tmstp_Daily and pd.tmstp_Daily < serverTime then
-			pd.tmstp_Daily = pd.tmstp_Daily + 86400
+		if pd.tmstp_Daily and pd.tmstp_Daily < ServerTime then
+			-- pd.tmstp_Daily = pd.tmstp_Daily + 86400
+			pd.tmstp_Daily = nil
 			pd.needResetDaily = true
 			for _, data in next, (E.ALL_UniversalQuests) do
 				if data.reset == "Daily" then
@@ -660,14 +472,18 @@ function EventFrame:func_Daily_Reset()
 		end
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:func_Weekly_Reset()
-	local serverTime = GetServerTime()
+	local ServerTime = E.TIME_SERVER()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local pd = CharInfo and CharInfo.PlayerData
-		local cm = CharInfo and CharInfo.MASLENGO
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
 		if pd and cm then
-			if pd.tmstp_Weekly and pd.tmstp_Weekly < serverTime then
-				pd.tmstp_Weekly = pd.tmstp_Weekly + 86400*7
+			if pd.tmstp_Weekly and pd.tmstp_Weekly < ServerTime then
+				-- pd.tmstp_Weekly = pd.tmstp_Weekly + (86400 * 7)
+				pd.tmstp_Weekly = nil
 				pd.needResetWeekly = true
 				if cm.GreatVault and cm.GreatVault.NextWeekReward then
 					pd.HasAvailableRewards = true
@@ -698,13 +514,16 @@ function EventFrame:func_Weekly_Reset()
 		end
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:func_Month_Reset()
 	local tmstp_Month = E.func_GetNextResetTime(365/12)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
-		local pd = CharInfo and CharInfo.PlayerData
-		local cm = CharInfo and CharInfo.MASLENGO
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
 		if pd and cm then
-			if (pd.tmstp_Month or 0) < GetServerTime() then
+			if (pd.tmstp_Month or 0) < E.TIME_SERVER() then
 				pd.tmstp_Month = tmstp_Month
 				pd.needResetMonth = true
 				for _, data in next, (E.ALL_UniversalQuests) do
@@ -718,9 +537,15 @@ function EventFrame:func_Month_Reset()
 		end
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.Init_Octo_Cache_DB()
 	Octo_Cache_DB = Octo_Cache_DB or {}
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 	["CONFIG_DEBUG"] = {
 		{
@@ -775,20 +600,20 @@ E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 		},
 		{
 			name = L["FUNCTION_TIMERS"],
-			variableKey = "FUNCTION_TIMERS",
+			variableKey = "CONFIG_DEBUG_FUNCTION_TIMERS",
 			defaultValue = false,
 		}
 	},
 	-- ["Quests Changed"] = {
 	-- {
-	--  name = L["QC_VIGNETTES"],
-	--  variableKey = "CONFIG_DEBUG_QC_VIGNETTES",
-	--  defaultValue = false,
+	-- name = L["QC_VIGNETTES"],
+	-- variableKey = "CONFIG_DEBUG_QC_VIGNETTES",
+	-- defaultValue = false,
 	-- },
 	-- {
-	--  name = L["QC_QUESTS"],
-	--  variableKey = "CONFIG_DEBUG_QC_QUESTS",
-	--  defaultValue = false,
+	-- name = L["QC_QUESTS"],
+	-- variableKey = "CONFIG_DEBUG_QC_QUESTS",
+	-- defaultValue = false,
 	-- },
 	-- },
 	["EDITBOX"] = {
@@ -817,6 +642,9 @@ E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 	},
 	-- CONFIG_DEBUG_EDITBOX_EDITORTHEME = "Twilight", -- for name in next, E.editorThemes do
 }
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.init_Octo_DevTool_DB()
 	Octo_DevTool_DB = Octo_DevTool_DB or {}
 	-- EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
@@ -829,18 +657,60 @@ function E.init_Octo_DevTool_DB()
 		end
 	end
 end
-function E.WTF_func_CheckAll()
-	E.init_Octo_DevTool_DB()
-	E.init_Octo_profileColors()
-	E.init_Octo_profileKeys()
-	E.func_RemoveDuplicateCharacters()
-	E.init_Octo_ToDo_DB_Levels()
-	E.init_Octo_ToDo_DB_Vars()
-	E.Init_Octo_Cache_DB()
-	E.init_Octo_ToDo_DB_AccountData()
-	E.init_Octo_ToDo_DB_Options()
-	E.func_setOldChanges()
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E.CleanupAllCallings()
+	local ServerTime = E.TIME_SERVER()
+	-- 1. Глобальный кеш: все регионы → ковенанты → квесты
+	if Octo_ToDo_DB_AccountData.Callings then
+		for region, covenants in next,(Octo_ToDo_DB_AccountData.Callings) do
+			for covID, quests in next,(covenants) do
+				for questID, data in next,(quests) do
+					if data.endTime and data.endTime < ServerTime then
+						quests[questID] = nil
+					end
+				end
+				if not next(quests) then
+					covenants[covID] = nil
+				end
+			end
+			if not next(covenants) then
+				Octo_ToDo_DB_AccountData.Callings[region] = nil
+			end
+		end
+	end
+	-- 2. Данные всех персонажей (MASLENGO.Callings)
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		if type(CharInfo) == "table" and CharInfo.MASLENGO then
+			local cm = CharInfo.MASLENGO
+			local callings = cm.Callings
+			if callings then
+				for region, covenants in pairs(callings) do
+					for covID, quests in pairs(covenants) do
+						for questID, data in pairs(quests) do
+							if data.endTime and data.endTime < ServerTime then
+								quests[questID] = nil
+							end
+						end
+						if not next(quests) then
+							covenants[covID] = nil
+						end
+					end
+					if not next(covenants) then
+						callings[region] = nil
+					end
+				end
+				if not next(callings) then
+					E.cm.Callings = nil
+				end
+			end
+		end
+	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:func_ScheduleResetTimer()
 	local seconds = E.func_GetSecondsUntilDailyReset()
 	if seconds and seconds > 0 then
@@ -857,6 +727,9 @@ function EventFrame:func_ScheduleResetTimer()
 		end)
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local MyEventsTable = {
 	"ADDON_LOADED",
 	"VARIABLES_LOADED",
@@ -870,55 +743,75 @@ function EventFrame:ADDON_LOADED(addonName)
 	self.ADDON_LOADED = nil
 	OctpToDo_inspectScantip = CreateFrame("GameTooltip", "OctoScanningTooltipFIRST", nil, "GameTooltipTemplate")
 	OctpToDo_inspectScantip:SetOwner(UIParent, "ANCHOR_NONE")
-	-- E.Init_Octo_Cache_DB()
-	-- E.init_Octo_profileKeys()
-	-- E.init_Octo_profileColors()
-	-- E.func_UpdateGlobals()
 end
-function EventFrame:VARIABLES_LOADED()
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E.WTF_func_CheckAll()
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	EventFrame:func_DatabaseClear()
 	E.init_Octo_DevTool_DB()
-	E.init_Octo_profileColors()
-	E.init_Octo_profileKeys()
+	E.init_Octo_Todo_DB_Profiles()
 	E.func_RemoveDuplicateCharacters()
 	E.init_Octo_ToDo_DB_Levels()
-	E.init_Octo_ToDo_DB_Vars()
 	E.Init_Octo_Cache_DB()
 	E.init_Octo_ToDo_DB_AccountData()
-	E.init_Octo_ToDo_DB_Options()
 	E.func_setOldChanges()
 	E.func_UpdateGlobals()
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function EventFrame:VARIABLES_LOADED()
+	E.func_INIT_Components() -- E.Components
+	E.WTF_func_CheckAll()
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
-	EventFrame:func_CacheGameData()
+
+	EventFrame:func_CacheGameData() -- E.Components
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()
 	EventFrame:func_Daily_Reset()
 	EventFrame:func_Weekly_Reset()
 	EventFrame:func_Month_Reset()
+	E.CleanupAllCallings()
 	C_Timer.After(1, E.func_UpdateGlobals)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 local function Reset_JournalInstance()
-	local serverTime = GetServerTime()
+	local ServerTime = E.TIME_SERVER()
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
 		local cm = CharInfo.MASLENGO
-		for instanceID, v in next, (cm.journalInstance) do
-			if v then
-				for difficultyID, w in next, (v) do
-					if w and w.instanceReset and w.instanceReset < serverTime then
-						cm.journalInstance[instanceID][difficultyID] = nil
+		if cm.journalInstance then
+			for instanceID, v in next, (cm.journalInstance) do
+				if v then
+					for difficultyID, w in next, (v) do
+						if w and w.instanceReset and w.instanceReset < ServerTime then
+							cm.journalInstance[instanceID][difficultyID] = nil
+						end
 					end
 				end
 			end
 		end
 	end
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.Reset_JournalInstance()
 	E.func_SpamBlock(Reset_JournalInstance, true)
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:UPDATE_INSTANCE_INFO()
 	E.Reset_JournalInstance()
 	E.func_RequestUIUpdate("UPDATE_INSTANCE_INFO")
 end
+----------------------------------------------------------------

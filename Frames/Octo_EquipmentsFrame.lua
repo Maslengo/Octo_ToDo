@@ -1,17 +1,8 @@
 local GlobalAddonName, E = ...
 local L = E.L
-local INDENT_TEXT = 4
 local INDEND_SCROLL = 20
 local MIN_COLUMN_WIDTH = 30
--- local MAX_COLUMN_WIDTH = 306-20-30 -- (20 иконка) (30 2ойфрейм)
-local MAX_COLUMN_WIDTH = 276-20-30 -- (20 иконка) (30 2ойфрейм)
-local MAX_DISPLAY_LINES = 32
-local LINES_TOTAL = math.floor(math.floor(E.PHYSICAL_SCREEN_HEIGHT/E.GLOBAL_LINE_HEIGHT)*.7)
-if MAX_DISPLAY_LINES > LINES_TOTAL then
-	MAX_DISPLAY_LINES = LINES_TOTAL
-end
-local charR, charG, charB = 1, 1, 1
-local borderColorR, borderColorG, borderColorB, borderColorA = 0, 0, 0, 1
+local MAX_COLUMN_WIDTH = 276-20-30
 local EventFrame = CreateFrame("FRAME")
 local Octo_EquipmentsFrame = CreateFrame("BUTTON", "Octo_EquipmentsFrame", UIParent, "OctoBackdropTemplate")
 Octo_EquipmentsFrame:Hide()
@@ -39,7 +30,7 @@ local function CalculateMainFrameWidth(columnWidths)
 	return totalWidth
 end
 local function CalculateMainFrameHeight(totalLines)
-	local displayLines = math.min(totalLines, MAX_DISPLAY_LINES)
+	local displayLines = math.min(totalLines, E.MAX_DISPLAY_LINES)
 	if displayLines == 0 then displayLines = 1 end
 	return (E.GLOBAL_LINE_HEIGHT * displayLines) + (E.GLOBAL_LINE_HEIGHT*2), displayLines
 end
@@ -64,12 +55,10 @@ local function UpdateColumnPositionsAndSizes(frame, columnWidths)
 		accumulatedWidth = accumulatedWidth + columnWidth
 	end
 end
-function EventFrame:Create_NameHeader() -- InitializePoolFrame
-	----------------------------------------------------------------
+function EventFrame:Create_NameHeader()
 	NameHeader:SetPoint("TOPLEFT", Octo_EquipmentsFrame, "TOPLEFT")
 	NameHeader:SetPoint("TOPRIGHT", Octo_EquipmentsFrame, "TOPRIGHT")
 	NameHeader:SetHeight((E.GLOBAL_LINE_HEIGHT*2))
-	----------------------------------------------------------------
 	NameHeader.Nickname = NameHeader:CreateFontString()
 	NameHeader.Nickname:SetFontObject(OctoFont11)
 	NameHeader.Server = NameHeader:CreateFontString()
@@ -80,29 +69,11 @@ function EventFrame:Create_NameHeader() -- InitializePoolFrame
 	NameHeader.Mail:SetFontObject(OctoFont11)
 	NameHeader.ItemLevel = NameHeader:CreateFontString()
 	NameHeader.ItemLevel:SetFontObject(OctoFont11)
-	----------------------------------------------------------------
 	NameHeader.CharTexture = NameHeader:CreateTexture(nil, "BACKGROUND", nil, -3)
 	NameHeader.CharTexture:SetAllPoints()
 	NameHeader.CharTexture:SetTexture(E.TEXTURE_CHAR_PATH)
-	----------------------------------------------------------------
 end
 local func_OnAcquired do
-	local function Create_Icon(frame)
-		local icon = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
-		icon:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
-		icon:SetTexCoord(.10, .90, .10, .90) -- zoom 10%
-		icon:Hide()
-		return icon
-	end
-	local function Create_Text(frame, justifyH)
-		local text = frame:CreateFontString()
-		text:SetFontObject(OctoFont11)
-		text:SetJustifyV("MIDDLE")
-		-- text:SetTextColor(1, 1, 1, 1)
-		text:SetWordWrap(false)
-		text:SetJustifyH(justifyH or "LEFT")
-		return text
-	end
 	function func_OnAcquired(owner, frame, node, new)
 		if new then
 			frame.columnFrames = setmetatable({}, {
@@ -110,23 +81,16 @@ local func_OnAcquired do
 						if key then
 							local columnFrame = CreateFrame("BUTTON", "columnFrame"..key, frame, "OctoRectTemplate")
 							columnFrame:Hide()
-							columnFrame:SetHeight(E.GLOBAL_LINE_HEIGHT)
+							columnFrame:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
 							local colType = EventFrame.columnTypes[key]
 							if colType == "icon" then
-								columnFrame.type = "icon"
-								columnFrame.texture = Create_Icon(columnFrame)
-								columnFrame.texture:SetPoint("CENTER")
-								columnFrame:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
-							else
-								columnFrame.type = "text"
-								if key == 3 then
-									columnFrame.text = Create_Text(columnFrame, "CENTER")
-								else
-									columnFrame.text = Create_Text(columnFrame, "LEFT")
-								end
-								columnFrame.text:SetAllPoints()
-								columnFrame:SetWidth(MIN_COLUMN_WIDTH)
+								columnFrame.iconFrame, columnFrame.texture = E.CreateIconFrame(columnFrame)
+							elseif colType == "text" then
+								columnFrame.text = E.func_CreateStandardText(columnFrame, columnFrame)
 							end
+							columnFrame:SetScript("OnHide", function()
+									columnFrame:Hide()
+							end)
 							rawset(self, key, columnFrame)
 							return columnFrame
 						end
@@ -134,8 +98,10 @@ local func_OnAcquired do
 					end
 			})
 			E.func_Create_Highlight(frame, owner)
-			frame:SetScript("OnHide", function() frame.Highlight:Hide() end)
-			frame:SetScript("OnShow", function() frame.Highlight:Show() end)
+			if frame.Highlight then
+				frame:SetScript("OnHide", function() frame.Highlight:Hide() end)
+				frame:SetScript("OnShow", function() frame.Highlight:Show() end)
+			end
 		end
 	end
 end
@@ -156,7 +122,7 @@ function EventFrame:CalculateColumnWidths(rowData, columnMaxWidths)
 			dataWidth = E.GLOBAL_LINE_HEIGHT
 		elseif hasText then
 			local textToMeasure = rowData[textKey]
-			dataWidth = E.func_MeasureTextWidth(textToMeasure) + INDENT_TEXT * 2
+			dataWidth = E.func_MeasureTextWidth(textToMeasure) + E.INDENT_TEXT * 2
 		else
 			dataWidth = EventFrame.columnTypes[i] == "icon" and E.GLOBAL_LINE_HEIGHT or MIN_COLUMN_WIDTH
 		end
@@ -182,10 +148,10 @@ function EventFrame:Octo_Frame_init(frame, node)
 				local icon = frameData["column"..i.."Icon"]
 				if icon then
 					columnFrame.texture:SetTexture(icon)
-					columnFrame.texture:Show()
+					columnFrame.iconFrame:Show()
 					columnFrame:Show()
 				else
-					columnFrame.texture:Hide()
+					columnFrame.iconFrame:Hide()
 					columnFrame:Hide()
 				end
 			else
@@ -218,58 +184,43 @@ function EventFrame:UpdateHeader(DataProvider, totalLines, columnWidths, CharInf
 	if not Octo_EquipmentsFrame or not Octo_EquipmentsFrame.view then
 		return
 	end
-	----------------------------------------------------------------
 	local pd = CharInfo.PlayerData
-	local faction = pd.Faction or "Neutral"
-	----------------------------------------------------------------
+	local faction = pd.FACTION or "Neutral"
 	NameHeader.Nickname:SetPoint("CENTER", 0, E.HEADER_TEXT_OFFSET)
 	NameHeader.Nickname:SetWordWrap(false)
 	NameHeader.Nickname:SetJustifyV("MIDDLE")
 	NameHeader.Nickname:SetJustifyH("CENTER")
-	----------------------------------------------------------------
 	NameHeader.Server:SetPoint("CENTER", 0, -E.HEADER_TEXT_OFFSET)
 	NameHeader.Server:SetWordWrap(false)
 	NameHeader.Server:SetJustifyV("MIDDLE")
 	NameHeader.Server:SetJustifyH("CENTER")
-	----------------------------------------------------------------
 	NameHeader.Mail:SetPoint("TOPRIGHT")
 	NameHeader.Mail:SetWordWrap(false)
 	NameHeader.Mail:SetJustifyV("MIDDLE")
 	NameHeader.Mail:SetJustifyH("RIGHT")
-	----------------------------------------------------------------
 	NameHeader.Durability:SetPoint("RIGHT")
 	NameHeader.Durability:SetWordWrap(false)
 	NameHeader.Durability:SetJustifyV("MIDDLE")
 	NameHeader.Durability:SetJustifyH("RIGHT")
-	----------------------------------------------------------------
 	NameHeader.ItemLevel:SetPoint("BOTTOMRIGHT")
 	NameHeader.ItemLevel:SetWordWrap(false)
 	NameHeader.ItemLevel:SetJustifyV("MIDDLE")
 	NameHeader.ItemLevel:SetJustifyH("RIGHT")
-	----------------------------------------------------------------
 	NameHeader.Nickname:SetText(E.func_CharInfo_NickName(CharInfo))
-	if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER then
+
+	local CONFIG_SHOW_ONLY_CURRENT_SERVER = E.func_CONFIG_SHOW_ONLY_CURRENT_SERVER()
+
+	if CONFIG_SHOW_ONLY_CURRENT_SERVER then
 		NameHeader.Nickname:SetPoint("CENTER")
 		NameHeader.Server:SetText("")
 	else
-		NameHeader.Server:SetText(E.func_CharInfo_Server(CharInfo)) -- playerServerText
+		NameHeader.Server:SetText(E.func_CharInfo_Server(CharInfo))
 	end
-	----------------------------------------------------------------
 	NameHeader.Durability:SetText(E.func_CharInfo_Durability(CharInfo, true))
 	NameHeader.Mail:SetText(E.func_CharInfo_Mail(CharInfo))
 	NameHeader.ItemLevel:SetText(E.func_CharInfo_ItemLevel(CharInfo))
-	----------------------------------------------------------------
-	-- if faction == "Horde" then
-	--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_HORDE)
-	-- elseif faction == "Alliance" then
-	--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_ALLIANCE)
-	-- elseif faction == "Neutral" then
-	--     charR, charG, charB = E.func_Hex2RGBA(E.COLOR_NEUTRAL)
-	-- end
-	-- NameHeader.CharTexture:SetVertexColor(charR, charG, charB, E.currentCHAR_ALPHA or 0.2)
 	local r, g, b, a = E.func_DB_HEADER_COLOR(CharInfo)
 	NameHeader.CharTexture:SetVertexColor(r, g, b, a)
-	----------------------------------------------------------------
 end
 function EventFrame:UpdateMainFrameUI(DataProvider, totalLines, columnWidths, CharInfo)
 	if not Octo_EquipmentsFrame or not Octo_EquipmentsFrame.view then
@@ -304,17 +255,6 @@ function EventFrame:CreateDataProvider(GUID)
 	local specTexture = E.func_texturefromIcon(specIcon)
 	local curServer = pd.curServer or ""
 	local resultName = specTexture..classColorHex..Name.."|r"
-	-- local ItemLevel = E.func_CharInfo_ItemLevel(CharInfo)
-	-- local PlayerItemLevel = ""
-	-- if pd.avgItemLevelEquipped and pd.avgItemLevel then
-	--     PlayerItemLevel = E.func_GetColorGradient(pd.avgItemLevelEquipped, E.minValue_ItemLevel, E.maxValue_ItemLevel)..pd.avgItemLevelEquipped
-	--     if pd.avgItemLevel > pd.avgItemLevelEquipped then
-	--         PlayerItemLevel = PlayerItemLevel.."/"..pd.avgItemLevel.."|r"
-	--     end
-	--     if pd.avgItemLevelPvp and pd.avgItemLevelPvp > pd.avgItemLevel then
-	--         PlayerItemLevel = PlayerItemLevel..E.COLOR_GREEN.."+|r"
-	--     end
-	-- end
 	for slotID in next, (E.OctoTable_SlotMapping) do
 		totalLines = totalLines + 1
 		local v = InventoryType[slotID] or {}
@@ -328,33 +268,10 @@ function EventFrame:CreateDataProvider(GUID)
 		local slotName = E.func_GetSlotNameForEmptySlot(slotID)
 		local current_Durability = v.current_Durability or 0
 		local maximum_Durability = v.maximum_Durability or 0
-		-- local ItemName = ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
-
-		-- local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
-		-- if ItemID then
-		-- 	local tempName = E.func_GetName("item", ItemID, Quality)
-		-- 	if strfind(tempName, E.TEXT_UNKNOWN) then
-		-- 		if ItemLink then
-		-- 			ItemName = ItemLink
-		-- 		elseif v.ItemName then
-		-- 			ItemName = v.ItemName
-		-- 		end
-		-- 	else
-		-- 		ItemName = tempName
-		-- 	end
-		-- else
-		-- 	if ItemLink then
-		-- 		ItemName = ItemLink
-		-- 	end
-		-- end
-
-
 		local function IsValidName(name)
 			return name and not string.find(name, E.TEXT_UNKNOWN, 1, true)
 		end
-
 		local ItemName = E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
-
 		if ItemID then
 			local itemName = E.func_GetName("item", ItemID, Quality)
 			if IsValidName(itemName) then
@@ -379,26 +296,6 @@ function EventFrame:CreateDataProvider(GUID)
 				ItemName = v.ItemName
 			end
 		end
-
-
-
-
-
-
-		-- if ItemID then
-		-- 	ItemName = tempName
-		-- elseif v.ItemName then
-		-- 	ItemName = v.ItemName
-		-- end
-		-- if ItemLink then
-		-- 	ItemName = ItemLink
-		-- end
-
-
-
-
-
-		-- local ItemName = ItemLink or ItemID and E.func_GetName("item", ItemID, Quality) or v.ItemName or E.COLOR_GRAY..EMPTY.." ("..slotName..")|r"
 		local rowData = {
 			ItemLink = ItemLink,
 			slotID = slotID,
@@ -434,8 +331,8 @@ function EventFrame:CreateDataProvider(GUID)
 		EventFrame.columnWidths[i] = columnMaxWidths[i] or (EventFrame.columnTypes[i] == "icon" and E.GLOBAL_LINE_HEIGHT or MIN_COLUMN_WIDTH)
 	end
 	local totalWidth = CalculateMainFrameWidth(EventFrame.columnWidths)
-	EventFrame.shouldShowScrollBar = MAX_DISPLAY_LINES < totalLines
-	local displayLines = math.min(totalLines, MAX_DISPLAY_LINES)
+	EventFrame.shouldShowScrollBar = E.MAX_DISPLAY_LINES < totalLines
+	local displayLines = math.min(totalLines, E.MAX_DISPLAY_LINES)
 	if displayLines == 0 then displayLines = 1 end
 	local totalHeight = (E.GLOBAL_LINE_HEIGHT * displayLines) + (E.GLOBAL_LINE_HEIGHT*2)
 	Octo_EquipmentsFrame:SetSize(totalWidth, totalHeight)
@@ -453,7 +350,6 @@ function EventFrame:CreateDataProvider(GUID)
 	self:UpdateMainFrameUI(DataProvider, totalLines, EventFrame.columnWidths, CharInfo)
 end
 function EventFrame:Create_Octo_EquipmentsFrame()
-	-- Octo_EquipmentsFrame:SetHitRectInsets(-1, -1, -1, -1)
 	Octo_EquipmentsFrame:HookScript("OnShow", function()
 			local scrollBar = Octo_EquipmentsFrame.ScrollBar
 			local shouldShow = EventFrame.shouldShowScrollBar
@@ -467,7 +363,7 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	end)
 	Octo_EquipmentsFrame:SetSize(1, E.GLOBAL_LINE_HEIGHT*1 + (E.GLOBAL_LINE_HEIGHT*2))
 	Octo_EquipmentsFrame:SetDontSavePosition(true)
-	Octo_EquipmentsFrame:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
+	Octo_EquipmentsFrame:SetClampedToScreen(E.func_GetProfile_SETTINGS_CURRENT().Config_ClampedToScreen)
 	Octo_EquipmentsFrame:SetFrameStrata("HIGH")
 	Octo_EquipmentsFrame:SetPoint("TOPLEFT", 0, -150)
 	Octo_EquipmentsFrame:EnableMouse(true)
@@ -490,11 +386,9 @@ function EventFrame:Create_Octo_EquipmentsFrame()
 	Octo_EquipmentsFrame:SetScript("OnClick", function(self)
 			self:Hide()
 	end)
-	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList") -- OctoRectTemplate
+	Octo_EquipmentsFrame.ScrollBox = CreateFrame("FRAME", nil, Octo_EquipmentsFrame, "WowScrollBoxList")
 	Octo_EquipmentsFrame.ScrollBox:SetPoint("TOPLEFT", 0, -(E.GLOBAL_LINE_HEIGHT*2))
 	Octo_EquipmentsFrame.ScrollBox:SetPoint("BOTTOMRIGHT")
-	-- Octo_EquipmentsFrame.ScrollBox:GetScrollTarget():SetPropagateMouseClicks(true)
-	-- Octo_EquipmentsFrame.ScrollBox:Layout()
 	Octo_EquipmentsFrame.ScrollBox:SetFrameLevel(Octo_EquipmentsFrame.ScrollBox:GetFrameLevel() + 1)
 	Octo_EquipmentsFrame.ScrollBar = CreateFrame("EventFrame", nil, Octo_EquipmentsFrame, "MinimalScrollBar")
 	Octo_EquipmentsFrame.ScrollBar:SetPoint("TOPLEFT", Octo_EquipmentsFrame.ScrollBox, "TOPRIGHT", 6, 0)

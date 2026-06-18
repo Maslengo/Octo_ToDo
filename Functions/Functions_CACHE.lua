@@ -24,26 +24,38 @@ local function func_ForcedQuality(text, forcedQuality)
 	return coloredName
 end
 ----------------------------------------------------------------
+-- local function func_Cache_Name(id, Cache_Name, name, debugLabel)
+--     if type(name) == "string" and name ~= "" then
+--         Cache_Name[id] = Cache_Name[id] or {}
+--         Cache_Name[id][E.curLocaleLang] = name
+
+--         if Octo_DevTool_DB and Octo_DevTool_DB.CONFIG_DEBUG_CACHE then
+--             E.func_PrintMessage(
+--                 E.COLOR_LIME..debugLabel.."|r",
+--                 name,
+--                 E.COLOR_GRAY.."id:"..id.."|r"
+--             )
+--         end
+--     end
+
+--     local entry = Cache_Name[id]
+--     if entry and type(entry) == "table" and type(entry[E.curLocaleLang]) == "string" then
+--         return entry[E.curLocaleLang]
+--     else
+--         return E.TEXT_UNKNOWN
+--     end
+-- end
 local function func_Cache_Name(id, Cache_Name, name, debugLabel)
 	if type(name) == "string" and name ~= "" then
-		Cache_Name[id] = Cache_Name[id] or {}
+		if not Cache_Name[id] then Cache_Name[id] = {} end
 		Cache_Name[id][E.curLocaleLang] = name
-
-		if Octo_DevTool_DB and Octo_DevTool_DB.CONFIG_DEBUG_CACHE then
-			E.func_PrintMessage(
-				E.COLOR_LIME..debugLabel.."|r",
-				name,
-				E.COLOR_GRAY.."id:"..id.."|r"
-			)
-		end
 	end
 
-	local entry = Cache_Name[id]
-	if entry and type(entry) == "table" and type(entry[E.curLocaleLang]) == "string" then
-		return entry[E.curLocaleLang]
-	else
-		return E.TEXT_UNKNOWN
+	local cached = Cache_Name[id]
+	if cached then
+		return cached[E.curLocaleLang] or E.TEXT_UNKNOWN
 	end
+	return E.TEXT_UNKNOWN
 end
 ----------------------------------------------------------------
 local function func_Cache_Quality(id, Cache_Quality, NEWquality, debugLabel)
@@ -63,9 +75,9 @@ function E.func_GetReputationSide(id)
 end
 ----------------------------------------------------------------
 function E.func_IsMountCollected(mountID)
-	if not mountID then return "no mountID" end
+	if not mountID then return false end
 	local isCollected = select(11, E.func_GetMountInfoByID(mountID))
-	return isCollected
+	return isCollected or false
 end
 ----------------------------------------------------------------
 function E.func_GetMountCollectedColor(mountID)
@@ -107,7 +119,8 @@ handler.item = function(Cache_Name, Cache_Quality, category, id)
 	-----------
 	-- COLOR --
 	-----------
-	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ITEMS_COLOREDNAME then
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	if settingsProfile and settingsProfile.CONFIG_ITEMS_COLOREDNAME then
 		local quality
 		local cachedQuality = func_cached_Quality(Cache_Quality, id)
 		if cachedQuality then
@@ -116,9 +129,9 @@ handler.item = function(Cache_Name, Cache_Quality, category, id)
 			quality = func_Cache_Quality(id, Cache_Quality, E.func_GetItemQualityByID(id), category)
 		end
 		if type(name) == "string" and name ~= "" and quality then
-		    name = E.func_GetQualityHexColor(quality) .. name .. "|r"
+			name = E.func_GetQualityHexColor(quality) .. name .. "|r"
 		else
-		    name = E.TEXT_UNKNOWN
+			name = E.TEXT_UNKNOWN
 		end
 	end
 	-----------
@@ -180,7 +193,8 @@ handler.currency = function(Cache_Name, Cache_Quality, category, id)
 	-----------
 	-- COLOR --
 	-----------
-	if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOREDNAME then
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	if settingsProfile and settingsProfile.CONFIG_CURRENCY_COLOREDNAME then
 		local info = E.func_GetCurrencyInfo(id)
 		if info then
 			local colorHex = (info.quality and ITEM_QUALITY_COLORS[info.quality].hex) or ITEM_QUALITY_COLORS[1].hex
@@ -301,10 +315,10 @@ handler.spell = function(Cache_Name, Cache_Quality, category, id)
 	else
 		local result = E.func_GetSpellName(id) or E.func_GetSpellInfo(id)
 		-- if GetSpellName and GetSpellName(id) then
-		-- 	result = GetSpellName(id)
+		--     result = GetSpellName(id)
 		-- elseif GetSpellInfo and GetSpellInfo(id) then
-		-- 	result = GetSpellInfo(id)
-		-- 	-- /dump GetSpellInfo(20271)
+		--     result = GetSpellInfo(id)
+		--     -- /dump GetSpellInfo(20271)
 		-- end
 		name = func_Cache_Name(id, Cache_Name, result, category)
 	end
@@ -471,7 +485,8 @@ handler.difficulty = function(Cache_Name, Cache_Quality, category, id, fullDiffi
 	----------
 	local name
 	local cached_Name = func_cached_Name(Cache_Name, id)
-	if not fullDifficultyName and Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS then
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	if not fullDifficultyName and settingsProfile and settingsProfile.CONFIG_RAIDS_DIFFICULTIES_ABBREVIATIONS then
 		name = E.OctoTable_Difficulties and E.OctoTable_Difficulties[id] and E.OctoTable_Difficulties[id].abbr or func_Cache_Name(id, Cache_Name, GetDifficultyInfo(id), category)
 	else
 		if cached_Name then
@@ -718,15 +733,16 @@ function E.func_GetName(category, id, forcedQuality, fullDifficultyName)
 	name = name or E.TEXT_UNKNOWN
 	----------------
 	if category == "currency" then
-		local hasMount = Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_MountsInTooltip and E.OctoTable_CurrencyMountForFuncCurName[id] or false
-		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_MountsInTooltip and (id == 3252 or id == 1166 or id == 2778) then
+		local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+		local hasMount = settingsProfile and settingsProfile.Config_MountsInTooltip and E.OctoTable_CurrencyMountForFuncCurName[id] or false
+		if settingsProfile and settingsProfile.Config_MountsInTooltip and (id == 3252 or id == 1166 or id == 2778) then
 			hasMount = true
 		end
 		name = name..(hasMount and E.COLOR_RED.."*|r" or "")
 	end
 	----------------
 	-- if type(name) ~= "string" then
-	-- 	error()
+	--     error()
 	-- end
 	local result = name -- E.func_translit and E.func_translit(name) or name
 	return result..debugTEXT
@@ -735,10 +751,10 @@ end
 function E.func_GetIcon(category, id)
 	local icon -- = E.ICON_QUESTION_MARK -- or E.ICON_EMPTY
 	if id and category and type(id) == "number" then
-		if category == "currency" then --  and Octo_ToDo_DB_Vars.CONFIG_CURRENCY_ICON
+		if category == "currency" then
 			local info = E.func_GetCurrencyInfo(id)
 			icon = (info and info.iconFileID) or icon
-		elseif category == "item" then -- and Octo_ToDo_DB_Vars.CONFIG_ITEMS_ICON
+		elseif category == "item" then
 			icon = E.func_GetItemIconByID(id) or icon
 		elseif category == "spell" then
 			icon = E.func_GetSpellTexture(id) or icon
@@ -756,15 +772,35 @@ function E.func_GetIcon(category, id)
 				end
 			end
 		elseif category == "covenant" then
-			icon = E.OctoTable_Covenant[id].icon
+			if id > 0 then
+				icon = E.OctoTable_Covenant[id] and E.OctoTable_Covenant[id].icon
+			end
 		elseif category == "mount" then
 			icon = select(3, E.func_GetMountInfoByID(id))
 		elseif category == "specialization" then
 			icon = select(4, GetSpecializationInfoByID(id))
 		elseif category == "profession" then
 			icon = E.func_GetTradeSkillTexture(id) -- skillLineID
-		-- elseif category == "encounter" then
-		-- 	icon = select(4, EJ_GetEncounterInfo(id)) -- НЕ ТО
+			-- elseif category == "encounter" then
+			--     icon = select(4, EJ_GetEncounterInfo(id)) -- НЕ ТО
+		elseif category == "map" then
+			local info = E.func_GetMapInfo(id)
+			if info then
+				-- local name = info.name
+				local mapType = info.mapType
+
+				for k, v in next, (Enum.UIMapType) do
+					if v == mapType then
+						if k == "Dungeon" then
+							icon = E.ATLAS_DUNGEON
+						end
+					end
+				end
+				-- local parentMapID = info.parentMapID
+				-- local flags = info.flags
+			end
+		elseif category == "quest" then
+			icon = E.func_GetQuestIcon(id)
 		end
 	end
 

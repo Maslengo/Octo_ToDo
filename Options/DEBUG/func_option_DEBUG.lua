@@ -9,14 +9,14 @@ function E.func_option_DEBUG(category, layout)
 	----------------------------------------------------------------
 	-- E.func_Header(layout, L["ID"])
 	----------------------------------------------------------------
-	-- Octo_ToDo_DB_Vars.Config_DebugID_ALL
+	-- E.func_GetProfile_SETTINGS_CURRENT().Config_DebugID_ALL
 	----------------------------------------------------------------
 	do
 		local variable = E.func_GenerateID()
 		local variableKey = "Config_DebugID_ALL"
-		local variableTbl = Octo_ToDo_DB_Vars
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
 		local name = L["Show ID"]
-		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
+		local defaultValue = E.DEFAULT_SETTINGS_FORPROFILE[variableKey]
 		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 	----------------------------------------------------------------
@@ -34,30 +34,6 @@ function E.func_option_DEBUG(category, layout)
 	----------------------------------------------------------------
 	do
 		local name = nil
-		local buttonText = L["RESET"] .. ": " .. L["OPTIONS"]
-		local tooltip = "table: Octo_ToDo_DB_Vars"
-		local function buttonClick()
-			Octo_ToDo_DB_Vars = nil
-			E.init_Octo_ToDo_DB_Vars()
-			E.func_UpdateGlobals()
-		end
-		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
-	end
-	----------------------------------------------------------------
-	do
-		local name = nil
-		local buttonText = L["RESET"] .. ": " .. L["BAG_FILTER_TITLE_SORTING"]
-		local tooltip = "table: Octo_ToDo_DB_Options"
-		local function buttonClick()
-				wipe(Octo_ToDo_DB_Options)
-				E.init_Octo_ToDo_DB_Options()
-				E.func_CreateDataProvider_SORTUI()
-		end
-		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
-	end
-	----------------------------------------------------------------
-	do
-		local name = nil
 		local buttonText = L["RESET"] .. ": " .. L["Characters"]
 		local tooltip = "table: Octo_ToDo_DB_Levels"
 		local function buttonClick()
@@ -67,27 +43,14 @@ function E.func_option_DEBUG(category, layout)
 		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 	end
 	----------------------------------------------------------------
-	-- do
-	-- 	local name = nil
-	-- 	local buttonText = L["RESET"] .. ": " .. L["Profiles"]
-	-- 	local tooltip = "table: Octo_profileKeys"
-	-- 	local function buttonClick()
-	-- 		Octo_profileKeys = nil
-	-- 		E.init_Octo_profileKeys()
-	-- 	end
-	-- 	E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
-	-- end
-	----------------------------------------------------------------
 	do
 		local name = nil
 		local buttonText = L["RESET"] .. ": " .. L["ALL"]
 		local tooltip = nil
 		local function buttonClick()
 			Octo_DevTool_DB = nil
-			Octo_profileColors = nil
-			Octo_profileKeys = nil
-			Octo_ToDo_DB_Levels = nil
-			Octo_ToDo_DB_Vars = nil
+			Octo_Todo_DB_Profiles = nil
+			-- Octo_ToDo_DB_Levels = nil
 			Octo_Cache_DB = nil
 			Octo_ToDo_DB_AccountData = nil
 

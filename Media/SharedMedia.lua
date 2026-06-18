@@ -18,7 +18,7 @@ end
 do
 	local font_tbl = {
 		"Expressway Rg Bold",
-		-- "Fira Code Regular",
+		"Fira Code Regular",
 		-- "wqy-zenhei",
 	}
 	local path = [[Interface\Addons\]]..GlobalAddonName..[[\Media\Fonts\]]
@@ -26,5 +26,20 @@ do
 		RegisterMyTables("font", value, 1, index, path)
 	end
 end
+
 ----------------------------------------------------------------
+
+do
+
+	local border_tbl = {
+		"Octo",
+	}
+	local path = [[Interface\Addons\]]..GlobalAddonName..[[\Media\Borders\]]
+	for index, value in ipairs(border_tbl) do
+		RegisterMyTables("border", value, 1, index, path)
+	end
+
+end
+
+
 ----------------------------------------------------------------

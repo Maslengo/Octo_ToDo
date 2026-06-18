@@ -1,11 +1,10 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 local enable = true
 if not enable then return end
 ----------------------------------------------------------------
 local categoryKey = 96
-----------------------------------------------------------------
-local L = E.L
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_DataOtrisovka = {}

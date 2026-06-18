@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Dragonflight_available = E.Is_Dragonflight_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_Dragonflight_available then return end;
+----------------------------------------------------------------
+if not E.Is_DF_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -100,6 +99,54 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	    {
+	        sorted = true,
+	        showTooltip = true,
+	        TextLeft = function()
+	            return L["RAID_INFO_WORLD_BOSS"]
+	        end,
+	        name_save = "WorldBoss",
+	        defS = true,
+	        reset = "Weekly",
+	        desc = categoryKey,
+	        questpools = {
+	            {
+	                {
+	                    69927,
+	                    forcedText = {npcID = 193532}, -- Базуал <Чудовищное Пламя> (Лазурный Простор)
+	                    addText = {mapID = E.MapID_TheAzureSpan},
+	                },
+	                {
+	                    69928,
+	                    forcedText = {npcID = 193533}, -- Лисканот <Крах Мироздания> (Будущее воинов стихий)
+	                    addText = {mapID = E.MapID_Thaldraszus},
+	                },
+	                {
+	                    69929,
+	                    forcedText = {npcID = 193534}, -- Струнраан <Бедствие Небес> (Равнины Он'ары)
+	                    addText = {mapID = E.MapID_OhnahranPlains},
+	                },
+	                {
+	                    69930,
+	                    forcedText = {npcID = 193535}, -- Базрикрон <Каменное Крыло> (Берега Пробуждения)
+	                    addText = {mapID = E.MapID_WakingShore},
+	                },
+	            },
+	            {
+	                {
+	                    74892,
+	                    addText = {mapID = E.MapID_ZarelekCavern}, -- Старейшины закали (Пещера Заралек)
+	                },
+	            },
+	            {
+	                {
+	                    76367,
+	                    forcedText = {npcID = 209574}, -- Ауростор <Пережидающий Зиму> (Изумрудный Сон)
+	                    addText = {mapID = E.MapID_EmeraldDream},
+	                },
+	            },
+	        },
+	    },
 		{
 			showTooltip = true,
 			TextLeft = function()
@@ -142,28 +189,6 @@ local function tempFunction()
 				{rewID = 2109, rewTYPE = "currency", rewSIZE = 500,}, --
 			},
 			forcedMaxQuest = 1,
-		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
-			end,
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{69927, forcedText = {npcID = 193532}, addText = {mapID = 2024},}, -- Базуал <Чудовищное Пламя> 193532 (Лазурный Простор)
-				{69928, forcedText = {npcID = 193533}, addText = {mapID = 2025},}, -- Лисканот <Крах Мироздания> 193533 (Будущее воинов стихий)
-				{69929, forcedText = {npcID = 193534}, addText = {mapID = 2023},}, -- Струнраан <Бедствие Небес> 193534 (Равнины Он'ары)
-				{69930, forcedText = {npcID = 193535}, addText = {mapID = 2022},}, -- Базрикрон <Каменное Крыло> 193535 (Берега Пробуждения)
-				{nil},
-				{74892, addText = {mapID = 2133},}, -- Старейшины закали (Пещера Заралек)
-				{nil},
-				{76367, forcedText = {npcID = 209574}, addText = {mapID = 2200},}, -- Ауростор <Пережидающий Зиму> 209574 Изумрудный Сон (6).
-			},
-			forcedMaxQuest = 3,
 		},
 		{
 			showTooltip = true,
@@ -264,7 +289,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78444, true)
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": "..E.func_GetName("quest", 78444, true)
 			end,
 			name_save = "EmeraldDream_AWorthyAllyDreamWardens",
 			defS = false,
@@ -287,7 +312,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78821, false)
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": "..E.func_GetName("quest", 78821, false)
 			end,
 			name_save = "EmeraldDream_BloomingDreamseeds",
 			defS = false,
@@ -309,7 +334,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": "..E.Timers.DF_Flower()..E.func_GetName("quest", 78319, false)
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": "..E.Timers.DF_Flower()..E.func_GetName("quest", 78319, false)
 			end,
 			name_save = "EmeraldDream_TheSuperbloom",
 			defS = false,
@@ -331,7 +356,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": ".."Rares"
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": ".."Rares"
 			end,
 			name_save = "EmeraldDream_Rares",
 			defS = false,
@@ -372,7 +397,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": "..L["Treasures"]
 			end,
 			name_save = "EmeraldDream_Treasures",
 			defS = false,
@@ -404,7 +429,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": "..E.func_GetName("quest", 78381, false)
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": "..E.func_GetName("quest", 78381, false)
 			end,
 			name_save = "EmeraldDream_DreamsUnified",
 			defS = false,
@@ -425,7 +450,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2200)..": ".."Seeds"
+				return E.func_GetName("map", E.MapID_EmeraldDream)..": ".."Seeds"
 			end,
 			name_save = "EmeraldDream_Seeds",
 			defS = false,
@@ -442,7 +467,7 @@ local function tempFunction()
 		-- sorted = false,
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetName("map", 2200)..": ".."TheGilneasReclamation_Storylines"
+		-- return E.func_GetName("map", E.MapID_EmeraldDream)..": ".."TheGilneasReclamation_Storylines"
 		-- end,
 		-- name_save = "TheGilneasReclamation_Storylines",
 		-- defS = true,
@@ -469,7 +494,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2239)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_Belameth)..": "..L["Treasures"]
 			end,
 			name_save = "Amirdrassil_Treasures",
 			defS = false,
@@ -504,7 +529,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": "..E.func_GetName("quest", 75665, true)
+				return E.func_GetName("map", E.MapID_ZarelekCavern)..": "..E.func_GetName("quest", 75665, true)
 			end,
 			name_save = "ZaralekCavernAWorthyAllyLoammNiffen",
 			defS = false,
@@ -526,7 +551,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": ".."Rares"
+				return E.func_GetName("map", E.MapID_ZarelekCavern)..": ".."Rares"
 			end,
 			name_save = "ZaralekCavernRares",
 			defS = false,
@@ -564,7 +589,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": ".."Events"
+				return E.func_GetName("map", E.MapID_ZarelekCavern)..": ".."Events"
 			end,
 			name_save = "ZaralekCavernEvents",
 			defS = false,
@@ -595,7 +620,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": "..L["Sniffenseeking"]
+				return E.func_GetName("map", E.MapID_ZarelekCavern)..": "..L["Sniffenseeking"]
 			end,
 			name_save = "ZaralekCavernSniffenseeking",
 			defS = false,
@@ -625,7 +650,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": ".. L["Sniffenseeking"].." ("..L["ITEMS"]..")"
+				return E.func_GetName("map", E.MapID_ZarelekCavern)..": ".. L["Sniffenseeking"].." ("..L["ITEMS"]..")"
 			end,
 			name_save = "ZaralekCavernSniffenseekingItems",
 			defS = false,
@@ -652,7 +677,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2133)..": "..E.func_GetName("quest", 74906, false).." "..E.Timers.DF_ResearchersUnderFire()
+				return E.func_GetName("map", E.MapID_ZarelekCavern)..": "..E.func_GetName("quest", 74906, false).." "..E.Timers.DF_ResearchersUnderFire()
 			end,
 			name_save = "ResearchersUnderFire",
 			defS = false,
@@ -679,7 +704,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2151)..": ".."Rares" -- Запретный край.
+				return E.func_GetName("map", E.MapID_ForbiddenReach)..": ".."Rares" -- Запретный край.
 			end,
 			name_save = "TheForbiddenReachRares",
 			defS = false,
@@ -718,7 +743,7 @@ local function tempFunction()
 			-- https://wowpedia.fandom.com/wiki/Storm-Bound_Chest
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2151)..": "..L["Storm-Bound Chest"]
+				return E.func_GetName("map", E.MapID_ForbiddenReach)..": "..L["Storm-Bound Chest"]
 			end,
 			name_save = "StormBoundChest",
 			defS = false,
@@ -738,7 +763,7 @@ local function tempFunction()
 			-- https://wowpedia.fandom.com/wiki/Keys_of_Loyalty
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2022)..": "..E.func_GetName("quest", 66133, false)
+				return E.func_GetName("map", E.MapID_WakingShore)..": "..E.func_GetName("quest", 66133, false)
 			end,
 			name_save = "KeysofLoyalty",
 			defS = false,
@@ -790,7 +815,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2025)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift()
+				return E.func_GetName("map", E.MapID_Thaldraszus)..": "..L["Time Rift"].." "..E.Timers.DF_TimeRift()
 			end,
 			name_save = "DFTimeRift",
 			defS = false,
@@ -943,10 +968,10 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return TRADE_SKILLS
+				return L["TRADE_SKILLS"]
 			end,
 			name_save = "ProfessionWeeklies",
-			defS = true,
+			defS = false,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {

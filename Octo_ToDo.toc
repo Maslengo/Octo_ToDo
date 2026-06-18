@@ -1,6 +1,6 @@
-## Interface: 120007, 120005, 120001
-## Version: v115.3
-# (12.0.5)(08.05.2026)
+## Interface: 120007
+## Version: v115.4
+# (12.0.7)(18.06.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 # Title: |cffD177FFO|r|cffC37CFBc|r|cffB582F7t|r|cffA787F3o|r|cff998DEF_|r|cff8C93EBT|r|cff7E98E7o|r|cff709EE3D|r|cff63A4E0o|r
@@ -11,18 +11,18 @@
 
 ## SavedVariables: Octo_DevTool_DB
 
-## SavedVariables: Octo_profileColors, Octo_profileKeys
-## SavedVariables: Octo_ToDo_DB_Levels, Octo_ToDo_DB_Vars, Octo_Cache_DB
+## SavedVariables: Octo_Todo_DB_Profiles
+
+## SavedVariables: Octo_ToDo_DB_Levels, Octo_Cache_DB
 
 ## SavedVariables: Octo_ToDo_DB_AccountData
-
-## SavedVariables: Octo_ToDo_DB_Options
 
 ## X-Wago-ID: 4N2mBVGL
 ## X-Curse-Project-ID: 1405495
 
 Libs\Libs.xml
 Templates.xml
+
 
 Locales\Localization.xml
 Init_Basic_Functions.lua

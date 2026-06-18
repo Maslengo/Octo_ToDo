@@ -4,12 +4,11 @@ local L = E.L
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function E.func_Tooltip_Chars(CharInfo, isMainFrame)
-
-	E.IS_HEADER_TOOLTIP = isMainFrame or false
-
-	local tooltip = {}
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
+	if not pd or not cm then return {} end
+	local tooltip = {}
+	E.IS_HEADER_TOOLTIP = isMainFrame or false
 	local color = E.COLOR_SKYBLUE
 	local classColorHex = pd.classColorHex or E.COLOR_GREEN
 	local Name = pd.Name or ""
@@ -41,8 +40,8 @@ function E.func_Tooltip_Chars(CharInfo, isMainFrame)
 	local durability = E.func_CharInfo_Durability(CharInfo, true)
 	if Name ~= "" and curServer ~= "" then
 		tooltip[#tooltip + 1] = {
-			specTexture..playerNameWithLevel.." "..playerServer,
-			-- specTexture..classColorHex..Name.."|r ("..curServer..")",
+			specTexture .. playerNameWithLevel .. " " .. playerServer,
+			-- specTexture .. classColorHex .. Name .. "|r (" .. curServer .. ")",
 			mail
 		}
 	end
@@ -51,10 +50,10 @@ function E.func_Tooltip_Chars(CharInfo, isMainFrame)
 			guild
 		}
 	end
-	local ItemLevel =  E.func_CharInfo_ItemLevel(CharInfo)
+	local ItemLevel = E.func_CharInfo_ItemLevel(CharInfo)
 	if ItemLevel ~= "" then
 		tooltip[#tooltip + 1] = {
-			L["STAT_AVERAGE_ITEM_LEVEL"]..": "..
+			L["STAT_AVERAGE_ITEM_LEVEL"] .. ": " ..
 			ItemLevel,
 			durability
 		}
@@ -62,137 +61,185 @@ function E.func_Tooltip_Chars(CharInfo, isMainFrame)
 	if Chromie_inChromieTime and Chromie_name ~= "" then
 		-- tooltip[#tooltip + 1] = { " ", " " }
 		tooltip[#tooltip + 1] = {
-			E.func_texturefromIcon("ChromieMap", nil, nil, true)..E.func_GetName("npc", 167032)..": "..E.COLOR_GREEN..Chromie_name.."|r"
+			E.func_texturefromIcon("ChromieMap", nil, nil, true) .. E.func_GetName("npc", 167032) .. ": " .. E.COLOR_GREEN .. Chromie_name .. "|r"
 		}
 	end
+	if pd.IsXPUserDisabled then
+		tooltip[#tooltip+1] = {E.COLOR_RED .. E.func_GetName("spell", 306715) .. "|r"}
+		-- tooltip[#tooltip+1] = {L["Experience Eliminator"] .. ": " .. E.COLOR_RED .. L["VIDEO_OPTIONS_DISABLED"] .. "|r"}
+	end
+
 	-- if usedSlots_BAGS > 0 and totalSlots_BAGS > 0 then
-	--     local icon = E.func_texturefromIcon(133634)
-	--     local textLeft = icon..L["BAG_NAME_BACKPACK"]..": "..classColorHex..usedSlots_BAGS.."/"..totalSlots_BAGS.."|r"
-	--     if usedSlots_BANK and totalSlots_BANK then
-	--         textLeft = textLeft.." "..L["BANK"]..": "..classColorHex..usedSlots_BANK.."/"..totalSlots_BANK.."|r"
-	--     end
-	--     tooltip[#tooltip + 1] = { textLeft, "" }
+	-- local icon = E.func_texturefromIcon(133634)
+	-- local textLeft = icon .. L["BAG_NAME_BACKPACK"] .. ": " .. classColorHex .. usedSlots_BAGS .. "/" .. totalSlots_BAGS .. "|r"
+	-- if usedSlots_BANK and totalSlots_BANK then
+	-- textLeft = textLeft .. " " .. L["BANK"] .. ": " .. classColorHex .. usedSlots_BANK .. "/" .. totalSlots_BANK .. "|r"
+	-- end
+	-- tooltip[#tooltip + 1] = { textLeft, "" }
 	-- end
 	if realTotalTime > 0 then
 		tooltip[#tooltip + 1] = { " ", "" }
 		tooltip[#tooltip + 1] = {
-			string.format(L["TIME_PLAYED_TOTAL"],classColorHex..E.func_SecondsToClock(realTotalTime)).."|r"
+			string.format(L["TIME_PLAYED_TOTAL"],classColorHex .. E.func_SecondsToClock(realTotalTime)) .. "|r"
 		}
 	end
-	-- if CharInfo.MASLENGO and CharInfo.MASLENGO.Items and CharInfo.MASLENGO.Items.Bags and CharInfo.MASLENGO.Items.Bags[122284] then
-	--     tooltip[#tooltip + 1] = { " ", "" }
-	--     tooltip[#tooltip + 1] = {
-	--         E.func_GetName("item", 122284),
-	--         CharInfo.MASLENGO.Items.Bags[122284]
-	--     }
+	-- if E.cm and E.cm.Items and E.cm.Items.Bags and E.cm.Items.Bags[122284] then
+	-- tooltip[#tooltip + 1] = { " ", "" }
+	-- tooltip[#tooltip + 1] = {
+	-- E.func_GetName("item", 122284),
+	-- E.cm.Items.Bags[122284]
+	-- }
 	-- end
 
 	if Octo_DevTool_DB.CONFIG_DEBUG_CHARACTERTOOLTIP then
 		tooltip[#tooltip+1] = {" ", ""}
-		tooltip[#tooltip+1] = {color..E.DEVTEXT.."|r", ""}
+		tooltip[#tooltip+1] = {color .. E.DEVTEXT .. "|r", ""}
 		if pd.tmstp_Daily then
 			tooltip[#tooltip+1] = {
-				color.."tmstp_Daily|r",
-				classColorHex..E.func_SecondsToClock(pd.tmstp_Daily - GetServerTime()).."|r"
+				color .. "tmstp_Daily|r",
+				classColorHex .. E.func_SecondsToClock(pd.tmstp_Daily - E.TIME_SERVER()) .. "|r"
 			}
 		end
 		if pd.tmstp_Weekly then
 			tooltip[#tooltip+1] = {
-				color.."tmstp_Weekly|r",
-				classColorHex..E.func_SecondsToClock(pd.tmstp_Weekly - GetServerTime()).."|r"
+				color .. "tmstp_Weekly|r",
+				classColorHex .. E.func_SecondsToClock(pd.tmstp_Weekly - E.TIME_SERVER()) .. "|r"
 			}
 		end
 		tooltip[#tooltip+1] = {
-			color.."GUID|r",
-			E.COLOR_PURPLE..pd.GUID.."|r"
+			color .. "GUID|r",
+			E.COLOR_PURPLE .. pd.GUID .. "|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."hasMail|r",
-			pd.hasMail and E.func_texturefromIcon(E.Icon_MailBox)..classColorHex.."true|r" or color.."false|r"
+			color .. "hasMail|r",
+			pd.hasMail and E.func_texturefromIcon(E.Icon_MailBox) .. classColorHex .. "true|r" or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."Chromie_canEnter|r",
-			pd.Chromie_canEnter and E.TRUE or color.."false|r"
+			color .. "Chromie_canEnter|r",
+			pd.Chromie_canEnter and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."Chromie_UnitChromieTimeID|r",
-			color..tostring(pd.Chromie_UnitChromieTimeID or "").."|r"
+			color .. "Chromie_UnitChromieTimeID|r",
+			color .. tostring(pd.Chromie_UnitChromieTimeID or "") .. "|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."Chromie_name|r",
-			color..tostring(pd.Chromie_name or "").."|r"
+			color .. "Chromie_name|r",
+			color .. tostring(pd.Chromie_name or "") .. "|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."BattleTag|r",
-			E.COLOR_BLUE..pd.BattleTag.."|r"
-		}
-		tooltip[#tooltip+1] = {" ", ""}
-		tooltip[#tooltip+1] = {
-			color.."GameLimitedMode_IsActive|r",
-			pd.GameLimitedMode_IsActive and E.TRUE or color.."false|r"
-		}
-		tooltip[#tooltip+1] = {
-			color.."levelCapped20|r",
-			pd.levelCapped20 and E.TRUE or color.."false|r"
-		}
-		tooltip[#tooltip+1] = {
-			color.."PlayerCanEarnExperience|r",
-			pd.PlayerCanEarnExperience and E.TRUE or color.."false|r"
-		}
-		tooltip[#tooltip+1] = {" ", ""}
-		tooltip[#tooltip+1] = {color.."buildVersion|r", classColorHex..pd.buildVersion.."|r"}
-		tooltip[#tooltip+1] = {color.."buildNumber|r", classColorHex..pd.buildNumber.."|r"}
-		tooltip[#tooltip+1] = {color.."buildDate|r", classColorHex..pd.buildDate.."|r"}
-		tooltip[#tooltip+1] = {color.."interfaceVersion|r", classColorHex..pd.interfaceVersion.."|r"}
-		tooltip[#tooltip+1] = {" ", ""}
-		tooltip[#tooltip+1] = {
-			color.."IsPublicBuild|r",
-			pd.IsPublicBuild and E.TRUE or color.."false|r"
+			color .. "BattleTag|r",
+			E.COLOR_BLUE .. pd.BattleTag .. "|r"
 		}
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {
-			color.."max LVL|r",
-			pd.GetRestrictedAccountData_rLevel and E.TRUE or color.."false|r"
+			color .. "GameLimitedMode_IsActive|r",
+			pd.GameLimitedMode_IsActive and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."max Money|r",
-			pd.GetRestrictedAccountData_rMoney and E.TRUE or color.."false|r"
+			color .. "levelCapped20|r",
+			pd.levelCapped20 and E.TRUE or color .. "false|r"
+		}
+		tooltip[#tooltip+1] = {
+			color .. "PlayerCanEarnExperience|r",
+			pd.PlayerCanEarnExperience and E.TRUE or color .. "false|r"
+		}
+		tooltip[#tooltip+1] = {" ", ""}
+		tooltip[#tooltip+1] = {color .. "buildVersion|r", classColorHex .. pd.buildVersion .. "|r"}
+		tooltip[#tooltip+1] = {color .. "buildNumber|r", classColorHex .. pd.buildNumber .. "|r"}
+		tooltip[#tooltip+1] = {color .. "buildDate|r", classColorHex .. pd.buildDate .. "|r"}
+		tooltip[#tooltip+1] = {color .. "interfaceVersion|r", classColorHex .. pd.interfaceVersion .. "|r"}
+		tooltip[#tooltip+1] = {" ", ""}
+		tooltip[#tooltip+1] = {
+			color .. "IsPublicBuild|r",
+			pd.IsPublicBuild and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {
-			color.."Authenticator|r",
-			pd.IsAccountSecured and E.TRUE or color.."false|r"
+			color .. "max LVL|r",
+			pd.GetRestrictedAccountData_rLevel and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."IsRestrictedAccount|r",
-			pd.IsRestrictedAccount and E.TRUE or color.."false|r"
-		}
-		tooltip[#tooltip+1] = {
-			color.."IsTrialAccount|r",
-			pd.IsTrialAccount and E.TRUE or color.."false|r"
-		}
-		tooltip[#tooltip+1] = {
-			color.."IsVeteranTrialAccount|r",
-			pd.IsVeteranTrialAccount and E.TRUE or color.."false|r"
+			color .. "max Money|r",
+			pd.GetRestrictedAccountData_rMoney and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {
-			color.."PlayerDurability|r",
-			pd.PlayerDurability and E.TRUE or color.."false|r"
+			color .. "Authenticator|r",
+			pd.IsAccountSecured and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."CharDBVersion|r",
-			color..tostring(pd.CharDBVersion or "").."|r"
+			color .. "IsRestrictedAccount|r",
+			pd.IsRestrictedAccount and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."CurrentRegion|r",
-			color..tostring(pd.CurrentRegion or "").."|r"
+			color .. "IsTrialAccount|r",
+			pd.IsTrialAccount and E.TRUE or color .. "false|r"
 		}
 		tooltip[#tooltip+1] = {
-			color.."CurrentRegionName|r",
-			color..tostring(pd.CurrentRegionName or "").."|r"
+			color .. "IsVeteranTrialAccount|r",
+			pd.IsVeteranTrialAccount and E.TRUE or color .. "false|r"
+		}
+		tooltip[#tooltip+1] = {" ", ""}
+		tooltip[#tooltip+1] = {
+			color .. "PlayerDurability|r",
+			pd.PlayerDurability and E.TRUE or color .. "false|r"
+		}
+		tooltip[#tooltip+1] = {
+			color .. "CharDBVersion|r",
+			color .. tostring(pd.CharDBVersion or "") .. "|r"
+		}
+		tooltip[#tooltip+1] = {
+			color .. "CurrentRegion|r",
+			color .. tostring(pd.CurrentRegion or "") .. "|r"
+		}
+		tooltip[#tooltip+1] = {
+			color .. "REGION_NAME|r",
+			color .. tostring(pd.REGION_NAME or "") .. "|r"
 		}
 	end
+
+	if not E.IS_HEADER_TOOLTIP then
+		local CharacterProfile, CharacterProfile_GUIDS, CharacterProfile_OTHER, CharacterProfile_SORTING = E.func_GetProfile_CHARACTERS_CURRENT()
+
+		-- local CONFIG_SORTING_CUSTOM = E.func_CONFIG_SORTING_CUSTOM()
+
+		if CharacterProfile and not CharacterProfile_OTHER.CONFIG_SORTING_CUSTOM then
+				if CharacterProfile and CharacterProfile_SORTING then
+					local sort_order = CharacterProfile_SORTING.sort_order
+					if sort_order then
+						tooltip[#tooltip+1] = {E.SEPARATOR_KEY}
+						-- table.insert(frame.tooltip, E.SEPARATOR_KEY)
+						for _, vars in ipairs(sort_order) do
+							local optInfo = E.SORT_OPTIONS[vars]
+							local data = pd[vars]
+							local formatter = optInfo.formatter
+							if optInfo then
+								local colorLEFT = E.COLOR_WHITE
+								local colorRIGHT = E.COLOR_WHITE
+								if formatter then data = formatter(data) end
+								if vars ~= "Name" then
+									local isActiveSettings = CharacterProfile_SORTING.sort_order_ACTIVED[vars]
+									if isActiveSettings == false then
+										colorLEFT = E.COLOR_GRAY
+										colorRIGHT = E.COLOR_GRAY
+									end
+								else
+									colorRIGHT = pd.classColorHex
+								end
+								tooltip[#tooltip+1] = {colorLEFT .. optInfo.name .. "|r", data}
+								-- table.insert(frame.tooltip, {colorLEFT .. optInfo.name .. "|r", data})
+							end
+						end
+					end
+				end
+
+		end
+	end
+
+
+
+
+
 	return tooltip
 end
 ----------------------------------------------------------------

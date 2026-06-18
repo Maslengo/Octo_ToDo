@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_WrathoftheLichKing_available = E.Is_WrathoftheLichKing_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_WrathoftheLichKing_available then return end;
+----------------------------------------------------------------
+if not E.Is_WotLK_available then return end
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------

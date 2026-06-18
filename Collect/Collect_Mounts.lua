@@ -2,9 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Mounts()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
 	local cache_1166 = E.func_Mounts_1166()
 	E.OctoTable_ALL_Mounts[1166] = E.OctoTable_ALL_Mounts[1166] or {}
@@ -13,7 +11,6 @@ local function Collect_Mounts()
 	local cache_2778 = E.func_Mounts_2778()
 	E.OctoTable_ALL_Mounts[2778] = E.OctoTable_ALL_Mounts[2778] or {}
 	for _, mountID in ipairs(E.func_GetMountIDs()) do
-
 		local source = select(3, E.func_GetMountInfoExtraByID(mountID))
 		source = source:gsub(" ", "") -- mountID == 645
 		source = source:gsub(",", "") -- mountID == 645
@@ -65,3 +62,4 @@ end
 function E.Collect_Mounts()
 	E.func_SpamBlock(Collect_Mounts, false)
 end
+----------------------------------------------------------------

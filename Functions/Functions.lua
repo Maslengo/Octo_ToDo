@@ -14,21 +14,20 @@ function E.func_WeeklyRewards_ShowUI()
 	end
 end
 ----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
-	local iconWidth = iconWidth or 16
-	local iconHeight = iconHeight or 16
-	return CreateAtlasMarkup(atlasName, iconWidth, iconHeight)
+	return CreateAtlasMarkup(atlasName, iconWidth or 16, iconHeight or 16)
 end
+----------------------------------------------------------------
 function E.func_GetItemHyperlink(itemID)
 	local _, link = E.func_GetItemInfo(itemID)
 	return link
 end
+----------------------------------------------------------------
 function E.func_GetItemQualityColorTable(itemID)
 	return ITEM_QUALITY_COLORS[E.func_GetItemQualityByID(itemID)]
 end
+----------------------------------------------------------------
 function E.func_GetQualityHexColor(quality)
 	local numQuality = tonumber(quality)
 	if numQuality and numQuality > 0 and numQuality < 8 then
@@ -37,18 +36,25 @@ function E.func_GetQualityHexColor(quality)
 	return E.COLOR_WHITE
 end
 ----------------------------------------------------------------
-function E.func_GetSpellDescription(spellID)
-	local result = GetSpellSubtext(spellID)
-	return result
-end
-----------------------------------------------------------------
 function E.func_RGB2Hex(r, g, b, a)
 	r = r ~= nil and r or 1
 	g = g ~= nil and g or 1
 	b = b ~= nil and b or 1
 	a = a ~= nil and a or 1
-	return "|c" .. string.format("%02x", math.floor(a*255)) .. utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+	return "|c" .. string.format("%02x%02x%02x%02x",
+		math.floor(a * 255),
+		math.floor(r * 255),
+		math.floor(g * 255),
+		math.floor(b * 255)
+	)
 end
+-- function E.func_RGB2Hex(r, g, b, a)
+-- 	r = r ~= nil and r or 1
+-- 	g = g ~= nil and g or 1
+-- 	b = b ~= nil and b or 1
+-- 	a = a ~= nil and a or 1
+-- 	return "|c" .. string.format("%02x", math.floor(a*255)) .. utf8upper(string.format("%02x%02x%02x", math.floor(r*255), math.floor(g*255), math.floor(b*255)))
+-- end
 ----------------------------------------------------------------
 function E.func_Hex2RGBA(hex, forcedAlpha)
 	if type(hex) ~= "string" then
@@ -95,35 +101,52 @@ end
 ----------------------------------------------------------------
 function E.func_RGB2HexString(r, g, b, a)
 	a = a or 1
-	return string.upper(string.format("%02x%02x%02x%02x",
-			math.floor(a * 255),
-			math.floor(r * 255),
-			math.floor(g * 255),
-			math.floor(b * 255)
-	))
+	return string.format("%02x%02x%02x%02x",
+		math.floor(a * 255),
+		math.floor(r * 255),
+		math.floor(g * 255),
+		math.floor(b * 255)
+	)
 end
+-- function E.func_RGB2HexString(r, g, b, a)
+-- 	a = a or 1
+-- 	return string.upper(string.format("%02x%02x%02x%02x",
+-- 			math.floor(a * 255),
+-- 			math.floor(r * 255),
+-- 			math.floor(g * 255),
+-- 			math.floor(b * 255)
+-- 	))
+-- end
 ----------------------------------------------------------------
 function E.func_Hex2ColorTable(hex, forcedAlpha)
 	local r, g, b, a = E.func_Hex2RGBA(hex)
 	return {r = r, g = g, b = b, a = forcedAlpha or a}
 end
 ----------------------------------------------------------------
-function E.func_GetNextResetTime(time)
-	local time = time or 1
+function E.func_GetNextResetTime(t)
+	local t = t or 1
 	local daytime = 86400
 	local thursdayReset = E.func_GetWeeklyResetStartTime()
-	return (math.ceil((GetServerTime() - thursdayReset)/(daytime*time))*daytime*time)+thursdayReset
+	return (math.ceil((E.TIME_SERVER() - thursdayReset)/(daytime*t))*daytime*t)+thursdayReset
 end
-function E.func_IsAchievementCompleted(id)
-	if not id then
+----------------------------------------------------------------
+----------------------------------------------------------------
+--- @param achievementID number|nil
+--- @return boolean
+function E.func_IsAchievementCompleted(achievementID)
+	if not achievementID then
 		return false
 	end
-	local completed = select(4, GetAchievementInfo(id))
+	local completed = select(4, GetAchievementInfo(achievementID))
 	return completed
 end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
 function E.func_EncodeCoordinates(x, y)
 	return math.floor(x * 10000 + 0.5) * 10000 + math.floor(y * 10000 + 0.5)
 end
+----------------------------------------------------------------
 function E.func_FormatCoordinates(x, y)
 	if not x or not y then return "" end
 	if x == 0 or y == 0 then
@@ -131,6 +154,7 @@ function E.func_FormatCoordinates(x, y)
 	end
 	return string.format("%.1f / %.1f", x * 100, y * 100)
 end
+----------------------------------------------------------------
 function E.func_UnpackCoordinates(packed)
 	if not packed or packed == 0 then
 		return nil, nil
@@ -143,10 +167,7 @@ function E.func_UnpackCoordinates(packed)
 	local y = tonumber(packedStr:sub(5, 8)) / 10000
 	return x, y -- Возвращаем ДВА ЧИСЛА
 end
-function E.func_ReversSort(a, b)
-	return b < a
-end
--- /run E.func_GetQuestLogCount()
+----------------------------------------------------------------
 function E.func_GetQuestLogCount()
 	local numQuests = 0
 	local numShownEntries = E.func_GetNumQuestLogEntries()
@@ -156,6 +177,7 @@ function E.func_GetQuestLogCount()
 	end
 	return numQuests
 end
+----------------------------------------------------------------
 function E.func_GetCurrentExpansion()
 	if LE_EXPANSION_LEVEL_CURRENT ~= nil then
 		return LE_EXPANSION_LEVEL_CURRENT+1
@@ -163,16 +185,19 @@ function E.func_GetCurrentExpansion()
 		return 1
 	end
 end
-function E.func_FormatLastSeen(time, color)
-	if not time then
+----------------------------------------------------------------
+function E.func_FormatLastSeen(t, color)
+	if not t then
 		return L["FRIENDS_LIST_OFFLINE"]
 	else
-		return string.format(L["BNET_LAST_ONLINE_TIME"], color .. E.func_FormatTimeAgo(time) .. "|r")
+		return string.format(L["BNET_LAST_ONLINE_TIME"], color .. E.func_FormatTimeAgo(t) .. "|r")
 	end
 end
+----------------------------------------------------------------
 function E.func_FormatTimeAgo(timeDiff, isAbsolute)
 	if not isAbsolute then
-		timeDiff = time() - timeDiff
+		local ServerTime = E.TIME_SERVER()
+		timeDiff = ServerTime - timeDiff
 	end
 	if timeDiff < SECONDS_PER_MIN then
 		return LASTONLINE_SECS
@@ -188,6 +213,7 @@ function E.func_FormatTimeAgo(timeDiff, isAbsolute)
 		return format(LASTONLINE_YEARS, math.floor(timeDiff / SECONDS_PER_YEAR))
 	end
 end
+----------------------------------------------------------------
 function E.func_TableConcat(table1, table2) -- func_ArrayConcatUnsafe
 	local len = #table1
 	for i = 1, #table2 do
@@ -196,84 +222,109 @@ function E.func_TableConcat(table1, table2) -- func_ArrayConcatUnsafe
 	end
 	return table1
 end
+----------------------------------------------------------------
 function E.func_MergeTables(table1, table2)
 	for k, v in next, (table2) do
 		table1[k] = v
 	end
 	return table1
 end
+----------------------------------------------------------------
 function E.func_GetTextWithColor(fontstring)
 	if not fontstring then return nil end
 	local text = fontstring:GetText()
 	if not text or text == "" then return nil end
 	return E.func_RGB2Hex(fontstring:GetTextColor()) .. text .. "|r"
 end
+----------------------------------------------------------------
 function E.func_FormatDateTwoDigits(date)
 	local result = ("%.2d"):format(date)
 	return result
 end
-function E.func_ShouldShow(id, dataType, profileName)
-	local shouldShow = false
-	if Octo_profileKeys.isSettingsEnabled then
-		-- Режим настройки включен - показываем все валюты
-		shouldShow = true
-	else
-		-- Режим настройки выключен - проверяем настройки валют
-		local settingsTable = Octo_profileKeys.profiles[profileName][dataType] -- dataType
-		if settingsTable then
-			-- Проверяем числовой ключ
-			if settingsTable[id] then
-				shouldShow = true
-			end
-			-- Проверяем строковый ключ
-			if settingsTable[tostring(id)] then
-				shouldShow = true
-			end
-		end
-	end
-	return shouldShow
-end
+----------------------------------------------------------------
 function E.func_InitField(tbl, field, default)
 	if tbl[field] == nil then
 		tbl[field] = default
 	end
 end
+----------------------------------------------------------------
 function E.func_InitSubTable(tbl, field)
 	if type(tbl[field]) ~= "table" then
 		tbl[field] = {}
 	end
 end
+----------------------------------------------------------------
 function E.func_SpamBlock(...)
+	-- Собираем уникальный строковый ключ из всех переданных аргументов.
+	-- Это позволяет различать разные вызовы (например, с разными функциями или параметрами).
 	local key = (""):join(tostringall(...))
+
+	-- Извлекаем саму функцию, флаг проверки боя и кастомный таймер спама.
 	local func, needCheckCombat, newSpamTimer = ...
+
+	-- Если первый аргумент — не функция, прерываем выполнение.
 	if type(func) ~= "function" then return end
-	local SPAM_TIME = newSpamTimer and newSpamTimer or Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME or 2
+
+	-- Определяем время блокировки: либо переданное, либо из настроек, либо по умолчанию 2 секунды.
+	local SPAM_TIME = newSpamTimer or E.SPAM_TIME or 2
+
+	-- Если нужно проверять бой и мы сейчас в нём — запоминаем, что вызов был сделан в бою, и выходим.
 	if (needCheckCombat == nil or needCheckCombat) and InCombatLockdown() then
 		E._inCombats[key] = true
-		return true -- заблочена и добавлена в выполнение после сброса комбата
+		return true
 	end
-	local currentTime = GetTime()
-	-- когда было последнее выполнение
+
+	-- Получаем текущее время (E.TIME_SERVER — ссылка на GetTime, поэтому вызывается как функция).
+	local ServerTime = E.TIME_SERVER()
+
+	-- Проверяем, был ли уже вызов с этим ключом.
 	if E._spamLocks[key] then
-		local timeSinceLast = currentTime - E._spamLocks[key]
-		local timeToEnd = SPAM_TIME-timeSinceLast
+		local timeSinceLast = ServerTime - E._spamLocks[key]  -- сколько прошло с последнего выполнения
+		local timeToEnd = SPAM_TIME - timeSinceLast             -- сколько осталось до конца блокировки
+
+		-- Если с последнего вызова прошло меньше SPAM_TIME, блокируем вызов.
 		if timeSinceLast < SPAM_TIME then
+			-- Планируем отложенный вызов, только если его ещё нет.
 			if not E._callAfterTimer[key] then
-				E._callAfterTimer[key] = true;
-				C_Timer.After(timeToEnd, function()
+				E._callAfterTimer[key] = true  -- помечаем, что таймер уже создан
+
+				-- Сохраняем все исходные аргументы для последующей передачи.
+				local args = { ... }
+
+				-- Создаём таймер, который сработает ровно через timeToEnd секунд.
+				-- Результат (дескриптор) сохраняем в E._timerHandles, чтобы иметь возможность отменить таймер.
+				E._timerHandles = E._timerHandles or {}  -- инициализируем таблицу, если её нет
+				E._timerHandles[key] = C_Timer.After(timeToEnd, function()
+						-- Таймер сработал — снимаем флаги и удаляем свой дескриптор.
 						E._callAfterTimer[key] = nil
-						E.func_SpamBlock(func, needCheckCombat)
+						E._timerHandles[key] = nil
+						-- Рекурсивно вызываем SpamBlock с теми же аргументами.
+						-- Теперь, когда блокировка истекла, func выполнится (если снова не попадёт в спам).
+						E.func_SpamBlock(unpack(args))
 				end)
 			end
-			return true -- заблочена
+			-- Прерываем текущий вызов, потому что он заблокирован.
+			return true
 		end
 	end
-	E._spamLocks[key] = currentTime -- Обновляем время последнего выполнения
-	func() -- Выполняем функцию
-	if E.func_UPDATE_MAINFRAME then
-		E.func_UPDATE_MAINFRAME()
+
+	-- Если мы здесь, значит блокировка истекла (или это первый вызов).
+	-- Но перед выполнением нужно отменить ранее запланированный таймер,
+	-- если он вдруг ещё не сработал — чтобы избежать двойного вызова func.
+	if E._timerHandles and E._timerHandles[key] then
+		E._timerHandles[key]:Cancel()        -- отменяем таймер
+		E._timerHandles[key] = nil           -- очищаем дескриптор
+		E._callAfterTimer[key] = nil         -- снимаем флаг существования таймера
 	end
-	return false -- всё ок
+
+	-- Фиксируем время текущего выполнения.
+	E._spamLocks[key] = ServerTime
+
+	-- Непосредственно вызываем целевую функцию.
+	func()
+
+	-- Возвращаем false как признак того, что вызов не был заблокирован.
+	return false
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -288,6 +339,7 @@ function E.func_CloseSettings()
 		HideUIPanel(GameMenuFrame)
 	end
 end
+----------------------------------------------------------------
 function E.func_OpenToCategory(frame)
 	if InCombatLockdown() then return end
 	if frame and frame:IsShown() then
@@ -296,24 +348,27 @@ function E.func_OpenToCategory(frame)
 	local id = E.main_category:GetID()
 	Settings.OpenToCategory(id, GlobalAddonName)
 end
-function E.func_toogleFrame(frame)
-	frame.clicked = not frame.clicked or nil
-	frame:SetShown(frame.clicked)
-	frame:SetAlpha(1)
-	-- frame:SetShown(not frame:IsShown())
+----------------------------------------------------------------
+function E.func_toogleFrame(f)
+	f.clicked = not f.clicked or nil
+	f:SetShown(f.clicked)
+	f:SetAlpha(1)
+	-- f:SetShown(not f:IsShown())
 end
-function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, frameString)
+----------------------------------------------------------------
+function E.func_CreateMinimapButton(AddonName, Saved_Variables, f, func, frameString)
+	if not f then return end
 	local function hideFrame(_, elapsed)
 		EventFrame.timer = EventFrame.timer - elapsed
 		if EventFrame.timer <= 0 then
-			frame:Hide()
+			f:Hide()
 			EventFrame:SetScript("OnUpdate", nil)
 		end
 	end
-	frame:HookScript("OnHide", function(frame)
-			frame.clicked = nil
+	f:HookScript("OnHide", function(f)
+			f.clicked = nil
 	end)
-	frame:HookScript("OnShow", function(frame)
+	f:HookScript("OnShow", function(f)
 			E.func_CloseSettings()
 	end)
 	local dataBroker = LibStub("LibDataBroker-1.1"):NewDataObject(AddonName, {
@@ -321,12 +376,12 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 			icon = "Interface\\AddOns\\" .. E.MainAddonName .. "\\Media\\IconTexture\\" .. AddonName,
 			OnClick = function(self, button)
 				if button == "LeftButton" then
-					Octo_profileKeys.isSettingsEnabled = nil
-					if frame then
-						E.func_toogleFrame(frame)
+					Octo_Todo_DB_Profiles.KEYS.isSettingsEnabled = nil
+					if f then
+						E.func_toogleFrame(f)
 					end
 				elseif button == "RightButton" then
-					E.func_OpenToCategory(frame)
+					E.func_OpenToCategory(f)
 				end
 			end,
 			OnTooltipShow = function(tooltip)
@@ -336,17 +391,19 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 				tooltip:AddLine(" ")
 				tooltip:AddDoubleLine(E.LEFT_MOUSE_ICON .. L["LMB:"], HUD_EDIT_MODE_SETTING_ACTION_BAR_VISIBLE_SETTING)
 				tooltip:AddDoubleLine(E.RIGHT_MOUSE_ICON .. L["RMB:"], L["OPTIONS"])
-				if Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER then
-					if not frame.clicked then
-						frame:SetAlpha(Octo_ToDo_DB_Vars.CONFIG_FRAME_ALPHA_ON_HOVER/100 or .8)
+				local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+				if settingsProfile.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER then
+					if not f.clicked then
+						f:SetAlpha(settingsProfile.CONFIG_FRAME_ALPHA_ON_HOVER/100 or .8)
 					end
-					frame:Show() -- E.func_toogleFrame(frame)
+					f:Show() -- E.func_toogleFrame(f)
 				end
 				EventFrame:SetScript("OnUpdate", nil)
 			end,
 			OnLeave = function()
-				if Octo_ToDo_DB_Vars.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER and Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION and not frame.clicked then
-					EventFrame.timer = Octo_ToDo_DB_Vars.CONFIG_HOVER_SHOW_DURATION
+				local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+				if settingsProfile.CONFIG_SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER and settingsProfile.CONFIG_HOVER_SHOW_DURATION and not f.clicked then
+					EventFrame.timer = settingsProfile.CONFIG_HOVER_SHOW_DURATION
 					EventFrame:SetScript("OnUpdate", hideFrame)
 				end
 			end,
@@ -359,47 +416,7 @@ function E.func_CreateMinimapButton(AddonName, Saved_Variables, frame, func, fra
 	end
 	LibStub("LibDBIcon-1.0"):Register(AddonName, dataBroker, Saved_Variables.LibDataBroker)
 end
--- function E.func_Gradient_OLD(text, firstColor, secondColor)
--- firstColor = firstColor or E.COLOR_ADDON_LEFT or "|cffD177FF"
--- secondColor = secondColor or E.COLOR_ADDON_RIGHT or "|cff63A4E0"
--- local str = ""
--- local total = utf8len(text)-1
--- if total > 0 then
--- local r1, g1, b1 = E.func_Hex2RGBA(firstColor)
--- local r2, g2, b2 = E.func_Hex2RGBA(secondColor)
--- local rdelta, gdelta, bdelta = (r2 - r1) / total, (g2 - g1) / total, (b2 - b1) / total
--- local r3 = r1
--- local g3 = g1
--- local b3 = b1
--- for i = 1, total do
--- str = str .. E.func_RGB2Hex(r3, g3, b3) .. utf8sub(text, i, i) .. "|r"
--- r3 = r3 + rdelta
--- g3 = g3 + gdelta
--- b3 = b3 + bdelta
--- end
--- return str .. secondColor .. utf8sub(text, utf8len(text)) .. "|r"
--- else
--- return text
--- end
--- end
--- function E.func_Gradient_OLD_2(text, firstColor, secondColor)
--- firstColor = firstColor or E.COLOR_ADDON_LEFT or "|cffD177FF"
--- secondColor = secondColor or E.COLOR_ADDON_RIGHT or "|cff63A4E0"
--- local len = utf8len(text)
--- if len <= 1 then return text end
--- local r1, g1, b1 = E.func_Hex2RGBA(firstColor)
--- local r2, g2, b2 = E.func_Hex2RGBA(secondColor)
--- local dr, dg, db = (r2 - r1) / (len - 1), (g2 - g1) / (len - 1), (b2 - b1) / (len - 1)
--- local parts = {}
--- for i = 1, len do
--- local t = (i - 1) / (len - 1) -- от 0 до 1
--- local r = r1 + dr * (i - 1) -- или r1 + (r2-r1) * t
--- local g = g1 + dg * (i - 1)
--- local b = b1 + db * (i - 1)
--- parts[i] = E.func_RGB2Hex(r, g, b) .. utf8sub(text, i, i) .. "|r"
--- end
--- return table.concat(parts)
--- end
+----------------------------------------------------------------
 function E.func_Gradient(text, firstColor, secondColor)
 	if type(text) ~= "string" or text == "" then
 		return ""
@@ -433,10 +450,7 @@ function E.func_GetColorGradient(value, minValue, maxValue)
 		return E.COLOR_WHITE
 	end
 	-- Проверяем, что цвета есть в БД
-	if not value
-	or not minValue
-	or not maxValue
-	then
+	if not value or not minValue or not maxValue or type(value) == "boolean" or type(minValue) ~= "number" or type(maxValue) ~= "number" then
 		return E.COLOR_GREEN
 	end
 	local r_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_r
@@ -484,30 +498,6 @@ function E.func_GetColorGradient(value, minValue, maxValue)
 	-- return string.format("|cff%02x%02x%02x", r, g, b)
 	local result = E.func_RGB2Hex(r/255, g/255, b/255, 1)
 	return result
-end
-----------------------------------------------------------------
-function E.func_CleanTable(tbl)
-	for k, v in pairs(tbl) do
-		if type(v) == "table" then
-			prune(v)
-			if not next(v) then tbl[k] = nil end
-		elseif v == 0 or v == "" then
-			tbl[k] = nil
-		end
-	end
-end
-----------------------------------------------------------------
-function E.func_RemoveEmptyValues(t)
-	for k, v in pairs(t) do
-		if type(v) == "table" then
-			Cleanup(v)
-			if next(v) == nil then
-				t[k] = nil
-			end
-		elseif v == 0 or v == "" then
-			t[k] = nil
-		end
-	end
 end
 ----------------------------------------------------------------
 function E.func_CleanDeepTable(t, rules)
@@ -633,25 +623,6 @@ function E.func_GetSavedVars(addonName)
 	return E.SavedVarsByAddon[addonName]
 end
 ----------------------------------------------------------------
-function E.func_RequestUIUpdate(event_name)
-	if Octo_DevTool_DB.CONFIG_DEBUG_EVENTS then
-		local isMainFrameVisible = Octo_MainFrame and Octo_MainFrame:IsShown()
-		if isMainFrameVisible then
-			if not E.updateScheduledFlag then
-				E.updateScheduledFlag = true
-				C_Timer.After(0.1, function()
-						E.updateScheduledFlag = false
-						if Octo_MainFrame and Octo_MainFrame:IsShown() then
-							-- E.func_TODO_CreateDataProvider()
-							DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_GREEN, E.COLOR_YELLOW) .. event_name)
-						end
-				end)
-			end
-		else
-			DEFAULT_CHAT_FRAME:AddMessage(E.func_Gradient("E.func_RequestUIUpdate ", E.COLOR_RED, E.COLOR_PURPLE) .. event_name)
-		end
-	end
-end
 function E.func_GetTimewalkingDungeon()
 	local joinable, timewalkDungeonName, result = false, "", ""
 	for expID, v in ipairs(E.OctoTable_Expansions) do
@@ -664,6 +635,7 @@ function E.func_GetTimewalkingDungeon()
 	end
 	return joinable, result, timewalkDungeonName:match("%((.-)%)")
 end
+----------------------------------------------------------------
 function E.func_FormatExpansion(expID, iconSide, fullName)
 	local expansion = E.OctoTable_Expansions[expID]
 	local expIcon = E.func_texturefromIcon(expansion.icon, 16, 32)
@@ -683,7 +655,7 @@ function E.func_GetCurrentRegionName()
 	end
 	return result
 end
-E.CurrentRegionName = E.func_GetCurrentRegionName()
+E.CURRENT_REGION_NAME = E.func_GetCurrentRegionName()
 function E.func_RegisterFrame_ICONS(frame)
 	E.OctoTable_Frames_ICONS = E.OctoTable_Frames_ICONS or {}
 	E.OctoTable_Frames_SIMPLE = E.OctoTable_Frames_SIMPLE or {}
@@ -802,17 +774,17 @@ function E.func_CompactRoundNumber(number)
 		return math.floor(number+.5)
 	end
 end
-function E.func_SecondsToClock(time, allwaysShowSeconds)
-	local time = tonumber(time) or 0
-	if time <= 0 then
+function E.func_SecondsToClock(t, allwaysShowSeconds)
+	local t = tonumber(t) or 0
+	if t <= 0 then
 		return ""
 	end
-	local years = math.floor(time / 31536000)
-	local days = math.floor(time % 31536000 / 86400)
-	local hours = math.floor(time % 86400 / 3600)
-	local mins = math.floor(time % 3600 / 60)
-	local secs = math.floor(time % 60)
-	local ms = time - math.floor(time)
+	local years = math.floor(t / 31536000)
+	local days = math.floor(t % 31536000 / 86400)
+	local hours = math.floor(t % 86400 / 3600)
+	local mins = math.floor(t % 3600 / 60)
+	local secs = math.floor(t % 60)
+	local ms = t - math.floor(t)
 	local parts = {}
 	if years > 0 then
 		table.insert(parts, years .. L["y"] .. " ")
@@ -835,15 +807,15 @@ function E.func_SecondsToClock(time, allwaysShowSeconds)
 		if allwaysShowSeconds then
 			table.insert(parts, " " .. string.format("%02d", secs) .. L["s"])
 		end
-	elseif time >= 60 then
+	elseif t >= 60 then
 		table.insert(parts, mins .. L["m"] .. " ")
-		if time < 600 or allwaysShowSeconds then
+		if t < 600 or allwaysShowSeconds then
 			table.insert(parts, secs .. L["s"])
 		end
-	elseif time >= 1 then
+	elseif t >= 1 then
 		table.insert(parts, secs .. L["s"])
 	else
-		table.insert(parts, string.format("%.3f", time) .. "ms")
+		table.insert(parts, string.format("%.3f", t) .. "ms")
 	end
 	return table.concat(parts)
 end
@@ -886,13 +858,23 @@ function E.func_GetPlayerLocation()
 	end
 	return E.TEXT_UNKNOWN, true
 end
-function E.func_GetQuestStatus(questID, forceBoolean)
-	if not questID then return end
+
+function E.func_IsOnQuest_DB(questID, cm)
+	if not questID or not cm then return false end
+	if cm.ListOfQuests and cm.ListOfQuests[questID] then
+		return true
+	end
+	return false
+end
+
+function E.func_GetQuestStatus(questID, forceBoolean, short)
+	if not questID then return "" end
 	local result
 	-- серый фейл
 	-- красный не сделан
-	-- желтный делается
+	-- желтый делается
 	-- фиолетовый можно сдать
+
 	if E.func_IsFailed(questID) then
 		result = E.COLOR_RED .. L["FAILED"] .. "|r"
 	elseif E.func_IsQuestFlaggedCompleted(questID) then
@@ -902,10 +884,15 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 			result = E.DONE
 		end
 	elseif E.func_IsComplete(questID) then
+		-- if short then
+		--     result = E.COLOR_PURPLE .. ">" .. " + " .. "<|r" -- E.DONE -- L["DONE"]
+		-- else
 		result = E.COLOR_PURPLE .. ">" .. L["QUEST_WATCH_QUEST_READY"] .. "<|r"
+		-- end
 	elseif not E.func_IsOnQuest(questID) then
 		result = nil
 	else
+		-- result =  E.func_FormatQuestProgress(questID)
 		local objectives = E.func_GetQuestObjectives(questID)
 		if not objectives then
 			result = ""
@@ -914,13 +901,19 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 			for i = 1, #objectives do
 				local objective = objectives[i]
 				if objective then
+					local currQ, maxQ = 0, 0
 					local objectiveText, objectiveType, finished, numFulfilled, numRequired = GetQuestObjectiveInfo(questID, i, false)
+					currQ = numFulfilled or 0
+					maxQ = numRequired or 0
+					if not numRequired then
+						currQ, maxQ = 0, 1
+					end
 					local color = finished and E.COLOR_YELLOW or E.COLOR_RED
 					local text
 					if objectiveType == "progressbar" then
 						text = color .. GetQuestProgressBarPercent(questID) .. "%|r"
 					else
-						text = color .. objective.numFulfilled .. "/" .. objective.numRequired .. "|r"
+						text = color .. currQ .. "/" .. maxQ .. "|r"
 					end
 					table.insert(parts, text)
 				end
@@ -929,6 +922,7 @@ function E.func_GetQuestStatus(questID, forceBoolean)
 		end
 	end
 	return result
+
 end
 function E.func_GetRealmShortName(text)
 	local a, b = strsplit(" ", text:gsub("[-']", " "))
@@ -1016,90 +1010,116 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local CompactSuffixes = {
-	enUS = { "", "k", "M", "B", "T" },
-	enGB = { "", "k", "M", "B", "T" },
-	ruRU = { "", " тыс.", " млн", " млрд", " трлн" },
-	deDE = { "", " Tsd.", " Mio.", " Mrd.", " Bio." },
-	frFR = { "", " k", " M", " Md", " T" },
-	esES = { "", " mil", " M", " mil M", " B" },
-	esMX = { "", " mil", " M", " mil M", " B" },
-	ptBR = { "", " mil", " mi", " bi", " tri" },
-	itIT = { "", " mila", " mln", " mld", " tln" },
-	zhCN = { "", "万", "亿", "兆" }, -- Упрощённый китайский
-	zhTW = { "", "萬", "億", "兆" }, -- Традиционный китайский
-	koKR = { "", "만", "억", "조" }, -- Корейский
-}
-local AsianLocales = {
-	zhCN = true,
-	zhTW = true,
-	koKR = true,
-}
-local function FormatWithSeparators(num)
-	local formatted = tostring(num)
-	while true do
-		local k = formatted:gsub("^(-?%d+)(%d%d%d)", "%1 %2")
-		if k == formatted then break end
-		formatted = k
+do
+	local CompactSuffixes = {
+		enUS = { "", "k", "M", "B", "T" },
+		enGB = { "", "k", "M", "B", "T" },
+		ruRU = { "", " тыс.", " млн", " млрд", " трлн" },
+		deDE = { "", " Tsd.", " Mio.", " Mrd.", " Bio." },
+		frFR = { "", " k", " M", " Md", " T" },
+		esES = { "", " mil", " M", " mil M", " B" },
+		esMX = { "", " mil", " M", " mil M", " B" },
+		ptBR = { "", " mil", " mi", " bi", " tri" },
+		itIT = { "", " mila", " mln", " mld", " tln" },
+		zhCN = { "", "万", "亿", "兆" },
+		zhTW = { "", "萬", "億", "兆" },
+		koKR = { "", "만", "억", "조" },
+	}
+	local AsianLocales = {
+		zhCN = true,
+		zhTW = true,
+		koKR = true,
+	}
+	local function FormatWithSeparators(num)
+		local formatted = tostring(num)
+		while true do
+			local k = formatted:gsub("^(-?%d+)(%d%d%d)", "%1 %2")
+			if k == formatted then break end
+			formatted = k
+		end
+		return formatted
 	end
-	return formatted
-end
-function E.func_CompactFormatNumber(num)
-	num = num or 0
-	local locale = "enUS"
-	local suffixes = CompactSuffixes["enUS"]
-	local mode = Octo_ToDo_DB_Vars.Config_numberFormatMode or 1
-	local STEP_WEST = 1000
-	local STEP_ASIA = 10000
-	local DECIMALS = 1
-	local step = STEP_WEST
-	----------------------------------------------------------------
-	if mode == 1 then
-		suffixes = CompactSuffixes["enUS"]
-	elseif mode == 2 then
-		locale = E.curLocaleLang
-		suffixes = CompactSuffixes[locale] or CompactSuffixes["enUS"]
-		step = AsianLocales[locale] and STEP_ASIA or STEP_WEST
-	elseif mode == 3 then -- ПОЛНЫЙ С РАЗДЕЛИТЕЛЯМИ
-		return FormatWithSeparators(math.floor(num + 0.5))
-	elseif mode == 4 then -- ПОЛНЫЙ
-		return (math.floor(num + 0.5))
-	elseif mode == 5 then -- BLIZZ LIKE
-		if AbbreviateLargeNumbers then
-			return AbbreviateLargeNumbers(math.floor(num + 0.5))
-		else
+
+	function E.func_CompactFormatNumber(num)
+		num = num or 0
+		local locale = "enUS"
+		local suffixes = CompactSuffixes["enUS"]
+		local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+		local mode = settingsProfile.Config_numberFormatMode or 1
+		local STEP_WEST = 1000
+		local STEP_ASIA = 10000
+		local step = STEP_WEST
+
+		-- mode 1 - компактный с усечением до 1 знака
+		if mode == 1 then
+			suffixes = CompactSuffixes["enUS"]
+			step = STEP_WEST
+
+			local i = 1
+			local sign = num < 0 and -1 or 1
+			local value = math.abs(num)
+
+			while value >= step and i < #suffixes do
+				value = value / step
+				i = i + 1
+			end
+
+			-- Усекаем до 1 знака (1.999 -> 1.9, НЕ 2)
+			local truncated = math.floor(value * 10) / 10
+			local result = truncated * sign
+			local s = tostring(result):gsub("%.0$", "")
+			return s .. suffixes[i]
+
+		elseif mode == 2 then
+			locale = E.curLocaleLang
+			suffixes = CompactSuffixes[locale] or CompactSuffixes["enUS"]
+			step = AsianLocales[locale] and STEP_ASIA or STEP_WEST
+
+			local i = 1
+			local sign = num < 0 and -1 or 1
+			local value = math.abs(num)
+
+			while value >= step and i < #suffixes do
+				value = value / step
+				i = i + 1
+			end
+
+			-- Усекаем до 1 знака
+			local truncated = math.floor(value * 10) / 10
+			local result = truncated * sign
+			local s = tostring(result):gsub("%.0$", "")
+			return s .. suffixes[i]
+
+		elseif mode == 3 then
+			return FormatWithSeparators(math.floor(num + 0.5))
+		elseif mode == 4 then
 			return tostring(math.floor(num + 0.5))
+		elseif mode == 5 then
+			if AbbreviateLargeNumbers then
+				return AbbreviateLargeNumbers(math.floor(num + 0.5))
+			else
+				return tostring(math.floor(num + 0.5))
+			end
+		elseif mode == 6 then
+			local i = 1
+			local sign = num < 0 and -1 or 1
+			local value = math.abs(num)
+
+			while value >= step and i < #suffixes do
+				value = value / step
+				i = i + 1
+			end
+
+			-- Усекаем до 1 знака
+			local truncated = math.floor(value * 10) / 10
+			local result = truncated * sign
+			local s = tostring(result):gsub("%.0$", "")
+			return s .. suffixes[i]
 		end
-	elseif mode == 6 then -- Short & Clean
-		local i = 1
-		local sign = num < 0 and -1 or 1
-		num = math.abs(num)
-		while num >= step and i < #suffixes do
-			num = num / step
-			i = i + 1
-		end
-		local rounded = math.floor(num + 0.5) * sign
-		return tostring(rounded) .. suffixes[i]
+
+		-- fallback (никогда не сработает, но оставлю)
+		return tostring(math.floor(num + 0.5))
 	end
-	----------------------------------------------------------------
-	local i = 1
-	local sign = num < 0 and -1 or 1
-	num = math.abs(num)
-	if not suffixes then
-		return tostring(math.floor(num * sign + 0.5))
-	end
-	while num >= step and i < #suffixes do
-		num = num / step
-		i = i + 1
-	end
-	local rounded = tonumber(string.format("%." .. DECIMALS .. "f", num))
-	if rounded >= step and i < #suffixes then
-		rounded = rounded / step
-		i = i + 1
-	end
-	rounded = rounded * sign
-	local s = tostring(rounded):gsub("%.0$", "")
-	return s .. suffixes[i]
 end
 ----------------------------------------------------------------
 function E.func_GetSpecializationIconSafe()
@@ -1112,16 +1132,24 @@ function E.func_GetSpecializationIconSafe()
 end
 ----------------------------------------------------------------
 function E.func_UpdateFont()
-	local Config_FontStyle = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontStyle
-	local Config_FontSize = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontSize
-	local Config_FontFlags = Octo_ToDo_DB_Vars.FontOption[E.curLocaleLang].Config_FontFlags
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	settingsProfile.FontOption = settingsProfile.FontOption or {}
+	settingsProfile.FontOption[E.curLocaleLang] = settingsProfile.FontOption[E.curLocaleLang] or {}
+
+	local Config_FontStyle = settingsProfile.FontOption[E.curLocaleLang].Config_FontStyle
+	local Config_FontSize = settingsProfile.FontOption[E.curLocaleLang].Config_FontSize
+	local Config_FontFlags = settingsProfile.FontOption[E.curLocaleLang].Config_FontFlags
 	local fontPath = LibSharedMedia:Fetch("font", Config_FontStyle)
+
 	E.OctoFont10:CopyFontObject(GameTooltipText)
-	E.OctoFont11:CopyFontObject(GameTooltipText)
-	E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
 	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
+
+	E.OctoFont11:CopyFontObject(GameTooltipText)
 	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
+
+	E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
 	E.OctoFont22:SetFont(fontPath, 22, Config_FontFlags)
+
 	Octo_MeasureFrame.measureText:SetFontObject(OctoFont11)
 end
 ----------------------------------------------------------------
@@ -1142,10 +1170,10 @@ function E.func_GetEmptySlotIcon(slotID)
 	return 134400
 end
 ----------------------------------------------------------------
-function E:func_CanCollectData()
+function E.func_CanCollectData()
 	local db = Octo_ToDo_DB_Levels
 	if not db then return false end
-	local char = db[self.curGUID]
+	local char = db[E.curGUID]
 	if not char then return false end
 	return char.MASLENGO ~= nil and char.PlayerData ~= nil
 end
@@ -1199,113 +1227,116 @@ function E.func_DB_FRAME_Color(frame, Type, r, g, b, a, UseFaction, UseClass)
 		frame.highlight:SetVertexColor(r, g, b) -- a?
 	end
 end
-local function func_UpdateGlobals()
-	local db = Octo_ToDo_DB_Vars
-	if db then
-		if db.Config_ADDON_HEIGHT then
-			E.GLOBAL_LINE_HEIGHT = db.Config_ADDON_HEIGHT
-			E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
-			E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
-		end
-		db.FontOption = db.FontOption or {}
-		db.FontOption[E.curLocaleLang] = db.FontOption[E.curLocaleLang] or {}
-		if db.FontOption[E.curLocaleLang].Config_FontStyle then
-			E.func_UpdateFont()
-		end
-		if Octo_profileColors and Octo_profileColors.profiles and Octo_profileColors.Current_profile then
-			E.func_CreateNew_profileColors(Octo_profileColors.Current_profile)
+function E.func_UpdateGlobals()
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	if not settingsProfile then return end
+	if settingsProfile.Config_ADDON_HEIGHT then
+		E.GLOBAL_LINE_HEIGHT = settingsProfile.Config_ADDON_HEIGHT
+		E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
+		E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
+	end
+	settingsProfile.FontOption = settingsProfile.FontOption or {}
+	settingsProfile.FontOption[E.curLocaleLang] = settingsProfile.FontOption[E.curLocaleLang] or {}
+	if settingsProfile.FontOption[E.curLocaleLang].Config_FontStyle then
+		E.func_UpdateFont()
+	end
+	if Octo_Todo_DB_Profiles and Octo_Todo_DB_Profiles.SETTINGS and Octo_Todo_DB_Profiles.SETTINGS.CURRENT then
+		E.func_CreateProfile("SETTINGS", Octo_Todo_DB_Profiles.SETTINGS.CURRENT)
+	end
+	----------------------------------------------------------------
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	E.PROFTBL = settingsProfile
+
+	if E.PROFTBL then
+		local UseFaction = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseFaction_CONFIG
+		local UseClass = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseClass_CONFIG
+
+		do
+			local MAIN_FRAME = E.FRAMES[E.MAIN_FRAME_NAME]
+			if MAIN_FRAME then
+				E.Octo_SearchBox_OnShow(MAIN_FRAME)
+			end
 		end
 		----------------------------------------------------------------
-		if E.PROFTBL then
-			----------------------------------------------------------------
-			do
-				local r = E.PROFTBL.ConfigColor_faction_Horde_r
-				local g = E.PROFTBL.ConfigColor_faction_Horde_g
-				local b = E.PROFTBL.ConfigColor_faction_Horde_b
-				local a = E.PROFTBL.ConfigColor_faction_Horde_a
-				E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
+		do
+			local r, g, b, a = E.PROFTBL.ConfigColor_faction_Horde_r, E.PROFTBL.ConfigColor_faction_Horde_g, E.PROFTBL.ConfigColor_faction_Horde_b, E.PROFTBL.ConfigColor_faction_Horde_a
+			E.COLOR_HORDE = E.func_RGB2Hex(r, g, b, a)
+		end
+		----------------------------------------------------------------
+		do
+			local r, g, b, a = E.PROFTBL.ConfigColor_faction_Alliance_r, E.PROFTBL.ConfigColor_faction_Alliance_g, E.PROFTBL.ConfigColor_faction_Alliance_b, E.PROFTBL.ConfigColor_faction_Alliance_a
+			E.COLOR_ALLIANCE = E.func_RGB2Hex(r, g, b, a)
+		end
+		----------------------------------------------------------------
+		do
+			local r, g, b, a = E.PROFTBL.ConfigColor_faction_Neutral_r, E.PROFTBL.ConfigColor_faction_Neutral_g, E.PROFTBL.ConfigColor_faction_Neutral_b, E.PROFTBL.ConfigColor_faction_Neutral_a
+			E.COLOR_NEUTRAL = E.func_RGB2Hex(r, g, b, a)
+			E.COLOR_FACTION = E.FACTION_CURRENT == "Horde" and E.COLOR_HORDE or E.FACTION_CURRENT == "Alliance" and E.COLOR_ALLIANCE or E.Class_Monk_Color
+		end
+		----------------------------------------------------------------
+		do
+			local r, g, b, a = E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a
+			for k, frame in next, (E.OctoTable_ColoredFrames) do
+				E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
 			end
-			----------------------------------------------------------------
-			do
-				local r = E.PROFTBL.ConfigColor_faction_Alliance_r
-				local g = E.PROFTBL.ConfigColor_faction_Alliance_g
-				local b = E.PROFTBL.ConfigColor_faction_Alliance_b
-				local a = E.PROFTBL.ConfigColor_faction_Alliance_a
-				E.COLOR_ALLIANCE = E.func_RGB2Hex(r, g, b, a)
+		end
+		----------------------------------------------------------------
+		do
+			local r, g, b, a = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a
+			-- E.func_DB_FRAME_Color(Octo_TooltipFrame, "frame", r, g, b, a, UseFaction, UseClass)
+			for k, frame in next, (E.OctoTable_ColoredTooltips) do
+				E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
 			end
-			----------------------------------------------------------------
-			do
-				local r = E.PROFTBL.ConfigColor_faction_Neutral_r
-				local g = E.PROFTBL.ConfigColor_faction_Neutral_g
-				local b = E.PROFTBL.ConfigColor_faction_Neutral_b
-				local a = E.PROFTBL.ConfigColor_faction_Neutral_a
-				E.COLOR_NEUTRAL = E.func_RGB2Hex(r, g, b, a)
-				E.COLOR_FACTION = E.FACTION_CURRENT == "Horde" and E.COLOR_HORDE or E.FACTION_CURRENT == "Alliance" and E.COLOR_ALLIANCE or E.Class_Monk_Color
+		end
+		----------------------------------------------------------------
+		do
+			local r, g, b, a = E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a
+			for k, frame in next, (E.OctoTable_ColoredFrames) do
+				E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
 			end
-			----------------------------------------------------------------
-			do
-				local r = E.PROFTBL.ConfigColor_MAIN_MainFrame_r
-				local g = E.PROFTBL.ConfigColor_MAIN_MainFrame_g
-				local b = E.PROFTBL.ConfigColor_MAIN_MainFrame_b
-				local a = E.PROFTBL.ConfigColor_MAIN_MainFrame_a
-				local UseFaction = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseFaction_CONFIG
-				local UseClass = E.PROFTBL.ConfigColor_MAIN_MainFrame_UseClass_CONFIG
-				for k, frame in next, (E.OctoTable_ColoredFrames) do
-					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
-				end
+			for k, frame in next, (E.OctoTable_ColoredTooltips) do
+				E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
 			end
-			----------------------------------------------------------------
-			do
-				local r = E.PROFTBL.ConfigColor_MAIN_Border_r
-				local g = E.PROFTBL.ConfigColor_MAIN_Border_g
-				local b = E.PROFTBL.ConfigColor_MAIN_Border_b
-				local a = E.PROFTBL.ConfigColor_MAIN_Border_a
-				local UseFaction = E.PROFTBL.ConfigColor_MAIN_Border_UseFaction_CONFIG
-				local UseClass = E.PROFTBL.ConfigColor_MAIN_Border_UseClass_CONFIG
-				for k, frame in next, (E.OctoTable_ColoredFrames) do
-					E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
-				end
-				for k, frame in next, (E.OctoFrames_Dropdowns) do
-					E.func_DB_FRAME_Color(frame, "border", r, g, b, a, UseFaction, UseClass)
-				end
-			end
-			----------------------------------------------------------------
-			do
-				local r = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r
-				local g = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g
-				local b = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b
-				local a = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a
-				local UseFaction = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseFaction_CONFIG
-				local UseClass = E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_UseClass_CONFIG
-				E.func_DB_FRAME_Color(Octo_TooltipFrame, "frame", r, g, b, a, UseFaction, UseClass)
-				for k, frame in next, (E.OctoFrames_Dropdowns) do
-					E.func_DB_FRAME_Color(frame, "frame", r, g, b, a, UseFaction, UseClass)
-				end
-			end
-			----------------------------------------------------------------
 		end
 		----------------------------------------------------------------
 	end
+	----------------------------------------------------------------
+
 end
-function E.func_UpdateGlobals()
-	E.func_SpamBlock(func_UpdateGlobals, true, 1)
-end
+-- function E.func_UpdateGlobals()
+--     E.func_SpamBlock(func_UpdateGlobals, true, 1)
+-- end
 ----------------------------------------------------------------
 function E.func_DB_REP_COLOR(repType, reaction)
-	local color
+	local color = E.COLOR_DARKGRAY
 	if not repType or not reaction or not E.PROFTBL then return color end
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+	local r, g, b, a = 0.5, 0.5, 0.5, 0.5
+
 	if repType == 1 and reaction and type(reaction) == "number" and reaction > 0 then
-		color = Octo_ToDo_DB_Vars[string.format("CONFIG_REPUTATION_SIMPLE_COLOR_%d", reaction)]
+		r = settingsProfile["CONFIG_REPUTATION_SIMPLE_COLOR_" .. reaction .. "_R"]
+		g = settingsProfile["CONFIG_REPUTATION_SIMPLE_COLOR_" .. reaction .. "_G"]
+		b = settingsProfile["CONFIG_REPUTATION_SIMPLE_COLOR_" .. reaction .. "_B"]
+		a = settingsProfile["CONFIG_REPUTATION_SIMPLE_COLOR_" .. reaction .. "_A"]
 	elseif repType == 2 then
-		color = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_FRIEND_COLOR
+		r = settingsProfile.CONFIG_REPUTATION_FRIEND_COLOR_R
+		g = settingsProfile.CONFIG_REPUTATION_FRIEND_COLOR_G
+		b = settingsProfile.CONFIG_REPUTATION_FRIEND_COLOR_B
+		a = settingsProfile.CONFIG_REPUTATION_FRIEND_COLOR_A -- E.func_GetProfile_SETTINGS_CURRENT().CONFIG_REPUTATION_FRIEND_COLOR_A
 	elseif repType == 3 then
-		color = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_MAJOR_COLOR
+		r = settingsProfile.CONFIG_REPUTATION_MAJOR_COLOR_R
+		g = settingsProfile.CONFIG_REPUTATION_MAJOR_COLOR_G
+		b = settingsProfile.CONFIG_REPUTATION_MAJOR_COLOR_B
+		a = settingsProfile.CONFIG_REPUTATION_MAJOR_COLOR_A
 	elseif repType == 4 then
-		color = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_PARAGON_COLOR
-	else
-		color = E.COLOR_DARKGRAY:gsub("^|c", "")
+		r = settingsProfile.CONFIG_REPUTATION_PARAGON_COLOR_R
+		g = settingsProfile.CONFIG_REPUTATION_PARAGON_COLOR_G
+		b = settingsProfile.CONFIG_REPUTATION_PARAGON_COLOR_B
+		a = settingsProfile.CONFIG_REPUTATION_PARAGON_COLOR_A
 	end
-	return "|c" .. color
+	color = E.func_RGB2Hex(r, g, b, a)
+
+	return color
 end
 ----------------------------------------------------------------
 function E.func_DB_COV_COLOR(covenantID)
@@ -1344,7 +1375,7 @@ function E.func_DB_FACTION_COLOR(CharInfo)
 	if not E.PROFTBL then return r, g, b, a end
 	if not CharInfo then return r, g, b, a end
 	local pd = CharInfo.PlayerData
-	local faction = pd.Faction or "Neutral"
+	local faction = pd.FACTION or "Neutral"
 	local result = E.Class_Monk_Color
 	if faction == "Horde" then
 		r = E.PROFTBL.ConfigColor_faction_Horde_r
@@ -1371,43 +1402,46 @@ function E.func_DB_HEADER_COLOR(CharInfo)
 	if not CharInfo then return r, g, b, a end
 	local pd = CharInfo.PlayerData
 	if not pd then return r, g, b, a end
-	local classColorHex = pd.classColorHex or E.COLOR_WHITE
-	if E.PROFTBL.ConfigColor_CharHeader_UseFaction_CONFIG then
-		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
-	elseif E.PROFTBL.ConfigColor_CharHeader_UseClass_CONFIG then
-		r, g, b = E.func_Hex2RGBA(classColorHex)
-	else
+
+	local colorTYPE = E.PROFTBL.ConfigColor_CharHeader_TYPE
+	if colorTYPE == 0 then -- CUSTOM
 		r = E.PROFTBL.ConfigColor_CharHeader_r
 		g = E.PROFTBL.ConfigColor_CharHeader_g
 		b = E.PROFTBL.ConfigColor_CharHeader_b
+	elseif colorTYPE == 1 then -- FACTION
+		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
+	elseif colorTYPE == 2 then -- CLASS
+		local classColorHex = pd.classColorHex or E.COLOR_WHITE
+		r, g, b = E.func_Hex2RGBA(classColorHex)
 	end
 	a = E.PROFTBL.ConfigColor_CharHeader_a
 	return r, g, b, a
 end
 ----------------------------------------------------------------
-function E.func_DB_CHARLINE_COLOR()
+function E.func_DB_CHARLINE_COLOR(CharInfo)
 	local r, g, b, a = 1, 1, 1, 1
 	if not E.PROFTBL then return r, g, b, a end
 	local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
+	-- if not CharInfo then return r, g, b, a end
 	local pd = CharInfo.PlayerData
-	local classColorHex = pd.classColorHex or E.COLOR_WHITE
-	if E.PROFTBL.ConfigColor_CharLines_UseFaction_CONFIG then
-		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
-	elseif E.PROFTBL.ConfigColor_CharLines_UseClass_CONFIG then
-		r, g, b = E.func_Hex2RGBA(classColorHex)
-	else
+	if not pd then return r, g, b, a end
+
+	local colorTYPE = E.PROFTBL.ConfigColor_CharLines_TYPE
+	if colorTYPE == 0 then -- CUSTOM
 		r = E.PROFTBL.ConfigColor_CharLines_r
 		g = E.PROFTBL.ConfigColor_CharLines_g
 		b = E.PROFTBL.ConfigColor_CharLines_b
+	elseif colorTYPE == 1 then -- FACTION
+		r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
+	elseif colorTYPE == 2 then -- CLASS
+		local classColorHex = pd.classColorHex or E.COLOR_WHITE
+		r, g, b = E.func_Hex2RGBA(classColorHex)
 	end
 	a = E.PROFTBL.ConfigColor_CharLines_a
 	return r, g, b, a
 end
-----------------------------------------------------------------
--- function E.func_DB_HIGHLIGHT_COLOR()
--- local r, g, b, a = 1, 1, 1, 1
--- return r, g, b, a
--- end
+
+
 ----------------------------------------------------------------
 local function ResetHighlightState(frame)
 	if frame.highlightLeave then
@@ -1420,6 +1454,39 @@ local function ResetHighlightState(frame)
 		frame.HighlightTexture:SetAlpha(0)
 	end
 end
+
+local function Highlight_OnShow(self, frame, alpha)
+	if E.PROFTBL then
+		local r = E.PROFTBL.ConfigColor_Highlight_r
+		local g = E.PROFTBL.ConfigColor_Highlight_g
+		local b = E.PROFTBL.ConfigColor_Highlight_b
+		local a = E.PROFTBL.ConfigColor_Highlight_a
+
+		local UseFaction = false
+		local UseClass = false
+		local colorTYPE = E.PROFTBL.ConfigColor_Highlight_TYPE
+		if colorTYPE == 0 then -- CUSTOM
+			r = E.PROFTBL.ConfigColor_CharLines_r
+			g = E.PROFTBL.ConfigColor_CharLines_g
+			b = E.PROFTBL.ConfigColor_CharLines_b
+		elseif colorTYPE == 1 then -- FACTION
+			UseFaction = true
+			r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
+		elseif colorTYPE == 2 then -- CLASS
+			UseClass = true
+			r, g, b = E.func_Hex2RGBA(E.classColorHexCurrent)
+		end
+		alpha:SetFromAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
+		E.func_DB_FRAME_Color(frame, "highlight", r, g, b, a, UseFaction, UseClass)
+		ResetHighlightState(self)
+	end
+end
+
+----------------------------------------------------------------
+-- function E.func_DB_HIGHLIGHT_COLOR()
+-- local r, g, b, a = 1, 1, 1, 1
+-- return r, g, b, a
+-- end
 ----------------------------------------------------------------
 function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 	if not frame or not anchorFrame or frame.highlight then
@@ -1487,17 +1554,7 @@ function E.func_ApplyHighlightTemplate(frame, anchorFrame)
 			GameTooltip:Hide()
 	end)
 	frame:SetScript("OnShow", function(self)
-			if E.PROFTBL then
-				local r = E.PROFTBL.ConfigColor_Highlight_r
-				local g = E.PROFTBL.ConfigColor_Highlight_g
-				local b = E.PROFTBL.ConfigColor_Highlight_b
-				local a = E.PROFTBL.ConfigColor_Highlight_a
-				local UseFaction = E.PROFTBL.ConfigColor_Highlight_UseFaction_CONFIG
-				local UseClass = E.PROFTBL.ConfigColor_Highlight_UseClass_CONFIG
-				alpha:SetFromAlpha(E.PROFTBL.ConfigColor_Highlight_a or .2)
-				E.func_DB_FRAME_Color(frame, "highlight", r, g, b, a, UseFaction, UseClass)
-				ResetHighlightState(self)
-			end
+		Highlight_OnShow(self, frame, alpha)
 	end)
 	frame:GetScript("OnShow")(frame)
 end
@@ -1724,49 +1781,55 @@ function E.func_SetFlattensRenderLayers_OnAllFrames()
 	for k, frame in next, (E.OctoTable_ColoredFrames) do
 		frame:SetFlattensRenderLayers(true)
 	end
-	for k, frame in next, (E.OctoFrames_Dropdowns) do
-		frame:SetFlattensRenderLayers(true)
+end
+----------------------------------------------------------------
+function E.func_CountCharacters()
+	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
+	local count = 0
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		count = count + 1
 	end
+	return count
 end
 ----------------------------------------------------------------
 function E.func_CountVisibleCharacters()
-	local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
-	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION or false
-	local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN or 1
-	local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX or 90
-	local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
-	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
-	local CONFIG_SHOW_ALWAYS_AS_FIRST = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST or false
+	local CharacterProfile, CharacterProfile_GUIDS, CharacterProfile_OTHER, CharacterProfile_SORTING = E.func_GetProfile_CHARACTERS_CURRENT()
+
+	local CONFIG_SHOW_ONLY_CURRENT_SERVER = CharacterProfile.OTHER.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = CharacterProfile.OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION or false
+	local CONFIG_SHOW_LEVEL_MIN = CharacterProfile.OTHER.CONFIG_SHOW_LEVEL_MIN or 1
+	local CONFIG_SHOW_LEVEL_MAX = CharacterProfile.OTHER.CONFIG_SHOW_LEVEL_MAX or 90
+	local CONFIG_SHOW_ONLY_CURRENT_FACTION = CharacterProfile.OTHER.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
+	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = CharacterProfile.OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
+	local CONFIG_SHOW_ALWAYS_AS_FIRST = CharacterProfile.OTHER.CONFIG_SHOW_ALWAYS_AS_FIRST or false
 	local count = 0
 	local curGUID = E.curGUID
-	local curFaction = E.FACTION_CURRENT
+	local FACTION = E.FACTION_CURRENT
 	local curServer = E.func_GetPlayerRealm()
-	local CurrentRegionName = E.CurrentRegionName
+	local REGION_NAME = E.CURRENT_REGION_NAME
 	local curBattleTag = E.curBattleTag
 	local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
-	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
+	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and REGION_NAME
 	local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
+
+
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if CharInfo.PlayerData then
 			local PlayerData = CharInfo.PlayerData
-			-- Текущий персонаж всегда считается, если включена опция
-			-- if CONFIG_SHOW_ALWAYS_AS_FIRST and GUID == curGUID then
-			--     count = count + 1
-			-- else
 			if GUID == curGUID then
 				count = count + 1
 			else
-				if PlayerData.CONFIG_SHOW_PLAYER and
+				if CharacterProfile_GUIDS[GUID] and
 				PlayerData.UnitLevel and
-				PlayerData.CurrentRegionName and
+				PlayerData.REGION_NAME and
 				PlayerData.curServer and
-				PlayerData.Faction and
+				PlayerData.FACTION and
 				PlayerData.BattleTag then
 					local unitLevel = PlayerData.UnitLevel
 					local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
-					local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.Faction == curFaction
+					local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.FACTION == FACTION
 					local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
-					local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
+					local meetsRegion = not checkCurrentRegion or PlayerData.REGION_NAME == REGION_NAME
 					local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag
 					if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
 						count = count + 1
@@ -1779,333 +1842,183 @@ function E.func_CountVisibleCharacters()
 end
 ----------------------------------------------------------------
 function E.func_SortCharacters()
-	local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
-	local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION or false
-	local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN or 1
-	local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX or 90
-	local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
-	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
-	local CONFIG_SHOW_ALWAYS_AS_FIRST = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST or false
-	local CONFIG_SORTING_CUSTOM = Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM or false
+	local CharacterProfile, CharacterProfile_GUIDS, CharacterProfile_OTHER, CharacterProfile_SORTING = E.func_GetProfile_CHARACTERS_CURRENT()
+
+	local CONFIG_SHOW_ONLY_CURRENT_SERVER = CharacterProfile_OTHER.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
+	local CONFIG_SHOW_ONLY_CURRENT_REGION = CharacterProfile_OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION or false
+	local CONFIG_SHOW_LEVEL_MIN = CharacterProfile_OTHER.CONFIG_SHOW_LEVEL_MIN or 1
+	local CONFIG_SHOW_LEVEL_MAX = CharacterProfile_OTHER.CONFIG_SHOW_LEVEL_MAX or 90
+	local CONFIG_SHOW_ONLY_CURRENT_FACTION = CharacterProfile_OTHER.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
+	local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = CharacterProfile_OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
+	local CONFIG_SHOW_ALWAYS_AS_FIRST = CharacterProfile_OTHER.CONFIG_SHOW_ALWAYS_AS_FIRST or false
+	local CONFIG_SORTING_CUSTOM = CharacterProfile_OTHER.CONFIG_SORTING_CUSTOM or false
+
 	local visible = {}
+	local visible_GUID = {}
 	local hidden = {}
+	local hidden_GUID = {}
 	local filtered = {}
+	local filtered_GUID = {}
+
 	local curGUID = E.curGUID
-	local curFaction = E.FACTION_CURRENT
+	local FACTION = E.FACTION_CURRENT
 	local curServer = E.func_GetPlayerRealm()
-	local CurrentRegionName = E.CurrentRegionName
+	local REGION_NAME = E.CURRENT_REGION_NAME
 	local curBattleTag = E.curBattleTag
 	local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
-	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
+	local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and REGION_NAME
 	local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
-	if CONFIG_SORTING_CUSTOM and Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.GUID_order then
-		for _, GUID in ipairs(Octo_ToDo_DB_Options.GUID_order) do
+
+
+
+	if CONFIG_SORTING_CUSTOM and CharacterProfile_SORTING and CharacterProfile_SORTING.GUID_order then
+		for _, GUID in ipairs(CharacterProfile_SORTING.GUID_order) do
 			local CharInfo = Octo_ToDo_DB_Levels and Octo_ToDo_DB_Levels[GUID]
-			if CharInfo and CharInfo.PlayerData then
-				if GUID == curGUID or CharInfo.PlayerData.CONFIG_SHOW_PLAYER then
+			local pd = CharInfo and CharInfo.PlayerData
+			if pd then
+				if GUID == curGUID or CharacterProfile_GUIDS[GUID] then
 					visible[#visible + 1] = CharInfo
+					visible_GUID[GUID] = true
 				else
 					hidden[#hidden + 1] = CharInfo
+					hidden_GUID[GUID] = true
 				end
 			end
 		end
-		-- E.func_ApplySort(visible, curGUID, CONFIG_SHOW_ALWAYS_AS_FIRST)
 		E.func_ApplySort(hidden, curGUID, false)
-		return visible, hidden, filtered
+		return visible, hidden, filtered, visible_GUID, hidden_GUID, filtered_GUID
 	end
+
 	for GUID, CharInfo in next, Octo_ToDo_DB_Levels do
 		if not CharInfo.PlayerData then
 			filtered[#filtered + 1] = CharInfo
+			filtered_GUID[GUID] = true
 		else
 			local pd = CharInfo.PlayerData
 			local unitLevel = pd.UnitLevel
-			local hasFields = unitLevel and pd.CurrentRegionName and pd.curServer and pd.Faction and pd.BattleTag
+			local hasFields = unitLevel and pd.REGION_NAME and pd.curServer and pd.FACTION and pd.BattleTag
 			if not hasFields then
 				filtered[#filtered + 1] = CharInfo
+				filtered_GUID[GUID] = true
 			else
 				local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
-				local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or pd.Faction == curFaction
+				local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or pd.FACTION == FACTION
 				local meetsServer = not checkCurrentServer or pd.curServer == curServer
-				local meetsRegion = not checkCurrentRegion or pd.CurrentRegionName == CurrentRegionName
+				local meetsRegion = not checkCurrentRegion or pd.REGION_NAME == REGION_NAME
 				local meetsBtag = not checkCurrentBtag or pd.BattleTag == curBattleTag
 				local passedFilters = meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag
-				-- if not passedFilters then
-				-- 	filtered[#filtered + 1] = CharInfo
-				-- elseif GUID == curGUID then
-				-- 	visible[#visible + 1] = CharInfo
-				-- elseif pd.CONFIG_SHOW_PLAYER then
-				-- 	visible[#visible + 1] = CharInfo
-				-- else
-				-- 	hidden[#hidden + 1] = CharInfo
-				-- end
+
 				if GUID == curGUID then
 					visible[#visible + 1] = CharInfo
+					visible_GUID[GUID] = true
 				elseif not passedFilters then
 					filtered[#filtered + 1] = CharInfo
-				elseif pd.CONFIG_SHOW_PLAYER then
+					filtered_GUID[GUID] = true
+				elseif CharacterProfile_GUIDS[GUID] then
 					visible[#visible + 1] = CharInfo
+					visible_GUID[GUID] = true
 				else
 					hidden[#hidden + 1] = CharInfo
+					hidden_GUID[GUID] = true
 				end
 			end
 		end
 	end
 	E.func_ApplySort(visible, curGUID, CONFIG_SHOW_ALWAYS_AS_FIRST)
 	E.func_ApplySort(hidden, curGUID, false)
-	return visible, hidden, filtered
+	return visible, hidden, filtered, visible_GUID, hidden_GUID, filtered_GUID
 end
+----------------------------------------------------------------
 function E.func_ApplySort(list, curGUID, alwaysFirst)
-	local sortOrder = Octo_ToDo_DB_Options.sort_order or {}
-	local sortOrderActived = Octo_ToDo_DB_Options.sort_order_ACTIVED or {}
-	local sortReverse = Octo_ToDo_DB_Options.sort_reverse or {}
-	table.sort(list, function(a, b)
-		local aData, bData = a.PlayerData, b.PlayerData
-		if not aData or not bData then return false end
-		if alwaysFirst then
-			local aIsCurrent = aData.GUID == curGUID
-			local bIsCurrent = bData.GUID == curGUID
-			if aIsCurrent ~= bIsCurrent then
-				return aIsCurrent
-			end
-		end
-		for _, sortKey in ipairs(sortOrder) do
-			if sortOrderActived[sortKey] then
-				local aVal = aData[sortKey]
-				local bVal = bData[sortKey]
-				local reverse = sortReverse[sortKey]
-				-- Если значения nil, заменяем на дефолтные
-				if aVal == nil then aVal = (type(bVal) == "number") and 0 or "" end
-				if bVal == nil then bVal = (type(aVal) == "number") and 0 or "" end
-				local aType = type(aVal)
-				local bType = type(bVal)
-				-- Приводим к одному типу для сравнения
-				if aType == "number" and bType ~= "number" then
-					bVal = tonumber(bVal) or 0
-				elseif aType ~= "number" and bType == "number" then
-					aVal = tonumber(aVal) or 0
-					aType = "number"
+	local CharacterProfile, CharacterProfile_GUIDS, CharacterProfile_OTHER, CharacterProfile_SORTING = E.func_GetProfile_CHARACTERS_CURRENT()
+
+	if not CharacterProfile_SORTING then return end
+	local sortOrder = CharacterProfile_SORTING.sort_order or {}
+	local sortOrderActived = CharacterProfile_SORTING.sort_order_ACTIVED or {}
+	local sortReverse = CharacterProfile_SORTING.sort_reverse or {}
+
+	local rules = {}
+
+	-- Правило "текущий всегда первый"
+	if alwaysFirst then
+		table.insert(rules, function(a, b)
+				local aIsCurrent = a.PlayerData and a.PlayerData.GUID == curGUID
+				local bIsCurrent = b.PlayerData and b.PlayerData.GUID == curGUID
+				if aIsCurrent ~= bIsCurrent then
+					return aIsCurrent
 				end
-				if aType == "number" then
+		end)
+	end
+
+	-- Правила по ключам с нормализацией
+	for _, sortKey in ipairs(sortOrder) do
+		if sortOrderActived[sortKey] then
+			local reverse = sortReverse[sortKey]
+			table.insert(rules, function(a, b)
+					local aData = a.PlayerData
+					local bData = b.PlayerData
+					if not aData or not bData then return false end
+
+					local aVal = aData[sortKey]
+					local bVal = bData[sortKey]
+
+					-- Замена nil на дефолтные значения
+					if aVal == nil then aVal = (type(bVal) == "number") and 0 or "" end
+					if bVal == nil then bVal = (type(aVal) == "number") and 0 or "" end
+
+					-- Приведение типов
+					if type(aVal) == "number" and type(bVal) ~= "number" then
+						bVal = tonumber(bVal) or 0
+					elseif type(aVal) ~= "number" and type(bVal) == "number" then
+						aVal = tonumber(aVal) or 0
+					end
+
 					if aVal ~= bVal then
 						if reverse then
-							return aVal < bVal
-						else
-							return aVal > bVal
-						end
-					end
-				else
-					aVal = tostring(aVal)
-					bVal = tostring(bVal)
-					if aVal ~= bVal then
-						if reverse then
 							return aVal > bVal
 						else
 							return aVal < bVal
 						end
 					end
-				end
-			end
+			end)
 		end
-		return (aData.Name or "") < (bData.Name or "")
+	end
+
+	-- Финальное правило: сортировка по имени
+	table.insert(rules, function(a, b)
+			local aData = a.PlayerData
+			local bData = b.PlayerData
+			local aName = aData and aData.Name or ""
+			local bName = bData and bData.Name or ""
+			return aName < bName
 	end)
+
+	-- Применяем сортировку с помощью универсальной функции
+	E.func_SortRecords(list, unpack(rules))
 end
--- function E.func_SortCharacters()
---     local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER or false
---     local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION or false
---     local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN or 1
---     local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX or 90
---     local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION or false
---     local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG or false
---     local CONFIG_SHOW_ALWAYS_AS_FIRST = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST or false
---     local CONFIG_SORTING_CUSTOM = Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM or false
---     local sorted = {}
---     local unsorted = {}
---     local curGUID = E.curGUID
---     local curFaction = E.FACTION_CURRENT
---     local curServer = E.func_GetPlayerRealm()
---     local CurrentRegionName = E.CurrentRegionName
---     local curBattleTag = E.curBattleTag
---     local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
---     local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
---     local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
---     -- Если включена кастомная сортировка
---     -- if CONFIG_SORTING_CUSTOM and Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.GUID_order then
---     --     -- Выводим в порядке GUID_order, учитывая только CONFIG_SHOW_PLAYER
---     --     for _, GUID in ipairs(Octo_ToDo_DB_Options.GUID_order) do
---     --         local CharInfo = Octo_ToDo_DB_Levels and Octo_ToDo_DB_Levels[GUID]
---     --         if CharInfo and CharInfo.PlayerData and CharInfo.PlayerData.CONFIG_SHOW_PLAYER then
---     --             sorted[#sorted + 1] = CharInfo
---     --         end
---     --     end
---     --     return sorted, unsorted
---     -- end
---     -- Если включена кастомная сортировка
---     if CONFIG_SORTING_CUSTOM and Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.GUID_order then
---         -- Выводим в порядке GUID_order
---         for _, GUID in ipairs(Octo_ToDo_DB_Options.GUID_order) do
---             local CharInfo = Octo_ToDo_DB_Levels and Octo_ToDo_DB_Levels[GUID]
---             if CharInfo and CharInfo.PlayerData then
---                 -- Показываем если: это текущий персонаж ИЛИ у него включен CONFIG_SHOW_PLAYER
---                 if GUID == curGUID or CharInfo.PlayerData.CONFIG_SHOW_PLAYER then
---                     sorted[#sorted + 1] = CharInfo
---                 end
---             end
---         end
---         return sorted, unsorted
---     end
---     for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
---         if CharInfo.PlayerData then
---             local PlayerData = CharInfo.PlayerData
---             if GUID == curGUID then
---                 sorted[#sorted + 1] = CharInfo
---             else
---                 if PlayerData.CONFIG_SHOW_PLAYER and
---                 PlayerData.UnitLevel and
---                 PlayerData.CurrentRegionName and
---                 PlayerData.curServer and
---                 PlayerData.Faction and
---                 PlayerData.BattleTag then
---                     local unitLevel = PlayerData.UnitLevel
---                     local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
---                     local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.Faction == curFaction
---                     local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
---                     local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
---                     local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag
---                     if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
---                         sorted[#sorted + 1] = CharInfo
---                     end
---                 else
---                     unsorted[#unsorted+1] = CharInfo
---                 end
---             end
---         end
---     end
---     -- Создаем словарь для быстрого доступа к TYPE
---     local sortOptionsType = {}
---     for vars, opt in pairs(E.SORT_OPTIONS) do
---         sortOptionsType[vars] = opt.TYPE
---     end
---     -- Получаем порядок сортировки из настроек
---     local sortOrder = Octo_ToDo_DB_Options.sort_order or {}
---     local sortOrderActived = Octo_ToDo_DB_Options.sort_order_ACTIVED or {}
---     local sortReverse = Octo_ToDo_DB_Options.sort_reverse or {}
---     -- Функция получения значения для сортировки по ключу
---     local function getSortValue(charData, sortKey)
---         return charData[sortKey]
---     end
---     -- Сортировка по правилам из sort_order (только для активных критериев)
---     table.sort(sorted, function(a, b)
---         local aData, bData = a.PlayerData, b.PlayerData
---         -- Если включен CONFIG_SHOW_ALWAYS_AS_FIRST, текущий игрок всегда первый
---         if CONFIG_SHOW_ALWAYS_AS_FIRST then
---             local aIsCurrent = aData.GUID == curGUID
---             local bIsCurrent = bData.GUID == curGUID
---             if aIsCurrent ~= bIsCurrent then
---                 return aIsCurrent  -- текущий игрок идет первым
---             end
---         end
---         for _, sortKey in ipairs(sortOrder) do
---             -- Пропускаем выключенные критерии
---             if sortOrderActived[sortKey] then
---                 local aVal = getSortValue(aData, sortKey)
---                 local bVal = getSortValue(bData, sortKey)
---                 -- local valType = sortOptionsType[sortKey]
---                 local valType = type(aVal)
---                 local reverse = sortReverse[sortKey]
---                 if valType == "number" then
---                     aVal = aVal or 0
---                     bVal = bVal or 0
---                     if aVal ~= bVal then
---                         if reverse then
---                             return aVal < bVal   -- возрастание
---                         else
---                             return aVal > bVal   -- убывание
---                         end
---                         -- if reverse then
---                         --     return aVal > bVal   -- убывание
---                         -- else
---                         --     return aVal < bVal   -- возрастание
---                         -- end
---                     end
---                 else -- string
---                     aVal = tostring(aVal or "")
---                     bVal = tostring(bVal or "")
---                     if aVal ~= bVal then
---                         if reverse then
---                             return aVal > bVal
---                         else
---                             return aVal < bVal
---                         end
---                     end
---                 end
---             end
---         end
---         -- Если все критерии равны, сортируем по имени
---         return (aData.Name or "") < (bData.Name or "")
---     end)
---     return sorted, unsorted
--- end
--- function E.func_SortCharacters()
---     local CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER
---     local CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
---     local CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN
---     local CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX
---     local CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION
---     local CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG -- Добавляем новую переменную
---     local sorted = {}
---     local curGUID = E.curGUID
---     local curFaction = E.FACTION_CURRENT
---     local curServer = E.func_GetPlayerRealm()
---     local CurrentRegionName = E.CurrentRegionName
---     local curBattleTag = E.curBattleTag -- Текущий BattleTag игрока
---     local checkCurrentServer = CONFIG_SHOW_ONLY_CURRENT_SERVER and curServer
---     local checkCurrentRegion = CONFIG_SHOW_ONLY_CURRENT_REGION and CurrentRegionName
---     local checkCurrentBtag = CONFIG_SHOW_ONLY_CURRENT_BATTLETAG and curBattleTag
---     for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
---         if not CharInfo.PlayerData then
---             -- Пропускаем, если нет PlayerData
---         else
---             local PlayerData = CharInfo.PlayerData
---             if GUID == curGUID then
---                 sorted[#sorted + 1] = CharInfo
---             else
---                 if PlayerData.CONFIG_SHOW_PLAYER and
---                 PlayerData.UnitLevel and
---                 PlayerData.CurrentRegionName and
---                 PlayerData.curServer and
---                 PlayerData.Faction and
---                 PlayerData.BattleTag then -- Добавляем проверку BattleTag
---                     local unitLevel = PlayerData.UnitLevel
---                     local meetsLevel = unitLevel >= CONFIG_SHOW_LEVEL_MIN and unitLevel <= CONFIG_SHOW_LEVEL_MAX
---                     local meetsFaction = not CONFIG_SHOW_ONLY_CURRENT_FACTION or PlayerData.Faction == curFaction
---                     local meetsServer = not checkCurrentServer or PlayerData.curServer == curServer
---                     local meetsRegion = not checkCurrentRegion or PlayerData.CurrentRegionName == CurrentRegionName
---                     local meetsBtag = not checkCurrentBtag or PlayerData.BattleTag == curBattleTag -- Проверка BattleTag
---                     if meetsLevel and meetsFaction and meetsServer and meetsRegion and meetsBtag then
---                         sorted[#sorted + 1] = CharInfo
---                     end
---                 end
---             end
---         end
---     end
---     table.sort(sorted, function(a, b)
---             local aData, bData = a.PlayerData, b.PlayerData
---             local aLevel = aData.UnitLevel or 0
---             local bLevel = bData.UnitLevel or 0
---             if aLevel ~= bLevel then
---                 return aLevel > bLevel
---             end
---             local aItemLevel = aData.avgItemLevelEquipped or 0
---             local bItemLevel = bData.avgItemLevelEquipped or 0
---             if aItemLevel ~= bItemLevel then
---                 return aItemLevel > bItemLevel
---             end
---             local aName = aData.Name or "noname"
---             local bName = bData.Name or "noname"
---             return aName < bName
---     end)
---     return sorted
--- end
+
+function E.func_DELETEPERS(GUID)
+	if not GUID or not Octo_ToDo_DB_Levels then return end
+	-- Удаляем из основной таблицы
+	Octo_ToDo_DB_Levels[GUID] = nil
+	-- Удаляем из GUID_order всех профилей
+	local profiles = Octo_Todo_DB_Profiles.CHARACTERS.profiles
+	for _, profile in pairs(profiles) do
+		if profile.SORTING and profile.SORTING.GUID_order then
+			for i = #profile.SORTING.GUID_order, 1, -1 do
+				if profile.SORTING.GUID_order[i] == GUID then
+					tremove(profile.SORTING.GUID_order, i)
+					break
+				end
+			end
+		end
+	end
+	-- Обновляем счётчик персонажей
+	E.TOTAL_CHARS = 0
+	for _ in pairs(Octo_ToDo_DB_Levels) do
+		E.TOTAL_CHARS = E.TOTAL_CHARS + 1
+	end
+end
 ----------------------------------------------------------------
 function E.func_GetCounts()
 	local numServers, numRegions, numBtags, numPlayers = 0, 0, 0, 0
@@ -2117,7 +2030,7 @@ function E.func_GetCounts()
 		if pd then
 			local server = pd.curServer
 			local btag = pd.BattleTag
-			local region = pd.CurrentRegionName
+			local region = pd.REGION_NAME
 			if btag and not seenBtags[btag] then
 				seenBtags[btag] = true
 				numBtags = numBtags + 1
@@ -2139,17 +2052,17 @@ end
 do
 	local function updateState(self)
 		-- if self:IsEnabled() then
-		--     if self.down and self.over then
-		--         self.Icon:SetAtlas("common-dropdown-a-button-pressedhover", true)
-		--     elseif self.over then
-		--         self.Icon:SetAtlas("common-dropdown-a-button-hover", true)
-		--     elseif self.down then
-		--         self.Icon:SetAtlas("common-dropdown-a-button-pressed", true)
-		--     else
-		--         self.Icon:SetAtlas("common-dropdown-a-button", true)
-		--     end
+		-- if self.down and self.over then
+		-- self.Icon:SetAtlas("common-dropdown-a-button-pressedhover", true)
+		-- elseif self.over then
+		-- self.Icon:SetAtlas("common-dropdown-a-button-hover", true)
+		-- elseif self.down then
+		-- self.Icon:SetAtlas("common-dropdown-a-button-pressed", true)
 		-- else
-		--     self.Icon:SetAtlas("common-dropdown-a-button-disabled", true)
+		-- self.Icon:SetAtlas("common-dropdown-a-button", true)
+		-- end
+		-- else
+		-- self.Icon:SetAtlas("common-dropdown-a-button-disabled", true)
 		-- end
 	end
 	local function OnEnter(self, tooltipFunc)
@@ -2247,29 +2160,29 @@ do
 	end
 end
 ----------------------------------------------------------------
-function E.func_CreateUtilitySlider(parent, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
-	local MySlider = CreateFrame("Frame", nil, parent, "MinimalSliderWithSteppersTemplate")
-	MySlider:SetPoint("TOPLEFT", 0, -20)
-	-- MySlider:SetSize(200, 40) -- 250, 40
-	local formatters = {
-		[MinimalSliderWithSteppersMixin.Label.Min] = function(value) return minValue end,  -- текст у минимального значения
-		[MinimalSliderWithSteppersMixin.Label.Max] = function(value) return maxValue end,  -- текст у максимального значения
-		[MinimalSliderWithSteppersMixin.Label.Left] = function(value) return LeftText end,  -- левый текст (Low)
-		[MinimalSliderWithSteppersMixin.Label.Right] = function(value) return tostring(math.floor(value)) end,  -- правый текст (значение)
-		[MinimalSliderWithSteppersMixin.Label.Top] = function(value) return name end,  -- текст сверху
-	}
-	local currentValue = variableTbl[variableKey] or defaultValue or 1
-	MySlider:Init(currentValue, 1, 100, step, formatters)
-	MySlider:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
-			local rounded = math.floor(value)
-			variableTbl[variableKey] = rounded
-			-- MySlider.MinText:SetText(minValue)
-			-- MySlider.MaxText:SetText(maxValue)
-			-- MySlider.LeftText:SetText(LeftText)
-			-- MySlider.RightText:SetText(tostring(math.floor(value)))
-			-- MySlider.TopText:SetText(name)-- текст сверху
-	end)
-end
+-- function E.func_CreateUtilitySlider(parent, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
+--     local MySlider = CreateFrame("Frame", nil, parent, "MinimalSliderWithSteppersTemplate")
+--     MySlider:SetPoint("TOPLEFT", 0, -20)
+--     -- MySlider:SetSize(200, 40) -- 250, 40
+--     local formatters = {
+--         [MinimalSliderWithSteppersMixin.Label.Min] = function(value) return minValue end, -- текст у минимального значения
+--         [MinimalSliderWithSteppersMixin.Label.Max] = function(value) return maxValue end, -- текст у максимального значения
+--         [MinimalSliderWithSteppersMixin.Label.Left] = function(value) return LeftText end, -- левый текст (Low)
+--         [MinimalSliderWithSteppersMixin.Label.Right] = function(value) return tostring(math.floor(value)) end, -- правый текст (значение)
+--         [MinimalSliderWithSteppersMixin.Label.Top] = function(value) return name end, -- текст сверху
+--     }
+--     local currentValue = variableTbl[variableKey] or defaultValue or 1
+--     MySlider:Init(currentValue, 1, 100, step, formatters)
+--     MySlider:RegisterCallback(MinimalSliderWithSteppersMixin.Event.OnValueChanged, function(_, value)
+--             local rounded = math.floor(value)
+--             variableTbl[variableKey] = rounded
+--             -- MySlider.MinText:SetText(minValue)
+--             -- MySlider.MaxText:SetText(maxValue)
+--             -- MySlider.LeftText:SetText(LeftText)
+--             -- MySlider.RightText:SetText(tostring(math.floor(value)))
+--             -- MySlider.TopText:SetText(name)-- текст сверху
+--     end)
+-- end
 ----------------------------------------------------------------
 function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
 	minWidth = minWidth or 1
@@ -2293,20 +2206,258 @@ function E.func_MeasureTextWidth(textToMeasure, minWidth, indent)
 	return math.max(math.ceil(width) + indent, minWidth)
 end
 ----------------------------------------------------------------
-function E.func_DELETEPERS(GUID)
-	if not GUID or not Octo_ToDo_DB_Levels then return end
-	-- Удаляем из основной таблицы
-	Octo_ToDo_DB_Levels[GUID] = nil
-	-- Удаляем из GUID_order (кастомный порядок сортировки)
-	if Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.GUID_order then
-		for i = #Octo_ToDo_DB_Options.GUID_order, 1, -1 do
-			if Octo_ToDo_DB_Options.GUID_order[i] == GUID then
-				table.remove(Octo_ToDo_DB_Options.GUID_order, i)
-				break
+function E.func_Percent(numerator, denominator, decimalPlaces)
+	numerator = numerator or 0
+	denominator = denominator or 0
+	if denominator == 0 then
+		return 0
+	end
+	local exact = (numerator / denominator) * 100
+	if decimalPlaces then
+		local multiplier = 10 ^ decimalPlaces
+		return math.floor(exact * multiplier + 0.5) / multiplier
+	else
+		return exact
+	end
+end
+----------------------------------------------------------------
+function E.CreateSettingsButton(parent)
+	local button = CreateFrame("BUTTON", nil, parent, "OctoRectTemplate")
+	button:SetSize(E.GLOBAL_LINE_HEIGHT, E.GLOBAL_LINE_HEIGHT)
+	button:SetPoint("LEFT", 1, -1)
+	button:RegisterForClicks("LeftButtonUp")
+	button:EnableMouse(true)
+	button:SetCollapsesLayout(true)
+	local texture = button:CreateTexture(nil, "BACKGROUND", nil, 5)
+	texture:SetPoint("CENTER")
+	texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+	-- texture:SetTexCoord(0.1, 0.9, 0.1, 0.9) -- zoom 10%
+	button.texture = texture
+	return button, texture
+end
+----------------------------------------------------------------
+function E.CreateIconFrame(parent, anchorFrame)
+	parent.type = "icon"
+	local frame = CreateFrame("FRAME", nil, parent)
+	frame:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+	if anchorFrame then
+		frame:SetPoint("LEFT", anchorFrame, "RIGHT")
+	else
+		frame:SetPoint("CENTER")
+	end
+	frame:Hide()
+	frame:SetCollapsesLayout(true)
+	local texture = frame:CreateTexture(nil, "BACKGROUND", nil, 5)
+	texture:SetPoint("CENTER")
+	texture:SetSize(E.GLOBAL_LINE_HEIGHT-2, E.GLOBAL_LINE_HEIGHT-2)
+	texture:SetTexCoord(0.1, 0.9, 0.1, 0.9) -- zoom 10%
+	frame.texture = texture
+	return frame, texture
+end
+----------------------------------------------------------------
+function E.func_CreateStandardText(parent, anchorFrame, justifyH)
+	if not parent then return end
+	parent.type = "text"
+	local text = parent:CreateFontString()
+	text:SetFontObject(OctoFont11)
+	text:SetJustifyV("MIDDLE")
+	text:SetTextColor(E.textR, E.textG, E.textB, E.textA)
+	text:SetWordWrap(false)
+	text:SetJustifyH(justifyH or "LEFT")
+	if anchorFrame and anchorFrame ~= parent then
+		-- Текст справа от anchorFrame
+		text:SetPoint("LEFT", anchorFrame, "RIGHT", E.INDENT_TEXT, 0)
+		text:SetPoint("RIGHT", parent, "RIGHT", -E.INDENT_TEXT, 0)
+	else
+		-- Текст на всю ширину parent
+		text:SetPoint("LEFT", parent, "LEFT", E.INDENT_TEXT, 0)
+		text:SetPoint("RIGHT", parent, "RIGHT", -E.INDENT_TEXT, 0)
+	end
+	return text
+end
+----------------------------------------------------------------
+function E.func_RequestCallings()
+	if C_CovenantCallings and C_CovenantCallings.RequestCallings then
+		C_CovenantCallings.RequestCallings()
+	end
+end
+----------------------------------------------------------------
+--- Примеры:
+---   E.func_SortRecords(items, "text")                  -- по полю text, возр.
+---   E.func_SortRecords(items, {"score", E.REVERSE})    -- по полю score, убыв.
+---   E.func_SortRecords(numbers, true)                  -- числа по убыванию
+---   E.func_SortRecords(items, function(a,b) return a.priority > b.priority end)
+-- Универсальная сортировка массива на месте.
+-- Поддерживаемые виды правил (передаются в ...):
+-- 1. Строка (key) — сортировка по возрастанию поля key.
+-- 2. Таблица {key, reverse} или {key = ..., reverse = ...}
+--    reverse = true (убывание) / false (возрастание).
+-- 3. Булево значение — прямая сортировка самих элементов (только для чисел/строк).
+--    false = возрастание, true = убывание.
+-- 4. Функция function(a, b) — должна возвращать true/false.
+-- Правила применяются последовательно, при неравенстве используется первое сработавшее правило.
+-- Если все правила не дали различия, порядок элементов не гарантируется.
+---@param tbl table[]               Массив для сортировки (изменяется на месте).
+---@param ... string|table|boolean|function  Правила сортировки.
+function E.func_SortRecords(tbl, ...)
+	assert(type(tbl) == "table", "E.func_SortRecords: first argument must be a table (array)")
+
+	local criteria = {...}
+
+	-- Безопасное сравнение: nil считается меньше любого значения,
+	-- одинаковые значения возвращают nil (нет решения),
+	-- разные типы сравниваются по имени типа (детерминированно).
+	local function safe_less(va, vb)
+		if va == vb then return nil end
+		if va == nil then return true end
+		if vb == nil then return false end
+		local ta, tb = type(va), type(vb)
+		if ta == tb then
+			return va < vb
+		end
+		return ta < tb
+	end
+
+	if #criteria == 0 then
+		table.sort(tbl, function(a, b)
+				local r = safe_less(a, b)
+				return r == true
+		end)
+		return
+	end
+
+	table.sort(tbl, function(a, b)
+			for _, rule in ipairs(criteria) do
+				local rt = type(rule)
+
+				if rt == "function" then
+					local res = rule(a, b)
+					if res == true then return true end
+					if res == false then return false end
+					-- не-boolean или nil — идём дальше
+
+				elseif rt == "table" then
+					local key = rule[1] or rule.key
+					if not key then
+						-- некорректное правило — пропускаем
+					else
+						local reverse = (rule[2] == true) or (rule.reverse == true)
+						local va = a and a[key] or nil
+						local vb = b and b[key] or nil
+						local r = safe_less(va, vb)
+						if r ~= nil then
+							return reverse and not r or r
+						end
+					end
+
+				elseif rt == "string" then
+					local va = a and a[rule] or nil
+					local vb = b and b[rule] or nil
+					local r = safe_less(va, vb)
+					if r ~= nil then
+						return r
+					end
+
+				elseif rt == "boolean" then
+					-- только для чисел и строк
+					local reverse = rule == true
+					if (type(a) == "number" or type(a) == "string") and
+					(type(b) == "number" or type(b) == "string") then
+						local r = safe_less(a, b)
+						if r ~= nil then
+							return reverse and not r or r
+						end
+					end
+					-- иначе пропускаем правило
+				end
+			end
+			-- все правила не дали различия
+			return false
+	end)
+end
+
+----------------------------------------------------------------
+do
+	function E.func_VersionToNumber(v)
+		if type(v) ~= "string" then return nil end
+		local major, minor, patch, build = v:match("^(%d+)%.(%d+)%.(%d+)%.?(%d*)$")
+		if not major then return nil end
+		major = tonumber(major)
+		minor = tonumber(minor)
+		patch = tonumber(patch)
+		build = tonumber(build) or 0
+		return major * 1000000000000 +
+		minor * 1000000000 +
+		patch * 1000000 +
+		build
+	end
+	local currentVer = E.func_VersionToNumber(tostring(E.buildVersion) .. "." .. tostring(E.buildNumber or 0))
+	function E.FilterByVersion(dataList, isUniversalQuests)
+		if not dataList then return end
+		local filtered = {}
+
+		-- 1. Фильтрация самих групп (AddedInPatch / RemovedInPatch)
+		for i = 1, #dataList do
+			local group = dataList[i]
+			local groupAdded = group.AddedInPatch and E.func_VersionToNumber(group.AddedInPatch)
+			local groupRemoved = group.RemovedInPatch and E.func_VersionToNumber(group.RemovedInPatch)
+
+			if (not groupAdded or currentVer >= groupAdded) and (not groupRemoved or currentVer <= groupRemoved) then
+				filtered[#filtered + 1] = group
 			end
 		end
+
+		-- 2. Для UniversalQuests дополнительная обработка внутренних квестов
+		if isUniversalQuests then
+			local finalFiltered = {}
+			for _, questGroup in ipairs(filtered) do
+				local newGroup = questGroup
+				if newGroup.questpools then
+					local validPools = {}
+					for _, pool in ipairs(newGroup.questpools) do
+						local poolHasActiveQuest = false
+						for _, questEntry in ipairs(pool) do
+							local questAdded = questEntry.AddedInPatch and E.func_VersionToNumber(questEntry.AddedInPatch)
+							local questRemoved = questEntry.RemovedInPatch and E.func_VersionToNumber(questEntry.RemovedInPatch)
+							if (not questAdded or currentVer >= questAdded) and (not questRemoved or currentVer <= questRemoved) then
+								poolHasActiveQuest = true
+								break
+							end
+						end
+						if poolHasActiveQuest then
+							validPools[#validPools + 1] = pool
+						end
+					end
+					if #validPools > 0 then
+						newGroup.questpools = validPools
+						finalFiltered[#finalFiltered + 1] = newGroup
+					end
+				elseif newGroup.quests then
+					local validQuests = {}
+					for _, questEntry in ipairs(newGroup.quests) do
+						local questAdded = questEntry.AddedInPatch and E.func_VersionToNumber(questEntry.AddedInPatch)
+						local questRemoved = questEntry.RemovedInPatch and E.func_VersionToNumber(questEntry.RemovedInPatch)
+						if (not questAdded or currentVer >= questAdded) and (not questRemoved or currentVer <= questRemoved) then
+							validQuests[#validQuests + 1] = questEntry
+						end
+					end
+					if #validQuests > 0 then
+						newGroup.quests = validQuests
+						finalFiltered[#finalFiltered + 1] = newGroup
+					end
+				else
+					finalFiltered[#finalFiltered + 1] = newGroup
+				end
+			end
+			return finalFiltered
+		end
+
+		return filtered
 	end
-	E.TOTAL_CHARS = #Octo_ToDo_DB_Options.GUID_order
+end
+----------------------------------------------------------------
+function E.func_IsSameAccount(pd)
+	return pd.REGION_NAME == E.CURRENT_REGION_NAME and pd.BattleTag == E.BattleTag
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -2319,29 +2470,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
--- function E.func_RegisterEvents(frame, MyEventsTable)
--- local stack = debugstack(2)
--- local STR = stack:match("Interface/AddOns/(.-):%d+") or E.TEXT_UNKNOWN
--- local DebugPath = STR:gsub("]", "")
--- for _, event in ipairs(MyEventsTable) do frame:RegisterEvent(event) end
--- frame:SetScript("OnEvent",
--- function(self, event, ...)
--- if self[event] then
--- self[event](self, ...)
--- else
--- DEFAULT_CHAT_FRAME:AddMessage(E.COLOR_EVENT .. event .. "|r" .. tostring(DebugPath))
--- self:UnregisterEvent(event)
--- self.event = nil
--- end
--- end)
--- end
 function E.func_RegisterEvents(frame, MyEventsTable)
 	local stack = debugstack(2)
 	local STR = stack:match("Interface/AddOns/(.-):%d+") or E.TEXT_UNKNOWN
@@ -2374,7 +2502,7 @@ function E.func_RegisterEvents(frame, MyEventsTable)
 end
 ----------------------------------------------------------------
 function E.func_RunAfterCombat()
-	for key in next, (E._inCombats) do
+	for key, callback in next, (E._inCombats) do
 		if type(callback) == "function" then
 			callback()
 			E._inCombats[key] = nil
@@ -2394,3 +2522,4 @@ end
 function EventFrame:PLAYER_LOGIN()
 	E.func_SetFlattensRenderLayers_OnAllFrames()
 end
+----------------------------------------------------------------

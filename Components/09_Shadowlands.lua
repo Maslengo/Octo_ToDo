@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_Shadowlands_available = E.Is_Shadowlands_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_Shadowlands_available then return end;
+----------------------------------------------------------------
+if not E.Is_SL_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -17,7 +16,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
-	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
+	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color .. E.OctoTable_Expansions[expansionID].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
@@ -96,28 +95,55 @@ local function tempFunction()
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return RAID_INFO_WORLD_BOSS -- L["World Boss"]
-			end,
-			name_save = "WorldBoss",
-			defS = true,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{61813, forcedText = {npcID = 167524}, addText = {mapID = 1533},}, -- "Валинор" <Свет эпох> Бастион
-				{61816, forcedText = {npcID = 167525}, addText = {mapID = 1536},}, -- Мортанис Малдраксус (2).
-				{61815, forcedText = {npcID = 167527}, addText = {mapID = 1565},}, -- Ораномонос Вечноветвящаяся Арденвельд (3).
-				{61814, forcedText = {npcID = 167526}, addText = {mapID = 1525},}, -- Нургаш Жижерожденный Ревендрет (3).
-				{nil},
-				{65143, forcedText = {npcID = 182466}, addText = {mapID = 1970},}, -- Антрос <Хранитель Предшественников> Зерет Мортис (2).
-				{nil},
-				{64531, forcedText = {npcID = 178958}, addText = {mapID = 1543},}, -- Мор'гет <Мучитель проклятых> Утроба .
-			},
-			forcedMaxQuest = 3,
-		},
+    {
+        sorted = true,
+        showTooltip = true,
+        TextLeft = function()
+            return L["RAID_INFO_WORLD_BOSS"]
+        end,
+        name_save = "WorldBoss",
+        defS = true,
+        reset = "Weekly",
+        desc = categoryKey,
+        questpools = {
+            {
+                {
+                    61813,
+                    forcedText = {npcID = 167524}, -- "Валинор" <Свет эпох> Бастион
+                    addText = {mapID = E.MapID_Bastian},
+                },
+                {
+                    61816,
+                    forcedText = {npcID = 167525}, -- Мортанис Малдраксус
+                    addText = {mapID = E.MapID_Maldraxxus},
+                },
+                {
+                    61815,
+                    forcedText = {npcID = 167527}, -- Ораномонос Вечноветвящаяся Арденвельд
+                    addText = {mapID = E.MapID_Ardenweald},
+                },
+                {
+                    61814,
+                    forcedText = {npcID = 167526}, -- Нургаш Жижерожденный Ревендрет
+                    addText = {mapID = E.MapID_Revendreth},
+                },
+            },
+            {
+                {
+                    65143,
+                    forcedText = {npcID = 182466}, -- Антрос <Хранитель Предшественников> Зерет Мортис
+                    addText = {mapID = E.MapID_ZerethMortis},
+                },
+            },
+            {
+                {
+                    64531,
+                    forcedText = {npcID = 178958}, -- Мор'гет <Мучитель проклятых> Утроба
+                    addText = {mapID = E.MapID_TheMaw},
+                },
+            },
+        },
+    },
 		----------------------------------------------------------------
 		----------------------------------------------------------------
 		----------------------------------------------------------------
@@ -156,21 +182,45 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": "..E.func_GetName("quest", 66042, false)
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. E.func_GetName("quest", 66042, false)
 			end,
-			name_save = "ZMpatternswithinpatterns",
+			name_save = E.MapID_ZerethMortis .. "patternswithinpatterns",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{66042},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 191139, rewTYPE = "item", rewSIZE = 1,},
+
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 1822, rewTYPE = "currency", rewSIZE = 1,}, --
+				{rewID = 1885, rewTYPE = "currency", rewSIZE = 23,}, --
+				{rewID = 2478, rewTYPE = "reputation", rewSIZE = 1250,}, --
+
+			},
 			forcedMaxQuest = 1,
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. L["Daily quests"] -- L["QUESTS_LABEL"]
+			end,
+			name_save = E.MapID_ZerethMortis .. "Daily",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = Octo_Cache_DB and Octo_Cache_DB.QuestsOnMap and Octo_Cache_DB.QuestsOnMap[E.MapID_ZerethMortis] or {},
+			forcedMaxQuest = 3,
 		},
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": ".."Rares"
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. "Rares"
 			end,
 			name_save = "ZMRares",
 			defS = true,
@@ -215,9 +265,9 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": ".."WorldQuests"
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. "WorldQuests"
 			end,
-			name_save = "ZMWorldQuests",
+			name_save = E.MapID_ZerethMortis .. "WorldQuests",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
@@ -259,48 +309,48 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": "..L["Treasures"] -- AREA_LOOTING_UNLOCKED
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. L["Treasures"] -- AREA_LOOTING_UNLOCKED
 			end,
-			name_save = "ZMtreasures",
+			name_save = E.MapID_ZerethMortis .. "treasures",
 			defS = true,
 			reset = "Normal",
 			desc = categoryKey,
 			quests = {
-				{65520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 1"},},
-				{65573, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 2"},},
-				{65489, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 3"},},
-				{64667, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 4"},},
-				{65465, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 5"},},
-				{65523, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 6"},},
-				{65487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 7"},},
-				{65503, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 8"},},
-				{65178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 9"},},
-				{65480, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 10"},},
-				{65545, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 11"},},
-				{65173, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 12"},},
-				{65441, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 13"},},
-				{65522, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 14"},},
-				{65537, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 15"},},
-				{65536, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 16"},},
-				{65542, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 17"},},
-				{65546, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 18"},},
-				{65540, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 19"},},
-				{65566, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 20"},},
-				{65447, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 21"},},
-				{65543, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 22"},},
-				{64545, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 23"},},
-				{65270, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 24"},},
-				{65565, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 25"},},
-				{65175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"].." 26"},},
+				{65520, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 1"},},
+				{65573, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 2"},},
+				{65489, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 3"},},
+				{64667, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 4"},},
+				{65465, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 5"},},
+				{65523, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 6"},},
+				{65487, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 7"},},
+				{65503, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 8"},},
+				{65178, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 9"},},
+				{65480, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 10"},},
+				{65545, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 11"},},
+				{65173, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 12"},},
+				{65441, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 13"},},
+				{65522, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 14"},},
+				{65537, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 15"},},
+				{65536, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 16"},},
+				{65542, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 17"},},
+				{65546, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 18"},},
+				{65540, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 19"},},
+				{65566, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 20"},},
+				{65447, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 21"},},
+				{65543, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 22"},},
+				{64545, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 23"},},
+				{65270, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 24"},},
+				{65565, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 25"},},
+				{65175, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Treasure"] .. " 26"},},
 			},
 			-- forcedMaxQuest = 26,
 		},
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": "..L["Undulating Foliage"]
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. L["Undulating Foliage"]
 			end,
-			name_save = "ZMUndulatingFoliage",
+			name_save = E.MapID_ZerethMortis .. "UndulatingFoliage",
 			defS = false,
 			reset = "Normal",
 			desc = categoryKey,
@@ -312,9 +362,9 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": "..L["Prying Eye Discovery"]
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. L["Prying Eye Discovery"]
 			end,
-			name_save = "ZMPryingEyeDiscovery",
+			name_save = E.MapID_ZerethMortis .. "PryingEyeDiscovery",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
@@ -329,29 +379,29 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": ".."Puzzle caches"
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. "Puzzle caches"
 			end,
-			name_save = "Puzzle caches",
+			name_save = E.MapID_ZerethMortis .. "Puzzle caches",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{65094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 1"},},
-				{65323, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 2"},},
-				{65318, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 3"},},
-				{65322, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 4"},},
-				{65317, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 5"},},
-				{65093, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 6"},},
-				{65321, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 7"},},
-				{65092, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 8"},},
-				{65316, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 9"},},
-				{65412, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 10"},},
-				{65315, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 11"},},
-				{65091, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 12"},},
-				{65320, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 13"},},
-				{64972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 14"},},
-				{65314, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 15"},},
-				{65319, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches".." 16"},},
+				{65094, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 1"},},
+				{65323, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 2"},},
+				{65318, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 3"},},
+				{65322, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 4"},},
+				{65317, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 5"},},
+				{65093, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 6"},},
+				{65321, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 7"},},
+				{65092, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 8"},},
+				{65316, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 9"},},
+				{65412, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 10"},},
+				{65315, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 11"},},
+				{65091, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 12"},},
+				{65320, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 13"},},
+				{64972, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 14"},},
+				{65314, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 15"},},
+				{65319, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Puzzle caches" .. " 16"},},
 			},
 			-- forcedMaxQuest = 50,
 		},
@@ -359,80 +409,107 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1970)..": ".."Concordance"
+				return E.func_GetName("map", E.MapID_ZerethMortis) .. ": " .. "Concordance"
 			end,
-			name_save = "Concordance",
+			name_save = E.MapID_ZerethMortis .. "Concordance",
 			defS = false,
 			reset = "Normal",
 			desc = categoryKey,
 			quests = {
-				{65179, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 1"},},
-				{65213, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 2"},},
-				{65216, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 3"},},
-				{65210, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 4"},},
-				{65180, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 5"},},
-				{65214, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 6"},},
-				{65211, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 7"},},
-				{65217, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 8"},},
-				{64940, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 9"},},
-				{65212, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 10"},},
-				{65209, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 11"},},
-				{65215, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance".." 12"},},
+				{65179, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 1"},},
+				{65213, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 2"},},
+				{65216, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 3"},},
+				{65210, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 4"},},
+				{65180, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 5"},},
+				{65214, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 6"},},
+				{65211, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 7"},},
+				{65217, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 8"},},
+				{64940, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 9"},},
+				{65212, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 10"},},
+				{65209, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 11"},},
+				{65215, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = "Concordance" .. " 12"},},
 			},
 			-- forcedMaxQuest = 12,
 		},
+
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1961)..": "..E.func_GetName("quest", 63949, false)
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. E.func_GetName("quest", 63949, false)
 			end,
-			name_save = "KORTHIAweekly",
+			name_save = E.MapID_Korthia .. "weekly",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{63949},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				{rewID = 186196, rewTYPE = "item", rewSIZE = 1,},
+				{rewID = 187175, rewTYPE = "item", rewSIZE = 1,},
+				{rewID = 187347, rewTYPE = "item", rewSIZE = 1,},
+
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 1822, rewTYPE = "currency", rewSIZE = 1,}, --
+				{rewID = 1977, rewTYPE = "currency", rewSIZE = 10,}, --
+				{rewID = 2470, rewTYPE = "reputation", rewSIZE = 750,}, --
+			},
 			forcedMaxQuest = 1,
 		},
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1961)..": "..E.func_GetName("quest", 65266, false)
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. E.func_GetName("quest", 65266, false)
 			end,
-			name_save = "KORTHIAlostresearch",
+			name_save = E.MapID_Korthia .. "lostresearch",
 			defS = true,
 			reset = "Weekly",
 			desc = categoryKey,
 			quests = {
 				{65266},
 			},
+			rewards = {
+				-- {rewID = ЙЦУЙЦУ, rewTYPE = "spell", rewSIZE = nil,}, --
+				-- {rewID = 186196, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 187175, rewTYPE = "item", rewSIZE = 1,},
+				-- {rewID = 187347, rewTYPE = "item", rewSIZE = 1,},
+
+				-- {rewID = 225571, rewTYPE = "item", rewSIZE = 1, addText = "Level 70–80"}, -- The Weaver's Gratuity
+				-- {rewID = 3002, rewTYPE = "currency", rewSIZE = 1500,}, -- The Weaver (Notoriety)
+				{rewID = 1931, rewTYPE = "currency", rewSIZE = 1000,}, --
+				{rewID = 1997, rewTYPE = "currency", rewSIZE = 800,}, --
+			},
 			forcedMaxQuest = 1,
 		},
-		{
-			sorted = false,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", 1961)..": "..E.func_GetName("quest", 64552, false)
-			end,
-			name_save = "KORTHIAanimatablemission",
-			defS = false,
-			reset = "Weekly",
-			desc = categoryKey,
-			quests = {
-				{64552, addText = {Icon = E.ICON_KYRIAN},}, -- ker
-				{64553, addText = {Icon = E.ICON_VENTHYR},}, -- vent
-				{64549, addText = {Icon = E.ICON_NIGHTFAE},}, -- fae
-				{64551, addText = {Icon = E.ICON_NECROLORD},}, -- necr
-			},
-			forcedMaxQuest = 4,
-		},
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetName("map", E.MapID_Korthia) .. ": " .. E.func_GetName("quest", 64552, false)
+		-- 	end,
+		-- 	name_save = E.MapID_Korthia .. "animatablemission",
+		-- 	defS = false,
+		-- 	reset = "Weekly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{64552, addText = {Icon = E.ICON_KYRIAN},}, -- ker
+		-- 		{64553, addText = {Icon = E.ICON_VENTHYR},}, -- vent
+		-- 		{64549, addText = {Icon = E.ICON_NIGHTFAE},}, -- fae
+		-- 		{64551, addText = {Icon = E.ICON_NECROLORD},}, -- necr
+		-- 	},
+		-- 	forcedMaxQuest = 4,
+		-- },
+
+
+
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetName("map", 1961)..": ".. E.func_GetName("quest", 64522, false)
+		-- return E.func_GetName("map", E.MapID_Korthia) .. ": " .. E.func_GetName("quest", 64522, false)
 		-- end,
-		-- name_save = "KORTHIAStolenKorthianSupplies",
+		-- name_save = E.MapID_Korthia .. "StolenKorthianSupplies",
 		-- defS = true,
 		-- reset = "Weekly",
 		-- desc = categoryKey,
@@ -441,13 +518,28 @@ local function tempFunction()
 		-- },
 		-- forcedMaxQuest = 1,
 		-- },
+
+
 		{
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1961)..": ".."Rares"
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. L["Daily quests"] -- L["QUESTS_LABEL"]
 			end,
-			name_save = "KORTHIARares",
+			name_save = E.MapID_Korthia .. "Daily",
+			defS = true,
+			reset = "Daily",
+			desc = categoryKey,
+			quests = Octo_Cache_DB and Octo_Cache_DB.QuestsOnMap and Octo_Cache_DB.QuestsOnMap[E.MapID_Korthia] or {},
+			forcedMaxQuest = 5, -- 4
+		},
+		{
+			sorted = true,
+			showTooltip = true,
+			TextLeft = function()
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. "Rares"
+			end,
+			name_save = E.MapID_Korthia .. "Rares",
 			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
@@ -477,86 +569,53 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 23,
 		},
+
+
 		-- {
-		-- sorted = true,
-		-- showTooltip = true,
-		-- TextLeft = function()
-		-- return E.func_GetName("map", 1961)..": ".. L["Daily quests"]
-		-- end,
-		-- name_save = "KORTHIADailyQuest",
-		-- defS = false,
-		-- reset = "Daily",
-		-- desc = categoryKey,
-		-- quests = {
-		-- {63793},--Задание брокеров: Энсидий Осквернитель
-		-- {63964},--Задание брокеров: Мрачный Коготь
-		-- {63794},--Задание брокеров: голодающее чудище
-		-- {63790},--Задание брокеров: лорд Аззорак
-		-- {63792},--Задание брокеров: Ноктюрнус Развоплотитель
-		-- {63963},--Задание брокеров: Железная Лапа
-		-- {63791},--Задание брокеров: Валдинар Окаянный
-		-- {63789},--Неустанная борьба: Обитель ученых
-		-- {63788},--Неустанная борьба: Святилище наставлений
-		-- {63787},--Неустанная борьба: Площадка терзателей
-		-- {63785},--Неустанная борьба: Форум Искателей
-		-- {64103},--Проверенный трюк
-		-- {64101},--Соблюдение процедур
-		-- {64089},--Чаи и настои
-		-- {64430},--Пролитый чай
-		-- {64065},--Местные реагенты
-		-- {63989},--Скользим со стилем
-		-- {64016},--Скользим со стилем
-		-- {64017},--Скользим со стилем
-		-- {63936},--Поглощенная анима
-		-- {63784},--Золото не вопрос
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetName("map", E.MapID_Korthia) .. ": " .. E.func_GetName("quest", 63777, false)
+		-- 	end,
+		-- 	name_save = E.MapID_Korthia .. "SealedSecrets",
+		-- 	defS = false,
+		-- 	reset = "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		{63777},
+		-- 		{63954},
+		-- 		{63955},
+		-- 		{63956},
+		-- 		{63961},
+		-- 	},
+		-- 	forcedMaxQuest = 1,
 		-- },
-		-- forcedMaxQuest = 4,
-		-- },
-		{
-			sorted = true,
-			showTooltip = true,
-			TextLeft = function()
-				return E.func_GetName("map", 1961)..": ".. E.func_GetName("quest", 63777, false)
-			end,
-			name_save = "SealedSecrets",
-			defS = false,
-			reset = "Daily",
-			desc = categoryKey,
-			quests = {
-				{63777},
-				{63954},
-				{63955},
-				{63956},
-				{63961},
-			},
-			forcedMaxQuest = 1,
-		},
 		{
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1961)..": ".. L["Purple Mobs"]
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. L["Purple Mobs"]
 			end,
-			name_save = "KORTHIAPurpleMobs",
+			name_save = E.MapID_Korthia .. "PurpleMobs",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{64341, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 1"},},
-				{64342, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 2"},},
-				{64343, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 3"},},
-				{64344, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 4"},},
-				{64747, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 5"},},
-				{64748, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 6"},},
-				{64749, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 7"},},
-				{64750, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 8"},},
-				{64751, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 9"},},
-				{64752, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 10"},},
-				{64753, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 11"},},
-				{64754, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 12"},},
-				{64755, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 13"},},
-				{64756, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 14"},},
-				{64757, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"].." 15"},},
+				{64341, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 1"},},
+				{64342, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 2"},},
+				{64343, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 3"},},
+				{64344, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 4"},},
+				{64747, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 5"},},
+				{64748, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 6"},},
+				{64749, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 7"},},
+				{64750, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 8"},},
+				{64751, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 9"},},
+				{64752, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 10"},},
+				{64753, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 11"},},
+				{64754, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 12"},},
+				{64755, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 13"},},
+				{64756, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 14"},},
+				{64757, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Purple Mobs"] .. " 15"},},
 			},
 			forcedMaxQuest = 15, -- 3?
 		},
@@ -564,17 +623,17 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1961)..": ".. L["Relic Gorger"]
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. L["Relic Gorger"]
 			end,
-			name_save = "KORTHIARelicGorgers",
+			name_save = E.MapID_Korthia .. "RelicGorgers",
 			defS = false,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{64433, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 1"},},
-				{64434, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 2"},},
-				{64435, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 3"},},
-				{64436, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"].." 4"},},
+				{64433, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"] .. " 1"},},
+				{64434, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"] .. " 2"},},
+				{64435, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"] .. " 3"},},
+				{64436, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Relic Gorger"] .. " 4"},},
 			},
 			forcedMaxQuest = 4,
 		},
@@ -582,43 +641,43 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1961)..": ".. L["Treasures"] -- AREA_LOOTING_UNLOCKED
+				return E.func_GetName("map", E.MapID_Korthia) .. ": " .. L["Treasures"] -- AREA_LOOTING_UNLOCKED
 			end,
-			name_save = "KORTHIACollectionMushrooms",
+			name_save = E.MapID_Korthia .. "CollectionMushrooms",
 			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
-				{64351, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 1"},},
-				{64354, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 2"},},
-				{64355, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 3"},},
-				{64356, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 4"},},
-				{64357, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"].." 5"},},
+				{64351, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"] .. " 1"},},
+				{64354, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"] .. " 2"},},
+				{64355, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"] .. " 3"},},
+				{64356, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"] .. " 4"},},
+				{64357, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mushrooms"] .. " 5"},},
 				{nil},
-				{64358, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 1"},}, -- ДА
-				{64359, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 2"},},
-				{64360, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 3"},},
-				{64361, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 4"},},
-				{64362, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"].." 5"},},
+				{64358, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"] .. " 1"},}, -- ДА
+				{64359, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"] .. " 2"},},
+				{64360, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"] .. " 3"},},
+				{64361, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"] .. " 4"},},
+				{64362, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Nests"] .. " 5"},},
 				{nil},
-				{64021, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"].." 1"},},
-				{64363, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"].." 2"},},
-				{64364, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"].." 3"},},
+				{64021, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"] .. " 1"},},
+				{64363, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"] .. " 2"},},
+				{64364, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Mawsworn Cache"] .. " 3"},},
 				{nil},
-				{64787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 1"},},
-				{64788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 2"},},
-				{64789, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 3"},},
-				{64790, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 4"},},
-				{64791, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"].." 5"},},
+				{64787, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"] .. " 1"},},
+				{64788, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"] .. " 2"},},
+				{64789, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"] .. " 3"},},
+				{64790, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"] .. " 4"},},
+				{64791, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Bones/Stones/Relics"] .. " 5"},},
 				{nil},
 				{64247, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Spectral Bound Chest"]},}, -- Chest with 3 keys
 				{nil},
 				{64575, addText = {IconVignette = "VignetteLoot",}, forcedText = {text = L["Anima Vessel"]},},
 				{nil},
-				{64456, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"].." 1"},},
-				{64470, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"].." 2"},},
-				{64471, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"].." 3"},},
-				{64472, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"].." 4"},},
+				{64456, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"] .. " 1"},},
+				{64470, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"] .. " 2"},},
+				{64471, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"] .. " 3"},},
+				{64472, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Riftbound Cache"] .. " 4"},},
 				{nil},
 				{64283, addText = {IconVignette = "VignetteLoot", notes = E.RIFT,}, forcedText = {text = L["Zovaal's Vault"]},},
 				{nil},
@@ -626,13 +685,19 @@ local function tempFunction()
 			},
 			-- forcedMaxQuest = 5,
 		},
+
+
+
+
+
+
 		-- {
 		-- sorted = false,
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetName("map", 1961)..": ".."Items"
+		-- return E.func_GetName("map", E.MapID_Korthia) .. ": " .. "Items"
 		-- end,
-		-- name_save = "KORTHIAitems",
+		-- name_save = E.MapID_Korthia .. "items",
 		-- defS = true,
 		-- reset = "Normal",
 		-- desc = categoryKey,
@@ -654,7 +719,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": "..L["Covenant Assault"]
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Covenant Assault"]
 			end,
 			name_save = "MAWassault",
 			defS = false,
@@ -671,7 +736,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": "..L["The Hunt"]
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["The Hunt"]
 			end,
 			name_save = "MAWhunt",
 			defS = false,
@@ -688,7 +753,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": "..L["Wrath of the Jailer"]
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Wrath of the Jailer"]
 			end,
 			name_save = "MAWwrathofthejailer",
 			defS = false,
@@ -702,7 +767,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": "..L["Tormentors of Torghast"].." "..E.Timers.SL_Maw_TormentorsofTorghast()
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Tormentors of Torghast"] .. " " .. E.Timers.SL_Maw_TormentorsofTorghast()
 			end,
 			name_save = "MAWtormentor",
 			defS = false,
@@ -713,10 +778,24 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 1,
 		},
+
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Daily quests"] -- L["QUESTS_LABEL"]
+		-- 	end,
+		-- 	name_save = "Daily" .. E.MapID_TheMaw,
+		-- 	defS = true,
+		-- 	reset = "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = Octo_Cache_DB and Octo_Cache_DB.QuestsOnMap and Octo_Cache_DB.QuestsOnMap[E.MapID_TheMaw] or {},
+		-- 	forcedMaxQuest = 5,
+		-- },
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": "..L["Helsworn Chest"]
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Helsworn Chest"]
 			end,
 			name_save = "MAWHelswornChest",
 			defS = false,
@@ -730,7 +809,7 @@ local function tempFunction()
 		{ -- ПОФИКСИТЬ доступно только во время найт фей ассаулта
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": "..L["Stolen Anima Vessel"]..E.RIFT
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Stolen Anima Vessel"] .. E.RIFT
 			end,
 			name_save = "MAWStolenAnimaVesselRIFT",
 			defS = false,
@@ -746,7 +825,7 @@ local function tempFunction()
 		-- {
 		-- showTooltip = true,
 		-- TextLeft = function()
-		-- return E.func_GetName("map", 1543)..": "..L["Daily quests"],--E.func_GetName("currency", 1880)
+		-- return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. L["Daily quests"],--E.func_GetName("currency", 1880)
 		-- end,
 		-- name_save = "MAWdailyQuests",
 		-- defS = false,
@@ -770,7 +849,7 @@ local function tempFunction()
 		{
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1543)..": ".."Rares"
+				return E.func_GetName("map", E.MapID_TheMaw) .. ": " .. "Rares"
 			end,
 			name_save = "MAWRares",
 			defS = true,
@@ -808,14 +887,14 @@ local function tempFunction()
 		{
 			sorted = false,
 			showTooltip = true,
-			TextLeft = L["OTHER"]..": Rares",
+			TextLeft = L["OTHER"] .. ": Rares",
 			name_save = "OtherRares",
 			defS = true,
 			reset = "Daily",
 			desc = categoryKey,
 			quests = {
 				-- Bastion
-				{nil, addText = {mapID = 1533},},
+				{nil, addText = {mapID = E.MapID_Bastian},},
 				{60977, forcedText = {npcID = 170832}, addText = {mount = 1426},},
 				{60977, forcedText = {npcID = 170833}, addText = {mount = 1426},},
 				{60977, forcedText = {npcID = 170834}, addText = {mount = 1426},},
@@ -824,7 +903,7 @@ local function tempFunction()
 				{60862, forcedText = {npcID = 170548}, addText = {mount = 1307},},
 				{nil},
 				-- Maldraxxus
-				{nil, addText = {mapID = 1536},},
+				{nil, addText = {mapID = E.MapID_Maldraxxus},},
 				{61720, forcedText = {npcID = 157309}, addText = {mount = 1410},},
 				{58783, forcedText = {npcID = 162586}, addText = {mount = 1366, Icon = E.ICON_NECROLORD},},
 				{58851, forcedText = {npcID = 162690}, addText = {mount = 1373},},
@@ -833,14 +912,14 @@ local function tempFunction()
 				{58784, forcedText = {npcID = 168147}, addText = {mount = 1370, Icon = E.ICON_NECROLORD},},
 				{nil},
 				-- Ardenweald
-				{nil, addText = {mapID = 1565},},
+				{nil, addText = {mapID = E.MapID_Ardenweald},},
 				{59145, forcedText = {npcID = 164107}, addText = {mount = 1362},},
 				{59157, forcedText = {npcID = 164112}, addText = {mount = 1415},},
 				{60306, forcedText = {npcID = 168135}, addText = {mount = 1306},},
 				{61632, forcedText = {npcID = 168647}, addText = {mount = 1393, Icon = E.ICON_NIGHTFAE},},
 				{nil},
 				-- Revendreth
-				{nil, addText = {mapID = 1525},},
+				{nil, addText = {mapID = E.MapID_Revendreth},},
 				{58259, forcedText = {npcID = 160821}, addText = {mount = 1391},},
 				{59612, forcedText = {npcID = 165290}, addText = {mount = 1310, Icon = E.ICON_VENTHYR},},
 				{59869, forcedText = {npcID = 166521}, addText = {mount = 1379},},
@@ -854,7 +933,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1670)..": "..L["DUNGEONS"]
+				return E.func_GetName("map", E.MapID_Oribos) .. ": " .. L["DUNGEONS"]
 			end,
 			name_save = "TradingFavors",
 			defS = false,
@@ -912,9 +991,65 @@ local function tempFunction()
 			},
 			forcedMaxQuest = 4,
 		},
+		------------------------------------------------------------
+		------------------------------------------------------------
+		------------------------------------------------------------
+		-- {
+		-- 	sorted = true,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return L["Covenant Callings"]
+		-- 	end,
+		-- 	name_save = "CovenantCallings",
+		-- 	defS = true,
+		-- 	reset = "Daily",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		-- 		-- Callings that reward Rare Tribute Chests:
+		-- 		{60391,}, -- aiding-ardenweald
+		-- 		{60393,}, -- aiding-bastion
+		-- 		{60395,}, -- aiding-maldraxxus
+		-- 		{60400,}, -- aiding-revendreth
+		-- 		{60415,}, -- rare-resources
+		-- 		{60458,}, -- anima-salvage
+		-- 		{60380,}, -- a-source-of-sorrowvine
+		-- 		{60372,}, -- a-wealth-of-wealdwood
+		-- 		{60465,}, -- anima-appeal
+		-- 		{60358,}, -- gildenite-grab
+		-- 		{60377,}, -- bonemetal-bonanza
+
+		-- 		-- Callings that reward Rare Tribute Chests as well as give special rewards through the Dirty Glinting Object drops: -- https://www.wowhead.com/npc=175390/dirty-glinting-object
+		-- 		{60387,}, -- training-in-bastion
+		-- 		{60403,}, -- training-in-ardenweald
+		-- 		{60407,}, -- training-in-maldraxxus
+		-- 		{60412,}, -- training-in-revendreth
+
+		-- 		-- Callings that reward Epic Tribute Chests:
+		-- 		{60424,}, -- a-call-to-ardenweald
+		-- 		{60418,}, -- a-call-to-bastion
+		-- 		{60430,}, -- a-call-to-maldraxxus
+		-- 		{60434,}, -- a-call-to-revendreth
+		-- 		{60439,}, -- challenges-in-ardenweald
+		-- 		{60442,}, -- challenges-in-bastion
+		-- 		{60447,}, -- challenges-in-maldraxxus
+		-- 		{60450,}, -- challenges-in-revendreth
+		-- 		{60454,}, -- storm-the-maw
+
+		-- 		-- L["Troubles at Home"]
+		-- 		{60425, addText = {Icon = E.ICON_KYRIAN}},
+		-- 		{60432, addText = {Icon = E.ICON_VENTHYR}},
+		-- 		{60419, addText = {Icon = E.ICON_NIGHTFAE}},
+		-- 		{60429, addText = {Icon = E.ICON_NECROLORD}},
+		-- 	},
+		-- 	forcedMaxQuest = 3,
+		-- },
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
+	}
+	----------------------------------------------------------------
+	OctoTables_DataOtrisovka[categoryKey].AdditionallyCENTER = {
+		{id = "Callings", defS = true,},
 	}
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {

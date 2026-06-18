@@ -113,7 +113,8 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 
 
 	if id == "CurrentKey" then
-		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.CONFIG_ITEMS_COLOREDNAME then
+		local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+		if settingsProfile.CONFIG_ITEMS_COLOREDNAME then
 			TextLeft = E.COLOR_WOW_EPIC..L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"].."|r"
 		else
 			TextLeft = L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"]
@@ -134,6 +135,23 @@ function E.func_Otrisovka_LEFT_AdditionallyTOP(categoryKey, CharInfo, dataType, 
 	if id == "Ashjrakamas" then
 		TextLeft = E.func_GetName("item", 169223)
 		IconLeft = E.func_GetIcon("item", 169223)
+	end
+	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E.func_Otrisovka_LEFT_AdditionallyCENTER(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
+	if id == "Callings" then
+		TextLeft = L["CALLINGS_QUESTS"]
+	end
+	if id == "BountiesLegion" then
+		TextLeft = L["CALLINGS_QUESTS"]
+	end
+	if id == "BountiesBattleforAzeroth" then
+		TextLeft = L["CALLINGS_QUESTS"]
 	end
 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
 end
@@ -182,3 +200,9 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
+function E.func_Otrisovka_LEFT_Maps(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey = "", nil, nil, dataType.."#"..id, nil
+	TextLeft = E.func_GetName("map", id)
+ 	return TextLeft, ColorLeft, IconLeft, SettingsType, TooltipKey
+end

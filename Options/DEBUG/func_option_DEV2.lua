@@ -46,7 +46,7 @@ function E.func_option_DEV2(category, layout)
 				if not E.DEBUG then return end
 				local data = E.getDataFromString(E.Octo_DevTool_DB_DATA, true)
 				if not data then
-					E.func_PrintMessage("|cffff0000Import failed:|r", err)
+					E.func_PrintMessage("|cffff0000Import failed: invalid data|r")
 					return
 				end
 				E.func_workWitchMyTable(data)

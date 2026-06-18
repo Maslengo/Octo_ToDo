@@ -1,7 +1,7 @@
 local GlobalAddonName, E = ...
 local EventFrame = CreateFrame("FRAME")
-local ENABLE_DEBUG_TIMER = false
 local function func_Collect_All()
+	RequestRaidInfo()
 	local allFunctions = {
 		{func = E.Collect_BFA_HeartOfAzeroth, name = "Collect_BFA_HeartOfAzeroth",},
 		{func = E.Collect_ChromieTime, name = "Collect_ChromieTime",},
@@ -25,8 +25,9 @@ local function func_Collect_All()
 		{func = E.Collect_Professions, name = "Collect_Professions",},
 		{func = E.Collect_Reputations, name = "Collect_Reputations",},
 		{func = E.Collect_WarMode, name = "Collect_WarMode",},
-		{func = E.Collect_Statistics, name = "Collect_Statistics",},
 		{func = E.Collect_Quests, name = "Collect_Quests",},
+		{func = E.Collect_QuestsOnMap, name = "Collect_QuestsOnMap",},
+		{func = E.Collect_Bounties, name = "Collect_Bounties",},
 	}
 	local total = #allFunctions
 	if total == 0 then return end
@@ -47,6 +48,7 @@ local function func_Collect_All()
 end
 ----------------------------------------------------------------
 function E.func_Collect_All()
+	E.func_RequestCallings()
 	E.func_SpamBlock(func_Collect_All, false)
 end
 ----------------------------------------------------------------
@@ -56,6 +58,7 @@ local MyEventsTable = {
 	"ACCOUNT_MONEY",
 	"AZERITE_ITEM_EXPERIENCE_CHANGED",
 	"BARBER_SHOP_APPEARANCE_APPLIED",
+	"COVENANT_CALLINGS_UPDATED",
 	"COVENANT_CHOSEN",
 	"COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED",
 	"CURRENCY_DISPLAY_UPDATE",
@@ -69,6 +72,7 @@ local MyEventsTable = {
 	"BAG_UPDATE",
 	"BAG_UPDATE_DELAYED",
 	"BANKFRAME_OPENED",
+	"DISABLE_XP_GAIN",
 	"PLAYERBANKSLOTS_CHANGED",
 	-- "PLAYERBANKBAGSLOTS_CHANGED", -- (CLASSIS)
 	"BANK_TAB_SETTINGS_UPDATED",
@@ -102,6 +106,7 @@ local MyEventsTable = {
 	"MAIL_SHOW",
 	"PLAYER_DEAD",
 	"PLAYER_EQUIPMENT_CHANGED",
+	"PLAYER_AVG_ITEM_LEVEL_UPDATE",
 	"PLAYER_FLAGS_CHANGED",
 	"PLAYER_LEVEL_UP",
 	"PLAYER_LEAVING_WORLD",
@@ -118,7 +123,7 @@ local MyEventsTable = {
 	"SPELLS_CHANGED",
 	"TIME_PLAYED_MSG",
 	"TRADE_SKILL_SHOW",
-	"UPDATE_FACTION",
+	-- "UPDATE_FACTION",
 	"UPDATE_INSTANCE_INFO",
 	"UPDATE_INVENTORY_DURABILITY",
 	"UPDATE_PENDING_MAIL",
@@ -129,15 +134,15 @@ local MyEventsTable = {
 	"CURRENCY_TRANSFER_SUCCESS",
 	-- "QUEST_DATA_LOAD_RESULT",
 	-- "ITEM_DATA_LOAD_RESULT",
+	"FACTION_STANDING_CHANGED",
 }
 E.func_RegisterEvents(EventFrame, MyEventsTable)
 function EventFrame:PLAYER_LOGIN()
 	C_Timer.After(1, function()
-			E.Collect_Money_PLAYER_LOGIN()
-			RequestTimePlayed()
-			RequestRaidInfo()
-			E.func_Collect_All()
-			E.func_RequestUIUpdate("PLAYER_LOGIN")
+		RequestTimePlayed()
+		E.Collect_Money_PLAYER_LOGIN()
+		E.func_Collect_All()
+		E.func_RequestUIUpdate("PLAYER_LOGIN")
 	end)
 	E.Collect_Mounts()
 end
@@ -163,6 +168,7 @@ function EventFrame:QUEST_LOG_UPDATE()
 	E.Collect_ChromieTime()
 	-- E.Collect_GreatVault()
 	E.Collect_Quests()
+	E.Collect_Bounties()
 	E.func_RequestUIUpdate("QUEST_LOG_UPDATE")
 end
 function EventFrame:PLAYER_MONEY()
@@ -197,8 +203,13 @@ function EventFrame:PLAYER_EQUIPMENT_CHANGED()
 	E.Collect_Equipments()
 	E.func_RequestUIUpdate("PLAYER_EQUIPMENT_CHANGED")
 end
+function EventFrame:PLAYER_AVG_ITEM_LEVEL_UPDATE()
+	E.Collect_Character_ItemLevels()
+	E.Collect_BFA_HeartOfAzeroth()
+	E.Collect_Equipments()
+	E.func_RequestUIUpdate("PLAYER_AVG_ITEM_LEVEL_UPDATE")
+end
 function EventFrame:PLAYER_LEAVING_WORLD()
-	-- E.func_Collect_All()
 	self:UnregisterEvent("PLAYER_LEAVING_WORLD")
 	self.PLAYER_LEAVING_WORLD = nil
 	-- E.Collect_GreatVault()
@@ -212,10 +223,20 @@ function EventFrame:COVENANT_CHOSEN(...)
 	local id = ...
 	E.Collect_Covenants()
 	E.func_RequestUIUpdate("COVENANT_CHOSEN")
+	C_Timer.After(2, function()
+		E.func_RequestCallings()
+	end)
 end
 function EventFrame:COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED()
 	E.Collect_Covenants()
 	E.func_RequestUIUpdate("COVENANT_SANCTUM_RENOWN_LEVEL_CHANGED")
+	C_Timer.After(2, function()
+		E.func_RequestCallings()
+	end)
+end
+function EventFrame:COVENANT_CALLINGS_UPDATED(...)
+	if not E.func_AreCallingsUnlocked() then return end
+	E.Collect_Callings(...)
 end
 function EventFrame:PLAYER_DEAD()
 	E.Collect_Equipments()
@@ -256,6 +277,7 @@ function EventFrame:PLAYER_REGEN_ENABLED()
 	E.Collect_Reputations()
 	E.Collect_Currencies()
 	E.Collect_Quests()
+	E.Collect_QuestsOnMap()
 	E.Collect_JournalInstance()
 	E.func_RequestUIUpdate("PLAYER_REGEN_ENABLED")
 end
@@ -294,10 +316,10 @@ function EventFrame:BARBER_SHOP_APPEARANCE_APPLIED()
 	E.Collect_Character_Info()
 	E.func_RequestUIUpdate("BARBER_SHOP_APPEARANCE_APPLIED")
 end
-function EventFrame:UPDATE_FACTION()
-	E.Collect_Reputations()
-	E.func_RequestUIUpdate("UPDATE_FACTION")
-end
+-- function EventFrame:UPDATE_FACTION()
+	-- E.Collect_Reputations()
+	-- E.func_RequestUIUpdate("UPDATE_FACTION")
+-- end
 function EventFrame:PLAYER_FLAGS_CHANGED()
 	E.Collect_Character_Info()
 	E.func_RequestUIUpdate("PLAYER_FLAGS_CHANGED")
@@ -403,7 +425,7 @@ function EventFrame:ITEM_CHANGED(...)
 	local arg1, arg2 = ...
 	if arg2:find("item:180653") or arg2:find("item:138019") or arg2:find("item:158923") or arg2:find("item:151086") then
 		E.Collect_Items_MythicKeystone()
-		C_Timer.After(Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME+.1, function()
+		C_Timer.After(E.SPAM_TIME+.1, function()
 			E.Collect_Items_MythicKeystone()
 		end)
 		E.func_RequestUIUpdate("ITEM_CHANGED")
@@ -418,16 +440,29 @@ function EventFrame:ITEM_COUNT_CHANGED()
 end
 function EventFrame:ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED()
 	E.func_DEBUG_CURRENCY_TRANSFER()
+	E.func_RequestUIUpdate("ACCOUNT_CHARACTER_CURRENCY_DATA_RECEIVED")
 end
 function EventFrame:CURRENCY_TRANSFER_INITIATED()
 	E.func_DEBUG_CURRENCY_TRANSFER()
+	E.func_RequestUIUpdate("CURRENCY_TRANSFER_INITIATED")
 end
 function EventFrame:CURRENCY_TRANSFER_FAILED()
 	E.func_DEBUG_CURRENCY_TRANSFER()
+	E.func_RequestUIUpdate("CURRENCY_TRANSFER_FAILED")
 end
 function EventFrame:CURRENCY_TRANSFER_SUCCESS()
 	E.func_DEBUG_CURRENCY_TRANSFER()
+	E.func_RequestUIUpdate("CURRENCY_TRANSFER_SUCCESS")
 end
 function EventFrame:CURRENCY_TRANSFER_LOG_UPDATE()
 	E.func_DEBUG_CURRENCY_TRANSFER()
+	E.func_RequestUIUpdate("CURRENCY_TRANSFER_LOG_UPDATE")
+end
+function EventFrame:FACTION_STANDING_CHANGED(...)
+	E.Collect_Reputations_TARGET(...)
+	E.func_RequestUIUpdate("Collect_Reputations_TARGET")
+end
+function EventFrame:DISABLE_XP_GAIN()
+	E.Collect_Character_Info()
+	E.func_RequestUIUpdate("DISABLE_XP_GAIN")
 end

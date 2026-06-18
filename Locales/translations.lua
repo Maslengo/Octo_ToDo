@@ -13,6 +13,174 @@ local GlobalAddonName, E = ...
 -- ["zhTW"] = "",
 -- },
 E.translations = {
+
+	["Experience Eliminator"] = {
+		["ruRU"] = "Накопление опыта",
+		["deDE"] = "Erfahrungseliminierer",
+		["esES"] = "Detiene-experiencia",
+		["esMX"] = "Detiene-experiencia",
+		["frFR"] = "Eliminateur d'expérience",
+		["itIT"] = "Eliminatore di Esperienza",
+		["ptBR"] = "Eliminador de Experiência",
+		["koKR"] = "경험치 제거 관리인",
+		["zhCN"] = "经验锁定者",
+		["zhTW"] = "經驗編制官",
+	},
+	["Region"] = {
+		["ruRU"] = "Регион",
+		["deDE"] = "Region",
+		["esES"] = "Región",
+		["esMX"] = "Región",
+		["frFR"] = "Région",
+		["itIT"] = "Regione",
+		["ptBR"] = "Região",
+		["koKR"] = "지역",
+		["zhCN"] = "地区",
+		["zhTW"] = "地區",
+	},
+	["The Ring of Blood"] = {
+		["ruRU"] = "Кольцо Крови",
+		["deDE"] = "Der Ring des Blutes",
+		["esES"] = "El Círculo de Sangre",
+		["esMX"] = "El Círculo de Sangre",
+		["frFR"] = "L'arène de sang",
+		["itIT"] = "Il Circolo del Sangue",
+		["ptBR"] = "Ringue de Sangue",
+		["koKR"] = "피의 투기장",
+		["zhCN"] = "鲜血竞技场",
+		["zhTW"] = "血之競技場",
+	},
+	["Current Server"] = {
+		["ruRU"] = "Текущий сервер",
+		["deDE"] = "Aktueller Server",
+		["esES"] = "Servidor actual",
+		["esMX"] = "Servidor actual",
+		["frFR"] = "Serveur actuel",
+		["itIT"] = "Server attuale",
+		["ptBR"] = "Servidor atual",
+		["koKR"] = "현재 서버",
+		["zhCN"] = "当前服务器",
+		["zhTW"] = "目前伺服器",
+	},
+	["Current Region"] = {
+		["ruRU"] = "Текущий регион",
+		["deDE"] = "Aktuelle Region",
+		["esES"] = "Región actual",
+		["esMX"] = "Región actual",
+		["frFR"] = "Région actuelle",
+		["itIT"] = "Regione attuale",
+		["ptBR"] = "Região atual",
+		["koKR"] = "현재 지역",
+		["zhCN"] = "当前地区",
+		["zhTW"] = "目前地區",
+	},
+	["Current Faction"] = {
+		["ruRU"] = "Текущая фракция",
+		["deDE"] = "Aktuelle Fraktion",
+		["esES"] = "Facción actual",
+		["esMX"] = "Facción actual",
+		["frFR"] = "Faction actuelle",
+		["itIT"] = "Fazione attuale",
+		["ptBR"] = "Facção atual",
+		["koKR"] = "현재 진영",
+		["zhCN"] = "当前阵营",
+		["zhTW"] = "目前陣營",
+	},
+	["Current BattleTag"] = {
+		["ruRU"] = "Текущий BattleTag",
+		["deDE"] = "Aktueller BattleTag",
+		["esES"] = "BattleTag actual",
+		["esMX"] = "BattleTag actual",
+		["frFR"] = "BattleTag actuel",
+		["itIT"] = "BattleTag attuale",
+		["ptBR"] = "BattleTag atual",
+		["koKR"] = "현재 BattleTag",
+		["zhCN"] = "当前 BattleTag",
+		["zhTW"] = "目前 BattleTag",
+	},
+
+
+	["Only Current Server"] = {
+		["ruRU"] = "Только текущий сервер",
+		["deDE"] = "Nur aktueller Server",
+		["esES"] = "Solo servidor actual",
+		["esMX"] = "Solo servidor actual",
+		["frFR"] = "Serveur actuel uniquement",
+		["itIT"] = "Solo server attuale",
+		["ptBR"] = "Apenas servidor atual",
+		["koKR"] = "현재 서버만",
+		["zhCN"] = "仅当前服务器",
+		["zhTW"] = "僅目前伺服器",
+	},
+
+	["Only Current Region"] = {
+		["ruRU"] = "Только текущий регион",
+		["deDE"] = "Nur aktuelle Region",
+		["esES"] = "Solo región actual",
+		["esMX"] = "Solo región actual",
+		["frFR"] = "Région actuelle uniquement",
+		["itIT"] = "Solo regione attuale",
+		["ptBR"] = "Apenas região atual",
+		["koKR"] = "현재 지역만",
+		["zhCN"] = "仅当前地区",
+		["zhTW"] = "僅目前地區",
+	},
+
+	["Only Current Faction"] = {
+		["ruRU"] = "Только текущая фракция",
+		["deDE"] = "Nur aktuelle Fraktion",
+		["esES"] = "Solo facción actual",
+		["esMX"] = "Solo facción actual",
+		["frFR"] = "Faction actuelle uniquement",
+		["itIT"] = "Solo fazione attuale",
+		["ptBR"] = "Apenas facção atual",
+		["koKR"] = "현재 진영만",
+		["zhCN"] = "仅当前阵营",
+		["zhTW"] = "僅目前陣營",
+	},
+
+	["Only Current BattleTag"] = {
+		["ruRU"] = "Только текущий BattleTag",
+		["deDE"] = "Nur aktueller BattleTag",
+		["esES"] = "Solo BattleTag actual",
+		["esMX"] = "Solo BattleTag actual",
+		["frFR"] = "BattleTag actuel uniquement",
+		["itIT"] = "Solo BattleTag attuale",
+		["ptBR"] = "Apenas BattleTag atual",
+		["koKR"] = "현재 BattleTag만",
+		["zhCN"] = "仅当前 BattleTag",
+		["zhTW"] = "僅目前 BattleTag",
+	},
+
+
+
+
+
+	["Current Character First"] = {
+		["ruRU"] = "Текущий персонаж первым",
+		["deDE"] = "Aktueller Charakter zuerst",
+		["esES"] = "Personaje actual primero",
+		["esMX"] = "Personaje actual primero",
+		["frFR"] = "Personnage actuel en premier",
+		["itIT"] = "Personaggio attuale per primo",
+		["ptBR"] = "Personagem atual primeiro",
+		["koKR"] = "현재 캐릭터 우선",
+		["zhCN"] = "当前角色优先",
+		["zhTW"] = "目前角色優先",
+	},
+
+	["Missive"] = {
+		["ruRU"] = "Донесение",
+		["deDE"] = "Bericht",
+		["esES"] = "Misiva",
+		["esMX"] = "Misiva",
+		["frFR"] = "Missive",
+		["itIT"] = "Missiva",
+		["ptBR"] = "Carta",
+		["koKR"] = "서신",
+		["zhCN"] = "密报",
+		["zhTW"] = "文件",
+	},
 	["Hide Delay (sec.)"] = {
 		["ruRU"] = "Задержка скрытия (сек.)",
 		["deDE"] = "Ausblendverzögerung (Sek.)",
@@ -84,7 +252,7 @@ E.translations = {
 		["ptBR"] = "Investidas do Caos",
 		["koKR"] = "공허 공세",
 		["zhCN"] = "虚空侵袭",
-		-- ["zhTW"] = "", -- https://www.wowhead.com/tw/quest=94386/void-assaults-zulaman
+		["zhTW"] = "虛無襲擊", -- https://www.wowhead.com/tw/quest=94386/void-assaults-zulaman
 	},
 	["Drag to reorder"] = {
 		["ruRU"] = "Перетащите, чтобы изменить порядок",
@@ -127,7 +295,6 @@ E.translations = {
 		["zhCN"] = "升序",
 		["zhTW"] = "升序",
 	},
-
 	["Descending"] = {
 		["ruRU"] = "По убыванию",
 		["deDE"] = "Absteigend",
@@ -163,19 +330,6 @@ E.translations = {
 		["koKR"] = "설정을 초기화하시겠습니까? 이 작업은 되돌릴 수 없습니다.",
 		["zhCN"] = "确定要重置设置吗？此操作无法撤销。",
 		["zhTW"] = "確定要重置設定嗎？此操作無法復原。",
-	},
-	["Show current character first"] = {
-	    ["ruRU"] = "Показывать текущего персонажа первым",
-	    ["deDE"] = "Aktuellen Charakter zuerst anzeigen",
-	    ["frFR"] = "Afficher le personnage actuel en premier",
-	    ["esES"] = "Mostrar personaje actual primero",
-	    ["esMX"] = "Mostrar personaje actual primero",
-	    ["itIT"] = "Mostra prima il personaggio attuale",
-	    ["ptBR"] = "Mostrar personagem atual primeiro",
-	    ["koKR"] = "현재 캐릭터 먼저 표시",
-	    ["zhCN"] = "优先显示当前角色",
-	    ["zhTW"] = "優先顯示目前角色",
-	    ["enGB"] = "Show current character first",
 	},
 	["TIME_PLAYED_ALERT"] = TIME_PLAYED_ALERT, -- Вы находитесь в игре уже %s. Не стоит чрезмерно увлекаться игрой в ущерб вашей реальной жизни.
 	["TIME_PLAYED_TOTAL"] = TIME_PLAYED_TOTAL, -- Общее время игры: %s
@@ -245,6 +399,34 @@ E.translations = {
 		["zhCN"] = "服务器",
 		["zhTW"] = "伺服器",
 	},
+
+	----------------------------------------------------------------
+	["COVENANT"] = COVENANT or {
+		["enUS"] = "Covenant",
+		["ruRU"] = "Ковенант",
+		["deDE"] = "Pakt",
+		["esES"] = "Curia",
+		["esMX"] = "Curia",
+		["frFR"] = "Congrégation",
+		["itIT"] = "Congrega",
+		["ptBR"] = "Pacto",
+		["koKR"] = "성약단",
+		["zhCN"] = "盟约",
+		["zhTW"] = "誓盟",
+	},
+	----------------------------------------------------------------
+	["PRIMARY"] = PRIMARY, -- Основное
+	-- ["WOWLABS_MAINLINE"] = WOWLABS_MAINLINE, -- Основное
+	----------------------------------------------------------------
+	["UNAVAILABLE"] = UNAVAILABLE, -- Недоступно
+	-- ["ADDON_NOT_AVAILABLE"] = ADDON_NOT_AVAILABLE, -- Недоступно
+	-- ["ANIMA_DIVERSION_NODE_UNAVAILABLE"] = ANIMA_DIVERSION_NODE_UNAVAILABLE, -- Недоступно
+	-- ["COMBAT_WARNINGS_EVENT_STATUS_BLOCKED"] = COMBAT_WARNINGS_EVENT_STATUS_BLOCKED, -- [Недоступно]
+	-- ["TAXI_PATH_UNREACHABLE"] = TAXI_PATH_UNREACHABLE, -- Недоступно
+	-- ["TOKEN_MARKET_PRICE_NOT_AVAILABLE"] = TOKEN_MARKET_PRICE_NOT_AVAILABLE, -- Недоступно
+	-- ["RUNEFORGE_LEGENDARY_POWER_LIST_OTHER_SPEC_LABEL"] = RUNEFORGE_LEGENDARY_POWER_LIST_OTHER_SPEC_LABEL, -- Недоступно
+	-- ["RUNEFORGE_POWER_FILTER_UNAVAILABLE"] = RUNEFORGE_POWER_FILTER_UNAVAILABLE, -- Недоступно
+	-- ["PET_STABLE_SLOT_LOCKED"] = PET_STABLE_SLOT_LOCKED, -- Недоступно
 	----------------------------------------------------------------
 	["CHARACTER_NAME_PROMPT"] = CHARACTER_NAME_PROMPT, -- Имя персонажа
 	-- ["REPORTING_MINOR_CATEGORY_CHARACTER_NAME"] = REPORTING_MINOR_CATEGORY_CHARACTER_NAME, -- Имя персонажа
@@ -262,19 +444,12 @@ E.translations = {
 	-- CDMSND_WAR3_GOLD - Золото
 	-- WORLD_QUEST_REWARD_FILTERS_GOLD - Золото
 	----------------------------------------------------------------
-	["COVENANT"] = COVENANT or {
-		["enUS"] = "Covenant",
-		["ruRU"] = "Ковенант",
-		["deDE"] = "Pakt",
-		["esES"] = "Curia",
-		["esMX"] = "Curia",
-		["frFR"] = "Congrégation",
-		["itIT"] = "Congrega",
-		["ptBR"] = "Pacto",
-		["koKR"] = "성약단",
-		["zhCN"] = "盟约",
-		["zhTW"] = "誓盟",
-	},
+	["RAID_INFO_WORLD_BOSS"] = RAID_INFO_WORLD_BOSS,
+	["DELVES_LABEL"] = DELVES_LABEL,
+	["EXPANSION_SEASON_NAME"] = EXPANSION_SEASON_NAME,
+	----------------------------------------------------------------
+	["QUEST_CLASSIFICATION_RECURRING"] = QUEST_CLASSIFICATION_RECURRING, -- Повторяемое
+	-- ["HOUSING_ENDEAVOR_REPEATABLE_TASK"] = HOUSING_ENDEAVOR_REPEATABLE_TASK, -- |A:UI-RefreshButton:18:18:0:0|a Повторяемая задача
 	----------------------------------------------------------------
 	-- ["BODY_1"] = BODY_1, -- Телосложение 1
 	-- ["BODY_2"] = BODY_2, -- Телосложение 2
@@ -287,26 +462,14 @@ E.translations = {
 	----------------------------------------------------------------
 	["GUID"] = GUID or "GUID",
 	----------------------------------------------------------------
-
-
-
-
 	["CLASS"] = CLASS, -- Класс
 	["BATTLETAG"] = BATTLETAG, -- BattleTag
 	["PVP_LABEL_WAR_MODE"] = PVP_LABEL_WAR_MODE, -- Режим войны
-	["ERR_PVP_WARMODE_TOGGLE_OFF"] = ERR_PVP_WARMODE_TOGGLE_OFF, -- Режим войны отключен.
-	["ERR_PVP_WARMODE_TOGGLE_ON"] = ERR_PVP_WARMODE_TOGGLE_ON, -- Режим войны включен.
 	["FACTION"] = FACTION, -- Фракция
 	["LEVEL"] = LEVEL, -- Уровень
 	["NAME"] = NAME, -- Имя
 	["ADD"] = ADD, -- Добавить
 	["SECONDARY"] = SECONDARY, -- Дополнительно
-
-
-
-
-
-
 	----------------------------------------------------------------
 	-- ["DELVES_GREAT_VAULT_LABEL"] = DELVES_GREAT_VAULT_LABEL,
 	["RATED_PVP_WEEKLY_VAULT"] = RATED_PVP_WEEKLY_VAULT,
@@ -325,6 +488,25 @@ E.translations = {
 	["BAG_FILTER_TITLE_SORTING"] = BAG_FILTER_TITLE_SORTING, -- Сортировка
 	-- HUD_EDIT_MODE_SETTING_UNIT_FRAME_SORT_BY - Сортировка
 	-- STABLE_FILTER_SORT_BY_LABEL - Сортировка
+	----------------------------------------------------------------
+	["COVENANT_MISSIONS_EMPTY_LIST"] = COVENANT_MISSIONS_EMPTY_LIST,
+	["CALLINGS_QUESTS"] = CALLINGS_QUESTS,
+	["AVAILABLE"] = AVAILABLE,
+	["LOCKED"] = LOCKED,
+	----------------------------------------------------------------
+	["EXPANSION_NAME0"] = EXPANSION_NAME0,
+	["EXPANSION_NAME1"] = EXPANSION_NAME1,
+	["EXPANSION_NAME2"] = EXPANSION_NAME2,
+	["EXPANSION_NAME3"] = EXPANSION_NAME3,
+	["EXPANSION_NAME4"] = EXPANSION_NAME4,
+	["EXPANSION_NAME5"] = EXPANSION_NAME5,
+	["EXPANSION_NAME6"] = EXPANSION_NAME6,
+	["EXPANSION_NAME7"] = EXPANSION_NAME7,
+	["EXPANSION_NAME8"] = EXPANSION_NAME8,
+	["EXPANSION_NAME9"] = EXPANSION_NAME9,
+	["EXPANSION_NAME10"] = EXPANSION_NAME10,
+	["EXPANSION_NAME11"] = EXPANSION_NAME11,
+	["EXPANSION_NAME12"] = EXPANSION_NAME12,
 	----------------------------------------------------------------
 	["SECONDS_FLOAT_ABBR"] = SECONDS_FLOAT_ABBR, -- %.1f сек.
 	["TIME_LABEL"] = TIME_LABEL, -- Время.
@@ -353,6 +535,44 @@ E.translations = {
 	-- ["SETTINGS_TITLE"] = SETTINGS_TITLE,  -- Параметры
 	-- ["GAMEMENU_OPTIONS"] = GAMEMENU_OPTIONS, -- Параметры
 	----------------------------------------------------------------
+	["LE_ITEM_CLASS_WEAPON"] = LE_ITEM_CLASS_WEAPON,
+	["LE_ITEM_CLASS_ARMOR"] = LE_ITEM_CLASS_ARMOR,
+	["LE_ITEM_CLASS_CONSUMABLE"] = LE_ITEM_CLASS_CONSUMABLE,
+	----------------------------------------------------------------
+	["TIME_REMAINING"] = TIME_REMAINING,
+	----------------------------------------------------------------
+	["ALL"] = ALL,
+	["WEAPON"] = WEAPON,
+	["AUCTION_CATEGORY_ARMOR"] = AUCTION_CATEGORY_ARMOR,
+	["HEIRLOOMS_CATEGORY_TRINKETS_RINGS_AND_NECKLACES"] = HEIRLOOMS_CATEGORY_TRINKETS_RINGS_AND_NECKLACES,
+	["BANK_TAB_ASSIGN_CONSUMABLES_CHECKBOX"] = BANK_TAB_ASSIGN_CONSUMABLES_CHECKBOX,
+	----------------------------------------------------------------
+	["SPELL_FAILED_TARGET_NO_POCKETS"] = SPELL_FAILED_TARGET_NO_POCKETS,
+	["ERR_NOT_IN_COMBAT"] = ERR_NOT_IN_COMBAT,
+	["ERR_PVP_WARMODE_TOGGLE_OFF"] = ERR_PVP_WARMODE_TOGGLE_OFF, -- Режим войны отключен.
+	["ERR_PVP_WARMODE_TOGGLE_ON"] = ERR_PVP_WARMODE_TOGGLE_ON, -- Режим войны включен.
+	["ERR_INV_FULL"] = ERR_INV_FULL,
+	["ERR_QUEST_LOG_FULL"] = ERR_QUEST_LOG_FULL,
+	["ERR_RAID_GROUP_ONLY"] = ERR_RAID_GROUP_ONLY,
+	["ERR_PARTY_LFG_BOOT_LIMIT"] = ERR_PARTY_LFG_BOOT_LIMIT,
+	["ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE"] = ERR_PARTY_LFG_BOOT_DUNGEON_COMPLETE,
+	["ERR_PARTY_LFG_BOOT_IN_COMBAT"] = ERR_PARTY_LFG_BOOT_IN_COMBAT, -- (ВЫКЛ)
+	["ERR_PARTY_LFG_BOOT_IN_PROGRESS"] = ERR_PARTY_LFG_BOOT_IN_PROGRESS,
+	["ERR_PARTY_LFG_BOOT_LOOT_ROLLS"] = ERR_PARTY_LFG_BOOT_LOOT_ROLLS,
+	["ERR_PARTY_LFG_TELEPORT_IN_COMBAT"] = ERR_PARTY_LFG_TELEPORT_IN_COMBAT,
+	["ERR_PET_SPELL_DEAD"] = ERR_PET_SPELL_DEAD,
+	["ERR_PLAYER_DEAD"] = ERR_PLAYER_DEAD,
+	["ERR_ALREADY_PICKPOCKETED"] = ERR_ALREADY_PICKPOCKETED,
+	["ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S"] = ERR_PARTY_LFG_BOOT_NOT_ELIGIBLE_S,
+	----------------------------------------------------------------
+	["JAILERS_TOWER_SCENARIO_FLOOR"] = JAILERS_TOWER_SCENARIO_FLOOR,
+	["VIDEO_OPTIONS_DISABLED"] = VIDEO_OPTIONS_DISABLED, -- Отключено
+	["VIDEO_OPTIONS_ENABLED"] = VIDEO_OPTIONS_ENABLED, -- Включено
+	["AUCTION_CATEGORY_HOUSING"] = AUCTION_CATEGORY_HOUSING, -- Жилье
+	["BINDING_HEADER_HOUSING_SYSTEM"] = BINDING_HEADER_HOUSING_SYSTEM, -- Жилье
+	["HOUSING_ITEM_TOAST_TYPE_DECOR"] = HOUSING_ITEM_TOAST_TYPE_DECOR, -- Декор
+	["CATALOG_SHOP_TYPE_DECOR"] = CATALOG_SHOP_TYPE_DECOR, -- Декор
+	["MOUNTS"] = MOUNTS, -- Транспорт
 	["SCREENSHOT_SUCCESS"] = SCREENSHOT_SUCCESS, -- Скриншот сохранен.
 	["DELETE_ITEM"] = DELETE_ITEM, -- Уничтожить предмет "%s"?
 	["DELETE_GOOD_ITEM"] = DELETE_GOOD_ITEM,
@@ -366,7 +586,6 @@ E.translations = {
 	["BATTLEGROUND_RATING_TOOLTIP_TITLE"] = BATTLEGROUND_RATING_TOOLTIP_TITLE, -- Текущий рейтинг
 	["PVP_CURRENT_RATING"] = PVP_CURRENT_RATING, -- Текущий рейтинг:
 	["PROVING_GROUNDS_SCORE"] = PROVING_GROUNDS_SCORE, -- Счёт.
-	["ALL"] = ALL,
 	["MAW_BUFF_QUALITY_STRING_EPIC"] = MAW_BUFF_QUALITY_STRING_EPIC, --  "|cffa335eeЭпическое|r"
 	["MAW_BUFF_QUALITY_STRING_RARE"] = MAW_BUFF_QUALITY_STRING_RARE, -- "|cff0070ddРедкое|r"
 	["MAW_BUFF_QUALITY_STRING_UNCOMMON"] = MAW_BUFF_QUALITY_STRING_UNCOMMON, -- "|cff1eff00Необычное|r"
@@ -400,7 +619,6 @@ E.translations = {
 	["WEEKLY_REWARDS_MYTHIC_KEYSTONE"] = WEEKLY_REWARDS_MYTHIC_KEYSTONE,
 	["PVP"] = PVP,
 	["PVP_OPTIONS"] = PVP_OPTIONS,
-	["CUSTOM"] = CUSTOM, -- ("Вручную")
 	["OTHER"] = OTHER, -- ("Другое")
 	["YES"] = YES,
 	["NO"] = NO,
@@ -435,14 +653,15 @@ E.translations = {
 	["FRIENDS_LIST_ONLINE"] = FRIENDS_LIST_ONLINE,
 	["FRIENDS_LIST_ZONE"] = FRIENDS_LIST_ZONE,
 	["GARRISON_CACHE"] = GARRISON_CACHE,
-	["ITEM_QUALITY1_DESC"] = ITEM_QUALITY1_DESC,
-	["ITEM_QUALITY2_DESC"] = ITEM_QUALITY2_DESC,
-	["ITEM_QUALITY3_DESC"] = ITEM_QUALITY3_DESC,
-	["ITEM_QUALITY4_DESC"] = ITEM_QUALITY4_DESC,
-	["ITEM_QUALITY5_DESC"] = ITEM_QUALITY5_DESC,
-	["ITEM_QUALITY6_DESC"] = ITEM_QUALITY6_DESC,
-	["ITEM_QUALITY7_DESC"] = ITEM_QUALITY7_DESC,
-	["ITEM_QUALITY8_DESC"] = ITEM_QUALITY8_DESC,
+	["ITEM_QUALITY1_DESC"] = ITEM_QUALITY1_DESC, -- Обычное
+	["ITEM_QUALITY2_DESC"] = ITEM_QUALITY2_DESC, -- Необычное
+	["ITEM_QUALITY3_DESC"] = ITEM_QUALITY3_DESC, -- Редкое
+	["ITEM_QUALITY4_DESC"] = ITEM_QUALITY4_DESC, -- Эпическое
+	["ITEM_QUALITY5_DESC"] = ITEM_QUALITY5_DESC, -- Легендарное
+	["ITEM_QUALITY6_DESC"] = ITEM_QUALITY6_DESC, -- Артефакт
+	["ITEM_QUALITY7_DESC"] = ITEM_QUALITY7_DESC, -- Наследие
+	["ITEM_QUALITY8_DESC"] = ITEM_QUALITY8_DESC, -- Жетон WoW
+	["TOKEN_FILTER_LABEL"] = TOKEN_FILTER_LABEL, -- Жетон WoW
 	["ITEMS"] = ITEMS,
 	["LFG_LIST_ITEM_LEVEL_CURRENT_PVP"] = LFG_LIST_ITEM_LEVEL_CURRENT_PVP,
 	["NONE"] = NONE,
@@ -543,19 +762,6 @@ E.translations = {
 		["koKR"] = "미니맵 버튼에 마우스를 올리면 창을 자동으로 표시합니다",
 		["zhCN"] = "鼠标悬停在小地图按钮上时自动显示窗口",
 		["zhTW"] = "滑鼠懸停在小地圖按鈕上時自動顯示視窗",
-	},
-
-	["Value"] = { -- ["VALUE"] = {
-		["ruRU"] = "Значение",
-		["deDE"] = "Wert",
-		["esES"] = "Valor",
-		["esMX"] = "Valor",
-		["frFR"] = "Valeur",
-		["itIT"] = "Valore",
-		["ptBR"] = "Valor",
-		["koKR"] = "값",
-		["zhCN"] = "数值",
-		["zhTW"] = "數值",
 	},
 
 	["Percentage"] = { -- ["PERCENTAGE"] = {
@@ -2473,6 +2679,18 @@ E.translations = {
 		["zhCN"] = "固定在屏幕",
 		["zhTW"] = "固定於螢幕",
 	},
+	["Save Position"] = {
+		["ruRU"] = "Сохранять положение",
+		["deDE"] = "Position speichern",
+		["esES"] = "Guardar posición",
+		["esMX"] = "Guardar posición",
+		["frFR"] = "Enregistrer la position",
+		["itIT"] = "Salva posizione",
+		["ptBR"] = "Salvar posição",
+		["koKR"] = "위치 저장",
+		["zhCN"] = "保存位置",
+		["zhTW"] = "儲存位置",
+	},
 	["Alpha On Drag"] = {
 		["ruRU"] = "Альфа при перетаскивании",
 		["deDE"] = "Transparenz beim Ziehen",
@@ -3072,54 +3290,6 @@ E.translations = {
 		["koKR"] = "보조 열쇠 불꽃",
 		["zhCN"] = "次要钥焰",
 		["zhTW"] = "次要鑰焰",
-	},
-	["Only Current Server"] = {
-		["ruRU"] = "Только текущий сервер",
-		["deDE"] = "Nur aktueller Server",
-		["esES"] = "Solo servidor actual",
-		["esMX"] = "Solo servidor actual",
-		["frFR"] = "Serveur actuel uniquement",
-		["itIT"] = "Solo server attuale",
-		["ptBR"] = "Apenas servidor atual",
-		["koKR"] = "현재 서버만",
-		["zhCN"] = "仅当前服务器",
-		["zhTW"] = "僅目前伺服器",
-	},
-	["Only Current Region"] = {
-		["ruRU"] = "Только текущий регион",
-		["deDE"] = "Nur aktuelle Region",
-		["esES"] = "Solo región actual",
-		["esMX"] = "Solo región actual",
-		["frFR"] = "Région actuelle uniquement",
-		["itIT"] = "Solo regione attuale",
-		["ptBR"] = "Apenas região atual",
-		["koKR"] = "현재 지역만",
-		["zhCN"] = "仅当前地区",
-		["zhTW"] = "僅目前地區",
-	},
-	["Only Current Realm"] = {
-		["ruRU"] = "Только текущий мир", -- более Blizzard-like
-		["deDE"] = "Nur aktueller Realm",
-		["esES"] = "Solo reino actual",
-		["esMX"] = "Solo reino actual",
-		["frFR"] = "Royaume actuel uniquement",
-		["itIT"] = "Solo regno attuale",
-		["ptBR"] = "Apenas reino atual",
-		["koKR"] = "현재 서버만",
-		["zhCN"] = "仅当前服务器",
-		["zhTW"] = "僅目前伺服器",
-	},
-	["Only Current BattleTag"] = {
-		["ruRU"] = "Только текущий BattleTag",
-		["deDE"] = "Nur aktueller BattleTag",
-		["esES"] = "Solo BattleTag actual",
-		["esMX"] = "Solo BattleTag actual",
-		["frFR"] = "BattleTag actuel uniquement",
-		["itIT"] = "Solo BattleTag attuale",
-		["ptBR"] = "Apenas BattleTag atual",
-		["koKR"] = "현재 BattleTag만",
-		["zhCN"] = "仅当前 BattleTag",
-		["zhTW"] = "僅目前 BattleTag",
 	},
 	["Daily quests"] = {
 		["ruRU"] = "Ежедневные задания",

@@ -23,10 +23,12 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 	local cm = CharInfo.MASLENGO
 	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
 	TextCenter = E.func_TextCenter_Currency(CharInfo, id)
-	if id == 1931 and pd.SL_Possible_CatalogedResearch then
-		TextCenter = string.format("%s%s +%d|r", TextCenter, E.COLOR_PURPLE, pd.SL_Possible_CatalogedResearch)
+	local SL_Possible_CatalogedResearch = pd.SL_Possible_CatalogedResearch or 0
+	if id == 1931 and SL_Possible_CatalogedResearch > 0 then
+		-- TextCenter = string.format("%s%s +%d|r", TextCenter, E.COLOR_PURPLE, SL_Possible_CatalogedResearch)
+		TextCenter = TextCenter .. E.COLOR_PURPLE .. " +" .. E.func_CompactFormatNumber(SL_Possible_CatalogedResearch) .. "|r"
 	end
-	if id == 824 then
+	if id == 824 then -- GARRISON RESOURCE
 		local GARRISON_RESOURCE_ID = 824
 		local RESOURCE_GENERATION_INTERVAL = 600
 		local RESOURCES_PER_INTERVAL = 1
@@ -35,8 +37,8 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			local color = E.COLOR_GRAY
 			local cacheSize = cm.GARRISON.cacheSize or MAX_CACHE_SIZE
 			local lastCacheTime = cm.GARRISON.lastCacheTime
-			local timeUnitsSinceLastCollect = lastCacheTime and (GetServerTime()-lastCacheTime)/RESOURCE_GENERATION_INTERVAL or 0
-			local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect)*RESOURCES_PER_INTERVAL)
+			local timeUnitsSinceLastCollect = lastCacheTime and (E.TIME_SERVER() - lastCacheTime) / RESOURCE_GENERATION_INTERVAL or 0
+			local earnedSinceLastCollect = min(cacheSize, floor(timeUnitsSinceLastCollect) * RESOURCES_PER_INTERVAL)
 			if earnedSinceLastCollect > 0 then
 				if earnedSinceLastCollect >= 5 then
 					color = (earnedSinceLastCollect == cacheSize) and E.COLOR_PURPLE or E.COLOR_YELLOW
@@ -45,32 +47,32 @@ function E.func_Otrisovka_Center_Currencies(categoryKey, CharInfo, dataType, id)
 			end
 		end
 	elseif id == 1822 then -- RENOWN
-		local covenantID = pd.SL_covenantID
-		if covenantID then
-			local prefix = E.OctoTable_Covenant[covenantID].prefix
-			-- local color = E.OctoTable_Covenant[covenantID].color
-			local color = E.func_DB_COV_COLOR(covenantID)
+		local SL_covenantID = pd.SL_covenantID
+		if SL_covenantID then
+			local prefix = E.OctoTable_Covenant[SL_covenantID].prefix
+			-- local color = E.OctoTable_Covenant[SL_covenantID].color
+			local color = E.func_DB_COV_COLOR(SL_covenantID)
 			-- local color = (curCovID == covenant) and cov.color or E.COLOR_GRAY
 			local renown = pd[prefix .. "_Renown"]
 			-- local anima = pd[prefix .. "_Anima"]
 			if renown then
-				TextCenter = color .. renown .. "|r"
+				TextCenter = color .. E.func_CompactFormatNumber(renown) .. "|r"
 			end
 		end
 	elseif id == 1813 then -- ANIMA
-		local covenantID = pd.SL_covenantID
-		if covenantID then
-			local prefix = E.OctoTable_Covenant[covenantID].prefix
-			-- local color = E.OctoTable_Covenant[covenantID].color
-			local color = E.func_DB_COV_COLOR(covenantID)
+		local SL_covenantID = pd.SL_covenantID
+		if SL_covenantID then
+			local prefix = E.OctoTable_Covenant[SL_covenantID].prefix
+			-- local color = E.OctoTable_Covenant[SL_covenantID].color
+			local color = E.func_DB_COV_COLOR(SL_covenantID)
 			-- local renown = pd[prefix .. "_Renown"]
-			local anima = pd[prefix .. "_Anima"]
-			if anima then
-				TextCenter = color .. anima .. "|r"
+			local anima = pd[prefix .. "_Anima"] or 0
+			if anima > 0 then
+				TextCenter = color .. E.func_CompactFormatNumber(anima) .. "|r"
 			end
 		end
 		if pd.SL_Possible_Anima and type(pd.SL_Possible_Anima) == "number" and pd.SL_Possible_Anima > 0 then
-			TextCenter = TextCenter .. E.COLOR_BLUE .. " +" .. pd.SL_Possible_Anima .. "|r"
+			TextCenter = TextCenter .. E.COLOR_BLUE .. " +" .. E.func_CompactFormatNumber(pd.SL_Possible_Anima) .. "|r"
 		end
 	end
 	return TextCenter, ColorCenter, FirstReputation, SecondReputation
@@ -105,7 +107,7 @@ function E.func_Otrisovka_Center_RaidsOrDungeons(categoryKey, CharInfo, dataType
 			}
 		end
 		-- Сортировка по приоритету из OctoTable_Difficulties
-		table.sort(difficulties, function(a, b)
+		E.func_SortRecords(difficulties, function(a, b)
 				local pa = E.OctoTable_Difficulties[a.difficultyID] and E.OctoTable_Difficulties[a.difficultyID].prior or 999
 				local pb = E.OctoTable_Difficulties[b.difficultyID] and E.OctoTable_Difficulties[b.difficultyID].prior or 999
 				return pa < pb
@@ -138,19 +140,17 @@ end
 function E.func_Otrisovka_Center_UniversalQuests(categoryKey, CharInfo, dataType, data)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
-	if data.quests then
-		local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
-		-- local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
-		local questKey = data.questKey
-		-- local showTooltip = data.showTooltip or false
-		if CharInfo.MASLENGO.UniversalQuest and CharInfo.MASLENGO.UniversalQuest[questKey] and CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter then
-			TextCenter = CharInfo.MASLENGO.UniversalQuest[questKey].TextCenter
-			if type(TextCenter) == "boolean" then
-				TextCenter = E.DONE
-			end
+	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
+	-- local questKey = E.UNIVERSAL .. data.desc .. "_" .. data.name_save .. "_" .. data.reset
+	local questKey = data.questKey
+	-- local showTooltip = data.showTooltip or false
+	if cm.UniversalQuest and cm.UniversalQuest[questKey] and cm.UniversalQuest[questKey].TextCenter then
+		TextCenter = cm.UniversalQuest[questKey].TextCenter
+		if type(TextCenter) == "boolean" then
+			TextCenter = E.DONE
 		end
-		return TextCenter, ColorCenter, FirstReputation, SecondReputation
 	end
+	return TextCenter, ColorCenter, FirstReputation, SecondReputation
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -166,7 +166,6 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 	local rep = cm.Reputation
 	if rep and type(rep) == "table" and rep[id] and rep[id].FIRST and rep[id].SECOND then
 		local func_CompactFormatNumber = E.func_CompactFormatNumber
-		local func_DB_REP_COLOR = E.func_DB_REP_COLOR
 		local FIRST = rep[id].FIRST
 		local SECOND = rep[id].SECOND
 		-- local ParagonCount = rep[id].ParagonCount or 0
@@ -181,26 +180,27 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		local showPercentage
 		local showReaction
 		local showStandings
+		local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
 		if repType == 1 then -- SIMPLE
-			showValue = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_VALUE_SIMPLE
-			showPercentage = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_PERCENTAGE_SIMPLE
-			showReaction = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_REACTION_SIMPLE
-			showStandings = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_STANDINGS_SIMPLE
+			showValue = settingsProfile.CONFIG_REPUTATION_VALUE_SIMPLE
+			showPercentage = settingsProfile.CONFIG_REPUTATION_PERCENTAGE_SIMPLE
+			showReaction = settingsProfile.CONFIG_REPUTATION_REACTION_SIMPLE
+			showStandings = settingsProfile.CONFIG_REPUTATION_STANDINGS_SIMPLE
 		elseif repType == 2 then -- FRIENDSHIP
-			showValue = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_VALUE_FRIEND
-			showPercentage = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_PERCENTAGE_FRIEND
-			showReaction = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_REACTION_FRIEND
-			showStandings = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_STANDINGS_FRIEND
+			showValue = settingsProfile.CONFIG_REPUTATION_VALUE_FRIEND
+			showPercentage = settingsProfile.CONFIG_REPUTATION_PERCENTAGE_FRIEND
+			showReaction = settingsProfile.CONFIG_REPUTATION_REACTION_FRIEND
+			showStandings = settingsProfile.CONFIG_REPUTATION_STANDINGS_FRIEND
 		elseif repType == 3 then -- MAJOR (Renown)
-			showValue = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_VALUE_MAJOR
-			showPercentage = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_PERCENTAGE_MAJOR
-			showReaction = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_REACTION_MAJOR
-			showStandings = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_STANDINGS_MAJOR
+			showValue = settingsProfile.CONFIG_REPUTATION_VALUE_MAJOR
+			showPercentage = settingsProfile.CONFIG_REPUTATION_PERCENTAGE_MAJOR
+			showReaction = settingsProfile.CONFIG_REPUTATION_REACTION_MAJOR
+			showStandings = settingsProfile.CONFIG_REPUTATION_STANDINGS_MAJOR
 		elseif repType == 4 then -- PARAGON
-			showValue = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_VALUE_PARAGON
-			showPercentage = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_PERCENTAGE_PARAGON
-			showReaction = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_REACTION_PARAGON
-			showStandings = Octo_ToDo_DB_Vars.CONFIG_REPUTATION_STANDINGS_PARAGON
+			showValue = settingsProfile.CONFIG_REPUTATION_VALUE_PARAGON
+			showPercentage = settingsProfile.CONFIG_REPUTATION_PERCENTAGE_PARAGON
+			showReaction = settingsProfile.CONFIG_REPUTATION_REACTION_PARAGON
+			showStandings = settingsProfile.CONFIG_REPUTATION_STANDINGS_PARAGON
 		end
 		----------------------------------------------------------------
 		local parts = {}
@@ -209,70 +209,70 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		----------------------------------------------------------------
 		-- CONFIG_VALUE ------------------------------------------------
 		----------------------------------------------------------------
-		if showValue_OLD then
-			local TEXT_VALUE = func_CompactFormatNumber(FIRST) .. "/" .. func_CompactFormatNumber(SECOND)
-			if TEXT_VALUE == "1/1" then
-				-- TEXT_VALUE = L["DONE"]
-				TEXT_VALUE = L["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"]
-			elseif TEXT_VALUE == "0/0" then
-				-- TEXT_VALUE = ""
-				TEXT_VALUE = nil
-			end
-			if TEXT_VALUE then
-				parts[#parts+1] = TEXT_VALUE
-			end
-		end
+		-- if showValue_OLD then
+		-- 	local TEXT_VALUE = func_CompactFormatNumber(FIRST) .. "/" .. func_CompactFormatNumber(SECOND)
+		-- 	if TEXT_VALUE == "1/1" then
+		-- 		-- TEXT_VALUE = L["DONE"]
+		-- 		TEXT_VALUE = L["AUCTION_HOUSE_MAX_QUANTITY_BUTTON"]
+		-- 	elseif TEXT_VALUE == "0/0" then
+		-- 		-- TEXT_VALUE = ""
+		-- 		TEXT_VALUE = nil
+		-- 	end
+		-- 	if TEXT_VALUE then
+		-- 		parts[#parts+1] = TEXT_VALUE
+		-- 	end
+		-- end
 		----------------------------------------------------------------
 		-- ColorCenter -------------------------------------------------
 		----------------------------------------------------------------
-		local ColorCenter = func_DB_REP_COLOR and func_DB_REP_COLOR(repType, reaction) or E.COLOR_GRAY
+		local ColorCenter = E.func_DB_REP_COLOR(repType, reaction)
 		----------------------------------------------------------------
 		-- CONFIG_PERCENTAGE -------------------------------------------
 		----------------------------------------------------------------
-		if showPercentage_OLD then
-			-- if repType == 2 or repType == 3 then -- 2
-			-- if FIRST ~= SECOND then
-			local percent = (SECOND > 0) and math_floor(FIRST / SECOND * 100) or 0
-			-- local TEXT_PERCENT = (percent > 0 and percent < 100) and (percent .. "%")
-			local TEXT_PERCENT = (percent > 0) and (percent .. "%")
-			-- local TEXT_PERCENT = percent .. "%"
-			if TEXT_PERCENT then
-				parts[#parts+1] = TEXT_PERCENT
-			end
-			-- end
-		end
+		-- if showPercentage_OLD then
+		-- 	-- if repType == 2 or repType == 3 then -- 2
+		-- 	-- if FIRST ~= SECOND then
+		-- 	local percent = (SECOND > 0) and math_floor(FIRST / SECOND * 100) or 0
+		-- 	-- local TEXT_PERCENT = (percent > 0 and percent < 100) and (percent .. "%")
+		-- 	local TEXT_PERCENT = (percent > 0) and (percent .. "%")
+		-- 	-- local TEXT_PERCENT = percent .. "%"
+		-- 	if TEXT_PERCENT then
+		-- 		parts[#parts+1] = TEXT_PERCENT
+		-- 	end
+		-- 	-- end
+		-- end
 		----------------------------------------------------------------
 		-- CONFIG_STANDINGS --------------------------------------------
 		----------------------------------------------------------------
-		if showStandings_OLD then
-			local TEXT_STANDINGS
-			if repType == 2 then -- FRIENDSHIP
-				if rankInfocurrentLevel and rankInfomaxLevel then
-					TEXT_STANDINGS = rankInfocurrentLevel .. "/" .. rankInfomaxLevel
-				end
-			elseif repType == 3 then
-				if renownLevel and renownMaxLevel then
-					TEXT_STANDINGS = renownLevel .. "/" .. renownMaxLevel
-				end
-			elseif repType == 1 then
-				if reaction and reaction > 0 then
-					local gender = E.cur_gender or 3
-					standingCache[reaction] = standingCache[reaction] or {}
-					local cached = standingCache[reaction][gender]
-					if not cached then
-						-- cached = GetText("FACTION_STANDING_LABEL" .. reaction, gender)
-						cached = _G["FACTION_STANDING_LABEL"..reaction]
-						standingCache[reaction][gender] = cached
-					end
-					TEXT_STANDINGS = cached
-				end
-			elseif repType == 4 then
-				TEXT_STANDINGS = L["Paragon"]
-			end
-			if TEXT_STANDINGS then
-				parts[#parts+1] = TEXT_STANDINGS
-			end
-		end
+		-- if showStandings_OLD then
+		-- 	local TEXT_STANDINGS
+		-- 	if repType == 2 then -- FRIENDSHIP
+		-- 		if rankInfocurrentLevel and rankInfomaxLevel then
+		-- 			TEXT_STANDINGS = rankInfocurrentLevel .. "/" .. rankInfomaxLevel
+		-- 		end
+		-- 	elseif repType == 3 then
+		-- 		if renownLevel and renownMaxLevel then
+		-- 			TEXT_STANDINGS = renownLevel .. "/" .. renownMaxLevel
+		-- 		end
+		-- 	elseif repType == 1 then
+		-- 		if reaction and reaction > 0 then
+		-- 			local gender = E.cur_gender or 3
+		-- 			standingCache[reaction] = standingCache[reaction] or {}
+		-- 			local cached = standingCache[reaction][gender]
+		-- 			if not cached then
+		-- 				-- cached = GetText("FACTION_STANDING_LABEL" .. reaction, gender)
+		-- 				cached = _G["FACTION_STANDING_LABEL"..reaction]
+		-- 				standingCache[reaction][gender] = cached
+		-- 			end
+		-- 			TEXT_STANDINGS = cached
+		-- 		end
+		-- 	elseif repType == 4 then
+		-- 		TEXT_STANDINGS = L["Paragon"]
+		-- 	end
+		-- 	if TEXT_STANDINGS then
+		-- 		parts[#parts+1] = TEXT_STANDINGS
+		-- 	end
+		-- end
 		----------------------------------------------------------------
 		-- reaction LOCAL_LANGUAGE >:( ---------------------------------
 		----------------------------------------------------------------
@@ -305,7 +305,7 @@ function E.func_Otrisovka_Center_Reputations(categoryKey, CharInfo, dataType, id
 		----------------------------------------------------------------
 		local test_1
 		if showValue then -- FIRST/SECOND
-				test_1 = func_CompactFormatNumber(FIRST) .. "/" .. func_CompactFormatNumber(SECOND)
+			test_1 = func_CompactFormatNumber(FIRST) .. "/" .. func_CompactFormatNumber(SECOND)
 		end
 		----------------------------------------------------------------
 		-- PERCENTAGE --------------------------------------------------
@@ -448,7 +448,7 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	for index, activityID in ipairs(E.Enum_Activities_table) do
 		if id == "GreatVault" .. index then
 			local vaultData = cm.GreatVault and cm.GreatVault[activityID]
-				-- RAID
+			-- RAID
 			if activityID == 3 then
 				local activities = vaultData and vaultData.activities or {}
 				local parts, hasData = {}, false
@@ -471,34 +471,28 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 			end
 			-- DUNGEON
 			if activityID == 1 then
-			    local activities = vaultData and vaultData.activities or {}
-			    local parts, hasData = {}, false
-
-			    for slot = 1, 3 do
-			        local level = activities[slot] and activities[slot].level
-			        local text, color
-
-			        if not level or level == 0 then
-			            text, color = "-", E.COLOR_GRAY
-			        else
-			            text = tostring(level)
-			            -- цвет в зависимости от того, открыт ли слот (есть ли награда)
-			            local rewards = vaultData and vaultData.rewards or {}
-			            color = rewards[slot] and E.COLOR_WHITE or E.COLOR_GRAY
-			        end
-
-			        if text ~= "-" then
-			            hasData = true
-			        end
-			        parts[slot] = color .. text .. "|r"
-			    end
-
-			    TextCenter = hasData and table.concat(parts, " ") or ""
+				local activities = vaultData and vaultData.activities or {}
+				local parts, hasData = {}, false
+				for slot = 1, 3 do
+					local level = activities[slot] and activities[slot].level
+					local text, color
+					if not level or level == 0 then
+						text, color = "-", E.COLOR_GRAY
+					else
+						text = tostring(level)
+						-- цвет в зависимости от того, открыт ли слот (есть ли награда)
+						local rewards = vaultData and vaultData.rewards or {}
+						color = rewards[slot] and E.COLOR_WHITE or E.COLOR_GRAY
+					end
+					if text ~= "-" then
+						hasData = true
+					end
+					parts[slot] = color .. text .. "|r"
+				end
+				TextCenter = hasData and table.concat(parts, " ") or ""
 			end
-
 			-- WORLD
 			if activityID == 6 then
-
 				local activities = E.func_GetActivities(activityID)
 				local current = vaultData and vaultData.min or 0
 				local required = activities and activities[3] and activities[3].threshold or 0
@@ -508,21 +502,18 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 				else
 					TextCenter = ""
 				end
-
-
 			end
-
 			-- else
-				-- DUNGEON / WORLD
-				-- local activities = E.func_GetActivities(activityID)
-				-- local current = vaultData and vaultData.min or 0
-				-- local required = activities and activities[3] and activities[3].threshold or 0
-				-- if current > 0 and required > 0 then
-				-- 	local color = (current >= required) and E.COLOR_GREEN or E.COLOR_YELLOW
-				-- 	TextCenter = color .. current .. "/" .. required .. "|r"
-				-- else
-				-- 	TextCenter = ""
-				-- end
+			-- DUNGEON / WORLD
+			-- local activities = E.func_GetActivities(activityID)
+			-- local current = vaultData and vaultData.min or 0
+			-- local required = activities and activities[3] and activities[3].threshold or 0
+			-- if current > 0 and required > 0 then
+			--     local color = (current >= required) and E.COLOR_GREEN or E.COLOR_YELLOW
+			--     TextCenter = color .. current .. "/" .. required .. "|r"
+			-- else
+			--     TextCenter = ""
+			-- end
 			-- end
 			break
 		end
@@ -531,8 +522,6 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 	if id == "CurrentKey" then
 		if pd.OwnedKeystoneLevel and pd.OwnedKeystoneChallengeMapID then
 			local seasonData = pd.MythicPlus and pd.MythicPlus[E.MythicPlus_seasonID]
-
-
 			if seasonData then
 				-- local color = E.func_RioColor(seasonData.RIO_Score)
 				local rioColor = E.COLOR_PURPLE -- E.func_RioColor(seasonData.RIO_Score)
@@ -566,8 +555,18 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 		TextCenter = "TextCenter_PlayerBANK"
 	end
 	if id == "HeartofAzeroth" then
-		if pd.azeriteLVL and pd.azeriteEXP then
-			TextCenter = E.COLOR_GREEN .. pd.azeriteLVL .. "|r" .. "+" .. E.COLOR_GRAY .. pd.azeriteEXP .. "|r"
+		local azerite_lvl = pd.azerite_lvl
+		local azerite_xp = pd.azerite_xp
+		local azerite_totalLevelXP = pd.azerite_totalLevelXP
+		if azerite_lvl and azerite_xp and azerite_totalLevelXP then
+			local percent = floor(azerite_xp / azerite_totalLevelXP * 100)
+			local missing = azerite_totalLevelXP - azerite_xp
+
+			-- local azeriteEXP = ("%d%%, -%s"):format(
+			-- 	floor(azerite_xp / azerite_totalLevelXP * 100),
+			-- 	E.func_CompactFormatNumber(azerite_totalLevelXP - azerite_xp)
+			-- )
+			TextCenter = E.COLOR_GREEN .. azerite_lvl .. "|r" .. E.COLOR_GRAY .. " +" .. E.func_CompactFormatNumber(percent) .. "%, -" .. E.func_CompactFormatNumber(missing) .. "|r"
 		else
 			if cm.Items.Bank[158075] then
 				TextCenter = E.COLOR_ORANGE .. "in bank|r"
@@ -581,6 +580,195 @@ function E.func_Otrisovka_Center_AdditionallyTOP(categoryKey, CharInfo, dataType
 			if cm.Items.Bank[169223] then
 				TextCenter = E.COLOR_ORANGE .. "in bank|r"
 				-- elseif cm.Items.Bags[169223] then
+			end
+		end
+	end
+	return TextCenter, ColorCenter, FirstReputation, SecondReputation
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+function E.func_Otrisovka_Center_AdditionallyCENTER(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
+	local pd = CharInfo.PlayerData
+	local cm = CharInfo.MASLENGO
+	-- local pd.REGION_NAME = E.pd.REGION_NAME
+	-- local pd.FACTION = E.pd.FACTION
+	if id == "Callings" then
+		local SL_covenantID = pd.SL_covenantID
+		if SL_covenantID then
+			local covenantData = E.OctoTable_Covenant and E.OctoTable_Covenant[SL_covenantID]
+			if covenantData then
+				local unlockKey = covenantData.prefix .. "_AreCallingsUnlocked"
+				local currentUnlocked = pd[unlockKey]
+
+				-- Проверяем состояние всех ковенантов
+				local anyTrue = false
+				local allNil = true
+				for covID, covInfo in pairs(E.OctoTable_Covenant) do
+					local key = covInfo.prefix .. "_AreCallingsUnlocked"
+					local val = pd[key]
+					if val == true then
+						anyTrue = true
+						allNil = false
+					elseif val == false then
+						allNil = false
+					end
+				end
+
+				if currentUnlocked == true then
+					local cacheData = Octo_ToDo_DB_AccountData.Callings and Octo_ToDo_DB_AccountData.Callings[pd.REGION_NAME] and Octo_ToDo_DB_AccountData.Callings[pd.REGION_NAME][SL_covenantID]
+					local Data = cm.Callings and cm.Callings[pd.REGION_NAME] and cm.Callings[pd.REGION_NAME][SL_covenantID]
+
+					-- Собираем уникальные квесты из Data и кеша
+					local playerQuests = {}
+					local callings = {}
+
+					-- Сначала из Data (все записи, включая завершённые)
+					if Data then
+						for questID, v in pairs(Data) do
+							playerQuests[questID] = true
+							table.insert(callings, {
+								isPlayer = true,
+								isCompleted = v.isCompleted,
+							})
+						end
+					end
+
+					-- Добавляем из кеша недостающие (не более 3)
+					if cacheData then
+						for questID, v in pairs(cacheData) do
+							if not playerQuests[questID] and #callings < 3 then
+								table.insert(callings, {
+									isPlayer = false,
+									isCompleted = false,
+								})
+							end
+						end
+					end
+
+					-- Добиваем до 3 фиктивными слотами (если нужно)
+					while #callings < 3 do
+						table.insert(callings, {
+							isPlayer = false,
+							isCompleted = false,
+						})
+					end
+
+					-- Сортируем: сначала записи персонажа, затем по endTime, затем по ID
+					E.func_SortRecords(callings,
+						{"isPlayer", false},
+						{"endTime", false},
+						{"questID", true}
+					)
+
+					local completedCount = 0
+					local hasActive = false
+					for _, v in ipairs(callings) do
+						if v.isCompleted then
+							completedCount = completedCount + 1
+						elseif v.isPlayer then
+							hasActive = true
+						end
+					end
+
+					local total = 3   -- всегда 3
+					local display
+					if completedCount == total then
+						display = E.DONE
+					else
+						local color = (hasActive or completedCount > 0) and E.COLOR_WHITE or E.COLOR_GRAY
+						display = color .. completedCount .. "/" .. total .. "|r"
+					end
+
+					local covenantICON = E.func_GetIcon("covenant", SL_covenantID)
+					TextCenter = E.func_texturefromIcon(covenantICON) .. display
+				elseif anyTrue then
+					local covenantICON = E.func_GetIcon("covenant", SL_covenantID)
+					TextCenter = E.COLOR_RED .. L["LOCKED"] .. "|r" -- E.func_texturefromIcon(covenantICON) ..
+				elseif allNil then
+					local covenantICON = E.func_GetIcon("covenant", SL_covenantID)
+					TextCenter = E.COLOR_GRAY .. "-" .. "|r" -- E.func_texturefromIcon(covenantICON) .. L["UNKNOWN"]
+				else
+					local covenantICON = E.func_GetIcon("covenant", SL_covenantID)
+					TextCenter = E.COLOR_RED .. L["LOCKED"] .. "|r" -- E.func_texturefromIcon(covenantICON) ..
+				end
+			else
+				TextCenter = ""
+			end
+		else
+			TextCenter = ""
+		end
+	end
+	if id == "BountiesLegion" or id == "BountiesBattleforAzeroth" then
+		local mapID = (id == "BountiesLegion") and E.MapID_Dalaran or E.MapID_Zandalar
+		local cmKey = "Bounties" .. mapID
+		local cacheKey = "Bounties" .. mapID
+
+		local cacheData = Octo_ToDo_DB_AccountData[cacheKey] and Octo_ToDo_DB_AccountData[cacheKey][pd.REGION_NAME] and Octo_ToDo_DB_AccountData[cacheKey][pd.REGION_NAME][pd.FACTION]
+		local Data = cm[cmKey] and cm[cmKey][pd.REGION_NAME] and cm[cmKey][pd.REGION_NAME][pd.FACTION]
+
+		if not (cacheData or Data) then
+			TextCenter = ""
+		else
+			local playerQuests = {}
+			local callings = {}
+
+			if Data then
+				for questID, v in pairs(Data) do
+					playerQuests[questID] = true
+					local cacheEntry = cacheData and cacheData[questID]
+					table.insert(callings, {
+						isPlayer = true,
+						isCompleted = v.isCompleted,
+						endTime = cacheEntry and cacheEntry.endTime or 0,   -- для сортировки
+					})
+				end
+			end
+
+			if cacheData then
+				for questID, v in pairs(cacheData) do
+					if not playerQuests[questID] and #callings < 10 then   -- ограничение по желанию, можно убрать
+						table.insert(callings, {
+							isPlayer = false,
+							isCompleted = false,
+							endTime = v.endTime or 0,
+						})
+					end
+				end
+			end
+
+			if #callings == 0 then
+				TextCenter = ""
+			else
+				E.func_SortRecords(callings,
+					{"isPlayer", false},
+					{"endTime", false},
+					{"questID", true}
+				)
+
+				local total = #callings
+				local completedCount = 0
+				local hasActive = false
+				for _, v in ipairs(callings) do
+					if v.isCompleted then
+						completedCount = completedCount + 1
+					elseif v.isPlayer then
+						hasActive = true
+					end
+				end
+
+				local display
+				if completedCount == total then
+					display = E.DONE
+				else
+					local color = (hasActive or completedCount > 0) and E.COLOR_WHITE or E.COLOR_GRAY
+					display = color .. completedCount .. "/" .. total .. "|r"
+				end
+
+				-- local icon = E.func_GetIcon("map", mapID)   -- или E.func_texturefromIcon(...)
+				TextCenter = display -- E.func_texturefromIcon(icon) ..
 			end
 		end
 	end
@@ -762,114 +950,32 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
--- function E.func_TextCenter_Currency(CharInfo, id, itemID)
--- 	local pd = CharInfo.PlayerData
--- 	local cm = CharInfo.MASLENGO
--- 	local data = cm.Currency
--- 	-- if not data[id] then return "" end
--- 	if not data[id] then data[id] = {} end
--- 	local result = ""
--- 	local quantity = data[id].quantity or 0
--- 	local totalEarned = data[id].totalEarned
--- 	local maxQuantity = data[id].maxQuantity
--- 	local quantityEarnedThisWeek = data[id].quantityEarnedThisWeek or 0
--- 	local maxWeeklyQuantity = data[id].maxWeeklyQuantity or 0
--- 	local useTotalEarnedForMaxQty = data[id].useTotalEarnedForMaxQty
--- 	local CONFIG_CURRENCY_SHOW_BRACKETS = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_BRACKETS or false -- Показывать прогресс в скобках (заработано/максимум)
--- 	local COLOR_BRACKETS = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_BRACKETS or E.COLOR_BLUE
--- 	local CONFIG_CURRENCY_SHOW_REMAINING = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING or false -- Показывать сколько осталось заработать (+123)
--- 	local COLOR_REMAINING = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_REMAINING or E.COLOR_YELLOW
--- 	local CONFIG_CURRENCY_SHOW_ZERO = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_ZERO or false
--- 	if quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO then
--- 		-- Main currency display logic
--- 		if useTotalEarnedForMaxQty then
--- 			-- Season-based currency
--- 			if maxQuantity then
--- 				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "|r"
--- 				-- HIDE IF ZERO
--- 				-- result = color .. quantity .. "|r"
--- 				if totalEarned and totalEarned ~= 0 then
--- 					-- PERENES SUDA
--- 					result = result .. E.func_CompactFormatNumber(quantity)
--- 					-- result = result .. string.format(L["CURRENCY_SEASON_TOTAL_MAXIMUM"], color, maxWeeklyQuantity, totalEarned)
--- 					-- result = result .. E.COLOR_BLUE .. "*|r"
--- 					if CONFIG_CURRENCY_SHOW_BRACKETS then
--- 						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(totalEarned) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. ")|r"
--- 					end
--- 					if CONFIG_CURRENCY_SHOW_REMAINING then
--- 						if maxQuantity ~= totalEarned then
--- 							local canEarn = maxQuantity - totalEarned
--- 							result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
--- 						end
--- 					end
--- 				end
--- 			else
--- 				result = result .. E.func_CompactFormatNumber(quantity)
--- 				if CONFIG_CURRENCY_SHOW_BRACKETS then
--- 					if quantityEarnedThisWeek ~= 0 and quantityEarnedThisWeek ~= quantity then
--- 						result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. ")|r"
--- 					end
--- 				end
--- 			end
--- 		else
--- 			-- Regular currency
--- 			if maxQuantity then
--- 				-- Has maximum limit
--- 				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "/" .. maxQuantity .. "|r"
--- 				local color = E.COLOR_WHITE
--- 				if quantity == maxQuantity then
--- 					color = E.COLOR_GREEN
--- 				end
--- 				result = result .. color .. E.func_CompactFormatNumber(quantity) .. "/" .. E.func_CompactFormatNumber(maxQuantity) .. "|r"
--- 			else
--- 				-- Simple display: just "Total: 123"
--- 				-- result = result .. L["TOTAL"] .. ": " .. color .. quantity .. "|r"
--- 				result = result .. E.func_CompactFormatNumber(quantity)
--- 			end
--- 		end
--- 		if CONFIG_CURRENCY_SHOW_BRACKETS then
--- 			-- Weekly cap display (always show if exists)
--- 			if maxWeeklyQuantity ~= 0 then
--- 				-- result = result .. {string.format(L["CURRENCY_WEEKLY_CAP"], color, quantity, maxWeeklyQuantity)}
--- 				result = result .. COLOR_BRACKETS .. " (" .. E.func_CompactFormatNumber(quantityEarnedThisWeek) .. "/" .. E.func_CompactFormatNumber(maxWeeklyQuantity) .. ")|r"
--- 			end
--- 		end
--- 		if CONFIG_CURRENCY_SHOW_REMAINING then
--- 			if maxWeeklyQuantity ~= 0 then
--- 				if maxWeeklyQuantity ~= quantityEarnedThisWeek then
--- 					local canEarn = maxWeeklyQuantity - quantityEarnedThisWeek
--- 					result = result .. COLOR_REMAINING .. " +" .. canEarn .. "|r"
--- 				end
--- 			end
--- 		end
--- 	end
--- 	if itemID then
--- 		result = result .. E.COLOR_GREEN .. E.func_TextCenter_Items(CharInfo, itemID, true) .. "|r"
--- 	end
--- 	return result
--- end
-----------------------------------------------------------------
-
-
 function E.func_TextCenter_Currency(CharInfo, id, itemID)
 	local pd = CharInfo.PlayerData
 	local cm = CharInfo.MASLENGO
 	local data = cm.Currency
 	if not data[id] then data[id] = {} end
 	local parts = {}
-
 	local quantity = data[id].quantity or 0
 	local totalEarned = data[id].totalEarned
 	local maxQuantity = data[id].maxQuantity
 	local quantityEarnedThisWeek = data[id].quantityEarnedThisWeek or 0
 	local maxWeeklyQuantity = data[id].maxWeeklyQuantity or 0
 	local useTotalEarnedForMaxQty = data[id].useTotalEarnedForMaxQty
-	local CONFIG_CURRENCY_SHOW_BRACKETS = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_BRACKETS or false
-	local COLOR_BRACKETS = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_BRACKETS or E.COLOR_BLUE
-	local CONFIG_CURRENCY_SHOW_REMAINING = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_REMAINING or false
-	local COLOR_REMAINING = "|c" .. Octo_ToDo_DB_Vars.CONFIG_CURRENCY_COLOR_REMAINING or E.COLOR_YELLOW
-	local CONFIG_CURRENCY_SHOW_ZERO = Octo_ToDo_DB_Vars.CONFIG_CURRENCY_SHOW_ZERO or false
+	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
 
+
+	local CONFIG_CURRENCY_SHOW_BRACKETS = settingsProfile.CONFIG_CURRENCY_SHOW_BRACKETS or false
+	local CONFIG_CURRENCY_SHOW_REMAINING = settingsProfile.CONFIG_CURRENCY_SHOW_REMAINING or false
+
+	local COLOR_BRACKETS = E.func_RGB2Hex(settingsProfile.CONFIG_CURRENCY_COLOR_BRACKETS_R, settingsProfile.CONFIG_CURRENCY_COLOR_BRACKETS_G, settingsProfile.CONFIG_CURRENCY_COLOR_BRACKETS_B, settingsProfile.CONFIG_CURRENCY_COLOR_BRACKETS_A)
+	local COLOR_REMAINING = E.func_RGB2Hex(settingsProfile.CONFIG_CURRENCY_COLOR_REMAINING_R, settingsProfile.CONFIG_CURRENCY_COLOR_REMAINING_G, settingsProfile.CONFIG_CURRENCY_COLOR_REMAINING_B, settingsProfile.CONFIG_CURRENCY_COLOR_REMAINING_A)
+
+	-- local COLOR_BRACKETS = "|c" .. settingsProfile.CONFIG_CURRENCY_COLOR_BRACKETS or E.COLOR_BLUE
+	-- local COLOR_REMAINING = "|c" .. settingsProfile.CONFIG_CURRENCY_COLOR_REMAINING or E.COLOR_YELLOW
+
+
+	local CONFIG_CURRENCY_SHOW_ZERO = settingsProfile.CONFIG_CURRENCY_SHOW_ZERO or false
 	-- Main quantity display
 	if quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO then
 		if useTotalEarnedForMaxQty then
@@ -886,7 +992,6 @@ function E.func_TextCenter_Currency(CharInfo, id, itemID)
 			end
 		end
 	end
-
 	-- Season-based brackets (totalEarned/maxQuantity)
 	if useTotalEarnedForMaxQty and maxQuantity and totalEarned and totalEarned ~= 0 then
 		if CONFIG_CURRENCY_SHOW_BRACKETS then
@@ -899,7 +1004,6 @@ function E.func_TextCenter_Currency(CharInfo, id, itemID)
 			end
 		end
 	end
-
 	-- Weekly cap for regular currencies
 	if not useTotalEarnedForMaxQty and (quantity > 0 or CONFIG_CURRENCY_SHOW_ZERO) then
 		if CONFIG_CURRENCY_SHOW_BRACKETS and maxWeeklyQuantity ~= 0 then
@@ -910,15 +1014,35 @@ function E.func_TextCenter_Currency(CharInfo, id, itemID)
 			parts[#parts+1] = COLOR_REMAINING .. "+" .. canEarn .. "|r"
 		end
 	end
-
 	local result = table.concat(parts, " ")
-
 	if itemID then
-		result = result .. E.COLOR_GREEN .. E.func_TextCenter_Items(CharInfo, itemID, true) .. "|r"
+		result = result .. E.COLOR_GREEN .. E.func_TextCenter_Items(CharInfo, itemID) .. "|r"
 	end
 	return result
 end
-
-
 ----------------------------------------------------------------
+function E.func_Otrisovka_Center_Maps(categoryKey, CharInfo, dataType, id)
+	if not categoryKey then return end
+	local TextCenter, ColorCenter, FirstReputation, SecondReputation = "", nil, nil, nil
+	local info = E.func_GetMapInfo(id)
+	if info then
+		local mapType = info.mapType
+		for k, v in next, (Enum.UIMapType) do
+			if v == mapType then
+				TextCenter = k
+			end
+		end
+	end
+
+	-- [1] = {
+	--     ["Dungeon"] = 4,
+	--     ["Orphan"] = 6,
+	--     ["Zone"] = 3,
+	--     ["Continent"] = 2,
+	--     ["Cosmic"] = 0,
+	--     ["Micro"] = 5,
+	--     ["World"] = 1,
+	-- },
+	return TextCenter, ColorCenter, FirstReputation, SecondReputation
+end
 ----------------------------------------------------------------

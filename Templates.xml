@@ -178,14 +178,18 @@
 		<Scripts>
 			<OnShow>
 				local E = OctoEngine
-				if E and E.PROFTBL and E.PROFTBL.ConfigColor_MAIN_MainFrame_r then
-					self:SetBackdrop(E.menuBackdrop)
-					self:SetBackdropColor(E.PROFTBL.ConfigColor_MAIN_MainFrame_r, E.PROFTBL.ConfigColor_MAIN_MainFrame_g, E.PROFTBL.ConfigColor_MAIN_MainFrame_b, E.PROFTBL.ConfigColor_MAIN_MainFrame_a)
-					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
-					if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.Config_ClampedToScreen then
-						self:SetClampedToScreen(Octo_ToDo_DB_Vars.Config_ClampedToScreen)
-					else
-						self:SetClampedToScreen(false)
+				if E and E.func_GetProfile_SETTINGS_CURRENT then
+					local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+					if settingsProfile then
+						self:SetBackdrop(E.menuBackdrop)
+						self:SetBackdropColor(settingsProfile.ConfigColor_MAIN_MainFrame_r, settingsProfile.ConfigColor_MAIN_MainFrame_g, settingsProfile.ConfigColor_MAIN_MainFrame_b, settingsProfile.ConfigColor_MAIN_MainFrame_a)
+						self:SetBackdropBorderColor(settingsProfile.ConfigColor_MAIN_Border_r, settingsProfile.ConfigColor_MAIN_Border_g, settingsProfile.ConfigColor_MAIN_Border_b, settingsProfile.ConfigColor_MAIN_Border_a)
+
+						if settingsProfile.Config_ClampedToScreen then
+							self:SetClampedToScreen(settingsProfile.Config_ClampedToScreen)
+						else
+							self:SetClampedToScreen(false)
+						end
 					end
 				end
 			</OnShow>
@@ -206,10 +210,13 @@
 		<Scripts>
 			<OnShow>
 				local E = OctoEngine
-				if E and E.PROFTBL and E.PROFTBL.ConfigColor_MAIN_MainFrame_r then
-					self:SetBackdrop(E.menuBackdrop)
-					self:SetBackdropColor(E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_r, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_g, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_b, E.PROFTBL.ConfigColor_TOOLTIP_TooltipFrame_a)
-					self:SetBackdropBorderColor(E.PROFTBL.ConfigColor_MAIN_Border_r, E.PROFTBL.ConfigColor_MAIN_Border_g, E.PROFTBL.ConfigColor_MAIN_Border_b, E.PROFTBL.ConfigColor_MAIN_Border_a)
+				if E and E.func_GetProfile_SETTINGS_CURRENT then
+					local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+					if settingsProfile then
+						self:SetBackdrop(E.menuBackdrop)
+						self:SetBackdropColor(settingsProfile.ConfigColor_TOOLTIP_TooltipFrame_r, settingsProfile.ConfigColor_TOOLTIP_TooltipFrame_g, settingsProfile.ConfigColor_TOOLTIP_TooltipFrame_b, settingsProfile.ConfigColor_TOOLTIP_TooltipFrame_a)
+						self:SetBackdropBorderColor(settingsProfile.ConfigColor_MAIN_Border_r, settingsProfile.ConfigColor_MAIN_Border_g, settingsProfile.ConfigColor_MAIN_Border_b, settingsProfile.ConfigColor_MAIN_Border_a)
+					end
 				end
 			</OnShow>
 		</Scripts>

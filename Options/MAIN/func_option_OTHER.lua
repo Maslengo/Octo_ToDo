@@ -6,11 +6,11 @@ function E.func_option_OTHER(category, layout)
 	----------------------------------------------------------------
 	E.func_Header(layout, L["OTHER"])
 	----------------------------------------------------------------
-	-- Octo_ToDo_DB_Vars.Config_numberFormatMode -------------------
+	-- E.func_GetProfile_SETTINGS_CURRENT().Config_numberFormatMode -------------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "Config_numberFormatMode"
-		local variableTbl = Octo_ToDo_DB_Vars
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
 		local name = L["Number Format"]
 		local defaultValue = 1
 		-- local values = {
@@ -33,13 +33,13 @@ function E.func_option_OTHER(category, layout)
 		E.func_Options_CreateDropdown(category, variableKey, variableTbl, name, defaultValue, values, tooltip)
 	end
 	----------------------------------------------------------------
-	-- Octo_ToDo_DB_Vars.Config_ADDON_HEIGHT -----------------------
+	-- E.func_GetProfile_SETTINGS_CURRENT().Config_ADDON_HEIGHT -----------------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "Config_ADDON_HEIGHT"
-		local variableTbl = Octo_ToDo_DB_Vars
-		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
-		local name = E.COLOR_RED..">|r"..L["Line Height"]..E.COLOR_RED.."<|r"
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+		local defaultValue = E.DEFAULT_SETTINGS_FORPROFILE[variableKey]
+		local name = E.COLOR_RED .. ">|r" .. L["Line Height"] .. E.COLOR_RED .. "<|r"
 		local minValue = 10
 		local maxValue = 40
 		local step = 1
@@ -47,13 +47,23 @@ function E.func_option_OTHER(category, layout)
 		E.func_Options_CreateSlider(category, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 	end
 	----------------------------------------------------------------
-	-- Octo_ToDo_DB_Vars.Config_ClampedToScreen --------------------
+	-- E.func_GetProfile_SETTINGS_CURRENT().Config_ClampedToScreen --------------------
 	----------------------------------------------------------------
 	do
 		local variableKey = "Config_ClampedToScreen"
-		local variableTbl = Octo_ToDo_DB_Vars
-		local defaultValue = E.Octo_ToDo_DB_Vars_DEFAULTS[variableKey]
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+		local defaultValue = E.DEFAULT_SETTINGS_FORPROFILE[variableKey]
 		local name = L["Clamped To Screen"]
+		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
+	end
+	----------------------------------------------------------------
+	-- E.func_GetProfile_SETTINGS_CURRENT().CONFIG_SAVE_POSITION --------------------
+	----------------------------------------------------------------
+	do
+		local variableKey = "CONFIG_SAVE_POSITION"
+		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+		local defaultValue = E.DEFAULT_SETTINGS_FORPROFILE[variableKey]
+		local name = L["Save Position"]
 		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end
 

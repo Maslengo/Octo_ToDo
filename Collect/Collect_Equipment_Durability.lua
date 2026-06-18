@@ -2,9 +2,7 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local function Collect_Equipment_Durability()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
 	local slots = {
 		INVSLOT_HEAD, -- 1
@@ -62,9 +60,10 @@ local function Collect_Equipment_Durability()
 	-- end
 	-- local averageDurability = count > 0 and (sum / count) or 100
 	----------------------------------------------------------------
-	collectPlayerData.PlayerDurability = E.func_CompactRoundNumber(lowestItemDurability)
+	E.pd.PlayerDurability = E.func_CompactRoundNumber(lowestItemDurability)
 end
 ----------------------------------------------------------------
 function E.Collect_Equipment_Durability()
 	E.func_SpamBlock(Collect_Equipment_Durability, false)
 end
+----------------------------------------------------------------

@@ -1,4 +1,5 @@
 local GlobalAddonName, E = ...
+local L = E.L
 local addonNAME = E.func_AddonNameForOptions(GlobalAddonName)
 ----------------------------------------------------------------
 local function compareVersion(v1, v2)
@@ -45,7 +46,7 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
-	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Reputation)
+	-- /run opde(E.cm.Reputation)
 	if compareVersion(108.8, DBVersion) then
 		if cm.Reputation then
 			for reputationID, v in next, (cm.Reputation) do
@@ -66,7 +67,7 @@ local function updateChars(pd, cm, DBVersion)
 		end
 	end
 	----------------------------------------------------------------
-	-- /run opde(Octo_ToDo_DB_Levels[E.curGUID].MASLENGO.Reputation)
+	-- /run opde(E.cm.Reputation)
 	if compareVersion(109.3, DBVersion) then
 		if cm.Items then
 			pd.usedSlots_BANK = nil
@@ -201,26 +202,39 @@ local function updateChars(pd, cm, DBVersion)
 		pd.HasAvailableRewards = nil
 	end
 	----------------------------------------------------------------
+	if compareVersion(115.4, DBVersion) then
+		if pd.azeriteLVL ~= nil then
+			pd.azerite_lvl = pd.azeriteLVL
+			pd.azeriteLVL = nil
+		end
+		if pd.azeriteEXP then
+			pd.azeriteEXP = nil
+		end
+		if cm.ListOfParagonQuests then
+			for questID, v in next, (cm.ListOfParagonQuests) do
+				if v ~= nil and type(v) == "string" then
+					cm.ListOfParagonQuests[questID] = true
+				end
+			end
+		end
+		-- ПОФИКСИТь
+		if pd.CurrentRegionName then
+			pd.REGION_NAME = pd.CurrentRegionName
+			pd.CurrentRegionName = nil
+		elseif not pd.REGION_NAME then
+			pd.REGION_NAME = "US" -- E.CURRENT_REGION_NAME
+		end
+		if pd.Faction then
+			pd.FACTION = pd.Faction
+			pd.Faction = nil
+		elseif not pd.FACTION then
+			pd.FACTION = "Horde" -- E.FACTION_CURRENT
+		end
+	end
+	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 local function updateGlobal(DBVersion)
-	----------------------------------------------------------------
-	if compareVersion(108.0, DBVersion) then
-		Octo_profileKeys = {}
-		E.func_CreateNew_profileKeys("Default")
-	end
-	----------------------------------------------------------------
-	if compareVersion(108.5, DBVersion) then
-		Octo_ToDo_DB_Vars.CONFIG_SPAM_TIME = 2
-	end
-	----------------------------------------------------------------
-	if compareVersion(112.2, DBVersion) then
-		if Octo_profileKeys and Octo_profileKeys.profiles and Octo_profileKeys.profiles.Default then
-			wipe(Octo_profileKeys.profiles.Default)
-			E.func_CreateNew_profileKeys(E.TEXT_DEFAULT)
-			E.func_PrintMessage(addonNAME, "reset profile:", L["DEFAULT"])
-		end
-	end
 	----------------------------------------------------------------
 	if compareVersion(114.2, DBVersion) then
 		if Octo_ToDo_DB_Vars.SHOW_FRAME_ON_MINIMAP_BUTTON_HOVER ~= nil then
@@ -233,7 +247,6 @@ local function updateGlobal(DBVersion)
 			Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Vars.Config_LevelToShow
 			Octo_ToDo_DB_Vars.Config_LevelToShow = nil
 		end
-
 		if Octo_ToDo_DB_Vars.Config_LevelToShowMAX ~= nil then
 			Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Vars.Config_LevelToShowMAX
 			Octo_ToDo_DB_Vars.Config_LevelToShowMAX = nil
@@ -254,17 +267,150 @@ local function updateGlobal(DBVersion)
 			Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Vars.isOnlyCurrentFaction
 			Octo_ToDo_DB_Vars.isOnlyCurrentFaction = nil
 		end
-
 	end
+	----------------------------------------------------------------
+	if compareVersion(115.4, DBVersion) then
+		if Octo_ToDo_DB_Options and Octo_ToDo_DB_Options.sort_reverse then
+			if Octo_ToDo_DB_Options.sort_reverse.UnitLevel == false then
+				Octo_ToDo_DB_Options.sort_reverse.UnitLevel = true
+			end
+			if Octo_ToDo_DB_Options.sort_reverse.avgItemLevelEquipped == false then
+				Octo_ToDo_DB_Options.sort_reverse.avgItemLevelEquipped = true
+			end
+		end
+		-- 1. Инициализация структуры профилей
+		if not Octo_Todo_DB_Profiles then
+			E.init_Octo_Todo_DB_Profiles()
+		else
+			-- перенос старых профилей цветов и ключей (если были)
+			if Octo_profileColors then
+				if Octo_profileColors.Current_profile then
+					Octo_Todo_DB_Profiles.SETTINGS.CURRENT = Octo_profileColors.Current_profile
+					Octo_profileColors.Current_profile = nil
+				end
+				if Octo_profileColors.profiles then
+					for profile_name, profile_data in next, (Octo_profileColors.profiles) do
+						Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name] = profile_data
+					end
+					Octo_profileColors.profiles = nil
+				end
+			end
+			if Octo_profileKeys then
+				if Octo_profileKeys.Current_profile then
+					Octo_Todo_DB_Profiles.KEYS.CURRENT = Octo_profileKeys.Current_profile
+					Octo_profileKeys.Current_profile = nil
+				end
+				if Octo_profileKeys.profiles then
+					for profile_name, profile_data in next, (Octo_profileKeys.profiles) do
+						Octo_Todo_DB_Profiles.KEYS.profiles[profile_name] = profile_data
+					end
+					Octo_profileKeys.profiles = nil
+				end
+			end
+			-- обновляем структуру (добавляем новые поля, если версия изменилась)
+			E.init_Octo_Todo_DB_Profiles()
+		end
+		-- 2. Активируем глобальные переменные текущих профилей (E.CHARACTERS_CURRENT и т.д.)
+		if E.func_UpdateGlobalNSforProfiles then
+			E.func_UpdateGlobalNSforProfiles()
+		end
+		-- 3. Перенос CONFIG_SHOW_PLAYER → GUIDS в профиль Default
+		for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+			local pd = CharInfo.PlayerData
+			if pd and pd.CONFIG_SHOW_PLAYER ~= nil then
+				-- все старые настройки видимости переносим в профиль по умолчанию
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.TEXT_ENG_DEFAULT].GUIDS[GUID] = pd.CONFIG_SHOW_PLAYER
+				pd.CONFIG_SHOW_PLAYER = nil
+			end
+		end
+		-- 4. Перенос Octo_ToDo_DB_Options → OTHER активного профиля CHARACTERS
+		if Octo_ToDo_DB_Options then
+			local other = Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_LEVEL_MIN = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN
+				Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MIN = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_LEVEL_MAX = Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX
+				Octo_ToDo_DB_Options.CONFIG_SHOW_LEVEL_MAX = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_REGION = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_ONLY_CURRENT_SERVER = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_SERVER = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_ONLY_CURRENT_FACTION = Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ONLY_CURRENT_FACTION = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SHOW_ALWAYS_AS_FIRST = Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST
+				Octo_ToDo_DB_Options.CONFIG_SHOW_ALWAYS_AS_FIRST = nil
+			end
+			if Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM ~= nil then
+				Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.CHARACTERS_CURRENT].OTHER.CONFIG_SORTING_CUSTOM = Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM
+				Octo_ToDo_DB_Options.CONFIG_SORTING_CUSTOM = nil
+			end
+		end
+		-- 5. Перенос старых данных сортировки из Octo_ToDo_DB_Options в SORTING профиля Default
+		if Octo_ToDo_DB_Options then
+			local defaultProfile = Octo_Todo_DB_Profiles.CHARACTERS.profiles[E.TEXT_ENG_DEFAULT]
+			if defaultProfile then
+				defaultProfile.SORTING = defaultProfile.SORTING or {}
+				local sorting = defaultProfile.SORTING
+				if Octo_ToDo_DB_Options.sort_order then
+					sorting.sort_order = Octo_ToDo_DB_Options.sort_order
+					Octo_ToDo_DB_Options.sort_order = nil
+				end
+				if Octo_ToDo_DB_Options.sort_reverse then
+					sorting.sort_reverse = Octo_ToDo_DB_Options.sort_reverse
+					Octo_ToDo_DB_Options.sort_reverse = nil
+				end
+				if Octo_ToDo_DB_Options.sort_order_ACTIVED then
+					sorting.sort_order_ACTIVED = Octo_ToDo_DB_Options.sort_order_ACTIVED
+					Octo_ToDo_DB_Options.sort_order_ACTIVED = nil
+				end
+				if Octo_ToDo_DB_Options.GUID_order then
+					sorting.GUID_order = Octo_ToDo_DB_Options.GUID_order
+					Octo_ToDo_DB_Options.GUID_order = nil
+				end
+			end
+		end
+		if Octo_ToDo_DB_Vars and Octo_ToDo_DB_Vars.FontOption then
+			for region, v in next, (Octo_ToDo_DB_Vars.FontOption) do
+				if v and v.Config_FontStyle == "|cffd177ffE|r|cffcb7afdx|r|cffc47cfbp|r|cffbe7ffar|r|cffb782f8e|r|cffb184f6s|r|cffaa87f4s|r|cffa48af2w|r|cff9d8cf0a|r|cff978fefy|r|cff9091ed |r|cff8a94ebR|r|cff8397e9g|r|cff7d99e7 |r|cff769ce5B|r|cff709fe4o|r|cff69a1e2l|r|cff63A4E0d|r" then
+					v.Config_FontStyle = E.DefaultFont
+				end
+			end
+			local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+			for k, v in next, (Octo_ToDo_DB_Vars) do
+				settingsProfile[k] = v
+			end
+			E.func_CreateProfile("SETTINGS", E.TEXT_ENG_DEFAULT)
+		end
+	end
+		-- opde(Octo_Todo_DB_Profiles.CHARACTERS)
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
 function E.func_setOldChanges()
-	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 	-- E.DEBUG_START()
-	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels or {}) do
-		local pd = CharInfo and CharInfo.PlayerData
-		local cm = CharInfo and CharInfo.MASLENGO
+	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
+	Octo_ToDo_DB_Options = Octo_ToDo_DB_Options or {}
+	Octo_Cache_DB = Octo_Cache_DB or {}
+	local interfaceVersionForReset = Octo_Cache_DB and Octo_Cache_DB.interfaceVersionForReset or 1
+	local oldGlobalVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
+	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
+	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
+		local pd = CharInfo.PlayerData
+		local cm = CharInfo.MASLENGO
 		if pd and cm then
 			local DBVersion = pd.CharDBVersion
 			updateChars(pd, cm, DBVersion)
@@ -272,11 +418,8 @@ function E.func_setOldChanges()
 		end
 	end
 	-- E.DEBUG_STOP("E.func_setOldChanges")
-	Octo_ToDo_DB_Vars = Octo_ToDo_DB_Vars or {}
-	local oldGlobalVersion = Octo_ToDo_DB_Vars.GlobalDBVersion or 1
-	local interfaceVersionForReset = Octo_Cache_DB and Octo_Cache_DB.interfaceVersionForReset or 1
 	updateGlobal(oldGlobalVersion)
-	if currentVersion ~= oldGlobalVersion or interfaceVersionForReset ~= E.interfaceVersion then
+	if E.REFRESH_CACHE and (currentVersion ~= oldGlobalVersion or interfaceVersionForReset ~= E.interfaceVersion) then
 	-- if currentVersion ~= oldGlobalVersion then
 		Octo_Cache_DB = nil
 		E.Init_Octo_Cache_DB()

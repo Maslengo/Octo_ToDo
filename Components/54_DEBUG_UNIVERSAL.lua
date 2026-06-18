@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 if not E.DEBUG then return end
 ----------------------------------------------------------------
 local categoryKey = 54
-----------------------------------------------------------------
-local L = E.L
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_DataOtrisovka = {}
@@ -32,7 +31,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2541)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_Arcantina)..": "..L["Treasures"]
 			end,
 			name_save = "arcantina_Treasures",
 			defS = true,
@@ -65,7 +64,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2502)..": "..L["Treasures"] -- The Shadow Enclave
+				return E.func_GetName("map", E.MapID_ShadowEnclave)..": "..L["Treasures"] -- The Shadow Enclave
 			end,
 			name_save = "delves_2502_Treasures",
 			defS = true,
@@ -86,7 +85,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2545)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_ParhelionPlaza)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2545_Treasures",
 			defS = true,
@@ -107,7 +106,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2547)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_ColleglateCalamity)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2547_Treasures",
 			defS = true,
@@ -128,7 +127,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", nil)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_TheDarkway)..": "..L["Treasures"]
 			end,
 			name_save = "delves_nil1_Treasures",
 			defS = true,
@@ -149,7 +148,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", nil)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_TwilightCrypts)..": "..L["Treasures"]
 			end,
 			name_save = "delves_nil2_Treasures",
 			defS = true,
@@ -170,7 +169,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2510)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_TheGrudgePit)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2510_Treasures",
 			defS = true,
@@ -191,7 +190,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2505)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_GulfofMemory)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2505_Treasures",
 			defS = true,
@@ -212,7 +211,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2528)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_SunkillerSanctum)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2528_Treasures",
 			defS = true,
@@ -233,7 +232,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2506)..": "..L["Treasures"]
+				return E.func_GetName("map", E.MapID_ShadowguardPoint)..": "..L["Treasures"]
 			end,
 			name_save = "delves_2506_Treasures",
 			defS = true,
@@ -254,7 +253,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 1)..": "..L["Treasures"] -- Placeholder map for Atal'Aman
+				return E.func_GetName("map", E.MapID_AtalAman)..": "..L["Treasures"] -- Placeholder map for Atal'Aman
 			end,
 			name_save = "atalaman_Treasures",
 			defS = true,
@@ -275,7 +274,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2395)..": "..L["Rares"] -- Eversong Woods
+				return E.func_GetName("map", E.MapID_EversongWoods)..": "..L["Rares"] -- Eversong Woods
 			end,
 			name_save = "eversong_woods_Rares",
 			defS = true,
@@ -303,7 +302,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2413)..": "..L["Rares"] -- Harandar
+				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Rares"] -- Harandar
 			end,
 			name_save = "harandar_Rares",
 			defS = true,
@@ -331,7 +330,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2405)..": "..L["Rares"] -- Voidstorm
+				return E.func_GetName("map", E.MapID_Voidstorm)..": "..L["Rares"] -- Voidstorm
 			end,
 			name_save = "voidstorm_Rares",
 			defS = true,
@@ -358,7 +357,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2437)..": "..L["Rares"] -- Zul'Aman
+				return E.func_GetName("map", E.MapID_ZulAman)..": "..L["Rares"] -- Zul'Aman
 			end,
 			name_save = "zulaman_Rares",
 			defS = true,
@@ -389,7 +388,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2395)..": "..L["Treasures"] -- Eversong Woods Treasures
+				return E.func_GetName("map", E.MapID_EversongWoods)..": "..L["Treasures"] -- Eversong Woods Treasures
 			end,
 			name_save = "eversong_woods_Treasures",
 			defS = true,
@@ -412,7 +411,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2413)..": "..L["Treasures"] -- Harandar Treasures
+				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Treasures"] -- Harandar Treasures
 			end,
 			name_save = "harandar_Treasures",
 			defS = true,
@@ -434,7 +433,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2405)..": "..L["Treasures"] -- Voidstorm Treasures
+				return E.func_GetName("map", E.MapID_Voidstorm)..": "..L["Treasures"] -- Voidstorm Treasures
 			end,
 			name_save = "voidstorm_Treasures",
 			defS = true,
@@ -460,7 +459,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2437)..": "..L["Treasures"] -- Zul'Aman Treasures
+				return E.func_GetName("map", E.MapID_ZulAman)..": "..L["Treasures"] -- Zul'Aman Treasures
 			end,
 			name_save = "zulaman_Treasures",
 			defS = true,
@@ -505,7 +504,7 @@ local function tempFunction()
 			sorted = false,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", 2413)..": "..L["Glowing Moths"] -- Harandar
+				return E.func_GetName("map", E.MapID_Harandar)..": "..L["Glowing Moths"] -- Harandar
 			end,
 			name_save = "harandar_GlowingMoths",
 			defS = true,

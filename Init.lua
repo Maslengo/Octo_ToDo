@@ -1,14 +1,40 @@
 local GlobalAddonName, E = ...
 local L = E.L
-local issecretvalue = issecretvalue
+-- local issecretvalue = issecretvalue
+_G.OctoEngine = E
 ----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 E.DefaultFont = LibSharedMedia:GetDefault("font")
 if E.curLocaleLang == "ruRU" or E.curLocaleLang == "enUS" then
-	E.DefaultFont = "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
+	-- E.DefaultFont = "|cffD177FFE|r|cffCA79FDx|r|cffC47CFBp|r|cffBD7EF9r|r|cffB781F7e|r|cffB084F5s|r|cffAA86F4s|r|cffA389F2w|r|cff9D8CF0a|r|cff968EEEy|r|cff9091EC |r|cff8994EAR|r|cff8396E9g|r|cff7C99E7 |r|cff769CE5B|r|cff6F9EE3o|r|cff69A1E1l|r|cff63A4E0d|r"
+	E.DefaultFont = "|cffd177ffE|r|cffca79fdx|r|cffc47cfbp|r|cffbd7ef9r|r|cffb781f7e|r|cffb084f5s|r|cffaa86f4s|r|cffa389f2w|r|cff9d8cf0a|r|cff968eeey|r|cff9091ec |r|cff8994eaR|r|cff8396e9g|r|cff7c99e7 |r|cff769ce5B|r|cff6f9ee3o|r|cff69a1e1l|r|cff63a4e0d|r"
 end
+----------------------------------------------------------------
+-- E.TIME_HZ = GetTime -- Returns the system uptime of your computer in seconds, with millisecond precision.
+-- E.TIME_NOW = time -- Returns a timestamp for the specified time or the current Unix time.
+E.TIME_SERVER = GetServerTime -- Returns the server's Unix time.
+E.PHYSICAL_SCREEN_WIDTH, E.PHYSICAL_SCREEN_HEIGHT = GetPhysicalScreenSize()
+E.FRAMES = {}
+----------------------------------------------------------------
+E.MAIN_FRAME_NAME = GlobalAddonName .. "_MainFrame"
+E.LIST_MAX_SIZE = 20 -- listMaxSize
+E.AUTO_FOCUS = false --  autoFocus
+----------------------------------------------------------------
+E.MAX_COLUMN_COUNT = 256
+E.INDENT_TEXT = 4
+E.MAX_DISPLAY_LINES = 100
+E.MAX_DISPLAY_LINES_TOOLTIP = 23 -- + 4
+E.MIN_COLUMN_WIDTH_LEFT = 200
+E.MIN_COLUMN_WIDTH_CENTER = 90
+E.searchFilter = nil
+E.LEFT_TEXTURE_ALPHA = .05
+E.MAX_FRAME_WIDTH = E.PHYSICAL_SCREEN_WIDTH*.8
+E.MAX_FRAME_HEIGHT = E.PHYSICAL_SCREEN_HEIGHT*.8
+E.isPanning = false
+-- E.ENABLE_UPDATE_MAINFRAME = true
+E.SEPARATOR_KEY = "---"
 ----------------------------------------------------------------
 E.ENABLE_HIGHTLIGHT = true
 E.ENABLE_EXPANSIONCOLOR = true
@@ -16,19 +42,23 @@ E.ENABLE_EXPANSIONCOLOR = true
 E.DEBUG = false
 E.DEBUG_NAME = false
 E.DEBUG_CURRENCY_TOOLTIP = false
+E.REFRESH_CACHE = true
+E.SPAM_TIME = 2
+----------------------------------------------------------------
+E.REVERSE = true -- по убыванию (E.DESCENDING = true) (E.ASCENDING  = false   -- по возрастанию)
 ----------------------------------------------------------------
 E.Octo_Table_SI_IDS = {}
 E.SavedInstanceID_to_EJInstance = {}
 E.EJInstance_to_SavedInstanceID = {}
 E.OctoTable_ColoredFrames = {}
+E.OctoTable_ColoredTooltips = {}
 E.OctoTables_Vibor = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
 E.ALL_UniversalQuests = {}
-E.ALL_AdditionallyTOP = {}
+E.ALL_AdditionallyCENTER = {}
 E.ALL_AdditionallyBOTTOM = {}
 E.ALL_Quests = {}
-E.ALL_RaidsOrDungeons = {}
 E.UniversalQuestMap = {}
 E.First_Option = {}
 E.Second_Option = {}
@@ -38,8 +68,6 @@ E.Holiday = {}
 E.KeyStoneTBL = {}
 E.Modules = {}
 E.OctoTable_Expansions = {}
-E.OctoTable_Expansions_Names = {}
-E.OctoTable_Expansions_Tiers = {}
 E.OctoTable_Frames_ICONS = {}
 E.OctoTable_Frames_SIMPLE = {}
 E.OctoTable_itemID_ALL = {}
@@ -61,13 +89,13 @@ E.OctoTable_CurrencyMountForFuncCurName = {}
 E._spamLocks = {}
 E._inCombats = {}
 E._callAfterTimer = {}
+E._timerHandles = {}
 E.minValue_ItemLevel = 0
 E.maxValue_ItemLevel = 0
 E.minValue_Money = 0
 E.maxValue_Money = 0
-E.DataProvider_Otrisovka = {}
-E.TEXT_DEFAULT = "Default" -- L["DEFAULT"]
-E.TEXT_DEFAULT_DARK = "Default (Dark)" -- L["DEFAULT"]
+E.TEXT_ENG_DEFAULT = "Default" -- E.TEXT_ENG_DEFAULT_DARK = "OctoUI"-- "Default (Dark)" -- L["DEFAULT"]
+E.TEXT_DEFAULT = L["DEFAULT"]
 E.UNIVERSAL = "UNIVERSAL_"
 E.LEFT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-leftbutton") and "|A:newplayertutorial-icon-mouse-leftbutton:0:0|a " or ""
 E.RIGHT_MOUSE_ICON = C_Texture.GetAtlasInfo("newplayertutorial-icon-mouse-rightbutton") and "|A:newplayertutorial-icon-mouse-rightbutton:0:0|a " or ""
@@ -79,6 +107,7 @@ E.className, E.classFilename, E.classId = UnitClass("PLAYER")
 E.classColor = RAID_CLASS_COLORS[E.classFilename] and RAID_CLASS_COLORS[E.classFilename].colorStr:sub(3) or "ffffff"
 E.classColorHexCurrent = E.func_GetClassColor_HEX(E.classFilename)
 E.curCharName = UnitFullName("PLAYER")
+E.TEXT_MYNAME = UnitName("PLAYER")
 E.Class_Warrior_Color = E.func_GetClassColor_HEX("WARRIOR")
 E.Class_Paladin_Color = E.func_GetClassColor_HEX("PALADIN")
 E.Class_Hunter_Color = E.func_GetClassColor_HEX("HUNTER")
@@ -93,7 +122,6 @@ E.Class_DemonHunter_Color = E.func_GetClassColor_HEX("DEMONHUNTER")
 E.Class_DeathKnight_Color = E.func_GetClassColor_HEX("DEATHKNIGHT")
 E.Class_Evoker_Color = E.func_GetClassColor_HEX("EVOKER")
 E.TEXT_SPACE = " "
-
 
 
 
@@ -119,7 +147,6 @@ E.menuBackdrop = {
 
 	insets = {left = E.edgeSize, right = E.edgeSize, top = E.edgeSize, bottom = E.edgeSize}
 }
-E.MAX_DISPLAY_LINES = 30
 E.ddMenuButtonHeight = 18
 E.GLOBAL_LINE_HEIGHT = 20
 E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2 -- Высота заголовка
@@ -135,8 +162,14 @@ E.OctoFont11:CopyFontObject(GameTooltipText)
 E.OctoFont22 = CreateFont("OctoFont22")
 E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
 E.OctoFont22:SetFont(E.Octo_font, 22, "OUTLINE")
+LE_EXPANSION_LEVEL_CURRENT = LE_EXPANSION_LEVEL_CURRENT or 1
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
-E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT]
+E.COLOR_GREEN = "|cff4FFF79" -- "|cff00FF00"
+E.COLOR_YELLOW = "|cffFFF371" -- "|cffFFFF00"
+E.COLOR_RED = "|cffFF4C4F" -- "|cffFF0000"
+E.COLOR_BLUE ="|cff00A3FF" -- "|cff0000FF"
+E.TEXT_UNKNOWN = E.COLOR_RED .. L["UNKNOWN"] .. "|r"
+E.currentExpansionName = _G['EXPANSION_NAME'..LE_EXPANSION_LEVEL_CURRENT] or E.TEXT_UNKNOWN
 E.IsPublicBuild = IsPublicBuild()
 E.buildVersion, E.buildNumber, E.buildDate, E.interfaceVersion = GetBuildInfo()
 E.buildNumber = tonumber(E.buildNumber)
@@ -150,12 +183,12 @@ E.BattleTag = select(2, BNGetInfo()) or "Trial Account"
 E.curBattleTag = E.BattleTag
 E.BTAG = tostringall(strsplit("#", E.BattleTag))
 E.CURRENT_REGION_ID = GetCurrentRegion()
-E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU"
+E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU" -- E.func_GetCurrentRegionName() вызывается в функции
 if E.CURRENT_REGION_NAME == "" then E.CURRENT_REGION_NAME = "US" end
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.curGUID = UnitGUID("PLAYER")
+
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
-E.PHYSICAL_SCREEN_WIDTH, E.PHYSICAL_SCREEN_HEIGHT = GetPhysicalScreenSize()
 E.POSITION_MAIN_FRAME = -157
 E.ANIMATION_DURATION = .2
 E.isElvUI = select(4, C_AddOns.GetAddOnInfo("ElvUI"))
@@ -182,12 +215,8 @@ E.COLOR_TIME = "|cff9999FF"
 -- E.COLOR_MIDNIGHT = "|cffB580FF"
 -- E.COLOR_THELASTTITAN = "|cffF4C263"
 
-
-
-E.COLOR_GREEN = "|cff4FFF79" -- "|cff00FF00"
-E.COLOR_YELLOW = "|cffFFF371" -- "|cffFFFF00"
-E.COLOR_RED = "|cffFF4C4F" -- "|cffFF0000"
-E.COLOR_BLUE ="|cff00A3FF" -- "|cff0000FF"
+E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA = 0, 0, 0, 1
+E.textR, E.textG, E.textB, E.textA = 1, 1, 1, 1
 
 
 E.COLOR_WORLDOFWARCRAFT = "|cffD0B070"
@@ -291,36 +320,48 @@ E.NIL = E.COLOR_RED.."nil|r"
 --   [3] = { prefix = "SL_NIGHTFAE" },
 --   [4] = { prefix = "SL_NECROLORD" },
 -- }
-E.LIST_MAX_SIZE = 30
-E.func_IsClassic = E.interfaceVersion > 10000 and E.interfaceVersion < 20000
-E.func_IsBC = E.interfaceVersion > 20000 and E.interfaceVersion < 30000
-E.func_IsWOTLK = E.interfaceVersion > 30000 and E.interfaceVersion < 40000
-E.func_IsCataclysm = E.interfaceVersion > 40000 and E.interfaceVersion < 50000
-E.func_IsMOP = E.interfaceVersion > 50000 and E.interfaceVersion < 60000
-E.func_IsWOD = E.interfaceVersion > 60000 and E.interfaceVersion < 70000
-E.func_IsLegion = E.interfaceVersion > 70000 and E.interfaceVersion < 80000
-E.func_IsBFA = E.interfaceVersion > 80000 and E.interfaceVersion < 90000
-E.func_IsShadowlands = E.interfaceVersion > 90000 and E.interfaceVersion < 100000
-E.func_IsDragonflight = E.interfaceVersion > 100000 and E.interfaceVersion < 110000
-E.func_IsTWW = E.interfaceVersion > 110000 and E.interfaceVersion < 120000
-E.IsMidnight = E.interfaceVersion > 120000 and E.interfaceVersion < 130000
-E.IsTLT = E.interfaceVersion > 130000 and E.interfaceVersion < 140000
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+local EXPANSION_ORDER = {
+	"WoW", "TBC", "WotLK", "Cata", "MoP", "WoD",
+	"Legion", "BfA", "SL", "DF", "TWW", "MN", "TLT"
+}
+local EXPANSION_STARTS = {
+	10000, 20000, 30000, 40000, 50000, 60000,
+	70000, 80000, 90000, 100000, 110000, 120000, 130000
+}
+local version = E.interfaceVersion
+local currentExpIndex
+for i, startVer in ipairs(EXPANSION_STARTS) do
+	if version >= startVer then
+		currentExpIndex = i
+	else
+		break
+	end
+end
+for i, name in ipairs(EXPANSION_ORDER) do
+	E["func_Is" .. name .. "_current"] = (i == currentExpIndex)
+end
+for i, name in ipairs(EXPANSION_ORDER) do
+	E["Is_" .. name .. "_available"] = (version >= EXPANSION_STARTS[i])
+end
+
+-- /dump E.func_IsDF -- FALSE
+-- /dump E.Is_DF_available -- TRUE
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+
+
+
+
+
+
+
 E.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 E.IsPTR = GetCurrentRegion() >= 72 -- 90 BETA midnight
 E.IsRemix = PlayerIsTimerunning and PlayerIsTimerunning()
-E.Is_WorldofWarcraft_available = E.interfaceVersion >= 10000
-E.Is_TheBurningCrusade_available = E.interfaceVersion >= 20000
-E.Is_WrathoftheLichKing_available = E.interfaceVersion >= 30000
-E.Is_Cataclysm_available = E.interfaceVersion >= 40000
-E.Is_MistsofPandaria_available = E.interfaceVersion >= 50000
-E.Is_WarlordsofDraenor_available = E.interfaceVersion >= 60000
-E.Is_Legion_available = E.interfaceVersion >= 70000
-E.Is_BattleforAzeroth_available = E.interfaceVersion >= 80000
-E.Is_Shadowlands_available = E.interfaceVersion >= 90000
-E.Is_Dragonflight_available = E.interfaceVersion >= 100000
-E.Is_TheWarWithin_available = E.interfaceVersion >= 110000
-E.Is_Midnight_available = E.interfaceVersion >= 120000
-E.Is_TheLastTitan_available = E.interfaceVersion >= 130000
 
 E.OctoTable_PlayerBags = {
 	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
@@ -381,23 +422,14 @@ E.OctoTable_SlotMapping = {
 	[16] = {name = "MAINHANDSLOT", invslot = INVSLOT_MAINHAND, priority = 17},
 	[17] = {name = "SECONDARYHANDSLOT", invslot = INVSLOT_OFFHAND, priority = 18},
 }
-E.dataDisplayOrder = {
-	"AdditionallyTOP",
-	"Currencies",
-	"Items",
-	"RaidsOrDungeons",
-	"Quests",
-	"UniversalQuests",
-	"Reputations",
-	"AdditionallyBOTTOM",
-}
 local season = C_MythicPlus and C_MythicPlus.GetCurrentSeason()
 if season == nil or season == false or season == 0 or season == -1 then
 	E.MythicPlus_seasonID = 1
 else
 	E.MythicPlus_seasonID = season
 end
-E.TEXT_INDEV = E.COLOR_RED..">>> ".."In Development".." <<<|r"
+E.TEXT_ERROR = E.COLOR_RED.."ERROR|r"
+E.TEXT_INDEV = E.COLOR_RED.."In Development|r"
 
 -- Таблица цветовых схем для редактора
 E.editorThemes = {
@@ -549,12 +581,19 @@ E.ICON_QUESTDAILY = "questlog-questtypeicon-daily"
 E.ICON_QUESTWEEKLY = "questlog-questtypeicon-weekly"
 E.ICON_QUESTMONTHLY = "questlog-questtypeicon-monthly"
 E.ICON_QUESTWEEKLY_ACCOUNT = "worldquest-tracker-questmarker-gray"
+E.ICON_RECURRING = "Crosshair_unableRecurringturnin_64" -- "UI-RefreshButton"
+
+-- UI-QuestPoiRecurring-QuestNumber-SuperTracked
+-- UI-QuestPoiRecurring-QuestNumber
+-- UI-QuestPoiRecurring-InnerGlow
+-- UI-QuestPoiRecurring-OuterGlow
 
 E.RESET_INFO = {
 	Normal = {icon = E.ICON_QUESTNORMAL, string = L["ITEM_QUALITY1_DESC"]},
 	Daily = {icon = E.ICON_QUESTDAILY, string = L["DAILY"]},
 	Weekly = {icon = E.ICON_QUESTWEEKLY, string = L["WEEKLY"]},
 	Monthly = {icon = E.ICON_QUESTMONTHLY, string = L["CALENDAR_REPEAT_MONTHLY"]},
+	Recurring = {icon = E.ICON_RECURRING, string = L["QUEST_CLASSIFICATION_RECURRING"]},
 }
 E.ICON_TABARD = 135026
 E.ICON_KYRIAN = "CovenantChoice-Panel-Sigil-Kyrian" -- 3641395
@@ -589,7 +628,7 @@ elseif E.FACTION_CURRENT == "Alliance" then
 	E.ICON_CURRENT_FACTION = E.ICON_ALLIANCE
 	E.COLOR_FACTION = E.COLOR_ALLIANCE
 else
-	E.ICON_CURRENT_FACTION = 775462
+	E.ICON_CURRENT_FACTION = E.ICON_NEUTRAL
 	E.COLOR_FACTION = E.Class_Monk_Color
 end
 
@@ -638,12 +677,13 @@ E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."D
 
 E.SORT_OPTIONS = {
 	----------------------------------------------------------------
-	["UnitLevel"] = {name = L["LEVEL"], defaultValue = 1, reverse = false, }, -- 20,
+	["UnitLevel"] = {name = L["LEVEL"], defaultValue = 1, reverse = true, }, -- 20,
 	["Name"] = {name = L["CHARACTER_NAME_PROMPT"], defaultValue = 3, reverse = false, },
 	----------------------------------------------------------------
-	["Faction"] = {name = L["FACTION"], reverse = false, },
+	["FACTION"] = {name = L["FACTION"], reverse = false, },
 	----------------------------------------------------------------
 	["BattleTag"] = {name = L["BATTLETAG"], reverse = false, },
+	["REGION_NAME"] = {name = L["Region"], reverse = false, },
 	["WarMode"] = {name = L["PVP_LABEL_WAR_MODE"], reverse = false, },
 	["RELOAD_COUNT"] = {name = "RELOAD_COUNT", reverse = false, }, -- 0,
 	----------------------------------------------------------------
@@ -654,7 +694,7 @@ E.SORT_OPTIONS = {
 	-- ["specPrimaryStat"] = {name = "specPrimaryStat", reverse = false, }, -- 4,
 	-- ["specRole"] = {name = "specRole", reverse = false, },
 	----------------------------------------------------------------
-	["avgItemLevelEquipped"] = {name = L["STAT_AVERAGE_ITEM_LEVEL"], defaultValue = 2, reverse = false, }, -- 25,
+	["avgItemLevelEquipped"] = {name = L["STAT_AVERAGE_ITEM_LEVEL"], defaultValue = 2, reverse = true, }, -- 25,
 	-- ["avgItemLevel"] = {name = "avgItemLevel", reverse = false, }, -- 25,
 	["avgItemLevelPvp"] = {name = L["STAT_AVERAGE_ITEM_LEVEL"] .. " PVP", reverse = false, }, -- 25,
 	----------------------------------------------------------------
@@ -674,7 +714,6 @@ E.SORT_OPTIONS = {
 	-- ["Chromie_UnitChromieTimeID"] = {name = "Chromie_UnitChromieTimeID", reverse = false, }, -- 15,
 	----------------------------------------------------------------
 	-- ["CurrentRegion"] = {name = "CurrentRegion", reverse = false, }, -- 3,
-	-- ["CurrentRegionName"] = {name = "CurrentRegionName", reverse = false, },
 	----------------------------------------------------------------
 	["curServer"] = {name = L["Realm"], reverse = false, },
 	-- ["curServerShort"] = {name = "curServerShort", reverse = false, },
@@ -699,7 +738,7 @@ E.SORT_OPTIONS = {
 	----------------------------------------------------------------
 	["SL_covenantID"] = {name = L["COVENANT"], reverse = false,  formatter = function(data) return E.func_GetName("covenant", data)  end}, -- 35,
 	----------------------------------------------------------------
-	["time"] = {name = L["Last online"], reverse = false,  formatter = function(data) return E.func_SecondsToClock(GetServerTime()-data)  end}, -- 35,
+	["time"] = {name = L["Last online"], reverse = true,  formatter = function(data) return E.func_SecondsToClock(E.TIME_SERVER() - data)  end}, -- 35,
 	-- ["tmstp_Daily"] = {name = "tmstp_Daily", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
 	-- ["tmstp_Month"] = {name = "tmstp_Month", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
 	-- ["tmstp_Weekly"] = {name = "tmstp_Weekly", reverse = false,  formatter = function(data) return E.func_SecondsToClock(data)  end}, -- 35,
@@ -711,7 +750,6 @@ E.SORT_OPTIONS = {
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	----------------------------------------------------------------
-	-- ["CONFIG_SHOW_PLAYER"] = {name = "CONFIG_SHOW_PLAYER", reverse = false, },
 	-- ["buildDate"] = {name = "buildDate", reverse = false, },
 	-- ["buildNumber"] = {name = "buildNumber", reverse = false, }, -- 66838,
 	-- ["buildVersion"] = {name = "buildVersion", reverse = false, },
@@ -758,4 +796,5 @@ E.ID_MYTHIC = 16
 
 
 -- /dump STANDARD_TEXT_FONT
-E.TEXT_UNKNOWN = E.COLOR_RED .. L["UNKNOWN"] .. "|r"
+
+

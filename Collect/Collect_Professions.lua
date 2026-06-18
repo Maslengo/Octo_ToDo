@@ -6,28 +6,26 @@ local prof34 = {2876, 2826, 2754, 2585, 2586, 2587, 2588, 2589, 2590, 2591, 2592
 ----------------------------------------------------------------
 local function Collect_Professions()
 	----------------------------------------------------------------
-	if not E:func_CanCollectData() then return end
-	local collectMASLENGO = Octo_ToDo_DB_Levels[E.curGUID].MASLENGO
-	local collectPlayerData = Octo_ToDo_DB_Levels[E.curGUID].PlayerData
+	if not E.func_CanCollectData() then return end
 	----------------------------------------------------------------
 	local collectENABLEmoreprof = false
-	collectMASLENGO.professions = {}
-	collectPlayerData.professions = {}
+	E.cm.professions = {}
+	E.pd.professions = {}
 	for i, id in next, ({GetProfessions()}) do
-		collectMASLENGO.professions[i] = collectMASLENGO.professions[i] or {}
+		E.cm.professions[i] = E.cm.professions[i] or {}
 		local _, _, skillLevel, maxSkillLevel, _, _, skillLine, skillModifier = E.func_GetProfessionInfo(id)
 		if skillLine and skillLine ~= 0 then
-			collectMASLENGO.professions[i].skillLine = skillLine
-			collectPlayerData.professions[skillLine] = true
+			E.cm.professions[i].skillLine = skillLine
+			E.pd.professions[skillLine] = true
 		end
 		if skillLevel and skillLevel ~= 0 then
-			collectMASLENGO.professions[i].skillLevel = skillLevel
+			E.cm.professions[i].skillLevel = skillLevel
 		end
 		if maxSkillLevel and maxSkillLevel ~= 0 then
-			collectMASLENGO.professions[i].maxSkillLevel = maxSkillLevel
+			E.cm.professions[i].maxSkillLevel = maxSkillLevel
 		end
 		if skillModifier and skillModifier ~= 0 then
-			collectMASLENGO.professions[i].skillModifier = skillModifier
+			E.cm.professions[i].skillModifier = skillModifier
 		end
 		if collectENABLEmoreprof then
 			if i == 1 or i == 2 then
@@ -44,8 +42,8 @@ local function Collect_Professions()
 						local QWEskillModifier = info.skillModifier
 						local QWEisPrimaryProfession = info.isPrimaryProfession
 						local QWEparentProfessionName = info.parentProfessionName
-						collectMASLENGO.professions[i].child = collectMASLENGO.professions[i].child or {}
-						tinsert(collectMASLENGO.professions[i].child, {
+						E.cm.professions[i].child = E.cm.professions[i].child or {}
+						tinsert(E.cm.professions[i].child, {
 								QWEprofessionName = QWEprofessionName,
 								QWEskillLevel = QWEskillLevel,
 								QWEmaxSkillLevel = QWEmaxSkillLevel,
@@ -71,8 +69,8 @@ local function Collect_Professions()
 						local QWEmaxSkillLevel = info.maxSkillLevel
 						local QWEprofessionID = info.professionID
 						local QWEexpansionName = info.expansionName
-						collectMASLENGO.professions[i].child = collectMASLENGO.professions[i].child or {}
-						tinsert(collectMASLENGO.professions[i].child, {
+						E.cm.professions[i].child = E.cm.professions[i].child or {}
+						tinsert(E.cm.professions[i].child, {
 								QWEprofessionName = QWEprofessionName,
 								QWEskillLevel = QWEskillLevel,
 								QWEmaxSkillLevel = QWEmaxSkillLevel,

@@ -2,7 +2,6 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local time = time
 local GetCVarBool, SetCVar = GetCVarBool, SetCVar
-local GetHolidayInfo = GetHolidayInfo or C_Calendar.GetHolidayInfo
 ----------------------------------------------------------------
 local getCalendarTime do
 	local t = {}
@@ -12,7 +11,8 @@ local getCalendarTime do
 		t.day = eTime.monthDay
 		t.hour = eTime.hour
 		t.min = eTime.minute
-		return time(t)
+		local result = time(t)
+		return result
 	end
 end
 ----------------------------------------------------------------
@@ -58,11 +58,12 @@ local function generateEventKey(eventID, startTime)
 		eventID,
 		startTime.monthDay,
 		startTime.month,
-		startTime.year)
+		startTime.year
+	)
 end
 ----------------------------------------------------------------
 function E.Collect_Holidays()
-	if not (GetHolidayInfo and E.ActiveHoliday and E.Holiday) then return end
+	if not (E.ActiveHoliday and E.Holiday) then return end
 	local backup = {}
 	backup = function_setBackup(backup)
 	local currentCalendarTime = E.func_GetCurrentCalendarTime()

@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local enable = true
-local Is_TheBurningCrusade_available = E.Is_TheBurningCrusade_available
-----------------------------------------------------------------
 if not enable then return end
-if not Is_TheBurningCrusade_available then return end;
+----------------------------------------------------------------
+if not E.Is_TBC_available then return end;
 ----------------------------------------------------------------
 local L = E.L
 ----------------------------------------------------------------
@@ -101,6 +100,28 @@ local function tempFunction()
 			defS = true,
 			reset = "Normal",
 			desc = categoryKey,
+			-- questpools = {
+			-- 	{
+			-- 		{9962,},
+			-- 	},
+			-- 	{
+			-- 		{9967,},
+			-- 	},
+			-- 	{
+			-- 		{9970,},
+			-- 	},
+			-- 	{
+			-- 		{9972,},
+			-- 	},
+			-- 	{
+			-- 		{9973,},
+			-- 	},
+			-- 	{
+			-- 		{9977,},
+			-- 	},
+
+			-- },
+
 			quests = {
 				{9962}, -- the-ring-of-blood-brokentoe
 				{9967}, -- the-ring-of-blood-the-blue-brothers

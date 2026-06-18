@@ -1,10 +1,9 @@
 local GlobalAddonName, E = ...
+local L = E.L
 ----------------------------------------------------------------
 if not E.DEBUG then return end
 ----------------------------------------------------------------
-local categoryKey = 53
-----------------------------------------------------------------
-local L = E.L
+local categoryKey = 52
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_DataOtrisovka = {}
@@ -12,7 +11,7 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
-	OctoTables_Vibor[categoryKey].name = "RaidsOrDungeons"
+	OctoTables_Vibor[categoryKey].name = L["REPUTATION"]
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
 	OctoTables_DataOtrisovka[categoryKey].Currencies = {
@@ -36,23 +35,63 @@ local function tempFunction()
 	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
 	}
 	----------------------------------------------------------------
-	local uniqueIDs = {}
-	for Field, Value in next, (Enum.CalendarEventType) do
-		-- if Value == 0 or Value == 1 then
-		for k, v in ipairs(C_Calendar.EventGetTextures(Value)) do
-			local mapId = v.mapId
-			uniqueIDs[mapId] = true
-		end
-		-- end
-	end
+
+
+
 	local sorted = {}
-	for id in next,(uniqueIDs) do
-		tinsert(sorted, id)
+	local test = {}
+	local allReputations = {}
+	local missingReputations = {}
+	local TYPE = "reputation"
+
+	-- Собираем ID репутаций, которые уже есть в DB
+	for id in next, (E.OctoTable_Reputations_DB) do
+		local name = E.func_GetName(TYPE, id)
+		local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
+		if name ~= E.TEXT_UNKNOWN .. debugTEXT then
+			tinsert(test, id)
+			allReputations[id] = name
+		end
 	end
-	table.sort(sorted, E.func_ReversSort)
+
+	-- Проверяем все возможные ID (1..3000) и находим отсутствующие
+	for id = 1, 3000 do
+		local name = E.func_GetName(TYPE, id)
+		local debugTEXT = E.debugInfo and E.debugInfo(id) or ""
+		if name ~= E.TEXT_UNKNOWN .. debugTEXT then
+			tinsert(sorted, id)
+
+			-- Если ID нет в allReputations, добавляем в missingReputations
+			if not allReputations[id] then
+				tinsert(missingReputations, id)
+			end
+		end
+	end
+
+
+	E.func_SortRecords(sorted, true)
+	E.func_SortRecords(missingReputations, true)
+	E.func_PrintMessage(#sorted, #test, "INIT")
+
+
+	local missingWithNames = {}
+	for _, id in ipairs(missingReputations) do
+		-- E.OctoTable_Reputations_DB[id] = E.OctoTable_Reputations_DB[id] or {}
+		local name = E.func_GetName(TYPE, id)
+		missingWithNames[id] = name
+	end
+
+
+
 	for i, id in ipairs(sorted) do
-		tinsert(OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons, {id = id, defS = true,})
+	-- for i, id in ipairs(missingReputations) do
+		tinsert(OctoTables_DataOtrisovka[categoryKey].Reputations, {id = id, defS = true,})
 	end
+
+
+
+
+
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)
