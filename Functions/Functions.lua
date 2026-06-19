@@ -1578,33 +1578,33 @@ function E.func_AutoKey()
 	return tostring("key_" .. E.func_GetOrder())
 end
 ----------------------------------------------------------------
-local soundFile_OnEnter = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\OnEnter.ogg"
+local soundFile_OnEnter = "Interface\\Addons\\" .. E.MainAddonName .. "\\Media\\sound\\OnEnter.ogg"
 function E.sound_OnEnter()
 	PlaySoundFile(soundFile_OnEnter, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_OnClick = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\OnClick.ogg"
+local soundFile_OnClick = "Interface\\Addons\\" .. E.MainAddonName .. "\\Media\\sound\\OnClick.ogg"
 function E.sound_OnClick()
 	PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
 	-- PlaySoundFile(soundFile_OnClick, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_Slider_OnValueChanged = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\Slider_OnValueChanged.ogg"
+local soundFile_Slider_OnValueChanged = "Interface\\Addons\\" .. E.MainAddonName .. "\\Media\\sound\\Slider_OnValueChanged.ogg"
 function E.sound_Slider_OnValueChanged()
 	PlaySoundFile(soundFile_Slider_OnValueChanged, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_DropDown_Close = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\DropDown_Close.ogg"
+local soundFile_DropDown_Close = "Interface\\Addons\\" .. E.MainAddonName .. "\\Media\\sound\\DropDown_Close.ogg"
 function E.sound_DropDown_Close()
 	PlaySoundFile(soundFile_DropDown_Close, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_DropDown_Open = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\DropDown_Open.ogg"
+local soundFile_DropDown_Open = "Interface\\Addons\\" .. E.MainAddonName .. "\\Media\\sound\\DropDown_Open.ogg"
 function E.sound_DropDown_Open()
 	PlaySoundFile(soundFile_DropDown_Open, "Master")
 end
 ----------------------------------------------------------------
-local soundFile_DropDown_Select = "Interface\\Addons\\" .. GlobalAddonName .. "\\Media\\sound\\DropDown_Select.ogg"
+local soundFile_DropDown_Select = "Interface\\Addons\\" .. E.MainAddonName .. "\\Media\\sound\\DropDown_Select.ogg"
 function E.sound_DropDown_Select()
 	PlaySoundFile(soundFile_DropDown_Select, "Master")
 end

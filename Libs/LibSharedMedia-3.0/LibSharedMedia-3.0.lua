@@ -224,8 +224,7 @@ local function updateMediaList(mediatype, value)
 
     local mlist = mediaList[mediatype]
     -- invariant: list is sorted, entries are unique, value not yet in list
-    local s, e = 1, #mlist
-    local m
+    local s, e, m = 1, #mlist
     while s <= e do
         m = math_floor((s + e) / 2)
         if mlist[m] > value then

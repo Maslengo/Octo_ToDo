@@ -2,44 +2,42 @@ local GlobalAddonName, E = ...
 ----------------------------------------------------------------
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
-local function RegisterMyTables(dataType, value, number, index, path)
-	local leftText = E.COLOR_ADDON_RIGHT..tostring(number).."|r"
-	if dataType == "sound" then
-		LibSharedMedia:Register(dataType, leftText.." "..E.func_Gradient(value), path..value..[[.ogg]])
-	elseif dataType == "font" then
-		LibSharedMedia:Register(dataType, E.func_Gradient(value), path..value..[[.TTF]], LibSharedMedia.LOCALE_BIT_ruRU + LibSharedMedia.LOCALE_BIT_western)
-	elseif dataType == "border" then
-		LibSharedMedia:Register(dataType, E.func_Gradient(value), path..value..[[.tga]])
-	elseif dataType == "statusbar" then
-		LibSharedMedia:Register(dataType, E.func_Gradient(dataType.." "..value), path..value..[[.tga]])
-	end
-end
+local border_tbl = {
+	"Octo",
+}
+local font_tbl = {
+	"Expressway Rg Bold",
+}
+local sound_tbl = {
+
+}
+local statusbar_tbl = {
+
+}
 ----------------------------------------------------------------
-do
-	local font_tbl = {
-		"Expressway Rg Bold",
-		"Fira Code Regular",
-		-- "wqy-zenhei",
-	}
-	local path = [[Interface\Addons\]]..GlobalAddonName..[[\Media\Fonts\]]
-	for index, value in ipairs(font_tbl) do
-		RegisterMyTables("font", value, 1, index, path)
+local fields = {
+	{field = "border", format = "tga", tbl = border_tbl,},
+	{field = "font", format = "TTF", tbl = font_tbl,},
+	{field = "sound", format = "ogg", tbl = sound_tbl,},
+	{field = "statusbar", format = "tga", tbl = statusbar_tbl,},
+}
+
+local COLOR_LEFT = E.COLOR_ADDON_LEFT --  E.COLOR_GREEN
+local COLOR_RIGHT = E.COLOR_ADDON_RIGHT -- E.COLOR_RED
+local func_Gradient = E.func_Gradient
+for _, v in ipairs(fields) do
+
+	local field = v.field
+	local format = v.format
+	local path = [[Interface\Addons\]] .. GlobalAddonName .. [[\Media\]] .. field .. [[\]]
+	local tbl = v.tbl
+	for i, fileName in ipairs(tbl) do
+		LibSharedMedia:Register(
+			field,
+			func_Gradient(fileName, COLOR_LEFT, COLOR_RIGHT),
+			path .. fileName .. [[.]] .. format,
+			field == "font" and LibSharedMedia.LOCALE_BIT_ruRU + LibSharedMedia.LOCALE_BIT_western or nil
+		)
 	end
 end
-
-----------------------------------------------------------------
-
-do
-
-	local border_tbl = {
-		"Octo",
-	}
-	local path = [[Interface\Addons\]]..GlobalAddonName..[[\Media\Borders\]]
-	for index, value in ipairs(border_tbl) do
-		RegisterMyTables("border", value, 1, index, path)
-	end
-
-end
-
-
 ----------------------------------------------------------------
