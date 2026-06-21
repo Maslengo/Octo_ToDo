@@ -8,12 +8,6 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 local utf8len, utf8sub, utf8upper, utf8lower = string.utf8len, string.utf8sub, string.utf8upper, string.utf8lower
 local strsplit = strsplit
 ----------------------------------------------------------------
-function E.func_WeeklyRewards_ShowUI()
-	if WeeklyRewards_ShowUI then
-		return WeeklyRewards_ShowUI()
-	end
-end
-----------------------------------------------------------------
 function E.func_GetAtlasIcon(atlasName, iconWidth, iconHeight)
 	if not atlasName then return end
 	return CreateAtlasMarkup(atlasName, iconWidth or 16, iconHeight or 16)
@@ -774,7 +768,7 @@ function E.func_CompactRoundNumber(number)
 		return math.floor(number+.5)
 	end
 end
-function E.func_SecondsToClock(t, allwaysShowSeconds)
+function E.func_SecondsToClock(t, allwaysShowSeconds, fullFormat)
 	local t = tonumber(t) or 0
 	if t <= 0 then
 		return ""
@@ -787,37 +781,45 @@ function E.func_SecondsToClock(t, allwaysShowSeconds)
 	local ms = t - math.floor(t)
 	local parts = {}
 	if years > 0 then
-		table.insert(parts, years .. L["y"] .. " ")
-		table.insert(parts, days .. L["d"] .. " ")
-		table.insert(parts, hours .. L["h"] .. " ")
-		table.insert(parts, mins .. L["m"])
-		if allwaysShowSeconds then
-			table.insert(parts, " " .. secs .. L["s"])
+		table.insert(parts, years .. L["y"])
+		table.insert(parts, days .. L["d"])
+		if fullFormat then
+			table.insert(parts, hours .. L["h"])
+			table.insert(parts, mins .. L["m"])
+			if allwaysShowSeconds then
+				table.insert(parts, secs .. L["s"])
+			end
 		end
 	elseif days > 0 then
-		table.insert(parts, days .. L["d"] .. " ")
-		table.insert(parts, hours .. L["h"] .. " ")
-		table.insert(parts, mins .. L["m"])
-		if allwaysShowSeconds then
-			table.insert(parts, " " .. secs .. L["s"])
+		table.insert(parts, days .. L["d"])
+		table.insert(parts, hours .. L["h"])
+		if fullFormat then
+			table.insert(parts, mins .. L["m"])
+			if allwaysShowSeconds then
+				table.insert(parts, secs .. L["s"])
+			end
 		end
 	elseif hours > 0 then
-		table.insert(parts, hours .. L["h"] .. " ")
+		table.insert(parts, hours .. L["h"])
 		table.insert(parts, string.format("%02d", mins) .. L["m"])
-		if allwaysShowSeconds then
-			table.insert(parts, " " .. string.format("%02d", secs) .. L["s"])
+		if fullFormat then
+			if allwaysShowSeconds then
+				table.insert(parts, string.format("%02d", secs) .. L["s"])
+			end
 		end
 	elseif t >= 60 then
-		table.insert(parts, mins .. L["m"] .. " ")
-		if t < 600 or allwaysShowSeconds then
-			table.insert(parts, secs .. L["s"])
+		table.insert(parts, mins .. L["m"])
+		if fullFormat then
+			if t < 600 or allwaysShowSeconds then
+				table.insert(parts, secs .. L["s"])
+			end
 		end
 	elseif t >= 1 then
 		table.insert(parts, secs .. L["s"])
 	else
 		table.insert(parts, string.format("%.3f", t) .. "ms")
 	end
-	return table.concat(parts)
+	return table.concat(parts, " ")
 end
 function E.func_texturefromIconEVENT(icon, iconSize)
 	iconSize = iconSize or 16
@@ -2049,117 +2051,6 @@ function E.func_GetCounts()
 	return numServers, numRegions, numBtags, numPlayers
 end
 ----------------------------------------------------------------
-do
-	local function updateState(self)
-		-- if self:IsEnabled() then
-		-- if self.down and self.over then
-		-- self.Icon:SetAtlas("common-dropdown-a-button-pressedhover", true)
-		-- elseif self.over then
-		-- self.Icon:SetAtlas("common-dropdown-a-button-hover", true)
-		-- elseif self.down then
-		-- self.Icon:SetAtlas("common-dropdown-a-button-pressed", true)
-		-- else
-		-- self.Icon:SetAtlas("common-dropdown-a-button", true)
-		-- end
-		-- else
-		-- self.Icon:SetAtlas("common-dropdown-a-button-disabled", true)
-		-- end
-	end
-	local function OnEnter(self, tooltipFunc)
-		self.over = true
-		self.tooltip = tooltipFunc
-		E.func_Octo_TooltipFrame_OnEnter(self, { "BOTTOMLEFT", "TOPRIGHT" })
-		self:SetAlpha(1)
-		updateState(self)
-	end
-	local function OnLeave(self)
-		self.over = nil
-		self:SetAlpha(.8)
-		updateState(self)
-	end
-	local function OnShow(self)
-		self:SetAlpha(.8)
-		Octo_TooltipFrame:Hide()
-	end
-	local function OnHide(self)
-		Octo_TooltipFrame:Hide()
-	end
-	local function OnMouseDown(self)
-		self.down = true
-		self.Icon:ClearAllPoints()
-		self.Icon:SetPoint("TOPLEFT", 1, -1)
-		self.Icon:SetPoint("BOTTOMRIGHT", 1, -1)
-		updateState(self)
-	end
-	local function OnMouseUp(self)
-		self.down = nil
-		self.Icon:ClearAllPoints()
-		self.Icon:SetPoint("TOPLEFT", 0, 0)
-		self.Icon:SetPoint("BOTTOMRIGHT", 0, 0)
-		updateState(self)
-	end
-	local function OnEnable(self)
-		self.Icon:SetDesaturated()
-		updateState(self)
-	end
-	local function OnDisable(self)
-		self.Icon:SetDesaturated(true)
-		updateState(self)
-	end
-	function E.func_CreateUtilityButton(parent, texture, width, height, tooltipFunc, clickFunc, isToggle, frameName)
-		local btn = CreateFrame("BUTTON", frameName, parent)
-		btn:SetSize(width or 20, height or 20)
-		btn.Icon = btn:CreateTexture(nil, "ARTWORK")
-		btn.Icon:SetAllPoints()
-		if isToggle then
-			btn.IconBG = btn:CreateTexture(nil, "BACKGROUND")
-			btn.IconBG:SetAllPoints()
-			E.func_SetupTextureToFrame(btn.IconBG, E.ICON_SETTINGS_BACKGROUD)
-		end
-		if texture then
-			if E.func_isAtlas(texture) then
-				btn.Icon:SetAtlas(texture)
-			else
-				btn.Icon:SetTexture(texture)
-			end
-		end
-		-- Скрипты
-		btn:SetScript("OnEnter", function(self) OnEnter(self, tooltipFunc) end)
-		btn:SetScript("OnLeave", OnLeave)
-		btn:SetScript("OnShow", OnShow)
-		btn:SetScript("OnHide", OnHide)
-		btn:SetScript("OnMouseDown", OnMouseDown)
-		btn:SetScript("OnMouseUp", OnMouseUp)
-		btn:SetScript("OnEnable", OnEnable)
-		btn:SetScript("OnDisable", OnDisable)
-		btn:SetMotionScriptsWhileDisabled(true)
-		-- btn:SetCollapsesLayout(true)
-		-- Для обычных кнопок (не toggle) - сразу вешаем clickFunc
-		if not isToggle and clickFunc then
-			btn:SetScript("OnClick", function(self)
-					clickFunc(self)
-					PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-			end)
-		end
-		-- Метод для установки данных и обновления иконки (для toggle кнопок)
-		btn.SetData = function(self, targetTable, targetKey, onClickCallback)
-			self.targetTable = targetTable
-			self.targetKey = targetKey
-			local value = targetTable and targetTable[targetKey] or false
-			E.func_SetupTextureToToggleFrameWithValue(self.Icon, value)
-			self:SetScript("OnClick", function()
-					if not self.targetTable then return end
-					local newValue = not self.targetTable[self.targetKey]
-					self.targetTable[self.targetKey] = newValue
-					E.func_SetupTextureToToggleFrameWithValue(self.Icon, newValue)
-					if onClickCallback then onClickCallback() end
-					PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON)
-			end)
-		end
-		return btn, btn.Icon
-	end
-end
-----------------------------------------------------------------
 -- function E.func_CreateUtilitySlider(parent, variableKey, variableTbl, name, defaultValue, tooltip, minValue, maxValue, step)
 --     local MySlider = CreateFrame("Frame", nil, parent, "MinimalSliderWithSteppersTemplate")
 --     MySlider:SetPoint("TOPLEFT", 0, -20)
@@ -2266,12 +2157,12 @@ function E.func_CreateStandardText(parent, anchorFrame, justifyH)
 	text:SetJustifyH(justifyH or "LEFT")
 	if anchorFrame and anchorFrame ~= parent then
 		-- Текст справа от anchorFrame
-		text:SetPoint("LEFT", anchorFrame, "RIGHT", E.INDENT_TEXT, 0)
-		text:SetPoint("RIGHT", parent, "RIGHT", -E.INDENT_TEXT, 0)
+		text:SetPoint("LEFT", anchorFrame, "RIGHT") -- , E.INDENT_TEXT, 0)
+		text:SetPoint("RIGHT", parent, "RIGHT") -- , -E.INDENT_TEXT, 0)
 	else
 		-- Текст на всю ширину parent
-		text:SetPoint("LEFT", parent, "LEFT", E.INDENT_TEXT, 0)
-		text:SetPoint("RIGHT", parent, "RIGHT", -E.INDENT_TEXT, 0)
+		text:SetPoint("LEFT", parent, "LEFT") -- , E.INDENT_TEXT, 0)
+		text:SetPoint("RIGHT", parent, "RIGHT") -- , -E.INDENT_TEXT, 0)
 	end
 	return text
 end
@@ -2365,7 +2256,8 @@ function E.func_SortRecords(tbl, ...)
 					(type(b) == "number" or type(b) == "string") then
 						local r = safe_less(a, b)
 						if r ~= nil then
-							return reverse and not r or r
+							-- return reverse and not r or r
+							return r ~= reverse
 						end
 					end
 					-- иначе пропускаем правило
@@ -2460,7 +2352,28 @@ function E.func_IsSameAccount(pd)
 	return pd.REGION_NAME == E.CURRENT_REGION_NAME and pd.BattleTag == E.BattleTag
 end
 ----------------------------------------------------------------
+function E.OPDECHAT()
+	if DEFAULT_CHAT_FRAME and DEFAULT_CHAT_FRAME.historyBuffer and DEFAULT_CHAT_FRAME.historyBuffer.elements then
+		local tbl = {}
+		for k, v in ipairs(DEFAULT_CHAT_FRAME.historyBuffer.elements) do
+			local message = v.message
+			-- local timestamp = v.timestamp
+			table.insert(tbl, message)
+		end
+		opde (tbl)
+	end
+end
+-- [1] = {
+--     [1] = "838 398 INIT",
+--     [2] = "TOTAL M+: 87",
+--     [3] = "In my table: 87",
+--     [4] = "missing: 0",
+--     [5] = "MUST TO DELETE: 0",
+-- },
 ----------------------------------------------------------------
+function E.func_GetCurrentDay()
+    return tonumber(date("%d"))  -- возвращает число от 1 до 31
+end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------

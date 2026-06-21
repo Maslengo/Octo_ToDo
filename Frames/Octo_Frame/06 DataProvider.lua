@@ -174,6 +174,7 @@ function E.func_MAIN_CreateDataProvider(frame)
 	if E.displayByType then
 		-- Основной цикл:
 		for _, dataType in ipairs(E.dataDisplayOrder) do
+			-- for _, categoryKey in ipairs(E.OctoTables_Vibor) do
 			for categoryKey in next, E.OctoTables_Vibor do
 				if ExpansionToShowTBL[categoryKey] then
 					local categoryData = E.OctoTables_DataOtrisovka[categoryKey]
@@ -184,6 +185,7 @@ function E.func_MAIN_CreateDataProvider(frame)
 			end
 		end
 	else
+		-- for _, categoryKey in ipairs(E.OctoTables_Vibor) do
 		for categoryKey in next, E.OctoTables_Vibor do
 			if ExpansionToShowTBL[categoryKey] then
 				local categoryData = E.OctoTables_DataOtrisovka[categoryKey]

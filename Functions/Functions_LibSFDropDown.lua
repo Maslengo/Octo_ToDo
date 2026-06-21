@@ -256,7 +256,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 					end,
 					keepShownOnClick = true,
 					isNotRadio = true,
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 				}
 				if node.guid ~= E.curGUID then
 					item.remove = function(btn)
@@ -279,7 +279,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 							notCheckable = true,
 							keepShownOnClick = true,
 							value = children,
-							fontObject = GameTooltipText,
+							-- fontObject = GameTooltipText,
 					})
 					if childHasVisible then hasVisible = true end
 				end
@@ -291,7 +291,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 				self:ddAddSeparator(lvl)
 				self:ddAddButton({
 						text = L["Show All"],
-						fontObject = GameTooltipText,
+						-- fontObject = GameTooltipText,
 						keepShownOnClick = true,
 						notCheckable = true,
 						func = function()
@@ -307,7 +307,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 				}, lvl)
 				self:ddAddButton({
 						text = L["Hide All"],
-						fontObject = GameTooltipText,
+						-- fontObject = GameTooltipText,
 						keepShownOnClick = true,
 						notCheckable = true,
 						func = function()
@@ -359,7 +359,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		do
 			self:ddAddButton({
 					text = L["Show All"],
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					keepShownOnClick = true,
 					notCheckable = true,
 					func = function()
@@ -380,7 +380,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		do
 			self:ddAddButton({
 					text = L["Hide All"],
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					keepShownOnClick = true,
 					notCheckable = true,
 					func = function()
@@ -471,7 +471,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		do
 			if uniqueItems("BattleTag") > 1 then
 				local info = {
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					keepShownOnClick = true,
 					notCheckable = false,
 					isNotRadio = true,
@@ -482,7 +482,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 					end,
 					-- disabledFont = "Interface\\AddOns\\Octo_SharedMedia\\Media1\\font\\01 Octo (dooztr_0).TTF",
 					-- disabledFont = E.Octo_font,
-					disabledFontObject = GameTooltipText,
+					-- disabledFontObject = GameTooltipText,
 					disabled = function()
 						return E.func_CONFIG_SORTING_CUSTOM()
 					end,
@@ -500,7 +500,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		do
 			if uniqueItems("REGION_NAME") > 1 then
 				local info = {
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					keepShownOnClick = true,
 					notCheckable = false,
 					isNotRadio = true,
@@ -509,7 +509,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 						return E.func_CONFIG_SORTING_CUSTOM()
 						and (E.COLOR_GRAY .. label .. "|r") or label
 					end,
-					disabledFontObject = GameTooltipText,
+					-- disabledFontObject = GameTooltipText,
 					disabled = function()
 						return E.func_CONFIG_SORTING_CUSTOM()
 					end,
@@ -527,7 +527,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		do
 			if uniqueItems("curServer") > 1 then
 				local info = {
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					keepShownOnClick = true,
 					notCheckable = false,
 					isNotRadio = true,
@@ -536,7 +536,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 						return E.func_CONFIG_SORTING_CUSTOM()
 						and (E.COLOR_GRAY .. label .. "|r") or label
 					end,
-					disabledFontObject = GameTooltipText,
+					-- disabledFontObject = GameTooltipText,
 					disabled = function()
 						return E.func_CONFIG_SORTING_CUSTOM()
 					end,
@@ -554,7 +554,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		do
 			if uniqueItems("FACTION") > 1 then
 				local info = {
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					keepShownOnClick = true,
 					notCheckable = false,
 					isNotRadio = true,
@@ -563,7 +563,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 						return E.func_CONFIG_SORTING_CUSTOM()
 						and (E.COLOR_GRAY .. label .. "|r") or label
 					end,
-					disabledFontObject = GameTooltipText,
+					-- disabledFontObject = GameTooltipText,
 					disabled = function()
 						return E.func_CONFIG_SORTING_CUSTOM()
 					end,
@@ -580,7 +580,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		----------------------------------------------------------------
 		do
 			local info = {
-				fontObject = GameTooltipText,
+				-- fontObject = GameTooltipText,
 				keepShownOnClick = true,
 				notCheckable = false,
 				isNotRadio = true,
@@ -589,7 +589,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 					return E.func_CONFIG_SORTING_CUSTOM()
 					and (E.COLOR_GRAY .. label .. "|r") or label
 				end,
-				disabledFontObject = GameTooltipText,
+				-- disabledFontObject = GameTooltipText,
 				disabled = function()
 					return E.func_CONFIG_SORTING_CUSTOM()
 				end,
@@ -605,7 +605,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 		----------------------------------------------------------------
 		do
 			local info = {
-				fontObject = GameTooltipText,
+				-- fontObject = GameTooltipText,
 				keepShownOnClick = true,
 				notCheckable = false,
 				isNotRadio = true,
@@ -662,7 +662,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 			----------------------------------------------------------------
 			self:ddAddButton({
 					text = L["Profiles"],
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 					hasArrowUp = true,
 					keepShownOnClick = true,
 					notCheckable = true,
@@ -676,7 +676,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 						for _, profileName in ipairs(profileNames) do
 							local info = {
 								text = (profileName == E.TEXT_ENG_DEFAULT) and L["DEFAULT"] or profileName,
-								fontObject = GameTooltipText,
+								-- fontObject = GameTooltipText,
 								keepShownOnClick = true,
 								notCheckable = false,
 								isNotRadio = false,
@@ -803,7 +803,10 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 											if providerfunc then providerfunc() end
 											E.func_UpdateGlobals()
 											E.func_PrintMessage(L["Profile reset to default"])
-											subself:ddCloseMenus()
+											-- subself:ddCloseMenus()
+											for i = lvl, lvl + 3 do DropDown:ddRefresh(i) end
+											-- DropDown:ddReopenMenu(sublvl)
+											DropDown:ddReopenAllMenus(1, sublvl)
 										end,
 										OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
 									},
@@ -867,16 +870,24 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 						subself:ddAddButton({ list = sublist, listMaxSize = E.LIST_MAX_SIZE, autoFocus = E.AUTO_FOCUS }, sublvl)
 						subself:ddAddSeparator(sublvl)
 						subself:ddAddButton({
-								text = L["NEW"], fontObject = GameTooltipText,
-								keepShownOnClick = false, notCheckable = true,
+								text = L["NEW"],
+								-- fontObject = GameTooltipText,
+								keepShownOnClick = false,
+								notCheckable = true,
 								func = function() createNewProfile(false) end,
 						}, sublvl)
+						----------------------------------------------------------------
+						----------------------------------------------------------------
+						----------------------------------------------------------------
 						subself:ddAddButton({
-								text = L["Copy current"], fontObject = GameTooltipText,
-								keepShownOnClick = false, notCheckable = true,
+								text = L["Copy current"],
+								-- fontObject = GameTooltipText,
+								keepShownOnClick = true,
+								notCheckable = true,
 								disabled = not db.CURRENT or not profiles[db.CURRENT],
 								func = function() createNewProfile(true) end,
 						}, sublvl)
+						----------------------------------------------------------------
 					end,
 			}, lvl)
 		end
@@ -912,37 +923,37 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 		return GetCurrentExpansionTBL()[menuButton.value]
 	end
 	for expansionID, v in next, (E.OctoTables_Vibor) do
-		table_insert(list, {
-				text = v.name,
-				fontObject = GameTooltipText,
-				value = expansionID,
-				icon = v.icon,
-				iconInfo = commonIconInfo,
-				keepShownOnClick = true,
-				notCheckable = false,
-				isNotRadio = true,
-				func = func_Myfunc,
-				checked = func_checked,
-				widgets = {
-					{
-						icon = "interface/worldmap/worldmappartyicon",
-						width = 16, height = 16,
-						OnClick = function(widget)
-							local tbl = GetCurrentExpansionTBL()
-							E.sound_OnClick()
-							for eid in next, (E.OctoTables_Vibor) do
-								tbl[eid] = false
-							end
-							tbl[expansionID] = true
-							providerfunc()
-							DropDown:ddRefresh(level)
-						end,
-						OnTooltipShow = function(btn, tooltip)
-							tooltip:AddLine(L["Select only this expansion"])
-						end,
-					}
-				}
-		})
+		local info = {}
+		info.text = v.name
+		-- info.fontObject = GameTooltipText
+		info.value = expansionID
+		info.icon = v.icon
+		info.iconInfo = commonIconInfo
+		info.keepShownOnClick = true
+		info.notCheckable = false
+		info.isNotRadio = true
+		info.func = func_Myfunc
+		info.checked = func_checked
+		info.widgets = {
+			{
+				icon = "interface/worldmap/worldmappartyicon",
+				width = 16, height = 16,
+				OnClick = function(widget)
+					local tbl = GetCurrentExpansionTBL()
+					E.sound_OnClick()
+					for eid in next, (E.OctoTables_Vibor) do
+						tbl[eid] = false
+					end
+					tbl[expansionID] = true
+					providerfunc()
+					DropDown:ddRefresh(level)
+				end,
+				OnTooltipShow = function(btn, tooltip)
+					tooltip:AddLine(L["Select only this expansion"])
+				end,
+			}
+		}
+		table_insert(list, info)
 	end
 	return function(self, lvl)
 		----------------------------------------------------------------
@@ -964,12 +975,14 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 		----------------------------------------------------------------
 		self:ddAddButton({
 				text = L["Show All"],
-				fontObject = GameTooltipText,
+				-- fontObject = GameTooltipText,
 				keepShownOnClick = true,
 				notCheckable = true,
 				func = function()
 					local tbl = GetCurrentExpansionTBL()
-					for eid in next, (E.OctoTables_Vibor) do tbl[eid] = true end
+					for eid in next, (E.OctoTables_Vibor) do
+						tbl[eid] = true
+					end
 					E.sound_OnClick()
 					providerfunc()
 					self:ddRefresh(lvl)
@@ -980,12 +993,14 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 		----------------------------------------------------------------
 		self:ddAddButton({
 				text = L["Hide All"],
-				fontObject = GameTooltipText,
+				-- fontObject = GameTooltipText,
 				keepShownOnClick = true,
 				notCheckable = true,
 				func = function()
 					local tbl = GetCurrentExpansionTBL()
-					for eid in next, (E.OctoTables_Vibor) do tbl[eid] = false end
+					for eid in next, (E.OctoTables_Vibor) do
+						tbl[eid] = false
+					end
 					E.sound_OnClick()
 					providerfunc()
 					self:ddRefresh(lvl)
@@ -1000,7 +1015,7 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 		----------------------------------------------------------------
 		self:ddAddButton({
 				text = L["Profiles"],
-				fontObject = GameTooltipText,
+				-- fontObject = GameTooltipText,
 				hasArrowUp = true,
 				keepShownOnClick = true,
 				notCheckable = true,
@@ -1014,7 +1029,7 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 					for _, profileName in ipairs(profileNames) do
 						local info = {
 							text = (profileName == E.TEXT_ENG_DEFAULT) and L["DEFAULT"] or profileName,
-							fontObject = GameTooltipText,
+							-- fontObject = GameTooltipText,
 							keepShownOnClick = true,
 							notCheckable = false,
 							isNotRadio = false,
@@ -1119,7 +1134,10 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 										if providerfunc then providerfunc() end
 										E.func_UpdateGlobals()
 										E.func_PrintMessage(L["Profile reset to default"])
-										subself:ddCloseMenus()
+										-- subself:ddCloseMenus()
+										for i = lvl, lvl + 3 do DropDown:ddRefresh(i) end
+										-- DropDown:ddReopenMenu(sublvl)
+										DropDown:ddReopenAllMenus(1, sublvl)
 									end,
 									OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
 								},
@@ -1181,15 +1199,15 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 					subself:ddAddSeparator(sublvl)
 					subself:ddAddButton({
 							text = L["NEW"],
-							fontObject = GameTooltipText,
+							-- fontObject = GameTooltipText,
 							keepShownOnClick = false,
 							notCheckable = true,
 							func = function() createNewProfile(false) end,
 					}, sublvl)
 					subself:ddAddButton({
 							text = L["Copy current"],
-							fontObject = GameTooltipText,
-							keepShownOnClick = false,
+							-- fontObject = GameTooltipText,
+							keepShownOnClick = true,
 							notCheckable = true,
 							disabled = not db.CURRENT or not profiles[db.CURRENT],
 							func = function() createNewProfile(true) end,
@@ -1205,14 +1223,13 @@ end
 function E.build_color_profiles_menu(providerfunc, DropDown, level)
 	local db = Octo_Todo_DB_Profiles and Octo_Todo_DB_Profiles.SETTINGS
 	local profilesALL = E.func_GetProfile_SETTINGS_ALL()
-
 	----------------------------------------------------------------
 	-- Единая функция для тоглов / цвета / тогл+цвет ----------------
 	----------------------------------------------------------------
 	local function addToggleButton_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
 		local info = {}
 		info.text = name
-		info.fontObject = GameTooltipText
+		-- info.fontObject = GameTooltipText
 		info.keepShownOnClick = true
 		if variableKey then
 			info.isNotRadio = true
@@ -1231,44 +1248,64 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 		local hasDefault = type(defaultTbl) == "table"
 		if hasDefault then
 			info.widgets = {{
-				icon = "talents-button-undo",
-				width = 16,
-				height = 16,
-				OnClick = function()
-					local dialogName = "OCTO_RESET_DEFAULT_" .. (variableKey or "color")
-					StaticPopupDialogs[dialogName] = {
-						text = L["Are you sure you want to reset to default?"] or "Reset to default?",
-						button1 = YES,
-						button2 = NO,
-						OnAccept = function()
-							if variableKey then
-								variableTbl[variableKey] = defaultTbl[variableKey]
+					icon = "talents-button-undo",
+					width = 16,
+					height = 16,
+					OnClick = function()
+						if variableKey then
+							variableTbl[variableKey] = defaultTbl[variableKey]
+						end
+						if variableKey_r and variableKey_g and variableKey_b then
+							variableTbl[variableKey_r] = defaultTbl[variableKey_r]
+							variableTbl[variableKey_g] = defaultTbl[variableKey_g]
+							variableTbl[variableKey_b] = defaultTbl[variableKey_b]
+							if variableKey_a then
+								variableTbl[variableKey_a] = defaultTbl[variableKey_a]
 							end
-							if variableKey_r and variableKey_g and variableKey_b then
-								variableTbl[variableKey_r] = defaultTbl[variableKey_r]
-								variableTbl[variableKey_g] = defaultTbl[variableKey_g]
-								variableTbl[variableKey_b] = defaultTbl[variableKey_b]
-								if variableKey_a then
-									variableTbl[variableKey_a] = defaultTbl[variableKey_a]
-								end
-							end
-							providerfunc()
-							E.func_UpdateGlobals()
-							for i = level, level + 3 do
-								DropDown:ddRefresh(i)
-							end
-						end,
-						timeout = 0,
-						whileDead = true,
-						hideOnEscape = true,
-						preferredIndex = 3,
-					}
-					StaticPopup_Show(dialogName)
-					subself:ddCloseMenus()
-				end,
-				OnTooltipShow = function(_, tooltipFrame)
-					tooltipFrame:AddLine(L["Reset to default"] or "Reset to default")
-				end,
+						end
+						providerfunc()
+						E.func_UpdateGlobals()
+						-- for i = level, level + 3 do
+						--     DropDown:ddRefresh(i)
+						-- end
+						-- DropDown:ddReopenMenu(sublvl)
+						DropDown:ddReopenAllMenus(1, sublvl)
+					end,
+					-- OnClick = function()
+					--     local dialogName = "OCTO_RESET_DEFAULT_" .. (variableKey or "color")
+					--     StaticPopupDialogs[dialogName] = {
+					--         text = L["Are you sure you want to reset to default?"] or "Reset to default?",
+					--         button1 = YES,
+					--         button2 = NO,
+					--         OnAccept = function()
+					--             if variableKey then
+					--                 variableTbl[variableKey] = defaultTbl[variableKey]
+					--             end
+					--             if variableKey_r and variableKey_g and variableKey_b then
+					--                 variableTbl[variableKey_r] = defaultTbl[variableKey_r]
+					--                 variableTbl[variableKey_g] = defaultTbl[variableKey_g]
+					--                 variableTbl[variableKey_b] = defaultTbl[variableKey_b]
+					--                 if variableKey_a then
+					--                     variableTbl[variableKey_a] = defaultTbl[variableKey_a]
+					--                 end
+					--             end
+					--             providerfunc()
+					--             E.func_UpdateGlobals()
+					--             for i = level, level + 3 do
+					--                 DropDown:ddRefresh(i)
+					--             end
+					--         end,
+					--         timeout = 0,
+					--         whileDead = true,
+					--         hideOnEscape = true,
+					--         preferredIndex = 3,
+					--     }
+					--     StaticPopup_Show(dialogName)
+					--     subself:ddCloseMenus()
+					-- end,
+					OnTooltipShow = function(_, tooltipFrame)
+						tooltipFrame:AddLine(L["Reset to default"] or "Reset to default")
+					end,
 			}}
 		end
 		if variableKey_r and variableKey_g and variableKey_b then
@@ -1315,12 +1352,10 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 		end
 		subself:ddAddButton(info, sublvl)
 	end
-
 	-- Функция для радио-кнопок (выбор одного значения из группы)
-	local function addToggleButtonClosureSIMPLE(subself, sublvl, name, variableTbl, variableKey, btnValue)
+	local function addToggleButtonClosureSIMPLE(subself, sublvl, name, variableTbl, variableKey, btnValue, defaultTbl)
 		local info = {}
 		info.text = name
-		info.fontObject = GameTooltipText
 		info.keepShownOnClick = true
 		info.notCheckable = false
 		info.isNotRadio = false
@@ -1334,91 +1369,127 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 			subself:ddRefresh(sublvl)
 			DropDown:ddRefresh(level)
 		end
+		-- Виджет сброса к дефолтному значению
+		if type(defaultTbl) == "table" then
+			info.widgets = {{
+					icon = "talents-button-undo",
+					width = 16, height = 16,
+					OnClick = function()
+						variableTbl[variableKey] = defaultTbl[variableKey]
+						providerfunc()
+						E.func_UpdateGlobals()
+						DropDown:ddReopenAllMenus(1, sublvl)
+					end,
+					OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Reset to default"] or "Reset to default") end,
+			}}
+		end
 		subself:ddAddButton(info, sublvl)
 	end
 	-- Функция для радио-кнопки, которая при значении 0 показывает цветовой квадрат
 	local function addRadioWithColor(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
-	    local info = {}
-	    info.text = name
-	    info.fontObject = GameTooltipText
-	    info.keepShownOnClick = true
-	    info.notCheckable = false
-	    info.isNotRadio = false           -- радио (круглая точка)
-	    info.value = btnValue
-	    info.checked = function(btn)
-	        return variableTbl[variableKey] == btnValue
-	    end
-	    info.func = function(btn, _, _, checked)
-	        variableTbl[variableKey] = btnValue
-	        providerfunc()
-	        subself:ddRefresh(sublvl)
-	        DropDown:ddRefresh(level)
-	    end
-
-	    -- Цветовой квадрат, если это CUSTOM (btnValue == 0) и переданы ключи цвета
-	    if btnValue == 0 and variableKey_r and variableKey_g and variableKey_b then
-	        local oldR = variableTbl[variableKey_r]
-	        local oldG = variableTbl[variableKey_g]
-	        local oldB = variableTbl[variableKey_b]
-	        local oldA = variableKey_a and variableTbl[variableKey_a]
-	        local hasAlpha = variableKey_a ~= nil
-
-	        local function Refresh()
-	            providerfunc()
-	            subself:ddRefresh(sublvl)
-	            DropDown:ddRefresh(level)
-	        end
-
-	        local function ApplyColor()
-	            local r, g, b = ColorPickerFrame:GetColorRGB()
-	            variableTbl[variableKey_r] = r
-	            variableTbl[variableKey_g] = g
-	            variableTbl[variableKey_b] = b
-	            if hasAlpha then variableTbl[variableKey_a] = ColorPickerFrame:GetColorAlpha() end
-	            Refresh()
-	        end
-
-	        info.hasColorSwatch = true
-	        info.r = oldR
-	        info.g = oldG
-	        info.b = oldB
-	        info.hasOpacity = hasAlpha
-	        info.opacity = oldA
-	        info.swatchFunc = ApplyColor
-	        if hasAlpha then info.opacityFunc = ApplyColor end
-	        info.cancelFunc = function()
-	            variableTbl[variableKey_r] = oldR
-	            variableTbl[variableKey_g] = oldG
-	            variableTbl[variableKey_b] = oldB
-	            if hasAlpha then variableTbl[variableKey_a] = oldA end
-	            Refresh()
-	        end
-	    end
-
-	    subself:ddAddButton(info, sublvl)
+		local info = {}
+		info.text = name
+		info.keepShownOnClick = true
+		info.notCheckable = false
+		info.isNotRadio = false
+		info.value = btnValue
+		info.checked = function(btn)
+			return variableTbl[variableKey] == btnValue
+		end
+		info.func = function(btn, _, _, checked)
+			variableTbl[variableKey] = btnValue
+			providerfunc()
+			subself:ddRefresh(sublvl)
+			DropDown:ddRefresh(level)
+		end
+		-- Цветовой квадрат для CUSTOM (btnValue == 0)
+		if btnValue == 0 and variableKey_r and variableKey_g and variableKey_b then
+			local oldR = variableTbl[variableKey_r]
+			local oldG = variableTbl[variableKey_g]
+			local oldB = variableTbl[variableKey_b]
+			local oldA = variableKey_a and variableTbl[variableKey_a]
+			local hasAlpha = variableKey_a ~= nil
+			local function Refresh()
+				providerfunc()
+				subself:ddRefresh(sublvl)
+				DropDown:ddRefresh(level)
+			end
+			local function ApplyColor()
+				local r, g, b = ColorPickerFrame:GetColorRGB()
+				variableTbl[variableKey_r] = r
+				variableTbl[variableKey_g] = g
+				variableTbl[variableKey_b] = b
+				if hasAlpha then variableTbl[variableKey_a] = ColorPickerFrame:GetColorAlpha() end
+				Refresh()
+			end
+			info.hasColorSwatch = true
+			info.r = oldR
+			info.g = oldG
+			info.b = oldB
+			info.hasOpacity = hasAlpha
+			info.opacity = oldA
+			info.swatchFunc = ApplyColor
+			if hasAlpha then info.opacityFunc = ApplyColor end
+			info.cancelFunc = function()
+				variableTbl[variableKey_r] = oldR
+				variableTbl[variableKey_g] = oldG
+				variableTbl[variableKey_b] = oldB
+				if hasAlpha then variableTbl[variableKey_a] = oldA end
+				Refresh()
+			end
+		end
+		-- Виджет сброса
+		if type(defaultTbl) == "table" then
+			info.widgets = {{
+					icon = "talents-button-undo",
+					width = 16, height = 16,
+					OnClick = function()
+						-- сброс основного ключа
+						variableTbl[variableKey] = defaultTbl[variableKey]
+						-- сброс цветовых ключей, если они есть
+						if variableKey_r then variableTbl[variableKey_r] = defaultTbl[variableKey_r] end
+						if variableKey_g then variableTbl[variableKey_g] = defaultTbl[variableKey_g] end
+						if variableKey_b then variableTbl[variableKey_b] = defaultTbl[variableKey_b] end
+						if variableKey_a then variableTbl[variableKey_a] = defaultTbl[variableKey_a] end
+						providerfunc()
+						E.func_UpdateGlobals()
+						DropDown:ddReopenAllMenus(1, sublvl)
+					end,
+					OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Reset to default"] or "Reset to default") end,
+			}}
+		end
+		subself:ddAddButton(info, sublvl)
 	end
 	-- Слайдер
-	local function addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step)
-		local slider = CreateFrame("FRAME", nil, subself, "OctoSliderFrameTemplate")
+	local function addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable) -- variable больше не нужен, но оставим для обратной совместимости
+		local slider = E.SLIDER_CHACHE[variableKey]
+		if not slider then
+			slider = CreateFrame("FRAME", nil, subself, "OctoSliderFrameTemplate")
+			E.SLIDER_CHACHE[variableKey] = slider
+		end
 		slider:setText(name)
 		slider:setMinMax(minValue, maxValue)
 		slider:setStep(step)
-		slider:setValue(variableTbl[variableKey] or (defaultTbl and defaultTbl[variableKey]) or minValue)
+		local currentValue = variableTbl[variableKey] or (defaultTbl and defaultTbl[variableKey]) or minValue
+		slider:setValue(currentValue)
 		slider:setOnChanged(function(sldr, value)
-				variableTbl[variableKey] = math.floor(value)
-				E.sound_OnClick()
-				providerfunc()
-				E.func_UpdateFont()
-				subself:ddRefresh(sublvl)
+				local newValue = math.floor(value / step + 0.5) * step
+				if newValue ~= (variableTbl[variableKey] or minValue) then  -- сравниваем с актуальным значением в таблице
+					variableTbl[variableKey] = newValue
+					E.sound_OnClick()
+					providerfunc()
+					E.func_UpdateFont()
+					subself:ddRefresh(sublvl)
+				end
 		end)
 		local info = {}
 		info.customFrame = slider
 		info.fixedWidth = true
 		info.notCheckable = true
-		local hasDefault = type(defaultTbl) == "table"
-		if hasDefault then
+		if type(defaultTbl) == "table" then
 			info.widgets = {{
-					icon = "talents-button-undo", width = 16, height = 16,
+					icon = "talents-button-undo",
+					width = 16, height = 16,
 					OnClick = function()
 						local dialogName = "OCTO_RESET_ADDON_" .. variableKey
 						StaticPopupDialogs[dialogName] = {
@@ -1443,12 +1514,11 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 		end
 		subself:ddAddButton(info, sublvl)
 	end
-
 	-- Выпадающий список
 	local function addDropdown_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, values)
 		local info = {}
 		info.text = name
-		info.fontObject = GameTooltipText
+		-- info.fontObject = GameTooltipText
 		info.hasArrowUp = true
 		info.keepShownOnClick = true
 		info.notCheckable = true
@@ -1457,7 +1527,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 			for _, v in ipairs(values) do
 				local subInfo = {}
 				subInfo.text = v.text
-				subInfo.fontObject = GameTooltipText
+				-- subInfo.fontObject = GameTooltipText
 				if variableKey == "Config_FontStyle" then
 					subInfo.font = v.path
 				end
@@ -1482,32 +1552,40 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 		local hasDefault = type(defaultTbl) == "table"
 		if hasDefault then
 			info.widgets = {{
-					icon = "talents-button-undo", width = 16, height = 16,
+					icon = "talents-button-undo",
+					width = 16,
+					height = 16,
 					OnClick = function()
-						local dialogName = "OCTO_RESET_ADDON_" .. variableKey
-						StaticPopupDialogs[dialogName] = {
-							text = L["Are you sure you want to reset to default?"] or "Reset to default?",
-							button1 = YES, button2 = NO,
-							OnAccept = function()
-								variableTbl[variableKey] = defaultTbl[variableKey]
-								providerfunc()
-								E.func_UpdateGlobals()
-								subself:ddRefresh(sublvl)
-							end,
-							timeout = 0,
-							whileDead = true,
-							hideOnEscape = true,
-							preferredIndex = 3,
-						}
-						StaticPopup_Show(dialogName)
-						subself:ddCloseMenus()
+						variableTbl[variableKey] = defaultTbl[variableKey]
+						providerfunc()
+						E.func_UpdateGlobals()
+						subself:ddRefresh(sublvl)
+						DropDown:ddReopenAllMenus(1, sublvl)
 					end,
+					-- OnClick = function()
+					--     local dialogName = "OCTO_RESET_ADDON_" .. variableKey
+					--     StaticPopupDialogs[dialogName] = {
+					--         text = L["Are you sure you want to reset to default?"] or "Reset to default?",
+					--         button1 = YES, button2 = NO,
+					--         OnAccept = function()
+					--             variableTbl[variableKey] = defaultTbl[variableKey]
+					--             providerfunc()
+					--             E.func_UpdateGlobals()
+					--             subself:ddRefresh(sublvl)
+					--         end,
+					--         timeout = 0,
+					--         whileDead = true,
+					--         hideOnEscape = true,
+					--         preferredIndex = 3,
+					--     }
+					--     StaticPopup_Show(dialogName)
+					--     subself:ddCloseMenus()
+					-- end,
 					OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Reset to default"] or "Reset to default") end,
 			}}
 		end
 		subself:ddAddButton(info, sublvl)
 	end
-
 	----------------------------------------------------------------
 	return function(self, lvl)
 		----------------------------------------------------------------
@@ -1516,7 +1594,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 		do
 			local list = {}
 			list.text =  L["PRIMARY"]
-			list.fontObject = GameTooltipText
+			-- list.fontObject = GameTooltipText
 			list.hasArrowUp = true
 			list.keepShownOnClick = true
 			list.notCheckable = true
@@ -1535,7 +1613,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					local name = L["Font"]
 					local variableKey = "Config_FontStyle"
 					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
-					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE.FontOption[E.curLocaleLang]
 					local values = fontValues
 					addDropdown_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, values)
 				end
@@ -1544,14 +1622,15 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local name = L["FONT_SIZE"]
+					local variable = E.func_GenerateID() -- UNIQUE ID
 					local variableKey = "Config_FontSize"
 					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
-					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE.FontOption[E.curLocaleLang]
 					local tooltip = nil
 					local minValue = 8
 					local maxValue = 32
 					local step = 1
-					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step)
+					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
 				end
 				----------------------------------------------------------------
 				-- Font Flags
@@ -1560,7 +1639,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					local name = L["Font Outline"]
 					local variableKey = "Config_FontFlags"
 					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
-					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE.FontOption[E.curLocaleLang]
 					local values = {
 						{value = "", text = NPC_NAMES_DROPDOWN_NONE},
 						{value = "MONOCHROME", text = "MONOCHROME"},
@@ -1600,6 +1679,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local name = E.COLOR_RED .. ">|r" .. L["Line Height"] .. E.COLOR_RED .. "<|r"
+					local variable = E.func_GenerateID() -- UNIQUE ID
 					local variableKey = "Config_ADDON_HEIGHT"
 					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
 					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
@@ -1607,7 +1687,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					local minValue = 10
 					local maxValue = 40
 					local step = 1
-					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step)
+					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
 				end
 				----------------------------------------------------------------
 				-- Clamped To Screen
@@ -1665,6 +1745,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local name = L["Hide Delay (sec.)"]
+					local variable = E.func_GenerateID() -- UNIQUE ID
 					local variableKey = "CONFIG_HOVER_SHOW_DURATION"
 					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
 					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
@@ -1673,13 +1754,14 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					local maxValue = 10
 					if E.DEBUG then maxValue = 100 end
 					local step = 1
-					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step)
+					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
 				end
 				----------------------------------------------------------------
 				-- Alpha on hover
 				----------------------------------------------------------------
 				do
 					local name = L["Alpha"] .. " %"
+					local variable = E.func_GenerateID() -- UNIQUE ID
 					local variableKey = "CONFIG_FRAME_ALPHA_ON_HOVER"
 					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
 					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
@@ -1687,20 +1769,19 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					local minValue = 50
 					local maxValue = 100
 					local step = 1
-					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step)
+					addSlider_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
 				end
 				----------------------------------------------------------------
 			end
 			self:ddAddButton(list, lvl)
 		end
-
 		----------------------------------------------------------------
 		-- L["CURRENCY"] -----------------------------------------------
 		----------------------------------------------------------------
 		do
 			local list = {}
 			list.text = L["CURRENCY"]
-			list.fontObject = GameTooltipText
+			-- list.fontObject = GameTooltipText
 			list.hasArrowUp = true
 			list.keepShownOnClick = true
 			list.notCheckable = true
@@ -1710,7 +1791,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["Icons"] .. "|r"
@@ -1751,7 +1832,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["COLORS"] .. "|r"
@@ -1777,7 +1858,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["OTHER"] .. "|r"
@@ -1818,7 +1899,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["Tooltip"] .. "|r"
@@ -1843,14 +1924,13 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 			end
 			self:ddAddButton(list, lvl)
 		end
-
 		----------------------------------------------------------------
 		-- L["ITEMS"] -----------------------------------------------
 		----------------------------------------------------------------
 		do
 			local list = {}
 			list.text = L["ITEMS"]
-			list.fontObject = GameTooltipText
+			-- list.fontObject = GameTooltipText
 			list.hasArrowUp = true
 			list.keepShownOnClick = true
 			list.notCheckable = true
@@ -1860,7 +1940,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["Icons"] .. "|r"
@@ -1886,7 +1966,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["COLORS"] .. "|r"
@@ -1911,14 +1991,13 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 			end
 			self:ddAddButton(list, lvl)
 		end
-
 		----------------------------------------------------------------
 		-- L["REPUTATION"] -----------------------------------------------
 		----------------------------------------------------------------
 		do
 			local list = {}
 			list.text = L["REPUTATION"]
-			list.fontObject = GameTooltipText
+			-- list.fontObject = GameTooltipText
 			list.hasArrowUp = true
 			list.keepShownOnClick = true
 			list.notCheckable = true
@@ -1928,7 +2007,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["Icons"] .. "|r"
@@ -1999,7 +2078,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["PARAGON"] .. "|r"
@@ -2085,7 +2164,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["MAJOR"] .. "/" .. L["RENOWN"] .. "|r"
@@ -2171,7 +2250,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["FRIEND"] .. "|r"
@@ -2257,7 +2336,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["SIMPLE"] .. "|r"
@@ -2433,14 +2512,13 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 			end
 			self:ddAddButton(list, lvl)
 		end
-
 		----------------------------------------------------------------
 		-- L["RAIDS"] -------------------------------------------------
 		----------------------------------------------------------------
 		do
 			local list = {}
 			list.text = L["RAIDS"]
-			list.fontObject = GameTooltipText
+			-- list.fontObject = GameTooltipText
 			list.hasArrowUp = true
 			list.keepShownOnClick = true
 			list.notCheckable = true
@@ -2450,7 +2528,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["Icons"] .. "|r"
@@ -2491,7 +2569,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				----------------------------------------------------------------
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.notCheckable = true
 					info.isTitle = true
 					info.text = E.COLOR_GRAY .. L["Tooltip"] .. "|r"
@@ -2531,770 +2609,785 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 			end
 			self:ddAddButton(list, lvl)
 		end
-
 		----------------------------------------------------------------
 		-- L["COLORS"] -------------------------------------------------
 		----------------------------------------------------------------
 		do
 			self:ddAddButton({
-				text = L["COLORS"],
-				fontObject = GameTooltipText,
-				hasArrowUp = true,
-				keepShownOnClick = true,
-				notCheckable = true,
-				value = function(subself, sublvl)
-					----------------------------------------------------------------
-					-- "Основной цвет" ---------------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["Main Frame Color"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- Main Frame Color
-							----------------------------------------------------------------
-							do
-								local name = L["Main Frame Color"]
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_MAIN_MainFrame_r"
-								local variableKey_g = "ConfigColor_MAIN_MainFrame_g"
-								local variableKey_b = "ConfigColor_MAIN_MainFrame_b"
-								local variableKey_a = "ConfigColor_MAIN_MainFrame_a"
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- Tooltip Color
-							----------------------------------------------------------------
-							do
-								local name = L["Tooltip Color"]
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_TOOLTIP_TooltipFrame_r"
-								local variableKey_g = "ConfigColor_TOOLTIP_TooltipFrame_g"
-								local variableKey_b = "ConfigColor_TOOLTIP_TooltipFrame_b"
-								local variableKey_a = "ConfigColor_TOOLTIP_TooltipFrame_a"
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- Border Color
-							----------------------------------------------------------------
-							do
-								local name = L["Border Color"]
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_MAIN_Border_r"
-								local variableKey_g = "ConfigColor_MAIN_Border_g"
-								local variableKey_b = "ConfigColor_MAIN_Border_b"
-								local variableKey_a = "ConfigColor_MAIN_Border_a"
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Заголовок" -------------------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["Header Color"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- CUSTOM
-							----------------------------------------------------------------
-							do
-								local name = L["CUSTOM"]
-								local variableKey = "ConfigColor_CharHeader_TYPE"
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_CharHeader_r"
-								local variableKey_g = "ConfigColor_CharHeader_g"
-								local variableKey_b = "ConfigColor_CharHeader_b"
-								local variableKey_a = "ConfigColor_CharHeader_a"
-								local btnValue = 0
-								addRadioWithColor(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
-								-- addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["CUSTOM"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharHeader_TYPE", 0)
-							end
-							----------------------------------------------------------------
-							-- By Faction
-							----------------------------------------------------------------
-							do
-								addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Faction"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharHeader_TYPE", 1)
-							end
-							----------------------------------------------------------------
-							-- By Class
-							----------------------------------------------------------------
-							do
-								addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Class"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharHeader_TYPE", 2)
-							end
-							----------------------------------------------------------------
-							-- SLIDER
-							----------------------------------------------------------------
-							do
-								local info = {}
-								info.text = function()
-									local a = E.func_GetProfile_SETTINGS_CURRENT()["ConfigColor_CharHeader_a"] or 0.2
-									return L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] .. ": " .. string.format("%.2f", a)
+					text = L["COLORS"],
+					-- fontObject = GameTooltipText,
+					hasArrowUp = true,
+					keepShownOnClick = true,
+					notCheckable = true,
+					value = function(subself, sublvl)
+						----------------------------------------------------------------
+						-- "Основной цвет" ---------------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["Main Frame Color"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- Main Frame Color
+								----------------------------------------------------------------
+								do
+									local name = L["Main Frame Color"]
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_MAIN_MainFrame_r"
+									local variableKey_g = "ConfigColor_MAIN_MainFrame_g"
+									local variableKey_b = "ConfigColor_MAIN_MainFrame_b"
+									local variableKey_a = "ConfigColor_MAIN_MainFrame_a"
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
 								end
-								info.fontObject = GameTooltipText
-								info.disabled = true
-								info.notCheckable = true
-								info.keepShownOnClick = true
-								subsubself:ddAddButton(info, subsublvl)
-							end
-							----------------------------------------------------------------
-						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Цвет подсветки персонажа" ----------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["Character Highlight Color"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- CUSTOM
-							----------------------------------------------------------------
-							do
-							    local name = L["CUSTOM"]
-							    local variableKey = "ConfigColor_CharLines_TYPE"
-							    local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-							    local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-							    local tooltip = nil
-							    local variableKey_r = "ConfigColor_CharLines_r"
-							    local variableKey_g = "ConfigColor_CharLines_g"
-							    local variableKey_b = "ConfigColor_CharLines_b"
-							    local variableKey_a = "ConfigColor_CharLines_a"
-							    local btnValue = 0
-							    addRadioWithColor(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
-							end
-							----------------------------------------------------------------
-							-- By Faction
-							----------------------------------------------------------------
-							do
-								addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Faction"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharLines_TYPE", 1)
-							end
-							----------------------------------------------------------------
-							-- By Class
-							----------------------------------------------------------------
-							do
-								addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Class"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharLines_TYPE", 2)
-							end
-							----------------------------------------------------------------
-							-- SLIDER
-							----------------------------------------------------------------
-							do
-								local info = {}
-								info.text = function()
-									local a = E.func_GetProfile_SETTINGS_CURRENT()["ConfigColor_CharLines_a"] or 0.2
-									return L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] .. ": " .. string.format("%.2f", a)
+								----------------------------------------------------------------
+								-- Tooltip Color
+								----------------------------------------------------------------
+								do
+									local name = L["Tooltip Color"]
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_TOOLTIP_TooltipFrame_r"
+									local variableKey_g = "ConfigColor_TOOLTIP_TooltipFrame_g"
+									local variableKey_b = "ConfigColor_TOOLTIP_TooltipFrame_b"
+									local variableKey_a = "ConfigColor_TOOLTIP_TooltipFrame_a"
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
 								end
-								info.fontObject = GameTooltipText
-								info.disabled = true
-								info.notCheckable = true
-								info.keepShownOnClick = true
-								subsubself:ddAddButton(info, subsublvl)
-							end
-							----------------------------------------------------------------
-						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Цвет подсветки строки" -------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["Row Highlight Color"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- CUSTOM
-							----------------------------------------------------------------
-							do
-							    local name = L["CUSTOM"]
-							    local variableKey = "ConfigColor_Highlight_TYPE"
-							    local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-							    local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-							    local tooltip = nil
-							    local variableKey_r = "ConfigColor_Highlight_r"
-							    local variableKey_g = "ConfigColor_Highlight_g"
-							    local variableKey_b = "ConfigColor_Highlight_b"
-							    local variableKey_a = "ConfigColor_Highlight_a"
-							    local btnValue = 0
-							    addRadioWithColor(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
-							end
-							----------------------------------------------------------------
-							-- By Faction
-							----------------------------------------------------------------
-							do
-								addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Faction"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_Highlight_TYPE", 1)
-							end
-							----------------------------------------------------------------
-							-- By Class
-							----------------------------------------------------------------
-							do
-								addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Class"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_Highlight_TYPE", 2)
-							end
-							----------------------------------------------------------------
-							-- SLIDER
-							----------------------------------------------------------------
-							do
-								local info = {}
-								info.text = function()
-									local a = E.func_GetProfile_SETTINGS_CURRENT()["ConfigColor_Highlight_a"] or 0.2
-									return L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] .. ": " .. string.format("%.2f", a)
+								----------------------------------------------------------------
+								-- Border Color
+								----------------------------------------------------------------
+								do
+									local name = L["Border Color"]
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_MAIN_Border_r"
+									local variableKey_g = "ConfigColor_MAIN_Border_g"
+									local variableKey_b = "ConfigColor_MAIN_Border_b"
+									local variableKey_a = "ConfigColor_MAIN_Border_a"
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
 								end
-								info.fontObject = GameTooltipText
-								info.disabled = true
-								info.notCheckable = true
-								info.keepShownOnClick = true
-								subsubself:ddAddButton(info, subsublvl)
+								----------------------------------------------------------------
 							end
-							----------------------------------------------------------------
-							-- SEPARATOR
-							----------------------------------------------------------------
-							do
-								subsubself:ddAddSeparator(subsublvl)
-							end
-							----------------------------------------------------------------
-							-- Smooth Animation
-							----------------------------------------------------------------
-							do
-								local name = L["Smooth Animation"]
-								local variableKey = "ConfigColor_ENABLE_HIGHLIGHT_ANIMATION"
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = nil
-								local variableKey_g = nil
-								local variableKey_b = nil
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
+							subself:ddAddButton(list, sublvl)
 						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Чередование цветов" ----------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["Alternating Colors"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
-							local values = {}
-							for _, v in ipairs(E.ZEBRA_MODE) do
-								table_insert(values, {
-									text = v.text,
-									fontObject = GameTooltipText,
-									keepShownOnClick = true,
-									notCheckable = false,
-									isNotRadio = false,
-									value = v.value,
-									checked = function() return settingsProfile["CONFIG_ZEBRA_MODE"] == v.value end,
-									func = function(btn)
-										settingsProfile["CONFIG_ZEBRA_MODE"] = btn.value
-										providerfunc()
-										subsubself:ddRefresh(subsublvl)
-										DropDown:ddRefresh(level)
-									end,
-								})
+						----------------------------------------------------------------
+						-- "Заголовок" -------------------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["Header Color"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- CUSTOM
+								----------------------------------------------------------------
+								do
+									local name = L["CUSTOM"]
+									local variableKey = "ConfigColor_CharHeader_TYPE"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_CharHeader_r"
+									local variableKey_g = "ConfigColor_CharHeader_g"
+									local variableKey_b = "ConfigColor_CharHeader_b"
+									local variableKey_a = "ConfigColor_CharHeader_a"
+									local btnValue = 0
+									addRadioWithColor(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
+								end
+								----------------------------------------------------------------
+								-- By Faction
+								----------------------------------------------------------------
+								do
+									addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Faction"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharHeader_TYPE", 1, E.DEFAULT_SETTINGS_FORPROFILE)
+								end
+								----------------------------------------------------------------
+								-- By Class
+								----------------------------------------------------------------
+								do
+									addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Class"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharHeader_TYPE", 2, E.DEFAULT_SETTINGS_FORPROFILE)
+								end
+								----------------------------------------------------------------
+								-- SLIDER
+								----------------------------------------------------------------
+								do
+									-- /dump E.func_GetProfile_SETTINGS_CURRENT().ConfigColor_CharHeader_a
+									local name = L["Alpha"] .. " %"
+									local variable = E.func_GenerateID() -- UNIQUE ID
+									local variableKey = "ConfigColor_CharHeader_a"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local minValue = 0
+									local maxValue = 1
+									local step = .1
+									addSlider_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
+								end
+								----------------------------------------------------------------
 							end
-							subsubself:ddAddButton({ list = values, listMaxSize = E.LIST_MAX_SIZE, autoFocus = E.AUTO_FOCUS }, subsublvl)
-							----------------------------------------------------------------
-							-- COLOR
-							----------------------------------------------------------------
-							do
-								local name = L["COLOR"]
-								local variableKey = nil
-								local variableTbl = settingsProfile
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_ZEBRA_RGBA_r"
-								local variableKey_g = "ConfigColor_ZEBRA_RGBA_g"
-								local variableKey_b = "ConfigColor_ZEBRA_RGBA_b"
-								local variableKey_a = "ConfigColor_ZEBRA_RGBA_a"
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
+							subself:ddAddButton(list, sublvl)
 						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Градиент" --------------------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["Gradient"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- Gradient toggle
-							----------------------------------------------------------------
-							do
-								local name = L["Gradient"]
-								local variableKey = "ConfigColor_TOOLTIP_usegradient"
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = nil
-								local variableKey_g = nil
-								local variableKey_b = nil
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+						----------------------------------------------------------------
+						-- "Цвет подсветки персонажа" ----------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["Character Highlight Color"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- CUSTOM
+								----------------------------------------------------------------
+								do
+									local name = L["CUSTOM"]
+									local variableKey = "ConfigColor_CharLines_TYPE"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_CharLines_r"
+									local variableKey_g = "ConfigColor_CharLines_g"
+									local variableKey_b = "ConfigColor_CharLines_b"
+									local variableKey_a = "ConfigColor_CharLines_a"
+									local btnValue = 0
+									addRadioWithColor(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
+								end
+								----------------------------------------------------------------
+								-- By Faction
+								----------------------------------------------------------------
+								do
+									addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Faction"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharLines_TYPE", 1, E.DEFAULT_SETTINGS_FORPROFILE)
+								end
+								----------------------------------------------------------------
+								-- By Class
+								----------------------------------------------------------------
+								do
+									addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Class"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_CharLines_TYPE", 2, E.DEFAULT_SETTINGS_FORPROFILE)
+								end
+								----------------------------------------------------------------
+								-- SLIDER
+								----------------------------------------------------------------
+								do
+									-- /dump E.func_GetProfile_SETTINGS_CURRENT().ConfigColor_CharLines_a
+									local name = L["Alpha"] .. " %"
+									local variable = E.func_GenerateID() -- UNIQUE ID
+									local variableKey = "ConfigColor_CharLines_a"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local minValue = 0
+									local maxValue = 1
+									local step = .1
+									addSlider_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
+									-- local info = {}
+									-- info.text = function()
+									--     local a = E.func_GetProfile_SETTINGS_CURRENT()["ConfigColor_CharLines_a"] or 0.2
+									--     return L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] .. ": " .. string.format("%.2f", a)
+									-- end
+									-- -- info.fontObject = GameTooltipText
+									-- info.disabled = true
+									-- info.notCheckable = true
+									-- info.keepShownOnClick = true
+									-- subsubself:ddAddButton(info, subsublvl)
+								end
+								----------------------------------------------------------------
 							end
-							----------------------------------------------------------------
-							-- max
-							----------------------------------------------------------------
-							do
-								local name = "max"
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_TOOLTIP_max_RGBA_r"
-								local variableKey_g = "ConfigColor_TOOLTIP_max_RGBA_g"
-								local variableKey_b = "ConfigColor_TOOLTIP_max_RGBA_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- mid
-							----------------------------------------------------------------
-							do
-								local name = "mid"
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_TOOLTIP_mid_RGBA_r"
-								local variableKey_g = "ConfigColor_TOOLTIP_mid_RGBA_g"
-								local variableKey_b = "ConfigColor_TOOLTIP_mid_RGBA_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- min
-							----------------------------------------------------------------
-							do
-								local name = "min"
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_TOOLTIP_min_RGBA_r"
-								local variableKey_g = "ConfigColor_TOOLTIP_min_RGBA_g"
-								local variableKey_b = "ConfigColor_TOOLTIP_min_RGBA_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
+							subself:ddAddButton(list, sublvl)
 						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Фракция" ---------------------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = FACTION
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- HORDE
-							----------------------------------------------------------------
-							do
-								local name = L["FACTION_HORDE"]
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_faction_Horde_r"
-								local variableKey_g = "ConfigColor_faction_Horde_g"
-								local variableKey_b = "ConfigColor_faction_Horde_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+						----------------------------------------------------------------
+						-- "Цвет подсветки строки" -------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["Row Highlight Color"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- CUSTOM
+								----------------------------------------------------------------
+								do
+									local name = L["CUSTOM"]
+									local variableKey = "ConfigColor_Highlight_TYPE"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_Highlight_r"
+									local variableKey_g = "ConfigColor_Highlight_g"
+									local variableKey_b = "ConfigColor_Highlight_b"
+									local variableKey_a = "ConfigColor_Highlight_a"
+									local btnValue = 0
+									addRadioWithColor(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a, btnValue)
+								end
+								----------------------------------------------------------------
+								-- By Faction
+								----------------------------------------------------------------
+								do
+									addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Faction"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_Highlight_TYPE", 1, E.DEFAULT_SETTINGS_FORPROFILE)
+								end
+								----------------------------------------------------------------
+								-- By Class
+								----------------------------------------------------------------
+								do
+									addToggleButtonClosureSIMPLE(subsubself, subsublvl, L["By Class"], E.func_GetProfile_SETTINGS_CURRENT(), "ConfigColor_Highlight_TYPE", 2, E.DEFAULT_SETTINGS_FORPROFILE)
+								end
+								----------------------------------------------------------------
+								-- SLIDER
+								----------------------------------------------------------------
+								do
+									-- /dump E.func_GetProfile_SETTINGS_CURRENT().ConfigColor_Highlight_a
+									local name = L["Alpha"] .. " %"
+									local variable = E.func_GenerateID() -- UNIQUE ID
+									local variableKey = "ConfigColor_Highlight_a"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local minValue = 0
+									local maxValue = 1
+									local step = .1
+									addSlider_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, minValue, maxValue, step, variable)
+									-- local info = {}
+									-- info.text = function()
+									--     local a = E.func_GetProfile_SETTINGS_CURRENT()["ConfigColor_Highlight_a"] or 0.2
+									--     return L["CINEMATIC_SUBTITLES_BACKGROUND_OPACITY_OPTION_LABEL"] .. ": " .. string.format("%.2f", a)
+									-- end
+									-- -- info.fontObject = GameTooltipText
+									-- info.disabled = true
+									-- info.notCheckable = true
+									-- info.keepShownOnClick = true
+									-- subsubself:ddAddButton(info, subsublvl)
+								end
+								----------------------------------------------------------------
+								-- SEPARATOR
+								----------------------------------------------------------------
+								do
+									subsubself:ddAddSeparator(subsublvl)
+								end
+								----------------------------------------------------------------
+								-- Smooth Animation
+								----------------------------------------------------------------
+								do
+									local name = L["Smooth Animation"]
+									local variableKey = "ConfigColor_ENABLE_HIGHLIGHT_ANIMATION"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = nil
+									local variableKey_g = nil
+									local variableKey_b = nil
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
 							end
-							----------------------------------------------------------------
-							-- ALLIANCE
-							----------------------------------------------------------------
-							do
-								local name = L["FACTION_ALLIANCE"]
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_faction_Alliance_r"
-								local variableKey_g = "ConfigColor_faction_Alliance_g"
-								local variableKey_b = "ConfigColor_faction_Alliance_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- NEUTRAL
-							----------------------------------------------------------------
-							do
-								local name = L["FACTION_NEUTRAL"]
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_faction_Neutral_r"
-								local variableKey_g = "ConfigColor_faction_Neutral_g"
-								local variableKey_b = "ConfigColor_faction_Neutral_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
+							subself:ddAddButton(list, sublvl)
 						end
-						subself:ddAddButton(list, sublvl)
-					end
-
-					----------------------------------------------------------------
-					-- "Обитель ковенанта" -----------------------------------------
-					----------------------------------------------------------------
-					do
-						local list = {}
-						list.text = L["GARRISON_TYPE_9_0_LANDING_PAGE_TITLE"]
-						list.fontObject = GameTooltipText
-						list.hasArrowUp = true
-						list.keepShownOnClick = true
-						list.notCheckable = true
-						list.value = function(subsubself, subsublvl)
-							----------------------------------------------------------------
-							-- KYRIAN
-							----------------------------------------------------------------
-							do
-								local name = E.func_GetName("covenant", 1)
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_KYRIAN_r"
-								local variableKey_g = "ConfigColor_KYRIAN_g"
-								local variableKey_b = "ConfigColor_KYRIAN_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+						----------------------------------------------------------------
+						-- "Чередование цветов" ----------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["Alternating Colors"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+								local values = {}
+								for _, v in ipairs(E.ZEBRA_MODE) do
+									table_insert(values, {
+											text = v.text,
+											-- fontObject = GameTooltipText,
+											keepShownOnClick = true,
+											notCheckable = false,
+											isNotRadio = false,
+											value = v.value,
+											checked = function() return settingsProfile["CONFIG_ZEBRA_MODE"] == v.value end,
+											func = function(btn)
+												settingsProfile["CONFIG_ZEBRA_MODE"] = btn.value
+												providerfunc()
+												subsubself:ddRefresh(subsublvl)
+												DropDown:ddRefresh(level)
+											end,
+									})
+								end
+								subsubself:ddAddButton({ list = values, listMaxSize = E.LIST_MAX_SIZE, autoFocus = E.AUTO_FOCUS }, subsublvl)
+								----------------------------------------------------------------
+								-- COLOR
+								----------------------------------------------------------------
+								do
+									local name = L["COLOR"]
+									local variableKey = nil
+									local variableTbl = settingsProfile
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_ZEBRA_RGBA_r"
+									local variableKey_g = "ConfigColor_ZEBRA_RGBA_g"
+									local variableKey_b = "ConfigColor_ZEBRA_RGBA_b"
+									local variableKey_a = "ConfigColor_ZEBRA_RGBA_a"
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
 							end
-							----------------------------------------------------------------
-							-- VENTHYR
-							----------------------------------------------------------------
-							do
-								local name = E.func_GetName("covenant", 2)
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_VENTHYR_r"
-								local variableKey_g = "ConfigColor_VENTHYR_g"
-								local variableKey_b = "ConfigColor_VENTHYR_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- NIGHTFAE
-							----------------------------------------------------------------
-							do
-								local name = E.func_GetName("covenant", 3)
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_NIGHTFAE_r"
-								local variableKey_g = "ConfigColor_NIGHTFAE_g"
-								local variableKey_b = "ConfigColor_NIGHTFAE_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
-							-- NECROLORD
-							----------------------------------------------------------------
-							do
-								local name = E.func_GetName("covenant", 4)
-								local variableKey = nil
-								local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-								local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
-								local tooltip = nil
-								local variableKey_r = "ConfigColor_NECROLORD_r"
-								local variableKey_g = "ConfigColor_NECROLORD_g"
-								local variableKey_b = "ConfigColor_NECROLORD_b"
-								local variableKey_a = nil
-								addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
-							end
-							----------------------------------------------------------------
+							subself:ddAddButton(list, sublvl)
 						end
-						subself:ddAddButton(list, sublvl)
-					end
-					----------------------------------------------------------------
-				end,
+						----------------------------------------------------------------
+						-- "Градиент" --------------------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["Gradient"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- Gradient toggle
+								----------------------------------------------------------------
+								do
+									local name = L["Gradient"]
+									local variableKey = "ConfigColor_TOOLTIP_usegradient"
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = nil
+									local variableKey_g = nil
+									local variableKey_b = nil
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- max
+								----------------------------------------------------------------
+								do
+									local name = "max"
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_TOOLTIP_max_RGBA_r"
+									local variableKey_g = "ConfigColor_TOOLTIP_max_RGBA_g"
+									local variableKey_b = "ConfigColor_TOOLTIP_max_RGBA_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- mid
+								----------------------------------------------------------------
+								do
+									local name = "mid"
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_TOOLTIP_mid_RGBA_r"
+									local variableKey_g = "ConfigColor_TOOLTIP_mid_RGBA_g"
+									local variableKey_b = "ConfigColor_TOOLTIP_mid_RGBA_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- min
+								----------------------------------------------------------------
+								do
+									local name = "min"
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_TOOLTIP_min_RGBA_r"
+									local variableKey_g = "ConfigColor_TOOLTIP_min_RGBA_g"
+									local variableKey_b = "ConfigColor_TOOLTIP_min_RGBA_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+							end
+							subself:ddAddButton(list, sublvl)
+						end
+						----------------------------------------------------------------
+						-- "Фракция" ---------------------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = FACTION
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- HORDE
+								----------------------------------------------------------------
+								do
+									local name = L["FACTION_HORDE"]
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_faction_Horde_r"
+									local variableKey_g = "ConfigColor_faction_Horde_g"
+									local variableKey_b = "ConfigColor_faction_Horde_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- ALLIANCE
+								----------------------------------------------------------------
+								do
+									local name = L["FACTION_ALLIANCE"]
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_faction_Alliance_r"
+									local variableKey_g = "ConfigColor_faction_Alliance_g"
+									local variableKey_b = "ConfigColor_faction_Alliance_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- NEUTRAL
+								----------------------------------------------------------------
+								do
+									local name = L["FACTION_NEUTRAL"]
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_faction_Neutral_r"
+									local variableKey_g = "ConfigColor_faction_Neutral_g"
+									local variableKey_b = "ConfigColor_faction_Neutral_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+							end
+							subself:ddAddButton(list, sublvl)
+						end
+						----------------------------------------------------------------
+						-- "Обитель ковенанта" -----------------------------------------
+						----------------------------------------------------------------
+						do
+							local list = {}
+							list.text = L["GARRISON_TYPE_9_0_LANDING_PAGE_TITLE"]
+							-- list.fontObject = GameTooltipText
+							list.hasArrowUp = true
+							list.keepShownOnClick = true
+							list.notCheckable = true
+							list.value = function(subsubself, subsublvl)
+								----------------------------------------------------------------
+								-- KYRIAN
+								----------------------------------------------------------------
+								do
+									local name = E.func_GetName("covenant", 1)
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_KYRIAN_r"
+									local variableKey_g = "ConfigColor_KYRIAN_g"
+									local variableKey_b = "ConfigColor_KYRIAN_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- VENTHYR
+								----------------------------------------------------------------
+								do
+									local name = E.func_GetName("covenant", 2)
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_VENTHYR_r"
+									local variableKey_g = "ConfigColor_VENTHYR_g"
+									local variableKey_b = "ConfigColor_VENTHYR_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- NIGHTFAE
+								----------------------------------------------------------------
+								do
+									local name = E.func_GetName("covenant", 3)
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_NIGHTFAE_r"
+									local variableKey_g = "ConfigColor_NIGHTFAE_g"
+									local variableKey_b = "ConfigColor_NIGHTFAE_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+								-- NECROLORD
+								----------------------------------------------------------------
+								do
+									local name = E.func_GetName("covenant", 4)
+									local variableKey = nil
+									local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+									local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
+									local tooltip = nil
+									local variableKey_r = "ConfigColor_NECROLORD_r"
+									local variableKey_g = "ConfigColor_NECROLORD_g"
+									local variableKey_b = "ConfigColor_NECROLORD_b"
+									local variableKey_a = nil
+									addToggleButton_NEW(subsubself, subsublvl, variableKey, variableTbl, name, defaultTbl, tooltip, variableKey_r, variableKey_g, variableKey_b, variableKey_a)
+								end
+								----------------------------------------------------------------
+							end
+							subself:ddAddButton(list, sublvl)
+						end
+						----------------------------------------------------------------
+					end,
 			}, lvl)
 		end
-
 		----------------------------------------------------------------
 		-- SEPARATOR ---------------------------------------------------
 		----------------------------------------------------------------
 		do
 			self:ddAddSeparator(lvl)
 		end
-
 		----------------------------------------------------------------
 		-- L["Profiles"] -----------------------------------------------
 		----------------------------------------------------------------
 		do
 			self:ddAddButton({
-				text = L["Profiles"],
-				fontObject = GameTooltipText,
-				hasArrowUp = true,
-				keepShownOnClick = true,
-				notCheckable = true,
-				value = function(subself, sublvl)
-					local sublist = {}
-					local profileNames = {}
-					for name in next, (profilesALL) do
-						table_insert(profileNames, name)
-					end
-					E.func_SortRecords(profileNames)
-					for _, profileName in ipairs(profileNames) do
-						local info = {}
-						info.text = (profileName == E.TEXT_ENG_DEFAULT) and L["DEFAULT"] or profileName
-						info.fontObject = GameTooltipText
-						info.keepShownOnClick = true
-						info.notCheckable = false
-						info.isNotRadio = false
-						info.value = profileName
-						info.checked = function()
-							return db.CURRENT == profileName
+					text = L["Profiles"],
+					-- fontObject = GameTooltipText,
+					hasArrowUp = true,
+					keepShownOnClick = true,
+					notCheckable = true,
+					value = function(subself, sublvl)
+						local sublist = {}
+						local profileNames = {}
+						for name in next, (profilesALL) do
+							table_insert(profileNames, name)
 						end
-						info.func = function(menuButton)
-							db.CURRENT = menuButton.value
-							E.func_UpdateGlobalNSforProfiles()
-							E.sound_OnClick()
-							if providerfunc then providerfunc() end
-							for i = level, level+3 do DropDown:ddRefresh(i) end
-						end
-						if profileName ~= E.TEXT_ENG_DEFAULT then
-							info.widgets = {
-								{
-									icon = "Interface/BUTTONS/UI-GroupLoot-Pass-Up",
-									width = 16, height = 16,
-									OnClick = function()
-										local function do_remove()
-											profilesALL[profileName] = nil
-											if db.CURRENT == profileName then
-												db.CURRENT = E.TEXT_ENG_DEFAULT
+						E.func_SortRecords(profileNames)
+						for _, profileName in ipairs(profileNames) do
+							local info = {}
+							info.text = (profileName == E.TEXT_ENG_DEFAULT) and L["DEFAULT"] or profileName
+							-- info.fontObject = GameTooltipText
+							info.keepShownOnClick = true
+							info.notCheckable = false
+							info.isNotRadio = false
+							info.value = profileName
+							info.checked = function()
+								return db.CURRENT == profileName
+							end
+							info.func = function(menuButton)
+								db.CURRENT = menuButton.value
+								E.func_UpdateGlobalNSforProfiles()
+								E.sound_OnClick()
+								if providerfunc then providerfunc() end
+								for i = level, level+3 do DropDown:ddRefresh(i) end
+							end
+							if profileName ~= E.TEXT_ENG_DEFAULT then
+								info.widgets = {
+									{
+										icon = "Interface/BUTTONS/UI-GroupLoot-Pass-Up",
+										width = 16, height = 16,
+										OnClick = function()
+											local function do_remove()
+												profilesALL[profileName] = nil
+												if db.CURRENT == profileName then
+													db.CURRENT = E.TEXT_ENG_DEFAULT
+												end
+												if providerfunc then providerfunc() end
+												E.func_PrintMessage(L["Profile successfully deleted"])
 											end
+											StaticPopupDialogs["OCTO_DELETE_PROFILE_CONFIRM"] = {
+												text = string.format(L["Delete profile '%s'?"], profileName),
+												button1 = L["DELETE"], button2 = L["CANCEL"],
+												OnAccept = do_remove, timeout = 0,
+												whileDead = true, hideOnEscape = true, preferredIndex = 3,
+											}
+											StaticPopup_Show("OCTO_DELETE_PROFILE_CONFIRM")
+											subself:ddCloseMenus()
+										end,
+										OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["DELETE"], nil, nil, nil, true) end,
+									},
+									{
+										icon = "Interface\\WorldMap\\GEAR_64GREY",
+										width = 16,
+										height = 16,
+										OnClick = function()
+											StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
+												text = string.format(L["Enter new name for profile '%s':"], profileName),
+												button1 = L["Rename"], button2 = L["CANCEL"],
+												hasEditBox = true, editBoxWidth = 260, maxLetters = 30,
+												OnAccept = function(dialog)
+													local newName = dialog.EditBox:GetText():trim()
+													if newName and newName ~= "" and newName ~= profileName then
+														if profilesALL[newName] then
+															E.func_PrintMessage(L["A profile with the same name exists"])
+															return
+														end
+														profilesALL[newName] = profilesALL[profileName]
+														profilesALL[profileName] = nil
+														if db.CURRENT == profileName then
+															db.CURRENT = newName
+														end
+														if providerfunc then providerfunc() end
+														E.func_PrintMessage(L["Profile successfully renamed"])
+													end
+												end,
+												OnShow = function(dialog)
+													dialog.EditBox:SetText(profileName)
+													dialog.EditBox:SetFocus()
+													dialog.EditBox:HighlightText()
+												end,
+												EditBoxOnEnterPressed = function(editBox)
+													local dialog = editBox:GetParent()
+													local newName = editBox:GetText():trim()
+													if newName and newName ~= "" and newName ~= profileName then
+														if profilesALL[newName] then
+															E.func_PrintMessage(L["A profile with the same name exists"])
+															return
+														end
+														profilesALL[newName] = profilesALL[profileName]
+														profilesALL[profileName] = nil
+														if db.CURRENT == profileName then
+															db.CURRENT = newName
+														end
+														dialog:Hide()
+														if providerfunc then providerfunc() end
+														E.func_PrintMessage(L["Profile successfully renamed"])
+													end
+												end,
+												timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
+											}
+											StaticPopup_Show("OCTO_RENAME_PROFILE_INLINE")
+											subself:ddCloseMenus()
+										end,
+										OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Rename"], nil, nil, nil, true) end,
+									},
+								}
+							else
+								info.widgets = {
+									{
+										icon = "talents-button-undo", width = 16, height = 16,
+										OnClick = function()
+											profilesALL[E.TEXT_ENG_DEFAULT] = nil
+											E.func_CreateProfile("SETTINGS", E.TEXT_ENG_DEFAULT)
 											if providerfunc then providerfunc() end
-											E.func_PrintMessage(L["Profile successfully deleted"])
-										end
-										StaticPopupDialogs["OCTO_DELETE_PROFILE_CONFIRM"] = {
-											text = string.format(L["Delete profile '%s'?"], profileName),
-											button1 = L["DELETE"], button2 = L["CANCEL"],
-											OnAccept = do_remove, timeout = 0,
-											whileDead = true, hideOnEscape = true, preferredIndex = 3,
-										}
-										StaticPopup_Show("OCTO_DELETE_PROFILE_CONFIRM")
-										subself:ddCloseMenus()
-									end,
-									OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["DELETE"], nil, nil, nil, true) end,
-								},
-								{
-									icon = "Interface\\WorldMap\\GEAR_64GREY",
-									width = 16,
-									height = 16,
-									OnClick = function()
-										StaticPopupDialogs["OCTO_RENAME_PROFILE_INLINE"] = {
-											text = string.format(L["Enter new name for profile '%s':"], profileName),
-											button1 = L["Rename"], button2 = L["CANCEL"],
-											hasEditBox = true, editBoxWidth = 260, maxLetters = 30,
-											OnAccept = function(dialog)
-												local newName = dialog.EditBox:GetText():trim()
-												if newName and newName ~= "" and newName ~= profileName then
-													if profilesALL[newName] then
-														E.func_PrintMessage(L["A profile with the same name exists"])
-														return
-													end
-													profilesALL[newName] = profilesALL[profileName]
-													profilesALL[profileName] = nil
-													if db.CURRENT == profileName then
-														db.CURRENT = newName
-													end
-													if providerfunc then providerfunc() end
-													E.func_PrintMessage(L["Profile successfully renamed"])
-												end
-											end,
-											OnShow = function(dialog)
-												dialog.EditBox:SetText(profileName)
-												dialog.EditBox:SetFocus()
-												dialog.EditBox:HighlightText()
-											end,
-											EditBoxOnEnterPressed = function(editBox)
-												local dialog = editBox:GetParent()
-												local newName = editBox:GetText():trim()
-												if newName and newName ~= "" and newName ~= profileName then
-													if profilesALL[newName] then
-														E.func_PrintMessage(L["A profile with the same name exists"])
-														return
-													end
-													profilesALL[newName] = profilesALL[profileName]
-													profilesALL[profileName] = nil
-													if db.CURRENT == profileName then
-														db.CURRENT = newName
-													end
-													dialog:Hide()
-													if providerfunc then providerfunc() end
-													E.func_PrintMessage(L["Profile successfully renamed"])
-												end
-											end,
-											timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
-										}
-										StaticPopup_Show("OCTO_RENAME_PROFILE_INLINE")
-										subself:ddCloseMenus()
-									end,
-									OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Rename"], nil, nil, nil, true) end,
-								},
-							}
-						else
-							info.widgets = {
-								{
-									icon = "talents-button-undo", width = 16, height = 16,
-									OnClick = function()
-										profilesALL[E.TEXT_ENG_DEFAULT] = nil
-										E.func_CreateProfile("SETTINGS", E.TEXT_ENG_DEFAULT)
-										if providerfunc then providerfunc() end
-										E.func_UpdateGlobals()
-										E.func_PrintMessage(L["Profile reset to default"])
-										subself:ddCloseMenus()
-									end,
-									OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
-								},
-							}
+											E.func_UpdateGlobals()
+											E.func_PrintMessage(L["Profile reset to default"])
+											-- subself:ddCloseMenus()
+											for i = lvl, lvl + 3 do DropDown:ddRefresh(i) end
+											-- DropDown:ddReopenMenu(sublvl)
+											DropDown:ddReopenAllMenus(1, sublvl)
+										end,
+										OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
+									},
+								}
+							end
+							table_insert(sublist, info)
 						end
-						table_insert(sublist, info)
-					end
-					local function createNewProfile(copyFromCurrent)
-						StaticPopupDialogs["OCTO_CREATE_PROFILE"] = {
-							text = copyFromCurrent and L["Enter a name for the new profile|n(will be copied from the current one)"] or L["Enter a name for the new profile"],
-							button1 = L["NEW"], button2 = L["CANCEL"],
-							hasEditBox = true, editBoxWidth = 260, maxLetters = 30,
-							OnAccept = function(dialog)
-								local pName = dialog.EditBox:GetText():trim()
-								if pName and pName ~= "" then
-									if profilesALL[pName] then
-										E.func_PrintMessage(L["A profile with the same name exists"])
-										return
+						local function createNewProfile(copyFromCurrent)
+							StaticPopupDialogs["OCTO_CREATE_PROFILE"] = {
+								text = copyFromCurrent and L["Enter a name for the new profile|n(will be copied from the current one)"] or L["Enter a name for the new profile"],
+								button1 = L["NEW"], button2 = L["CANCEL"],
+								hasEditBox = true, editBoxWidth = 260, maxLetters = 30,
+								OnAccept = function(dialog)
+									local pName = dialog.EditBox:GetText():trim()
+									if pName and pName ~= "" then
+										if profilesALL[pName] then
+											E.func_PrintMessage(L["A profile with the same name exists"])
+											return
+										end
+										if copyFromCurrent and db.CURRENT then
+											local src = profilesALL[db.CURRENT]
+											profilesALL[pName] = src and E.func_CopyTableDeep(src) or {}
+										else
+											E.func_CreateProfile("SETTINGS", pName)
+										end
+										db.CURRENT = pName
+										if providerfunc then providerfunc() end
+										E.func_PrintMessage(L["Profile successfully created"])
 									end
-									if copyFromCurrent and db.CURRENT then
-										local src = profilesALL[db.CURRENT]
-										profilesALL[pName] = src and E.func_CopyTableDeep(src) or {}
-									else
-										E.func_CreateProfile("SETTINGS", pName)
+								end,
+								OnShow = function(dialog) dialog.EditBox:SetText(""); dialog.EditBox:SetFocus() end,
+								EditBoxOnEnterPressed = function(editBox)
+									local dialog = editBox:GetParent()
+									local pName = editBox:GetText():trim()
+									if pName and pName ~= "" then
+										if profilesALL[pName] then
+											E.func_PrintMessage(L["A profile with the same name exists"])
+											return
+										end
+										if copyFromCurrent and db.CURRENT then
+											local src = profilesALL[db.CURRENT]
+											profilesALL[pName] = src and E.func_CopyTableDeep(src) or {}
+										else
+											E.func_CreateProfile("SETTINGS", pName)
+										end
+										db.CURRENT = pName
+										dialog:Hide()
+										if providerfunc then providerfunc() end
+										E.func_PrintMessage(L["Profile successfully created"])
 									end
-									db.CURRENT = pName
-									if providerfunc then providerfunc() end
-									E.func_PrintMessage(L["Profile successfully created"])
-								end
-							end,
-							OnShow = function(dialog) dialog.EditBox:SetText(""); dialog.EditBox:SetFocus() end,
-							EditBoxOnEnterPressed = function(editBox)
-								local dialog = editBox:GetParent()
-								local pName = editBox:GetText():trim()
-								if pName and pName ~= "" then
-									if profilesALL[pName] then
-										E.func_PrintMessage(L["A profile with the same name exists"])
-										return
-									end
-									if copyFromCurrent and db.CURRENT then
-										local src = profilesALL[db.CURRENT]
-										profilesALL[pName] = src and E.func_CopyTableDeep(src) or {}
-									else
-										E.func_CreateProfile("SETTINGS", pName)
-									end
-									db.CURRENT = pName
-									dialog:Hide()
-									if providerfunc then providerfunc() end
-									E.func_PrintMessage(L["Profile successfully created"])
-								end
-							end,
-							timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
-						}
-						StaticPopup_Show("OCTO_CREATE_PROFILE")
-						subself:ddCloseMenus()
-					end
-					subself:ddAddButton({ list = sublist, listMaxSize = E.LIST_MAX_SIZE, autoFocus = E.AUTO_FOCUS }, sublvl)
-					----------------------------------------------------------------
-					-- SEPARATOR
-					----------------------------------------------------------------
-					do
-						subself:ddAddSeparator(sublvl)
-					end
-					----------------------------------------------------------------
-					-- NEW
-					----------------------------------------------------------------
-					do
-						local info = {}
-						info.text = L["NEW"]
-						info.fontObject = GameTooltipText
-						info.keepShownOnClick = false
-						info.notCheckable = true
-						info.func = function() createNewProfile(false) end
-						subself:ddAddButton(info, sublvl)
-					end
-					----------------------------------------------------------------
-					-- Copy current
-					----------------------------------------------------------------
-					do
-						local info = {}
-						info.text = L["Copy current"]
-						info.fontObject = GameTooltipText
-						info.keepShownOnClick = false
-						info.notCheckable = true
-						info.disabled = not db.CURRENT or not profilesALL[db.CURRENT]
-						info.func = function() createNewProfile(true) end
-						subself:ddAddButton(info, sublvl)
-					end
-					----------------------------------------------------------------
-				end,
+								end,
+								timeout = 0, whileDead = true, hideOnEscape = true, preferredIndex = 3,
+							}
+							StaticPopup_Show("OCTO_CREATE_PROFILE")
+							subself:ddCloseMenus()
+						end
+						subself:ddAddButton({ list = sublist, listMaxSize = E.LIST_MAX_SIZE, autoFocus = E.AUTO_FOCUS }, sublvl)
+						----------------------------------------------------------------
+						-- SEPARATOR
+						----------------------------------------------------------------
+						do
+							subself:ddAddSeparator(sublvl)
+						end
+						----------------------------------------------------------------
+						-- NEW
+						----------------------------------------------------------------
+						do
+							local info = {}
+							info.text = L["NEW"]
+							-- info.fontObject = GameTooltipText
+							info.keepShownOnClick = false
+							info.notCheckable = true
+							info.func = function() createNewProfile(false) end
+							subself:ddAddButton(info, sublvl)
+						end
+						----------------------------------------------------------------
+						-- Copy current
+						----------------------------------------------------------------
+						do
+							local info = {}
+							info.text = L["Copy current"]
+							-- info.fontObject = GameTooltipText
+							info.keepShownOnClick = true
+							info.notCheckable = true
+							info.disabled = not db.CURRENT or not profilesALL[db.CURRENT]
+							info.func = function() createNewProfile(true) end
+							subself:ddAddButton(info, sublvl)
+						end
+						----------------------------------------------------------------
+					end,
 			}, lvl)
 		end
 		----------------------------------------------------------------
@@ -3321,7 +3414,7 @@ function E.func_Create_DDframe_ToDo(frame, providerfunc, buttonName)
 					if CountCharacters > 1 then
 						table_insert(list, {
 								text = classColorHexCurrent .. L["Characters"] .. "|r",
-								fontObject = GameTooltipText,
+								-- fontObject = GameTooltipText,
 								hasArrowUp = true,
 								keepShownOnClick = true,
 								notCheckable = true,
@@ -3335,7 +3428,7 @@ function E.func_Create_DDframe_ToDo(frame, providerfunc, buttonName)
 				do
 					table_insert(list, {
 							text = L["EXPANSION_FILTER_TEXT"],
-							fontObject = GameTooltipText,
+							-- fontObject = GameTooltipText,
 							hasArrowUp = true,
 							keepShownOnClick = true,
 							notCheckable = true,
@@ -3347,8 +3440,8 @@ function E.func_Create_DDframe_ToDo(frame, providerfunc, buttonName)
 				----------------------------------------------------------------
 				do
 					table_insert(list, {
-							text = addonNAME or GlobalAddonName,
-							fontObject = GameTooltipText,
+							text = L["OTHER"], --  addonNAME or GlobalAddonName,
+							-- fontObject = GameTooltipText,
 							hasArrowUp = true,
 							keepShownOnClick = true,
 							notCheckable = true,
@@ -3405,7 +3498,7 @@ function E.func_Create_DDframe_Achievements(frame, providerfunc, buttonName)
 			local categories = GetCategoryList()
 			for i = 1, #categories do
 				local info = {}
-				info.fontObject = GameTooltipText
+				-- info.fontObject = GameTooltipText
 				local categoryID = categories[i]
 				local name, parentCategoryID = GetCategoryInfo(categoryID)
 				local total, completed = GetCategoryNumAchievements(categoryID, true)
@@ -3442,7 +3535,7 @@ function E.func_Create_DDframe_Achievements(frame, providerfunc, buttonName)
 				self:ddAddSeparator(level)
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					info.notCheckable = false
 					info.isNotRadio = true
@@ -3458,7 +3551,7 @@ function E.func_Create_DDframe_Achievements(frame, providerfunc, buttonName)
 				end
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.text = L["RESET"]
 					info.keepShownOnClick = false
 					info.notCheckable = true
@@ -3482,7 +3575,7 @@ function E.func_Create_DDframe_QuestsChanged(frame, providerfunc, buttonName)
 			if level == 1 then
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					info.notCheckable = false
 					info.isNotRadio = true
@@ -3497,7 +3590,7 @@ function E.func_Create_DDframe_QuestsChanged(frame, providerfunc, buttonName)
 				end
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					info.notCheckable = false
 					info.isNotRadio = true
@@ -3513,7 +3606,7 @@ function E.func_Create_DDframe_QuestsChanged(frame, providerfunc, buttonName)
 				self:ddAddSeparator(level)
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = false
 					info.notCheckable = true
 					info.text = L["wipe QC_Quests"]
@@ -3526,7 +3619,7 @@ function E.func_Create_DDframe_QuestsChanged(frame, providerfunc, buttonName)
 				end
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = false
 					info.notCheckable = true
 					info.text = L["wipe QC_Vignettes"]
@@ -3577,7 +3670,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 			if level == 1 then
 				for name in next, E.editorThemes do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					local cacheKey = "theme_" .. name
 					if not handlerCache[cacheKey] then
@@ -3594,7 +3687,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 				dd:ddAddSeparator(level)
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					info.notCheckable = true
 					info.hasArrowUp = true
@@ -3604,7 +3697,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 				end
 				do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					info.notCheckable = true
 					info.hasArrowUp = true
@@ -3615,7 +3708,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 			elseif value == "tab" then
 				for _, v in ipairs({0, 2, 3, 4}) do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					local cacheKey = "tab_" .. v
 					if not handlerCache[cacheKey] then
@@ -3632,7 +3725,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 			elseif value == "font" then
 				for i = 10, 16 do
 					local info = {}
-					info.fontObject = GameTooltipText
+					-- info.fontObject = GameTooltipText
 					info.keepShownOnClick = true
 					local cacheKey = "font_" .. i
 					if not handlerCache[cacheKey] then
@@ -3688,7 +3781,7 @@ function E.func_Create_DDframe_Options_LEFT(frame, providerfunc, buttonName)
 					text = E.NONE,
 					notCheckable = true,
 					disabled = true,
-					fontObject = GameTooltipText,
+					-- fontObject = GameTooltipText,
 				}
 				self:ddAddButton(info, level)
 			else
@@ -3705,7 +3798,7 @@ function E.func_Create_DDframe_Options_LEFT(frame, providerfunc, buttonName)
 								E.func_CreateDataProvider_SORTUI()
 							end,
 							notCheckable = true,
-							fontObject = GameTooltipText,
+							-- fontObject = GameTooltipText,
 					})
 				end
 				self:ddAddButton({ list = buttonList, listMaxSize = E.LIST_MAX_SIZE, autoFocus = E.AUTO_FOCUS})

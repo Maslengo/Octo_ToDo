@@ -54,7 +54,7 @@ local function tempFunction()
 		end
 	end
 
-	-- Проверяем все возможные ID (1..3000) и находим отсутствующие
+	-- Проверяем все возможные ID и находим отсутствующие
 	for id = 1, 3000 do
 		local name = E.func_GetName(TYPE, id)
 		local debugTEXT = E.debugInfo and E.debugInfo(id) or ""

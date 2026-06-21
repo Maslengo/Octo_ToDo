@@ -5,7 +5,8 @@ local slashCommands = {
 		commands = {"/octo"},
 		handler = function(msg)
 			if not InCombatLockdown() then
-				E.func_main_frame_toggle()
+				local MAIN_FRAME = E.FRAMES[E.MAIN_FRAME_NAME]
+				E.func_main_frame_toggle(MAIN_FRAME)
 			end
 		end
 	},

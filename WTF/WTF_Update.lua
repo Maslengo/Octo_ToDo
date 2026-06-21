@@ -3,8 +3,7 @@ local L = E.L
 local addonNAME = E.func_AddonNameForOptions(GlobalAddonName)
 ----------------------------------------------------------------
 local function compareVersion(v1, v2)
-	if v2 == 1 or v2 == 0 then return false end
-	return v1 > (v2 or 0)
+    return v1 > (v2 or 0)
 end
 ----------------------------------------------------------------
 local function updateChars(pd, cm, DBVersion)
@@ -286,14 +285,51 @@ local function updateGlobal(DBVersion)
 			if Octo_profileColors then
 				if Octo_profileColors.Current_profile then
 					Octo_Todo_DB_Profiles.SETTINGS.CURRENT = Octo_profileColors.Current_profile
-					Octo_profileColors.Current_profile = nil
+					-- Octo_profileColors.Current_profile = nil
 				end
 				if Octo_profileColors.profiles then
 					for profile_name, profile_data in next, (Octo_profileColors.profiles) do
 						Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name] = profile_data
+
+
+						if Octo_profileColors.profiles[profile_name].ConfigColor_CharLinesUseFaction_CONFIG == true then
+							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_CharLines_TYPE = 1
+						end
+						if Octo_profileColors.profiles[profile_name].ConfigColor_CharHeaderUseFaction_CONFIG == true then
+							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_CharHeader_TYPE = 1
+						end
+						if Octo_profileColors.profiles[profile_name].ConfigColor_HighlightUseFaction_CONFIG == true then
+							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_Highlight_TYPE = 1
+						end
+
+						if Octo_profileColors.profiles[profile_name].ConfigColor_CharLines_UseClass_CONFIG == true then
+							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_CharLines_TYPE = 2
+						end
+						if Octo_profileColors.profiles[profile_name].ConfigColor_CharHeader_UseClass_CONFIG == true then
+							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_CharHeader_TYPE = 2
+						end
+						if Octo_profileColors.profiles[profile_name].ConfigColor_Highlight_UseClass_CONFIG == true then
+							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_Highlight_TYPE = 2
+						end
+
 					end
-					Octo_profileColors.profiles = nil
+					-- Octo_profileColors.profiles = nil
 				end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 			end
 			if Octo_profileKeys then
 				if Octo_profileKeys.Current_profile then
@@ -405,7 +441,9 @@ function E.func_setOldChanges()
 	Octo_ToDo_DB_Options = Octo_ToDo_DB_Options or {}
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	local interfaceVersionForReset = Octo_Cache_DB and Octo_Cache_DB.interfaceVersionForReset or 1
-	local oldGlobalVersion = Octo_Cache_DB and Octo_Cache_DB.GlobalDBVersion or 1
+	Octo_ToDo_DBVersion = Octo_ToDo_DBVersion or {}
+	Octo_ToDo_DBVersion.dbv = Octo_ToDo_DBVersion.dbv or 1
+	local oldGlobalVersion = Octo_ToDo_DBVersion.dbv
 	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
@@ -425,6 +463,6 @@ function E.func_setOldChanges()
 		E.func_BUILD_DUNG_DB()
 		Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
 	end
-	Octo_Cache_DB.GlobalDBVersion = currentVersion
+	Octo_ToDo_DBVersion.dbv = currentVersion
 end
 ----------------------------------------------------------------

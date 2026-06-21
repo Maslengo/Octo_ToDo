@@ -7,9 +7,8 @@
 	<Script file="Frames\Octo_Frame\07 ColumnHeaders.lua"/>
 	<Script file="Frames\Octo_Frame\08 Acquired.lua"/>
 	<Script file="Frames\Octo_Frame\09 Init.lua"/>
+	<Script file="Frames\Octo_Frame\10 Portals.lua"/>
 	<Script file="Frames\Octo_Frame\99 EventHandlers.lua"/>
-
-
 
 	<Script file="Frames\Octo_TooltipFrame.lua"/>
 	<!-- <Script file="Frames\Octo_Frame.lua"/> -->

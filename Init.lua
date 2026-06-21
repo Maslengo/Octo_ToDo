@@ -17,6 +17,7 @@ end
 E.TIME_SERVER = GetServerTime -- Returns the server's Unix time.
 E.PHYSICAL_SCREEN_WIDTH, E.PHYSICAL_SCREEN_HEIGHT = GetPhysicalScreenSize()
 E.FRAMES = {}
+E.SLIDER_CHACHE = {}
 ----------------------------------------------------------------
 E.MAIN_FRAME_NAME = GlobalAddonName .. "_MainFrame"
 E.LIST_MAX_SIZE = 20 -- listMaxSize

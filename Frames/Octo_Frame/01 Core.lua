@@ -74,11 +74,6 @@ local function setupHorizontalScroll(frame, scrollContentFrame)
 	horizontalScrollBar:SetHideIfUnscrollable(true)
 	horizontalScrollFrame:SetScrollChild(scrollContentFrame)
 
-
-
-
-
-
 	return horizontalScrollFrame
 end
 local function setupLeftScrollBox(frame, horizontalScrollFrame)

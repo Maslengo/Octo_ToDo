@@ -2,7 +2,7 @@ local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
 local function HeaderFrameLeft_OnShow(frame)
-	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsUntilWeeklyReset(), false).."|r"
+	local text = E.COLOR_FACTION..E.func_SecondsToClock(E.func_GetSecondsUntilWeeklyReset(), false, true).."|r"
 	frame.Text1:SetText(text)
 	frame:SetSize(E.MIN_COLUMN_WIDTH_LEFT*2, E.GLOBAL_LINE_HEIGHT)
 end

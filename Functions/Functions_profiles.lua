@@ -410,8 +410,8 @@ local function func_CreateProfile_CHARACTERS(db, profileName)
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		if profile.OTHER.CONFIG_SHOW_LEVEL_MIN == nil then profile.OTHER.CONFIG_SHOW_LEVEL_MIN = 1 end
 		if profile.OTHER.CONFIG_SHOW_LEVEL_MAX == nil then profile.OTHER.CONFIG_SHOW_LEVEL_MAX = 90 end
-		if profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG == nil then profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = true end
-		if profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION == nil then profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION = true end
+		if profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG == nil then profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_BATTLETAG = false end
+		if profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION == nil then profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_REGION = false end
 		if profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_SERVER == nil then profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_SERVER = false end
 		if profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_FACTION == nil then profile.OTHER.CONFIG_SHOW_ONLY_CURRENT_FACTION = false end
 		if profile.OTHER.CONFIG_SHOW_ALWAYS_AS_FIRST == nil then profile.OTHER.CONFIG_SHOW_ALWAYS_AS_FIRST = false end

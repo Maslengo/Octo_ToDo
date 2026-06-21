@@ -72,10 +72,13 @@ local function tempFunction()
 	----------------------------------------------------------------
 	local RaidsOrDungeons = {
 		-- Raid
+		{id = 3004, defS = true, AddedInPatch = "12.1.0",}, -- The Venomous Abyss
+		{id = 2987, defS = true, AddedInPatch = "12.1.0",}, -- The Tidebound Grotto
 		{id = 1592, defS = true, AddedInPatch = "12.0.7",}, -- "SPOREFALL = 1 BOSS RAID" -> 12.0.7 (summer?)
 		{id = 2913, defS = true, AddedInPatch = "12.0.0.65390",}, -- March on Quel'Danas
 		{id = 2912, defS = true, AddedInPatch = "12.0.0.65390",}, -- The Voidspire
 		{id = 2939, defS = true, AddedInPatch = "12.0.0.65390",}, -- The Dreamrift
+
 		-- {id = 2805, defS = true,}, -- Windrunner Spire
 		-- {id = 2915, defS = true,}, -- Nexus-Point Xenas
 		-- {id = 2811, defS = true,}, -- Magisters' Terrace

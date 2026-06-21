@@ -1,6 +1,6 @@
-## Interface: 120007
-## Version: v115.5
-# (12.0.7)(19.06.2026)
+## Interface: 120100, 120007
+## Version: v115.6
+# (12.0.7)(21.06.2026)
 
 ## Title: |cffd177ffO|r|cffb283f7c|r|cff9390eet|r|cff739de5o|r - ToDo
 # Title: |cffD177FFO|r|cffC37CFBc|r|cffB582F7t|r|cffA787F3o|r|cff998DEF_|r|cff8C93EBT|r|cff7E98E7o|r|cff709EE3D|r|cff63A4E0o|r
@@ -16,6 +16,10 @@
 ## SavedVariables: Octo_ToDo_DB_Levels, Octo_Cache_DB
 
 ## SavedVariables: Octo_ToDo_DB_AccountData
+
+## SavedVariables: Octo_ToDo_DB_Calendar
+
+## SavedVariables: Octo_ToDo_DBVersion
 
 ## X-Wago-ID: 4N2mBVGL
 ## X-Curse-Project-ID: 1405495
@@ -37,3 +41,5 @@ Components\Components.xml
 Collect\Collect.xml
 Frames\Frames.xml
 Options\Options.xml
+
+calendar.lua

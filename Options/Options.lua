@@ -142,20 +142,20 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	-- RAIDS -------------------------------------------------------
 	----------------------------------------------------------------
-	do
-		local enable = true
-		if enable then
-			-- local iconID = E.func_texturefromIcon(E.ATLAS_RAID)
-			local tabName = L["RAIDS"]
-			local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
-			if E.func_option_RAIDS_ICONS then
-				E.func_option_RAIDS_ICONS(category, layout)
-			end
-			if E.func_option_RAIDS_TOOLTIP then
-				E.func_option_RAIDS_TOOLTIP(category, layout)
-			end
-		end
-	end
+	-- do
+	-- 	local enable = true
+	-- 	if enable then
+	-- 		-- local iconID = E.func_texturefromIcon(E.ATLAS_RAID)
+	-- 		local tabName = L["RAIDS"]
+	-- 		local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, tabName)
+	-- 		if E.func_option_RAIDS_ICONS then
+	-- 			E.func_option_RAIDS_ICONS(category, layout)
+	-- 		end
+	-- 		if E.func_option_RAIDS_TOOLTIP then
+	-- 			E.func_option_RAIDS_TOOLTIP(category, layout)
+	-- 		end
+	-- 	end
+	-- end
 	----------------------------------------------------------------
 	-- MPLUS -------------------------------------------------------
 	----------------------------------------------------------------
@@ -177,22 +177,22 @@ function EventFrame:PLAYER_LOGIN()
 	----------------------------------------------------------------
 	-- COLORS ------------------------------------------------------
 	----------------------------------------------------------------
-	do
-		local enable = true
-		if enable then
-			local width = E.FOURTH_WIDTH
-			-- local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
-			-- E.func_option_COLOR_PROFILE(category, layout)
-			-- E.func_option_COLOR_MAIN(category, layout)
-			if width and E.func_option_COLORS then
-				local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
-				local leftText = L["COLORS"]
-				local rightText = L["COLORS"]
-				AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_COLORS(width, rightText))
-				AceConfigDialog:AddToBlizOptions(leftText, leftText, main_category:GetID())
-			end
-		end
-	end
+	-- do
+	-- 	local enable = true
+	-- 	if enable then
+	-- 		local width = E.FOURTH_WIDTH
+	-- 		-- local category, layout = Settings.RegisterVerticalLayoutSubcategory(parentCategory, category3name)
+	-- 		-- E.func_option_COLOR_PROFILE(category, layout)
+	-- 		-- E.func_option_COLOR_MAIN(category, layout)
+	-- 		if width and E.func_option_COLORS then
+	-- 			local parent = E.func_GetAddOnMetadata(E.MainAddonName, "Title")
+	-- 			local leftText = L["COLORS"]
+	-- 			local rightText = L["COLORS"]
+	-- 			AceConfigRegistry:RegisterOptionsTable(leftText, E.func_option_COLORS(width, rightText))
+	-- 			AceConfigDialog:AddToBlizOptions(leftText, leftText, main_category:GetID())
+	-- 		end
+	-- 	end
+	-- end
 
 	----------------------------------------------------------------
 	-- 11 ---------------------------------------------------------
