@@ -91,7 +91,7 @@ function E.func_Tooltip_Chars(CharInfo, isMainFrame)
 	-- }
 	-- end
 
-	if Octo_DevTool_DB.CONFIG_DEBUG_CHARACTERTOOLTIP then
+	if Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_CHARACTERTOOLTIP then
 		tooltip[#tooltip+1] = {" ", ""}
 		tooltip[#tooltip+1] = {color .. E.DEVTEXT .. "|r", ""}
 		if pd.tmstp_Daily then

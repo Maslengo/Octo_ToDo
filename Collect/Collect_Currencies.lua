@@ -22,6 +22,11 @@ local function Collect_Currencies()
 			local maxWeeklyQuantity = info.maxWeeklyQuantity
 			local useTotalEarnedForMaxQty = info.useTotalEarnedForMaxQty
 
+			-- if currencyID == 3310 then
+			-- 	E.func_PrintMessage(E.func_GetName("currency", currencyID), quantityEarnedThisWeek, canEarnPerWeek)
+			-- end
+			-- /run opde(E.func_GetCurrencyInfo(3310))
+
 			-- Кэш аккаунт-трансферабельных валют
 			if not currencyCache[currencyID] then
 				currencyCache[currencyID] = E.func_FetchCurrencyDataFromAccountCharacters(currencyID)

@@ -436,12 +436,14 @@ function E.func_Gradient(text, firstColor, secondColor)
 	return table.concat(segments)
 end
 ----------------------------------------------------------------
-function E.func_GetColorGradient(value, minValue, maxValue)
+function E.func_GetColorGradient(value, minValue, maxValue, forced)
 	if not E.PROFTBL then
 		return E.COLOR_WHITE
 	end
-	if E.PROFTBL.ConfigColor_TOOLTIP_usegradient == nil or E.PROFTBL.ConfigColor_TOOLTIP_usegradient == false then
-		return E.COLOR_WHITE
+	if not forced then
+		if E.PROFTBL.ConfigColor_TOOLTIP_usegradient == nil or E.PROFTBL.ConfigColor_TOOLTIP_usegradient == false then
+			return E.COLOR_WHITE
+		end
 	end
 	-- Проверяем, что цвета есть в БД
 	if not value or not minValue or not maxValue or type(value) == "boolean" or type(minValue) ~= "number" or type(maxValue) ~= "number" then
@@ -451,10 +453,12 @@ function E.func_GetColorGradient(value, minValue, maxValue)
 	local g_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_g
 	local b_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_b
 	local a_max = E.PROFTBL.ConfigColor_TOOLTIP_max_RGBA_a
+
 	local r_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_r
 	local g_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_g
 	local b_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_b
 	local a_mid = E.PROFTBL.ConfigColor_TOOLTIP_mid_RGBA_a
+
 	local r_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_r
 	local g_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_g
 	local b_min = E.PROFTBL.ConfigColor_TOOLTIP_min_RGBA_b
@@ -705,7 +709,18 @@ function E.func_GetMinMaxValue(tbl, data)
 	end
 	local minValue, maxValue
 	for _, v in next, tbl do
-		local value = (type(v) == "table" and v[data]) or 0
+		local value
+		if data then
+			-- Если data передан, ожидаем, что v - таблица, и берём v[data]
+			value = (type(v) == "table" and v[data]) or 0
+		else
+			-- Если data не передан, предполагаем, что v - число
+			value = v
+		end
+		-- Защита от нечисловых значений
+		if type(value) ~= "number" then
+			value = 0
+		end
 		if minValue == nil or value < minValue then
 			minValue = value
 		end
@@ -1135,24 +1150,20 @@ end
 ----------------------------------------------------------------
 function E.func_UpdateFont()
 	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
-	settingsProfile.FontOption = settingsProfile.FontOption or {}
-	settingsProfile.FontOption[E.curLocaleLang] = settingsProfile.FontOption[E.curLocaleLang] or {}
+	if not settingsProfile then return end
 
-	local Config_FontStyle = settingsProfile.FontOption[E.curLocaleLang].Config_FontStyle
-	local Config_FontSize = settingsProfile.FontOption[E.curLocaleLang].Config_FontSize
-	local Config_FontFlags = settingsProfile.FontOption[E.curLocaleLang].Config_FontFlags
-	local fontPath = LibSharedMedia:Fetch("font", Config_FontStyle)
+	local fontStyle = settingsProfile.Config_FontStyle or E.DefaultFont or "Friz Quadrata TT"
+	local fontSize = settingsProfile.Config_FontSize or 11
+	local fontFlags = settingsProfile.Config_FontFlags or "OUTLINE"
+	local fontPath = LibSharedMedia:Fetch("font", fontStyle)
 
 	E.OctoFont10:CopyFontObject(GameTooltipText)
-	E.OctoFont10:SetFont(fontPath, Config_FontSize-1, Config_FontFlags)
+	E.OctoFont10:SetFont(fontPath, fontSize - 1, fontFlags)
 
 	E.OctoFont11:CopyFontObject(GameTooltipText)
-	E.OctoFont11:SetFont(fontPath, Config_FontSize, Config_FontFlags)
+	E.OctoFont11:SetFont(fontPath, fontSize, fontFlags)
 
-	E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
-	E.OctoFont22:SetFont(fontPath, 22, Config_FontFlags)
-
-	Octo_MeasureFrame.measureText:SetFontObject(OctoFont11)
+	Octo_MeasureFrame.measureText:SetFontObject(E.OctoFont11)
 end
 ----------------------------------------------------------------
 function E.func_GetSlotNameForEmptySlot(slotID)
@@ -1235,11 +1246,11 @@ function E.func_UpdateGlobals()
 	if settingsProfile.Config_ADDON_HEIGHT then
 		E.GLOBAL_LINE_HEIGHT = settingsProfile.Config_ADDON_HEIGHT
 		E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2
-		E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
+		E.HEADER_TEXT_OFFSET = (E.HEADER_HEIGHT/2) - (E.GLOBAL_LINE_HEIGHT/2)
+		-- E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
 	end
-	settingsProfile.FontOption = settingsProfile.FontOption or {}
-	settingsProfile.FontOption[E.curLocaleLang] = settingsProfile.FontOption[E.curLocaleLang] or {}
-	if settingsProfile.FontOption[E.curLocaleLang].Config_FontStyle then
+	-- Шрифт: теперь Config_FontStyle лежит прямо в профиле
+	if settingsProfile.Config_FontStyle then
 		E.func_UpdateFont()
 	end
 	if Octo_Todo_DB_Profiles and Octo_Todo_DB_Profiles.SETTINGS and Octo_Todo_DB_Profiles.SETTINGS.CURRENT then
@@ -1303,7 +1314,6 @@ function E.func_UpdateGlobals()
 		----------------------------------------------------------------
 	end
 	----------------------------------------------------------------
-
 end
 -- function E.func_UpdateGlobals()
 --     E.func_SpamBlock(func_UpdateGlobals, true, 1)
@@ -1473,6 +1483,7 @@ local function Highlight_OnShow(self, frame, alpha)
 			b = E.PROFTBL.ConfigColor_CharLines_b
 		elseif colorTYPE == 1 then -- FACTION
 			UseFaction = true
+			local CharInfo = Octo_ToDo_DB_Levels[E.curGUID]
 			r, g, b = E.func_DB_FACTION_COLOR(CharInfo)
 		elseif colorTYPE == 2 then -- CLASS
 			UseClass = true
@@ -2270,19 +2281,36 @@ end
 
 ----------------------------------------------------------------
 do
+	-- function E.func_VersionToNumber(v)
+	-- 	if type(v) ~= "string" then return nil end
+	-- 	local major, minor, patch, build = v:match("^(%d+)%.(%d+)%.(%d+)%.?(%d*)$")
+	-- 	if not major then return nil end
+	-- 	major = tonumber(major)
+	-- 	minor = tonumber(minor)
+	-- 	patch = tonumber(patch)
+	-- 	build = tonumber(build) or 0
+	-- 	return major * 1000000000000 +
+	-- 	minor * 1000000000 +
+	-- 	patch * 1000000 +
+	-- 	build
+	-- end
 	function E.func_VersionToNumber(v)
 		if type(v) ~= "string" then return nil end
-		local major, minor, patch, build = v:match("^(%d+)%.(%d+)%.(%d+)%.?(%d*)$")
-		if not major then return nil end
-		major = tonumber(major)
-		minor = tonumber(minor)
-		patch = tonumber(patch)
+		local major, minor, patch, build = v:match("^(%d+)%.?(%d*)%.?(%d*)%.?(%d*)$")
+		if not major or major == "" then return nil end
+		major = tonumber(major) or 0
+		minor = tonumber(minor) or 0
+		patch = tonumber(patch) or 0
 		build = tonumber(build) or 0
-		return major * 1000000000000 +
-		minor * 1000000000 +
-		patch * 1000000 +
-		build
+		-- major * 1e9 + minor * 1e6 + patch * 1e5 + build (build занимает до 5 цифр)
+		return major * 1000000000 + minor * 1000000 + patch * 100000 + build
 	end
+
+	-- E.func_PrintMessage(E.func_VersionToNumber("12.0.7"))        -- 12000700000
+	-- E.func_PrintMessage(E.func_VersionToNumber("12.0.7.21312"))  -- 12000721312
+	-- E.func_PrintMessage(E.func_VersionToNumber("12.1.7.00001"))  -- 12010070001
+
+
 	local currentVer = E.func_VersionToNumber(tostring(E.buildVersion) .. "." .. tostring(E.buildNumber or 0))
 	function E.FilterByVersion(dataList, isUniversalQuests)
 		if not dataList then return end
@@ -2348,6 +2376,38 @@ do
 	end
 end
 ----------------------------------------------------------------
+function E.func_NumberToVersion(value, color)
+	if type(value) == "string" then value = tonumber(value) end
+	if type(value) ~= "number" then return nil end
+
+	local build = 0
+	local q
+	if value >= 1000000000 then
+		build = value % 100000
+		q = math.floor(value / 100000)
+	else
+		q = math.floor(value)
+	end
+
+	local patch = q % 100
+	local minor = math.floor(q / 100) % 100
+	local major = math.floor(q / 10000)
+
+	local version
+	if build and build > 0 then
+		version = string.format("%d.%d.%d.%d", major, minor, patch, build)
+	else
+		version = string.format("%d.%d.%d", major, minor, patch)
+	end
+
+	if color then
+		return color .. version .. "|r"
+	end
+
+	return version
+end
+
+----------------------------------------------------------------
 function E.func_IsSameAccount(pd)
 	return pd.REGION_NAME == E.CURRENT_REGION_NAME and pd.BattleTag == E.BattleTag
 end
@@ -2372,7 +2432,7 @@ end
 -- },
 ----------------------------------------------------------------
 function E.func_GetCurrentDay()
-    return tonumber(date("%d"))  -- возвращает число от 1 до 31
+	return tonumber(date("%d"))  -- возвращает число от 1 до 31
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------

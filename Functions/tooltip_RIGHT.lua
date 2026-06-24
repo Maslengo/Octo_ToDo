@@ -739,7 +739,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					end
 				end
 			end
-			if Octo_DevTool_DB.CONFIG_DEBUG_REPUTATIONTOOLTIP then
+			if Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_REPUTATIONTOOLTIP then
 				tooltip[#tooltip+1] = {" "}
 				tooltip[#tooltip+1] = {E.COLOR_DEBUG .. "~~~ DEBUG ~~~|r"}
 				tooltip[#tooltip+1] = {"FIRST", FIRST} -- число
@@ -1411,7 +1411,7 @@ function E.func_KeyTooltip_RIGHT(GUID, SettingsType)
 					end
 				end
 
-				if Octo_DevTool_DB.CONFIG_DEBUG_UNIVERSAL then
+				if Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_UNIVERSAL then
 					tooltip[#tooltip+1] = {questKey, "total: " .. totalQuest}
 				end
 

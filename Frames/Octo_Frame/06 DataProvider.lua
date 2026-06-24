@@ -171,33 +171,31 @@ function E.func_MAIN_CreateDataProvider(frame)
 	end
 
 
+
 	if E.displayByType then
-		-- Основной цикл:
-		for _, dataType in ipairs(E.dataDisplayOrder) do
-			-- for _, categoryKey in ipairs(E.OctoTables_Vibor) do
-			for categoryKey in next, E.OctoTables_Vibor do
-				if ExpansionToShowTBL[categoryKey] then
-					local categoryData = E.OctoTables_DataOtrisovka[categoryKey]
-					if categoryData and categoryData[dataType] then
-						processData(categoryKey, dataType, categoryData[dataType])
-					end
-				end
-			end
-		end
+	    for _, dataType in ipairs(E.dataDisplayOrder) do
+	        for _, categoryKey in ipairs(E.OctoTables_Vibor_ORDER) do
+	            if ExpansionToShowTBL[categoryKey] then
+	                local categoryData = E.OctoTables_DataOtrisovka[categoryKey]
+	                if categoryData and categoryData[dataType] then
+	                    processData(categoryKey, dataType, categoryData[dataType])
+	                end
+	            end
+	        end
+	    end
 	else
-		-- for _, categoryKey in ipairs(E.OctoTables_Vibor) do
-		for categoryKey in next, E.OctoTables_Vibor do
-			if ExpansionToShowTBL[categoryKey] then
-				local categoryData = E.OctoTables_DataOtrisovka[categoryKey]
-				if categoryData then
-					for _, dataType in ipairs(E.dataDisplayOrder) do
-						if categoryData[dataType] then
-							processData(categoryKey, dataType, categoryData[dataType])
-						end
-					end
-				end
-			end
-		end
+	    for _, categoryKey in ipairs(E.OctoTables_Vibor_ORDER) do
+	        if ExpansionToShowTBL[categoryKey] then
+	            local categoryData = E.OctoTables_DataOtrisovka[categoryKey]
+	            if categoryData then
+	                for _, dataType in ipairs(E.dataDisplayOrder) do
+	                    if categoryData[dataType] then
+	                        processData(categoryKey, dataType, categoryData[dataType])
+	                    end
+	                end
+	            end
+	        end
+	    end
 	end
 	if totalLines == 0 then
 		totalLines = 1

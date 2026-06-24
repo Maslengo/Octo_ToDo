@@ -11,6 +11,7 @@ local function tempFunction()
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].defs = true
 	OctoTables_Vibor[categoryKey].icon = E.ICON_EMPTY
 	local fullDifficultyName = true
 	OctoTables_Vibor[categoryKey].name = E.func_GetName("difficulty", E.ID_MYTHIC, nil, fullDifficultyName) .. "+"

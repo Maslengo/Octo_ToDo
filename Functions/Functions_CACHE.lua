@@ -29,7 +29,7 @@ end
 --         Cache_Name[id] = Cache_Name[id] or {}
 --         Cache_Name[id][E.curLocaleLang] = name
 
---         if Octo_DevTool_DB and Octo_DevTool_DB.CONFIG_DEBUG_CACHE then
+--         if Octo_ToDo_DB_Variables and Octo_ToDo_DB_Variables.CONFIG and Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_CACHE then
 --             E.func_PrintMessage(
 --                 E.COLOR_LIME..debugLabel.."|r",
 --                 name,

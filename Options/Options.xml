@@ -31,6 +31,8 @@
 
 	<Script file="Options\COLORS\func_option_COLORS.lua"/>
 
+	<Script file="Options\CHANGELOG\func_option_CHANGELOG.lua"/>
+
 	<Script file="Options\DEBUG\func_option_DEBUG.lua"/>
 	<Script file="Options\DEBUG\func_option_DEV1.lua"/>
 	<Script file="Options\DEBUG\func_option_DEV2.lua"/>

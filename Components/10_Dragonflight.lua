@@ -12,13 +12,10 @@ local expansionID = 10
 ----------------------------------------------------------------
 local function tempFunction()
 	local OctoTables_Vibor = {}
-	-- wipe(OctoTables_Vibor)
 	local OctoTables_DataOtrisovka = {}
-	-- wipe(OctoTables_DataOtrisovka)
 	OctoTables_DataOtrisovka[categoryKey] = {}
-	-- wipe(OctoTables_DataOtrisovka[categoryKey])
 	OctoTables_Vibor[categoryKey] = {}
-	-- wipe(OctoTables_Vibor[categoryKey])
+	OctoTables_Vibor[categoryKey].defs = false
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color..E.OctoTable_Expansions[expansionID].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK

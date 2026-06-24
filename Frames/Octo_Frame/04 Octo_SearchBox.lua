@@ -51,7 +51,7 @@ function E.func_CreateSearchBox(frame)
 	frame.Octo_SearchBox.Background:SetPoint("BOTTOMRIGHT", frame.Octo_SearchBox, "BOTTOMRIGHT", -1, 1)
 	frame.Octo_SearchBox:SetPoint("TOPLEFT", E.INDENT_TEXT + 30, -E.HEADER_TEXT_OFFSET)
 	-- frame.Octo_SearchBox:SetSize(E.MIN_COLUMN_WIDTH_LEFT - E.INDENT_TEXT - 40, E.GLOBAL_LINE_HEIGHT/2)
-	frame.Octo_SearchBox:SetSize(22, 22)
+	-- frame.Octo_SearchBox:SetSize(20, 20)
 
 	frame.Octo_SearchBox:SetAutoFocus(false)
 	frame.Octo_SearchBox:SetFontObject(OctoFont11)

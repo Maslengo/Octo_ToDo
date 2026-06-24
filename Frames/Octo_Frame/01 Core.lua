@@ -151,8 +151,8 @@ function E.func_CreateMainFrame(frameName)
 	-- Инициализация для режима сохранения позиции (если нужен)
 	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
 	if settingsProfile.CONFIG_SAVE_POSITION then
-		settingsProfile.FramePosition = settingsProfile.FramePosition or {}
-		settingsProfile.FramePosition[frameName] = settingsProfile.FramePosition[frameName] or {}
+		Octo_ToDo_DB_Variables.FramePosition = Octo_ToDo_DB_Variables.FramePosition or {}
+		Octo_ToDo_DB_Variables.FramePosition[frameName] = Octo_ToDo_DB_Variables.FramePosition[frameName] or {}
 	end
 
 	frame:SetSize(100, 100)
@@ -174,7 +174,7 @@ function E.func_CreateMainFrame(frameName)
 
 
 		if settingsProfile.CONFIG_SAVE_POSITION then
-			local pos = settingsProfile.FramePosition and settingsProfile.FramePosition[frameName]
+			local pos = Octo_ToDo_DB_Variables.FramePosition and Octo_ToDo_DB_Variables.FramePosition[frameName]
 			if pos and pos.xOfs and pos.yOfs then
 				-- Восстанавливаем позицию из сохранения
 				SetFramePosition(frame, pos.xOfs, pos.yOfs)
@@ -282,10 +282,10 @@ function E.SaveFramePositionNormalized(frame, x, y)
 
 	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
 	if settingsProfile.CONFIG_SAVE_POSITION then
-		settingsProfile.FramePosition = settingsProfile.FramePosition or {}
-		settingsProfile.FramePosition[frameName] = settingsProfile.FramePosition[frameName] or {}
+		Octo_ToDo_DB_Variables.FramePosition = Octo_ToDo_DB_Variables.FramePosition or {}
+		Octo_ToDo_DB_Variables.FramePosition[frameName] = Octo_ToDo_DB_Variables.FramePosition[frameName] or {}
 
-		settingsProfile.FramePosition[frame:GetName()] = {
+		Octo_ToDo_DB_Variables.FramePosition[frame:GetName()] = {
 			point = "TOPLEFT",
 			relativePoint = "TOPLEFT",
 			xOfs = x,

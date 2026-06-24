@@ -30,8 +30,8 @@ function EventFrame:PLAYER_LOGIN()
 			local buttonName = nil
 			E.func_Create_DDframe_ToDo(MAIN_FRAME, providerfunc, buttonName)
 		end
-		local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
-		E.func_CreateMinimapButton(GlobalAddonName, settingsProfile, MAIN_FRAME, function() E.func_main_frame_toggle(MAIN_FRAME) end)
+		-- local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+		E.func_CreateMinimapButton(GlobalAddonName, Octo_ToDo_DB_Variables, MAIN_FRAME, function() E.func_main_frame_toggle(MAIN_FRAME) end)
 	end
 	----------------------------------------------------------------
 end

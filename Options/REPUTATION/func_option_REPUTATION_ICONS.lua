@@ -9,11 +9,11 @@ function E.func_option_REPUTATION_ICONS(category, layout)
 	-- E.func_GetProfile_SETTINGS_CURRENT().CONFIG_REPUTATION_ICON --------------------
 	----------------------------------------------------------------
 	do
+		local icon = E.ICON_TABARD
 		local name = E.func_texturefromIcon(icon)..L["Icon"]
 		local variable = E.func_GenerateID()
 		local variableKey = "CONFIG_REPUTATION_ICON"
 		local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
-		local icon = E.ICON_TABARD
 		local defaultValue = E.DEFAULT_SETTINGS_FORPROFILE[variableKey]
 		E.func_Options_CreateCheckbox(category, variableKey, variableTbl, name, defaultValue)
 	end

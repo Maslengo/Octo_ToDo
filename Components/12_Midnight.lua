@@ -13,6 +13,7 @@ local expansionID = 12
 local function tempFunction()
 	local OctoTables_Vibor = {}
 	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].defs = false
 	OctoTables_Vibor[categoryKey].icon = E.OctoTable_Expansions[expansionID].icon
 	OctoTables_Vibor[categoryKey].name = E.OctoTable_Expansions[expansionID].color .. E.OctoTable_Expansions[expansionID].nameBlizzard
 	OctoTables_Vibor[categoryKey].color = E.OctoTable_Expansions[expansionID] and E.OctoTable_Expansions[expansionID].color or E.COLOR_BLACK
@@ -501,7 +502,7 @@ local function tempFunction()
 			sorted = true,
 			showTooltip = true,
 			TextLeft = function()
-				return E.func_GetName("map", E.MapID_Naigtal) .. ": " .. E.func_GetName("quest", 96720) -- Showdown on Naigtal
+				return E.func_GetName("map", E.MapID_Naigtal) .. ": " .. E.func_GetName("quest", 96717) -- Showdown on Naigtal
 			end,
 			name_save = "ShowdownonNaigtal",
 			defS = true,

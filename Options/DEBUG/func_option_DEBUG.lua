@@ -33,35 +33,37 @@ function E.func_option_DEBUG(category, layout)
 	end
 	----------------------------------------------------------------
 	do
-		local name = nil
-		local buttonText = L["RESET"] .. ": " .. L["Characters"]
-		local tooltip = "table: Octo_ToDo_DB_Levels"
-		local function buttonClick()
-			Octo_ToDo_DB_Levels = nil
-			E.init_Octo_ToDo_DB_Levels()
+		if E.DEBUG then
+			local name = nil
+			local buttonText = L["RESET"] .. ": " .. L["Characters"]
+			local tooltip = "table: Octo_ToDo_DB_Levels"
+			local function buttonClick()
+				Octo_ToDo_DB_Levels = nil
+				E.init_Octo_ToDo_DB_Levels()
+			end
+			E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 		end
-		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 	end
 	----------------------------------------------------------------
 	do
-		local name = nil
-		local buttonText = L["RESET"] .. ": " .. L["ALL"]
-		local tooltip = nil
-		local function buttonClick()
-			Octo_DevTool_DB = nil
-			Octo_Todo_DB_Profiles = nil
-			-- Octo_ToDo_DB_Levels = nil
-			Octo_Cache_DB = nil
-			Octo_ToDo_DB_AccountData = nil
+		if E.DEBUG then
+			local name = nil
+			local buttonText = L["RESET"] .. ": " .. L["ALL"]
+			local tooltip = nil
+			local function buttonClick()
+				Octo_Todo_DB_Profiles = nil
+				-- Octo_ToDo_DB_Levels = nil
+				Octo_Cache_DB = nil
+				Octo_ToDo_DB_AccountData = nil
 
-			E.WTF_func_CheckAll()
+				E.WTF_func_CheckAll()
 
-			E.func_BUILD_DUNG_DB()
-			E.func_UpdateGlobals()
-			E.func_UpdateFont()
-
+				E.func_BUILD_DUNG_DB()
+				E.func_UpdateGlobals()
+				E.func_UpdateFont()
+			end
+			E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 		end
-		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 	end
 	----------------------------------------------------------------
 	do
@@ -73,6 +75,5 @@ function E.func_option_DEBUG(category, layout)
 		end
 		E.func_Options_CreateButton(category, name, buttonText, buttonClick, tooltip)
 	end
-	----------------------------------------------------------------
 	----------------------------------------------------------------
 end

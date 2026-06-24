@@ -1903,7 +1903,7 @@ function DropDownButtonMixin:ddReopenMenu(level, value)
 			self:ddCloseMenus(level)
 			self:ddToggle(level, value or menu.value, rFrame, point, rPoint, x, y)
 
-			if f then
+			if f and f.highlight then
 				v[level] = f
 				f.highlight:Show()
 			end
@@ -1911,14 +1911,18 @@ function DropDownButtonMixin:ddReopenMenu(level, value)
 	end
 end
 
+
+-- This function isn't recomend for menus with search frames
 function DropDownButtonMixin:ddReopenAllMenus(minLevel, maxLevel)
 	if self ~= v.DROPDOWNBUTTON then return end
 	local params = {}
 
-	for i = minLevel, maxLevel do
+	for i = (minLevel or 1), (maxLevel or #dropDownMenusList) do
 		local menu = lib:GetMenu(i)
 		if menu and menu:IsShown() then
 			params[i] = {v[i], menu:GetPoint()}
+		else
+			break
 		end
 	end
 
@@ -1934,7 +1938,6 @@ function DropDownButtonMixin:ddReopenAllMenus(minLevel, maxLevel)
 		end
 	end
 end
-
 
 
 function DropDownButtonMixin:ddIsMenuShown(level)

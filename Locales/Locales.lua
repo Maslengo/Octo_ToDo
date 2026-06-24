@@ -9,7 +9,7 @@ local color_red = E.COLOR_RED or "|cffFF0000"
 local curLocaleLang = GetLocale() or "enUS"
 ----------------------------------------------------------------
 function E.func_translit(text)
-	if not Octo_DevTool_DB or not Octo_DevTool_DB.CONFIG_DEBUG_TRANSLIT then
+	if not Octo_ToDo_DB_Variables or not Octo_ToDo_DB_Variables.CONFIG or not Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_TRANSLIT then
 		return text
 	end
 	if type(text) ~= "string" or text == "" then

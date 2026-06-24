@@ -2,12 +2,10 @@ local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
 function E.DEBUG_START()
-	-- if not Octo_DevTool_DB.CONFIG_DEBUG_FUNCTION_TIMERS then return end
 	local timer = debugprofilestart()
 	return timer
 end
 function E.DEBUG_STOP(funcName)
-	-- if not Octo_DevTool_DB.CONFIG_DEBUG_FUNCTION_TIMERS then return end
 	if not funcName then funcName = "" end
 	local timer = E.func_CompactRoundNumber(debugprofilestop())
 	local result = funcName.." "..E.func_Gradient("debug timer: ", "|cffD177FF", "|cff63A4E0")
@@ -18,6 +16,7 @@ function E.debugInfo(id)
 	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
 	if not settingsProfile then return "" end
 	local result = settingsProfile.Config_DebugID_ALL and (E.COLOR_GRAY.." id:"..id.."|r") or ""
+	-- local result = settingsProfile.Config_DebugID_ALL and (E.COLOR_GRAY.." ("..id..")|r") or ""
 	return result
 end
 function E.func_goldenHeight(width)
@@ -139,7 +138,7 @@ end
 
 
 function E.func_RequestUIUpdate(event_name)
-	if Octo_DevTool_DB.CONFIG_DEBUG_EVENTS then
+	if Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EVENTS then
 		local MAIN_FRAME = E.FRAMES[E.MAIN_FRAME_NAME]
 		local isMainFrameVisible = MAIN_FRAME and MAIN_FRAME:IsShown()
 		if isMainFrameVisible then

@@ -6,33 +6,47 @@ if not E.DEBUG then return end
 local categoryKey = 55
 ----------------------------------------------------------------
 local function tempFunction()
-	local OctoTables_DataOtrisovka = {}
 	local OctoTables_Vibor = {}
-	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].defs = false
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = CALENDAR_FILTER_HOLIDAYS
 	OctoTables_Vibor[categoryKey].color = E.COLOR_RED
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Currencies = {
-		{id = 1166, defS = true,}, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon())
+	local Currencies = {
+		-- {id = 1166, defS = true,}, -- Timewarped Badge (local joinable, timewalkDungeonName = E.func_GetTimewalkingDungeon())
 		-- {id = 3309, defS = true,}, -- Hellstone Shard
 		-- {id = 2588, defS = true,}, -- Riders of Azeroth Badge
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Items = {
-		-- {id = 44791, defS = true,}, -- Event: Noblegarden
-		-- {id = 45072, defS = true,}, -- Event: Noblegarden
-		-- {id = 23247, defS = true,}, -- Event: Midsummer Fire Festival
+	local Items = {
+		{id = 44791, defS = true,}, -- Event: Noblegarden
+		{id = 45072, defS = true,}, -- Event: Noblegarden
+		{id = 23247, defS = true,}, -- Event: Midsummer Fire Festival
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = {
-	}
+	-- local RaidsOrDungeons = {
+	-- }
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].Reputations = {
-	}
+	-- local Reputations = {
+	-- }
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = {
+	local UniversalQuests = {
+		-- {
+		-- 	sorted = false,
+		-- 	showTooltip = true,
+		-- 	TextLeft = function()
+		-- 		return "SummerFestival"
+		-- 	end,
+		-- 	name_save = "SummerFestival",
+		-- 	defS = true,
+		-- 	reset = "Monthly",
+		-- 	desc = categoryKey,
+		-- 	quests = {
+		--		HandyNotes_SummerFestival
+		-- 	},
+		-- 	-- forcedMaxQuest = 1,
+		-- },
 		{
 			sorted = true,
 			showTooltip = true,
@@ -496,12 +510,29 @@ local function tempFunction()
 		},
 	}
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = {
-	}
+	-- local AdditionallyTOP = {
+	-- }
 	----------------------------------------------------------------
-	OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = {
-	}
+	-- local AdditionallyBOTTOM = {
+	-- }
 	----------------------------------------------------------------
+
+
+	local OctoTables_DataOtrisovka = {}
+	OctoTables_DataOtrisovka[categoryKey] = {}
+	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyTOP = E.FilterByVersion(AdditionallyTOP)
+	OctoTables_DataOtrisovka[categoryKey].Currencies = E.FilterByVersion(Currencies)
+	OctoTables_DataOtrisovka[categoryKey].Items = E.FilterByVersion(Items)
+	-- OctoTables_DataOtrisovka[categoryKey].RaidsOrDungeons = E.FilterByVersion(RaidsOrDungeons)
+	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyCENTER = E.FilterByVersion(AdditionallyCENTER)
+	-- OctoTables_DataOtrisovka[categoryKey].Quests = E.FilterByVersion(Quests)
+	OctoTables_DataOtrisovka[categoryKey].UniversalQuests = E.FilterByVersion(UniversalQuests, true)
+	-- OctoTables_DataOtrisovka[categoryKey].Reputations = E.FilterByVersion(Reputations)
+	-- OctoTables_DataOtrisovka[categoryKey].AdditionallyBOTTOM = E.FilterByVersion(AdditionallyBOTTOM)
+	-- OctoTables_DataOtrisovka[categoryKey].Maps = E.FilterByVersion(Maps)
+
+
+
 	return OctoTables_Vibor, OctoTables_DataOtrisovka
 end
 table.insert(E.Components, tempFunction)

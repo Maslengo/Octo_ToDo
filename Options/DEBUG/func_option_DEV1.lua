@@ -4,10 +4,10 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 function E.func_option_DEV1(category, layout)
 	----------------------------------------------------------------
-	local variableTbl = Octo_DevTool_DB
+	local variableTbl = Octo_ToDo_DB_Variables.CONFIG
 	----------------------------------------------------------------
-	if E.Octo_DevTool_DB_defaultOptions then
-		for headerName, headers in next,(E.Octo_DevTool_DB_defaultOptions) do
+	if E.Octo_ToDo_DB_Variables_defaultOptions then
+		for headerName, headers in next,(E.Octo_ToDo_DB_Variables_defaultOptions) do
 			----------------------------------------------------------------
 			-- HEADER ------------------------------------------------------
 			----------------------------------------------------------------

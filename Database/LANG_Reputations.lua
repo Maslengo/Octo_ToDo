@@ -1991,11 +1991,11 @@ E.OctoTable_Reputations_DB = {
 		["ruRU"] = "Пиратская Бухта",
 	},
 }
-E.TBL_validReps = {}
+E.ALL_Reputations = {}
 E.TBL_paragonQuests = {}
 E.OctoTable_Reputations_Paragon_Data = {}
 for reputationID, data in next, (E.OctoTable_Reputations_DB) do
-	E.TBL_validReps[reputationID] = true
+	E.ALL_Reputations[reputationID] = true
 	local paragonQuest = data.paragonQuest
 	if paragonQuest then
 		E.TBL_paragonQuests[paragonQuest] = true

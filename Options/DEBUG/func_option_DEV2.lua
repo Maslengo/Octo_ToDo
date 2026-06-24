@@ -4,7 +4,7 @@ local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 ----------------------------------------------------------------
 function E.func_option_DEV2(category, layout)
 	----------------------------------------------------------------
-	local db = Octo_DevTool_DB
+	local db = Octo_ToDo_DB_Variables.CONFIG
 	----------------------------------------------------------------
 	-- HEADER ------------------------------------------------------
 	----------------------------------------------------------------
@@ -39,12 +39,12 @@ function E.func_option_DEV2(category, layout)
 	----------------------------------------------------------------
 	----------------------------------------------------------------
 	do
-		if E.Octo_DevTool_DB_DATA then
+		if E.Octo_ToDo_DB_Variables_DATA then
 			local name = L["Import from file"]
 			local buttonText = L["button Text"]
 			local function buttonClick()
 				if not E.DEBUG then return end
-				local data = E.getDataFromString(E.Octo_DevTool_DB_DATA, true)
+				local data = E.getDataFromString(E.Octo_ToDo_DB_Variables_DATA, true)
 				if not data then
 					E.func_PrintMessage("|cffff0000Import failed: invalid data|r")
 					return

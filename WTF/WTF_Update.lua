@@ -3,7 +3,7 @@ local L = E.L
 local addonNAME = E.func_AddonNameForOptions(GlobalAddonName)
 ----------------------------------------------------------------
 local function compareVersion(v1, v2)
-    return v1 > (v2 or 0)
+	return v1 > (v2 or 0)
 end
 ----------------------------------------------------------------
 local function updateChars(pd, cm, DBVersion)
@@ -290,8 +290,6 @@ local function updateGlobal(DBVersion)
 				if Octo_profileColors.profiles then
 					for profile_name, profile_data in next, (Octo_profileColors.profiles) do
 						Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name] = profile_data
-
-
 						if Octo_profileColors.profiles[profile_name].ConfigColor_CharLinesUseFaction_CONFIG == true then
 							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_CharLines_TYPE = 1
 						end
@@ -301,7 +299,6 @@ local function updateGlobal(DBVersion)
 						if Octo_profileColors.profiles[profile_name].ConfigColor_HighlightUseFaction_CONFIG == true then
 							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_Highlight_TYPE = 1
 						end
-
 						if Octo_profileColors.profiles[profile_name].ConfigColor_CharLines_UseClass_CONFIG == true then
 							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_CharLines_TYPE = 2
 						end
@@ -311,25 +308,9 @@ local function updateGlobal(DBVersion)
 						if Octo_profileColors.profiles[profile_name].ConfigColor_Highlight_UseClass_CONFIG == true then
 							Octo_Todo_DB_Profiles.SETTINGS.profiles[profile_name].ConfigColor_Highlight_TYPE = 2
 						end
-
 					end
 					-- Octo_profileColors.profiles = nil
 				end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 			end
 			if Octo_profileKeys then
 				if Octo_profileKeys.Current_profile then
@@ -432,7 +413,28 @@ local function updateGlobal(DBVersion)
 			E.func_CreateProfile("SETTINGS", E.TEXT_ENG_DEFAULT)
 		end
 	end
-		-- opde(Octo_Todo_DB_Profiles.CHARACTERS)
+	-- opde(Octo_Todo_DB_Profiles.CHARACTERS)
+	if compareVersion(115.7, DBVersion) then
+		local allProfiles = Octo_Todo_DB_Profiles and Octo_Todo_DB_Profiles.SETTINGS and Octo_Todo_DB_Profiles.SETTINGS.profiles
+		if allProfiles then
+			for profileName, profileData in next, (allProfiles) do
+				if profileData and profileData.FontOption then
+					for lang, langData in next, profileData.FontOption do
+						if type(langData) == "table" then
+							for configKey, configValue in next, (langData) do
+								profileData[configKey] = configValue
+							end
+						end
+					end
+					profileData.FontOption = nil
+				end
+			end
+		end
+		if Octo_ToDo_DBVersion and Octo_ToDo_DBVersion.FramePosition then
+			Octo_ToDo_DB_Variables.FramePosition = Octo_ToDo_DBVersion.FramePosition
+		end
+
+	end
 	----------------------------------------------------------------
 end
 ----------------------------------------------------------------
@@ -441,9 +443,9 @@ function E.func_setOldChanges()
 	Octo_ToDo_DB_Options = Octo_ToDo_DB_Options or {}
 	Octo_Cache_DB = Octo_Cache_DB or {}
 	local interfaceVersionForReset = Octo_Cache_DB and Octo_Cache_DB.interfaceVersionForReset or 1
-	Octo_ToDo_DBVersion = Octo_ToDo_DBVersion or {}
-	Octo_ToDo_DBVersion.dbv = Octo_ToDo_DBVersion.dbv or 1
-	local oldGlobalVersion = Octo_ToDo_DBVersion.dbv
+	Octo_ToDo_DB_Variables = Octo_ToDo_DB_Variables or {}
+	Octo_ToDo_DB_Variables.dbv = Octo_ToDo_DB_Variables.dbv or 1
+	local oldGlobalVersion = Octo_ToDo_DB_Variables.dbv
 	local currentVersion = tonumber(C_AddOns.GetAddOnMetadata(GlobalAddonName, "Version"):match("v(%d+%.%d+)")) -- lastAddonVersion
 	for GUID, CharInfo in next, (Octo_ToDo_DB_Levels) do
 		local pd = CharInfo.PlayerData
@@ -457,12 +459,12 @@ function E.func_setOldChanges()
 	-- E.DEBUG_STOP("E.func_setOldChanges")
 	updateGlobal(oldGlobalVersion)
 	if E.REFRESH_CACHE and (currentVersion ~= oldGlobalVersion or interfaceVersionForReset ~= E.interfaceVersion) then
-	-- if currentVersion ~= oldGlobalVersion then
+		-- if currentVersion ~= oldGlobalVersion then
 		Octo_Cache_DB = nil
 		E.Init_Octo_Cache_DB()
 		E.func_BUILD_DUNG_DB()
 		Octo_Cache_DB.interfaceVersionForReset = E.interfaceVersion
 	end
-	Octo_ToDo_DBVersion.dbv = currentVersion
+	Octo_ToDo_DB_Variables.dbv = currentVersion
 end
 ----------------------------------------------------------------

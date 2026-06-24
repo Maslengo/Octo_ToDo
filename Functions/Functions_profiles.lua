@@ -16,7 +16,7 @@ end
 
 
 
-local function defaults_tbl()
+local function defaults_tbl_SETTINGS()
 	-- Вычисляем значения перед созданием defaults
 	local TR, TG, TB, TA = E.func_Hex2RGBA(E.COLOR_RED)
 	local OR, OG, OB, OA = E.func_Hex2RGBA(E.COLOR_ORANGE)
@@ -53,6 +53,10 @@ local function defaults_tbl()
 
 
 	E.DEFAULT_SETTINGS_FORPROFILE = {
+		Config_FontStyle = E.DefaultFont,
+		Config_FontSize = 11,
+		Config_FontFlags = "OUTLINE",
+
 		Config_numberFormatMode = 1,
 		GlobalDBVersion = 0,
 		CONFIG_ADVANCED_TOOLTIP_MYTHICKEYSTONE = true,
@@ -68,14 +72,6 @@ local function defaults_tbl()
 		-- Config_FontStyle = E.DefaultFont,
 		-- Config_FontSize = 11,
 		-- Config_FontFlags = "OUTLINE",
-		FontOption = {
-			[E.curLocaleLang] = {
-				Config_FontStyle = E.DefaultFont,
-				Config_FontSize = 11,
-				Config_FontFlags = "OUTLINE",
-			}
-		},
-		FramePosition = {},
 		----------------------------------------------------------------
 		-- CONFIG_ACHIEVEMENT_SHOW_COMPLETED = true,
 		-- Currencies = true,
@@ -207,7 +203,6 @@ local function defaults_tbl()
 		CONFIG_CURRENCY_COLOR_REMAINING_A = COLOR_ADDON_RIGHT_A,
 		-- CONFIG_CURRENCY_COLOR_REMAINING = E.COLOR_ADDON_RIGHT:gsub("^|cff", "80"),
 
-		Config_MountsInTooltip = true,
 
 		CONFIG_CURRENCY_SHOW_ZERO = false,
 		CONFIG_CURRENCY_COLOR_ZERO_R = ZR,
@@ -333,6 +328,7 @@ local function syncProfileWithDefaults(profile, defaults, profileName, path)
 			end
 		else
 			if profile[key] == nil then
+				-- E.func_PrintMessage(E.COLOR_GREEN .. currentPath .. "|r")
 				profile[key] = defaultValue
 			end
 		end
@@ -341,9 +337,12 @@ local function syncProfileWithDefaults(profile, defaults, profileName, path)
 	-- for key in next, (profile) do
 	-- 	local defaultValue = defaults[key]
 	-- 	local currentPath = (path ~= "" and (path .. "." .. key)) or key
+
 	-- 	if defaultValue == nil then
+	-- 		E.func_PrintMessage(E.COLOR_RED .. currentPath .. "|r")
 	-- 		profile[key] = nil
-	-- 	elseif type(profile[key]) == "table" and type(defaultValue) == "table" then
+	-- 	end
+	-- 	if type(profile[key]) == "table" and type(defaultValue) == "table" then
 	-- 		syncProfileWithDefaults(profile[key], defaultValue, profileName, currentPath)
 	-- 	end
 	-- end
@@ -351,54 +350,55 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-local function func_InitProfileDefaults_KEYS(db, profileName)
-	local CURRENT = db.profiles[profileName]
-	for categoryKey, categoryData in next, E.OctoTables_DataOtrisovka do
-		for dataType, dataEntries in next, categoryData do
-			CURRENT[dataType] = CURRENT[dataType] or {}
+local function defaults_tbl_KEYS()
+	local defaults = {}
+
+
+	for _, dataType in ipairs(E.dataDisplayOrder) do
+		defaults[dataType] = {}
+	end
+
+
+	defaults.ExpansionToShow = {}
+	for categoryKey, data in next, (E.OctoTables_Vibor) do
+		local defs = data.defs or false
+		defaults.ExpansionToShow[categoryKey] = defs
+	end
+
+	local lastExp = E.func_GetCurrentExpansion()
+	defaults.ExpansionToShow[lastExp] = true
+
+	for _, categoryData in next, (E.OctoTables_DataOtrisovka) do
+		for dataType, dataEntries in next, (categoryData) do
 			if dataType == "UniversalQuests" then
 				for _, questData in ipairs(dataEntries) do
-					local questKey = questData.questKey
-					if questKey and CURRENT.UniversalQuests[questKey] == nil then
-						CURRENT.UniversalQuests[questKey] = questData.defS
-					end
+					local questKey = E.UNIVERSAL .. questData.desc .. "_" .. questData.name_save .. "_" .. questData.reset
+					defaults[dataType][questKey] = questData.defS
 				end
 			else
 				for _, entry in ipairs(dataEntries) do
-					if entry.id ~= nil and CURRENT[dataType][entry.id] == nil then
-						CURRENT[dataType][entry.id] = entry.defS
+					if entry.id ~= nil then
+						defaults[dataType][entry.id] = entry.defS
 					end
 				end
 			end
 		end
 	end
+
+
+	return defaults
 end
+
 local function func_CreateProfile_KEYS(db, profileName)
 	db.profiles[profileName] = db.profiles[profileName] or {}
+	syncProfileWithDefaults(db.profiles[profileName], defaults_tbl_KEYS(), profileName)
 	----------------------------------------------------------------
-	do
-		local profile = db.profiles[profileName]
-		local lastExp = E.func_GetCurrentExpansion()
-		E.func_InitField(profile, "ExpansionToShow", {
-				[lastExp] = true, -- [12] = true, -- MIDNIGHT
-				[96] = true, -- MPLUS
-				-- [97] = false, -- PVP
-				[99] = true -- OTHER
-		})
-		for _, dataType in ipairs(E.dataDisplayOrder) do
-			E.func_InitSubTable(profile, dataType)
-		end
-		E.func_InitSubTable(db.profiles, "Default")
-		local defaultProfile_TBL = db.profiles.Default
-		for _, dataType in ipairs(E.dataDisplayOrder) do
-			E.func_InitSubTable(defaultProfile_TBL, dataType)
-		end
-	end
-
 	db.isSettingsEnabled = false
-	----------------------------------------------------------------
-	func_InitProfileDefaults_KEYS(db, profileName)
-	----------------------------------------------------------------
+end
+
+local function func_CreateProfile_SETTINGS(db, profileName)
+	db.profiles[profileName] = db.profiles[profileName] or {}
+	syncProfileWithDefaults(db.profiles[profileName], defaults_tbl_SETTINGS(), profileName)
 end
 
 local function func_CreateProfile_CHARACTERS(db, profileName)
@@ -528,11 +528,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-local function func_CreateProfile_SETTINGS(db, profileName)
-	db.profiles[profileName] = db.profiles[profileName] or {}
-	syncProfileWithDefaults(db.profiles[profileName], defaults_tbl(), profileName)
-end
 
 
 function E.func_CreateProfile(field, profileName, justChecked)

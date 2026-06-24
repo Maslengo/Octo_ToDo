@@ -320,192 +320,193 @@ function E.func_Options_CreateDropdown(category, variableKey, variableTbl, name,
 end
 ----------------------------------------------------------------
 function E.func_Options_CreateDropdown_FontStyle(category, layout)
-	local variable = E.func_GenerateID()
-	local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
-	local variableTbl = settingsProfile.FontOption[E.curLocaleLang]
-	local variableKey = "Config_FontStyle"
-	local defaultValue = E.DefaultFont
-	local function GetValue()
-		return variableTbl[variableKey] or defaultValue
-	end
-	local function SetValue(value)
-		variableTbl[variableKey] = value
-		E.func_UpdateFont()
-	end
-	local name = L["Font"]
-	local fontsList = LibSharedMedia:List("font")
-	local tooltipText = E.func_defaultValue_tooltip(defaultValue)
-	if E.interfaceVersion > 120000 then
-		-- local defaultValue = "Friz Quadrata TT"
-		-- Создаем настройку
-		local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
-		-- setting:SetValueChangedCallback(E.func_UpdateFont)
-		-- Создаем кастомный инициализатор
-		local OctoFontDropdownInitializer = CreateFromMixins(
-			ScrollBoxFactoryInitializerMixin,
-			SettingsElementHierarchyMixin,
-			SettingsSearchableElementMixin
-		)
-		function OctoFontDropdownInitializer:Init()
-			-- Используем правильный template!
-			ScrollBoxFactoryInitializerMixin.Init(self, "OctoSettingsDropdownControlTemplate")
-			self.data = {
-				name = name,
-				tooltip = name,
-			}
-			self:AddSearchTags(name)
-		end
-		function OctoFontDropdownInitializer:GetExtent()
-			return E.BUTTON_HEIGHT
-		end
-		-- Вспомогательные функции
-		local function GetCurrentFontIndex(fontName)
-			for i, font in ipairs(fontsList) do
-				if font == fontName then
-					return i
-				end
-			end
-			return 1
-		end
-		-- Локальная функция для обновления UI
-		local function UpdateDropdownUI(frame, currentFont)
-			if not frame or not frame.Control then return end
-			local dropdown = frame.Control.Dropdown
-			if dropdown then
-				dropdown:ddSetSelectedValue(currentFont)
-				dropdown:ddSetSelectedText(currentFont, nil, nil, nil, GameFontNormal,
-					LibSharedMedia:Fetch("font", currentFont))
-			end
-			-- Обновляем кнопки навигации
-			local leftBtn = frame.Control.DecrementButton
-			local rightBtn = frame.Control.IncrementButton
-			local currentIndex = GetCurrentFontIndex(currentFont)
-			local totalFonts = #fontsList
-			if leftBtn then
-				leftBtn:SetEnabled(currentIndex > 1)
-			end
-			if rightBtn then
-				rightBtn:SetEnabled(currentIndex < totalFonts)
-			end
-		end
-		function OctoFontDropdownInitializer:InitFrame(frame)
-			-- Инициализируем базовые свойства фрейма
-			frame.data = self.data
-			-- Если у фрейма есть Text поле (как в SettingsListElementTemplate)
-			if frame.Text then
-				frame.Text:SetFontObject(GameFontNormal)
-				frame.Text:SetText(name)
-				frame.Text:SetPoint("LEFT", 37, 0)
-			end
-			-- Проверяем, есть ли Control (OctoSettingsDropdownControlTemplate)
-			if not frame.Control then
-				-- Это неправильный template! Нужно проверить структуру вашего template
-				return
-			end
-			local dropdown = frame.Control.Dropdown
-			local leftBtn = frame.Control.DecrementButton
-			local rightBtn = frame.Control.IncrementButton
-			-- Получаем текущее значение
-			local currentValue = setting:GetValue() or defaultValue
-			-- Инициализируем dropdown
-			if dropdown then
-				dropdown:ddSetSelectedValue(currentValue)
-				dropdown:ddSetSelectedText(currentValue, nil, nil, nil, GameFontNormal, LibSharedMedia:Fetch("font", currentValue))
-				dropdown:ddSetInitFunc(function(dropdown, level, value)
-						local fonts = LibSharedMedia:HashTable("font")
-						local info = {list = {}}
-						for i, fontName in ipairs(LibSharedMedia:List("font")) do
-							info.list[#info.list + 1] = {
-								text = fontName,
-								value = fontName,
-								fontObject = GameFontHighlightLeft,
-								font = fonts[fontName],
-								arg1 = dropdown,
-								func = function(btn, ddBtn)
-									setting:SetValue(btn.value)
-									UpdateDropdownUI(frame, btn.value)
-								end,
-								checked = (setting:GetValue() or defaultValue) == fontName,
-							}
-						end
-						dropdown:ddAddButton(info)
-				end)
-			end
-			-- Настраиваем кнопки навигации
-			if leftBtn then
-				leftBtn:SetScript("OnClick", function()
-						E.sound_OnClick()
-						local currentFont = setting:GetValue() or defaultValue
-						local currentIndex = GetCurrentFontIndex(currentFont)
-						if currentIndex > 1 then
-							local newFont = fontsList[currentIndex - 1]
-							setting:SetValue(newFont)
-							UpdateDropdownUI(frame, newFont)
-						end
-				end)
-			end
-			if rightBtn then
-				rightBtn:SetScript("OnClick", function()
-						E.sound_OnClick()
-						local currentFont = setting:GetValue() or defaultValue
-						local currentIndex = GetCurrentFontIndex(currentFont)
-						if currentIndex < #LibSharedMedia:List("font") then
-							local newFont = fontsList[currentIndex + 1]
-							setting:SetValue(newFont)
-							UpdateDropdownUI(frame, newFont)
-						end
-				end)
-			end
-			-- ВАЖНО: Инициализируем callback контейнер ПРАВИЛЬНО
-			-- Используем существующий или создаем новый
-			frame.cbrHandles = frame.cbrHandles or Settings.CreateCallbackHandleContainer()
-			-- Регистрируем callback для обновлений значения
-			frame.cbrHandles:SetOnValueChangedCallback(setting:GetVariable(), function()
-					local currentValue = setting:GetValue() or defaultValue
-					UpdateDropdownUI(frame, currentValue)
-			end)
-			-- Обновляем UI сразу
-			UpdateDropdownUI(frame, currentValue)
-		end
-		function OctoFontDropdownInitializer:Resetter(frame)
-			-- Очищаем callback контейнер
-			if frame.cbrHandles then
-				frame.cbrHandles:Unregister()
-				frame.cbrHandles = nil
-			end
-			-- Закрываем выпадающие меню
-			if frame.Control and frame.Control.Dropdown then
-				frame.Control.Dropdown:ddCloseMenus()
-			end
-		end
-		-- Добавляем инициализатор
-		local customFontInitializer = CreateFromMixins(OctoFontDropdownInitializer)
-		customFontInitializer:Init()
-		layout:AddInitializer(customFontInitializer)
-	elseif E.interfaceVersion > 10000 then
-		local fontValues = {}
-		for _, fontName in ipairs(fontsList) do
-			fontValues[fontName] = fontName
-		end
-		-- local setting = Settings.RegisterProxySetting(category, variable, variableTbl, type(defaultValue), name, defaultValue, GetValue, SetValue)
-		local v = GetValue()
-		local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), v)
-		Settings.SetOnValueChangedCallback(variable, function(event, settingObj, value)
-			variableTbl[variableKey] = value -- setting:GetValue()
-			E.func_UpdateFont()
-			E.func_UpdateGlobals()
-		end)
+    local variable = E.func_GenerateID()
+    local settingsProfile = E.func_GetProfile_SETTINGS_CURRENT()
+    -- Больше не используем FontOption[locale] — работаем напрямую с профилем
+    local variableTbl = settingsProfile
+    local variableKey = "Config_FontStyle"
+    local defaultValue = E.DefaultFont
+    local function GetValue()
+        return variableTbl[variableKey] or defaultValue
+    end
+    local function SetValue(value)
+        variableTbl[variableKey] = value
+        E.func_UpdateFont()
+    end
+    local name = L["Font"]
+    local fontsList = LibSharedMedia:List("font")
+    local tooltipText = E.func_defaultValue_tooltip(defaultValue)
+    if E.interfaceVersion > 120000 then
+        -- local defaultValue = "Friz Quadrata TT"
+        -- Создаем настройку
+        local setting = Settings.RegisterProxySetting(category, variable, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        -- setting:SetValueChangedCallback(E.func_UpdateFont)
+        -- Создаем кастомный инициализатор
+        local OctoFontDropdownInitializer = CreateFromMixins(
+            ScrollBoxFactoryInitializerMixin,
+            SettingsElementHierarchyMixin,
+            SettingsSearchableElementMixin
+        )
+        function OctoFontDropdownInitializer:Init()
+            -- Используем правильный template!
+            ScrollBoxFactoryInitializerMixin.Init(self, "OctoSettingsDropdownControlTemplate")
+            self.data = {
+                name = name,
+                tooltip = name,
+            }
+            self:AddSearchTags(name)
+        end
+        function OctoFontDropdownInitializer:GetExtent()
+            return E.BUTTON_HEIGHT
+        end
+        -- Вспомогательные функции
+        local function GetCurrentFontIndex(fontName)
+            for i, font in ipairs(fontsList) do
+                if font == fontName then
+                    return i
+                end
+            end
+            return 1
+        end
+        -- Локальная функция для обновления UI
+        local function UpdateDropdownUI(frame, currentFont)
+            if not frame or not frame.Control then return end
+            local dropdown = frame.Control.Dropdown
+            if dropdown then
+                dropdown:ddSetSelectedValue(currentFont)
+                dropdown:ddSetSelectedText(currentFont, nil, nil, nil, GameFontNormal,
+                    LibSharedMedia:Fetch("font", currentFont))
+            end
+            -- Обновляем кнопки навигации
+            local leftBtn = frame.Control.DecrementButton
+            local rightBtn = frame.Control.IncrementButton
+            local currentIndex = GetCurrentFontIndex(currentFont)
+            local totalFonts = #fontsList
+            if leftBtn then
+                leftBtn:SetEnabled(currentIndex > 1)
+            end
+            if rightBtn then
+                rightBtn:SetEnabled(currentIndex < totalFonts)
+            end
+        end
+        function OctoFontDropdownInitializer:InitFrame(frame)
+            -- Инициализируем базовые свойства фрейма
+            frame.data = self.data
+            -- Если у фрейма есть Text поле (как в SettingsListElementTemplate)
+            if frame.Text then
+                frame.Text:SetFontObject(GameFontNormal)
+                frame.Text:SetText(name)
+                frame.Text:SetPoint("LEFT", 37, 0)
+            end
+            -- Проверяем, есть ли Control (OctoSettingsDropdownControlTemplate)
+            if not frame.Control then
+                -- Это неправильный template! Нужно проверить структуру вашего template
+                return
+            end
+            local dropdown = frame.Control.Dropdown
+            local leftBtn = frame.Control.DecrementButton
+            local rightBtn = frame.Control.IncrementButton
+            -- Получаем текущее значение
+            local currentValue = setting:GetValue() or defaultValue
+            -- Инициализируем dropdown
+            if dropdown then
+                dropdown:ddSetSelectedValue(currentValue)
+                dropdown:ddSetSelectedText(currentValue, nil, nil, nil, GameFontNormal, LibSharedMedia:Fetch("font", currentValue))
+                dropdown:ddSetInitFunc(function(dropdown, level, value)
+                    local fonts = LibSharedMedia:HashTable("font")
+                    local info = {list = {}}
+                    for i, fontName in ipairs(LibSharedMedia:List("font")) do
+                        info.list[#info.list + 1] = {
+                            text = fontName,
+                            value = fontName,
+                            fontObject = GameFontHighlightLeft,
+                            font = fonts[fontName],
+                            arg1 = dropdown,
+                            func = function(btn, ddBtn)
+                                setting:SetValue(btn.value)
+                                UpdateDropdownUI(frame, btn.value)
+                            end,
+                            checked = (setting:GetValue() or defaultValue) == fontName,
+                        }
+                    end
+                    dropdown:ddAddButton(info)
+                end)
+            end
+            -- Настраиваем кнопки навигации
+            if leftBtn then
+                leftBtn:SetScript("OnClick", function()
+                    E.sound_OnClick()
+                    local currentFont = setting:GetValue() or defaultValue
+                    local currentIndex = GetCurrentFontIndex(currentFont)
+                    if currentIndex > 1 then
+                        local newFont = fontsList[currentIndex - 1]
+                        setting:SetValue(newFont)
+                        UpdateDropdownUI(frame, newFont)
+                    end
+                end)
+            end
+            if rightBtn then
+                rightBtn:SetScript("OnClick", function()
+                    E.sound_OnClick()
+                    local currentFont = setting:GetValue() or defaultValue
+                    local currentIndex = GetCurrentFontIndex(currentFont)
+                    if currentIndex < #LibSharedMedia:List("font") then
+                        local newFont = fontsList[currentIndex + 1]
+                        setting:SetValue(newFont)
+                        UpdateDropdownUI(frame, newFont)
+                    end
+                end)
+            end
+            -- ВАЖНО: Инициализируем callback контейнер ПРАВИЛЬНО
+            -- Используем существующий или создаем новый
+            frame.cbrHandles = frame.cbrHandles or Settings.CreateCallbackHandleContainer()
+            -- Регистрируем callback для обновлений значения
+            frame.cbrHandles:SetOnValueChangedCallback(setting:GetVariable(), function()
+                local currentValue = setting:GetValue() or defaultValue
+                UpdateDropdownUI(frame, currentValue)
+            end)
+            -- Обновляем UI сразу
+            UpdateDropdownUI(frame, currentValue)
+        end
+        function OctoFontDropdownInitializer:Resetter(frame)
+            -- Очищаем callback контейнер
+            if frame.cbrHandles then
+                frame.cbrHandles:Unregister()
+                frame.cbrHandles = nil
+            end
+            -- Закрываем выпадающие меню
+            if frame.Control and frame.Control.Dropdown then
+                frame.Control.Dropdown:ddCloseMenus()
+            end
+        end
+        -- Добавляем инициализатор
+        local customFontInitializer = CreateFromMixins(OctoFontDropdownInitializer)
+        customFontInitializer:Init()
+        layout:AddInitializer(customFontInitializer)
+    elseif E.interfaceVersion > 10000 then
+        local fontValues = {}
+        for _, fontName in ipairs(fontsList) do
+            fontValues[fontName] = fontName
+        end
+        -- local setting = Settings.RegisterProxySetting(category, variable, variableTbl, type(defaultValue), name, defaultValue, GetValue, SetValue)
+        local v = GetValue()
+        local setting = Settings.RegisterAddOnSetting(category, name, variable, type(defaultValue), v)
+        Settings.SetOnValueChangedCallback(variable, function(event, settingObj, value)
+            -- Теперь пишем прямо в профиль (settingsProfile), а не в FontOption[locale]
+            settingsProfile.Config_FontStyle = value -- или settingsProfile[variableKey] = value
+            E.func_UpdateFont()
+            E.func_UpdateGlobals()
+        end)
 
-		local function GetOptions()
-			local container = Settings.CreateControlTextContainer()
-			for fontName in pairs(fontValues) do
-				container:Add(fontName, fontName)
-			end
-			return container:GetData()
-		end
-		local initializer = Settings.CreateDropDown(category, setting, GetOptions, tooltipText)
-
-	end
+        local function GetOptions()
+            local container = Settings.CreateControlTextContainer()
+            for fontName in pairs(fontValues) do
+                container:Add(fontName, fontName)
+            end
+            return container:GetData()
+        end
+        local initializer = Settings.CreateDropDown(category, setting, GetOptions, tooltipText)
+    end
 end
 ----------------------------------------------------------------
 function E.func_Create(category, layout)

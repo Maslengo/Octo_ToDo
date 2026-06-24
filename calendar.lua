@@ -1,36 +1,24 @@
 local GlobalAddonName, E = ...
 local L = E.L
 ----------------------------------------------------------------
--- Заглушка для проверки «секретных» ивентов -------------------
-----------------------------------------------------------------
 local issecretvalue = issecretvalue or function() end
-----------------------------------------------------------------
--- Константы периодов ------------------------------------------
 ----------------------------------------------------------------
 local PAST_PERIOD = 1
 local PRESENT_PERIOD = 2
 local FUTURE_PERIOD = 3
 ----------------------------------------------------------------
--- Фрейм, управляющий календарём
-----------------------------------------------------------------
 local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
--- Сколько дней показывать в прошлом и будущем -----------------
-----------------------------------------------------------------
 local showPast = true
-local previousDays = 3 -- 28
+local previousDays = 0 -- 28
 ----------------------------------------------------------------
 local showFuture = true
-local followingDays = 14 -- 28
-----------------------------------------------------------------
-local showID = false
-----------------------------------------------------------------
--- Иконки ------------------------------------------------------
+local followingDays = 14 -- 28 -- TWO WEEKS
 ----------------------------------------------------------------
 local iconStrPattern = "|T%s:18:18:0:0:128:128:0:91:0:91|t "
 local iconStrCustomPattern = "|T%s:18|t "
 local iconLockOut = "|T340023:18:18:2:0:32:32:0:28:0:28|t "
-local noIcon = "|TInterface/Icons/INV_Misc_QuestionMark:18|t "
+local noIcon = "|TInterface/Icons/INV_Misc_QuestionMark:18|t " -- E.ICON_QUESTION_MARK
 ----------------------------------------------------------------
 -- Текстуры типов событий --------------------------------------
 ----------------------------------------------------------------
@@ -52,14 +40,6 @@ EventFrame.FILTER_CVARS = {
 	"calendarShowWeeklyHolidays",
 	"calendarShowBattlegrounds",
 }
-----------------------------------------------------------------
--- func_RegisterEvents -----------------------------------------
-----------------------------------------------------------------
-local MyEventsTable = {
-	"ADDON_LOADED",
-	"PLAYER_LOGIN",
-}
-E.func_RegisterEvents(EventFrame, MyEventsTable)
 ----------------------------------------------------------------
 -- Создаёт метку времени из структуры, которую возвращает календарь
 ----------------------------------------------------------------
@@ -169,12 +149,44 @@ local function AssignPeriodAndTime(event, currentTimestamp)
 			-- sortTime nil
 		end
 	end
+
+	if period == PRESENT_PERIOD then
+		-- используем event.endTimestamp если он уже вычислен, иначе локальные значения
+		local endTs = event.endTimestamp or (event.endTime and CreateCalendarTimestamp(event.endTime))
+		local st = sortTime or event.sortTime or nil
+
+		-- если есть sortTime и оно в прошлом -> прошлое
+		if st and st <= currentTimestamp then
+			period = PAST_PERIOD
+			sortTime = nil
+		-- если sortTime отсутствует, но endTimestamp в прошлом -> прошлое
+		elseif (not st) and endTs and endTs <= currentTimestamp then
+			period = PAST_PERIOD
+			sortTime = nil
+		end
+	end
+
+
 	event.periodID = period
 	event.sortTime = sortTime
 end
-----------------------------------------------------------------------
--- PLAYER_LOGIN ------------------------------------------------------
-----------------------------------------------------------------------
+----------------------------------------------------------------
+-- func_RegisterEvents -----------------------------------------
+----------------------------------------------------------------
+local MyEventsTable = {
+	"VARIABLES_LOADED",
+	"PLAYER_LOGIN",
+}
+E.func_RegisterEvents(EventFrame, MyEventsTable)
+----------------------------------------------------------------
+-- VARIABLES_LOADED --------------------------------------------
+----------------------------------------------------------------
+function EventFrame:VARIABLES_LOADED()
+	self:init_Octo_ToDo_DB_Variables_Calendar()
+end
+----------------------------------------------------------------
+-- PLAYER_LOGIN ------------------------------------------------
+----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
 	C_Timer.After(1, function()
 			Octo_CalendarButton:HookScript("OnShow", function()
@@ -191,20 +203,12 @@ function EventFrame:PLAYER_LOGIN()
 	end)
 end
 ----------------------------------------------------------------
--- ADDON_LOADED ------------------------------------------------
+-- init_Octo_ToDo_DB_Variables_Calendar ----------------------------------
 ----------------------------------------------------------------
-function EventFrame:ADDON_LOADED(addonName)
-	if addonName ~= GlobalAddonName then return end
-	self:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
-	self:Init_Octo_ToDo_DB_Calendar()
-end
-----------------------------------------------------------------
--- Init_Octo_ToDo_DB_Calendar ----------------------------------
-----------------------------------------------------------------
-function EventFrame:Init_Octo_ToDo_DB_Calendar() -- /run opde(Octo_ToDo_DB_Calendar)
-	Octo_ToDo_DB_Calendar = Octo_ToDo_DB_Calendar or {}
-	self.db = Octo_ToDo_DB_Calendar
+function EventFrame:init_Octo_ToDo_DB_Variables_Calendar()
+	Octo_ToDo_DB_Variables = Octo_ToDo_DB_Variables or {}
+	Octo_ToDo_DB_Variables.Calendar = Octo_ToDo_DB_Variables.Calendar or {}
+	self.db = Octo_ToDo_DB_Variables.Calendar
 	for _, cvar in ipairs(self.FILTER_CVARS) do
 		if self.db[cvar] == nil then
 			self.db[cvar] = true
@@ -326,9 +330,8 @@ function EventFrame:setEventList(day, periodID)
 			if event.sortTime and event.sortTime < self.timeToEvent then
 				self.timeToEvent = event.sortTime
 			end
-			if showID then
-				event.title = event.title .. E.COLOR_GRAY .. " (" .. event.eventID .. ")|r"
-			end
+
+			event.title = event.title .. E.debugInfo(event.eventID)
 			self:updateEventAttr(event)
 			self.list[#self.list + 1] = event
 			self.list[eventKey] = event
@@ -428,7 +431,7 @@ function EventFrame:generateTooltipData()
 	local rightHeader = self.db.titleColor .. curDateStr .. "|r"
 	local testSTR = E.COLOR_TIME .. NormalizeNumber(now.monthDay) .. "." .. NormalizeNumber(now.month) .. "|r"
 	-- tooltip[#tooltip+1] = {leftHeader, centHeader, rightHeader}
-	tooltip[#tooltip+1] = {"", "", testSTR, "", ""}
+	tooltip[#tooltip+1] = {"", "", testSTR}
 	tooltip[#tooltip+1] = {E.SEPARATOR_KEY}
 	local visibleCount = 0
 	local lastPeriod
@@ -467,7 +470,12 @@ function EventFrame:generateTooltipData()
 					end
 				end
 			end
-			tooltip[#tooltip+1] = {icon .. event.title, timeRemaining, {event.dateStrLEFT, "RIGHT"}, event.dateStrRIGHT ~= "" and "-" or "", {event.dateStrRIGHT, "LEFT"}} -- , event.dateStr
+			tooltip[#tooltip+1] = {
+				icon .. event.title,
+				timeRemaining,
+				{event.dateStrLEFT, "RIGHT"}, event.dateStrRIGHT ~= "" and "-" or "", {event.dateStrRIGHT, "LEFT"},
+				-- {event.dateStrLEFT .. (event.dateStrRIGHT ~= "" and " " or "") .. event.dateStrRIGHT, "CENTER"}
+			} -- , event.dateStr
 		end
 	end
 	if visibleCount == 0 then

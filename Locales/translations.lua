@@ -13,7 +13,18 @@ local GlobalAddonName, E = ...
 -- ["zhTW"] = "",
 -- },
 E.translations = {
-
+	["Changelog"] = {
+		["ruRU"] = "Список изменений",
+		["deDE"] = "Änderungsprotokoll",
+		["esES"] = "Registro de cambios",
+		["esMX"] = "Registro de cambios",
+		["frFR"] = "Historique des modifications",
+		["itIT"] = "Registro delle modifiche",
+		["ptBR"] = "Registro de alterações",
+		["koKR"] = "변경 내역",
+		["zhCN"] = "更新日志",
+		["zhTW"] = "更新日誌",
+	},
 	["Experience Eliminator"] = {
 		["ruRU"] = "Накопление опыта",
 		["deDE"] = "Erfahrungseliminierer",
@@ -415,6 +426,23 @@ E.translations = {
 		["zhTW"] = "誓盟",
 	},
 	----------------------------------------------------------------
+	["Button"] = {
+		["ruRU"] = "Кнопка",
+		["deDE"] = "Schaltfläche",
+		["esES"] = "Botón",
+		["esMX"] = "Botón",
+		["frFR"] = "Bouton",
+		["itIT"] = "Pulsante",
+		["ptBR"] = "Botão",
+		["koKR"] = "버튼",
+		["zhCN"] = "按钮",
+		["zhTW"] = "按鈕",
+	},
+	----------------------------------------------------------------
+	["DELVES_NEW_CURIO"] = DELVES_NEW_CURIO, -- НОВОЕ
+	["NEW_CAPS"] = NEW_CAPS, -- НОВОЕ
+	["EVENTS_LABEL"] = EVENTS_LABEL, -- Собития
+	["TRACKING"] = TRACKING, -- Отслеживание
 	["EMPTY"] = EMPTY, -- Пусто
 	----------------------------------------------------------------
 	["PRIMARY"] = PRIMARY, -- Основное
@@ -607,6 +635,7 @@ E.translations = {
 	["FACTION_STANDING_LABEL6"] = FACTION_STANDING_LABEL6,
 	["FACTION_STANDING_LABEL7"] = FACTION_STANDING_LABEL7,
 	["FACTION_STANDING_LABEL8"] = FACTION_STANDING_LABEL8,
+	["RAID"] = RAID, -- Рейд
 	["RAIDS"] = RAIDS,
 	["DUNGEONS"] = DUNGEONS,
 	["COLOR"] = COLOR,

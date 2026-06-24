@@ -1,9 +1,10 @@
 local GlobalAddonName, E = ...
-local EventFrame = CreateFrame("FRAME")
-local funcName = GlobalAddonName.."WTF"
+----------------------------------------------------------------
+-- local funcName = GlobalAddonName.."WTF"
 local L = E.L
 local LibThingsLoad = LibStub("LibThingsLoad-1.0")
 ----------------------------------------------------------------
+local EventFrame = CreateFrame("FRAME")
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function EventFrame:func_CacheGameData()
@@ -93,6 +94,53 @@ function EventFrame:func_CacheGameData()
 		end
 	end
 	----------------------------------------------------------------
+	-- E.DEBUG_STOP("func_CacheGameData")
+	----------------------------------------------------------------
+	E.UniversalQuestMap = {}
+	E.ALL_UniversalQuests = {}
+	-- заранее построенный lookup
+	for _, categoryData in next, (E.OctoTables_DataOtrisovka) do
+		for dataType, dataEntries in next, (categoryData) do
+			if dataType == "UniversalQuests" then
+				for _, data in next, (dataEntries) do
+					if (data.quests or data.questpools) and data.reset then
+						local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
+						data.questKey = questKey
+						table.insert(E.ALL_UniversalQuests, data)
+						E.UniversalQuestMap[questKey] = data
+					end
+				end
+			end
+			if dataType == "Currencies" then
+				for i, v in next, (dataEntries) do
+					local currencyID = v.id
+					E.ALL_Currencies[currencyID] = true
+				end
+			end
+			if dataType == "Reputations" then
+				for i, v in next, (dataEntries) do
+					local reputationID = v.id
+					E.ALL_Reputations[reputationID] = true
+				end
+			end
+			-- if dataType == "RaidsOrDungeons" then
+			-- end
+			if dataType == "Items" then
+				for i, v in next, (dataEntries) do
+					local itemID = v.id
+					E.ALL_Items[itemID] = true
+				end
+			end
+			-- if dataType == "AdditionallyTOP" then
+			-- end
+			-- if dataType == "AdditionallyBOTTOM" then
+			-- end
+			-- if dataType == "AdditionallyCENTER" then
+			-- end
+		end
+	end
+	-- opde(E.UniversalQuestMap)
+	----------------------------------------------------------------
 	-- Асинхронная загрузка
 	local promise = LibThingsLoad:QuestsByKey(E.ALL_Quests)
 	promise:AddItemsByKey(E.ALL_Items)
@@ -108,27 +156,6 @@ function EventFrame:func_CacheGameData()
 			-- -- E.func_GetItemQualityByID(ID)
 			-- end
 	end)
-	----------------------------------------------------------------
-	-- E.DEBUG_STOP("func_CacheGameData")
-	----------------------------------------------------------------
-	E.UniversalQuestMap = {}
-	E.ALL_UniversalQuests = {}
-	-- заранее построенный lookup
-	for _, categoryData in next, (E.OctoTables_DataOtrisovka) do
-	    for dataType, dataEntries in next, (categoryData) do
-	        if dataType == "UniversalQuests" then
-	            for _, data in next, (dataEntries) do
-	                if (data.quests or data.questpools) and data.reset then
-	                    local questKey = E.UNIVERSAL..data.desc.."_"..data.name_save.."_"..data.reset
-	                    data.questKey = questKey
-	                    table.insert(E.ALL_UniversalQuests, data)
-	                    E.UniversalQuestMap[questKey] = data
-	                end
-	            end
-	        end
-	    end
-	end
-	-- opde(E.UniversalQuestMap)
 end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
@@ -214,7 +241,6 @@ function EventFrame:func_DatabaseClear()
 	E.func_CleanDeepTable(Octo_Cache_DB, rules)
 	E.func_CleanDeepTable(Octo_ToDo_DB_AccountData, rules)
 	E.func_CleanDeepTable(Octo_Achievements_DB, rules)
-	E.func_CleanDeepTable(Octo_DevTool_DB, rules)
 	E.func_CleanDeepTable(Octo_Moduls_DB, rules)
 	E.func_CleanDeepTable(Octo_QuestsChanged_DB, rules)
 	E.func_CleanDeepTable(Octo_TalentsFrameArt_DB, rules)
@@ -382,16 +408,10 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
-----------------------------------------------------------------
 local fields = {
-	"SETTINGS",		-- E.SETTINGS_CURRENT
-	"KEYS",			-- E.KEYS_CURRENT
-	"CHARACTERS",	-- E.CHARACTERS_CURRENT
+	"SETTINGS",        -- E.SETTINGS_CURRENT
+	"KEYS",            -- E.KEYS_CURRENT
+	"CHARACTERS",    -- E.CHARACTERS_CURRENT
 }
 ----------------------------------------------------------------
 function E.func_UpdateGlobalNSforProfiles()
@@ -402,14 +422,12 @@ function E.func_UpdateGlobalNSforProfiles()
 		E[field .. "_CURRENT"] = Octo_Todo_DB_Profiles[field].CURRENT
 	end
 end
-
-
-
 function E.func_INIT_Components()
 	-- E.DEBUG_START()
 	----------------------------------------------------------------
 	E.OctoTables_Vibor = {}
 	E.OctoTables_DataOtrisovka = {}
+	E.OctoTables_Vibor_ORDER = {}
 	----------------------------------------------------------------
 	for i, componentFunc in next, (E.Components) do
 		local OctoTables_Vibor, OctoTables_DataOtrisovka = componentFunc()
@@ -424,10 +442,14 @@ function E.func_INIT_Components()
 			end
 		end
 	end
+	E.OctoTables_Vibor_ORDER = {}
+	for key in pairs(E.OctoTables_Vibor) do
+		table.insert(E.OctoTables_Vibor_ORDER, key)
+	end
+	table.sort(E.OctoTables_Vibor_ORDER)
 	----------------------------------------------------------------
 	-- E.DEBUG_STOP("func_INIT_Components")
 end
-
 ----------------------------------------------------------------
 function E.init_Octo_Todo_DB_Profiles()
 	Octo_Todo_DB_Profiles = Octo_Todo_DB_Profiles or {}
@@ -546,11 +568,11 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
+E.Octo_ToDo_DB_Variables_defaultOptions = {
 	["CONFIG_DEBUG"] = {
 		{
 			name = L["DEBUG"],
-			variableKey = "CONFIG_DEBUG_DEBUG", -- Octo_DevTool_DB.CONFIG_DEBUG_ENABLED
+			variableKey = "CONFIG_DEBUG_DEBUG",
 			defaultValue = false,
 		},
 		{
@@ -645,15 +667,19 @@ E.Octo_DevTool_DB_defaultOptions = { -- Octo_DevTool_DB
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-function E.init_Octo_DevTool_DB()
-	Octo_DevTool_DB = Octo_DevTool_DB or {}
-	-- EventFrame.savedVars = E.func_GetSavedVars(GlobalAddonName)
-	for _, headers in next,(E.Octo_DevTool_DB_defaultOptions) do
+function E.init_Octo_ToDo_DB_Variables()
+	Octo_ToDo_DB_Variables = Octo_ToDo_DB_Variables or {}
+	Octo_ToDo_DB_Variables.dbv = Octo_ToDo_DB_Variables.dbv or 1
+	Octo_ToDo_DB_Variables.LibDataBroker = Octo_ToDo_DB_Variables.LibDataBroker or 240
+	Octo_ToDo_DB_Variables.dataprovider = Octo_ToDo_DB_Variables.dataprovider or {}
+	Octo_ToDo_DB_Variables.CONFIG = Octo_ToDo_DB_Variables.CONFIG or {}
+	Octo_ToDo_DB_Variables.Calendar = Octo_ToDo_DB_Variables.Calendar or {}
+	for _, headers in next,(E.Octo_ToDo_DB_Variables_defaultOptions) do
 		for _, tbl in ipairs(headers) do
 			local variableKey = tbl.variableKey
 			local defaultValue = tbl.defaultValue
-			E.func_InitField(Octo_DevTool_DB, variableKey, defaultValue)
-			E[variableKey] = Octo_DevTool_DB[variableKey] -- Копируем в глобальную таблицу
+			E.func_InitField(Octo_ToDo_DB_Variables.CONFIG, variableKey, defaultValue)
+			-- E[variableKey] = Octo_ToDo_DB_Variables.CONFIG[variableKey] -- Копируем в глобальную таблицу
 		end
 	end
 end
@@ -750,12 +776,12 @@ end
 function E.WTF_func_CheckAll()
 	Octo_ToDo_DB_Levels = Octo_ToDo_DB_Levels or {}
 	EventFrame:func_DatabaseClear()
-	E.init_Octo_DevTool_DB()
+	E.init_Octo_ToDo_DB_Levels()
 	E.init_Octo_Todo_DB_Profiles()
 	E.func_RemoveDuplicateCharacters()
-	E.init_Octo_ToDo_DB_Levels()
 	E.Init_Octo_Cache_DB()
 	E.init_Octo_ToDo_DB_AccountData()
+	E.init_Octo_ToDo_DB_Variables()
 	E.func_setOldChanges()
 	E.func_UpdateGlobals()
 end
@@ -770,7 +796,6 @@ end
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 function EventFrame:PLAYER_LOGIN()
-
 	EventFrame:func_CacheGameData() -- E.Components
 	self:func_ScheduleResetTimer()
 	E.func_BUILD_DUNG_DB()

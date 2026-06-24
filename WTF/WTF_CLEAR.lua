@@ -10,7 +10,7 @@ function E.Cleanup_Obsolete_Reputations()
 		if cm then
 			if cm.Reputation then
 				for reputationID in next, cm.Reputation do
-					if not E.TBL_validReps[reputationID] then
+					if not E.ALL_Reputations[reputationID] then
 						-- E.func_PrintMessage(pd.classColorHex..pd.Name.."|r", "cm.Reputation[reputationID] = nil")
 						cm.Reputation[reputationID] = nil
 					end

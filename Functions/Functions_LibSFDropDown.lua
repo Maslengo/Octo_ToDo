@@ -35,7 +35,7 @@ function E.func_CreateBaseDropDown(frame, buttonName, customName)
 	DropDown.ExpandArrow:SetTexture("Interface/ChatFrame/ChatFrameExpandArrow")
 	DropDown.ExpandArrow:SetPoint("RIGHT", 0, 0)
 	DropDown.text = DropDown:CreateFontString()
-	DropDown.text:SetFontObject(OctoFont11)
+	DropDown.text:SetFontObject(E.OctoFont12_MT)
 	DropDown.text:SetAllPoints()
 	DropDown.text:SetJustifyV("MIDDLE")
 	DropDown.text:SetJustifyH("CENTER")
@@ -263,6 +263,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 						E.func_DELETEPERS(btn.value)
 						providerfunc()
 						for i = level, level+3 do DropDown:ddRefresh(i) end
+						DropDown:ddReopenAllMenus() --(1, level+3)
 					end
 					item.removeDoNotHide = true
 				end
@@ -281,7 +282,9 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 							value = children,
 							-- fontObject = GameTooltipText,
 					})
-					if childHasVisible then hasVisible = true end
+					if childHasVisible then
+						hasVisible = true
+					end
 				end
 			end
 		end
@@ -806,7 +809,7 @@ function E.build_characters_menu(providerfunc, DropDown, level)
 											-- subself:ddCloseMenus()
 											for i = lvl, lvl + 3 do DropDown:ddRefresh(i) end
 											-- DropDown:ddReopenMenu(sublvl)
-											DropDown:ddReopenAllMenus(1, sublvl)
+											DropDown:ddReopenAllMenus() --(1, sublvl)
 										end,
 										OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
 									},
@@ -922,38 +925,43 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 	local function func_checked(menuButton)
 		return GetCurrentExpansionTBL()[menuButton.value]
 	end
-	for expansionID, v in next, (E.OctoTables_Vibor) do
-		local info = {}
-		info.text = v.name
-		-- info.fontObject = GameTooltipText
-		info.value = expansionID
-		info.icon = v.icon
-		info.iconInfo = commonIconInfo
-		info.keepShownOnClick = true
-		info.notCheckable = false
-		info.isNotRadio = true
-		info.func = func_Myfunc
-		info.checked = func_checked
-		info.widgets = {
-			{
-				icon = "interface/worldmap/worldmappartyicon",
-				width = 16, height = 16,
-				OnClick = function(widget)
-					local tbl = GetCurrentExpansionTBL()
-					E.sound_OnClick()
-					for eid in next, (E.OctoTables_Vibor) do
-						tbl[eid] = false
-					end
-					tbl[expansionID] = true
-					providerfunc()
-					DropDown:ddRefresh(level)
-				end,
-				OnTooltipShow = function(btn, tooltip)
-					tooltip:AddLine(L["Select only this expansion"])
-				end,
+	-- Изменено: используем упорядоченный массив
+	for _, expansionID in ipairs(E.OctoTables_Vibor_ORDER) do
+		local v = E.OctoTables_Vibor[expansionID]
+		if v then
+			local info = {}
+			info.text = v.name
+			-- info.fontObject = GameTooltipText
+			info.value = expansionID
+			info.icon = v.icon
+			info.iconInfo = commonIconInfo
+			info.keepShownOnClick = true
+			info.notCheckable = false
+			info.isNotRadio = true
+			info.func = func_Myfunc
+			info.checked = func_checked
+			info.widgets = {
+				{
+					icon = "interface/worldmap/worldmappartyicon",
+					width = 16, height = 16,
+					OnClick = function(widget)
+						local tbl = GetCurrentExpansionTBL()
+						E.sound_OnClick()
+						-- Изменено: обход по упорядоченному массиву
+						for _, eid in ipairs(E.OctoTables_Vibor_ORDER) do
+							tbl[eid] = false
+						end
+						tbl[expansionID] = true
+						providerfunc()
+						DropDown:ddRefresh(level)
+					end,
+					OnTooltipShow = function(btn, tooltip)
+						tooltip:AddLine(L["Select only this expansion"])
+					end,
+				}
 			}
-		}
-		table_insert(list, info)
+			table_insert(list, info)
+		end
 	end
 	return function(self, lvl)
 		----------------------------------------------------------------
@@ -980,7 +988,8 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 				notCheckable = true,
 				func = function()
 					local tbl = GetCurrentExpansionTBL()
-					for eid in next, (E.OctoTables_Vibor) do
+					-- Изменено: обход по упорядоченному массиву
+					for _, eid in ipairs(E.OctoTables_Vibor_ORDER) do
 						tbl[eid] = true
 					end
 					E.sound_OnClick()
@@ -998,7 +1007,8 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 				notCheckable = true,
 				func = function()
 					local tbl = GetCurrentExpansionTBL()
-					for eid in next, (E.OctoTables_Vibor) do
+					-- Изменено: обход по упорядоченному массиву
+					for _, eid in ipairs(E.OctoTables_Vibor_ORDER) do
 						tbl[eid] = false
 					end
 					E.sound_OnClick()
@@ -1137,7 +1147,7 @@ function E.build_expansion_menu(providerfunc, DropDown, level)
 										-- subself:ddCloseMenus()
 										for i = lvl, lvl + 3 do DropDown:ddRefresh(i) end
 										-- DropDown:ddReopenMenu(sublvl)
-										DropDown:ddReopenAllMenus(1, sublvl)
+										DropDown:ddReopenAllMenus() --(1, sublvl)
 									end,
 									OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
 								},
@@ -1269,7 +1279,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 						--     DropDown:ddRefresh(i)
 						-- end
 						-- DropDown:ddReopenMenu(sublvl)
-						DropDown:ddReopenAllMenus(1, sublvl)
+						DropDown:ddReopenAllMenus() --(1, sublvl)
 					end,
 					-- OnClick = function()
 					--     local dialogName = "OCTO_RESET_DEFAULT_" .. (variableKey or "color")
@@ -1378,7 +1388,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 						variableTbl[variableKey] = defaultTbl[variableKey]
 						providerfunc()
 						E.func_UpdateGlobals()
-						DropDown:ddReopenAllMenus(1, sublvl)
+						DropDown:ddReopenAllMenus() --(1, sublvl)
 					end,
 					OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Reset to default"] or "Reset to default") end,
 			}}
@@ -1453,7 +1463,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 						if variableKey_a then variableTbl[variableKey_a] = defaultTbl[variableKey_a] end
 						providerfunc()
 						E.func_UpdateGlobals()
-						DropDown:ddReopenAllMenus(1, sublvl)
+						DropDown:ddReopenAllMenus() --(1, sublvl)
 					end,
 					OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["Reset to default"] or "Reset to default") end,
 			}}
@@ -1560,7 +1570,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 						providerfunc()
 						E.func_UpdateGlobals()
 						subself:ddRefresh(sublvl)
-						DropDown:ddReopenAllMenus(1, sublvl)
+						DropDown:ddReopenAllMenus() --(1, sublvl)
 					end,
 					-- OnClick = function()
 					--     local dialogName = "OCTO_RESET_ADDON_" .. variableKey
@@ -1612,8 +1622,9 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					end
 					local name = L["Font"]
 					local variableKey = "Config_FontStyle"
-					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
-					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE.FontOption[E.curLocaleLang]
+					-- Теперь переменная ссылается на сам профиль (плоские ключи)
+					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
 					local values = fontValues
 					addDropdown_NEW(subself, sublvl, variableKey, variableTbl, name, defaultTbl, values)
 				end
@@ -1624,8 +1635,8 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 					local name = L["FONT_SIZE"]
 					local variable = E.func_GenerateID() -- UNIQUE ID
 					local variableKey = "Config_FontSize"
-					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
-					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE.FontOption[E.curLocaleLang]
+					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
 					local tooltip = nil
 					local minValue = 8
 					local maxValue = 32
@@ -1638,8 +1649,8 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 				do
 					local name = L["Font Outline"]
 					local variableKey = "Config_FontFlags"
-					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT().FontOption[E.curLocaleLang]
-					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE.FontOption[E.curLocaleLang]
+					local variableTbl = E.func_GetProfile_SETTINGS_CURRENT()
+					local defaultTbl = E.DEFAULT_SETTINGS_FORPROFILE
 					local values = {
 						{value = "", text = NPC_NAMES_DROPDOWN_NONE},
 						{value = "MONOCHROME", text = "MONOCHROME"},
@@ -3297,7 +3308,7 @@ function E.build_color_profiles_menu(providerfunc, DropDown, level)
 											-- subself:ddCloseMenus()
 											for i = lvl, lvl + 3 do DropDown:ddRefresh(i) end
 											-- DropDown:ddReopenMenu(sublvl)
-											DropDown:ddReopenAllMenus(1, sublvl)
+											DropDown:ddReopenAllMenus() --(1, sublvl)
 										end,
 										OnTooltipShow = function(btn, tooltip) tooltip:AddLine(L["RESET"], nil, nil, nil, true) end,
 									},
@@ -3643,8 +3654,8 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 	local handlerCache = setmetatable({}, { __mode = "kv" })
 	local function makeThemeHandler(themeName)
 		return function(btn)
-			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME = themeName
-			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES)
+			Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_EDITORTHEME = themeName
+			LibIndentation.enable(editBox, E.func_createColorScheme(themeName or "Twilight"), Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_TABSPACES)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(1)
@@ -3652,8 +3663,8 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 	end
 	local function makeTabSizeHandler(tabSize)
 		return function(btn)
-			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES = tabSize
-			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME or "Twilight"), tabSize)
+			Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_TABSPACES = tabSize
+			LibIndentation.enable(editBox, E.func_createColorScheme(Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_EDITORTHEME or "Twilight"), tabSize)
 			editBox:SetText(editBox:GetText():trim())
 			LibIndentation.indentEditbox(editBox)
 			DropDown:ddRefresh(2)
@@ -3661,7 +3672,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 	end
 	local function makeFontSizeHandler(fontSize)
 		return function(btn)
-			Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_FONTSIZE = fontSize
+			Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_FONTSIZE = fontSize
 			editBox:SetFont(E.Octo_font, fontSize, "")
 			DropDown:ddRefresh(2)
 		end
@@ -3679,7 +3690,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 					info.text = name
 					info.value = name
 					info.checked = function(btn)
-						return Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_EDITORTHEME == name
+						return Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_EDITORTHEME == name
 					end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
@@ -3717,7 +3728,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 					info.text = v
 					info.value = v
 					info.checked = function(btn)
-						return btn.value == Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_TABSPACES
+						return btn.value == Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_TABSPACES
 					end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
@@ -3734,7 +3745,7 @@ function E.func_Create_DDframe_editFrame(frame, providerfunc, buttonName)
 					info.text = i
 					info.value = i
 					info.checked = function(btn)
-						return btn.value == Octo_DevTool_DB.CONFIG_DEBUG_EDITBOX_FONTSIZE
+						return btn.value == Octo_ToDo_DB_Variables.CONFIG.CONFIG_DEBUG_EDITBOX_FONTSIZE
 					end
 					info.func = handlerCache[cacheKey]
 					dd:ddAddButton(info, level)
@@ -3795,7 +3806,7 @@ function E.func_Create_DDframe_Options_LEFT(frame, providerfunc, buttonName)
 								if not CharacterProfile_SORTING then return end
 								table_insert(CharacterProfile_SORTING.sort_order, opt.vars)
 								CharacterProfile_SORTING.sort_order_ACTIVED[opt.vars] = true
-								E.func_CreateDataProvider_SORTUI()
+								E.func_CreateDataProvider_CHARACTERS()
 							end,
 							notCheckable = true,
 							-- fontObject = GameTooltipText,

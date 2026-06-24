@@ -3,6 +3,14 @@ local L = E.L
 -- local issecretvalue = issecretvalue
 _G.OctoEngine = E
 ----------------------------------------------------------------
+E.DEBUG = false
+E.DEBUG_CHANGELOG = false
+E.DEBUG_NAME = false
+E.DEBUG_CURRENCY_TOOLTIP = false
+----------------------------------------------------------------
+E.REFRESH_CACHE = true
+E.SPAM_TIME = 2
+----------------------------------------------------------------
 -- local scale = WorldFrame:GetWidth() / GetPhysicalScreenSize() / UIParent:GetScale()
 E.curLocaleLang = GetLocale() or "enUS"
 local LibSharedMedia = LibStub("LibSharedMedia-3.0")
@@ -40,26 +48,23 @@ E.SEPARATOR_KEY = "---"
 E.ENABLE_HIGHTLIGHT = true
 E.ENABLE_EXPANSIONCOLOR = true
 ----------------------------------------------------------------
-E.DEBUG = false
-E.DEBUG_NAME = false
-E.DEBUG_CURRENCY_TOOLTIP = false
-E.REFRESH_CACHE = true
-E.SPAM_TIME = 2
-----------------------------------------------------------------
 E.REVERSE = true -- по убыванию (E.DESCENDING = true) (E.ASCENDING  = false   -- по возрастанию)
 ----------------------------------------------------------------
+E.HIDEFRAMES = {}
 E.Octo_Table_SI_IDS = {}
 E.SavedInstanceID_to_EJInstance = {}
 E.EJInstance_to_SavedInstanceID = {}
 E.OctoTable_ColoredFrames = {}
 E.OctoTable_ColoredTooltips = {}
 E.OctoTables_Vibor = {}
+E.OctoTables_Vibor_ORDER = {}
 E.ALL_Currencies = {}
 E.ALL_Items = {}
 E.ALL_UniversalQuests = {}
 E.ALL_AdditionallyCENTER = {}
 E.ALL_AdditionallyBOTTOM = {}
 E.ALL_Quests = {}
+E.ALL_Reputations = {}
 E.UniversalQuestMap = {}
 E.First_Option = {}
 E.Second_Option = {}
@@ -123,10 +128,6 @@ E.Class_DemonHunter_Color = E.func_GetClassColor_HEX("DEMONHUNTER")
 E.Class_DeathKnight_Color = E.func_GetClassColor_HEX("DEATHKNIGHT")
 E.Class_Evoker_Color = E.func_GetClassColor_HEX("EVOKER")
 E.TEXT_SPACE = " "
-
-
-
-
 E.FULL_WIDTH = 3.60
 E.FOURTH_WIDTH = E.FULL_WIDTH/4.4
 E.HALF_WIDTH = E.FULL_WIDTH/2.2
@@ -140,12 +141,10 @@ E.edgeFile = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\border\\Octo.tga"
 E.menuBackdrop = {
 	bgFile = E.bgFile,
 	edgeFile = E.edgeFile,
-
 	-- tile = true,
 	-- -- tileEdge = true,
 	-- tileSize = 8,
 	edgeSize = E.edgeSize, -- 2
-
 	insets = {left = E.edgeSize, right = E.edgeSize, top = E.edgeSize, bottom = E.edgeSize}
 }
 E.ddMenuButtonHeight = 18
@@ -154,15 +153,6 @@ E.HEADER_HEIGHT = E.GLOBAL_LINE_HEIGHT*2 -- Высота заголовка
 E.HEADER_TEXT_OFFSET = E.HEADER_HEIGHT / 5
 E.GLOBAL_LINE_WIDTH_LEFT = 200
 E.GLOBAL_LINE_WIDTH_RIGHT = 90
-E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\font\\Expressway Rg Bold.TTF"
-E.GLOBAL_FONT_SIZE = 11
-E.OctoFont10 = CreateFont("OctoFont10")
-E.OctoFont10:CopyFontObject(GameTooltipText)
-E.OctoFont11 = CreateFont("OctoFont11")
-E.OctoFont11:CopyFontObject(GameTooltipText)
-E.OctoFont22 = CreateFont("OctoFont22")
-E.OctoFont22:CopyFontObject(SystemFont_Outline_Small)
-E.OctoFont22:SetFont(E.Octo_font, 22, "OUTLINE")
 LE_EXPANSION_LEVEL_CURRENT = LE_EXPANSION_LEVEL_CURRENT or 1
 E.currentMaxLevel = GetMaxLevelForExpansionLevel(LE_EXPANSION_LEVEL_CURRENT)
 E.COLOR_GREEN = "|cff4FFF79" -- "|cff00FF00"
@@ -188,7 +178,6 @@ E.CURRENT_REGION_NAME = GetCurrentRegionName() or "EU" -- E.func_GetCurrentRegio
 if E.CURRENT_REGION_NAME == "" then E.CURRENT_REGION_NAME = "US" end
 E.GameVersion = GetCurrentRegion() >= 72 and "PTR" or "Retail"
 E.curGUID = UnitGUID("PLAYER")
-
 E.GameLimitedMode_IsActive = GameLimitedMode_IsActive() or false
 E.POSITION_MAIN_FRAME = -157
 E.ANIMATION_DURATION = .2
@@ -215,11 +204,8 @@ E.COLOR_TIME = "|cff9999FF"
 -- E.COLOR_THEWARWITHIN = "|cff90CCDD"
 -- E.COLOR_MIDNIGHT = "|cffB580FF"
 -- E.COLOR_THELASTTITAN = "|cffF4C263"
-
 E.borderColorR, E.borderColorG, E.borderColorB, E.borderColorA = 0, 0, 0, 1
 E.textR, E.textG, E.textB, E.textA = 1, 1, 1, 1
-
-
 E.COLOR_WORLDOFWARCRAFT = "|cffD0B070"
 E.COLOR_THEBURNINGCRUSADE = "|cffD45565"
 E.COLOR_WRATHOFTHELICHKING = "|cff6CB8D8"
@@ -271,7 +257,6 @@ E.COLOR_EVENT = "|cffFFF371"
 E.COLOR_DEBUG = E.classColorHexCurrent
 E.COLOR_FUNCTION = "|cff87CDEB"
 E.COLOR_IVORY = "|cffFFF7D7"
-
 E.COLOR_REPPARAGON =  "|cff00A3FF"      -- "|cff00527F" -- 00A3FF
 E.COLOR_REPMAJOR =  "|cff00A3FF"      -- "|cff00527F" -- 00A3FF
 E.COLOR_REPFRIEND =  "|cff9F7CFF"      -- "|cff4F3E7F"  -- 9F7CFF
@@ -283,19 +268,11 @@ E.COLOR_REPSIMPLE_5 =  "|cffFFF371"      -- "|cff7C7638" -- FFF371
 E.COLOR_REPSIMPLE_6 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
 E.COLOR_REPSIMPLE_7 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
 E.COLOR_REPSIMPLE_8 =  "|cff4FFF79"      -- "|cff277F3C" -- 4FFF79
-
-
 E.FACTION_CURRENT = UnitFactionGroup("PLAYER")
 E.FACTION_OPPOSITE = E.FACTION_CURRENT == "Alliance" and "Horde" or "Alliance"
-
-
-
-
-
 E.COLOR_HORDE = "|cffC41E3A"
 E.COLOR_ALLIANCE = "|cff0070DD"
 E.COLOR_NEUTRAL = E.Class_Monk_Color
-
 E.COLOR_KYRIAN_R = 0.44
 E.COLOR_KYRIAN_G = 0.66
 E.COLOR_KYRIAN_B = 0.86
@@ -308,7 +285,6 @@ E.COLOR_NIGHTFAE_B = 0.76
 E.COLOR_VENTHYR_R = 0.88
 E.COLOR_VENTHYR_G = 0.40
 E.COLOR_VENTHYR_B = 0.40
-
 E.RIFT = E.COLOR_PURPLE.." (RIFT)|r"
 E.DONE = E.COLOR_GREEN..L["DONE"].."|r"
 E.NONE = E.COLOR_GRAY..L["NONE"].."|r"
@@ -347,23 +323,14 @@ end
 for i, name in ipairs(EXPANSION_ORDER) do
 	E["Is_" .. name .. "_available"] = (version >= EXPANSION_STARTS[i])
 end
-
 -- /dump E.func_IsDF -- FALSE
 -- /dump E.Is_DF_available -- TRUE
 ----------------------------------------------------------------
 ----------------------------------------------------------------
 ----------------------------------------------------------------
-
-
-
-
-
-
-
 E.IsRetail = WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
 E.IsPTR = GetCurrentRegion() >= 72 -- 90 BETA midnight
 E.IsRemix = PlayerIsTimerunning and PlayerIsTimerunning()
-
 E.OctoTable_PlayerBags = {
 	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
 	Enum.BagIndex.Backpack, -- 0,
@@ -373,7 +340,6 @@ E.OctoTable_PlayerBags = {
 	Enum.BagIndex.Bag_4, -- 4,
 	Enum.BagIndex.ReagentBag, -- 5,
 }
-
 E.OctoTable_PlayerBags_WithoutReagents = {
 	-- Enum.BagIndex.Keyring, -- -1, (no need in retail)
 	Enum.BagIndex.Backpack, -- 0,
@@ -383,9 +349,6 @@ E.OctoTable_PlayerBags_WithoutReagents = {
 	Enum.BagIndex.Bag_4, -- 4,
 	-- Enum.BagIndex.ReagentBag, -- 5,
 }
-
-
-
 E.OctoTable_bankTabs = {
 	-- Enum.BagIndex.CharacterBankTab, -- -2, (classic)
 	Enum.BagIndex.CharacterBankTab_1, -- 6,
@@ -431,7 +394,6 @@ else
 end
 E.TEXT_ERROR = E.COLOR_RED.."ERROR|r"
 E.TEXT_INDEV = E.COLOR_RED.."In Development|r"
-
 -- Таблица цветовых схем для редактора
 E.editorThemes = {
 	["Twilight"] = {
@@ -481,10 +443,6 @@ E.editorThemes = {
 		["String"] = "|cff829D61", -- строки (зелёный)
 	},
 }
-
-
-
-
 E.cur_gender = UnitSex("PLAYER")
 -- addon mem: 6.16 MB
 E.OctoTable_Prefixes = {
@@ -510,13 +468,11 @@ E.OctoTable_Launguages = {
 	{name = "koKR", translate = "한국어", }, -- 9
 	{name = "zhCN", translate = "简体中文", }, -- 10
 	{name = "zhTW", translate = "繁體中文", }, -- 11
-
 	{name = "Auto", translate = "Язык", }, -- 12
 }
 E.CompressionMethod = Enum.CompressionMethod and Enum.CompressionMethod.Deflate or 0
 E.CompressionLevel = Enum.CompressionLevel and Enum.CompressionLevel.OptimizeForSize or 2
 E.Base64Variant = Enum.Base64Variant and Enum.Base64Variant.StandardUrlSafe or 1
-
 ----------------------------------------------------------------
 local Octo_MeasureFrame = CreateFrame("FRAME", "Octo_MeasureFrame", UIParent)
 Octo_MeasureFrame:Hide()
@@ -533,7 +489,6 @@ E.ICON_SETTINGS_GREEN = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textur
 E.ICON_SETTINGS_RED = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_RED"
 E.ICON_SETTINGS_GRAY = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_GRAY"
 E.ICON_SETTINGS_DARKGRAY = "Interface\\AddOns\\"..E.MainAddonName.."\\Media\\Textures\\ICON_SETTINGS_DARKGRAY"
-
 E.ICON_SETTINGS_ACTIVE = "checkmark-minimal"
 E.ICON_SETTINGS_INACTIVE = E.ICON_EMPTY
 E.ICON_SETTINGS_BACKGROUD = "checkbox-minimal"
@@ -551,24 +506,20 @@ E.ATLAS_ACCOUNT_WIDE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Texture
 E.ATLAS_ACCOUNT_TRANSFERABLE = "Interface\\AddOns\\"..GlobalAddonName.."\\Media\\Textures\\warbands-transferable-icon" -- "warbands-transferable-icon"
 E.ICON_DEBUG = 7448162 -- "poi-torghast" -- ATLAS
 ----------------------------------------------------------------
-
 -- E.ICON_QUESTNORMAL = "Crosshair_Quest_64"
 -- E.ICON_QUESTDAILY = "Crosshair_Recurring_64"
 -- E.ICON_QUESTWEEKLY = "Crosshair_Wrapper_64"
 -- E.ICON_QUESTMONTHLY = "warbands-icon" -- "cursor_Wrapper_64"
-
 E.ICON_QUESTNORMAL = "QuestNormal"
 E.ICON_QUESTDAILY = "questlog-questtypeicon-daily"
 E.ICON_QUESTWEEKLY = "questlog-questtypeicon-weekly"
 E.ICON_QUESTMONTHLY = "questlog-questtypeicon-monthly"
 E.ICON_QUESTWEEKLY_ACCOUNT = "worldquest-tracker-questmarker-gray"
 E.ICON_RECURRING = "Crosshair_unableRecurringturnin_64" -- "UI-RefreshButton"
-
 -- UI-QuestPoiRecurring-QuestNumber-SuperTracked
 -- UI-QuestPoiRecurring-QuestNumber
 -- UI-QuestPoiRecurring-InnerGlow
 -- UI-QuestPoiRecurring-OuterGlow
-
 E.RESET_INFO = {
 	Normal = {icon = E.ICON_QUESTNORMAL, string = L["ITEM_QUALITY1_DESC"]},
 	Daily = {icon = E.ICON_QUESTDAILY, string = L["DAILY"]},
@@ -612,7 +563,6 @@ else
 	E.ICON_CURRENT_FACTION = E.ICON_NEUTRAL
 	E.COLOR_FACTION = E.Class_Monk_Color
 end
-
 E.ICON_WARBANDS = E.COLOR_BLUE.."(A)".."|r"
 E.ICON_QUESTION_MARK = 134400 or "Interface\\Icons\\INV_Misc_QuestionMark"
 E.ICON_LFG = "Interface\\LFGFRAME\\BattlenetWorking0"
@@ -655,7 +605,6 @@ E.OctoTable_Covenant = {
 	},
 }
 E.DEVTEXT = "|T"..E.IconTexture..":14:14:::64:64:4:60:4:60|t"..E.COLOR_GREEN.."DebugInfo|r: "
-
 E.SORT_OPTIONS = {
 	----------------------------------------------------------------
 	["UnitLevel"] = {name = L["LEVEL"], defaultValue = 1, reverse = true, }, -- 20,
@@ -766,16 +715,64 @@ E.IS_HEADER_TOOLTIP = false
 -- 	ROWS = 1,      -- только строки
 -- 	COLUMNS = 2,   -- только столбцы
 -- }
-
 E.ZEBRA_MODE = {
 	{value = 0, text = L["NONE"],},
 	{value = 1, text = L["Rows"],},
 	{value = 2, text = L["Columns"],},
 }
-
 E.ID_MYTHIC = 16
-
-
 -- /dump STANDARD_TEXT_FONT
-
-
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------
+do
+	E.Octo_font = "Interface\\Addons\\"..E.MainAddonName.."\\Media\\font\\Expressway Rg Bold.TTF"
+	E.OctoFont10 = CreateFont("OctoFont10")
+	E.OctoFont10:CopyFontObject(GameTooltipText)
+	E.OctoFont11 = CreateFont("OctoFont11")
+	E.OctoFont11:CopyFontObject(GameTooltipText)
+	-- do
+	-- 	local asian_tbl = { -- if asian_tbl[E.curLocaleLang] then fontSize = 12 end
+	-- 		["koKR"] = true,
+	-- 		["zhCN"] = true,
+	-- 		["zhTW"] = true,
+	-- 	}
+	-- 	local DefaultFontKey = LibSharedMedia:GetDefault("font")
+	-- 	local DefaultFontPath = LibSharedMedia:Fetch("font", DefaultFontKey)
+	-- 	E.OctoFont12_MT = CreateFont("OctoFont12_Static")
+	-- 	E.OctoFont12_MT:CopyFontObject(GameTooltipText) -- GameTooltipText / GameFontHighlightSmall / SystemFont_Outline_Small
+	-- 	E.OctoFont12_MT:SetFont(DefaultFontPath, 12, "OUTLINE") -- OUTLINE
+	-- 	E.OctoFont14_Static = CreateFont("OctoFont14_Static")
+	-- 	E.OctoFont14_Static:CopyFontObject(GameTooltipText) -- GameTooltipText / GameFontHighlightSmall / SystemFont_Outline_Small
+	-- 	E.OctoFont14_Static:SetFont(DefaultFontPath, 14, "OUTLINE") -- OUTLINE
+	-- end
+	-- Функция создания шрифта заданного размера
+	local function CreateStaticFont(size)
+		-- local fontKey = LibSharedMedia:GetDefault("font")
+		-- local fontPath = LibSharedMedia:Fetch("font", fontKey) or STANDARD_TEXT_FONT
+		local fontPath = STANDARD_TEXT_FONT
+		local font = CreateFont("OctoFont" .. size .. "_MT")
+		font:CopyFontObject(GameTooltipText) -- GameTooltipText / GameFontHighlightSmall / SystemFont_Outline_Small
+		font:SetFont(fontPath, size, "OUTLINE")
+		return font
+	end
+	local metatable = getmetatable(E) or {}
+	setmetatable(E, metatable)
+	-- local oldIndex = metatable.__index
+	metatable.__index = function(tbl, key)
+		local size = key:match("^OctoFont(%d+)_MT$")
+		if size then
+			local font = CreateStaticFont(tonumber(size))
+			rawset(tbl, key, font)
+			return font
+		end
+		-- if type(oldIndex) == "function" then
+		-- 	return oldIndex(tbl, key)
+		-- elseif type(oldIndex) == "table" then
+		-- 	return oldIndex[key]
+		-- end
+	end
+end
+----------------------------------------------------------------
+----------------------------------------------------------------
+----------------------------------------------------------------

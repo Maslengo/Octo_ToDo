@@ -10,6 +10,7 @@ local function tempFunction()
 	local OctoTables_Vibor = {}
 	OctoTables_DataOtrisovka[categoryKey] = {}
 	OctoTables_Vibor[categoryKey] = {}
+	OctoTables_Vibor[categoryKey].defs = false
 	OctoTables_Vibor[categoryKey].icon = E.ICON_DEBUG
 	OctoTables_Vibor[categoryKey].name = "maps"
 	-- OctoTables_Vibor[categoryKey].name = L["WEEKLY_REWARDS_MYTHIC_KEYSTONE"] -- "MPLUS"

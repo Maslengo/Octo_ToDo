@@ -133,7 +133,7 @@ local function Collect_Reputations()
 	else
 		E.cm.Reputation = {}
 	end
-	for reputationID in next, (E.TBL_validReps) do
+	for reputationID in next, (E.ALL_Reputations) do
 		local output = func_GetReputationProgress(reputationID)
 		-- if output then
 		local isAccountWide = E.func_IsAccountWideReputation(reputationID)

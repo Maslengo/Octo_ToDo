@@ -206,6 +206,23 @@ function EventFrame:PLAYER_LOGIN()
 		end
 	end
 	----------------------------------------------------------------
+	-- CHANGELOG ---------------------------------------------------
+	----------------------------------------------------------------
+	do
+		if E.DEBUG_CHANGELOG then
+			local enable = true
+			if enable then
+				local layout = CreateFrame("FRAME", GlobalAddonName.."CHANGELOG_LAYOUT")
+				layout:Hide()
+				local category = Settings.RegisterCanvasLayoutSubcategory(parentCategory, layout, L["Changelog"])
+				-- category.ID = L["Changelog"]
+				if E.func_option_CHANGELOG then
+					E.func_option_CHANGELOG(category, layout)
+				end
+			end
+		end
+	end
+	----------------------------------------------------------------
 	-- DEBUG -------------------------------------------------------
 	----------------------------------------------------------------
 	do

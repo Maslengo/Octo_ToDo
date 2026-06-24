@@ -46,7 +46,7 @@ function E.func_option_CHARACTERS(category, layout)
 	layout:SetScript("OnShow", function()
 			scrollContentFrame_LEFT:Show()
 			scrollContentFrame_RIGHT:Show()
-			RunNextFrame(E.func_CreateDataProvider_SORTUI)
+			RunNextFrame(E.func_CreateDataProvider_CHARACTERS)
 	end)
 	----------------------------------------------------------------
 	-- Функция для показа подтверждения удаления персонажа
@@ -105,7 +105,7 @@ function E.func_option_CHARACTERS(category, layout)
 		end
 		function E.Create_TEXTLEFT_LEFT(frame)
 			frame.TEXTLEFT = frame:CreateFontString()
-			frame.TEXTLEFT:SetFontObject(OctoFont11)
+			frame.TEXTLEFT:SetFontObject(E.OctoFont12_MT)
 			frame.TEXTLEFT:SetPoint("LEFT", frame.icon1frame_LEFT, "RIGHT")
 			frame.TEXTLEFT:SetWordWrap(false)
 			frame.TEXTLEFT:SetJustifyV("MIDDLE")
@@ -212,7 +212,7 @@ function E.func_option_CHARACTERS(category, layout)
 		end
 		function E.Create_TEXT_RIGHT(frame)
 			frame.TEXT_RIGHT = frame:CreateFontString()
-			frame.TEXT_RIGHT:SetFontObject(OctoFont11)
+			frame.TEXT_RIGHT:SetFontObject(E.OctoFont12_MT)
 			frame.TEXT_RIGHT:SetPoint("LEFT", frame.icon2frame, "RIGHT")
 			frame.TEXT_RIGHT:SetWordWrap(false)
 			frame.TEXT_RIGHT:SetJustifyV("MIDDLE")
@@ -308,7 +308,7 @@ function E.func_option_CHARACTERS(category, layout)
 			frame.icon1frame_LEFT:Show()
 			local _, _, _, CharacterProfile_SORTING = E.func_GetProfile_CHARACTERS_CURRENT()
 			if CharacterProfile_SORTING then
-				frame.icon1frame_LEFT:SetData(CharacterProfile_SORTING.sort_order_ACTIVED, key, E.func_CreateDataProvider_SORTUI)
+				frame.icon1frame_LEFT:SetData(CharacterProfile_SORTING.sort_order_ACTIVED, key, E.func_CreateDataProvider_CHARACTERS)
 			end
 		end
 		function E.func_2_LEFT(frame, key)
@@ -317,7 +317,7 @@ function E.func_option_CHARACTERS(category, layout)
 			frame.icon2frame:Show()
 			local _, _, _, CharacterProfile_SORTING = E.func_GetProfile_CHARACTERS_CURRENT()
 			if CharacterProfile_SORTING then
-				frame.icon2frame:SetData(CharacterProfile_SORTING.sort_reverse, key, E.func_CreateDataProvider_SORTUI)
+				frame.icon2frame:SetData(CharacterProfile_SORTING.sort_reverse, key, E.func_CreateDataProvider_CHARACTERS)
 			end
 		end
 		function E.func_3_LEFT(frame, key, index)
@@ -334,7 +334,7 @@ function E.func_option_CHARACTERS(category, layout)
 				end
 				table.remove(CharacterProfile_SORTING.sort_order, index)
 				CharacterProfile_SORTING.sort_order_ACTIVED[key] = nil
-				E.func_CreateDataProvider_SORTUI()
+				E.func_CreateDataProvider_CHARACTERS()
 			end)
 		end
 		function E.func_4_LEFT(frame, index, order)
@@ -351,7 +351,7 @@ function E.func_option_CHARACTERS(category, layout)
 						local temp = order[index - 1]
 						order[index - 1] = order[index]
 						order[index] = temp
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end
 			end)
 		end
@@ -369,7 +369,7 @@ function E.func_option_CHARACTERS(category, layout)
 						local temp = order[index + 1]
 						order[index + 1] = order[index]
 						order[index] = temp
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end
 			end)
 		end
@@ -432,7 +432,7 @@ function E.func_option_CHARACTERS(category, layout)
 			frame.icon1frame_RIGHT:Show()
 			local _, CharacterProfile_GUIDS = E.func_GetProfile_CHARACTERS_CURRENT()
 			if CharacterProfile_GUIDS then
-				frame.icon1frame_RIGHT:SetData(CharacterProfile_GUIDS, GUID, E.func_CreateDataProvider_SORTUI)
+				frame.icon1frame_RIGHT:SetData(CharacterProfile_GUIDS, GUID, E.func_CreateDataProvider_CHARACTERS)
 			end
 		end
 		function E.func_2_RIGHT(frame, pd)
@@ -448,7 +448,7 @@ function E.func_option_CHARACTERS(category, layout)
 			end
 			frame.icon3frame:Show()
 			frame.icon3frame:SetScript("OnClick", function()
-					ConfirmCharacterDelete(GUID, CharInfo, E.func_CreateDataProvider_SORTUI)
+					ConfirmCharacterDelete(GUID, CharInfo, E.func_CreateDataProvider_CHARACTERS)
 			end)
 		end
 		function E.func_4_RIGHT(frame, index, order)
@@ -464,7 +464,7 @@ function E.func_option_CHARACTERS(category, layout)
 						local temp = order[index - 1]
 						order[index - 1] = order[index]
 						order[index] = temp
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end
 			end)
 		end
@@ -481,7 +481,7 @@ function E.func_option_CHARACTERS(category, layout)
 						local temp = order[index + 1]
 						order[index + 1] = order[index]
 						order[index] = temp
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end
 			end)
 		end
@@ -549,7 +549,7 @@ function E.func_option_CHARACTERS(category, layout)
 	----------------------------------------------------------------
 	local func_CreateOcto_SortUI do
 		local function scroll_LEFT(layout)
-			scrollContentFrame_LEFT:SetPoint("TOPLEFT", layout, "TOPLEFT", INDENT_CONTAINER, -INDENT_CONTAINER-40)
+			scrollContentFrame_LEFT:SetPoint("TOPLEFT", layout, "TOPLEFT", 0, -INDENT_CONTAINER-40)
 			scrollContentFrame_LEFT:SetPoint("BOTTOMLEFT", layout, "BOTTOMLEFT", INDENT_CONTAINER, INDENT_CONTAINER)
 			scrollContentFrame_LEFT:SetWidth(WIDTH_DATAPROVIDER)
 			scrollContentFrame_LEFT.ScrollBoxLEFT = CreateFrame("FRAME", nil, scrollContentFrame_LEFT, "WowScrollBoxList")
@@ -572,7 +572,7 @@ function E.func_option_CHARACTERS(category, layout)
 				EventFrame.DropDownFrame_LEFT:SetSize(WIDTH_BUTTON_BIG, HEIGHT_BUTTON)
 
 				EventFrame.hintLeft = scrollContentFrame_LEFT:CreateFontString()
-				EventFrame.hintLeft:SetFontObject(OctoFont11)
+				EventFrame.hintLeft:SetFontObject(E.OctoFont12_MT)
 				EventFrame.hintLeft:SetPoint("BOTTOM", scrollContentFrame_LEFT, "TOP", 0, 0)
 				EventFrame.hintLeft:SetJustifyH("CENTER")
 				EventFrame.hintLeft:SetWidth(WIDTH_DATAPROVIDER)
@@ -583,7 +583,7 @@ function E.func_option_CHARACTERS(category, layout)
 				f:SetSize(WIDTH_BUTTON_BIG, HEIGHT_BUTTON)
 				table.insert(E.OctoTable_ColoredFrames, f)
 				f.text = f:CreateFontString()
-				f.text:SetFontObject(OctoFont11)
+				f.text:SetFontObject(E.OctoFont12_MT)
 				f.text:SetAllPoints()
 				f.text:SetJustifyV("MIDDLE")
 				f.text:SetJustifyH("CENTER")
@@ -599,7 +599,7 @@ function E.func_option_CHARACTERS(category, layout)
 							CharacterProfile.SORTING = nil   -- удаляем старую сортировку
 						end
 						E.func_CreateProfile("CHARACTERS", E.CHARACTERS_CURRENT)
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end)
 				end)
 				f:SetScript("OnMouseDown", function(selfBtn)
@@ -670,14 +670,14 @@ function E.func_option_CHARACTERS(category, layout)
 
 			do
 				local frame = layout
-				local providerfunc = E.func_CreateDataProvider_SORTUI
+				local providerfunc = E.func_CreateDataProvider_CHARACTERS
 				local buttonName = L["Characters"]
 				EventFrame.DropDownFrame_RIGHT = E.func_Create_DDframe_Options_RIGHT(frame, providerfunc, buttonName)
 				EventFrame.DropDownFrame_RIGHT:SetPoint("BOTTOMLEFT", scrollContentFrame_RIGHT, "TOPLEFT", 0, INDENT_CONTAINER)
 				EventFrame.DropDownFrame_RIGHT:SetSize(WIDTH_BUTTON_BIG, HEIGHT_BUTTON)
 
 				EventFrame.hintRight = scrollContentFrame_RIGHT:CreateFontString()
-				EventFrame.hintRight:SetFontObject(OctoFont11)
+				EventFrame.hintRight:SetFontObject(E.OctoFont12_MT)
 				EventFrame.hintRight:SetPoint("BOTTOM", scrollContentFrame_RIGHT, "TOP", 0, 0)
 				EventFrame.hintRight:SetJustifyH("CENTER")
 				EventFrame.hintRight:SetWidth(WIDTH_DATAPROVIDER)
@@ -688,16 +688,16 @@ function E.func_option_CHARACTERS(category, layout)
 				local ResetFrame_RIGHT = E.func_CreateUtilityButton(layout, nil, HEIGHT_BUTTON, HEIGHT_BUTTON, nil, nil, true, "ResetFrame_RIGHT")
 				local _, _, CharacterProfile_OTHER = E.func_GetProfile_CHARACTERS_CURRENT()
 				if CharacterProfile_OTHER then
-					ResetFrame_RIGHT:SetData(CharacterProfile_OTHER, "CONFIG_SORTING_CUSTOM", E.func_CreateDataProvider_SORTUI)
+					ResetFrame_RIGHT:SetData(CharacterProfile_OTHER, "CONFIG_SORTING_CUSTOM", E.func_CreateDataProvider_CHARACTERS)
 				end
 				ResetFrame_RIGHT:SetPoint("BOTTOMRIGHT", scrollContentFrame_RIGHT, "TOPRIGHT", -INDENT_CONTAINER*6, INDENT_CONTAINER)
 				ResetFrame_RIGHT.text = ResetFrame_RIGHT:CreateFontString()
-				ResetFrame_RIGHT.text:SetFontObject(OctoFont11)
+				ResetFrame_RIGHT.text:SetFontObject(E.OctoFont12_MT)
 				ResetFrame_RIGHT.text:SetPoint("LEFT", ResetFrame_RIGHT.Icon, "RIGHT", 4, 0)
 				ResetFrame_RIGHT.text:SetJustifyV("MIDDLE")
 				ResetFrame_RIGHT.text:SetText(L["CUSTOM"])
 				ResetFrame_RIGHT.textUP = ResetFrame_RIGHT:CreateFontString()
-				ResetFrame_RIGHT.textUP:SetFontObject(OctoFont11)
+				ResetFrame_RIGHT.textUP:SetFontObject(E.OctoFont12_MT)
 				ResetFrame_RIGHT.textUP:SetPoint("BOTTOM", ResetFrame_RIGHT.Icon, "TOP", 0, 4)
 				ResetFrame_RIGHT.textUP:SetText(L["CUSTOM"])
 				ResetFrame_RIGHT:HookScript("OnClick", E.disableButtonsUpdate)
@@ -792,7 +792,7 @@ function E.func_option_CHARACTERS(category, layout)
 						local order = CharacterProfile_SORTING.sort_order
 						if newID > id then newID = newID - 1 end
 						table.insert(order, newID, table.remove(order, id))
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end
 				end
 			end)
@@ -885,7 +885,7 @@ function E.func_option_CHARACTERS(category, layout)
 						local order = CharacterProfile_SORTING.GUID_order
 						if newID > id then newID = newID - 1 end
 						table.insert(order, newID, table.remove(order, id))
-						E.func_CreateDataProvider_SORTUI()
+						E.func_CreateDataProvider_CHARACTERS()
 					end
 				end
 			end)
@@ -957,7 +957,7 @@ function E.func_option_CHARACTERS(category, layout)
 		local height = visibleLines * HEIGHT_ROW + INDENT_ROW * 2
 		scrollContentFrame_LEFT.ScrollBoxLEFT:SetHeight(height)
 	end
-	function E.func_CreateDataProvider_SORTUI()
+	function E.func_CreateDataProvider_CHARACTERS()
 		func_CreateDataProvider_RIGHT()
 		func_CreateDataProvider_LEFT()
 		E.disableButtonsUpdate()
